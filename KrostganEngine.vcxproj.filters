@@ -13,10 +13,60 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Исходные файлы\CoreSystems">
+      <UniqueIdentifier>{06d82c06-98eb-47ad-9190-5cf44f374fa2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\GameObjects">
+      <UniqueIdentifier>{fb538d48-4313-485b-bf9c-38f2abf3bfd1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="KrostganEngine.cpp">
+    <ClCompile Include="main.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="GameInit.cpp">
+      <Filter>Исходные файлы\CoreSystems</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine.cpp">
+      <Filter>Исходные файлы\CoreSystems</Filter>
+    </ClCompile>
+    <ClCompile Include="GameConfigLoad.cpp">
+      <Filter>Исходные файлы\CoreSystems</Filter>
+    </ClCompile>
+    <ClCompile Include="IGameObject.cpp">
+      <Filter>Исходные файлы\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineModes.cpp">
+      <Filter>Исходные файлы\CoreSystems</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GameInit.h">
+      <Filter>Исходные файлы\CoreSystems</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine.h">
+      <Filter>Исходные файлы\CoreSystems</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineCore.h">
+      <Filter>Исходные файлы\CoreSystems</Filter>
+    </ClInclude>
+    <ClInclude Include="GameConfigLoad.h">
+      <Filter>Исходные файлы\CoreSystems</Filter>
+    </ClInclude>
+    <ClInclude Include="GameConfigsList.h">
+      <Filter>Исходные файлы\CoreSystems</Filter>
+    </ClInclude>
+    <ClInclude Include="ICallbackRec_GraphRen.h">
+      <Filter>Исходные файлы\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="IGameObject.h">
+      <Filter>Исходные файлы\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="ICallbacks.h">
+      <Filter>Исходные файлы\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineModes.h">
+      <Filter>Исходные файлы\CoreSystems</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
