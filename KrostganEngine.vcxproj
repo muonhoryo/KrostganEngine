@@ -104,7 +104,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>SFML_STATIC;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\SFML-2.5.1\include;D:\create\c++\KrostganEngine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\SFML-2.5.1\include;D:\create\c++\KrostganEngine;D:\create\c++\KrostganEngine\Scripts;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -135,26 +135,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Engine.cpp" />
-    <ClCompile Include="EngineModes.cpp" />
-    <ClCompile Include="GameConfigLoad.cpp" />
-    <ClCompile Include="GameInit.cpp" />
-    <ClCompile Include="IGameObject.cpp" />
-    <ClCompile Include="main.cpp">
-      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdcpp17</LanguageStandard>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">SFML_STATIC;_DEBUG;_CONSOLE;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
+    <ClCompile Include="Scripts\Engine.cpp" />
+    <ClCompile Include="Scripts\EngineModes.cpp" />
+    <ClCompile Include="Scripts\GameConfigLoad.cpp" />
+    <ClCompile Include="Scripts\IGameObject.cpp" />
+    <ClCompile Include="Scripts\main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="EngineCore.h" />
-    <ClInclude Include="Engine.h" />
-    <ClInclude Include="EngineModes.h" />
-    <ClInclude Include="GameConfigLoad.h" />
-    <ClInclude Include="GameConfigsList.h" />
-    <ClInclude Include="GameInit.h" />
-    <ClInclude Include="ICallbackRec_GraphRen.h" />
-    <ClInclude Include="ICallbacks.h" />
-    <ClInclude Include="IGameObject.h" />
+    <ClInclude Include="Scripts\Engine.h" />
+    <ClInclude Include="Scripts\EngineCore.h" />
+    <ClInclude Include="Scripts\EngineModes.h" />
+    <ClInclude Include="Scripts\GameConfigLoad.h" />
+    <ClInclude Include="Scripts\GameConfigsList.h" />
+    <ClInclude Include="Scripts\ICallbackRec_GraphRen.h" />
+    <ClInclude Include="Scripts\ICallbacks.h" />
+    <ClInclude Include="Scripts\IGameObject.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Config.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

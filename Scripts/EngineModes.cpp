@@ -1,14 +1,10 @@
 
-#include <SFML/Graphics.hpp>
+
 #include <EngineCore.h>
-#include <iostream>
-#include <optional>
-using namespace std;
-using namespace sf;
 
 using namespace KrostganEngine::Core;
 
-void GameInit::Initialize() {
+void GameMode::ExecuteCycle() {
 
     RenderWindow& wind = Engine::GetRenderWindow();
 
@@ -24,4 +20,7 @@ void GameInit::Initialize() {
         wind.clear();
         wind.display();
     }
+}
+void MainMenuMode::ExecuteCycle() {
+
 }

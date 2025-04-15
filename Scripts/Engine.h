@@ -9,35 +9,15 @@ using namespace sf;
 namespace KrostganEngine {
 	namespace Core {
 		 class Engine {
-
+			 
 		 public:
-			 struct EngineState {
-				 enum StateType {
-					 None,
-					 MainMenu,
-					 Game
-				 };
-
-				 EngineState() {
-					 CurrState = None;
-					 NextState = None;
-					 NeedToInterrupt = false;
-				 }
-
-				 StateType CurrState=None;
-				 StateType NextState=None; 
-				 bool NeedToInterrupt=false;
-
-				 union {
-
-					 KrostganEngine::Core::MainMenuMode MainMenuSt;
-					 KrostganEngine::Core::GameMode GameSt;
-				 };
-			 };
+			 struct EngineStateHandler;
+			 enum EngineState;
 
 		 public:
 			static const std::string ENGINE_VERSION;
 			static Engine& GetInstanceEngine();
+			static void StartEngine();
 
 			static void ReqToSetMode_MainMenu();
 			static void ReqToSetMode_Game();
@@ -47,13 +27,13 @@ namespace KrostganEngine {
 		private:
 			Engine();
 			static Engine* Singleton;
-			static Engine::EngineState EngState;
-			static EngineMode* EngMode;
+			static Engine::EngineStateHandler EngStateHandler;
+			static EngineMode* CurrMode;
 
 			RenderWindow RendWin;
 			float FrameTime=0;
 
-			static void RequestToChangeState(EngineState::StateType state);
+			static void RequestToChangeState(EngineState state);
 			static void SetMode_MainMenu();
 			static void SetMode_Game();
 			static void ResolveInterruption();

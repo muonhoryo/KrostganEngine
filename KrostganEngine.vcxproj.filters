@@ -21,52 +21,51 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="Scripts\main.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="GameInit.cpp">
-      <Filter>Исходные файлы\CoreSystems</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine.cpp">
-      <Filter>Исходные файлы\CoreSystems</Filter>
-    </ClCompile>
-    <ClCompile Include="GameConfigLoad.cpp">
-      <Filter>Исходные файлы\CoreSystems</Filter>
-    </ClCompile>
-    <ClCompile Include="IGameObject.cpp">
+    <ClCompile Include="Scripts\IGameObject.cpp">
       <Filter>Исходные файлы\GameObjects</Filter>
     </ClCompile>
-    <ClCompile Include="EngineModes.cpp">
+    <ClCompile Include="Scripts\Engine.cpp">
+      <Filter>Исходные файлы\CoreSystems</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\EngineModes.cpp">
+      <Filter>Исходные файлы\CoreSystems</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\GameConfigLoad.cpp">
       <Filter>Исходные файлы\CoreSystems</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GameInit.h">
-      <Filter>Исходные файлы\CoreSystems</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine.h">
-      <Filter>Исходные файлы\CoreSystems</Filter>
-    </ClInclude>
-    <ClInclude Include="EngineCore.h">
-      <Filter>Исходные файлы\CoreSystems</Filter>
-    </ClInclude>
-    <ClInclude Include="GameConfigLoad.h">
-      <Filter>Исходные файлы\CoreSystems</Filter>
-    </ClInclude>
-    <ClInclude Include="GameConfigsList.h">
-      <Filter>Исходные файлы\CoreSystems</Filter>
-    </ClInclude>
-    <ClInclude Include="ICallbackRec_GraphRen.h">
+    <ClInclude Include="Scripts\ICallbackRec_GraphRen.h">
       <Filter>Исходные файлы\GameObjects</Filter>
     </ClInclude>
-    <ClInclude Include="IGameObject.h">
+    <ClInclude Include="Scripts\ICallbacks.h">
       <Filter>Исходные файлы\GameObjects</Filter>
     </ClInclude>
-    <ClInclude Include="ICallbacks.h">
+    <ClInclude Include="Scripts\IGameObject.h">
       <Filter>Исходные файлы\GameObjects</Filter>
     </ClInclude>
-    <ClInclude Include="EngineModes.h">
+    <ClInclude Include="Scripts\Engine.h">
       <Filter>Исходные файлы\CoreSystems</Filter>
     </ClInclude>
+    <ClInclude Include="Scripts\EngineCore.h">
+      <Filter>Исходные файлы\CoreSystems</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\EngineModes.h">
+      <Filter>Исходные файлы\CoreSystems</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\GameConfigLoad.h">
+      <Filter>Исходные файлы\CoreSystems</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\GameConfigsList.h">
+      <Filter>Исходные файлы\CoreSystems</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Config.txt">
+      <Filter>Файлы ресурсов</Filter>
+    </Text>
   </ItemGroup>
 </Project>
