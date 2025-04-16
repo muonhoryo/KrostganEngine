@@ -1,11 +1,16 @@
 #pragma once
 
+#include <SFML/Graphics.hpp>
+
+using namespace sf;
+
 namespace KrostganEngine {
 	namespace GameObjects {
 		class ICallbackRec_GraphRen {
-		
 		public:
-			virtual void GraphicRender();
+			virtual void RenderGraphic(RenderWindow& window)=0;
+		protected:
+			ICallbackRec_GraphRen() {};
 		};
 	}
 }

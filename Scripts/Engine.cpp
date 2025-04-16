@@ -8,6 +8,7 @@ using namespace KrostganEngine::Core;
 
 
 Engine::Engine() {
+	Singleton = this;
 	GameConfigLoad config=GameConfigLoad();
 	string line = string();
 	if (!config.GetConfigValue(GameConfigsList::X_WINDOW_RESOLUTION, &line))
@@ -21,14 +22,15 @@ Engine::Engine() {
 	CurrMode = nullptr;
 	EngStateHandler = EngineStateHandler();
 
-	ReqToSetMode_Game();
-	SetMode_Game();
+	ReqToSetMode_LevelDeser();
+	SetMode_LevelDeser();
+	ResetInterruption();
 }
 
 
 Engine& Engine::GetInstanceEngine() {
 	if(Engine::Singleton==nullptr)
-		Engine::Singleton = new Engine();
+		new Engine();
 	return *Engine::Singleton;
 }
 void Engine::StartEngine() {
@@ -46,6 +48,9 @@ void Engine::ReqToSetMode_Game() {
 void Engine::ReqToSetMode_MainMenu() {
 	Engine::RequestToChangeState(EngineState::MainMenu);
 }
+void Engine::ReqToSetMode_LevelDeser() {
+	Engine::RequestToChangeState(EngineState::LevelDeserialization);
+}
 
 void Engine::RequestToChangeState(EngineState state) {
 	if (state != GetCurrentEngState()) {
@@ -62,8 +67,12 @@ void Engine::SetMode_Game() {
 	Singleton->CurrMode = Singleton->EngStateHandler.GameSt;
 }
 void Engine::SetMode_MainMenu() {
-	/*EngState.MainMenuSt = MainMenuMode();
-	Engine::EngMode = &Engine::EngState.MainMenuSt;*/
+	Singleton->EngStateHandler.MainMenuSt = new MainMenuMode();
+	Singleton->CurrMode = Singleton->EngStateHandler.MainMenuSt;
+}
+void Engine::SetMode_LevelDeser() {
+	Singleton->EngStateHandler.LevelDeserSt = new LevelDeserializationMode();
+	Singleton->CurrMode = Singleton->EngStateHandler.LevelDeserSt;
 }
 void Engine::ResolveInterruption() {
 	switch (Singleton->EngStateHandler.NextState)
@@ -71,14 +80,20 @@ void Engine::ResolveInterruption() {
 	case KrostganEngine::Core::EngineState::None:
 		break;
 	case KrostganEngine::Core::EngineState::MainMenu:
-		Engine::SetMode_Game();
+		Engine::SetMode_MainMenu();
 		break;
 	case KrostganEngine::Core::EngineState::Game:
-		Engine::SetMode_MainMenu();
+		Engine::SetMode_Game();
+		break;
+	case EngineState::LevelDeserialization:
+		Engine::SetMode_LevelDeser();
 		break;
 	default:
 		break;
 	}
+	ResetInterruption();
+}
+void Engine::ResetInterruption() {
 	Singleton->EngStateHandler.NeedToInterrupt = false;
 	Singleton->EngStateHandler.CurrState = GetNextEngState();
 }

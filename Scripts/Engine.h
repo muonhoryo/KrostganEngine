@@ -18,6 +18,7 @@ namespace KrostganEngine {
 
 			static void ReqToSetMode_MainMenu();
 			static void ReqToSetMode_Game();
+			static void ReqToSetMode_LevelDeser();
 
 			static RenderWindow& GetRenderWindow();
 			static float GetFrameTime();
@@ -36,7 +37,9 @@ namespace KrostganEngine {
 			static void RequestToChangeState(EngineState state);
 			static void SetMode_MainMenu();
 			static void SetMode_Game();
+			static void SetMode_LevelDeser();
 			static void ResolveInterruption();
+			static void ResetInterruption();
 
 			static EngineMode* GetCurrentEngMode();
 

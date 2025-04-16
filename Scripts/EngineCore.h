@@ -5,3 +5,4 @@
 #include <GameConfigsList.h>
 #include <EngineModes.h>
 #include <EngineStateHandler.h>
+#include <EngineWorkCycleModule.h>

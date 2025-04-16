@@ -1,6 +1,9 @@
 #pragma once
 
+#include <SFML/Graphics.hpp>
 #include <EngineCore.h>
+
+using namespace sf;
 
 namespace KrostganEngine {
 	namespace Core {
@@ -13,16 +16,22 @@ namespace KrostganEngine {
 
 		class GameMode:public EngineMode {
 			void ExecuteCycle() override;
-
 		public:
-			GameMode():EngineMode(){}
+			GameMode();
+		private:
+			RenderWindow* Window;
 		};
 
 		class MainMenuMode :public EngineMode {
 			void ExecuteCycle() override;
-
 		public:
 			MainMenuMode():EngineMode(){}
+		};
+
+		class LevelDeserializationMode:public EngineMode {
+			void ExecuteCycle() override;
+		public:
+			LevelDeserializationMode(): EngineMode() {};
 		};
 	}
 }

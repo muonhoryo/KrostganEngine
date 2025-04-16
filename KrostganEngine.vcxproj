@@ -135,14 +135,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Scripts\EngineRenderModule.cpp" />
+    <ClCompile Include="Scripts\SpriteRenderer.cpp" />
     <ClCompile Include="Scripts\Engine.cpp" />
     <ClCompile Include="Scripts\EngineModes.cpp" />
     <ClCompile Include="Scripts\EngineStateHandler.cpp" />
     <ClCompile Include="Scripts\GameConfigLoad.cpp" />
-    <ClCompile Include="Scripts\IGameObject.cpp" />
+    <ClCompile Include="Scripts\GameObject.cpp" />
     <ClCompile Include="Scripts\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Scripts\EngineWorkCycleModule.h" />
+    <ClInclude Include="Scripts\SpriteRenderer.h" />
     <ClInclude Include="Scripts\Engine.h" />
     <ClInclude Include="Scripts\EngineCore.h" />
     <ClInclude Include="Scripts\EngineModes.h" />
@@ -150,8 +154,8 @@
     <ClInclude Include="Scripts\GameConfigLoad.h" />
     <ClInclude Include="Scripts\GameConfigsList.h" />
     <ClInclude Include="Scripts\ICallbackRec_GraphRen.h" />
-    <ClInclude Include="Scripts\ICallbacks.h" />
-    <ClInclude Include="Scripts\IGameObject.h" />
+    <ClInclude Include="Scripts\EngineCallbacks.h" />
+    <ClInclude Include="Scripts\GameObject.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Config.txt" />

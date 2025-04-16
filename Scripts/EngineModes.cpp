@@ -1,26 +1,31 @@
 
 
+#include <SFML/Graphics.hpp>
 #include <EngineCore.h>
 
 using namespace KrostganEngine::Core;
+using namespace sf;
 
 void GameMode::ExecuteCycle() {
 
-    RenderWindow& wind = Engine::GetRenderWindow();
-
-    while (wind.isOpen())
+    Event event;
+    while ((*Window).pollEvent(event))
     {
-        sf::Event event;
-        while (wind.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-                wind.close();
-        }
-
-        wind.clear();
-        wind.display();
+        if (event.type == Event::Closed)
+            (*Window).close();
     }
+
+    (*Window).clear();
+    (*Window).display();
 }
+GameMode::GameMode():EngineMode() {
+    Window = &Engine::GetRenderWindow();
+}
+
 void MainMenuMode::ExecuteCycle() {
 
+}
+
+void LevelDeserializationMode :: ExecuteCycle() {
+    Engine::ReqToSetMode_Game();
 }
