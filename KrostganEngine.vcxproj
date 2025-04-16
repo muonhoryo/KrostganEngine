@@ -137,6 +137,7 @@
   <ItemGroup>
     <ClCompile Include="Scripts\Engine.cpp" />
     <ClCompile Include="Scripts\EngineModes.cpp" />
+    <ClCompile Include="Scripts\EngineStateHandler.cpp" />
     <ClCompile Include="Scripts\GameConfigLoad.cpp" />
     <ClCompile Include="Scripts\IGameObject.cpp" />
     <ClCompile Include="Scripts\main.cpp" />
@@ -145,6 +146,7 @@
     <ClInclude Include="Scripts\Engine.h" />
     <ClInclude Include="Scripts\EngineCore.h" />
     <ClInclude Include="Scripts\EngineModes.h" />
+    <ClInclude Include="Scripts\EngineStateHandler.h" />
     <ClInclude Include="Scripts\GameConfigLoad.h" />
     <ClInclude Include="Scripts\GameConfigsList.h" />
     <ClInclude Include="Scripts\ICallbackRec_GraphRen.h" />

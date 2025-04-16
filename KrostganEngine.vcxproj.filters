@@ -24,29 +24,23 @@
     <ClCompile Include="Scripts\main.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\IGameObject.cpp">
-      <Filter>Исходные файлы\GameObjects</Filter>
-    </ClCompile>
     <ClCompile Include="Scripts\Engine.cpp">
       <Filter>Исходные файлы\CoreSystems</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\EngineModes.cpp">
       <Filter>Исходные файлы\CoreSystems</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\EngineStateHandler.cpp">
+      <Filter>Исходные файлы\CoreSystems</Filter>
+    </ClCompile>
     <ClCompile Include="Scripts\GameConfigLoad.cpp">
       <Filter>Исходные файлы\CoreSystems</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\IGameObject.cpp">
+      <Filter>Исходные файлы\GameObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Scripts\ICallbackRec_GraphRen.h">
-      <Filter>Исходные файлы\GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\ICallbacks.h">
-      <Filter>Исходные файлы\GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\IGameObject.h">
-      <Filter>Исходные файлы\GameObjects</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\Engine.h">
       <Filter>Исходные файлы\CoreSystems</Filter>
     </ClInclude>
@@ -56,11 +50,23 @@
     <ClInclude Include="Scripts\EngineModes.h">
       <Filter>Исходные файлы\CoreSystems</Filter>
     </ClInclude>
+    <ClInclude Include="Scripts\EngineStateHandler.h">
+      <Filter>Исходные файлы\CoreSystems</Filter>
+    </ClInclude>
     <ClInclude Include="Scripts\GameConfigLoad.h">
       <Filter>Исходные файлы\CoreSystems</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\GameConfigsList.h">
       <Filter>Исходные файлы\CoreSystems</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\ICallbackRec_GraphRen.h">
+      <Filter>Исходные файлы\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\ICallbacks.h">
+      <Filter>Исходные файлы\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\IGameObject.h">
+      <Filter>Исходные файлы\GameObjects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -6,28 +6,6 @@
 using namespace sf;
 using namespace KrostganEngine::Core;
 
-enum Engine::EngineState {
-	None,
-	MainMenu,
-	Game
-};
-struct Engine::EngineStateHandler {
-	EngineStateHandler() {
-		CurrState = EngineState::None;
-		NextState = EngineState::None;
-		NeedToInterrupt = false;
-	}
-
-	EngineState CurrState = EngineState::None;
-	EngineState NextState = EngineState::None;
-	bool NeedToInterrupt = false;
-
-	union {
-
-		KrostganEngine::Core::MainMenuMode* MainMenuSt;
-		KrostganEngine::Core::GameMode* GameSt;
-	};
-};
 
 Engine::Engine() {
 	GameConfigLoad config=GameConfigLoad();
@@ -40,14 +18,13 @@ Engine::Engine() {
 	unsigned int YRes=stoi(line);
 	string header = "Krostgan Engine " + Engine::ENGINE_VERSION;
 	RendWin.create(VideoMode(XRes,YRes), header);
+	CurrMode = nullptr;
+	EngStateHandler = EngineStateHandler();
 
 	ReqToSetMode_Game();
 	SetMode_Game();
 }
 
-RenderWindow& Engine::GetRenderWindow() {
-	return Engine::Singleton->RendWin;
-}
 
 Engine& Engine::GetInstanceEngine() {
 	if(Engine::Singleton==nullptr)
@@ -56,8 +33,8 @@ Engine& Engine::GetInstanceEngine() {
 }
 void Engine::StartEngine() {
 	while (true) {
-		CurrMode->ExecuteCycle();
-		if (EngStateHandler.NeedToInterrupt) {
+		GetCurrentEngMode()->ExecuteCycle();
+		if (IsNeedToInterrupt()) {
 			ResolveInterruption();
 		}
 	}
@@ -71,47 +48,60 @@ void Engine::ReqToSetMode_MainMenu() {
 }
 
 void Engine::RequestToChangeState(EngineState state) {
-	if (state != EngStateHandler.CurrState) {
-		if (!EngStateHandler.NeedToInterrupt) {
-			EngStateHandler.NeedToInterrupt = true;
+	if (state != GetCurrentEngState()) {
+		if (!IsNeedToInterrupt()) {
+			Singleton->EngStateHandler.NeedToInterrupt = true;
 		}
-		if (state != EngStateHandler.NextState) {
-			EngStateHandler.NextState = state;
+		if (state != GetNextEngState()) {
+			Singleton->EngStateHandler.NextState = state;
 		}
 	}
 }
 void Engine::SetMode_Game() {
-	EngStateHandler.GameSt = new GameMode();
-	CurrMode = EngStateHandler.GameSt;
+	Singleton->EngStateHandler.GameSt = new GameMode();
+	Singleton->CurrMode = Singleton->EngStateHandler.GameSt;
 }
 void Engine::SetMode_MainMenu() {
 	/*EngState.MainMenuSt = MainMenuMode();
 	Engine::EngMode = &Engine::EngState.MainMenuSt;*/
 }
 void Engine::ResolveInterruption() {
-	switch (EngStateHandler.NextState)
+	switch (Singleton->EngStateHandler.NextState)
 	{
-	case KrostganEngine::Core::Engine::EngineState::None:
+	case KrostganEngine::Core::EngineState::None:
 		break;
-	case KrostganEngine::Core::Engine::EngineState::MainMenu:
+	case KrostganEngine::Core::EngineState::MainMenu:
 		Engine::SetMode_Game();
 		break;
-	case KrostganEngine::Core::Engine::EngineState::Game:
+	case KrostganEngine::Core::EngineState::Game:
 		Engine::SetMode_MainMenu();
 		break;
 	default:
 		break;
 	}
-	EngStateHandler.NeedToInterrupt = false;
-	EngStateHandler.CurrState = EngStateHandler.NextState;
+	Singleton->EngStateHandler.NeedToInterrupt = false;
+	Singleton->EngStateHandler.CurrState = GetNextEngState();
 }
 
-const std::string Engine::ENGINE_VERSION = "A0.0.1";
-Engine* Engine::Singleton = nullptr;
+EngineMode* Engine::GetCurrentEngMode() {
+	return Singleton->CurrMode;
+}
 
-EngineMode* Engine::CurrMode = nullptr;
-Engine::EngineStateHandler Engine::EngStateHandler = Engine::EngineStateHandler();
+const std::string Engine::ENGINE_VERSION = "A0.0.3";
+Engine* Engine::Singleton = nullptr;
 
 float Engine::GetFrameTime() {
 	return Engine::Singleton->FrameTime;
+}
+RenderWindow& Engine::GetRenderWindow() {
+	return Engine::Singleton->RendWin;
+}
+bool Engine::IsNeedToInterrupt() {
+	return Singleton->EngStateHandler.NeedToInterrupt;
+}
+EngineState Engine::GetCurrentEngState() {
+	return Singleton->EngStateHandler.CurrState;
+}
+EngineState Engine::GetNextEngState() {
+	return Singleton->EngStateHandler.NextState;
 }

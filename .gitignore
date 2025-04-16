@@ -363,6 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 
 *.txt
-*.vcxproj
-*.filters
 *.dll
