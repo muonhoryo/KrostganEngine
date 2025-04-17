@@ -136,6 +136,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\EngineRenderModule.cpp" />
+    <ClCompile Include="Scripts\Event.cpp" />
+    <ClCompile Include="Scripts\LevelLoader.cpp" />
+    <ClCompile Include="Scripts\LevelLoadingInfo.cpp" />
     <ClCompile Include="Scripts\SpriteRenderer.cpp" />
     <ClCompile Include="Scripts\Engine.cpp" />
     <ClCompile Include="Scripts\EngineModes.cpp" />
@@ -146,6 +149,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\EngineWorkCycleModule.h" />
+    <ClInclude Include="Scripts\Event.h" />
+    <ClInclude Include="Scripts\Events.h" />
+    <ClInclude Include="Scripts\GameObjects.h" />
+    <ClInclude Include="Scripts\LevelLoader.h" />
+    <ClInclude Include="Scripts\LevelLoadingInfo.h" />
     <ClInclude Include="Scripts\SpriteRenderer.h" />
     <ClInclude Include="Scripts\Engine.h" />
     <ClInclude Include="Scripts\EngineCore.h" />

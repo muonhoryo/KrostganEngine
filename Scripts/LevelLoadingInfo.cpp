@@ -1,0 +1,22 @@
+
+#include <LevelLoadingInfo.h>
+#include <forward_list>
+#include <string>
+#include <SFML/Graphics.hpp>
+#include <SFML/System.hpp>
+
+using namespace sf;
+using namespace std;
+using namespace KrostganEngine::Core;
+
+
+LevelLoadingInfo::LevelLoadingInfo(forward_list<UnitLoadInfo> Units) {
+	this->Units = Units;
+}
+
+KrostganEngine::Core::UnitLoadInfo::UnitLoadInfo(string TexturePath, Vector2f SpriteOffset, Vector2f Position)
+{
+		this->TexturePath = TexturePath;
+		this->SpriteOffset = SpriteOffset;
+		this->Position = Position;
+}

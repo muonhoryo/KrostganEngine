@@ -22,6 +22,12 @@
     <Filter Include="Исходные файлы\CoreSystems\EngineWorkCycles">
       <UniqueIdentifier>{e568dd13-d1ac-4e7f-8dc0-bd77e82e34f2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Исходные файлы\Events">
+      <UniqueIdentifier>{26c0a582-45a8-4c64-9a36-9293aea263e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\CoreSystems\LevelLoading">
+      <UniqueIdentifier>{1fc4e247-e754-4bc6-ac03-7bbc7fe4c169}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\main.cpp">
@@ -47,6 +53,15 @@
     </ClCompile>
     <ClCompile Include="Scripts\SpriteRenderer.cpp">
       <Filter>Исходные файлы\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Event.cpp">
+      <Filter>Исходные файлы\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\LevelLoader.cpp">
+      <Filter>Исходные файлы\CoreSystems\LevelLoading</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\LevelLoadingInfo.cpp">
+      <Filter>Исходные файлы\CoreSystems\LevelLoading</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -82,6 +97,21 @@
     </ClInclude>
     <ClInclude Include="Scripts\SpriteRenderer.h">
       <Filter>Исходные файлы\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Event.h">
+      <Filter>Исходные файлы\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Events.h">
+      <Filter>Исходные файлы\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\GameObjects.h">
+      <Filter>Исходные файлы\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\LevelLoader.h">
+      <Filter>Исходные файлы\CoreSystems\LevelLoading</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\LevelLoadingInfo.h">
+      <Filter>Исходные файлы\CoreSystems\LevelLoading</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

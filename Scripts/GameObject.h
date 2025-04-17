@@ -11,11 +11,11 @@ namespace KrostganEngine {
 	namespace GameObjects {
 		class GameObject :SpriteRenderer {
 		public:
-			GameObject(const Texture& RenTexture, Vector2f RenOffset, Vector2f Position);
 			Vector2f GetPosition();
 			void SetPosition(Vector2f position);
 		protected:
 			Vector2f Position;
+			GameObject(const Texture& RenTexture, Vector2f RenOffset, Vector2f Position);
 		};
 	}
 }
