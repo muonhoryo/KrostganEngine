@@ -18,7 +18,7 @@ GameConfigLoad::GameConfigLoad() {
 	size_t index;
 	if (st.is_open()) {
 		while (getline(st, line)) {
-			index = line.find(CONFIG_SEP_SYM);
+			index = line.find(CONFIG_DEF_END_SYM);
 			name = line.substr(0, index);
 			value = line.substr(index + 1, line.length() - index - 1);
 			conf = ConfigPosition(name, value);
@@ -50,4 +50,4 @@ bool GameConfigLoad::GetConfigValue(const string& name,string* value) {
 }
 
 const string GameConfigLoad::CONFIG_PATH = "Config.txt";
-const char GameConfigLoad::CONFIG_SEP_SYM = ':';
+const char GameConfigLoad::CONFIG_DEF_END_SYM = ':';

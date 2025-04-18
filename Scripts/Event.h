@@ -39,12 +39,16 @@ namespace KrostganEngine {
 
 	template <typename TArguments>
 	class EventHandler {
-	public:
-		EventHandler(ExecutedEvent<TArguments>& Owner) {
-			this->Owner = Owner;
-		}
-		void Execute(TArguments& args);
 	private:
 		ExecutedEvent<TArguments>& Owner;
+	public:
+		EventHandler(ExecutedEvent<TArguments>& Owner):Owner(Owner) {
+		}
+		void Execute(TArguments& args) {
+			for (IEventSubscriber<TArguments>* sub : Owner.Subscribers)
+			{
+				sub->Execute(args);
+			}
+		}
 	};
 }

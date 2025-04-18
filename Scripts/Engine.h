@@ -4,6 +4,7 @@
 #include <EngineCore.h>
 #include <EngineModes.h>
 #include <EngineStateHandler.h>
+#include <EngineWorkCycleModule.h>
 
 using namespace sf;
 
@@ -25,11 +26,14 @@ namespace KrostganEngine {
 			static bool IsNeedToInterrupt();
 			static EngineState GetCurrentEngState();
 			static EngineState GetNextEngState();
+			static EngineRenderModule& GetRenderModule();
 		private:
 			Engine();
+			static void InitializeSystems();
 			static Engine* Singleton;
 			EngineStateHandler EngStateHandler;
 			EngineMode* CurrMode;
+			EngineRenderModule& RenderModule;
 
 			RenderWindow RendWin;
 			float FrameTime=0;

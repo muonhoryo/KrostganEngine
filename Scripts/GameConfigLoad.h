@@ -22,7 +22,7 @@ namespace KrostganEngine {
 
 			vector<ConfigPosition> ConfigArr = vector<ConfigPosition>();
 			static const string CONFIG_PATH;
-			static const char CONFIG_SEP_SYM;
+			static const char CONFIG_DEF_END_SYM;
 		
 		public:
 			GameConfigLoad();

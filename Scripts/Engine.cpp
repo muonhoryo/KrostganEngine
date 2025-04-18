@@ -2,12 +2,13 @@
 #include <EngineCore.h>
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <EngineWorkCycleModule.h>
 
 using namespace sf;
 using namespace KrostganEngine::Core;
 
 
-Engine::Engine() {
+Engine::Engine():RenderModule(*new EngineRenderModule()) {
 	Singleton = this;
 	GameConfigLoad config=GameConfigLoad();
 	string line = string();
@@ -22,9 +23,14 @@ Engine::Engine() {
 	CurrMode = nullptr;
 	EngStateHandler = EngineStateHandler();
 
+	InitializeSystems();
+
 	ReqToSetMode_LevelDeser();
 	SetMode_LevelDeser();
 	ResetInterruption();
+}
+void Engine::InitializeSystems() {
+
 }
 
 
@@ -102,7 +108,7 @@ EngineMode* Engine::GetCurrentEngMode() {
 	return Singleton->CurrMode;
 }
 
-const std::string Engine::ENGINE_VERSION = "A0.0.3";
+const std::string Engine::ENGINE_VERSION = "A0.0.6";
 Engine* Engine::Singleton = nullptr;
 
 float Engine::GetFrameTime() {
@@ -119,4 +125,7 @@ EngineState Engine::GetCurrentEngState() {
 }
 EngineState Engine::GetNextEngState() {
 	return Singleton->EngStateHandler.NextState;
+}
+EngineRenderModule& Engine::GetRenderModule() {
+	return Singleton->RenderModule;
 }

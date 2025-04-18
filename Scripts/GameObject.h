@@ -9,7 +9,7 @@ using namespace sf;
 
 namespace KrostganEngine {
 	namespace GameObjects {
-		class GameObject :SpriteRenderer {
+		class GameObject :public SpriteRenderer {
 		public:
 			Vector2f GetPosition();
 			void SetPosition(Vector2f position);

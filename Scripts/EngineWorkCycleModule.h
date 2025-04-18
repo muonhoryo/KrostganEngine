@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <EngineCallbacks.h>
+#include <LevelLoading.h>
 
 using namespace std;
 using namespace KrostganEngine::GameObjects;
@@ -11,6 +12,7 @@ namespace KrostganEngine {
 		class EngineWorkCycleModule {
 		public:
 			virtual void Execute()=0;
+			//virtual void Initialize() = 0;
 
 		protected:
 			EngineWorkCycleModule() {};
@@ -26,11 +28,12 @@ namespace KrostganEngine {
 			EngineRenderModule();
 
 			void Execute() override;
-			void Initialize(vector<ICallbackRec_GraphRen*> graphs);
+
+			void Initialize(GraphicsLoadEventArgs& graphs);
 			void Remove(const ICallbackRec_GraphRen*& graphToDel);
 			void Add(ICallbackRec_GraphRen*& graphToAdd);
 		private:
-			vector<ICallbackRec_GraphRen*> Graphics;
+			forward_list<ICallbackRec_GraphRen*>& Graphics;
 		};
 
 		class EngineLateUpdateModule :EngineWorkCycleModule {

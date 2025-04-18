@@ -10,12 +10,12 @@ using namespace std;
 using namespace KrostganEngine::Core;
 
 
-LevelLoadingInfo::LevelLoadingInfo(forward_list<UnitLoadInfo> Units) {
-	this->Units = Units;
+LevelLoadingInfo::LevelLoadingInfo(forward_list<UnitLoadInfo>& Units):Units(Units) {
 }
 
-KrostganEngine::Core::UnitLoadInfo::UnitLoadInfo(string TexturePath, Vector2f SpriteOffset, Vector2f Position)
+KrostganEngine::Core::UnitLoadInfo::UnitLoadInfo(string Name,string TexturePath, Vector2f SpriteOffset, Vector2f Position)
 {
+	this->Name = Name;
 		this->TexturePath = TexturePath;
 		this->SpriteOffset = SpriteOffset;
 		this->Position = Position;

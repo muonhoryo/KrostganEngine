@@ -136,9 +136,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\EngineRenderModule.cpp" />
-    <ClCompile Include="Scripts\Event.cpp" />
+    <ClCompile Include="Scripts\Extensions.cpp" />
     <ClCompile Include="Scripts\LevelLoader.cpp" />
     <ClCompile Include="Scripts\LevelLoadingInfo.cpp" />
+    <ClCompile Include="Scripts\LevelSerialization.cpp" />
     <ClCompile Include="Scripts\SpriteRenderer.cpp" />
     <ClCompile Include="Scripts\Engine.cpp" />
     <ClCompile Include="Scripts\EngineModes.cpp" />
@@ -146,14 +147,18 @@
     <ClCompile Include="Scripts\GameConfigLoad.cpp" />
     <ClCompile Include="Scripts\GameObject.cpp" />
     <ClCompile Include="Scripts\main.cpp" />
+    <ClCompile Include="Scripts\UnitObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\EngineWorkCycleModule.h" />
     <ClInclude Include="Scripts\Event.h" />
     <ClInclude Include="Scripts\Events.h" />
+    <ClInclude Include="Scripts\Extensions.h" />
     <ClInclude Include="Scripts\GameObjects.h" />
     <ClInclude Include="Scripts\LevelLoader.h" />
+    <ClInclude Include="Scripts\LevelLoading.h" />
     <ClInclude Include="Scripts\LevelLoadingInfo.h" />
+    <ClInclude Include="Scripts\LevelSerialization.h" />
     <ClInclude Include="Scripts\SpriteRenderer.h" />
     <ClInclude Include="Scripts\Engine.h" />
     <ClInclude Include="Scripts\EngineCore.h" />
@@ -164,9 +169,14 @@
     <ClInclude Include="Scripts\ICallbackRec_GraphRen.h" />
     <ClInclude Include="Scripts\EngineCallbacks.h" />
     <ClInclude Include="Scripts\GameObject.h" />
+    <ClInclude Include="Scripts\UnitObject.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Config.txt" />
+    <Text Include="TestLevel.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\Sprites\UnitSprite_Guardian.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

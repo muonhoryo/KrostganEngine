@@ -2,9 +2,15 @@
 
 #include <SFML/Graphics.hpp>
 #include <EngineCore.h>
+#include <LevelLoading.h>
 
 using namespace KrostganEngine::Core;
 using namespace sf;
+
+GameMode::GameMode() :EngineMode() {
+    Window = &Engine::GetRenderWindow();
+
+}
 
 void GameMode::ExecuteCycle() {
 
@@ -18,14 +24,12 @@ void GameMode::ExecuteCycle() {
     (*Window).clear();
     (*Window).display();
 }
-GameMode::GameMode():EngineMode() {
-    Window = &Engine::GetRenderWindow();
-}
-
 void MainMenuMode::ExecuteCycle() {
 
 }
-
 void LevelDeserializationMode :: ExecuteCycle() {
+    auto& levInf = LevelSerialization::DeserializeLevel("TestLevel.txt");
+    LevelLoader::LoadLevel(levInf);
+    Engine::GetRenderModule().Initialize(LevelLoader::LoadedGraphics);
     Engine::ReqToSetMode_Game();
 }
