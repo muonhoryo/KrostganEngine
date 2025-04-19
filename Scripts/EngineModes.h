@@ -2,8 +2,12 @@
 
 #include <SFML/Graphics.hpp>
 #include <EngineCore.h>
+#include <EngineCallbacks.h>
+#include <ICallbackRec_Upd.h>
 
 using namespace sf;
+using namespace KrostganEngine::GameObjects;
+
 
 namespace KrostganEngine {
 	namespace Core {
@@ -15,11 +19,19 @@ namespace KrostganEngine {
 		};
 
 		class GameMode:public EngineMode {
+			class GameModeInputHandler :public ICallbackRec_Upd {
+			public:
+				GameModeInputHandler();
+				void Update(CallbackRecArgs_Upd args) override;
+			};
+
 			void ExecuteCycle() override;
 		public:
 			GameMode();
+			~GameMode();
 		private:
 			RenderWindow* Window;
+			ICallbackRec_Upd* InputHandler;
 		};
 
 		class MainMenuMode :public EngineMode {

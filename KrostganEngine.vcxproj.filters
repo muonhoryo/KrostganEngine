@@ -46,15 +46,21 @@
     <Filter Include="Файлы заголовков\Extensions">
       <UniqueIdentifier>{98ff38d7-5a64-4ed6-a9d7-d2eda6514b93}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Исходные файлы\CoreSystems\EngineModes">
+      <UniqueIdentifier>{eb68c48d-28a9-4f99-955e-6f7a334eff33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\GameObjects\EngineCallbacks">
+      <UniqueIdentifier>{091fc831-9119-4f42-8876-c2666d1a7b25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\GameObjects\EngineCallbacks">
+      <UniqueIdentifier>{f044e815-b11f-4fa9-8789-24483a509b0b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\main.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\Engine.cpp">
-      <Filter>Исходные файлы\CoreSystems</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\EngineModes.cpp">
       <Filter>Исходные файлы\CoreSystems</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\EngineStateHandler.cpp">
@@ -87,18 +93,27 @@
     <ClCompile Include="Scripts\UnitObject.cpp">
       <Filter>Исходные файлы\GameObjects</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\EngineUpdateModule.cpp">
+      <Filter>Исходные файлы\CoreSystems\EngineWorkCycles</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\GameMode.cpp">
+      <Filter>Исходные файлы\CoreSystems\EngineModes</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\MainMenuMode.cpp">
+      <Filter>Исходные файлы\CoreSystems\EngineModes</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\LevelDeserializationMode.cpp">
+      <Filter>Исходные файлы\CoreSystems\EngineModes</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\CallbackRecArgs_Upd.cpp">
+      <Filter>Исходные файлы\GameObjects\EngineCallbacks</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Scripts\ICallbackRec_GraphRen.h">
-      <Filter>Файлы заголовков\GameObjects</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\GameObject.h">
       <Filter>Файлы заголовков\GameObjects</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\GameObjects.h">
-      <Filter>Файлы заголовков\GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\EngineCallbacks.h">
       <Filter>Файлы заголовков\GameObjects</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\SpriteRenderer.h">
@@ -148,6 +163,15 @@
     </ClInclude>
     <ClInclude Include="Scripts\UnitObject.h">
       <Filter>Файлы заголовков\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\EngineCallbacks.h">
+      <Filter>Файлы заголовков\GameObjects\EngineCallbacks</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\ICallbackRec_Upd.h">
+      <Filter>Файлы заголовков\GameObjects\EngineCallbacks</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\ICallbackRec_GraphRen.h">
+      <Filter>Файлы заголовков\GameObjects\EngineCallbacks</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

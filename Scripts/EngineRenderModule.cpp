@@ -7,21 +7,29 @@
 using namespace std;
 using namespace KrostganEngine::Core;
 
-EngineRenderModule::EngineRenderModule():EngineWorkCycleModule(),Graphics(*new forward_list<ICallbackRec_GraphRen*>) {
+EngineRenderModule::EngineRenderModule(RenderWindow& Window):EngineWorkCycleModule(),
+Graphics(*new forward_list<ICallbackRec_GraphRen*>),Window(Window)
+{
 }
 void EngineRenderModule::Execute() {
-	RenderWindow& window = Engine::GetRenderWindow();
-	window.clear();
+	if (!Window.isOpen())
+		return;
+	Window.clear();
 	for (auto rec : Graphics) {
-		(*rec).RenderGraphic(window);
+		(*rec).RenderGraphic(Window);
 	}
+	Window.display();
 }
 void EngineRenderModule::Initialize(forward_list<ICallbackRec_GraphRen*> graphs){
+	Unload();
 	for (auto gr : graphs) {
 		Graphics.push_front(gr);
 	}
 }
-void EngineRenderModule::Remove(const ICallbackRec_GraphRen*& graphToDel) {
+void EngineRenderModule::Unload() {
+	Graphics.clear();
+}
+void EngineRenderModule::Remove( ICallbackRec_GraphRen * const& graphToDel) {
 
 	auto itToD = Graphics.cbegin();
 	auto it = Graphics.begin();

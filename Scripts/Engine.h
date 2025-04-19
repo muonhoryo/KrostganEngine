@@ -27,6 +27,7 @@ namespace KrostganEngine {
 			static EngineState GetCurrentEngState();
 			static EngineState GetNextEngState();
 			static EngineRenderModule& GetRenderModule();
+			static EngineUpdateModule& GetUpdateModule();
 		private:
 			Engine();
 			static void InitializeSystems();
@@ -34,6 +35,7 @@ namespace KrostganEngine {
 			EngineStateHandler EngStateHandler;
 			EngineMode* CurrMode;
 			EngineRenderModule& RenderModule;
+			EngineUpdateModule& UpdateModule;
 
 			RenderWindow RendWin;
 			float FrameTime=0;

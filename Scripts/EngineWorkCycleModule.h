@@ -12,7 +12,6 @@ namespace KrostganEngine {
 		class EngineWorkCycleModule {
 		public:
 			virtual void Execute()=0;
-			//virtual void Initialize() = 0;
 
 		protected:
 			EngineWorkCycleModule() {};
@@ -20,20 +19,33 @@ namespace KrostganEngine {
 
 		class EngineUpdateModule:EngineWorkCycleModule {
 		public:
+			EngineUpdateModule(RenderWindow& Window);
+
 			void Execute() override;
+
+			void Initialize(forward_list<ICallbackRec_Upd*> graphs);
+			void Unload();
+			void Remove( ICallbackRec_Upd * const& scrToDel);
+			void Add(ICallbackRec_Upd*& scrToDel);
+		private:
+			RenderWindow& Window;
+			Event& UpdateEvent;
+			forward_list<ICallbackRec_Upd*>& UpdateScripts;
 		};
 
 		class EngineRenderModule :EngineWorkCycleModule {
 		public:
-			EngineRenderModule();
+			EngineRenderModule(RenderWindow& Window);
 
 			void Execute() override;
 
 			void Initialize(forward_list<ICallbackRec_GraphRen*> graphs);
-			void Remove(const ICallbackRec_GraphRen*& graphToDel);
+			void Unload();
+			void Remove(ICallbackRec_GraphRen * const& graphToDel);
 			void Add(ICallbackRec_GraphRen*& graphToAdd);
 		private:
 			forward_list<ICallbackRec_GraphRen*>& Graphics;
+			RenderWindow& Window;
 		};
 
 		class EngineLateUpdateModule :EngineWorkCycleModule {

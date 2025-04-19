@@ -8,7 +8,8 @@ using namespace sf;
 using namespace KrostganEngine::Core;
 
 
-Engine::Engine():RenderModule(*new EngineRenderModule()) {
+Engine::Engine():RenderModule(*new EngineRenderModule(RendWin)),
+UpdateModule(*new EngineUpdateModule(RendWin)){
 	Singleton = this;
 	GameConfigLoad config=GameConfigLoad();
 	string line = string();
@@ -108,7 +109,7 @@ EngineMode* Engine::GetCurrentEngMode() {
 	return Singleton->CurrMode;
 }
 
-const std::string Engine::ENGINE_VERSION = "A0.0.6";
+const std::string Engine::ENGINE_VERSION = "A0.0.8";
 Engine* Engine::Singleton = nullptr;
 
 float Engine::GetFrameTime() {
@@ -128,4 +129,7 @@ EngineState Engine::GetNextEngState() {
 }
 EngineRenderModule& Engine::GetRenderModule() {
 	return Singleton->RenderModule;
+}
+EngineUpdateModule& Engine::GetUpdateModule() {
+	return Singleton->UpdateModule;
 }

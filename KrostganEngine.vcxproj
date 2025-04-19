@@ -136,13 +136,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\EngineRenderModule.cpp" />
+    <ClCompile Include="Scripts\EngineUpdateModule.cpp" />
     <ClCompile Include="Scripts\Extensions.cpp" />
+    <ClCompile Include="Scripts\GameMode.cpp" />
+    <ClCompile Include="Scripts\CallbackRecArgs_Upd.cpp" />
     <ClCompile Include="Scripts\LevelLoader.cpp" />
     <ClCompile Include="Scripts\LevelLoadingInfo.cpp" />
     <ClCompile Include="Scripts\LevelSerialization.cpp" />
+    <ClCompile Include="Scripts\MainMenuMode.cpp" />
     <ClCompile Include="Scripts\SpriteRenderer.cpp" />
     <ClCompile Include="Scripts\Engine.cpp" />
-    <ClCompile Include="Scripts\EngineModes.cpp" />
+    <ClCompile Include="Scripts\LevelDeserializationMode.cpp" />
     <ClCompile Include="Scripts\EngineStateHandler.cpp" />
     <ClCompile Include="Scripts\GameConfigLoad.cpp" />
     <ClCompile Include="Scripts\GameObject.cpp" />
@@ -155,6 +159,7 @@
     <ClInclude Include="Scripts\Events.h" />
     <ClInclude Include="Scripts\Extensions.h" />
     <ClInclude Include="Scripts\GameObjects.h" />
+    <ClInclude Include="Scripts\ICallbackRec_Upd.h" />
     <ClInclude Include="Scripts\LevelLoader.h" />
     <ClInclude Include="Scripts\LevelLoading.h" />
     <ClInclude Include="Scripts\LevelLoadingInfo.h" />
