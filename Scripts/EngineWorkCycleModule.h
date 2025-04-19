@@ -29,7 +29,7 @@ namespace KrostganEngine {
 
 			void Execute() override;
 
-			void Initialize(GraphicsLoadEventArgs& graphs);
+			void Initialize(forward_list<ICallbackRec_GraphRen*> graphs);
 			void Remove(const ICallbackRec_GraphRen*& graphToDel);
 			void Add(ICallbackRec_GraphRen*& graphToAdd);
 		private:

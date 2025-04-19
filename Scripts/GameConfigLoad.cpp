@@ -9,9 +9,10 @@ using namespace KrostganEngine::Core;
 GameConfigLoad::GameConfigLoad() {
 	string line;
 	ifstream st(CONFIG_PATH);
-	if (st.bad()==true||
-		st.fail()==true)
+	if (st.bad() == true ||
+		st.fail() == true) {
 		throw exception("Cannot open config file");
+	}
 	ConfigPosition conf;
 	string name;
 	string value;
