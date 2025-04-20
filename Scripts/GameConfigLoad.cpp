@@ -39,8 +39,8 @@ bool GameConfigLoad::GetConfigValue(const string& name,string* value) {
 	for (auto conf : ConfigArr) {
 		if (conf.Name.find(name) != string::npos) {
 			const char *source = conf.Value.c_str();
-			char dest[sizeof(source)];
-			strcpy_s(dest, sizeof(dest), source);
+			char* dest = new char[conf.Value.size()];
+			strcpy_s(dest, conf.Value.size()+1, source);
 			&value->append(dest);
 
 			cout << *value << endl;

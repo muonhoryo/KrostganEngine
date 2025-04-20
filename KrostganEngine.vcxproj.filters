@@ -55,6 +55,12 @@
     <Filter Include="Файлы заголовков\GameObjects\EngineCallbacks">
       <UniqueIdentifier>{f044e815-b11f-4fa9-8789-24483a509b0b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы заголовков\Debug">
+      <UniqueIdentifier>{a5b74747-94ad-4a78-ad6c-11c1e41de456}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Debug">
+      <UniqueIdentifier>{080c2777-7e33-425b-b99e-e160ece6aede}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\main.cpp">
@@ -107,6 +113,9 @@
     </ClCompile>
     <ClCompile Include="Scripts\CallbackRecArgs_Upd.cpp">
       <Filter>Исходные файлы\GameObjects\EngineCallbacks</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\ConsoleCommsInterpretator.cpp">
+      <Filter>Исходные файлы\Debug</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -172,6 +181,12 @@
     </ClInclude>
     <ClInclude Include="Scripts\ICallbackRec_GraphRen.h">
       <Filter>Файлы заголовков\GameObjects\EngineCallbacks</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Debug.h">
+      <Filter>Файлы заголовков\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\ConsoleCommsInterpretator.h">
+      <Filter>Файлы заголовков\Debug</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

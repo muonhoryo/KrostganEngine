@@ -21,6 +21,8 @@ namespace KrostganEngine {
 			static void ReqToSetMode_Game();
 			static void ReqToSetMode_LevelDeser();
 
+			static void SetZoom(float zoom);
+
 			static RenderWindow& GetRenderWindow();
 			static float GetFrameTime();
 			static bool IsNeedToInterrupt();
@@ -28,7 +30,8 @@ namespace KrostganEngine {
 			static EngineState GetNextEngState();
 			static EngineRenderModule& GetRenderModule();
 			static EngineUpdateModule& GetUpdateModule();
-		private:
+			static float GetZoom();
+		 private:
 			Engine();
 			static void InitializeSystems();
 			static Engine* Singleton;
@@ -39,6 +42,7 @@ namespace KrostganEngine {
 
 			RenderWindow RendWin;
 			float FrameTime=0;
+			float Zoom = 1;
 
 			static void RequestToChangeState(EngineState state);
 			static void SetMode_MainMenu();
@@ -48,6 +52,7 @@ namespace KrostganEngine {
 			static void ResetInterruption();
 
 			static EngineMode* GetCurrentEngMode();
+			static View& InstanceNewView();
 
 			friend static float SetFrameTime();
 		};

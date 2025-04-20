@@ -6,6 +6,7 @@
 
 using namespace sf;
 using namespace KrostganEngine::Core;
+using namespace std;
 
 
 Engine::Engine():RenderModule(*new EngineRenderModule(RendWin)),
@@ -20,7 +21,14 @@ UpdateModule(*new EngineUpdateModule(RendWin)){
 		throw exception("Cannot parse window's YResolution");
 	unsigned int YRes=stoi(line);
 	string header = "Krostgan Engine " + Engine::ENGINE_VERSION;
-	RendWin.create(VideoMode(XRes,YRes), header);
+	RendWin.create(VideoMode(XRes,YRes), header,Style::Close);
+	View view;
+	view.setCenter(XRes / 2, YRes / 2);
+	view.setSize(XRes, YRes);
+	view.zoom(Zoom);
+	RendWin.setView(view);
+	SetZoom(1.5);
+	SetZoom(1);
 	CurrMode = nullptr;
 	EngStateHandler = EngineStateHandler();
 
@@ -108,9 +116,24 @@ void Engine::ResetInterruption() {
 EngineMode* Engine::GetCurrentEngMode() {
 	return Singleton->CurrMode;
 }
+View& Engine::InstanceNewView() {
+	View& view = *new View(Singleton->RendWin.getView());
+	return view;
+}
 
-const std::string Engine::ENGINE_VERSION = "A0.0.8";
+const std::string Engine::ENGINE_VERSION = "A0.0.9";
 Engine* Engine::Singleton = nullptr;
+
+void Engine::SetZoom(float zoom) {
+	if (zoom<= 0)
+		throw exception("Zoom cannot be less or equal 0");
+	else {
+		auto& view = InstanceNewView();
+		view.zoom(zoom/Singleton->Zoom);
+		Singleton->RendWin.setView(view);
+		Singleton->Zoom = zoom;
+	}
+}
 
 float Engine::GetFrameTime() {
 	return Engine::Singleton->FrameTime;
@@ -132,4 +155,7 @@ EngineRenderModule& Engine::GetRenderModule() {
 }
 EngineUpdateModule& Engine::GetUpdateModule() {
 	return Singleton->UpdateModule;
+}
+float Engine::GetZoom() {
+	return Singleton->Zoom;
 }

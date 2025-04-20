@@ -135,6 +135,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Scripts\ConsoleCommsInterpretator.cpp" />
     <ClCompile Include="Scripts\EngineRenderModule.cpp" />
     <ClCompile Include="Scripts\EngineUpdateModule.cpp" />
     <ClCompile Include="Scripts\Extensions.cpp" />
@@ -154,6 +155,8 @@
     <ClCompile Include="Scripts\UnitObject.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Scripts\ConsoleCommsInterpretator.h" />
+    <ClInclude Include="Scripts\Debug.h" />
     <ClInclude Include="Scripts\EngineWorkCycleModule.h" />
     <ClInclude Include="Scripts\Event.h" />
     <ClInclude Include="Scripts\Events.h" />
