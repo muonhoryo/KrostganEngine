@@ -5,6 +5,7 @@
 #include <EngineModes.h>
 #include <EngineStateHandler.h>
 #include <EngineWorkCycleModule.h>
+#include <EngineConfig.h>
 
 using namespace sf;
 
@@ -39,6 +40,7 @@ namespace KrostganEngine {
 			EngineMode* CurrMode;
 			EngineRenderModule& RenderModule;
 			EngineUpdateModule& UpdateModule;
+			const EngineConfig* EngineConfiguration;
 
 			RenderWindow RendWin;
 			float FrameTime=0;

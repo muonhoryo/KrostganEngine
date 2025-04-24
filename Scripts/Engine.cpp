@@ -3,6 +3,8 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <EngineWorkCycleModule.h>
+#include <EngineConfigLoad.h>
+#include <EngineConfig.h>
 
 using namespace sf;
 using namespace KrostganEngine::Core;
@@ -12,19 +14,14 @@ using namespace std;
 Engine::Engine():RenderModule(*new EngineRenderModule(RendWin)),
 UpdateModule(*new EngineUpdateModule(RendWin)){
 	Singleton = this;
-	GameConfigLoad config=GameConfigLoad();
-	string line = string();
-	if (!config.GetConfigValue(GameConfigsList::X_WINDOW_RESOLUTION, &line))
-		throw exception("Cannot parse window's XResolution");
-	unsigned int XRes = stoi(line);
-	if (!config.GetConfigValue(GameConfigsList::Y_WINDOW_RESOLUTION, &line))
-		throw exception("Cannot parse window's YResolution");
-	unsigned int YRes=stoi(line);
+	EngineConfigLoad config=EngineConfigLoad();
+	EngineConfiguration = &config.LoadEngineConfig();
 	string header = "Krostgan Engine " + Engine::ENGINE_VERSION;
-	RendWin.create(VideoMode(XRes,YRes), header,Style::Close);
+	Vector2f resol = EngineConfiguration->WindowResolution;
+	RendWin.create(VideoMode(resol.x,resol.y), header,Style::Close);
 	View view;
-	view.setCenter(XRes / 2, YRes / 2);
-	view.setSize(XRes, YRes);
+	view.setCenter(resol.x/ 2, resol.y/ 2);
+	view.setSize(resol.x, resol.y);
 	view.zoom(Zoom);
 	RendWin.setView(view);
 	SetZoom(1.5);

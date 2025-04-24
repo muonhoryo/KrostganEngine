@@ -61,6 +61,12 @@
     <Filter Include="Исходные файлы\Debug">
       <UniqueIdentifier>{080c2777-7e33-425b-b99e-e160ece6aede}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems\EngineConfiguration">
+      <UniqueIdentifier>{95d79e04-4c53-4230-bd6e-8b6a348a8050}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\CoreSystems\EngineConfiguration">
+      <UniqueIdentifier>{3e069c8e-eddd-440b-89f3-cebe66c3f2b3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\main.cpp">
@@ -70,9 +76,6 @@
       <Filter>Исходные файлы\CoreSystems</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\EngineStateHandler.cpp">
-      <Filter>Исходные файлы\CoreSystems</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\GameConfigLoad.cpp">
       <Filter>Исходные файлы\CoreSystems</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\GameObject.cpp">
@@ -123,6 +126,9 @@
     <ClCompile Include="Scripts\ICallbackRec_Upd.cpp">
       <Filter>Исходные файлы\GameObjects\EngineCallbacks</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\EngineConfigLoad.cpp">
+      <Filter>Исходные файлы\CoreSystems\EngineConfiguration</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\GameObject.h">
@@ -150,12 +156,6 @@
       <Filter>Файлы заголовков\CoreSystems</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\EngineStateHandler.h">
-      <Filter>Файлы заголовков\CoreSystems</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\GameConfigLoad.h">
-      <Filter>Файлы заголовков\CoreSystems</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\GameConfigsList.h">
       <Filter>Файлы заголовков\CoreSystems</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\EngineWorkCycleModule.h">
@@ -196,6 +196,18 @@
     </ClInclude>
     <ClInclude Include="Scripts\ICallbackRec_LUpd.h">
       <Filter>Файлы заголовков\GameObjects\EngineCallbacks</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\EngineConfigLoad.h">
+      <Filter>Файлы заголовков\CoreSystems\EngineConfiguration</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\EngineConfigsDefsList.h">
+      <Filter>Файлы заголовков\CoreSystems\EngineConfiguration</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\GlobalConsts.h">
+      <Filter>Файлы заголовков\CoreSystems\EngineConfiguration</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\EngineConfig.h">
+      <Filter>Файлы заголовков\CoreSystems\EngineConfiguration</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

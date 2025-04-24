@@ -151,7 +151,7 @@
     <ClCompile Include="Scripts\Engine.cpp" />
     <ClCompile Include="Scripts\LevelDeserializationMode.cpp" />
     <ClCompile Include="Scripts\EngineStateHandler.cpp" />
-    <ClCompile Include="Scripts\GameConfigLoad.cpp" />
+    <ClCompile Include="Scripts\EngineConfigLoad.cpp" />
     <ClCompile Include="Scripts\GameObject.cpp" />
     <ClCompile Include="Scripts\main.cpp" />
     <ClCompile Include="Scripts\UnitObject.cpp" />
@@ -159,11 +159,13 @@
   <ItemGroup>
     <ClInclude Include="Scripts\ConsoleCommsInterpretator.h" />
     <ClInclude Include="Scripts\Debug.h" />
+    <ClInclude Include="Scripts\EngineConfig.h" />
     <ClInclude Include="Scripts\EngineWorkCycleModule.h" />
     <ClInclude Include="Scripts\Event.h" />
     <ClInclude Include="Scripts\Events.h" />
     <ClInclude Include="Scripts\Extensions.h" />
     <ClInclude Include="Scripts\GameObjects.h" />
+    <ClInclude Include="Scripts\GlobalConsts.h" />
     <ClInclude Include="Scripts\ICallbackRec_LUpd.h" />
     <ClInclude Include="Scripts\ICallbackRec_Upd.h" />
     <ClInclude Include="Scripts\LevelLoader.h" />
@@ -175,8 +177,8 @@
     <ClInclude Include="Scripts\EngineCore.h" />
     <ClInclude Include="Scripts\EngineModes.h" />
     <ClInclude Include="Scripts\EngineStateHandler.h" />
-    <ClInclude Include="Scripts\GameConfigLoad.h" />
-    <ClInclude Include="Scripts\GameConfigsList.h" />
+    <ClInclude Include="Scripts\EngineConfigLoad.h" />
+    <ClInclude Include="Scripts\EngineConfigsDefsList.h" />
     <ClInclude Include="Scripts\ICallbackRec_GraphRen.h" />
     <ClInclude Include="Scripts\EngineCallbacks.h" />
     <ClInclude Include="Scripts\GameObject.h" />
