@@ -6,12 +6,15 @@ using namespace sf;
 
 namespace KrostganEngine {
 	namespace GameObjects {
-		class ICallbackRec_GraphRen {
+
+		struct CallbackRecArgs_LUpd {
+		};
+
+		class ICallbackRec_LUpd {
 		public:
-			virtual void RenderGraphic(RenderWindow& window)=0;
-			~ICallbackRec_GraphRen();
+			virtual void Update(CallbackRecArgs_LUpd args) = 0;
 		protected:
-			ICallbackRec_GraphRen();
+			ICallbackRec_LUpd() {};
 		};
 	}
 }

@@ -16,16 +16,10 @@ using namespace KrostganEngine::Debug;
 GameMode::GameModeInputHandler::GameModeInputHandler() {
 }
 void GameMode::GameModeInputHandler::Update(CallbackRecArgs_Upd args) {
-	if (!args.Window.isOpen())
-		return;
-	while (args.Window.pollEvent(args.UpdateEvent)) {
-		if (args.UpdateEvent.type == Event::Closed)
-		{
-			args.Window.close();
-			exit(1);
-		}
-		else if (args.UpdateEvent.type == Event::KeyPressed&&
-			args.UpdateEvent.key.code==Keyboard::Tilde) {
+
+	for (auto input :args.PlayerInput) {
+		if (input.type == Event::KeyPressed &&
+			input.key.code == Keyboard::Tilde) {
 			cout << "Enter command:";
 			fflush(stdin);
 			cin.clear();
@@ -35,18 +29,15 @@ void GameMode::GameModeInputHandler::Update(CallbackRecArgs_Upd args) {
 				ConsoleCommsInterpretator::ExecuteCommand(input);
 			Engine::GetRenderWindow().requestFocus();
 		}
-		if (!args.Window.isOpen())
-			return;
 	}
 }
 
 GameMode::GameMode() :EngineMode() {
     InputHandler = new GameModeInputHandler();
     Window = &Engine::GetRenderWindow();
-    Engine::GetUpdateModule().Add(InputHandler);
 }
 GameMode::~GameMode() {
-    Engine::GetUpdateModule().Remove(InputHandler);
+	delete InputHandler;
 }
 void GameMode::ExecuteCycle() {
 

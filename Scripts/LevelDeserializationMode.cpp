@@ -10,6 +10,5 @@ using namespace sf;
 void LevelDeserializationMode :: ExecuteCycle() {
     auto& levInf = LevelSerialization::DeserializeLevel("TestLevel.txt");
     LevelLoader::LoadLevel(levInf);
-    Engine::GetRenderModule().Initialize(LevelLoader::LoadedGraphics);
     Engine::ReqToSetMode_Game();
 }

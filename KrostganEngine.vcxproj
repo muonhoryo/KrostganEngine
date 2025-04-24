@@ -141,6 +141,8 @@
     <ClCompile Include="Scripts\Extensions.cpp" />
     <ClCompile Include="Scripts\GameMode.cpp" />
     <ClCompile Include="Scripts\CallbackRecArgs_Upd.cpp" />
+    <ClCompile Include="Scripts\ICallbackRec_GraphRen.cpp" />
+    <ClCompile Include="Scripts\ICallbackRec_Upd.cpp" />
     <ClCompile Include="Scripts\LevelLoader.cpp" />
     <ClCompile Include="Scripts\LevelLoadingInfo.cpp" />
     <ClCompile Include="Scripts\LevelSerialization.cpp" />
@@ -162,6 +164,7 @@
     <ClInclude Include="Scripts\Events.h" />
     <ClInclude Include="Scripts\Extensions.h" />
     <ClInclude Include="Scripts\GameObjects.h" />
+    <ClInclude Include="Scripts\ICallbackRec_LUpd.h" />
     <ClInclude Include="Scripts\ICallbackRec_Upd.h" />
     <ClInclude Include="Scripts\LevelLoader.h" />
     <ClInclude Include="Scripts\LevelLoading.h" />

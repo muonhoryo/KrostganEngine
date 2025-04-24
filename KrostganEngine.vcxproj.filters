@@ -117,6 +117,12 @@
     <ClCompile Include="Scripts\ConsoleCommsInterpretator.cpp">
       <Filter>Исходные файлы\Debug</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\ICallbackRec_GraphRen.cpp">
+      <Filter>Исходные файлы\GameObjects\EngineCallbacks</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\ICallbackRec_Upd.cpp">
+      <Filter>Исходные файлы\GameObjects\EngineCallbacks</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\GameObject.h">
@@ -187,6 +193,9 @@
     </ClInclude>
     <ClInclude Include="Scripts\ConsoleCommsInterpretator.h">
       <Filter>Файлы заголовков\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\ICallbackRec_LUpd.h">
+      <Filter>Файлы заголовков\GameObjects\EngineCallbacks</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
