@@ -13,10 +13,202 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Исходные файлы\CoreSystems">
+      <UniqueIdentifier>{06d82c06-98eb-47ad-9190-5cf44f374fa2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\GameObjects">
+      <UniqueIdentifier>{fb538d48-4313-485b-bf9c-38f2abf3bfd1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\CoreSystems\EngineWorkCycles">
+      <UniqueIdentifier>{e568dd13-d1ac-4e7f-8dc0-bd77e82e34f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\CoreSystems\LevelLoading">
+      <UniqueIdentifier>{1fc4e247-e754-4bc6-ac03-7bbc7fe4c169}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Extensions">
+      <UniqueIdentifier>{e37f1323-c92c-46e1-b9ad-4b64b96afbfe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\GameObjects">
+      <UniqueIdentifier>{dc7ce5da-c447-4849-b09f-4a8d91becc46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Events">
+      <UniqueIdentifier>{3b82d69c-282e-4036-af03-0ecae92d4282}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems">
+      <UniqueIdentifier>{d0727401-5493-4f94-8058-7670b6c4676d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems\EngineWorkCycles">
+      <UniqueIdentifier>{9b38be29-8e5a-4a14-b948-60bbccbbbd53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems\LevelLoading">
+      <UniqueIdentifier>{89d5f938-0c88-4096-a2f8-526a86dc40c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Extensions">
+      <UniqueIdentifier>{98ff38d7-5a64-4ed6-a9d7-d2eda6514b93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\CoreSystems\EngineModes">
+      <UniqueIdentifier>{eb68c48d-28a9-4f99-955e-6f7a334eff33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\GameObjects\EngineCallbacks">
+      <UniqueIdentifier>{091fc831-9119-4f42-8876-c2666d1a7b25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\GameObjects\EngineCallbacks">
+      <UniqueIdentifier>{f044e815-b11f-4fa9-8789-24483a509b0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Debug">
+      <UniqueIdentifier>{a5b74747-94ad-4a78-ad6c-11c1e41de456}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Debug">
+      <UniqueIdentifier>{080c2777-7e33-425b-b99e-e160ece6aede}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="KrostganEngine.cpp">
+    <ClCompile Include="Scripts\main.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\Engine.cpp">
+      <Filter>Исходные файлы\CoreSystems</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\EngineStateHandler.cpp">
+      <Filter>Исходные файлы\CoreSystems</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\GameConfigLoad.cpp">
+      <Filter>Исходные файлы\CoreSystems</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\GameObject.cpp">
+      <Filter>Исходные файлы\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\EngineRenderModule.cpp">
+      <Filter>Исходные файлы\CoreSystems\EngineWorkCycles</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\SpriteRenderer.cpp">
+      <Filter>Исходные файлы\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\LevelLoader.cpp">
+      <Filter>Исходные файлы\CoreSystems\LevelLoading</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\LevelLoadingInfo.cpp">
+      <Filter>Исходные файлы\CoreSystems\LevelLoading</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\LevelSerialization.cpp">
+      <Filter>Исходные файлы\CoreSystems\LevelLoading</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Extensions.cpp">
+      <Filter>Исходные файлы\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\UnitObject.cpp">
+      <Filter>Исходные файлы\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\EngineUpdateModule.cpp">
+      <Filter>Исходные файлы\CoreSystems\EngineWorkCycles</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\GameMode.cpp">
+      <Filter>Исходные файлы\CoreSystems\EngineModes</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\MainMenuMode.cpp">
+      <Filter>Исходные файлы\CoreSystems\EngineModes</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\LevelDeserializationMode.cpp">
+      <Filter>Исходные файлы\CoreSystems\EngineModes</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\CallbackRecArgs_Upd.cpp">
+      <Filter>Исходные файлы\GameObjects\EngineCallbacks</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\ConsoleCommsInterpretator.cpp">
+      <Filter>Исходные файлы\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\ICallbackRec_GraphRen.cpp">
+      <Filter>Исходные файлы\GameObjects\EngineCallbacks</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\ICallbackRec_Upd.cpp">
+      <Filter>Исходные файлы\GameObjects\EngineCallbacks</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Scripts\GameObject.h">
+      <Filter>Файлы заголовков\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\GameObjects.h">
+      <Filter>Файлы заголовков\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\SpriteRenderer.h">
+      <Filter>Файлы заголовков\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Events.h">
+      <Filter>Файлы заголовков\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Event.h">
+      <Filter>Файлы заголовков\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine.h">
+      <Filter>Файлы заголовков\CoreSystems</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\EngineCore.h">
+      <Filter>Файлы заголовков\CoreSystems</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\EngineModes.h">
+      <Filter>Файлы заголовков\CoreSystems</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\EngineStateHandler.h">
+      <Filter>Файлы заголовков\CoreSystems</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\GameConfigLoad.h">
+      <Filter>Файлы заголовков\CoreSystems</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\GameConfigsList.h">
+      <Filter>Файлы заголовков\CoreSystems</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\EngineWorkCycleModule.h">
+      <Filter>Файлы заголовков\CoreSystems\EngineWorkCycles</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\LevelLoader.h">
+      <Filter>Файлы заголовков\CoreSystems\LevelLoading</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\LevelLoading.h">
+      <Filter>Файлы заголовков\CoreSystems\LevelLoading</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\LevelSerialization.h">
+      <Filter>Файлы заголовков\CoreSystems\LevelLoading</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\LevelLoadingInfo.h">
+      <Filter>Файлы заголовков\CoreSystems\LevelLoading</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Extensions.h">
+      <Filter>Файлы заголовков\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\UnitObject.h">
+      <Filter>Файлы заголовков\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\EngineCallbacks.h">
+      <Filter>Файлы заголовков\GameObjects\EngineCallbacks</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\ICallbackRec_Upd.h">
+      <Filter>Файлы заголовков\GameObjects\EngineCallbacks</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\ICallbackRec_GraphRen.h">
+      <Filter>Файлы заголовков\GameObjects\EngineCallbacks</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Debug.h">
+      <Filter>Файлы заголовков\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\ConsoleCommsInterpretator.h">
+      <Filter>Файлы заголовков\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\ICallbackRec_LUpd.h">
+      <Filter>Файлы заголовков\GameObjects\EngineCallbacks</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Config.txt">
+      <Filter>Файлы ресурсов</Filter>
+    </Text>
+    <Text Include="TestLevel.txt">
+      <Filter>Файлы ресурсов</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\Sprites\UnitSprite_Guardian.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
   </ItemGroup>
 </Project>
