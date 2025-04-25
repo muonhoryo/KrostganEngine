@@ -26,6 +26,7 @@ namespace KrostganEngine {
 			static inline const string OBJECT_SPRITE_PATH = "SpritePath";
 			static inline const string OBJECT_SPRITE_OFFSET = "SpriteOffset";
 			static inline const string OBJECT_POSITION = "Position";
+			static inline const string OBJECT_SIZE = "Size";
 		};
 	}
 }

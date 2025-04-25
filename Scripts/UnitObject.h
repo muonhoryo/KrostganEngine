@@ -6,7 +6,7 @@ namespace KrostganEngine {
 	namespace GameObjects {
 		class UnitObject :public GameObject {
 		public: 
-			UnitObject(const Texture& RenTexture, Vector2f RenOffset, Vector2f Position);
+			UnitObject(const Texture& RenTexture, Vector2f RenOffset, Vector2f Position,float Size);
 		};
 	}
 }

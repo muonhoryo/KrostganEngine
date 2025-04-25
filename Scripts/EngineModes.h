@@ -1,7 +1,6 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include <EngineCore.h>
 #include <EngineCallbacks.h>
 #include <ICallbackRec_Upd.h>
 
