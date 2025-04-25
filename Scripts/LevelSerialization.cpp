@@ -5,11 +5,16 @@
 #include <iostream>
 #include <vector>
 #include <Extensions.h>
+#include <Engine.h>
+#include <GlobalConsts.h>
 
+using namespace std;
 using namespace KrostganEngine;
 using namespace KrostganEngine::Core;
 
 LevelLoadingInfo& LevelSerialization::DeserializeLevel(string serPath) {
+	auto& consts = Engine::GetGlobalConsts();
+	float i = consts.GameObjs_OneSizeSpriteResolution;
 	string line;
 	ifstream st(serPath);
 	if (st.bad() == true ||
@@ -32,18 +37,21 @@ LevelLoadingInfo& LevelSerialization::DeserializeLevel(string serPath) {
 	st.close();
 	units.push_front(*ParseUnitInfo(params));
 	params->clear();
+	delete params;
 	LevelLoadingInfo* levelInfo = new LevelLoadingInfo(units);
 	return *levelInfo;
 }
+
 UnitLoadInfo* LevelSerialization::ParseUnitInfo(vector<string>* params) {
 	if (params->size() == 0)
-		throw exception("Missing params of unity");
+		throw exception("Missing params of unit");
 	vector<string>& paramsRef = *params;
 	string* name = new string();
 	string* sprPath = new string();
 	string* vecValue = new string();
 	Vector2f sprOffset = Vector2f();
 	Vector2f objPosition = Vector2f();
+	float objSize;
 
 	if (!GetSerValueOfParam(paramsRef, LevelSerializationParDefNames::OBJECT_NAME, name))
 		throw exception("Cannot get name of object");
@@ -56,8 +64,20 @@ UnitLoadInfo* LevelSerialization::ParseUnitInfo(vector<string>* params) {
 	if (!GetSerValueOfParam(paramsRef, LevelSerializationParDefNames::OBJECT_POSITION, vecValue))
 		throw exception("Caanot get position of object");
 	objPosition = Extensions::ParseVec2f(*vecValue);
-	return new UnitLoadInfo(*name, *sprPath, sprOffset, objPosition);
+	if (!GetSerValueOfParam(paramsRef, LevelSerializationParDefNames::OBJECT_SIZE, vecValue))
+		throw exception("Cant get size of object");
+	objSize = stof(*vecValue);
+
+	UnitLoadInfo* info = new UnitLoadInfo(*name, *sprPath, sprOffset, objPosition, objSize);
+	delete vecValue;
+	delete name;
+	delete sprPath;
+	cout << "Loaded unit:" << endl << "Name: " << info->Name << endl << "Sprite path: " << info->TexturePath <<
+		endl << "Sprite offset: " << Extensions::ToString(info->SpriteOffset) << endl << "Position: " + Extensions::ToString(info->Position) 
+		<< endl<<"Size: "<<info->Size<<endl;
+	return info;
 }
+
 bool LevelSerialization::GetSerValueOfParam(vector<string>& params, const string& paramName,string* output) {
 	(*output).clear();
 	for (auto par : params) {

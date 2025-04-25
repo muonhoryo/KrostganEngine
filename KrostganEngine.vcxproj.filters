@@ -129,6 +129,12 @@
     <ClCompile Include="Scripts\EngineConfigLoad.cpp">
       <Filter>Исходные файлы\CoreSystems\EngineConfiguration</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\GlobalConstsLoad.cpp">
+      <Filter>Исходные файлы\CoreSystems\EngineConfiguration</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\ValuesListDeserializer.cpp">
+      <Filter>Исходные файлы\CoreSystems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\GameObject.h">
@@ -200,14 +206,17 @@
     <ClInclude Include="Scripts\EngineConfigLoad.h">
       <Filter>Файлы заголовков\CoreSystems\EngineConfiguration</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\EngineConfigsDefsList.h">
-      <Filter>Файлы заголовков\CoreSystems\EngineConfiguration</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\GlobalConsts.h">
       <Filter>Файлы заголовков\CoreSystems\EngineConfiguration</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\EngineConfig.h">
       <Filter>Файлы заголовков\CoreSystems\EngineConfiguration</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\GlobalConstsLoad.h">
+      <Filter>Файлы заголовков\CoreSystems\EngineConfiguration</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\ValuesListDeserializer.h">
+      <Filter>Файлы заголовков\CoreSystems</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

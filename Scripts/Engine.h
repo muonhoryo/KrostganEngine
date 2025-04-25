@@ -1,11 +1,12 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include <EngineCore.h>
 #include <EngineModes.h>
 #include <EngineStateHandler.h>
 #include <EngineWorkCycleModule.h>
 #include <EngineConfig.h>
+#include <GlobalConsts.h>
+#include <EngineWorkCycleModule.h>
 
 using namespace sf;
 
@@ -31,6 +32,8 @@ namespace KrostganEngine {
 			static EngineState GetNextEngState();
 			static EngineRenderModule& GetRenderModule();
 			static EngineUpdateModule& GetUpdateModule();
+			static const EngineConfig& GetEngineConfig();
+			static const GlobalConsts& GetGlobalConsts();
 			static float GetZoom();
 		 private:
 			Engine();
@@ -41,6 +44,7 @@ namespace KrostganEngine {
 			EngineRenderModule& RenderModule;
 			EngineUpdateModule& UpdateModule;
 			const EngineConfig* EngineConfiguration;
+			const GlobalConsts* Consts;
 
 			RenderWindow RendWin;
 			float FrameTime=0;

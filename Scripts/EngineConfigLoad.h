@@ -3,37 +3,24 @@
 #include <vector>
 #include <string>
 #include <EngineConfig.h>
+#include <ValuesListDeserializer.h>
 
 using namespace std;
 
 namespace KrostganEngine {
 	namespace Core {
-		class EngineConfigLoad {
-
-		private:
-			struct ConfigPosition {
-				ConfigPosition(string Name, string Value) {
-					this->Name = Name;
-					this->Value = Value;
-				}
-				ConfigPosition() :ConfigPosition("", "") {}
-				string Name;
-				string Value;
-			};
-
-
+		class EngineConfigLoad:public ValuesListDeserializer {
 		public:
 			EngineConfigLoad();
-			~EngineConfigLoad();
+			~EngineConfigLoad() {}
 
 			const EngineConfig& LoadEngineConfig();
 			const EngineConfig& GetLoadedConfig();
 		private:
-			bool TryGetConfigValue(const string& configName, string* value);
-			void InitializeConfig();
-
-			vector<ConfigPosition> ConfigArr;
 			EngineConfig LoadedConfig;
+
+			const string GetFilePath() override;
+			const char GetValuesDefEndSym() override;
 
 			static const string CONFIG_PATH;
 			static const char CONFIG_DEF_END_SYM;

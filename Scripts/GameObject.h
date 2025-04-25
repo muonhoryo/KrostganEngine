@@ -12,10 +12,13 @@ namespace KrostganEngine {
 		class GameObject :public SpriteRenderer {
 		public:
 			Vector2f GetPosition();
+			float GetSize();
 			void SetPosition(Vector2f position);
+			void SetSize(float size);
 		protected:
 			Vector2f Position;
-			GameObject(const Texture& RenTexture, Vector2f RenOffset, Vector2f Position);
+			float Size;
+			GameObject(const Texture& RenTexture, Vector2f RenOffset, Vector2f Position,float Size);
 		};
 	}
 }

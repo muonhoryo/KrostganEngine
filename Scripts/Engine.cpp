@@ -14,8 +14,12 @@ using namespace std;
 Engine::Engine():RenderModule(*new EngineRenderModule(RendWin)),
 UpdateModule(*new EngineUpdateModule(RendWin)){
 	Singleton = this;
+
 	EngineConfigLoad config=EngineConfigLoad();
 	EngineConfiguration = &config.LoadEngineConfig();
+	GlobalConstsLoad consts = GlobalConstsLoad();
+	Consts = &consts.LoadGlobalConsts();
+
 	string header = "Krostgan Engine " + Engine::ENGINE_VERSION;
 	Vector2f resol = EngineConfiguration->WindowResolution;
 	RendWin.create(VideoMode(resol.x,resol.y), header,Style::Close);
@@ -152,6 +156,12 @@ EngineRenderModule& Engine::GetRenderModule() {
 }
 EngineUpdateModule& Engine::GetUpdateModule() {
 	return Singleton->UpdateModule;
+}
+const EngineConfig& Engine::GetEngineConfig() {
+	return *(Singleton->EngineConfiguration);
+}
+const GlobalConsts& Engine::GetGlobalConsts() {
+	return *Singleton->Consts;
 }
 float Engine::GetZoom() {
 	return Singleton->Zoom;

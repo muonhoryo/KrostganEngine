@@ -16,8 +16,9 @@ namespace KrostganEngine {
 			string TexturePath;
 			Vector2f SpriteOffset;
 			Vector2f Position;
+			float Size;
 
-			UnitLoadInfo(string Name,string TexturePath, Vector2f SpriteOffset, Vector2f Position);
+			UnitLoadInfo(string Name,string TexturePath, Vector2f SpriteOffset, Vector2f Position,float Size);
 		};
 		struct LevelLoadingInfo {
 

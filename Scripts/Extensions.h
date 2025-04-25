@@ -11,6 +11,7 @@ namespace KrostganEngine {
 	struct Extensions
 	{
 		static Vector2f ParseVec2f(const string& serVect);
+		static string ToString(const Vector2f& vect);
 		static void ClearPath(string* path);
 
 		template <typename T>

@@ -21,6 +21,9 @@ Vector2f Extensions::ParseVec2f(const string& serVect) {
 	y = stof(seValue.c_str());
 	return Vector2f(x, y);
 }
+string Extensions::ToString(const Vector2f& vect) {
+	return "{ " + to_string(vect.x) + " ; " + to_string(vect.y) + " }";
+}
 void Extensions::ClearPath(string* path) {
 	long long index = -1;
 	long long nextIndex = -1;

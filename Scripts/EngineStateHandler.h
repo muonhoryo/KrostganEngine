@@ -1,6 +1,6 @@
 #pragma once
 
-#include <EngineCore.h>
+#include <EngineModes.h>
 
 namespace KrostganEngine {
 	namespace Core {
@@ -18,9 +18,9 @@ namespace KrostganEngine {
 
 			union {
 
-				KrostganEngine::Core::MainMenuMode* MainMenuSt;
-				KrostganEngine::Core::GameMode* GameSt;
-				KrostganEngine::Core::LevelDeserializationMode* LevelDeserSt;
+				MainMenuMode* MainMenuSt;
+				GameMode* GameSt;
+				LevelDeserializationMode* LevelDeserSt;
 			};
 
 			EngineStateHandler();
