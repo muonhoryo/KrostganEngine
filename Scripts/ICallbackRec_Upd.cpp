@@ -1,6 +1,4 @@
 
-
-#include <ICallbackRec_GraphRen.h>
 #include <EngineCore.h>
 
 using namespace KrostganEngine::GameObjects;

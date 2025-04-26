@@ -1,5 +1,5 @@
 
-#include "ValuesListDeserializer.h"
+#include <ValuesListDeserializer.h>
 #include <string>
 #include <string.h>
 #include <fstream>
@@ -42,7 +42,7 @@ bool ValuesListDeserializer::TryGetValue(const string& name, string* value) {
 		throw exception("Cannot output value");
 	value->clear();
 
-	for (auto conf : StrValuesArr) {
+	for (auto& conf : StrValuesArr) {
 		if (conf.Name.find(name) != string::npos) {
 			const char* source = conf.Value.c_str();
 			char* dest = new char[conf.Value.size()];

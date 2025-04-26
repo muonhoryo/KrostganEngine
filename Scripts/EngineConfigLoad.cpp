@@ -1,13 +1,9 @@
 
 #include <string>
-#include <string.h>
-#include <fstream>
 #include <iostream>
 #include <vector>
 #include <SFML/System.hpp>
-#include <ValuesListDeserializer.h>
-#include <EngineConfig.h>
-#include <EngineConfigLoad.h>
+#include <EngineCore.h>
 
 using namespace std;
 using namespace sf;

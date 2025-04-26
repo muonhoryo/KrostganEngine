@@ -1,8 +1,7 @@
 
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
-#include <EngineWorkCycleModule.h>
-#include <Engine.h>
+#include <EngineCore.h>
 
 using namespace KrostganEngine::Core;
 using namespace sf;

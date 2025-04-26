@@ -4,7 +4,7 @@
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
 
-using namespace KrostganEngine::GameObjects;
+using namespace KrostganEngine::Core;
 using namespace std;
 using namespace sf;
 

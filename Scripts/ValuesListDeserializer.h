@@ -7,6 +7,9 @@ using namespace std;
 namespace KrostganEngine::Core {
 	class ValuesListDeserializer
 	{
+	public:
+		~ValuesListDeserializer();
+
 	protected:
 		struct ValueDefPair {
 			ValueDefPair(string Name, string Value) {
@@ -19,7 +22,6 @@ namespace KrostganEngine::Core {
 		};
 
 		ValuesListDeserializer();
-		~ValuesListDeserializer();
 
 		bool TryGetValue(const string& configName, string* Value);
 		void DeserializeValues();

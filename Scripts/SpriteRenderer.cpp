@@ -1,5 +1,5 @@
 
-#include <EngineCallbacks.h>
+#include <ICallbackRec_GraphRen.h>
 #include <SpriteRenderer.h>
 #include <SFML/Graphics.hpp>
 #include <Engine.h>
@@ -7,7 +7,7 @@
 #include <Extensions.h>
 
 using namespace sf;
-using namespace KrostganEngine::GameObjects;
+using namespace KrostganEngine::UI;
 using namespace KrostganEngine::Core;
 
 SpriteRenderer::SpriteRenderer(const Texture& RenTexture, Vector2f Offset = Vector2f(0, 0)) :
@@ -28,31 +28,27 @@ SpriteRenderer::SpriteRenderer(const Texture& RenTexture, float maxSizeInPixels,
 		IsVertical = false;
 	}
 	TextureResizingMult = maxSizeInPixels / GetMaxSpritePixSize();
-	Resize(Vector2f(1, 1));
+	ResizeSprite(Vector2f(1, 1));
 	this->Offset = Offset;
 }
 
 void SpriteRenderer::RenderGraphic(RenderWindow& window) {
 	window.draw(RenSprite);
 }
+
 const Texture& SpriteRenderer::GetRenTexture() {
 	return *RenSprite.getTexture();
 }
-Vector2f SpriteRenderer::GetOffset() {
+Vector2f SpriteRenderer::GetSpriteOffset() {
 	return Offset;
 }
-Vector2f SpriteRenderer::GetGlobalPosition() {
+Vector2f SpriteRenderer::GetSpriteGlobalPosition() {
 	return RenSprite.getPosition();
 }
-Vector2f SpriteRenderer::GetInharitedPosition() {
-	return  GetGlobalPosition()-GetOffset();
+Vector2f SpriteRenderer::GetSpriteInharitedPosition() {
+	return  GetSpriteGlobalPosition()-GetSpriteOffset();
 }
-void SpriteRenderer::SetOffset(Vector2f offset) {
-	Vector2f inharPos = GetInharitedPosition();
-	Offset = offset;
-	SetSpriteInharitedPosition(inharPos);
-}
-float SpriteRenderer::GetMinMaxRatio() {
+float SpriteRenderer::GetSpriteMinMaxRatio() {
 	return MinMaxSizeRatio;
 }
 bool SpriteRenderer::IsSpriteVertical() {
@@ -77,14 +73,18 @@ float SpriteRenderer::GetMinSpritePixSize() {
 Vector2f SpriteRenderer::GetSpriteSize() {
 	return MainSize;
 }
-void SpriteRenderer::Resize(Vector2f size) {
+
+void SpriteRenderer::SetSpriteOffset(Vector2f offset) {
+	Vector2f inharPos = GetSpriteInharitedPosition();
+	Offset = offset;
+	SetSpriteInharitedPosition(inharPos);
+}
+void SpriteRenderer::ResizeSprite(Vector2f size) {
 	Vector2f newScale = size * TextureResizingMult;
 	RenSprite.setScale(newScale);
 	MainSize = size;
 }
 
 void SpriteRenderer::SetSpriteInharitedPosition(Vector2f position) {
-	RenSprite.setPosition(position + GetOffset());
-	cout << "RequestPosition: " <<Extensions::ToString(position) << endl;
-	cout << Extensions::ToString(RenSprite.getPosition()) << endl;
+	RenSprite.setPosition(position + GetSpriteOffset());
 }

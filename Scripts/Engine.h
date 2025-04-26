@@ -4,19 +4,18 @@
 #include <EngineModes.h>
 #include <EngineStateHandler.h>
 #include <EngineWorkCycleModule.h>
-#include <EngineConfig.h>
-#include <GlobalConsts.h>
-#include <EngineWorkCycleModule.h>
+#include <ExternalConfigurations.h>
+#include <Physics.h>
 
 using namespace sf;
+using namespace KrostganEngine::Physics;
 
 namespace KrostganEngine {
 	namespace Core {
 		 class Engine {
 			 
 		 public:
-			static const std::string ENGINE_VERSION;
-			static Engine& GetInstanceEngine();
+			static Engine& GetInstance();
 			static void StartEngine();
 
 			static void ReqToSetMode_MainMenu();
@@ -32,9 +31,16 @@ namespace KrostganEngine {
 			static EngineState GetNextEngState();
 			static EngineRenderModule& GetRenderModule();
 			static EngineUpdateModule& GetUpdateModule();
+			static PhysicsEngine& GetPhysicsEngine();
 			static const EngineConfig& GetEngineConfig();
 			static const GlobalConsts& GetGlobalConsts();
+			static const ExternalGlobalResources& GetGlobalResources();
 			static float GetZoom();
+
+			static Vector2f ScreenPosToGlobalCoord(const Vector2f& screenPos);
+			static Vector2u GetScreenSize();
+
+			static const std::string ENGINE_VERSION;
 		 private:
 			Engine();
 			static void InitializeSystems();
@@ -43,8 +49,10 @@ namespace KrostganEngine {
 			EngineMode* CurrMode;
 			EngineRenderModule& RenderModule;
 			EngineUpdateModule& UpdateModule;
+			PhysicsEngine& PhysicsEng;
 			const EngineConfig* EngineConfiguration;
 			const GlobalConsts* Consts;
+			const ExternalGlobalResources* GlobalResources;
 
 			RenderWindow RendWin;
 			float FrameTime=0;

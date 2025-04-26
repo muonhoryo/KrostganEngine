@@ -1,3 +1,4 @@
+#pragma once
 
 #include <ConsoleCommsInterpretator.h>
 #include <string>

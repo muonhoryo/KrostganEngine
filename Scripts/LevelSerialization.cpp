@@ -1,12 +1,10 @@
 
-#include <LevelLoading.h>
 #include <string>
 #include <fstream>
 #include <iostream>
 #include <vector>
 #include <Extensions.h>
-#include <Engine.h>
-#include <GlobalConsts.h>
+#include <EngineCore.h>
 
 using namespace std;
 using namespace KrostganEngine;
@@ -57,13 +55,13 @@ UnitLoadInfo* LevelSerialization::ParseUnitInfo(vector<string>* params) {
 		throw exception("Cannot get name of object");
 	if (!GetSerValueOfParam(paramsRef, LevelSerializationParDefNames::OBJECT_SPRITE_PATH, sprPath))
 		throw exception("Cannot get path of sprite");
-	Extensions::ClearPath(sprPath);
+	FStreamExts::ClearPath(sprPath);
 	if (!GetSerValueOfParam(paramsRef, LevelSerializationParDefNames::OBJECT_SPRITE_OFFSET, vecValue))
 		throw exception("Cannot get offset of sprite");
-	sprOffset = Extensions::ParseVec2f(*vecValue);
+	sprOffset = VectExts::ParseVec2f(*vecValue);
 	if (!GetSerValueOfParam(paramsRef, LevelSerializationParDefNames::OBJECT_POSITION, vecValue))
 		throw exception("Caanot get position of object");
-	objPosition = Extensions::ParseVec2f(*vecValue);
+	objPosition = VectExts::ParseVec2f(*vecValue);
 	if (!GetSerValueOfParam(paramsRef, LevelSerializationParDefNames::OBJECT_SIZE, vecValue))
 		throw exception("Cant get size of object");
 	objSize = stof(*vecValue);
@@ -73,7 +71,7 @@ UnitLoadInfo* LevelSerialization::ParseUnitInfo(vector<string>* params) {
 	delete name;
 	delete sprPath;
 	cout << "Loaded unit:" << endl << "Name: " << info->Name << endl << "Sprite path: " << info->TexturePath <<
-		endl << "Sprite offset: " << Extensions::ToString(info->SpriteOffset) << endl << "Position: " + Extensions::ToString(info->Position) 
+		endl << "Sprite offset: " << VectExts::ToString(info->SpriteOffset) << endl << "Position: " + VectExts::ToString(info->Position) 
 		<< endl<<"Size: "<<info->Size<<endl;
 	return info;
 }

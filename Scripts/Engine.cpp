@@ -2,29 +2,31 @@
 #include <EngineCore.h>
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include <EngineWorkCycleModule.h>
-#include <EngineConfigLoad.h>
-#include <EngineConfig.h>
+#include <Extensions.h>
 
 using namespace sf;
+using namespace KrostganEngine;
 using namespace KrostganEngine::Core;
 using namespace std;
+using namespace KrostganEngine::Physics;
 
 
 Engine::Engine():RenderModule(*new EngineRenderModule(RendWin)),
-UpdateModule(*new EngineUpdateModule(RendWin)){
+UpdateModule(*new EngineUpdateModule(RendWin)), PhysicsEng(*new PhysicsEngine()){
 	Singleton = this;
 
 	EngineConfigLoad config=EngineConfigLoad();
 	EngineConfiguration = &config.LoadEngineConfig();
 	GlobalConstsLoad consts = GlobalConstsLoad();
 	Consts = &consts.LoadGlobalConsts();
+	ExtGlobalResourcesLoad resources = ExtGlobalResourcesLoad();
+	GlobalResources = &resources.LoadGlobalResources();
 
 	string header = "Krostgan Engine " + Engine::ENGINE_VERSION;
 	Vector2f resol = EngineConfiguration->WindowResolution;
 	RendWin.create(VideoMode(resol.x,resol.y), header,Style::Close);
 	View view;
-	view.setCenter(resol.x/ 2, resol.y/ 2);
+	view.setCenter(0, 0);
 	view.setSize(resol.x, resol.y);
 	view.zoom(Zoom);
 	RendWin.setView(view);
@@ -44,7 +46,7 @@ void Engine::InitializeSystems() {
 }
 
 
-Engine& Engine::GetInstanceEngine() {
+Engine& Engine::GetInstance() {
 	if(Engine::Singleton==nullptr)
 		new Engine();
 	return *Engine::Singleton;
@@ -66,6 +68,17 @@ void Engine::ReqToSetMode_MainMenu() {
 }
 void Engine::ReqToSetMode_LevelDeser() {
 	Engine::RequestToChangeState(EngineState::LevelDeserialization);
+}
+
+void Engine::SetZoom(float zoom) {
+	if (zoom <= 0)
+		throw exception("Zoom cannot be less or equal 0");
+	else {
+		auto& view = InstanceNewView();
+		view.zoom(zoom / Singleton->Zoom);
+		Singleton->RendWin.setView(view);
+		Singleton->Zoom = zoom;
+	}
 }
 
 void Engine::RequestToChangeState(EngineState state) {
@@ -122,19 +135,9 @@ View& Engine::InstanceNewView() {
 	return view;
 }
 
-const std::string Engine::ENGINE_VERSION = "A0.0.9";
+const std::string Engine::ENGINE_VERSION = "A0.0.2.0";
 Engine* Engine::Singleton = nullptr;
 
-void Engine::SetZoom(float zoom) {
-	if (zoom<= 0)
-		throw exception("Zoom cannot be less or equal 0");
-	else {
-		auto& view = InstanceNewView();
-		view.zoom(zoom/Singleton->Zoom);
-		Singleton->RendWin.setView(view);
-		Singleton->Zoom = zoom;
-	}
-}
 
 float Engine::GetFrameTime() {
 	return Engine::Singleton->FrameTime;
@@ -157,12 +160,33 @@ EngineRenderModule& Engine::GetRenderModule() {
 EngineUpdateModule& Engine::GetUpdateModule() {
 	return Singleton->UpdateModule;
 }
+PhysicsEngine& Engine::GetPhysicsEngine() {
+	return Singleton->PhysicsEng;
+}
 const EngineConfig& Engine::GetEngineConfig() {
 	return *(Singleton->EngineConfiguration);
 }
 const GlobalConsts& Engine::GetGlobalConsts() {
 	return *Singleton->Consts;
 }
+const ExternalGlobalResources& Engine::GetGlobalResources() {
+	return *Singleton->GlobalResources;
+}
 float Engine::GetZoom() {
 	return Singleton->Zoom;
+}
+
+Vector2f Engine::ScreenPosToGlobalCoord(const Vector2f& screenPos) {
+	Vector2f globalCoord = Vector2f(screenPos);
+	auto& view = Singleton->RendWin.getView();
+	globalCoord -=view.getCenter();
+	Vector2f screenSize = (Vector2f)GetScreenSize();
+	screenSize.x *= 0.5;
+	screenSize.y *= 0.5;
+	globalCoord -= screenSize;
+	globalCoord *= GetZoom();
+	return globalCoord;
+}
+Vector2u Engine::GetScreenSize() {
+	return Singleton->RendWin.getSize();
 }

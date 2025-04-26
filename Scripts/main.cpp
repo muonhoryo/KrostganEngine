@@ -4,6 +4,6 @@
 
 int main()
 {
-    KrostganEngine::Core::Engine& engine=KrostganEngine::Core::Engine::GetInstanceEngine();
+    KrostganEngine::Core::Engine& engine=KrostganEngine::Core::Engine::GetInstance();
     engine.StartEngine();
 }

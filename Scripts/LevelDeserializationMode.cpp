@@ -1,8 +1,6 @@
 
-
 #include <SFML/Graphics.hpp>
-#include <Engine.h>
-#include <LevelLoading.h>
+#include <EngineCore.h>
 
 using namespace KrostganEngine::Core;
 using namespace sf;

@@ -2,8 +2,8 @@
 
 #include <vector>
 #include <string>
-#include <EngineConfig.h>
-#include <EngineCore.h>
+#include <GlobalConsts.h>
+#include <ValuesListDeserializer.h>
 
 using namespace std;
 
@@ -21,6 +21,7 @@ namespace KrostganEngine::Core {
 
 		const string GetFilePath() override;
 		const char GetValuesDefEndSym() override;
+		float DeserializeValueByDefinition(const string& definition, string* buffer);
 
 		static const string CONSTS_PATH;
 		static const char CONFIG_DEF_END_SYM;

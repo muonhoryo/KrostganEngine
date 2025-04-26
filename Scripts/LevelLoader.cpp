@@ -1,19 +1,16 @@
 
-#pragma once
-
-#include <GameObjects.h>
-#include <LevelLoadingInfo.h>
-#include <LevelLoader.h>
+#include <EngineCore.h>
+#include <CoreGameObjects.h>
 #include <forward_list>
 #include <SFML/Graphics.hpp>
 #include <string>
-#include <Event.h>
+#include <Events.h>
 #include <SFML/System.hpp>
-#include <EngineCallbacks.h>
 
 using namespace sf;
 using namespace KrostganEngine::Core;
 using namespace KrostganEngine;
+using namespace KrostganEngine::GameObjects;
 
 UnitsLoadEventArgs::UnitsLoadEventArgs(forward_list<UnitObject*>* LoadedUnits) {
 	this->LoadedUnits = LoadedUnits;

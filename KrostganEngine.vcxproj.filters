@@ -16,9 +16,6 @@
     <Filter Include="Исходные файлы\CoreSystems">
       <UniqueIdentifier>{06d82c06-98eb-47ad-9190-5cf44f374fa2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Исходные файлы\GameObjects">
-      <UniqueIdentifier>{fb538d48-4313-485b-bf9c-38f2abf3bfd1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Исходные файлы\CoreSystems\EngineWorkCycles">
       <UniqueIdentifier>{e568dd13-d1ac-4e7f-8dc0-bd77e82e34f2}</UniqueIdentifier>
     </Filter>
@@ -27,9 +24,6 @@
     </Filter>
     <Filter Include="Исходные файлы\Extensions">
       <UniqueIdentifier>{e37f1323-c92c-46e1-b9ad-4b64b96afbfe}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Файлы заголовков\GameObjects">
-      <UniqueIdentifier>{dc7ce5da-c447-4849-b09f-4a8d91becc46}</UniqueIdentifier>
     </Filter>
     <Filter Include="Файлы заголовков\Events">
       <UniqueIdentifier>{3b82d69c-282e-4036-af03-0ecae92d4282}</UniqueIdentifier>
@@ -49,23 +43,62 @@
     <Filter Include="Исходные файлы\CoreSystems\EngineModes">
       <UniqueIdentifier>{eb68c48d-28a9-4f99-955e-6f7a334eff33}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Исходные файлы\GameObjects\EngineCallbacks">
-      <UniqueIdentifier>{091fc831-9119-4f42-8876-c2666d1a7b25}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Файлы заголовков\GameObjects\EngineCallbacks">
-      <UniqueIdentifier>{f044e815-b11f-4fa9-8789-24483a509b0b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Файлы заголовков\Debug">
       <UniqueIdentifier>{a5b74747-94ad-4a78-ad6c-11c1e41de456}</UniqueIdentifier>
     </Filter>
     <Filter Include="Исходные файлы\Debug">
       <UniqueIdentifier>{080c2777-7e33-425b-b99e-e160ece6aede}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Файлы заголовков\CoreSystems\EngineConfiguration">
-      <UniqueIdentifier>{95d79e04-4c53-4230-bd6e-8b6a348a8050}</UniqueIdentifier>
+    <Filter Include="Файлы заголовков\PlayerControl">
+      <UniqueIdentifier>{0ef54734-7469-43d5-907b-82e2c499c8dc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Исходные файлы\CoreSystems\EngineConfiguration">
-      <UniqueIdentifier>{3e069c8e-eddd-440b-89f3-cebe66c3f2b3}</UniqueIdentifier>
+    <Filter Include="Исходные файлы\PlayerControl">
+      <UniqueIdentifier>{d3c8335e-58c6-4fc3-a581-00684ee277d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems\Physics">
+      <UniqueIdentifier>{3f8251b6-02ad-4aee-abe9-e93a59e2ba92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\CoreSystems\Physics">
+      <UniqueIdentifier>{8764ba64-0dc0-4588-a3c3-82920ea03dc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\CoreSystems\Physics\CollisionShapes">
+      <UniqueIdentifier>{f71943d0-f4e0-429c-8e6b-cf71606404fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\EntitiesControl">
+      <UniqueIdentifier>{57f44eed-0974-4d34-a31b-f1a96e2914c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\EntitiesControl">
+      <UniqueIdentifier>{5604d52a-41bc-432f-8c58-31039c89d00d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems\EngineCallbacks">
+      <UniqueIdentifier>{f044e815-b11f-4fa9-8789-24483a509b0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\CoreSystems\EngineCallbacks">
+      <UniqueIdentifier>{091fc831-9119-4f42-8876-c2666d1a7b25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems\GameObjects">
+      <UniqueIdentifier>{dc7ce5da-c447-4849-b09f-4a8d91becc46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\CoreSystems\GameObjects">
+      <UniqueIdentifier>{fb538d48-4313-485b-bf9c-38f2abf3bfd1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems\ExternalResources">
+      <UniqueIdentifier>{86b65db4-36fa-4d83-801d-8e9025f9a7b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\CoreSystems\ExternalResources">
+      <UniqueIdentifier>{1a09639f-d312-4ea5-8ecb-f3ff7aaebdc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems\UI/UX">
+      <UniqueIdentifier>{1b6b2ee0-f94a-44ba-af1d-af3b1517a850}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems\UI/UX\Primitives">
+      <UniqueIdentifier>{37c69a07-d98f-4e52-9180-cc5f4fc21a17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\CoreSystems\UI/UX">
+      <UniqueIdentifier>{62d5be82-9ec4-4630-8976-209b90775b58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\CoreSystems\UI/UX\Primitives">
+      <UniqueIdentifier>{59bae570-18c7-4e52-84f2-8ab1ac93b208}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -79,13 +112,10 @@
       <Filter>Исходные файлы\CoreSystems</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\GameObject.cpp">
-      <Filter>Исходные файлы\GameObjects</Filter>
+      <Filter>Исходные файлы\CoreSystems\GameObjects</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\EngineRenderModule.cpp">
       <Filter>Исходные файлы\CoreSystems\EngineWorkCycles</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\SpriteRenderer.cpp">
-      <Filter>Исходные файлы\GameObjects</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\LevelLoader.cpp">
       <Filter>Исходные файлы\CoreSystems\LevelLoading</Filter>
@@ -96,11 +126,8 @@
     <ClCompile Include="Scripts\LevelSerialization.cpp">
       <Filter>Исходные файлы\CoreSystems\LevelLoading</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Extensions.cpp">
-      <Filter>Исходные файлы\Extensions</Filter>
-    </ClCompile>
     <ClCompile Include="Scripts\UnitObject.cpp">
-      <Filter>Исходные файлы\GameObjects</Filter>
+      <Filter>Исходные файлы\CoreSystems\GameObjects</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\EngineUpdateModule.cpp">
       <Filter>Исходные файлы\CoreSystems\EngineWorkCycles</Filter>
@@ -115,36 +142,90 @@
       <Filter>Исходные файлы\CoreSystems\EngineModes</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\CallbackRecArgs_Upd.cpp">
-      <Filter>Исходные файлы\GameObjects\EngineCallbacks</Filter>
+      <Filter>Исходные файлы\CoreSystems\EngineCallbacks</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\ConsoleCommsInterpretator.cpp">
       <Filter>Исходные файлы\Debug</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\ICallbackRec_GraphRen.cpp">
-      <Filter>Исходные файлы\GameObjects\EngineCallbacks</Filter>
+      <Filter>Исходные файлы\CoreSystems\EngineCallbacks</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\ICallbackRec_Upd.cpp">
-      <Filter>Исходные файлы\GameObjects\EngineCallbacks</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\EngineConfigLoad.cpp">
-      <Filter>Исходные файлы\CoreSystems\EngineConfiguration</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\GlobalConstsLoad.cpp">
-      <Filter>Исходные файлы\CoreSystems\EngineConfiguration</Filter>
+      <Filter>Исходные файлы\CoreSystems\EngineCallbacks</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\ValuesListDeserializer.cpp">
       <Filter>Исходные файлы\CoreSystems</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\BaseInputHandler.cpp">
+      <Filter>Исходные файлы\PlayerControl</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\ColliderShapes.cpp">
+      <Filter>Исходные файлы\CoreSystems\Physics\CollisionShapes</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\GroupSelectionHandler.cpp">
+      <Filter>Исходные файлы\PlayerControl</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\PhysicsEngine.cpp">
+      <Filter>Исходные файлы\CoreSystems\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\GroupSelectionSystem.cpp">
+      <Filter>Исходные файлы\EntitiesControl</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\GroupSelectionQuad.cpp">
+      <Filter>Исходные файлы\CoreSystems\UI/UX</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\AABBCollShape.cpp">
+      <Filter>Исходные файлы\CoreSystems\Physics\CollisionShapes</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\CircleCollShape.cpp">
+      <Filter>Исходные файлы\CoreSystems\Physics\CollisionShapes</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\FStreamExts.cpp">
+      <Filter>Исходные файлы\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\VectExts.cpp">
+      <Filter>Исходные файлы\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\CircleVisPrimitive.cpp">
+      <Filter>Исходные файлы\CoreSystems\UI/UX\Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\QuadVisPrimitive.cpp">
+      <Filter>Исходные файлы\CoreSystems\UI/UX\Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\IPhysicalObject.cpp">
+      <Filter>Исходные файлы\CoreSystems\EngineCallbacks</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Entity.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\ExtGlobalResourcesLoad.cpp">
+      <Filter>Исходные файлы\CoreSystems\ExternalResources</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\GlobalConstsLoad.cpp">
+      <Filter>Исходные файлы\CoreSystems\ExternalResources</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\EngineConfigLoad.cpp">
+      <Filter>Исходные файлы\CoreSystems\ExternalResources</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\TransformableObj.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\SpriteRenderer.cpp">
+      <Filter>Исходные файлы\CoreSystems\UI/UX</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\SingleSprite.cpp">
+      <Filter>Исходные файлы\CoreSystems\UI/UX</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\HeroObject.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\GameObject.h">
-      <Filter>Файлы заголовков\GameObjects</Filter>
+      <Filter>Файлы заголовков\CoreSystems\GameObjects</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\GameObjects.h">
-      <Filter>Файлы заголовков\GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\SpriteRenderer.h">
-      <Filter>Файлы заголовков\GameObjects</Filter>
+    <ClInclude Include="Scripts\CoreGameObjects.h">
+      <Filter>Файлы заголовков\CoreSystems\GameObjects</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Events.h">
       <Filter>Файлы заголовков\Events</Filter>
@@ -183,16 +264,13 @@
       <Filter>Файлы заголовков\Extensions</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\UnitObject.h">
-      <Filter>Файлы заголовков\GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\EngineCallbacks.h">
-      <Filter>Файлы заголовков\GameObjects\EngineCallbacks</Filter>
+      <Filter>Файлы заголовков\CoreSystems\GameObjects</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\ICallbackRec_Upd.h">
-      <Filter>Файлы заголовков\GameObjects\EngineCallbacks</Filter>
+      <Filter>Файлы заголовков\CoreSystems\EngineCallbacks</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\ICallbackRec_GraphRen.h">
-      <Filter>Файлы заголовков\GameObjects\EngineCallbacks</Filter>
+      <Filter>Файлы заголовков\CoreSystems\EngineCallbacks</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Debug.h">
       <Filter>Файлы заголовков\Debug</Filter>
@@ -201,22 +279,97 @@
       <Filter>Файлы заголовков\Debug</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\ICallbackRec_LUpd.h">
-      <Filter>Файлы заголовков\GameObjects\EngineCallbacks</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\EngineConfigLoad.h">
-      <Filter>Файлы заголовков\CoreSystems\EngineConfiguration</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\GlobalConsts.h">
-      <Filter>Файлы заголовков\CoreSystems\EngineConfiguration</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\EngineConfig.h">
-      <Filter>Файлы заголовков\CoreSystems\EngineConfiguration</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\GlobalConstsLoad.h">
-      <Filter>Файлы заголовков\CoreSystems\EngineConfiguration</Filter>
+      <Filter>Файлы заголовков\CoreSystems\EngineCallbacks</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\ValuesListDeserializer.h">
       <Filter>Файлы заголовков\CoreSystems</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\PlayerControl.h">
+      <Filter>Файлы заголовков\PlayerControl</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Physics.h">
+      <Filter>Файлы заголовков\CoreSystems\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\BaseInputHandler.h">
+      <Filter>Файлы заголовков\PlayerControl</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\ColliderShapes.h">
+      <Filter>Файлы заголовков\CoreSystems\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\GroupSelectionHandler.h">
+      <Filter>Файлы заголовков\PlayerControl</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\PhysicsEngine.h">
+      <Filter>Файлы заголовков\CoreSystems\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\PhysicsLayer.h">
+      <Filter>Файлы заголовков\CoreSystems\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\GroupSelectionSystem.h">
+      <Filter>Файлы заголовков\EntitiesControl</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\ISelectableEntity.h">
+      <Filter>Файлы заголовков\EntitiesControl</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\EntitiesControl.h">
+      <Filter>Файлы заголовков\EntitiesControl</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\GroupSelectionQuad.h">
+      <Filter>Файлы заголовков\CoreSystems\UI/UX</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\CoreUIUX.h">
+      <Filter>Файлы заголовков\CoreSystems\UI/UX</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\PrimitiveVisualShapes.h">
+      <Filter>Файлы заголовков\CoreSystems\UI/UX\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\IPhysicalObject.h">
+      <Filter>Файлы заголовков\CoreSystems\EngineCallbacks</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\ForwListExts.h">
+      <Filter>Файлы заголовков\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\FStreamExts.h">
+      <Filter>Файлы заголовков\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\VectExts.h">
+      <Filter>Файлы заголовков\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Entity.h">
+      <Filter>Файлы заголовков\CoreSystems\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\ExternalGlobalResources.h">
+      <Filter>Файлы заголовков\CoreSystems\ExternalResources</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\ExtGlobalResourcesLoad.h">
+      <Filter>Файлы заголовков\CoreSystems\ExternalResources</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\GlobalConstsLoad.h">
+      <Filter>Файлы заголовков\CoreSystems\ExternalResources</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\EngineConfig.h">
+      <Filter>Файлы заголовков\CoreSystems\ExternalResources</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\EngineConfigLoad.h">
+      <Filter>Файлы заголовков\CoreSystems\ExternalResources</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\ExternalConfigurations.h">
+      <Filter>Файлы заголовков\CoreSystems\ExternalResources</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\GlobalConsts.h">
+      <Filter>Файлы заголовков\CoreSystems\ExternalResources</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\TransformableObj.h">
+      <Filter>Файлы заголовков\CoreSystems\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\SpriteRenderer.h">
+      <Filter>Файлы заголовков\CoreSystems\UI/UX</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\SingleSprite.h">
+      <Filter>Файлы заголовков\CoreSystems\UI/UX</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\HeroObject.h">
+      <Filter>Файлы заголовков\CoreSystems\GameObjects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

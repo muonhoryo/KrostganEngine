@@ -1,0 +1,6 @@
+#pragma once
+
+#include <PhysicsEngine.h>
+#include <ColliderShapes.h>
+#include <PhysicsLayer.h>
+#include <IPhysicalObject.h>

@@ -1,11 +1,11 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include <EngineCallbacks.h>
 #include <ICallbackRec_Upd.h>
+#include <EntitiesControl.h>
 
 using namespace sf;
-using namespace KrostganEngine::GameObjects;
+using namespace KrostganEngine::EntitiesControl;
 
 
 namespace KrostganEngine {
@@ -18,11 +18,6 @@ namespace KrostganEngine {
 		};
 
 		class GameMode:public EngineMode {
-			class GameModeInputHandler :public ICallbackRec_Upd {
-			public:
-				GameModeInputHandler();
-				void Update(CallbackRecArgs_Upd args) override;
-			};
 
 			void ExecuteCycle() override;
 		public:
@@ -30,7 +25,9 @@ namespace KrostganEngine {
 			~GameMode();
 		private:
 			RenderWindow* Window;
-			ICallbackRec_Upd* InputHandler;
+			ICallbackRec_Upd* BaseInputHandl;
+			ICallbackRec_Upd* GroupSelectionHandl;
+			GroupSelectionSystem* GroupSelectSystem;
 		};
 
 		class MainMenuMode :public EngineMode {

@@ -1,8 +1,6 @@
 
 #include <EngineCore.h>
 #include <string>
-#include <string.h>
-#include <fstream>
 #include <iostream>
 #include <vector>
 #include <SFML/System.hpp>
@@ -18,9 +16,10 @@ const GlobalConsts& GlobalConstsLoad::LoadGlobalConsts() {
 	DeserializeValues();
 
 	string line = string();
-	if (!TryGetValue(GlobalConsts::DEF_GAMEOBJS_ONESIZE_SPRITERESOL, &line))
-		throw exception("Missing value of sprites one resolution");
-	LoadedGlobalConsts.GameObjs_OneSizeSpriteResolution = stof(line);
+	LoadedGlobalConsts.GameObjs_OneSizeSpriteResolution = DeserializeValueByDefinition(GlobalConsts::DEF_GAMEOBJS_ONESIZE_SPRITERESOL, &line);
+	LoadedGlobalConsts.HeroesSelectArea_OneSizeSpriteResol = DeserializeValueByDefinition(GlobalConsts::DEF_HEROES_SELECTAREA_ONESIZE_SPRITERESOL, &line);
+	LoadedGlobalConsts.UnitsSelectArea_OneSizeSpriteResol = DeserializeValueByDefinition(GlobalConsts::DEF_UNITS_SELECTAREA_ONESIZE_SPRITERESOL, &line);
+	LoadedGlobalConsts.EPS = DeserializeValueByDefinition(GlobalConsts::DEF_EPS, &line);
 
 	StrValuesArr.clear();
 	return LoadedGlobalConsts;
@@ -34,6 +33,14 @@ const string GlobalConstsLoad::GetFilePath() {
 }
 const char GlobalConstsLoad::GetValuesDefEndSym() {
 	return CONFIG_DEF_END_SYM;
+}
+
+float GlobalConstsLoad::DeserializeValueByDefinition(const string& definition, string* buffer) {
+	if (!TryGetValue(definition, buffer)) {
+		string str = "Missing value of " + definition;
+		throw exception(str.c_str());
+	}
+	return stof(*buffer);
 }
 
 const string GlobalConstsLoad::CONSTS_PATH = "GlobalConsts.txt";

@@ -135,19 +135,34 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Scripts\AABBCollShape.cpp" />
+    <ClCompile Include="Scripts\BaseInputHandler.cpp" />
+    <ClCompile Include="Scripts\CircleCollShape.cpp" />
+    <ClCompile Include="Scripts\CircleVisPrimitive.cpp" />
+    <ClCompile Include="Scripts\ColliderShapes.cpp" />
     <ClCompile Include="Scripts\ConsoleCommsInterpretator.cpp" />
     <ClCompile Include="Scripts\EngineRenderModule.cpp" />
     <ClCompile Include="Scripts\EngineUpdateModule.cpp" />
-    <ClCompile Include="Scripts\Extensions.cpp" />
+    <ClCompile Include="Scripts\Entity.cpp" />
+    <ClCompile Include="Scripts\ExtGlobalResourcesLoad.cpp" />
+    <ClCompile Include="Scripts\FStreamExts.cpp" />
     <ClCompile Include="Scripts\GameMode.cpp" />
     <ClCompile Include="Scripts\CallbackRecArgs_Upd.cpp" />
     <ClCompile Include="Scripts\GlobalConstsLoad.cpp" />
+    <ClCompile Include="Scripts\GroupSelectionHandler.cpp" />
+    <ClCompile Include="Scripts\GroupSelectionQuad.cpp" />
+    <ClCompile Include="Scripts\GroupSelectionSystem.cpp" />
+    <ClCompile Include="Scripts\HeroObject.cpp" />
     <ClCompile Include="Scripts\ICallbackRec_GraphRen.cpp" />
     <ClCompile Include="Scripts\ICallbackRec_Upd.cpp" />
+    <ClCompile Include="Scripts\IPhysicalObject.cpp" />
     <ClCompile Include="Scripts\LevelLoader.cpp" />
     <ClCompile Include="Scripts\LevelLoadingInfo.cpp" />
     <ClCompile Include="Scripts\LevelSerialization.cpp" />
     <ClCompile Include="Scripts\MainMenuMode.cpp" />
+    <ClCompile Include="Scripts\PhysicsEngine.cpp" />
+    <ClCompile Include="Scripts\QuadVisPrimitive.cpp" />
+    <ClCompile Include="Scripts\SingleSprite.cpp" />
     <ClCompile Include="Scripts\SpriteRenderer.cpp" />
     <ClCompile Include="Scripts\Engine.cpp" />
     <ClCompile Include="Scripts\LevelDeserializationMode.cpp" />
@@ -155,26 +170,49 @@
     <ClCompile Include="Scripts\EngineConfigLoad.cpp" />
     <ClCompile Include="Scripts\GameObject.cpp" />
     <ClCompile Include="Scripts\main.cpp" />
+    <ClCompile Include="Scripts\TransformableObj.cpp" />
     <ClCompile Include="Scripts\UnitObject.cpp" />
     <ClCompile Include="Scripts\ValuesListDeserializer.cpp" />
+    <ClCompile Include="Scripts\VectExts.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Scripts\BaseInputHandler.h" />
+    <ClInclude Include="Scripts\ColliderShapes.h" />
     <ClInclude Include="Scripts\ConsoleCommsInterpretator.h" />
     <ClInclude Include="Scripts\Debug.h" />
     <ClInclude Include="Scripts\EngineConfig.h" />
     <ClInclude Include="Scripts\EngineWorkCycleModule.h" />
+    <ClInclude Include="Scripts\EntitiesControl.h" />
+    <ClInclude Include="Scripts\Entity.h" />
     <ClInclude Include="Scripts\Event.h" />
     <ClInclude Include="Scripts\Events.h" />
     <ClInclude Include="Scripts\Extensions.h" />
-    <ClInclude Include="Scripts\GameObjects.h" />
+    <ClInclude Include="Scripts\ExternalConfigurations.h" />
+    <ClInclude Include="Scripts\ExternalGlobalResources.h" />
+    <ClInclude Include="Scripts\ExtGlobalResourcesLoad.h" />
+    <ClInclude Include="Scripts\ForwListExts.h" />
+    <ClInclude Include="Scripts\FStreamExts.h" />
+    <ClInclude Include="Scripts\CoreGameObjects.h" />
     <ClInclude Include="Scripts\GlobalConsts.h" />
     <ClInclude Include="Scripts\GlobalConstsLoad.h" />
+    <ClInclude Include="Scripts\GroupSelectionHandler.h" />
+    <ClInclude Include="Scripts\GroupSelectionQuad.h" />
+    <ClInclude Include="Scripts\GroupSelectionSystem.h" />
+    <ClInclude Include="Scripts\HeroObject.h" />
     <ClInclude Include="Scripts\ICallbackRec_LUpd.h" />
     <ClInclude Include="Scripts\ICallbackRec_Upd.h" />
+    <ClInclude Include="Scripts\IPhysicalObject.h" />
+    <ClInclude Include="Scripts\ISelectableEntity.h" />
     <ClInclude Include="Scripts\LevelLoader.h" />
     <ClInclude Include="Scripts\LevelLoading.h" />
     <ClInclude Include="Scripts\LevelLoadingInfo.h" />
     <ClInclude Include="Scripts\LevelSerialization.h" />
+    <ClInclude Include="Scripts\Physics.h" />
+    <ClInclude Include="Scripts\PhysicsEngine.h" />
+    <ClInclude Include="Scripts\PhysicsLayer.h" />
+    <ClInclude Include="Scripts\PlayerControl.h" />
+    <ClInclude Include="Scripts\PrimitiveVisualShapes.h" />
+    <ClInclude Include="Scripts\SingleSprite.h" />
     <ClInclude Include="Scripts\SpriteRenderer.h" />
     <ClInclude Include="Scripts\Engine.h" />
     <ClInclude Include="Scripts\EngineCore.h" />
@@ -182,10 +220,12 @@
     <ClInclude Include="Scripts\EngineStateHandler.h" />
     <ClInclude Include="Scripts\EngineConfigLoad.h" />
     <ClInclude Include="Scripts\ICallbackRec_GraphRen.h" />
-    <ClInclude Include="Scripts\EngineCallbacks.h" />
     <ClInclude Include="Scripts\GameObject.h" />
+    <ClInclude Include="Scripts\CoreUIUX.h" />
+    <ClInclude Include="Scripts\TransformableObj.h" />
     <ClInclude Include="Scripts\UnitObject.h" />
     <ClInclude Include="Scripts\ValuesListDeserializer.h" />
+    <ClInclude Include="Scripts\VectExts.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Config.txt" />
