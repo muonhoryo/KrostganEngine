@@ -1,8 +1,6 @@
 
-#include <SFML/Graphics.hpp>
-#include <EngineCore.h>
-#include <PlayerControl.h>
-#include <EntitiesControl.h>
+#include <EngineModes.h>
+#include <Engine.h>
 
 using namespace KrostganEngine::Core;
 using namespace sf;
@@ -14,11 +12,13 @@ GameMode::GameMode() :EngineMode() {
     Window = &Engine::GetRenderWindow();
     BaseInputHandl = new BaseInputHandler();
     GroupSelectionHandl = new GroupSelectionHandler();
+    OrdersInteraction = new OrdersSystemInteraction();
     GroupSelectSystem = &GroupSelectionSystem::GetInstance();
 }
 GameMode::~GameMode() {
 	delete BaseInputHandl;
     delete GroupSelectionHandl;
+    delete OrdersInteraction;
     delete GroupSelectSystem;
 }
 void GameMode::ExecuteCycle() {

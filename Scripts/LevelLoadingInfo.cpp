@@ -14,7 +14,8 @@ LevelLoadingInfo::LevelLoadingInfo(forward_list<UnitLoadInfo>& Units):Units(Unit
 }
 
 KrostganEngine::Core::UnitLoadInfo::UnitLoadInfo(string Name,string TexturePath, Vector2f SpriteOffset, Vector2f Position,
-	float Size)
+	float Size,EntityBattleStats& BattleStats)
+	:BattleStats(BattleStats)
 {
 	this->Name = Name;
 		this->TexturePath = TexturePath;

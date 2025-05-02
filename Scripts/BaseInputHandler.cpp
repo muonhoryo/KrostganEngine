@@ -13,16 +13,17 @@ BaseInputHandler::BaseInputHandler() {
 void BaseInputHandler::Update(CallbackRecArgs_Upd args) {
 
 	for (auto &input : args.PlayerInput) {
-		if (input.type == Event::KeyPressed &&
-			input.key.code == Keyboard::Tilde) {
-			cout << "Enter command:";
-			fflush(stdin);
-			cin.clear();
-			string input;
-			getline(cin, input);
-			if (input.size() > 0)
-				ConsoleCommsInterpretator::ExecuteCommand(input);
-			Engine::GetRenderWindow().requestFocus();
+		if (input.type == Event::KeyPressed) {
+			if (input.key.code == Keyboard::Tilde) { //Open console
+				cout << "Enter command:";
+				fflush(stdin);
+				cin.clear();
+				string input;
+				getline(cin, input);
+				if (input.size() > 0)
+					ConsoleCommsInterpretator::ExecuteCommand(input);
+				Engine::GetRenderWindow().requestFocus();
+			}
 		}
 	}
 }

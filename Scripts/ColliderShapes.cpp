@@ -44,7 +44,7 @@ bool ColliderShape::IsOverlap_CircleVsAABB(CircleCollShape coll1, AABBCollShape 
 				nearP.y = coll2.Max.y;
 			dist = VectExts::Length(nearP - coll1.Center);
 		}
-		return (coll1.Radius - dist)>=Engine::GetGlobalConsts().EPS;
+		return (coll1.Radius - dist)>=eps;
 	}
 }
 bool ColliderShape::IsOverlap_AABBvsAABB(AABBCollShape coll1, AABBCollShape coll2) {

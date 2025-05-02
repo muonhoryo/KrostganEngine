@@ -6,11 +6,11 @@
 using namespace std;
 
 namespace KrostganEngine {
-	struct ForwListExts {
-		template <typename T>
-		static size_t IndexOf(const forward_list<T>& list, T const& value) {
+	struct CollectionsExts {
+		template <typename TCollectionsType,typename TElementsType>
+		static size_t IndexOf(const TCollectionsType& list,TElementsType const& value) {
 			size_t i = 0;
-			for (T el : list) {
+			for (TElementsType el : list) {
 				if (el == value) {
 					return i;
 				}

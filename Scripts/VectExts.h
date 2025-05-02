@@ -27,6 +27,11 @@ namespace KrostganEngine {
 		static float Length(Vector2<T> vect) {
 			return sqrt(SquareLength<T>(vect));
 		}
+		template <typename T>
+		static Vector2f Normalize(Vector2<T> vect) {
+			float len = Length(vect);
+			return Vector2f(vect.x / len, vect.y / len);
+		}
 
 	private:
 		VectExts();

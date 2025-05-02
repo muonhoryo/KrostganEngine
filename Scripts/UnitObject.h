@@ -2,13 +2,17 @@
 
 #include <SFML/System.hpp>
 #include <GameObject.h>
-#include <EntitiesControl.h>
+#include <CoreEntitiesControl.h>
 #include <Physics.h>
 #include <Entity.h>
+#include <EntityOrders.h>
+#include <vector>
+#include <EntityOrderType.h>
 
 #include <CoreUIUX.h>
 
 using namespace sf;
+using namespace std;
 using namespace KrostganEngine::Physics;
 using namespace KrostganEngine::EntitiesControl;
 using namespace KrostganEngine::UI;
@@ -17,13 +21,15 @@ namespace KrostganEngine {
 	namespace GameObjects {
 		class UnitObject :public Entity {
 		public: 
-			UnitObject(const Texture& RenTexture, Vector2f RenOffset, Vector2f Position,float Size);
+			UnitObject(EntityBattleStats& BattleStats,const Texture& RenTexture, Vector2f RenOffset, Vector2f Position,float Size);
 			~UnitObject();
 
 			PhysicsLayer GetLayer() override;
 
 			void SetScale(float size) override;
 			void SetPosition(Vector2f pos) override;
+
+			const vector<EntityOrderType>& GetAllowedOrdersCatalog() override;
 
 		protected:
 			const ColliderShape& GetCollider() const override;
@@ -34,6 +40,7 @@ namespace KrostganEngine {
 		private:
 			PhysicsLayer Layer;
 			CircleCollShape* Collider;
+			static const vector<EntityOrderType> AllowedOrdersCatalog;
 
 			CircleVisPrimitive* testCircle;
 		};

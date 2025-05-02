@@ -7,6 +7,8 @@
 #include <ExternalConfigurations.h>
 #include <Physics.h>
 
+#define eps Engine::GetGlobalConsts().EPS
+
 using namespace sf;
 using namespace KrostganEngine::Physics;
 
@@ -39,6 +41,7 @@ namespace KrostganEngine {
 
 			static Vector2f ScreenPosToGlobalCoord(const Vector2f& screenPos);
 			static Vector2u GetScreenSize();
+			static Vector2f GetCursorClampedPos();
 
 			static const std::string ENGINE_VERSION;
 		 private:

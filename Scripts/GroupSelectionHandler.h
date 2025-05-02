@@ -1,5 +1,7 @@
 #pragma once
-#include <EngineCore.h>
+
+#include <ICallbackRec_Upd.h>
+#include <Physics.h>
 #include <SFML/System.hpp>
 #include <CoreUIUX.h>
 #include <SFML/Graphics.hpp>

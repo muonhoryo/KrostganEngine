@@ -5,11 +5,12 @@
 using namespace KrostganEngine::Core;
 
 namespace KrostganEngine::PlayerControl {
-	class BaseInputHandler :public ICallbackRec_Upd {
+	class OrdersSystemInteraction:public ICallbackRec_Upd {
 	public:
-		BaseInputHandler();
+		OrdersSystemInteraction();
 		void Update(CallbackRecArgs_Upd args) override;
+
+	private:
+		static void GiveOrderToSelected_MoveToPoint();
 	};
 }
-
-

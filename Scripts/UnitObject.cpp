@@ -5,6 +5,8 @@
 #include <SFML/Graphics.hpp>
 #include <Entity.h>
 #include <Engine.h>
+#include <vector>
+#include <CoreEntitiesControl.h>
 
 #include <PrimitiveVisualShapes.h>
 
@@ -14,8 +16,8 @@ using namespace KrostganEngine::Physics;
 using namespace KrostganEngine::GameObjects;
 using namespace KrostganEngine::UI;
 
-UnitObject::UnitObject(const Texture& RenTexture, Vector2f RenOffset, Vector2f Position,float Size)
-	:Entity(RenTexture, RenOffset, Position,Size){
+UnitObject::UnitObject(EntityBattleStats& BattleStats,const Texture& RenTexture, Vector2f RenOffset, Vector2f Position,float Size)
+	:Entity(BattleStats,RenTexture, RenOffset, Position,Size){
 	Collider = new CircleCollShape(Position, Size * Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution * 0.5f);
 	Layer = PhysicsLayer::Units;
 
@@ -44,6 +46,10 @@ void UnitObject::SetPosition(Vector2f pos) {
 	testCircle->SetCenter(pos);
 }
 
+const vector<EntityOrderType>& UnitObject::GetAllowedOrdersCatalog() {
+	return UnitObject::AllowedOrdersCatalog;
+}
+
 const ColliderShape& UnitObject::GetCollider() const {
 	return *Collider;
 }
@@ -56,3 +62,5 @@ const Texture& UnitObject::GetSelectionTexture() {
 float UnitObject::GetSelectSpriteMaxSize() {
 	return Engine::GetGlobalConsts().UnitsSelectArea_OneSizeSpriteResol;
 }
+
+const vector<EntityOrderType> UnitObject::AllowedOrdersCatalog = vector<EntityOrderType> {EntityOrderType::MovingToPoint};

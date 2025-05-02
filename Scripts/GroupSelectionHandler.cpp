@@ -5,7 +5,7 @@
 #include <EngineCore.h>
 #include <Extensions.h>
 #include <iostream>
-#include <EntitiesControl.h>
+#include <CoreEntitiesControl.h>
 #include <CoreUIUX.h>
 #include <SFML/Graphics.hpp>
 
@@ -82,11 +82,7 @@ void GroupSelectionHandler::SelectionEndCheck(const Event& ev) {
 	}
 }
 Vector2f GroupSelectionHandler::GetCursorGlobalPos() {
-	Vector2i cursorPos = Mouse::getPosition(Engine::GetRenderWindow());
-	Vector2u screenSize = Engine::GetScreenSize();
-	Vector2f globalPos=Vector2f(
-		clamp<float>((float)cursorPos.x, 0, (float)screenSize.x),
-		clamp<float>((float)cursorPos.y, 0,(float)screenSize.y));
+	Vector2f globalPos = Engine::GetCursorClampedPos();
 	globalPos = Engine::ScreenPosToGlobalCoord(globalPos);
 	return globalPos;
 }

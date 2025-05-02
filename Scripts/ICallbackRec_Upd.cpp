@@ -1,5 +1,6 @@
 
-#include <EngineCore.h>
+#include <Engine.h>
+#include <ICallbackRec_Upd.h>
 
 using namespace KrostganEngine::GameObjects;
 using namespace KrostganEngine::Core;

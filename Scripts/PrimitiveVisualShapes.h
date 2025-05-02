@@ -1,9 +1,9 @@
 #pragma once
 
-//#include <EngineCore.h>
 #include <ICallbackRec_GraphRen.h>
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
+#include <vector>
 
 using namespace sf;
 using namespace std;
@@ -47,5 +47,24 @@ namespace KrostganEngine::UI {
 
 	private:
 		CircleShape CirShape;
+	};
+
+	class LinesVisPrimitive :public ICallbackRec_GraphRen {
+	public:
+		LinesVisPrimitive(vector<Vector2f>& pointsCoord, Color edgeColor);
+		
+		Color GetEdgeColor();
+		size_t GetPointsCount();
+
+		void AddPoint(Vector2f point);
+		void RemovePointAt(size_t index);
+		void ReduceSize(size_t newCount);
+		void SetEdgeColor(Color color);
+		void SetPointPosition(Vector2f newPos, size_t pointIndex);
+
+		void RenderGraphic(RenderWindow& window) override;
+
+	private:
+		VertexArray Vertexes;
 	};
 }

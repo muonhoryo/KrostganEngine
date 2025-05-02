@@ -1,6 +1,7 @@
 #pragma once
 
-#include <EntitiesControl.h>
+#include <ISelectableEntity.h>
+#include <GroupSelectionSystem.h>
 #include <iostream>
 #include <GameObject.h>
 #include <Extensions.h>
@@ -51,6 +52,12 @@ void GroupSelectionSystem::Clear() {
 		en->SelectionOff();
 	}
 	Singleton->SelectedEntities.clear();
+}
+forward_list<ISelectableEntity*>::iterator GroupSelectionSystem::GetEntitiesBegIter() {
+	return Singleton->SelectedEntities.begin();
+}
+forward_list<ISelectableEntity*>::const_iterator GroupSelectionSystem::GetEntitiesEndIter() {
+	return Singleton->SelectedEntities.cend();
 }
 
 GroupSelectionSystem* GroupSelectionSystem::Singleton = nullptr;

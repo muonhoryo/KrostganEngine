@@ -8,8 +8,8 @@
 using namespace sf;
 using namespace KrostganEngine::GameObjects;
 
-HeroObject::HeroObject(const Texture& RenTexture, Vector2f RenOffset, Vector2f Position, float Size)
-	:UnitObject(RenTexture,RenOffset,Position,Size){}
+HeroObject::HeroObject(EntityBattleStats& BattleStats, const Texture& RenTexture, Vector2f RenOffset, Vector2f Position, float Size)
+	:UnitObject(BattleStats,RenTexture,RenOffset,Position,Size){}
 HeroObject::~HeroObject(){}
 
 const Texture& HeroObject::GetSelectionTexture() {

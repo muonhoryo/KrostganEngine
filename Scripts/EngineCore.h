@@ -15,3 +15,5 @@
 #include <EngineWorkCycleModule.h>
 #include <LevelLoading.h>
 #include <CoreGameObjects.h>
+#include <CoreEntitiesControl.h>
+#include <CorePlayerControl.h>

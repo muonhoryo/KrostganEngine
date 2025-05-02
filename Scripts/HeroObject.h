@@ -9,7 +9,7 @@ using namespace sf;
 namespace KrostganEngine::GameObjects {
 	class HeroObject:UnitObject {
 	public:
-		HeroObject(const Texture& RenTexture, Vector2f RenOffset, Vector2f Position, float Size);
+		HeroObject(EntityBattleStats& BattleStats,const Texture& RenTexture, Vector2f RenOffset, Vector2f Position, float Size);
 		~HeroObject();
 
 	protected:

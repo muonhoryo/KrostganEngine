@@ -49,12 +49,6 @@
     <Filter Include="Исходные файлы\Debug">
       <UniqueIdentifier>{080c2777-7e33-425b-b99e-e160ece6aede}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Файлы заголовков\PlayerControl">
-      <UniqueIdentifier>{0ef54734-7469-43d5-907b-82e2c499c8dc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Исходные файлы\PlayerControl">
-      <UniqueIdentifier>{d3c8335e-58c6-4fc3-a581-00684ee277d9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Файлы заголовков\CoreSystems\Physics">
       <UniqueIdentifier>{3f8251b6-02ad-4aee-abe9-e93a59e2ba92}</UniqueIdentifier>
     </Filter>
@@ -63,12 +57,6 @@
     </Filter>
     <Filter Include="Исходные файлы\CoreSystems\Physics\CollisionShapes">
       <UniqueIdentifier>{f71943d0-f4e0-429c-8e6b-cf71606404fc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Файлы заголовков\EntitiesControl">
-      <UniqueIdentifier>{57f44eed-0974-4d34-a31b-f1a96e2914c4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Исходные файлы\EntitiesControl">
-      <UniqueIdentifier>{5604d52a-41bc-432f-8c58-31039c89d00d}</UniqueIdentifier>
     </Filter>
     <Filter Include="Файлы заголовков\CoreSystems\EngineCallbacks">
       <UniqueIdentifier>{f044e815-b11f-4fa9-8789-24483a509b0b}</UniqueIdentifier>
@@ -99,6 +87,42 @@
     </Filter>
     <Filter Include="Исходные файлы\CoreSystems\UI/UX\Primitives">
       <UniqueIdentifier>{59bae570-18c7-4e52-84f2-8ab1ac93b208}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\CoreSystems\EntitiesControl">
+      <UniqueIdentifier>{5604d52a-41bc-432f-8c58-31039c89d00d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems\EntitiesControl">
+      <UniqueIdentifier>{57f44eed-0974-4d34-a31b-f1a96e2914c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems\PlayerControl">
+      <UniqueIdentifier>{0ef54734-7469-43d5-907b-82e2c499c8dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\CoreSystems\PlayerControl">
+      <UniqueIdentifier>{d3c8335e-58c6-4fc3-a581-00684ee277d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems\EntitiesControl\Orders">
+      <UniqueIdentifier>{bfb360ab-c755-4c41-8c63-0fc9d1b7ab81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems\EntitiesControl\Orders\BaseOrders">
+      <UniqueIdentifier>{f6d17936-2bb7-4fe6-abe9-3f3903c92e78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems\EntitiesControl\Orders\EntityActions">
+      <UniqueIdentifier>{04cb6955-bb06-4b8e-b10d-b33dfd7bc999}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\CoreSystems\EntitiesControl\Orders">
+      <UniqueIdentifier>{42bf80d0-a98a-453a-9d8d-82be8733f243}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\CoreSystems\EntitiesControl\Orders\EntityActions">
+      <UniqueIdentifier>{52f97b20-e0d7-41bb-9527-9ebdc18cc5c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems\GameObjects\EntityBattleStats">
+      <UniqueIdentifier>{b7508e81-192e-49c2-91af-37df94037153}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\CoreSystems\GameObjects\EntityBattleStats">
+      <UniqueIdentifier>{791f15e4-3d76-4545-a025-275c70345a6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\CoreSystems\EntitiesControl\Orders\BaseOrders">
+      <UniqueIdentifier>{66928b83-3043-4d09-9bbe-5dad90722650}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -157,19 +181,19 @@
       <Filter>Исходные файлы\CoreSystems</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\BaseInputHandler.cpp">
-      <Filter>Исходные файлы\PlayerControl</Filter>
+      <Filter>Исходные файлы\CoreSystems\PlayerControl</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\ColliderShapes.cpp">
       <Filter>Исходные файлы\CoreSystems\Physics\CollisionShapes</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\GroupSelectionHandler.cpp">
-      <Filter>Исходные файлы\PlayerControl</Filter>
+      <Filter>Исходные файлы\CoreSystems\PlayerControl</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\PhysicsEngine.cpp">
       <Filter>Исходные файлы\CoreSystems\Physics</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\GroupSelectionSystem.cpp">
-      <Filter>Исходные файлы\EntitiesControl</Filter>
+      <Filter>Исходные файлы\CoreSystems\EntitiesControl</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\GroupSelectionQuad.cpp">
       <Filter>Исходные файлы\CoreSystems\UI/UX</Filter>
@@ -218,6 +242,24 @@
     </ClCompile>
     <ClCompile Include="Scripts\HeroObject.cpp">
       <Filter>Исходные файлы\CoreSystems\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Entity_OrdersExec.cpp">
+      <Filter>Исходные файлы\CoreSystems\EntitiesControl</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\EntityAction_Move.cpp">
+      <Filter>Исходные файлы\CoreSystems\EntitiesControl\Orders\EntityActions</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\EntityBattleStats.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameObjects\EntityBattleStats</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\EntityOrder_MoveToPoint.cpp">
+      <Filter>Исходные файлы\CoreSystems\EntitiesControl\Orders\BaseOrders</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\OrdersSystemInteraction.cpp">
+      <Filter>Исходные файлы\CoreSystems\PlayerControl</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\LinesVisPrimitive.cpp">
+      <Filter>Исходные файлы\CoreSystems\UI/UX\Primitives</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -284,20 +326,20 @@
     <ClInclude Include="Scripts\ValuesListDeserializer.h">
       <Filter>Файлы заголовков\CoreSystems</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\PlayerControl.h">
-      <Filter>Файлы заголовков\PlayerControl</Filter>
+    <ClInclude Include="Scripts\CorePlayerControl.h">
+      <Filter>Файлы заголовков\CoreSystems\PlayerControl</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Physics.h">
       <Filter>Файлы заголовков\CoreSystems\Physics</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\BaseInputHandler.h">
-      <Filter>Файлы заголовков\PlayerControl</Filter>
+      <Filter>Файлы заголовков\CoreSystems\PlayerControl</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\ColliderShapes.h">
       <Filter>Файлы заголовков\CoreSystems\Physics</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\GroupSelectionHandler.h">
-      <Filter>Файлы заголовков\PlayerControl</Filter>
+      <Filter>Файлы заголовков\CoreSystems\PlayerControl</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\PhysicsEngine.h">
       <Filter>Файлы заголовков\CoreSystems\Physics</Filter>
@@ -306,13 +348,13 @@
       <Filter>Файлы заголовков\CoreSystems\Physics</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\GroupSelectionSystem.h">
-      <Filter>Файлы заголовков\EntitiesControl</Filter>
+      <Filter>Файлы заголовков\CoreSystems\EntitiesControl</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\ISelectableEntity.h">
-      <Filter>Файлы заголовков\EntitiesControl</Filter>
+      <Filter>Файлы заголовков\CoreSystems\EntitiesControl</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\EntitiesControl.h">
-      <Filter>Файлы заголовков\EntitiesControl</Filter>
+    <ClInclude Include="Scripts\CoreEntitiesControl.h">
+      <Filter>Файлы заголовков\CoreSystems\EntitiesControl</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\GroupSelectionQuad.h">
       <Filter>Файлы заголовков\CoreSystems\UI/UX</Filter>
@@ -325,9 +367,6 @@
     </ClInclude>
     <ClInclude Include="Scripts\IPhysicalObject.h">
       <Filter>Файлы заголовков\CoreSystems\EngineCallbacks</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\ForwListExts.h">
-      <Filter>Файлы заголовков\Extensions</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\FStreamExts.h">
       <Filter>Файлы заголовков\Extensions</Filter>
@@ -370,6 +409,39 @@
     </ClInclude>
     <ClInclude Include="Scripts\HeroObject.h">
       <Filter>Файлы заголовков\CoreSystems\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\IEntityOrder.h">
+      <Filter>Файлы заголовков\CoreSystems\EntitiesControl\Orders</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\IEntityAction.h">
+      <Filter>Файлы заголовков\CoreSystems\EntitiesControl\Orders</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\EntityOrders.h">
+      <Filter>Файлы заголовков\CoreSystems\EntitiesControl\Orders</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\EntityOrderType.h">
+      <Filter>Файлы заголовков\CoreSystems\EntitiesControl\Orders</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\CollectionsExts.h">
+      <Filter>Файлы заголовков\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\EntityOrder_MoveToPoint.h">
+      <Filter>Файлы заголовков\CoreSystems\EntitiesControl\Orders\BaseOrders</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\EntityAction_Move.h">
+      <Filter>Файлы заголовков\CoreSystems\EntitiesControl\Orders\EntityActions</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\EntityBattleStats.h">
+      <Filter>Файлы заголовков\CoreSystems\GameObjects\EntityBattleStats</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\BaseOrdersAndActions.h">
+      <Filter>Файлы заголовков\CoreSystems\EntitiesControl\Orders</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\OrdersSystemInteraction.h">
+      <Filter>Файлы заголовков\CoreSystems\PlayerControl</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\EntityOrder_GlobalPosTarget.h">
+      <Filter>Файлы заголовков\CoreSystems\EntitiesControl\Orders\BaseOrders</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

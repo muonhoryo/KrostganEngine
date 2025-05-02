@@ -135,7 +135,7 @@ View& Engine::InstanceNewView() {
 	return view;
 }
 
-const std::string Engine::ENGINE_VERSION = "A0.0.2.0";
+const std::string Engine::ENGINE_VERSION = "A0.0.3.0";
 Engine* Engine::Singleton = nullptr;
 
 
@@ -189,4 +189,12 @@ Vector2f Engine::ScreenPosToGlobalCoord(const Vector2f& screenPos) {
 }
 Vector2u Engine::GetScreenSize() {
 	return Singleton->RendWin.getSize();
+}
+Vector2f Engine::GetCursorClampedPos() {
+	Vector2i cursorPos = Mouse::getPosition(Engine::GetRenderWindow());
+	Vector2u screenSize = Engine::GetScreenSize();
+	Vector2f globalPos = Vector2f(
+		clamp<float>((float)cursorPos.x, 0, (float)screenSize.x),
+		clamp<float>((float)cursorPos.y, 0, (float)screenSize.y));
+	return globalPos;
 }

@@ -5,10 +5,12 @@
 #include <vector>
 #include <Extensions.h>
 #include <EngineCore.h>
+#include <EntityBattleStats.h>
 
 using namespace std;
 using namespace KrostganEngine;
 using namespace KrostganEngine::Core;
+using namespace KrostganEngine::GameObjects;
 
 LevelLoadingInfo& LevelSerialization::DeserializeLevel(string serPath) {
 	auto& consts = Engine::GetGlobalConsts();
@@ -46,28 +48,36 @@ UnitLoadInfo* LevelSerialization::ParseUnitInfo(vector<string>* params) {
 	vector<string>& paramsRef = *params;
 	string* name = new string();
 	string* sprPath = new string();
-	string* vecValue = new string();
+	string* serValue = new string();
 	Vector2f sprOffset = Vector2f();
 	Vector2f objPosition = Vector2f();
 	float objSize;
+	float bStas_f;
+	EntityBattleStats& bStats = *new EntityBattleStats();
 
 	if (!GetSerValueOfParam(paramsRef, LevelSerializationParDefNames::OBJECT_NAME, name))
 		throw exception("Cannot get name of object");
 	if (!GetSerValueOfParam(paramsRef, LevelSerializationParDefNames::OBJECT_SPRITE_PATH, sprPath))
 		throw exception("Cannot get path of sprite");
 	FStreamExts::ClearPath(sprPath);
-	if (!GetSerValueOfParam(paramsRef, LevelSerializationParDefNames::OBJECT_SPRITE_OFFSET, vecValue))
+	if (!GetSerValueOfParam(paramsRef, LevelSerializationParDefNames::OBJECT_SPRITE_OFFSET, serValue))
 		throw exception("Cannot get offset of sprite");
-	sprOffset = VectExts::ParseVec2f(*vecValue);
-	if (!GetSerValueOfParam(paramsRef, LevelSerializationParDefNames::OBJECT_POSITION, vecValue))
+	sprOffset = VectExts::ParseVec2f(*serValue);
+	if (!GetSerValueOfParam(paramsRef, LevelSerializationParDefNames::OBJECT_POSITION, serValue))
 		throw exception("Caanot get position of object");
-	objPosition = VectExts::ParseVec2f(*vecValue);
-	if (!GetSerValueOfParam(paramsRef, LevelSerializationParDefNames::OBJECT_SIZE, vecValue))
+	objPosition = VectExts::ParseVec2f(*serValue);
+	if (!GetSerValueOfParam(paramsRef, LevelSerializationParDefNames::OBJECT_SIZE, serValue))
 		throw exception("Cant get size of object");
-	objSize = stof(*vecValue);
+	objSize = stof(*serValue);
+	//Fill battle stats of unit
+	if (GetSerValueOfParam(paramsRef, LevelSerializationParDefNames::UNIT_MOVINGSPEED, serValue)) {
+		bStas_f = stof(*serValue);
+		if (bStas_f >= 0)
+			bStats.SetMovingSpeed(bStas_f);
+	}
 
-	UnitLoadInfo* info = new UnitLoadInfo(*name, *sprPath, sprOffset, objPosition, objSize);
-	delete vecValue;
+	UnitLoadInfo* info = new UnitLoadInfo(*name, *sprPath, sprOffset, objPosition, objSize,bStats);
+	delete serValue;
 	delete name;
 	delete sprPath;
 	cout << "Loaded unit:" << endl << "Name: " << info->Name << endl << "Sprite path: " << info->TexturePath <<
