@@ -12,9 +12,10 @@ using namespace KrostganEngine::UI;
 namespace KrostganEngine::GameObjects {
 	class GameObject :public SingleSprite, public IPhysicalObject {
 	public:
-		bool IsCollide(AABBCollShape coll) override;
-		bool IsCollide(CircleCollShape coll) override;
-		bool IsCollide(ColliderShape* coll[], size_t count) override;
+		bool IsCollide(AABBCollShape coll) const override;
+		bool IsCollide(CircleCollShape coll) const override;
+		bool IsCollide(ColliderShape* coll[], size_t count) const override;
+		bool IsInCollider(Vector2f point) const override;
 	protected:
 		GameObject(const Texture& RenTexture, Vector2f RenOffset, Vector2f Position, float Size);
 

@@ -4,3 +4,4 @@
 #include <PrimitiveVisualShapes.h>
 #include <SingleSprite.h>
 #include <SpriteRenderer.h>
+#include <CursorManager.h>

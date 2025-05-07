@@ -10,6 +10,7 @@ EngineRenderModule::EngineRenderModule(RenderWindow& Window):EngineCallbackHandl
 {
 }
 void EngineRenderModule::Execute() {
+	FrameRenderTime.restart();
 	if (!Window.isOpen())
 		return;
 	Window.clear();
@@ -17,4 +18,9 @@ void EngineRenderModule::Execute() {
 		(*rec).RenderGraphic(Window);
 	}
 	Window.display();
+	SetFrameRenderTime(FrameRenderTime.getElapsedTime().asSeconds());
+}
+
+void EngineRenderModule::SetFrameRenderTime(float time) {
+	Engine::Singleton->FrameRenderTime = time;
 }

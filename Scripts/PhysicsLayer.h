@@ -1,7 +1,7 @@
 #pragma once
 
 namespace KrostganEngine::Physics {
-	enum class PhysicsLayer : int {
+	enum class PhysicsLayer : size_t {
 		None = 0,
 		Environment = 1,
 		Decorations = 2,

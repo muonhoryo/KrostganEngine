@@ -1,7 +1,6 @@
 #pragma once
 
 #include <Gameobject.h>
-#include <CoreEntitiesControl.h>
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
 #include <SingleSprite.h>
@@ -13,6 +12,11 @@
 #include <vector>
 #include <EntityOrderType.h>
 #include <CoreUIUX.h>
+#include <IHitPointModule.h>
+#include <IAttackableObj.h>
+#include <AutoAttackModule.h>
+#include <ISelectableEntity.h>
+#include <Events.h>
 
 using namespace sf;
 using namespace std;
@@ -20,8 +24,12 @@ using namespace KrostganEngine::EntitiesControl;
 using namespace KrostganEngine::UI;
 
 namespace KrostganEngine::GameObjects {
-	class Entity :public GameObject,public ISelectableEntity, public ICallbackRec_Upd {
+	class Entity :public GameObject,public ISelectableEntity, public ICallbackRec_Upd,public IAttackableObj {
 	public:
+		ExecutedEvent<const IEntityOrder*> GetOrderEvent;
+		ExecutedEvent<const IEntityOrder*> ExecuteOrderEvent;
+		NoArgsExecutedEvent ResetOrderListEvent;
+
 		~Entity();
 
 		void SelectionOn() override;
@@ -30,6 +38,8 @@ namespace KrostganEngine::GameObjects {
 
 		void SetPosition(Vector2f position) override;
 		void SetScale(float scale) override;
+
+		TransformableObj& GetTransform() override;
 
 	protected:
 		Entity(EntityBattleStats& BattlsStats,const Texture& RenTexture,
@@ -40,6 +50,9 @@ namespace KrostganEngine::GameObjects {
 		virtual Vector2f GetSelectSpriteRenOffset() { return Vector2f(0, 0); };
 
 	private:
+		EventHandler<const IEntityOrder*> GetOrderEventHandler = EventHandler<const IEntityOrder*>(GetOrderEvent);
+		EventHandler<const IEntityOrder*> ExecuteOrderEventHandler = EventHandler<const IEntityOrder*>(ExecuteOrderEvent);
+		NoArgsEventHandler ResetOrderListEventHandler = NoArgsEventHandler(ResetOrderListEventHandler);
 		bool IsEntitySelected;
 		SingleSprite* SelectionSprite;
 		//
@@ -48,8 +61,23 @@ namespace KrostganEngine::GameObjects {
 		// 
 		// 
 	public:
+		const EntityBattleStats& GetBattleStats();
+		IHitPointModule& GetHPModule() override;
+
+	private:
 		EntityBattleStats& BattleStats;
+		IHitPointModule& HPModule;
 		//
+		// 
+		// Attacking
+		// 
+		// 
+	public:
+		AutoAttackModule& GetAAModule();
+
+	private:
+		AutoAttackModule& AAModule;
+		// 
 		//
 		//Orders system
 		//
@@ -57,6 +85,9 @@ namespace KrostganEngine::GameObjects {
 	public:
 		bool TryAddOrder(IEntityOrder* order,bool clearOrdQueue=false);
 		void ResetOrdersQueue();
+
+		list<IEntityOrder*>::const_iterator GetOrderQueueIter_Begin() const;
+		list<IEntityOrder*>::const_iterator GetOrderQueueIter_AfterEnd() const;
 
 		void Update(CallbackRecArgs_Upd args) override;
 

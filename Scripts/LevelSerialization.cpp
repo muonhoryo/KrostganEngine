@@ -48,40 +48,34 @@ UnitLoadInfo* LevelSerialization::ParseUnitInfo(vector<string>* params) {
 	vector<string>& paramsRef = *params;
 	string* name = new string();
 	string* sprPath = new string();
-	string* serValue = new string();
+	string* buffer = new string();
 	Vector2f sprOffset = Vector2f();
 	Vector2f objPosition = Vector2f();
 	float objSize;
-	float bStas_f;
-	EntityBattleStats& bStats = *new EntityBattleStats();
 
 	if (!GetSerValueOfParam(paramsRef, LevelSerializationParDefNames::OBJECT_NAME, name))
 		throw exception("Cannot get name of object");
 	if (!GetSerValueOfParam(paramsRef, LevelSerializationParDefNames::OBJECT_SPRITE_PATH, sprPath))
 		throw exception("Cannot get path of sprite");
 	FStreamExts::ClearPath(sprPath);
-	if (!GetSerValueOfParam(paramsRef, LevelSerializationParDefNames::OBJECT_SPRITE_OFFSET, serValue))
+	if (!GetSerValueOfParam(paramsRef, LevelSerializationParDefNames::OBJECT_SPRITE_OFFSET, buffer))
 		throw exception("Cannot get offset of sprite");
-	sprOffset = VectExts::ParseVec2f(*serValue);
-	if (!GetSerValueOfParam(paramsRef, LevelSerializationParDefNames::OBJECT_POSITION, serValue))
+	sprOffset = ParseVec2f(*buffer);
+	if (!GetSerValueOfParam(paramsRef, LevelSerializationParDefNames::OBJECT_POSITION, buffer))
 		throw exception("Caanot get position of object");
-	objPosition = VectExts::ParseVec2f(*serValue);
-	if (!GetSerValueOfParam(paramsRef, LevelSerializationParDefNames::OBJECT_SIZE, serValue))
+	objPosition = ParseVec2f(*buffer);
+	if (!GetSerValueOfParam(paramsRef, LevelSerializationParDefNames::OBJECT_SIZE, buffer))
 		throw exception("Cant get size of object");
-	objSize = stof(*serValue);
+	objSize = stof(*buffer);
 	//Fill battle stats of unit
-	if (GetSerValueOfParam(paramsRef, LevelSerializationParDefNames::UNIT_MOVINGSPEED, serValue)) {
-		bStas_f = stof(*serValue);
-		if (bStas_f >= 0)
-			bStats.SetMovingSpeed(bStas_f);
-	}
+	EntityBattleStats& bStats = GetBattleStats(paramsRef, buffer);
 
 	UnitLoadInfo* info = new UnitLoadInfo(*name, *sprPath, sprOffset, objPosition, objSize,bStats);
-	delete serValue;
+	delete buffer;
 	delete name;
 	delete sprPath;
 	cout << "Loaded unit:" << endl << "Name: " << info->Name << endl << "Sprite path: " << info->TexturePath <<
-		endl << "Sprite offset: " << VectExts::ToString(info->SpriteOffset) << endl << "Position: " + VectExts::ToString(info->Position) 
+		endl << "Sprite offset: " << ToString(info->SpriteOffset) << endl << "Position: " + ToString(info->Position) 
 		<< endl<<"Size: "<<info->Size<<endl;
 	return info;
 }
@@ -98,4 +92,53 @@ bool LevelSerialization::GetSerValueOfParam(vector<string>& params, const string
 		}
 	}
 	return false;
+}
+
+EntityBattleStats& LevelSerialization::GetBattleStats(vector<string>& params, string* buffer) {
+	EntityBattleStats& bStats = *new EntityBattleStats();
+	float bStat_f;
+	size_t bStat_s_t;
+
+	//Moving speed
+	if (GetSerValueOfParam(params, LevelSerializationParDefNames::UNIT_MOVINGSPEED, buffer)) {
+		bStat_f = stof(*buffer);
+		if (bStat_f >= 0)
+			bStats.SetMovingSpeed(bStat_f);
+	}				
+
+	//MaxHP
+	if (GetSerValueOfParam(params, LevelSerializationParDefNames::ENTITY_MAX_HP, buffer)) {
+		bStat_s_t = stoi(*buffer);
+		if (bStat_s_t > 0)
+			bStats.SetMaxHP(bStat_s_t);
+	}
+
+	//CurrentHP
+	if (GetSerValueOfParam(params, LevelSerializationParDefNames::ENTITY_CURR_HP, buffer)) {
+		bStat_s_t = stoi(*buffer);
+		if (bStat_s_t > 0)
+			bStats.SetCurrentHP(bStat_s_t);
+	}
+
+	//AADamage
+	if (GetSerValueOfParam(params, LevelSerializationParDefNames::ENTITY_AA_DAMAGE, buffer)) {
+		bStat_s_t = stoi(*buffer);
+		bStats.SetAADamage(bStat_s_t);
+	}
+
+	//AASpeed
+	if (GetSerValueOfParam(params, LevelSerializationParDefNames::ENTITY_AA_SPEED, buffer)) {
+		bStat_f = stof(*buffer);
+		if (bStat_f >= 0)
+			bStats.SetAASpeed(bStat_f);
+	}
+
+	//AARadius
+	if (GetSerValueOfParam(params, LevelSerializationParDefNames::ENTITY_AA_RADIUS, buffer)) {
+		bStat_f = stof(*buffer);
+		if (bStat_f > 0)
+			bStats.SetAARadius(bStat_f);
+	}
+
+	return bStats;
 }

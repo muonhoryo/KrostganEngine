@@ -1,6 +1,6 @@
 
 #include <EntityOrder_MoveToPoint.h>
-#include <EntityAction_Move.h>
+#include <EntityAction_MoveToPoint.h>
 #include <Extensions.h>
 #include <Engine.h>
 
@@ -15,12 +15,12 @@ EntityOrder_MoveToPoint::EntityOrder_MoveToPoint(Entity& Owner,Vector2f TargetGl
 }
 
 bool EntityOrder_MoveToPoint::CheckExecCondition() {
-	float dist = VectExts::Length(TargetGlobalPos - Owner.GetPosition());
+	float dist = Length(TargetGlobalPos - Owner.GetPosition());
 	return dist <= eps;
 }
 list <IEntityAction*>& EntityOrder_MoveToPoint::GetActions() {
 	list<IEntityAction*>* lst = new list<IEntityAction*>();
-	IEntityAction* act = new EntityAction_Move(Owner, TargetGlobalPos);
+	IEntityAction* act = new EntityAction_MoveToPoint(Owner, TargetGlobalPos);
 	lst->push_back(act);
 	return *lst;
 }

@@ -5,10 +5,9 @@ using namespace KrostganEngine::Core;
 using namespace KrostganEngine::Physics;
 
 IPhysicalObject::IPhysicalObject() {
-	IPhysicalObject* ref = this;
-	Engine::GetPhysicsEngine().Add(ref);
+	Engine::GetPhysicsEngine().Add(*this);
 }
 IPhysicalObject::~IPhysicalObject() {
-	IPhysicalObject* ref = this;
-	Engine::GetPhysicsEngine().Remove(ref);
+	IPhysicalObject& ref = *this;
+	Engine::GetPhysicsEngine().Remove(*this);
 }

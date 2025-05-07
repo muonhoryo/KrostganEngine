@@ -1,23 +1,18 @@
 #pragma once
 
-#include <Entity.h>
-#include <SFML/System.hpp>
-#include <IEntityAction.h>
+#include <EntityAction_MoveTo.h>
 
 using namespace sf;
 using namespace KrostganEngine::GameObjects;
 
 namespace KrostganEngine::EntitiesControl {
-	class EntityAction_Move :public IEntityAction {
+	class EntityAction_MoveToPoint :public EntityAction_MoveTo{
 	public:
-		EntityAction_Move(Entity& Owner,Vector2f TargetGlobalCoord);
+		EntityAction_MoveToPoint(Entity& Owner,Vector2f TargetGlobalCoord);
 
 		bool CheckExecCondition() override;
 		void Execute() override;
 
 		const Vector2f TargetGlobalCoord;
-	private:
-		float DistanceToTarget;
-		Entity& Owner;
 	};
 }

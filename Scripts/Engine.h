@@ -6,10 +6,12 @@
 #include <EngineWorkCycleModule.h>
 #include <ExternalConfigurations.h>
 #include <Physics.h>
+#include <CursorManager.h>
 
 #define eps Engine::GetGlobalConsts().EPS
 
 using namespace sf;
+using namespace KrostganEngine::UI;
 using namespace KrostganEngine::Physics;
 
 namespace KrostganEngine {
@@ -27,13 +29,15 @@ namespace KrostganEngine {
 			static void SetZoom(float zoom);
 
 			static RenderWindow& GetRenderWindow();
-			static float GetFrameTime();
+			static float GetFrameDeltaTime();
+			static float GetFrameRenderTime();
 			static bool IsNeedToInterrupt();
 			static EngineState GetCurrentEngState();
 			static EngineState GetNextEngState();
 			static EngineRenderModule& GetRenderModule();
 			static EngineUpdateModule& GetUpdateModule();
 			static PhysicsEngine& GetPhysicsEngine();
+			static CursorManager& GetCursorManager();
 			static const EngineConfig& GetEngineConfig();
 			static const GlobalConsts& GetGlobalConsts();
 			static const ExternalGlobalResources& GetGlobalResources();
@@ -46,19 +50,28 @@ namespace KrostganEngine {
 			static const std::string ENGINE_VERSION;
 		 private:
 			Engine();
-			static void InitializeSystems();
+			void InitializeSystems();
+			void InitializeCursorManager();
 			static Engine* Singleton;
 			EngineStateHandler EngStateHandler;
 			EngineMode* CurrMode;
 			EngineRenderModule& RenderModule;
 			EngineUpdateModule& UpdateModule;
 			PhysicsEngine& PhysicsEng;
+			CursorManager* WindCursorManager;
 			const EngineConfig* EngineConfiguration;
 			const GlobalConsts* Consts;
 			const ExternalGlobalResources* GlobalResources;
 
 			RenderWindow RendWin;
-			float FrameTime=0;
+			/// <summary>
+			/// In seconds
+			/// </summary>
+			float FrameDeltaTime = 0;
+			/// <summary>
+			/// In seconds
+			/// </summary>
+			float FrameRenderTime = 0;
 			float Zoom = 1;
 
 			static void RequestToChangeState(EngineState state);
@@ -71,7 +84,8 @@ namespace KrostganEngine {
 			static EngineMode* GetCurrentEngMode();
 			static View& InstanceNewView();
 
-			friend static float SetFrameTime();
+			friend static void EngineUpdateModule::SetFrameDeltaTime(float time);
+			friend static void EngineRenderModule::SetFrameRenderTime(float time);
 		};
 	}
 }

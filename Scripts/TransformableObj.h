@@ -9,11 +9,13 @@ namespace KrostganEngine::GameObjects {
 	public:
 		~TransformableObj(){}
 
-		Vector2f GetPosition();
-		float GetScale();
+		Vector2f GetPosition() const;
+		float GetScale()const ;
 
 		virtual void SetPosition(Vector2f position);
 		virtual void SetScale(float scale);
+
+		void Move(Vector2f moveValue);
 
 	protected:
 		TransformableObj(Vector2f Position, float Scale);

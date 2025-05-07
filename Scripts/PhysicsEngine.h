@@ -16,6 +16,8 @@ namespace KrostganEngine::Physics {
 		PhysicsEngine();
 
 		vector<IPhysicalObject*> OverlapAABB_All(Vector2f min, Vector2f max, PhysicsLayer layer=PhysicsLayer::All);
+
+		IPhysicalObject* PointCast(Vector2f globalPos, PhysicsLayer layer = PhysicsLayer::All);
 	};
 }
 

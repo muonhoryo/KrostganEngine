@@ -4,6 +4,7 @@
 #include <ICallbackRec_Upd.h>
 #include <CoreEntitiesControl.h>
 #include <CorePlayerControl.h>
+#include <GameUI.h>
 
 using namespace sf;
 using namespace KrostganEngine::EntitiesControl;
@@ -26,9 +27,8 @@ namespace KrostganEngine::Core {
 	private:
 		RenderWindow* Window;
 		ICallbackRec_Upd* BaseInputHandl;
-		ICallbackRec_Upd* GroupSelectionHandl;
-		GroupSelectionSystem* GroupSelectSystem;
-		OrdersSystemInteraction* OrdersInteraction;
+		EntitiesCtrlInputHandler* EntitiesCtrlHandler;
+		GameUI* GameInterface;
 	};
 
 	class MainMenuMode :public EngineMode {

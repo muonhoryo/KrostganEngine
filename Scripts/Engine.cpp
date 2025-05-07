@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <Extensions.h>
+#include <SFML/System.hpp>
 
 using namespace sf;
 using namespace KrostganEngine;
@@ -12,7 +13,9 @@ using namespace KrostganEngine::Physics;
 
 
 Engine::Engine():RenderModule(*new EngineRenderModule(RendWin)),
-UpdateModule(*new EngineUpdateModule(RendWin)), PhysicsEng(*new PhysicsEngine()){
+UpdateModule(*new EngineUpdateModule(RendWin)),
+PhysicsEng(*new PhysicsEngine()){
+
 	Singleton = this;
 
 	EngineConfigLoad config=EngineConfigLoad();
@@ -30,10 +33,11 @@ UpdateModule(*new EngineUpdateModule(RendWin)), PhysicsEng(*new PhysicsEngine())
 	view.setSize(resol.x, resol.y);
 	view.zoom(Zoom);
 	RendWin.setView(view);
-	SetZoom(1.5);
-	SetZoom(1);
+	RendWin.setFramerateLimit(EngineConfiguration->FrameRateLimit);
 	CurrMode = nullptr;
 	EngStateHandler = EngineStateHandler();
+
+	GroupSelectionSystem::GetInstance();
 
 	InitializeSystems();
 
@@ -42,7 +46,18 @@ UpdateModule(*new EngineUpdateModule(RendWin)), PhysicsEng(*new PhysicsEngine())
 	ResetInterruption();
 }
 void Engine::InitializeSystems() {
+	InitializeCursorManager();
+}
+void Engine::InitializeCursorManager() {
+	Cursor& def = *new Cursor();
+	Cursor& att = *new Cursor();
 
+	def.loadFromSystem(Cursor::Arrow);
+	Image img_att = GlobalResources->CursorSprite_Attack.copyToImage();
+	Vector2u hotSpot = EngineConfiguration->CursorHotspot_Attack;
+	att.loadFromPixels(img_att.getPixelsPtr(), img_att.getSize(),hotSpot);
+
+	WindCursorManager = new CursorManager(RendWin, def, att);
 }
 
 
@@ -139,11 +154,14 @@ const std::string Engine::ENGINE_VERSION = "A0.0.3.0";
 Engine* Engine::Singleton = nullptr;
 
 
-float Engine::GetFrameTime() {
-	return Engine::Singleton->FrameTime;
-}
 RenderWindow& Engine::GetRenderWindow() {
 	return Engine::Singleton->RendWin;
+}
+float Engine::GetFrameDeltaTime() {
+	return Singleton->FrameDeltaTime;
+}
+float Engine::GetFrameRenderTime() {
+	return Singleton->FrameRenderTime;
 }
 bool Engine::IsNeedToInterrupt() {
 	return Singleton->EngStateHandler.NeedToInterrupt;
@@ -162,6 +180,9 @@ EngineUpdateModule& Engine::GetUpdateModule() {
 }
 PhysicsEngine& Engine::GetPhysicsEngine() {
 	return Singleton->PhysicsEng;
+}
+CursorManager& Engine::GetCursorManager() {
+	return *Singleton->WindCursorManager;
 }
 const EngineConfig& Engine::GetEngineConfig() {
 	return *(Singleton->EngineConfiguration);

@@ -2,12 +2,18 @@
 
 #include <forward_list>
 #include <ISelectableEntity.h>
+#include <Events.h>
 
 using namespace std;
+using namespace KrostganEngine;
 
 namespace KrostganEngine::EntitiesControl {
 	class GroupSelectionSystem {
 	public:
+		static inline ExecutedEvent<ISelectableEntity*>& AddSelectableEvent=*new ExecutedEvent<ISelectableEntity*>();
+		static inline ExecutedEvent<ISelectableEntity*>& RemoveSelectableEvent= *new ExecutedEvent<ISelectableEntity*>();;
+		static inline NoArgsExecutedEvent& ClearSelectionEvent=*new NoArgsExecutedEvent();
+		
 		~GroupSelectionSystem();
 
 		static GroupSelectionSystem& GetInstance();
@@ -25,6 +31,10 @@ namespace KrostganEngine::EntitiesControl {
 			}
 		}
 	private:
+		EventHandler<ISelectableEntity*> AddSelectableEventHandler = EventHandler<ISelectableEntity*>(AddSelectableEvent);
+		EventHandler<ISelectableEntity*> RemoveSelectableEventHandler = EventHandler<ISelectableEntity*>(RemoveSelectableEvent);
+		NoArgsEventHandler ClearSelectionEventHandler = NoArgsEventHandler(ClearSelectionEvent);
+
 		GroupSelectionSystem();
 
 		static GroupSelectionSystem* Singleton;

@@ -6,15 +6,21 @@
 #include <list>
 #include <IEntityOrder.h>
 #include <IEntityAction.h>
+#include <EntityHPModule.h>
+#include <EntityBaseAAModule.h>
 
 using namespace sf;
+using namespace KrostganEngine;
 using namespace KrostganEngine::GameObjects;
 using namespace KrostganEngine::EntitiesControl;
 using namespace KrostganEngine::UI;
 
 Entity::Entity(EntityBattleStats& BattleStats,const Texture& RenTexture, Vector2f RenOffset, Vector2f Position, float Scale)
 	:GameObject(RenTexture,RenOffset,Position, Scale), ISelectableEntity(),ICallbackRec_Upd(),
-	BattleStats(BattleStats){
+	BattleStats(BattleStats),
+	HPModule(*new EntityHPModule(BattleStats)),
+	AAModule(*new EntityBaseAAModule(BattleStats,*this))
+{
 	IsEntitySelected = false;
 	SelectionSprite = nullptr;
 
@@ -65,4 +71,18 @@ void Entity::SetScale(float scale) {
 	GameObject::SetScale(scale);
 	if (IsEntitySelected)
 		SelectionSprite->SetScale(scale);
+}
+
+TransformableObj& Entity::GetTransform() {
+	return *(TransformableObj*)this;
+}
+
+const EntityBattleStats& Entity::GetBattleStats() {
+	return BattleStats;
+}
+IHitPointModule& Entity::GetHPModule() {
+	return HPModule;
+}
+AutoAttackModule& Entity::GetAAModule() {
+	return AAModule;
 }

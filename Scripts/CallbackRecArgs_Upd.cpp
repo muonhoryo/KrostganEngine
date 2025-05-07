@@ -8,7 +8,7 @@ using namespace KrostganEngine::Core;
 using namespace std;
 using namespace sf;
 
-CallbackRecArgs_Upd::CallbackRecArgs_Upd(const vector<Event>& PlayerInput):
+CallbackRecArgs_Upd::CallbackRecArgs_Upd(const vector<Event>& PlayerInput,float LastFrameDeltaTime):
 PlayerInput(PlayerInput){
-
+	this->LastFrameDeltaTime = LastFrameDeltaTime;
 }

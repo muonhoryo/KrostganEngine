@@ -4,9 +4,11 @@
 #include <vector>
 #include <SFML/System.hpp>
 #include <EngineCore.h>
+#include <Extensions.h>
 
 using namespace std;
 using namespace sf;
+using namespace KrostganEngine;
 using namespace KrostganEngine::Core;
 
 EngineConfigLoad::EngineConfigLoad() :ValuesListDeserializer() {
@@ -18,15 +20,23 @@ const EngineConfig& EngineConfigLoad::LoadEngineConfig() {
 	unsigned int XRes;
 	unsigned int YRes;
 
-	string line = string();
-	if (!TryGetValue(EngineConfig::DEF_X_WINDOW_RESOLUTION, &line))
+	string buffer = string();
+	if (!TryGetValue(EngineConfig::DEF_X_WINDOW_RESOLUTION, &buffer))
 		throw exception("Cannot parse window's XResolution");
-	XRes = stoi(line);
+	XRes = stoi(buffer);
 
-	if (!TryGetValue(EngineConfig::DEF_Y_WINDOW_RESOLUTION, &line))
+	if (!TryGetValue(EngineConfig::DEF_Y_WINDOW_RESOLUTION, &buffer))
 		throw exception("Cannot parse window's YResolution");
-	YRes = stoi(line);
+	YRes = stoi(buffer);
 	LoadedConfig.WindowResolution = Vector2f(XRes, YRes);
+
+	if (!TryGetValue(EngineConfig::DEF_FRAMERATE_LIMIT, &buffer))
+		throw exception("Cannot pars framerate limit");
+	LoadedConfig.FrameRateLimit = stoi(buffer);
+
+	if (!TryGetValue(EngineConfig::DEF_CURSOR_ATTACK_HOTSPOT, &buffer))
+		throw exception("Cannot parse attack cursor hotspot");
+	LoadedConfig.CursorHotspot_Attack = ParseVec2u(buffer);
 
 	StrValuesArr.clear();
 	return LoadedConfig;

@@ -9,8 +9,9 @@ using namespace std;
 
 namespace KrostganEngine::Core {
 	struct CallbackRecArgs_Upd {
-		CallbackRecArgs_Upd(const vector<Event>& playerInput);
+		CallbackRecArgs_Upd(const vector<Event>& PlayerInput,float LastFrameDeltaTime);
 		const vector<Event>& PlayerInput;
+		float LastFrameDeltaTime; //Milliseconds
 	};
 
 	class ICallbackRec_Upd {

@@ -8,10 +8,11 @@ namespace KrostganEngine::Physics {
 	{
 	public:
 
-		virtual PhysicsLayer GetLayer() = 0;
-		virtual bool IsCollide(AABBCollShape coll) = 0;
-		virtual bool IsCollide(CircleCollShape coll) = 0;
-		virtual bool IsCollide(ColliderShape* coll[],size_t count) = 0;
+		virtual PhysicsLayer GetLayer() const = 0;
+		virtual bool IsCollide(AABBCollShape coll) const = 0;
+		virtual bool IsCollide(CircleCollShape coll) const = 0;
+		virtual bool IsCollide(ColliderShape* coll[],size_t count) const = 0;
+		virtual bool IsInCollider(Vector2f point) const = 0;
 
 		~IPhysicalObject();
 

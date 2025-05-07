@@ -29,7 +29,7 @@ UnitObject::~UnitObject() {
 }
 
 
-PhysicsLayer UnitObject::GetLayer() {
+PhysicsLayer UnitObject::GetLayer() const {
 	return Layer;
 }
 
@@ -56,6 +56,11 @@ const ColliderShape& UnitObject::GetCollider() const {
 bool UnitObject::IsCollideShape(const ColliderShape& shape) const {
 	return shape.IsOverlap(*Collider);
 }
+
+Vector2f UnitObject::GetClosestPoint(Vector2f source) const {
+	return Collider->GetClosestPoint(source);
+}
+
 const Texture& UnitObject::GetSelectionTexture() {
 	return Engine::GetGlobalResources().UnitsSelectionAreaSprite;
 }
@@ -63,4 +68,8 @@ float UnitObject::GetSelectSpriteMaxSize() {
 	return Engine::GetGlobalConsts().UnitsSelectArea_OneSizeSpriteResol;
 }
 
-const vector<EntityOrderType> UnitObject::AllowedOrdersCatalog = vector<EntityOrderType> {EntityOrderType::MovingToPoint};
+const vector<EntityOrderType> UnitObject::AllowedOrdersCatalog = vector<EntityOrderType> 
+	{
+	EntityOrderType::MovingToPoint,
+	EntityOrderType::AttackTarget
+};

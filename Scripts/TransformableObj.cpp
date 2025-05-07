@@ -12,10 +12,10 @@ TransformableObj::TransformableObj(Vector2f Position=Vector2f(0,0), float Scale=
 	SetScale(Scale);
 }
 
-Vector2f TransformableObj::GetPosition() {
+Vector2f TransformableObj::GetPosition() const {
 	return Position;
 }
-float TransformableObj::GetScale() {
+float TransformableObj::GetScale() const{
 	return Scale;
 }
 
@@ -24,4 +24,8 @@ void TransformableObj::SetPosition(Vector2f position) {
 }
 void TransformableObj::SetScale(float scale) {
 	Scale = scale;
+}
+void TransformableObj::Move(Vector2f movValue) {
+	Vector2f nextPos = GetPosition() + movValue;
+	SetPosition(nextPos);
 }

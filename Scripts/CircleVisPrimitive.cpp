@@ -18,7 +18,7 @@ CircleVisPrimitive::CircleVisPrimitive(Vector2f center, float radius, Color edge
 	SetCenter(center);
 	SetEdgeColor(edgeColor);
 
-	cout << "Create circle at position: " + VectExts::ToString<float>(GetCenter())<<endl;
+	cout << "Create circle at position: " + ToString<float>(GetCenter())<<endl;
 }
 
 Vector2f CircleVisPrimitive::GetCenter() {

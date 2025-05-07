@@ -8,6 +8,7 @@
 #include <ICallbackRec_Upd.h>
 #include <ICallbackRec_LUpd.h>
 
+using namespace sf;
 using namespace std;
 using namespace KrostganEngine::Core;
 
@@ -32,25 +33,30 @@ namespace KrostganEngine::Core {
 		void Unload() {
 			Callbacks.clear();
 		};
-		void Remove(TCallback* const& callbckToDel) {
-			if (Callbacks.front() == callbckToDel)
+		void Remove( TCallback& callbckToDel) {
+			TCallback* elRef = Callbacks.front();
+			if (elRef == &callbckToDel)
 			{
 				Callbacks.pop_front();
 				return;
 			}
+			bool isFound = false;
 			auto itToD = Callbacks.begin();
 			auto it = Callbacks.begin();
 			++it;
 			for (; it != Callbacks.end(); ++it) {
-				if (*it == callbckToDel) {
+				elRef = *it;
+				if (elRef== &callbckToDel) {
+					isFound = true;
 					break;
 				}
 				++itToD;
 			}
-			Callbacks.erase_after(itToD);
+			if(isFound)
+				Callbacks.erase_after(itToD);
 		};
-		void Add(TCallback*& callbck) {
-			Callbacks.push_front(callbck);
+		void Add(TCallback& callbck) {
+			Callbacks.push_front(&callbck);
 		};
 
 	protected:
@@ -69,6 +75,9 @@ namespace KrostganEngine::Core {
 		RenderWindow& Window;
 		Event& UpdateEvent;
 		vector<Event> PlayerInput;
+		Clock FrameDeltaTimer;
+	public:
+		void SetFrameDeltaTime(float time);
 	};
 
 	class EngineRenderModule :public EngineCallbackHandler<ICallbackRec_GraphRen>,
@@ -79,6 +88,9 @@ namespace KrostganEngine::Core {
 		void Execute() override;
 	private:
 		RenderWindow& Window;
+		Clock FrameRenderTime;
+	public:
+		void SetFrameRenderTime(float time);
 	};
 
 	class EngineLateUpdateModule :public EngineCallbackHandler<ICallbackRec_LUpd>,

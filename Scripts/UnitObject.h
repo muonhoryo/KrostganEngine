@@ -24,7 +24,7 @@ namespace KrostganEngine {
 			UnitObject(EntityBattleStats& BattleStats,const Texture& RenTexture, Vector2f RenOffset, Vector2f Position,float Size);
 			~UnitObject();
 
-			PhysicsLayer GetLayer() override;
+			PhysicsLayer GetLayer() const override;
 
 			void SetScale(float size) override;
 			void SetPosition(Vector2f pos) override;
@@ -34,6 +34,9 @@ namespace KrostganEngine {
 		protected:
 			const ColliderShape& GetCollider() const override;
 			bool IsCollideShape(const ColliderShape& shape) const override;
+
+			Vector2f GetClosestPoint(Vector2f sources) const override;
+
 			const Texture& GetSelectionTexture() override;
 			float GetSelectSpriteMaxSize() override;
 

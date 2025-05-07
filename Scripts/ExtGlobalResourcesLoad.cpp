@@ -15,12 +15,13 @@ const ExternalGlobalResources& ExtGlobalResourcesLoad::LoadGlobalResources() {
 	DeserializeValues();
 
 	string* buffer = new string();
-	Texture* texs[2]{};
+	Texture* texs[3]{};
 
 	texs[0] = LoadTextureByDefinition(ExternalGlobalResources::DEF_UNITS_SELECTIONAREA_SPRITE_PATH, *buffer);
 	texs[1] = LoadTextureByDefinition(ExternalGlobalResources::DEF_HEROES_SELECTIONAREA_SPRITE_PATH, *buffer);
-	
-	LoadedGlobalResources = new ExternalGlobalResources(*texs[0], *texs[1]);
+	texs[2] = LoadTextureByDefinition(ExternalGlobalResources::DEF_CURSOR_ATTACK_SPRITE_PATH, *buffer);
+
+	LoadedGlobalResources = new ExternalGlobalResources(*texs[0], *texs[1],*texs[2]);
 
 	delete buffer;
 

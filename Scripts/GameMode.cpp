@@ -11,15 +11,13 @@ using namespace KrostganEngine::EntitiesControl;
 GameMode::GameMode() :EngineMode() {
     Window = &Engine::GetRenderWindow();
     BaseInputHandl = new BaseInputHandler();
-    GroupSelectionHandl = new GroupSelectionHandler();
-    OrdersInteraction = new OrdersSystemInteraction();
-    GroupSelectSystem = &GroupSelectionSystem::GetInstance();
+    EntitiesCtrlHandler = new EntitiesCtrlInputHandler();
+    GameInterface = new GameUI();
 }
 GameMode::~GameMode() {
 	delete BaseInputHandl;
-    delete GroupSelectionHandl;
-    delete OrdersInteraction;
-    delete GroupSelectSystem;
+    delete EntitiesCtrlHandler;
+    delete GameInterface;
 }
 void GameMode::ExecuteCycle() {
 

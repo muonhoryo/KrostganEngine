@@ -19,3 +19,9 @@ bool AABBCollShape::IsOverlap(AABBCollShape collision) const {
 bool AABBCollShape::IsOverlap(CircleCollShape collision) const {
 	return IsOverlap_CircleVsAABB(collision, *this);
 }
+bool AABBCollShape::IsPointInCollider(Vector2f point) const {
+	return ColliderShape::IsPointInCollider(*this, point);
+}
+Vector2f AABBCollShape::GetClosestPoint(Vector2f point) const {
+	return ColliderShape::GetClosestPoint(*this, point);
+}
