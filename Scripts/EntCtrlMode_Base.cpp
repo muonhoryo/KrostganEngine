@@ -18,7 +18,19 @@ void EntCtrlMode_Base::HandleInput(CallbackRecArgs_Upd& args) {
 	for (auto& input : args.PlayerInput) {
 		if (input.type == Event::MouseButtonPressed) {
 			if (input.key.code == Mouse::Right) {
-				GiveOrderToSelected_MoveToPoint();
+				IAttackableObj* target=nullptr;
+				Vector2f pos = GetPosByCursor();
+				if (TryGetTargetByTypeAtPos(pos, target)) {
+					IFractionMember* fracMember = dynamic_cast<IFractionMember*>(target);
+					Relation rel = fracMember != nullptr ? FractionsSystem::GetRelation(Fraction::Player, fracMember->GetFraction()) : Relation::Neutral;
+					if (rel == Relation::Enemy)
+						GiveOrderToSelected_AttackTarget(*target);
+					else
+						GiveOrderToSelected_MoveToPoint(pos);
+				}
+				else {
+					GiveOrderToSelected_MoveToPoint(pos);
+				}
 			}
 			else if(input.mouseButton.button == Mouse::Button::Left) {
 				Vector2f mousePos= Vector2f((float)input.mouseButton.x, (float)input.mouseButton.y);

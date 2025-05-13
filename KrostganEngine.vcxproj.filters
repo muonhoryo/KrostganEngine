@@ -145,6 +145,12 @@
     <Filter Include="Файлы заголовков\UI/UX">
       <UniqueIdentifier>{2a498f39-da0f-40fe-b978-d56f12374f60}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems\EntitiesControl\RelationsSystem">
+      <UniqueIdentifier>{b4fc3cd2-3e2c-43e5-8dcd-eeddc0339807}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\CoreSystems\EntitiesControl\RelationsSystem">
+      <UniqueIdentifier>{8448677f-19fc-422b-abda-de4333c48d2f}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Исходные файлы\UI/UX">
       <UniqueIdentifier>{22eea0bd-aa0c-40af-bdfd-1e412c208dd0}</UniqueIdentifier>
     </Filter>
@@ -330,6 +336,12 @@
     <ClCompile Include="Scripts\OrderTargsVisManager.cpp">
       <Filter>Исходные файлы\UI/UX</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\FractionSystem.cpp">
+      <Filter>Исходные файлы\CoreSystems\EntitiesControl\RelationsSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Entity_FractionsSystem.cpp">
+      <Filter>Исходные файлы\CoreSystems\EntitiesControl\RelationsSystem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\GameObject.h">
@@ -458,9 +470,6 @@
     <ClInclude Include="Scripts\EngineConfigLoad.h">
       <Filter>Файлы заголовков\CoreSystems\ExternalResources</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\ExternalConfigurations.h">
-      <Filter>Файлы заголовков\CoreSystems\ExternalResources</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\GlobalConsts.h">
       <Filter>Файлы заголовков\CoreSystems\ExternalResources</Filter>
     </ClInclude>
@@ -559,6 +568,15 @@
     </ClInclude>
     <ClInclude Include="Scripts\GameUI.h">
       <Filter>Файлы заголовков\UI/UX</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\FractionsSystem.h">
+      <Filter>Файлы заголовков\CoreSystems\EntitiesControl\RelationsSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\RelationsSystem.h">
+      <Filter>Файлы заголовков\CoreSystems\EntitiesControl\RelationsSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\IFractionMember.h">
+      <Filter>Файлы заголовков\CoreSystems\EntitiesControl\RelationsSystem</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

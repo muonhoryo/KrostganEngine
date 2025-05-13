@@ -1,8 +1,12 @@
 #pragma once
 
 #include <ICallbackRec_Upd.h>
+#include <Physics.h>
+#include <HPSystem.h>
 
 using namespace KrostganEngine::Core;
+using namespace KrostganEngine::Physics;
+using namespace KrostganEngine::GameObjects;
 
 namespace KrostganEngine::PlayerControl {
 	class EntitiesCtrlInputHandler;
@@ -18,8 +22,22 @@ namespace KrostganEngine::PlayerControl {
 
 		EntitiesCtrlInputHandler& Owner;
 
-		static void GiveOrderToSelected_MoveToPoint();
-		static void GiveOrderToSelected_AttackTarget();
+		static Vector2f GetPosByCursor();
+		static bool TryGetTargetAtPos(Vector2f pos, IPhysicalObject*& target);
+
+		template<typename TTargetType>
+		static bool TryGetTargetByTypeAtPos(Vector2f pos, TTargetType*& target) {
+			IPhysicalObject* physTar=nullptr;
+			if (!TryGetTargetAtPos(pos, physTar))
+				return false;
+			else {
+				target = dynamic_cast<TTargetType*>(physTar);
+				return target != nullptr;
+			}
+		}
+
+		static void GiveOrderToSelected_MoveToPoint(Vector2f targetGlobalPos);
+		static void GiveOrderToSelected_AttackTarget(IAttackableObj& target);
 	};
 
 	class EntitiesCtrlInputHandler :public ICallbackRec_Upd {

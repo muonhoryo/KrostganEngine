@@ -11,7 +11,7 @@
 #include <IPhysicalObject.h>
 
 #include <Physics.h>
-#include <ExternalConfigurations.h>
+#include <ExternalData.h>
 #include <EngineWorkCycleModule.h>
 #include <LevelLoading.h>
 #include <CoreGameObjects.h>

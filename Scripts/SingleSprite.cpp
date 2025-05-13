@@ -5,9 +5,9 @@
 using namespace sf;
 using namespace KrostganEngine::UI;
 
-SingleSprite::SingleSprite(const Texture& RenTexture, float maxSpriteSize,Vector2f RenOffset = Vector2f(0, 0), Vector2f Position = Vector2f(0, 0), float Scale = 1)
+SingleSprite::SingleSprite(const Texture& RenTexture, float maxSpriteSize,Vector2f RenOffset, Vector2f Position, float Scale, Color SprColor)
 	:TransformableObj(Position,1),
-	SpriteRenderer(RenTexture, maxSpriteSize, RenOffset){
+	SpriteRenderer(RenTexture, maxSpriteSize, RenOffset,SprColor){
 	SetPosition(Position);
 	SetScale(Scale);
 }

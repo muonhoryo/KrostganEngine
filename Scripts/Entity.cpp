@@ -15,12 +15,13 @@ using namespace KrostganEngine::GameObjects;
 using namespace KrostganEngine::EntitiesControl;
 using namespace KrostganEngine::UI;
 
-Entity::Entity(EntityBattleStats& BattleStats,const Texture& RenTexture, Vector2f RenOffset, Vector2f Position, float Scale)
-	:GameObject(RenTexture,RenOffset,Position, Scale), ISelectableEntity(),ICallbackRec_Upd(),
+Entity::Entity(EntityBattleStats& BattleStats,Fraction EntityFraction,const Texture& RenTexture, Vector2f RenOffset, Vector2f Position, float Scale)
+	:GameObject(RenTexture,RenOffset,Position, Scale,GetSprColorFromFraction(EntityFraction)), ISelectableEntity(),ICallbackRec_Upd(),IFractionMember(),
 	BattleStats(BattleStats),
 	HPModule(*new EntityHPModule(BattleStats)),
 	AAModule(*new EntityBaseAAModule(BattleStats,*this))
 {
+	this->EntityFraction = EntityFraction;
 	IsEntitySelected = false;
 	SelectionSprite = nullptr;
 
@@ -44,7 +45,7 @@ void Entity::SelectionOn() {
 	if (!IsEntitySelected) {
 		IsEntitySelected = true;
 		SelectionSprite = new SingleSprite(GetSelectionTexture(), GetSelectSpriteMaxSize(), GetSelectSpriteRenOffset(), 
-			GetPosition(), GetScale());
+			GetPosition(), GetScale(),GetSpriteColor());
 	}
 }
 void Entity::SelectionOff() {
@@ -71,6 +72,10 @@ void Entity::SetScale(float scale) {
 	GameObject::SetScale(scale);
 	if (IsEntitySelected)
 		SelectionSprite->SetScale(scale);
+}
+void Entity::SetSpriteColor(Color color) {
+	SpriteRenderer::SetSpriteColor(color);
+	SelectionSprite->SetSpriteColor(color);
 }
 
 TransformableObj& Entity::GetTransform() {

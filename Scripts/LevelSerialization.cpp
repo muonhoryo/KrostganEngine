@@ -6,11 +6,13 @@
 #include <Extensions.h>
 #include <EngineCore.h>
 #include <EntityBattleStats.h>
+#include <RelationsSystem.h>
 
 using namespace std;
 using namespace KrostganEngine;
 using namespace KrostganEngine::Core;
 using namespace KrostganEngine::GameObjects;
+using namespace KrostganEngine::EntitiesControl;
 
 LevelLoadingInfo& LevelSerialization::DeserializeLevel(string serPath) {
 	auto& consts = Engine::GetGlobalConsts();
@@ -46,12 +48,14 @@ UnitLoadInfo* LevelSerialization::ParseUnitInfo(vector<string>* params) {
 	if (params->size() == 0)
 		throw exception("Missing params of unit");
 	vector<string>& paramsRef = *params;
+	string* buffer = new string();
+
 	string* name = new string();
 	string* sprPath = new string();
-	string* buffer = new string();
 	Vector2f sprOffset = Vector2f();
 	Vector2f objPosition = Vector2f();
 	float objSize;
+	Fraction frac;
 
 	if (!GetSerValueOfParam(paramsRef, LevelSerializationParDefNames::OBJECT_NAME, name))
 		throw exception("Cannot get name of object");
@@ -67,16 +71,24 @@ UnitLoadInfo* LevelSerialization::ParseUnitInfo(vector<string>* params) {
 	if (!GetSerValueOfParam(paramsRef, LevelSerializationParDefNames::OBJECT_SIZE, buffer))
 		throw exception("Cant get size of object");
 	objSize = stof(*buffer);
+	if (!GetSerValueOfParam(paramsRef, LevelSerializationParDefNames::ENTITY_FRACTION, buffer))
+		throw exception("Cannot get fraction of entity");
+	FStreamExts::ClearPath(buffer);
+	if (FractionsSystem::FractionNames.find(*buffer) == FractionsSystem::FractionNames.end())
+		frac = Fraction::Neutral;
+	else
+		frac = FractionsSystem::FractionNames.at(*buffer);
+
 	//Fill battle stats of unit
 	EntityBattleStats& bStats = GetBattleStats(paramsRef, buffer);
 
-	UnitLoadInfo* info = new UnitLoadInfo(*name, *sprPath, sprOffset, objPosition, objSize,bStats);
+	UnitLoadInfo* info = new UnitLoadInfo(*name, *sprPath, sprOffset, objPosition, objSize,bStats,frac);
 	delete buffer;
 	delete name;
 	delete sprPath;
 	cout << "Loaded unit:" << endl << "Name: " << info->Name << endl << "Sprite path: " << info->TexturePath <<
-		endl << "Sprite offset: " << ToString(info->SpriteOffset) << endl << "Position: " + ToString(info->Position) 
-		<< endl<<"Size: "<<info->Size<<endl;
+		endl << "Sprite offset: " << ToString(info->SpriteOffset) << endl << "Position: " + ToString(info->Position)
+		<< endl << "Size: " << info->Size << endl << "Fraction: " << (int)info->EntityFraction << endl;
 	return info;
 }
 

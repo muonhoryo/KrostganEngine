@@ -17,6 +17,7 @@
 #include <AutoAttackModule.h>
 #include <ISelectableEntity.h>
 #include <Events.h>
+#include <RelationsSystem.h>
 
 using namespace sf;
 using namespace std;
@@ -24,7 +25,8 @@ using namespace KrostganEngine::EntitiesControl;
 using namespace KrostganEngine::UI;
 
 namespace KrostganEngine::GameObjects {
-	class Entity :public GameObject,public ISelectableEntity, public ICallbackRec_Upd,public IAttackableObj {
+	class Entity :public GameObject,public ISelectableEntity, public ICallbackRec_Upd,public IAttackableObj,
+		public IFractionMember{
 	public:
 		ExecutedEvent<const IEntityOrder*> GetOrderEvent;
 		ExecutedEvent<const IEntityOrder*> ExecuteOrderEvent;
@@ -38,11 +40,12 @@ namespace KrostganEngine::GameObjects {
 
 		void SetPosition(Vector2f position) override;
 		void SetScale(float scale) override;
+		void SetSpriteColor(Color color) override;
 
 		TransformableObj& GetTransform() override;
 
 	protected:
-		Entity(EntityBattleStats& BattlsStats,const Texture& RenTexture,
+		Entity(EntityBattleStats& BattlsStats,Fraction EntityFraction,const Texture& RenTexture,
 			Vector2f RenOffset, Vector2f Position, float Size);
 
 		virtual const Texture& GetSelectionTexture()=0;
@@ -77,6 +80,19 @@ namespace KrostganEngine::GameObjects {
 
 	private:
 		AutoAttackModule& AAModule;
+		// 
+		//
+		//Fraction
+		//
+		//
+	public:
+		Fraction GetFraction() const override;
+
+	private:
+		Fraction EntityFraction;
+
+		Color GetSprColorFromFraction(Fraction frac);
+
 		// 
 		//
 		//Orders system

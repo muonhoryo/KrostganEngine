@@ -17,7 +17,7 @@ namespace KrostganEngine::GameObjects {
 		bool IsCollide(ColliderShape* coll[], size_t count) const override;
 		bool IsInCollider(Vector2f point) const override;
 	protected:
-		GameObject(const Texture& RenTexture, Vector2f RenOffset, Vector2f Position, float Size);
+		GameObject(const Texture& RenTexture, Vector2f RenOffset=Vector2f(0,0), Vector2f Position = Vector2f(0, 0), float Size = 1, Color SprColor = Color::White);
 
 		virtual const ColliderShape& GetCollider() const = 0;
 		virtual bool IsCollideShape(const ColliderShape& shape) const = 0;

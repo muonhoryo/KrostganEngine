@@ -30,11 +30,14 @@ namespace KrostganEngine {
 			static inline const string OBJECT_SPRITE_OFFSET = "SpriteOffset";
 			static inline const string OBJECT_POSITION = "Position";
 			static inline const string OBJECT_SIZE = "Size";
+
 			static inline const string ENTITY_MAX_HP = "MaxHP";
 			static inline const string ENTITY_CURR_HP = "CurrentHP";
 			static inline const string ENTITY_AA_DAMAGE = "AADamage";
 			static inline const string ENTITY_AA_SPEED = "AASpeed";
 			static inline const string ENTITY_AA_RADIUS = "AARadius";
+			static inline const string ENTITY_FRACTION = "Fraction";
+
 			static inline const string UNIT_MOVINGSPEED = "MovingSpeed";
 		};
 	}

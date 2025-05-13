@@ -10,10 +10,10 @@ using namespace sf;
 using namespace KrostganEngine::UI;
 using namespace KrostganEngine::Core;
 
-SpriteRenderer::SpriteRenderer(const Texture& RenTexture, Vector2f Offset = Vector2f(0, 0)) :
+SpriteRenderer::SpriteRenderer(const Texture& RenTexture, Vector2f Offset, Color SprColor) :
 	SpriteRenderer(RenTexture, (float)max(RenTexture.getSize().x, RenTexture.getSize().y), Offset)
 {}
-SpriteRenderer::SpriteRenderer(const Texture& RenTexture, float maxSizeInPixels, Vector2f Offset = Vector2f(0, 0)):
+SpriteRenderer::SpriteRenderer(const Texture& RenTexture, float maxSizeInPixels, Vector2f Offset, Color SprColor) :
 	ICallbackRec_GraphRen() {
 	RenSprite.setTexture(RenTexture);
 	Vector2u texSize = RenTexture.getSize();
@@ -29,6 +29,7 @@ SpriteRenderer::SpriteRenderer(const Texture& RenTexture, float maxSizeInPixels,
 	}
 	TextureResizingMult = maxSizeInPixels / GetMaxSpritePixSize();
 	ResizeSprite(Vector2f(1, 1));
+	SetSpriteColor(SprColor);
 	this->Offset = Offset;
 }
 
@@ -73,6 +74,9 @@ float SpriteRenderer::GetMinSpritePixSize() {
 Vector2f SpriteRenderer::GetSpriteSize() {
 	return MainSize;
 }
+Color SpriteRenderer::GetSpriteColor() {
+	return RenSprite.getColor();
+}
 
 void SpriteRenderer::SetSpriteOffset(Vector2f offset) {
 	Vector2f inharPos = GetSpriteInharitedPosition();
@@ -83,6 +87,9 @@ void SpriteRenderer::ResizeSprite(Vector2f size) {
 	Vector2f newScale = size * TextureResizingMult;
 	RenSprite.setScale(newScale);
 	MainSize = size;
+}
+void SpriteRenderer::SetSpriteColor(Color color) {
+	RenSprite.setColor(color);
 }
 
 void SpriteRenderer::SetSpriteInharitedPosition(Vector2f position) {

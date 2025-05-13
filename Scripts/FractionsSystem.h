@@ -1,0 +1,40 @@
+#pragma once
+
+#include <SFML/Graphics.hpp>
+#include <map> 
+#include <string>
+
+using namespace std;
+using namespace sf;
+
+namespace KrostganEngine::EntitiesControl {
+	enum class Fraction {
+		Player,
+		Neutral,
+		Enemy
+	};
+
+	enum class Relation {
+		Ally,
+		Neutral,
+		Enemy
+	};
+	
+	class FractionsSystem {
+	public:
+		static Relation GetRelation(Fraction objFrac,Fraction subjFrac);
+		static Color GetRelationColor(Relation rel);
+
+		static inline const map<string, Fraction>& FractionNames = *new map<string, Fraction>
+		{
+			pair{ "Player",Fraction::Player },
+			pair{ "Neutral",Fraction::Neutral },
+			pair{ "Enemy",Fraction::Enemy }
+		};
+		static inline const Fraction DefaultFrac = Fraction::Neutral;
+		static inline const Relation DefaultRel = Relation::Neutral;
+
+	private:
+		FractionsSystem();
+	};
+}

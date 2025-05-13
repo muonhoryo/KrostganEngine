@@ -13,17 +13,17 @@ using namespace KrostganEngine::Physics;
 using namespace KrostganEngine::Core;
 using namespace KrostganEngine::GameObjects;
 
-GameObject::GameObject(const Texture& RenTexture, Vector2f RenOffset = Vector2f(0, 0), Vector2f Position = Vector2f(0, 0), float Size = 1)
-	:SingleSprite(RenTexture, Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution, RenOffset, Position, Size),
+GameObject::GameObject(const Texture& RenTexture, Vector2f RenOffset, Vector2f Position , float Size ,Color SprColor)
+	:SingleSprite(RenTexture, Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution, RenOffset, Position, Size,SprColor),
 	IPhysicalObject() {}
 
 bool GameObject::IsCollide(AABBCollShape coll)const {
 	const ColliderShape& shape = GetCollider();
-	return shape.IsOverlap(coll);
+	return shape.Intersect(coll);
 }
 bool GameObject::IsCollide(CircleCollShape coll) const{
 	const ColliderShape& shape = GetCollider();
-	return shape.IsOverlap(coll);
+	return shape.Intersect(coll);
 }
 bool GameObject::IsCollide(ColliderShape* coll[], size_t count) const{
 	int index = 0;

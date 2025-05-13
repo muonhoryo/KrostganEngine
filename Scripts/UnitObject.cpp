@@ -15,9 +15,10 @@ using namespace KrostganEngine::Core;
 using namespace KrostganEngine::Physics;
 using namespace KrostganEngine::GameObjects;
 using namespace KrostganEngine::UI;
+using namespace KrostganEngine::EntitiesControl;
 
-UnitObject::UnitObject(EntityBattleStats& BattleStats,const Texture& RenTexture, Vector2f RenOffset, Vector2f Position,float Size)
-	:Entity(BattleStats,RenTexture, RenOffset, Position,Size){
+UnitObject::UnitObject(EntityBattleStats& BattleStats,Fraction EntityFraction,const Texture& RenTexture, Vector2f RenOffset, Vector2f Position,float Size)
+	:Entity(BattleStats,EntityFraction,RenTexture, RenOffset, Position,Size){
 	Collider = new CircleCollShape(Position, Size * Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution * 0.5f);
 	Layer = PhysicsLayer::Units;
 
@@ -54,7 +55,7 @@ const ColliderShape& UnitObject::GetCollider() const {
 	return *Collider;
 }
 bool UnitObject::IsCollideShape(const ColliderShape& shape) const {
-	return shape.IsOverlap(*Collider);
+	return shape.Intersect(*Collider);
 }
 
 Vector2f UnitObject::GetClosestPoint(Vector2f source) const {

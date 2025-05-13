@@ -21,7 +21,7 @@ namespace KrostganEngine {
 	namespace GameObjects {
 		class UnitObject :public Entity {
 		public: 
-			UnitObject(EntityBattleStats& BattleStats,const Texture& RenTexture, Vector2f RenOffset, Vector2f Position,float Size);
+			UnitObject(EntityBattleStats& BattleStats,Fraction EntityFraction,const Texture& RenTexture, Vector2f RenOffset, Vector2f Position,float Size);
 			~UnitObject();
 
 			PhysicsLayer GetLayer() const override;

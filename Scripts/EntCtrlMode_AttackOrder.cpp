@@ -2,7 +2,7 @@
 #include <EntitiesCtrlInputModes.h>
 #include <iostream>
 #include <Engine.h>
-#include <ExternalConfigurations.h>
+#include <ExternalData.h>
 
 using namespace std;
 using namespace KrostganEngine;
@@ -21,7 +21,10 @@ void EntCtrlMode_AttackOrder::HandleInput(CallbackRecArgs_Upd& args) {
 	for (auto& input : args.PlayerInput) {
 		if (input.type == Event::MouseButtonPressed) {
 			if (input.key.code == Mouse::Left) {
-				GiveOrderToSelected_AttackTarget();
+				IAttackableObj* target = nullptr;
+				if (TryGetTargetByTypeAtPos(GetPosByCursor(), target)) {
+					GiveOrderToSelected_AttackTarget(*target);
+				}
 			}
 			Owner.SetNewMode(*new EntCtrlMode_Base(Owner));
 			return;

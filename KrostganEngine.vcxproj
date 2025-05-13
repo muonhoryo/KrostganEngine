@@ -160,8 +160,10 @@
     <ClCompile Include="Scripts\EntityHPModule.cpp" />
     <ClCompile Include="Scripts\EntityOrder_AttackTarget.cpp" />
     <ClCompile Include="Scripts\EntityOrder_MoveToPoint.cpp" />
+    <ClCompile Include="Scripts\Entity_FractionsSystem.cpp" />
     <ClCompile Include="Scripts\Entity_OrdersExec.cpp" />
     <ClCompile Include="Scripts\ExtGlobalResourcesLoad.cpp" />
+    <ClCompile Include="Scripts\FractionSystem.cpp" />
     <ClCompile Include="Scripts\FStreamExts.cpp" />
     <ClCompile Include="Scripts\GameMode.cpp" />
     <ClCompile Include="Scripts\CallbackRecArgs_Upd.cpp" />
@@ -204,6 +206,7 @@
     <ClInclude Include="Scripts\EntityAction_FollowObject.h" />
     <ClInclude Include="Scripts\EntityAction_MoveTo.h" />
     <ClInclude Include="Scripts\EntityBaseAAModule.h" />
+    <ClInclude Include="Scripts\FractionsSystem.h" />
     <ClInclude Include="Scripts\EntityOrder_AttackTarget.h" />
     <ClInclude Include="Scripts\EntityOrder_ObjectTarget.h" />
     <ClInclude Include="Scripts\GameObjsBaseFightSystem.h" />
@@ -227,10 +230,11 @@
     <ClInclude Include="Scripts\EntityOrderType.h" />
     <ClInclude Include="Scripts\EntityOrder_GlobalPosTarget.h" />
     <ClInclude Include="Scripts\EntityOrder_MoveToPoint.h" />
+    <ClInclude Include="Scripts\IFractionMember.h" />
+    <ClInclude Include="Scripts\RelationsSystem.h" />
     <ClInclude Include="Scripts\TemplateEvent.h" />
     <ClInclude Include="Scripts\Events.h" />
     <ClInclude Include="Scripts\Extensions.h" />
-    <ClInclude Include="Scripts\ExternalConfigurations.h" />
     <ClInclude Include="Scripts\ExternalGlobalResources.h" />
     <ClInclude Include="Scripts\ExtGlobalResourcesLoad.h" />
     <ClInclude Include="Scripts\FStreamExts.h" />

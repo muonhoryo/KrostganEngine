@@ -10,20 +10,14 @@ namespace KrostganEngine::Physics {
 
 	struct ColliderShape {
 	public:
-		virtual bool IsOverlap(CircleCollShape collision) const = 0;
-		virtual bool IsOverlap(AABBCollShape collision)const = 0;
+		virtual bool Intersect(CircleCollShape collision) const = 0;
+		virtual bool Intersect(AABBCollShape collision)const = 0;
 		virtual bool IsPointInCollider(Vector2f point)const = 0;
 		virtual Vector2f GetClosestPoint(Vector2f point)const = 0;
 
-		static bool IsOverlap_CircleVsCircle(CircleCollShape coll1, CircleCollShape coll2);
-		static bool IsOverlap_CircleVsAABB(CircleCollShape coll1, AABBCollShape coll2);
-		static bool IsOverlap_AABBvsAABB(AABBCollShape coll1, AABBCollShape coll2);
-
-		static bool IsPointInCollider(const CircleCollShape& coll, Vector2f point);
-		static bool IsPointInCollider(const AABBCollShape& coll, Vector2f point);
-
-		static Vector2f GetClosestPoint(const CircleCollShape& coll, Vector2f point);
-		static Vector2f GetClosestPoint(const AABBCollShape& coll, Vector2f point);
+		static bool Intersect_CircleVsCircle(CircleCollShape coll1, CircleCollShape coll2);
+		static bool Intersect_CircleVsAABB(CircleCollShape coll1, AABBCollShape coll2);
+		static bool Intersect_AABBvsAABB(AABBCollShape coll1, AABBCollShape coll2);
 
 	protected:
 		ColliderShape(){}
@@ -36,8 +30,8 @@ namespace KrostganEngine::Physics {
 		 Vector2f Min;
 		 Vector2f Max;
 
-		bool IsOverlap(CircleCollShape collision) const override;
-		bool IsOverlap(AABBCollShape collision) const override;
+		bool Intersect(CircleCollShape collision) const override;
+		bool Intersect(AABBCollShape collision) const override;
 		bool IsPointInCollider(Vector2f point) const override;
 		Vector2f GetClosestPoint(Vector2f point)const override;
 	};
@@ -48,8 +42,8 @@ namespace KrostganEngine::Physics {
 		 Vector2f Center;
 		 float Radius;
 
-		bool IsOverlap(CircleCollShape collision) const  override;
-		bool IsOverlap(AABBCollShape collision) const  override;
+		bool Intersect(CircleCollShape collision) const  override;
+		bool Intersect(AABBCollShape collision) const  override;
 		bool IsPointInCollider(Vector2f point) const override;
 		Vector2f GetClosestPoint(Vector2f point)const override;
 	};
