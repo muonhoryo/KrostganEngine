@@ -17,15 +17,12 @@ using namespace KrostganEngine::GameObjects;
 using namespace KrostganEngine::UI;
 using namespace KrostganEngine::EntitiesControl;
 
-UnitObject::UnitObject(EntityBattleStats& BattleStats,Fraction EntityFraction,const Texture& RenTexture, Vector2f RenOffset, Vector2f Position,float Size)
-	:Entity(BattleStats,EntityFraction,RenTexture, RenOffset, Position,Size){
-	Collider = new CircleCollShape(Position, Size * Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution * 0.5f);
+UnitObject::UnitObject(UnitObjectCtorParams& params)
+	:Entity(params){
+	Collider = new CircleCollShape(params.Position, params.Size * Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution * 0.5f);
 	Layer = PhysicsLayer::Units;
-
-	testCircle = new CircleVisPrimitive(Position, Collider->Radius, Color::Green, 30);
 }
 UnitObject::~UnitObject() {
-	delete testCircle;
 	delete Collider;
 }
 
@@ -37,14 +34,10 @@ PhysicsLayer UnitObject::GetLayer() const {
 void UnitObject::SetScale(float scale) {
 	Entity::SetScale(scale);
 	Collider->Radius= scale * Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution/2;
-
-	testCircle->SetRadius(Collider->Radius);
 }
 void UnitObject::SetPosition(Vector2f pos) {
 	Entity::SetPosition(pos);
 	Collider->Center = pos;
-
-	testCircle->SetCenter(pos);
 }
 
 const vector<EntityOrderType>& UnitObject::GetAllowedOrdersCatalog() {

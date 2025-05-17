@@ -154,6 +154,15 @@
     <Filter Include="Исходные файлы\UI/UX">
       <UniqueIdentifier>{22eea0bd-aa0c-40af-bdfd-1e412c208dd0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems\GameObjects\OrdersSystem">
+      <UniqueIdentifier>{7e218a6a-a054-457d-977d-e6d792cd9cb8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\CoreSystems\GameObjects\OrdersSystem">
+      <UniqueIdentifier>{0d966feb-92e7-4ba0-b463-83b65df10b66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Debug\Visualization">
+      <UniqueIdentifier>{7eeb6729-4d8f-4023-be38-c55fda2b34df}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\main.cpp">
@@ -270,9 +279,6 @@
     <ClCompile Include="Scripts\HeroObject.cpp">
       <Filter>Исходные файлы\CoreSystems\GameObjects</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Entity_OrdersExec.cpp">
-      <Filter>Исходные файлы\CoreSystems\EntitiesControl</Filter>
-    </ClCompile>
     <ClCompile Include="Scripts\EntityAction_MoveToPoint.cpp">
       <Filter>Исходные файлы\CoreSystems\EntitiesControl\Orders\EntityActions</Filter>
     </ClCompile>
@@ -341,6 +347,30 @@
     </ClCompile>
     <ClCompile Include="Scripts\Entity_FractionsSystem.cpp">
       <Filter>Исходные файлы\CoreSystems\EntitiesControl\RelationsSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\AutoAggressionModule.cpp">
+      <Filter>Исходные файлы\CoreSystems\EntitiesControl</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\OrdersExecutor.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameObjects\OrdersSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\BaseAutoAggrModule.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameObjects\OrdersSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\ExecutorActionsMediator.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameObjects\OrdersSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\GameObjectsManager.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\UnitColliderVisualizer.cpp">
+      <Filter>Исходные файлы\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\EntityAARadVisualizer.cpp">
+      <Filter>Исходные файлы\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\EntityAutoAggrRadVisualizer.cpp">
+      <Filter>Исходные файлы\Debug</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -577,6 +607,24 @@
     </ClInclude>
     <ClInclude Include="Scripts\IFractionMember.h">
       <Filter>Файлы заголовков\CoreSystems\EntitiesControl\RelationsSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\OrdersExecutor.h">
+      <Filter>Файлы заголовков\CoreSystems\GameObjects\OrdersSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\BaseAutoAggrModule.h">
+      <Filter>Файлы заголовков\CoreSystems\GameObjects\OrdersSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\GameObjectsManager.h">
+      <Filter>Файлы заголовков\CoreSystems\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\UnitColliderVisualizer.h">
+      <Filter>Файлы заголовков\Debug\Visualization</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\EntityAARadVisualizer.h">
+      <Filter>Файлы заголовков\Debug\Visualization</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\EntityAutoAggrRadVisualizer.h">
+      <Filter>Файлы заголовков\Debug\Visualization</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

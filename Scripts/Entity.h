@@ -4,13 +4,9 @@
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
 #include <SingleSprite.h>
-#include <IEntityOrder.h>
-#include <IEntityAction.h>
 #include <ICallbackRec_Upd.h>
-#include <list>
 #include <EntityBattleStats.h>
 #include <vector>
-#include <EntityOrderType.h>
 #include <CoreUIUX.h>
 #include <IHitPointModule.h>
 #include <IAttackableObj.h>
@@ -18,6 +14,7 @@
 #include <ISelectableEntity.h>
 #include <Events.h>
 #include <RelationsSystem.h>
+#include <OrdersExecutor.h>
 
 using namespace sf;
 using namespace std;
@@ -25,13 +22,34 @@ using namespace KrostganEngine::EntitiesControl;
 using namespace KrostganEngine::UI;
 
 namespace KrostganEngine::GameObjects {
-	class Entity :public GameObject,public ISelectableEntity, public ICallbackRec_Upd,public IAttackableObj,
-		public IFractionMember{
-	public:
-		ExecutedEvent<const IEntityOrder*> GetOrderEvent;
-		ExecutedEvent<const IEntityOrder*> ExecuteOrderEvent;
-		NoArgsExecutedEvent ResetOrderListEvent;
+	class Entity;
 
+	struct EntityCtorParams {
+		EntityBattleStats* BattleStats;
+		Fraction EntityFraction;
+		const Texture* RenTexture;
+		Vector2f RenOffset;
+		Vector2f Position;
+		float Size;
+
+		AutoAttackModule* GetAAModule() const { return AAModule; }
+		AutoAggressionModule* GetAutoAggrModule() const { return AutoAggrModule; }
+		IHitPointModule* GetHPModule() const { return HPModule; }
+
+	protected:
+		virtual void Init_AAModule(Entity& owner) = 0;
+		virtual void Init_AutoAggrModule(Entity& owner, ExecutorActionsMediator& mediator) = 0;
+		virtual void Init_HPModule() = 0;
+
+		AutoAttackModule* AAModule=nullptr;
+		AutoAggressionModule* AutoAggrModule=nullptr;
+		IHitPointModule* HPModule=nullptr;
+
+		friend class Entity;
+	};
+
+	class Entity :public GameObject,public ISelectableEntity,public IAttackableObj, public IFractionMember,public OrdersExecutor {
+	public:
 		~Entity();
 
 		void SelectionOn() override;
@@ -43,48 +61,21 @@ namespace KrostganEngine::GameObjects {
 		void SetSpriteColor(Color color) override;
 
 		TransformableObj& GetTransform() override;
+		IHitPointModule& GetHPModule()override;
 
 	protected:
-		Entity(EntityBattleStats& BattlsStats,Fraction EntityFraction,const Texture& RenTexture,
-			Vector2f RenOffset, Vector2f Position, float Size);
+		Entity(EntityCtorParams& params);
 
 		virtual const Texture& GetSelectionTexture()=0;
 		virtual float GetSelectSpriteMaxSize() = 0;
 		virtual Vector2f GetSelectSpriteRenOffset() { return Vector2f(0, 0); };
 
 	private:
-		EventHandler<const IEntityOrder*> GetOrderEventHandler = EventHandler<const IEntityOrder*>(GetOrderEvent);
-		EventHandler<const IEntityOrder*> ExecuteOrderEventHandler = EventHandler<const IEntityOrder*>(ExecuteOrderEvent);
-		NoArgsEventHandler ResetOrderListEventHandler = NoArgsEventHandler(ResetOrderListEventHandler);
 		bool IsEntitySelected;
 		SingleSprite* SelectionSprite;
-		//
-		// 
-		// BattleStats
-		// 
-		// 
-	public:
-		const EntityBattleStats& GetBattleStats();
-		IHitPointModule& GetHPModule() override;
-
-	private:
-		EntityBattleStats& BattleStats;
-		IHitPointModule& HPModule;
-		//
-		// 
-		// Attacking
-		// 
-		// 
-	public:
-		AutoAttackModule& GetAAModule();
-
-	private:
-		AutoAttackModule& AAModule;
-		// 
-		//
-		//Fraction
-		//
-		//
+		IHitPointModule* HPModule;
+		
+		friend class AutoAggressionModule;
 	public:
 		Fraction GetFraction() const override;
 
@@ -92,37 +83,5 @@ namespace KrostganEngine::GameObjects {
 		Fraction EntityFraction;
 
 		Color GetSprColorFromFraction(Fraction frac);
-
-		// 
-		//
-		//Orders system
-		//
-		//
-	public:
-		bool TryAddOrder(IEntityOrder* order,bool clearOrdQueue=false);
-		void ResetOrdersQueue();
-
-		list<IEntityOrder*>::const_iterator GetOrderQueueIter_Begin() const;
-		list<IEntityOrder*>::const_iterator GetOrderQueueIter_AfterEnd() const;
-
-		void Update(CallbackRecArgs_Upd args) override;
-
-	protected:
-		virtual const vector<EntityOrderType>& GetAllowedOrdersCatalog() = 0;
-
-	private:
-		list<IEntityOrder*> OrdersQueue;
-		list<IEntityAction*>* ActionsToExecute;
-		IEntityOrder* CurrentOrder;
-		IEntityAction* CurrentActionToExecute;
-		LinesVisPrimitive* OrdersTargetsVisualizer;
-
-		void HandleOrders(CallbackRecArgs_Upd& args);
-		void HandleActionsToDo(CallbackRecArgs_Upd& args);
-
-		void FirstOrderExecution();
-		bool IsFirstOrderExecution();
-		void UnloadCurrentOrder();
-		void UpdateActionsToDoFromOrder();
 	};
 }

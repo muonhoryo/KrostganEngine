@@ -10,7 +10,7 @@ using namespace KrostganEngine::EntitiesControl;
 namespace KrostganEngine::GameObjects {
 	class HeroObject:UnitObject {
 	public:
-		HeroObject(EntityBattleStats& BattleStats,Fraction EntityFraction,const Texture& RenTexture, Vector2f RenOffset, Vector2f Position, float Size);
+		HeroObject(UnitObjectCtorParams& params);
 		~HeroObject();
 
 	protected:

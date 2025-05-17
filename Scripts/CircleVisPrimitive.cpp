@@ -39,6 +39,7 @@ void CircleVisPrimitive::SetCenter(Vector2f center) {
 }
 void CircleVisPrimitive::SetRadius(float radius) {
 	CirShape.setRadius(radius);
+	CirShape.setOrigin(radius, radius);
 }
 void CircleVisPrimitive::SetEdgeColor(Color color) {
 	CirShape.setOutlineColor(color);

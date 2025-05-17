@@ -16,6 +16,8 @@ namespace KrostganEngine::EntitiesControl {
 		virtual EntityOrderType GetOrderType() = 0;
 
 	 protected:
-		 IEntityOrder(){}
+		 IEntityOrder() :IsDataInv(false){}
+
+		 bool IsDataInv;
 	};
 }

@@ -39,7 +39,7 @@ void EntitiesCtrlInputMode::GiveOrderToSelected_MoveToPoint(Vector2f targetGloba
 	for (;begIt != endIt;) {
 		parEl = dynamic_cast<Entity*>(*begIt);
 		if (parEl != nullptr) {
-			parEl->TryAddOrder(new EntityOrder_MoveToPoint(*parEl, targetGlobalPos), true);
+			parEl->TryAddOrder(new EntityOrder_MoveToPoint(*parEl,*parEl, targetGlobalPos), true);
 		}
 		++begIt;
 	}
@@ -55,7 +55,7 @@ void EntitiesCtrlInputMode::GiveOrderToSelected_AttackTarget(IAttackableObj& tar
 	for (;begIt != endIt;) {
 		parEl = dynamic_cast<Entity*>(*begIt);
 		if (parEl != nullptr) {
-			parEl->TryAddOrder(new EntityOrder_AttackTarget(*parEl, target), true);
+			parEl->TryAddOrder(new EntityOrder_AttackTarget(*parEl, *parEl,target), true);
 		}
 		++begIt;
 	}

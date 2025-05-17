@@ -7,6 +7,8 @@
 #include <HeroObject.h>
 #include <TransformableObj.h>
 
+#include <GameObjectsManager.h>
+
 #include <EntityBattleStats.h>
 #include <GameObjsBaseFightSystem.h>
 #include <HPSystem.h>

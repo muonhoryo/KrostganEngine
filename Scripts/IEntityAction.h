@@ -7,6 +7,8 @@ namespace KrostganEngine::EntitiesControl {
 		virtual void Execute() = 0;
 
 	protected:
-		IEntityAction(){}
+		IEntityAction():IsDataInv(false) { }
+
+		bool IsDataInv;
 	};
 }

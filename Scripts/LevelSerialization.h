@@ -37,6 +37,7 @@ namespace KrostganEngine {
 			static inline const string ENTITY_AA_SPEED = "AASpeed";
 			static inline const string ENTITY_AA_RADIUS = "AARadius";
 			static inline const string ENTITY_FRACTION = "Fraction";
+			static inline const string ENTITY_AUTO_AGGRESSIONS_RADIUS = "AutoAggrRadius";
 
 			static inline const string UNIT_MOVINGSPEED = "MovingSpeed";
 		};

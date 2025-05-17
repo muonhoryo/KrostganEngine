@@ -1,0 +1,189 @@
+
+#include <OrdersExecutor.h>
+#include <Extensions.h>
+#include <EntityOrders.h>
+#include <iostream>
+
+using namespace std;
+using namespace KrostganEngine;
+using namespace KrostganEngine::GameObjects;
+using namespace KrostganEngine::EntitiesControl;
+
+OrdersExecutor::OrdersExecutor(EntityBattleStats& BattleStats, AutoAttackModule* AAModule, AutoAggressionModule* AutoAggrModule)
+	:BattleStats(BattleStats),
+	ActionsToExecute(new list<IEntityAction*>()),
+	CurrentActionToExecute(nullptr),
+	CurrentOrder(nullptr){
+	SetAAModule(AAModule);
+	SetAutoAggrModule(AutoAggrModule);
+}
+OrdersExecutor::~OrdersExecutor() {
+
+}
+
+bool OrdersExecutor::TryAddOrder(IEntityOrder* order, bool clearOrdQueue) {
+	if (CollectionsExts::IndexOf(GetAllowedOrdersCatalog(), order->GetOrderType()) != string::npos) { //Order's type is allowed
+
+		EntityOrder_ObjectTarget* parOrd = dynamic_cast<EntityOrder_ObjectTarget*>(order);
+		if (parOrd != nullptr &&
+			!parOrd->CanTargetItself()) {			//Order's target is object, but it cannot be executor
+			const OrdersExecutor* ordTar =dynamic_cast<const OrdersExecutor*>( & parOrd->GetTarget());
+			if (ordTar == this) {		//Order's target is executor
+				return false;
+			}
+		}
+
+		if (clearOrdQueue && OrdersQueue.size() != 0)
+		{
+			ResetOrdersQueue();
+		}
+		OrdersQueue.push_back(order);
+		GetOrderEventHandler.Execute(order);
+		return true;
+	}
+	return false;
+}
+void OrdersExecutor::ResetOrdersQueue() {
+	if (!IsFirstOrderExecution()) {
+		UnloadCurrentOrder();
+	}
+	OrdersQueue.clear();
+	ResetOrderListEventHandler.Execute();
+}
+
+list<IEntityOrder*>::const_iterator OrdersExecutor::GetOrderQueueIter_Begin() const {
+	return OrdersQueue.cbegin();
+}
+list<IEntityOrder*>::const_iterator OrdersExecutor::GetOrderQueueIter_AfterEnd() const {
+	return OrdersQueue.cend();
+}
+EntityBattleStats& OrdersExecutor::GetBattleStats() const {
+	return BattleStats;
+}
+AutoAttackModule& OrdersExecutor::GetAAModule() const {
+	return *AAModule;
+}
+AutoAggressionModule& OrdersExecutor::GetAutoAggrModule() const {
+	return *AutoAggrModule;
+}
+
+void OrdersExecutor::Update(CallbackRecArgs_Upd args) {
+	HandleOrders(args);
+	HandleActionsToDo(args);
+}
+
+void OrdersExecutor::HandleOrders(CallbackRecArgs_Upd& args) {
+	if (IsFirstOrderExecution()) {
+		if (OrdersQueue.size() != 0) {	//First order's execution
+			FirstOrderExecution();
+		}
+	}
+	else if (CurrentOrder->CheckExecCondition()) {
+		UnloadCurrentOrder();
+		if (OrdersQueue.size() != 0) {
+			FirstOrderExecution();
+		}
+	}
+}
+void OrdersExecutor::HandleActionsToDo(CallbackRecArgs_Upd& args) {
+	while (ActionsToExecute->size() != 0) {			//Is there any actions to do in queue
+
+		if (CurrentActionToExecute == nullptr){		//Is current action is unloaded
+
+			UpdateCurrActionToExec();				//Get next action to do
+		}
+
+		if (CurrentActionToExecute->CheckExecCondition()) {		//Is current action is complete
+			
+			//Check every action in queue until get action that needs to complete or queue is ended
+			//Unload current action
+
+			ActionsToExecute->pop_front();
+			delete CurrentActionToExecute;
+
+			if (ActionsToExecute->size() == 0) {		//Is every actions completed
+
+				CurrentActionToExecute = nullptr;		//Empty field and set signal, that there is no actions to do
+			}
+			else {
+
+				UpdateCurrActionToExec();				//Get next action to do
+			}
+		}
+		else {
+
+			//Execute current action
+			CurrentActionToExecute->Execute();
+			return;
+		}
+	}
+	if (!IsFirstOrderExecution() && !CurrentOrder->CheckExecCondition()) {  //Order is still uncomplete, but previous actions is done
+
+		UpdateActionsToDoFromOrder();		//Get actions from order
+		UpdateCurrActionToExec();			//Get next action to do try to execute that
+	}
+}
+
+void OrdersExecutor::FirstOrderExecution() {
+	while (OrdersQueue.size() != 0) {
+		CurrentOrder = OrdersQueue.front();
+		if (CurrentOrder->CheckExecCondition()) {
+			OrdersQueue.pop_front();
+		}
+		else {
+			CurrentOrder->OnStartExecution();
+			UpdateActionsToDoFromOrder();
+			return;
+		}
+	}
+}
+bool OrdersExecutor::IsFirstOrderExecution() {
+	return CurrentOrder == nullptr;
+}
+void OrdersExecutor::UnloadCurrentOrder() {
+	cout << "Order of type: " << (int)CurrentOrder->GetOrderType() << " is done" << endl;
+	UnloadActionsToDo();
+
+	OrdersQueue.pop_front();
+	CurrentOrder->OnEndExecution();
+	auto parOrder = dynamic_cast<EntityOrder_GlobalPosTarget*>(CurrentOrder);
+	ExecuteOrderEventHandler.Execute(CurrentOrder);
+	delete CurrentOrder;
+	CurrentOrder = nullptr;
+}
+void OrdersExecutor::UnloadActionsToDo() {
+	ActionsToExecute->clear();
+	if (CurrentActionToExecute != nullptr) {
+		delete CurrentActionToExecute;
+	}
+	CurrentActionToExecute = nullptr;
+}
+void OrdersExecutor::UpdateActionsToDoFromOrder() {
+	ChangeActionsToDo(&CurrentOrder->GetActions());
+}
+void OrdersExecutor::ChangeActionsToDo(list<IEntityAction*>* actions) {
+	if (ActionsToExecute != nullptr) {
+		delete ActionsToExecute;
+	}
+	ActionsToExecute = actions;
+}
+void OrdersExecutor::UpdateCurrActionToExec() {
+	CurrentActionToExecute = ActionsToExecute->front();
+	cout << "Execute action: " << typeid(*CurrentActionToExecute).name() << endl;
+}
+
+ExecutorActionsMediator& OrdersExecutor::GetActionsMediator() {
+	return *new ExecutorActionsMediator(*this);
+}
+void OrdersExecutor::SetAAModule(AutoAttackModule* aamodule) {
+	if (AAModule != nullptr)
+		delete AAModule;
+	AAModule = aamodule;
+}
+void OrdersExecutor::SetAutoAggrModule(AutoAggressionModule* autoAggmodule) {
+	if (AutoAggrModule != nullptr)
+		delete AutoAggrModule;
+	AutoAggrModule = autoAggmodule;
+	if (AutoAggrModule != nullptr)
+		AutoAggrModule->TurnOn();
+}

@@ -15,6 +15,10 @@ EntityBaseAAModule::EntityBaseAAModule(EntityBattleStats& BattleStats,Transforma
 		RemReloadTime = FLT_MAX;
 }
 
+/// <summary>
+/// If target is nullptr, stops AAModule
+/// </summary>
+/// <param name="target"></param>
 void EntityBaseAAModule::SetAsTarget(IAttackableObj* target) {
 	Target = target;
 }

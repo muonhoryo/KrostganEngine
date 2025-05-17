@@ -7,7 +7,7 @@
 #include <IEntityOrder.h>
 #include <IEntityAction.h>
 #include <EntityHPModule.h>
-#include <EntityBaseAAModule.h>
+#include <GameObjectsManager.h>
 
 using namespace sf;
 using namespace KrostganEngine;
@@ -15,30 +15,27 @@ using namespace KrostganEngine::GameObjects;
 using namespace KrostganEngine::EntitiesControl;
 using namespace KrostganEngine::UI;
 
-Entity::Entity(EntityBattleStats& BattleStats,Fraction EntityFraction,const Texture& RenTexture, Vector2f RenOffset, Vector2f Position, float Scale)
-	:GameObject(RenTexture,RenOffset,Position, Scale,GetSprColorFromFraction(EntityFraction)), ISelectableEntity(),ICallbackRec_Upd(),IFractionMember(),
-	BattleStats(BattleStats),
-	HPModule(*new EntityHPModule(BattleStats)),
-	AAModule(*new EntityBaseAAModule(BattleStats,*this))
+Entity::Entity(EntityCtorParams& params)
+	:GameObject(*params.RenTexture, params.RenOffset, params.Position, params.Size, GetSprColorFromFraction(params.EntityFraction)),
+	ISelectableEntity(), ICallbackRec_Upd(), IFractionMember(),
+	OrdersExecutor(*params.BattleStats, nullptr, nullptr)
 {
-	this->EntityFraction = EntityFraction;
+	params.Init_AAModule(*this);
+	params.Init_AutoAggrModule(*this,GetActionsMediator());
+	params.Init_HPModule();
+	SetAAModule(params.GetAAModule());
+	SetAutoAggrModule(params.GetAutoAggrModule());
+	HPModule = params.HPModule;
+
+	this->EntityFraction = params.EntityFraction;
 	IsEntitySelected = false;
 	SelectionSprite = nullptr;
 
-	OrdersQueue = list<IEntityOrder*>();
-	ActionsToExecute = new list<IEntityAction*>();
-	CurrentOrder = nullptr;
-	CurrentActionToExecute = nullptr;
-	vector<Vector2f>& pointsForVis = *new vector<Vector2f>{ GetPosition() };
-	OrdersTargetsVisualizer = new LinesVisPrimitive(pointsForVis,Color::Green);
-	delete &pointsForVis;
+	GameObjectsManager::AddEntity(this);
 }
+
 Entity::~Entity() {
 	SelectionOff();
-
-	if (ActionsToExecute != nullptr)
-		delete ActionsToExecute;
-	OrdersQueue.clear();
 }
 
 void Entity::SelectionOn() {
@@ -66,7 +63,6 @@ void Entity::SetPosition(Vector2f position) {
 	GameObject::SetPosition(position);
 	if (IsEntitySelected)
 		SelectionSprite->SetPosition(position);
-	OrdersTargetsVisualizer->SetPointPosition(position, 0);
 }
 void Entity::SetScale(float scale) {
 	GameObject::SetScale(scale);
@@ -82,12 +78,6 @@ TransformableObj& Entity::GetTransform() {
 	return *(TransformableObj*)this;
 }
 
-const EntityBattleStats& Entity::GetBattleStats() {
-	return BattleStats;
-}
 IHitPointModule& Entity::GetHPModule() {
-	return HPModule;
-}
-AutoAttackModule& Entity::GetAAModule() {
-	return AAModule;
+	return *HPModule;
 }

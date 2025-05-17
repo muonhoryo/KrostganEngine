@@ -10,9 +10,10 @@ using namespace KrostganEngine;
 using namespace KrostganEngine::GameObjects;
 using namespace KrostganEngine::EntitiesControl;
 
-EntityOrder_AttackTarget::EntityOrder_AttackTarget(Entity& Owner, IAttackableObj& Target)
+EntityOrder_AttackTarget::EntityOrder_AttackTarget(OrdersExecutor& Owner,TransformableObj& OwnerTransform, IAttackableObj& Target)
 	:IEntityOrder(),
 	Owner(Owner),
+	OwnerTransform(OwnerTransform),
 	Target(Target),
 	AAModule(Owner.GetAAModule())
 {}
@@ -29,17 +30,19 @@ list<IEntityAction*>& EntityOrder_AttackTarget::GetActions() {
 	else {									//Owner needs to follow target first
 		
 		float alloDist = Owner.GetBattleStats().GetAARadius();
-		actions.push_back((IEntityAction*)new EntityAction_FollowObject(Owner, Target.GetTransform(), alloDist));
+		actions.push_back((IEntityAction*)new EntityAction_FollowObject(Owner,OwnerTransform, Target.GetTransform(), alloDist));
 		actions.push_back((IEntityAction*)new EntityAction_AutoAttack(Owner, Target));
 	}
 	return actions;
 }
 void EntityOrder_AttackTarget::OnStartExecution() 
 {
+	Owner.GetAutoAggrModule().TurnOff();
 	AAModule.SetAsTarget(&Target);
 }
 void EntityOrder_AttackTarget::OnEndExecution() 
 {
+	Owner.GetAutoAggrModule().TurnOn();
 	AAModule.SetAsTarget(nullptr);
 }
 EntityOrderType EntityOrder_AttackTarget::GetOrderType() {

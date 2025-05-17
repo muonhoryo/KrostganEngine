@@ -14,6 +14,8 @@ namespace KrostganEngine::GameObjects {
 		size_t GetAADamage() const;
 		float GetAASpeed() const;
 		float GetAARadius() const;
+		//View
+		float GetAutoAggrRadius() const;
 
 		//HitPoint
 		void SetMaxHP(size_t hp);
@@ -25,6 +27,8 @@ namespace KrostganEngine::GameObjects {
 		void SetAADamage(size_t damage);
 		void SetAASpeed(float speed);
 		void SetAARadius(float radius);
+		//View
+		void SetAutoAggrRadius(float radius);
 
 	private:
 		//HitPoint
@@ -36,5 +40,7 @@ namespace KrostganEngine::GameObjects {
 		size_t AADamage;
 		float AASpeed;
 		float AARadius;
+		//View
+		float AutoAggrRadius;
 	};
 }

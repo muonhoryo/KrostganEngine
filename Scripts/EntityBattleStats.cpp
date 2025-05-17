@@ -13,6 +13,7 @@ EntityBattleStats::EntityBattleStats()
 	AADamage = 0;
 	AASpeed = 0;
 	AARadius = 0;
+	AutoAggrRadius = 0;
 }
 
 //
@@ -88,4 +89,18 @@ void EntityBattleStats::SetAARadius(float radius) {
 		throw exception("AA radius cannot be less than zero");
 
 	AARadius = radius;
+}
+//
+// 
+// View
+// 
+//
+float EntityBattleStats::GetAutoAggrRadius()const {
+	return AutoAggrRadius;
+}
+void EntityBattleStats::SetAutoAggrRadius(float radius) {
+	if (radius < 0)
+		throw exception("AutoAggression radius cannot be less than zero");
+
+	AutoAggrRadius = radius;
 }

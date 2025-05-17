@@ -9,23 +9,31 @@ using namespace KrostganEngine;
 using namespace KrostganEngine::GameObjects;
 using namespace KrostganEngine::EntitiesControl;
 
-EntityOrder_MoveToPoint::EntityOrder_MoveToPoint(Entity& Owner,Vector2f TargetGlobalCoord)
-	:EntityOrder_GlobalPosTarget(TargetGlobalCoord),
-	Owner(Owner){
+EntityOrder_MoveToPoint::EntityOrder_MoveToPoint(OrdersExecutor& Owner, TransformableObj& OwnerTransform,Vector2f TargetGlobalCoord) : EntityOrder_GlobalPosTarget(TargetGlobalCoord),
+	Owner(Owner),
+	OwnerTransform(OwnerTransform){
 }
 
 bool EntityOrder_MoveToPoint::CheckExecCondition() {
-	float dist = Length(TargetGlobalPos - Owner.GetPosition());
+	if (IsDataInv)
+		return true;
+	float dist = Length(TargetGlobalPos - OwnerTransform.GetPosition());
 	return dist <= eps;
 }
 list <IEntityAction*>& EntityOrder_MoveToPoint::GetActions() {
 	list<IEntityAction*>* lst = new list<IEntityAction*>();
-	IEntityAction* act = new EntityAction_MoveToPoint(Owner, TargetGlobalPos);
+	IEntityAction* act = new EntityAction_MoveToPoint(Owner,OwnerTransform, TargetGlobalPos);
 	lst->push_back(act);
 	return *lst;
 }
-void EntityOrder_MoveToPoint::OnStartExecution() {}
-void EntityOrder_MoveToPoint::OnEndExecution() {}
+void EntityOrder_MoveToPoint::OnStartExecution()
+{
+	Owner.GetAutoAggrModule().TurnOff();
+}
+void EntityOrder_MoveToPoint::OnEndExecution() 
+{
+	Owner.GetAutoAggrModule().TurnOn();
+}
 EntityOrderType EntityOrder_MoveToPoint::GetOrderType() {
 	return EntityOrderType::MovingToPoint;
 }

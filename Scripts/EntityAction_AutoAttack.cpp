@@ -10,7 +10,7 @@ using namespace KrostganEngine;
 using namespace KrostganEngine::GameObjects;
 using namespace KrostganEngine::EntitiesControl;
 
-EntityAction_AutoAttack::EntityAction_AutoAttack(Entity& Owner, IAttackableObj& Target) 
+EntityAction_AutoAttack::EntityAction_AutoAttack(OrdersExecutor& Owner, IAttackableObj& Target)
 	:IEntityAction(),
 	Owner(Owner),
 	Target(Target),

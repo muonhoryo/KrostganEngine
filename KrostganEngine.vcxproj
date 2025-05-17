@@ -136,11 +136,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\AABBCollShape.cpp" />
+    <ClCompile Include="Scripts\AutoAggressionModule.cpp" />
     <ClCompile Include="Scripts\AutoAttackModule.cpp" />
+    <ClCompile Include="Scripts\BaseAutoAggrModule.cpp" />
     <ClCompile Include="Scripts\BaseInputHandler.cpp" />
     <ClCompile Include="Scripts\CircleCollShape.cpp" />
     <ClCompile Include="Scripts\CircleVisPrimitive.cpp" />
     <ClCompile Include="Scripts\ColliderShapes.cpp" />
+    <ClCompile Include="Scripts\EntityAARadVisualizer.cpp" />
+    <ClCompile Include="Scripts\EntityAutoAggrRadVisualizer.cpp" />
+    <ClCompile Include="Scripts\UnitColliderVisualizer.cpp" />
     <ClCompile Include="Scripts\ConsoleCommsInterpretator.cpp" />
     <ClCompile Include="Scripts\CursorManager.cpp" />
     <ClCompile Include="Scripts\EngineRenderModule.cpp" />
@@ -161,12 +166,13 @@
     <ClCompile Include="Scripts\EntityOrder_AttackTarget.cpp" />
     <ClCompile Include="Scripts\EntityOrder_MoveToPoint.cpp" />
     <ClCompile Include="Scripts\Entity_FractionsSystem.cpp" />
-    <ClCompile Include="Scripts\Entity_OrdersExec.cpp" />
+    <ClCompile Include="Scripts\ExecutorActionsMediator.cpp" />
     <ClCompile Include="Scripts\ExtGlobalResourcesLoad.cpp" />
     <ClCompile Include="Scripts\FractionSystem.cpp" />
     <ClCompile Include="Scripts\FStreamExts.cpp" />
     <ClCompile Include="Scripts\GameMode.cpp" />
     <ClCompile Include="Scripts\CallbackRecArgs_Upd.cpp" />
+    <ClCompile Include="Scripts\GameObjectsManager.cpp" />
     <ClCompile Include="Scripts\GameUI.cpp" />
     <ClCompile Include="Scripts\GlobalConstsLoad.cpp" />
     <ClCompile Include="Scripts\GroupSelectionQuad.cpp" />
@@ -181,6 +187,7 @@
     <ClCompile Include="Scripts\LevelSerialization.cpp" />
     <ClCompile Include="Scripts\LinesVisPrimitive.cpp" />
     <ClCompile Include="Scripts\MainMenuMode.cpp" />
+    <ClCompile Include="Scripts\OrdersExecutor.cpp" />
     <ClCompile Include="Scripts\OrderTargsVisManager.cpp" />
     <ClCompile Include="Scripts\OrderTargetVisualizer.cpp" />
     <ClCompile Include="Scripts\PhysicsEngine.cpp" />
@@ -199,6 +206,10 @@
     <ClCompile Include="Scripts\VectExts.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Scripts\BaseAutoAggrModule.h" />
+    <ClInclude Include="Scripts\EntityAARadVisualizer.h" />
+    <ClInclude Include="Scripts\EntityAutoAggrRadVisualizer.h" />
+    <ClInclude Include="Scripts\UnitColliderVisualizer.h" />
     <ClInclude Include="Scripts\CursorManager.h" />
     <ClInclude Include="Scripts\EntitiesCtrlInputHandler.h" />
     <ClInclude Include="Scripts\EntitiesCtrlInputModes.h" />
@@ -209,6 +220,7 @@
     <ClInclude Include="Scripts\FractionsSystem.h" />
     <ClInclude Include="Scripts\EntityOrder_AttackTarget.h" />
     <ClInclude Include="Scripts\EntityOrder_ObjectTarget.h" />
+    <ClInclude Include="Scripts\GameObjectsManager.h" />
     <ClInclude Include="Scripts\GameObjsBaseFightSystem.h" />
     <ClInclude Include="Scripts\GameUI.h" />
     <ClInclude Include="Scripts\HPSystem.h" />
@@ -231,6 +243,7 @@
     <ClInclude Include="Scripts\EntityOrder_GlobalPosTarget.h" />
     <ClInclude Include="Scripts\EntityOrder_MoveToPoint.h" />
     <ClInclude Include="Scripts\IFractionMember.h" />
+    <ClInclude Include="Scripts\OrdersExecutor.h" />
     <ClInclude Include="Scripts\RelationsSystem.h" />
     <ClInclude Include="Scripts\TemplateEvent.h" />
     <ClInclude Include="Scripts\Events.h" />

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Entity.h>
+#include <OrdersExecutor.h>
 
 using namespace sf;
 using namespace KrostganEngine::GameObjects;
@@ -8,14 +8,16 @@ using namespace KrostganEngine::GameObjects;
 namespace KrostganEngine::EntitiesControl {
 	class EntityAction_AutoAttack:public IEntityAction {
 	public:
-		EntityAction_AutoAttack(Entity& Owner,IAttackableObj& Target);
+		EntityAction_AutoAttack(OrdersExecutor& Owner,IAttackableObj& Target);
 
 		bool CheckExecCondition() override;
 		void Execute() override;
 
 	private:
-		Entity& Owner;
+		OrdersExecutor& Owner;
 		IAttackableObj& Target;
+		
+		//Cashed
 		IHitPointModule& TargetHPModule;
 		AutoAttackModule& AAModule;
 	};

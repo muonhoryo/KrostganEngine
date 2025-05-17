@@ -37,7 +37,11 @@ LevelLoadingInfo& LevelSerialization::DeserializeLevel(string serPath) {
 		}
 	}
 	st.close();
-	units.push_front(*ParseUnitInfo(params));
+	size_t size = params->size();
+	if (size > 1||
+		size == 1 && params[0].size() > 1) {
+		units.push_front(*ParseUnitInfo(params));
+	}
 	params->clear();
 	delete params;
 	LevelLoadingInfo* levelInfo = new LevelLoadingInfo(units);
@@ -150,6 +154,13 @@ EntityBattleStats& LevelSerialization::GetBattleStats(vector<string>& params, st
 		bStat_f = stof(*buffer);
 		if (bStat_f > 0)
 			bStats.SetAARadius(bStat_f);
+	}
+
+	//AutoAggrRadius
+	if (GetSerValueOfParam(params, LevelSerializationParDefNames::ENTITY_AUTO_AGGRESSIONS_RADIUS, buffer)) {
+		bStat_f = stof(*buffer);
+		if (bStat_f > 0)
+			bStats.SetAutoAggrRadius(bStat_f);
 	}
 
 	return bStats;

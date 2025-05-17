@@ -36,7 +36,15 @@ void LevelLoader::LoadLevel(const LevelLoadingInfo& levelInfo) {
 	for (auto& un : levelInfo.Units) {
 		tex = new Texture();
 		tex->loadFromFile(un.TexturePath);
-		unitObj = new UnitObject(un.BattleStats,un.EntityFraction,*tex,un.SpriteOffset,un.Position,un.Size);
+		UnitObjectCtorParams& params = *new UnitObjectCtorParams();
+		params.BattleStats = &un.BattleStats;
+		params.EntityFraction = un.EntityFraction;
+		params.RenTexture = tex;
+		params.RenOffset = un.SpriteOffset;
+		params.Position = un.Position;
+		params.Size = un.Size;
+		unitObj = new UnitObject(params);
+		delete &params;
 		LoadedUnits.push_front(unitObj);
 	}
 	for (UnitObject* un : LoadedUnits) {

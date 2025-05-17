@@ -8,6 +8,9 @@
 #include <EntityOrders.h>
 #include <vector>
 #include <EntityOrderType.h>
+#include <EntityBaseAAModule.h>
+#include <BaseAutoAggrModule.h>
+#include <EntityHPModule.h>
 
 #include <CoreUIUX.h>
 
@@ -19,9 +22,21 @@ using namespace KrostganEngine::UI;
 
 namespace KrostganEngine {
 	namespace GameObjects {
+		struct UnitObjectCtorParams : public EntityCtorParams {
+			void Init_AAModule(Entity& owner) override {
+				AAModule = new EntityBaseAAModule(*BattleStats, owner);
+			}
+			void Init_AutoAggrModule(Entity& owner,ExecutorActionsMediator& mediator) override {
+				AutoAggrModule= new BaseAutoAggrModule(owner, mediator);
+			}
+			void Init_HPModule() override {
+				HPModule = new EntityHPModule(*BattleStats);
+			}
+		};
+
 		class UnitObject :public Entity {
 		public: 
-			UnitObject(EntityBattleStats& BattleStats,Fraction EntityFraction,const Texture& RenTexture, Vector2f RenOffset, Vector2f Position,float Size);
+			UnitObject(UnitObjectCtorParams& params);
 			~UnitObject();
 
 			PhysicsLayer GetLayer() const override;
@@ -44,8 +59,6 @@ namespace KrostganEngine {
 			PhysicsLayer Layer;
 			CircleCollShape* Collider;
 			static const vector<EntityOrderType> AllowedOrdersCatalog;
-
-			CircleVisPrimitive* testCircle;
 		};
 	}
 }

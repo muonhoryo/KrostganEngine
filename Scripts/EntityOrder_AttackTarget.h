@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Entity.h>
+#include <OrdersExecutor.h>
 #include <EntityOrder_ObjectTarget.h>
 
 using namespace KrostganEngine::GameObjects;
@@ -8,7 +8,7 @@ using namespace KrostganEngine::GameObjects;
 namespace KrostganEngine::EntitiesControl {
 	class EntityOrder_AttackTarget:public IEntityOrder,public EntityOrder_ObjectTarget {
 	public:
-		EntityOrder_AttackTarget(Entity& Owner, IAttackableObj& Target);
+		EntityOrder_AttackTarget(OrdersExecutor& Owner, TransformableObj& OwnerTransform, IAttackableObj& Target);
 
 		bool CheckExecCondition() override;
 		list<IEntityAction*>& GetActions() override;
@@ -18,7 +18,9 @@ namespace KrostganEngine::EntitiesControl {
 
 		const TransformableObj& GetTarget() const override;
 
-		Entity& Owner;
+		OrdersExecutor& Owner;
+		TransformableObj& OwnerTransform;
+		//Cashed
 		AutoAttackModule& AAModule;
 		IAttackableObj& Target;
 	};
