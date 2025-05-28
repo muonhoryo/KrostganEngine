@@ -78,6 +78,7 @@ void GroupSelectionSystem::Remove(ISelectableEntity*& entity) {
 void GroupSelectionSystem::Clear() {
 	for (auto en : Singleton->SelectedEntities) {
 		en->SelectionOff();
+		Singleton->RemoveSelectableEventHandler.Execute(en);
 	}
 	Singleton->SelectedEntities.clear();
 	Singleton->ClearSelectionEventHandler.Execute();

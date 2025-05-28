@@ -23,6 +23,7 @@ OrderTargsVisManager::RemoveEntitySubscriber::RemoveEntitySubscriber(OrderTargsV
 }
 
 void OrderTargsVisManager::RemoveEntitySubscriber::Execute(ISelectableEntity* const& args) {
+	Owner.TryRemoveEntity(args);
 }
 
 OrderTargsVisManager::ClearListSubscriber::ClearListSubscriber(OrderTargsVisManager& Owner)
