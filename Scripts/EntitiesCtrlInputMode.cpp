@@ -81,3 +81,19 @@ void EntitiesCtrlInputMode::GiveOrderToSelected_HoldPosition() {
 	}
 	cout << "Give an order: Hold position " << endl;
 }
+void EntitiesCtrlInputMode::GiveOrderToSelected_Cancel() {
+	if (!GivingOrderCondition())
+		return;
+
+	auto begIt = GroupSelectionSystem::GetEntitiesBegIter();
+	auto endIt = GroupSelectionSystem::GetEntitiesEndIter();
+	Entity* parEl;
+	for (;begIt != endIt;) {
+		parEl = dynamic_cast<Entity*>(*begIt);
+		if (parEl != nullptr) {
+			parEl->TryAddOrder(new EntityOrder_Cancel(*parEl), true);
+		}
+		++begIt;
+	}
+	cout << "Give an order: Cancel " << endl;
+}

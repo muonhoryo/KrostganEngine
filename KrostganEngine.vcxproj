@@ -145,6 +145,7 @@
     <ClCompile Include="Scripts\ColliderShapes.cpp" />
     <ClCompile Include="Scripts\EntityAARadVisualizer.cpp" />
     <ClCompile Include="Scripts\EntityAutoAggrRadVisualizer.cpp" />
+    <ClCompile Include="Scripts\EntityOrder_Cancel.cpp" />
     <ClCompile Include="Scripts\EntityOrder_HoldPosition.cpp" />
     <ClCompile Include="Scripts\UnitColliderVisualizer.cpp" />
     <ClCompile Include="Scripts\ConsoleCommsInterpretator.cpp" />
@@ -208,6 +209,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\BaseAutoAggrModule.h" />
+    <ClInclude Include="Scripts\EntityOrder_Cancel.h" />
     <ClInclude Include="Scripts\EntityOrder_HoldPosition.h" />
     <ClInclude Include="Scripts\EntityAARadVisualizer.h" />
     <ClInclude Include="Scripts\EntityAutoAggrRadVisualizer.h" />

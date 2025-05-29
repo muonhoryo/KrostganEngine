@@ -52,9 +52,10 @@ void EntCtrlMode_Base::HandleInput(CallbackRecArgs_Upd& args) {
 			{
 				GiveOrderToSelected_HoldPosition();
 			}
-
-			default:
-				break;
+			case Keyboard::C:
+			{
+				GiveOrderToSelected_Cancel();
+			}
 			}
 		}
 	}
