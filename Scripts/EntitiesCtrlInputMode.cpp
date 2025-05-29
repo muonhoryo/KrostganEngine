@@ -29,8 +29,12 @@ bool EntitiesCtrlInputMode::TryGetTargetAtPos(Vector2f pos, IPhysicalObject*& ta
 		return true;
 }
 
+bool EntitiesCtrlInputMode::GivingOrderCondition() {
+	return GroupSelectionSystem::GetToPlayertRelOfSelEntities() == Relation::Ally;
+}
+
 void EntitiesCtrlInputMode::GiveOrderToSelected_MoveToPoint(Vector2f targetGlobalPos) {
-	if (GroupSelectionSystem::GeToPlayertRelOfSelEntities() != Relation::Ally)
+	if (!GivingOrderCondition())
 		return;
 
 	auto begIt = GroupSelectionSystem::GetEntitiesBegIter();
@@ -46,7 +50,7 @@ void EntitiesCtrlInputMode::GiveOrderToSelected_MoveToPoint(Vector2f targetGloba
 	cout << "Give an order: Move to " << ToString<float>(targetGlobalPos) << endl;
 }
 void EntitiesCtrlInputMode::GiveOrderToSelected_AttackTarget(IAttackableObj& target) {
-	if (GroupSelectionSystem::GeToPlayertRelOfSelEntities() != Relation::Ally)
+	if (!GivingOrderCondition())
 		return;
 
 	auto begIt = GroupSelectionSystem::GetEntitiesBegIter();
@@ -60,4 +64,20 @@ void EntitiesCtrlInputMode::GiveOrderToSelected_AttackTarget(IAttackableObj& tar
 		++begIt;
 	}
 	cout << "Give an order: Attack target " << endl;
+}
+void EntitiesCtrlInputMode::GiveOrderToSelected_HoldPosition() {
+	if (!GivingOrderCondition())
+		return;
+
+	auto begIt = GroupSelectionSystem::GetEntitiesBegIter();
+	auto endIt = GroupSelectionSystem::GetEntitiesEndIter();
+	Entity* parEl;
+	for (;begIt != endIt;) {
+		parEl = dynamic_cast<Entity*>(*begIt);
+		if (parEl != nullptr) {
+			parEl->TryAddOrder(new EntityOrder_HoldPosition(*parEl),true);
+		}
+		++begIt;
+	}
+	cout << "Give an order: Hold position " << endl;
 }

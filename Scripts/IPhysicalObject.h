@@ -14,7 +14,7 @@ namespace KrostganEngine::Physics {
 		virtual bool IsCollide(ColliderShape* coll[],size_t count) const = 0;
 		virtual bool IsInCollider(Vector2f point) const = 0;
 
-		~IPhysicalObject();
+		virtual ~IPhysicalObject();
 
 	protected:
 		IPhysicalObject();

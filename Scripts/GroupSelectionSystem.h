@@ -23,7 +23,7 @@ namespace KrostganEngine::EntitiesControl {
 		static void Clear();
 		static forward_list<ISelectableEntity*>::iterator GetEntitiesBegIter();
 		static forward_list<ISelectableEntity*>::const_iterator GetEntitiesEndIter();
-		static Relation GeToPlayertRelOfSelEntities();
+		static Relation GetToPlayertRelOfSelEntities();
 
 		template <typename TIterator,typename TCIterator>
 		static void AddRange(TIterator itStart, TCIterator itEnd) {

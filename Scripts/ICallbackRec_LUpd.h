@@ -10,6 +10,8 @@ namespace KrostganEngine::Core {
 
 	class ICallbackRec_LUpd {
 	public:
+		virtual ~ICallbackRec_LUpd() {};
+
 		virtual void Update(CallbackRecArgs_LUpd args) = 0;
 	protected:
 		ICallbackRec_LUpd() {};

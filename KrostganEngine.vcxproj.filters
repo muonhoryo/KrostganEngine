@@ -372,6 +372,9 @@
     <ClCompile Include="Scripts\EntityAutoAggrRadVisualizer.cpp">
       <Filter>Исходные файлы\Debug</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\EntityOrder_HoldPosition.cpp">
+      <Filter>Исходные файлы\CoreSystems\EntitiesControl\Orders\BaseOrders</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\GameObject.h">
@@ -625,6 +628,9 @@
     </ClInclude>
     <ClInclude Include="Scripts\EntityAutoAggrRadVisualizer.h">
       <Filter>Файлы заголовков\Debug\Visualization</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\EntityOrder_HoldPosition.h">
+      <Filter>Файлы заголовков\CoreSystems\EntitiesControl\Orders\BaseOrders</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

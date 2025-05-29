@@ -33,7 +33,7 @@ bool OrdersExecutor::TryAddOrder(IEntityOrder* order, bool clearOrdQueue) {
 			}
 		}
 
-		if (clearOrdQueue && OrdersQueue.size() != 0)
+		if ((clearOrdQueue || order->IsCancelNextOrders()) && OrdersQueue.size() != 0)
 		{
 			ResetOrdersQueue();
 		}
@@ -159,17 +159,30 @@ void OrdersExecutor::UnloadActionsToDo() {
 	CurrentActionToExecute = nullptr;
 }
 void OrdersExecutor::UpdateActionsToDoFromOrder() {
-	ChangeActionsToDo(&CurrentOrder->GetActions());
+	ChangeActionsToDo(CurrentOrder->GetActions());
 }
 void OrdersExecutor::ChangeActionsToDo(list<IEntityAction*>* actions) {
-	if (ActionsToExecute != nullptr) {
-		delete ActionsToExecute;
+	if (actions == nullptr) {
+		if (ActionsToExecute == nullptr) {
+			ActionsToExecute = new list<IEntityAction*>();
+		}
+		else if (ActionsToExecute->size() != 0) {
+			ActionsToExecute->clear();
+		}
 	}
-	ActionsToExecute = actions;
+	else {
+		if (ActionsToExecute != nullptr) {
+			delete ActionsToExecute;
+		}
+		ActionsToExecute = actions;
+	}
 }
 void OrdersExecutor::UpdateCurrActionToExec() {
-	CurrentActionToExecute = ActionsToExecute->front();
-	cout << "Execute action: " << typeid(*CurrentActionToExecute).name() << endl;
+	if (ActionsToExecute->size() > 0) {
+
+		CurrentActionToExecute = ActionsToExecute->front();
+		cout << "Execute action: " << typeid(*CurrentActionToExecute).name() << endl;
+	}
 }
 
 ExecutorActionsMediator& OrdersExecutor::GetActionsMediator() {

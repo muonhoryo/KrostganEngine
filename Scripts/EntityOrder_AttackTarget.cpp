@@ -21,7 +21,7 @@ EntityOrder_AttackTarget::EntityOrder_AttackTarget(OrdersExecutor& Owner,Transfo
 bool EntityOrder_AttackTarget::CheckExecCondition() {
 	return Target.GetHPModule().GetIsDeadState();
 }
-list<IEntityAction*>& EntityOrder_AttackTarget::GetActions() {
+list<IEntityAction*>* EntityOrder_AttackTarget::GetActions() {
 	list<IEntityAction*>& actions=*new list<IEntityAction*>();
 	if (Owner.GetAAModule().CheckTargetReach(Target)) {			//Target is in attack range of executor
 		
@@ -33,7 +33,7 @@ list<IEntityAction*>& EntityOrder_AttackTarget::GetActions() {
 		actions.push_back((IEntityAction*)new EntityAction_FollowObject(Owner,OwnerTransform, Target.GetTransform(), alloDist));
 		actions.push_back((IEntityAction*)new EntityAction_AutoAttack(Owner, Target));
 	}
-	return actions;
+	return &actions;
 }
 void EntityOrder_AttackTarget::OnStartExecution() 
 {

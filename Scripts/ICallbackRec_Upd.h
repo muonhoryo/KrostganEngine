@@ -17,7 +17,7 @@ namespace KrostganEngine::Core {
 	class ICallbackRec_Upd {
 	public:
 		virtual void Update(CallbackRecArgs_Upd args) = 0;
-		~ICallbackRec_Upd();
+		virtual ~ICallbackRec_Upd();
 	protected:
 		ICallbackRec_Upd();
 	};

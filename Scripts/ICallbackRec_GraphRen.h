@@ -8,7 +8,7 @@ namespace KrostganEngine::Core {
 	class ICallbackRec_GraphRen {
 	public:
 		virtual void RenderGraphic(RenderWindow& window) = 0;
-		~ICallbackRec_GraphRen();
+		virtual ~ICallbackRec_GraphRen();
 	protected:
 		ICallbackRec_GraphRen();
 	};

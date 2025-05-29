@@ -9,15 +9,17 @@ using namespace std;
 namespace KrostganEngine::EntitiesControl {
 	 class IEntityOrder {
 	 public:
+		 virtual ~IEntityOrder(){}
+
 		virtual bool CheckExecCondition()=0;
-		virtual list<IEntityAction*>& GetActions()=0;
+		virtual list<IEntityAction*>* GetActions()=0;
 		virtual void OnStartExecution() = 0;
 		virtual void OnEndExecution() = 0;
 		virtual EntityOrderType GetOrderType() = 0;
 
-	 protected:
-		 IEntityOrder() :IsDataInv(false){}
+		virtual bool IsCancelNextOrders() { return false; }
 
-		 bool IsDataInv;
+	 protected:
+		 IEntityOrder(){}
 	};
 }

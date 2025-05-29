@@ -3,6 +3,7 @@
 namespace KrostganEngine::EntitiesControl {
 	enum class EntityOrderType {
 		MovingToPoint,
-		AttackTarget
+		AttackTarget,
+		HoldPosition
 	};
 }

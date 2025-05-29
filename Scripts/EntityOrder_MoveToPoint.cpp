@@ -15,16 +15,14 @@ EntityOrder_MoveToPoint::EntityOrder_MoveToPoint(OrdersExecutor& Owner, Transfor
 }
 
 bool EntityOrder_MoveToPoint::CheckExecCondition() {
-	if (IsDataInv)
-		return true;
 	float dist = Length(TargetGlobalPos - OwnerTransform.GetPosition());
 	return dist <= eps;
 }
-list <IEntityAction*>& EntityOrder_MoveToPoint::GetActions() {
+list <IEntityAction*>* EntityOrder_MoveToPoint::GetActions() {
 	list<IEntityAction*>* lst = new list<IEntityAction*>();
 	IEntityAction* act = new EntityAction_MoveToPoint(Owner,OwnerTransform, TargetGlobalPos);
 	lst->push_back(act);
-	return *lst;
+	return lst;
 }
 void EntityOrder_MoveToPoint::OnStartExecution()
 {

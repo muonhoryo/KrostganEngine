@@ -62,8 +62,9 @@ float UnitObject::GetSelectSpriteMaxSize() {
 	return Engine::GetGlobalConsts().UnitsSelectArea_OneSizeSpriteResol;
 }
 
-const vector<EntityOrderType> UnitObject::AllowedOrdersCatalog = vector<EntityOrderType> 
-	{
-	EntityOrderType::MovingToPoint,
-	EntityOrderType::AttackTarget
+const vector<EntityOrderType> UnitObject::AllowedOrdersCatalog = vector<EntityOrderType>
+{
+EntityOrderType::MovingToPoint,
+EntityOrderType::AttackTarget,
+EntityOrderType::HoldPosition
 };

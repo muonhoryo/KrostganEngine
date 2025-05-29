@@ -15,7 +15,7 @@ namespace KrostganEngine::EntitiesControl {
 		EntityOrder_MoveToPoint(OrdersExecutor& Owner,TransformableObj& OwnerTransform,Vector2f TargetGlobalCoord);
 
 		bool CheckExecCondition() override;
-		list<IEntityAction*>& GetActions() override;
+		list<IEntityAction*>* GetActions() override;
 		void OnStartExecution() override;
 		void OnEndExecution() override;
 		EntityOrderType GetOrderType() override;

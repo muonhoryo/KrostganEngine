@@ -11,7 +11,7 @@ namespace KrostganEngine::EntitiesControl {
 		EntityOrder_AttackTarget(OrdersExecutor& Owner, TransformableObj& OwnerTransform, IAttackableObj& Target);
 
 		bool CheckExecCondition() override;
-		list<IEntityAction*>& GetActions() override;
+		list<IEntityAction*>* GetActions() override;
 		void OnStartExecution() override;
 		void OnEndExecution() override;
 		EntityOrderType GetOrderType() override;

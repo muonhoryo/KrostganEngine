@@ -39,10 +39,22 @@ void EntCtrlMode_Base::HandleInput(CallbackRecArgs_Upd& args) {
 			}
 		}
 		else if (input.type == Event::KeyPressed) {
-			if (input.key.code == Keyboard::A) {
+			
+			switch (input.key.code)
+			{
+			case Keyboard::A:
+			{
 				Owner.SetNewMode(*new EntCtrlMode_AttackOrder(Owner));
 				cout << "Handle target of attack order" << endl;
 				return;
+			}
+			case Keyboard::H:
+			{
+				GiveOrderToSelected_HoldPosition();
+			}
+
+			default:
+				break;
 			}
 		}
 	}

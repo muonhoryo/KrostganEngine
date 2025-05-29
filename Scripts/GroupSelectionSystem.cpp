@@ -89,7 +89,7 @@ forward_list<ISelectableEntity*>::iterator GroupSelectionSystem::GetEntitiesBegI
 forward_list<ISelectableEntity*>::const_iterator GroupSelectionSystem::GetEntitiesEndIter() {
 	return Singleton->SelectedEntities.cend();
 }
-Relation GroupSelectionSystem::GeToPlayertRelOfSelEntities() {
+Relation GroupSelectionSystem::GetToPlayertRelOfSelEntities() {
 	return Singleton->SelEntsRelationToPl;
 }
 
