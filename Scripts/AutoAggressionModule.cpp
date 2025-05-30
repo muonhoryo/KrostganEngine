@@ -11,6 +11,7 @@ AutoAggressionModule::AutoAggressionModule(ExecutorActionsMediator& ActionMediat
 	ActionMediator(ActionMediator)
 {
 	IsActive = false;
+	IsFollowTargets = true;
 }
 AutoAggressionModule::~AutoAggressionModule() {
 	delete &ActionMediator;
@@ -28,10 +29,26 @@ void AutoAggressionModule::TurnOff() {
 		cout << "Turn auto aggression off"<<endl;
 	}
 }
+void AutoAggressionModule::TurnTargetFollowingOn() {
+	if (!IsFollowTargets) {
+		TurnTarFollOnAction();
+	}
+}
+void AutoAggressionModule::TurnTargetFollowingOff() {
+	if (IsFollowTargets) {
+		TurnTarFollOffAction();
+	}
+}
+void AutoAggressionModule::Restart() {
+	TurnOff();
+	TurnOnAction();
+}
 
-
-bool AutoAggressionModule::GetActiveState() {
+bool AutoAggressionModule::GetActiveState()const {
 	return IsActive;
+}
+bool AutoAggressionModule::GetIsFollTarState()const {
+	return IsFollowTargets;
 }
 
 void AutoAggressionModule::Update(CallbackRecArgs_Upd args) {
@@ -46,4 +63,10 @@ void AutoAggressionModule::TurnOnAction() {
 }
 void AutoAggressionModule::TurnOffAction() {
 	IsActive = false;
+}
+void AutoAggressionModule::TurnTarFollOnAction() {
+	IsFollowTargets = true;
+}
+void AutoAggressionModule::TurnTarFollOffAction() {
+	IsFollowTargets = false;
 }

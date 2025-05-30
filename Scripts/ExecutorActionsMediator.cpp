@@ -16,6 +16,7 @@ void ExecutorActionsMediator::AddAction(IEntityAction* action) {
 	Owner.ActionsToExecute->push_front(action);
 }
 void ExecutorActionsMediator::SetQueue(list<IEntityAction*>& actions) {
+	Owner.UnloadActionsToDo();
 	Owner.ChangeActionsToDo(&actions);
 }
 void ExecutorActionsMediator::ResetCurrActions() {

@@ -6,11 +6,11 @@ using namespace KrostganEngine;
 using namespace KrostganEngine::EntitiesControl;
 using namespace KrostganEngine::GameObjects;
 
-EntityOrder_Cancel::EntityOrder_Cancel(OrdersExecutor& Owner) : EntityOrder_HoldPosition(Owner),
+EntityOrder_Cancel::EntityOrder_Cancel(OrdersExecutor& Owner) : EntityOrder_Idle(Owner),
 	CancelTime(Engine::GetGlobalConsts().Orders_CancelTime){
 }
 void EntityOrder_Cancel::OnStartExecution() {
-	EntityOrder_HoldPosition::OnStartExecution();
+	EntityOrder_Idle::OnStartExecution();
 	ComplTimer.restart();
 ;}
 EntityOrderType EntityOrder_Cancel::GetOrderType() {

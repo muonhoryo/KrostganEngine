@@ -131,6 +131,7 @@ void OrdersExecutor::FirstOrderExecution() {
 			OrdersQueue.pop_front();
 		}
 		else {
+			UnloadActionsToDo();
 			CurrentOrder->OnStartExecution();
 			UpdateActionsToDoFromOrder();
 			return;
@@ -152,7 +153,8 @@ void OrdersExecutor::UnloadCurrentOrder() {
 	CurrentOrder = nullptr;
 }
 void OrdersExecutor::UnloadActionsToDo() {
-	ActionsToExecute->clear();
+	if(ActionsToExecute!=nullptr)
+		ActionsToExecute->clear();
 	if (CurrentActionToExecute != nullptr) {
 		delete CurrentActionToExecute;
 	}
@@ -165,9 +167,6 @@ void OrdersExecutor::ChangeActionsToDo(list<IEntityAction*>* actions) {
 	if (actions == nullptr) {
 		if (ActionsToExecute == nullptr) {
 			ActionsToExecute = new list<IEntityAction*>();
-		}
-		else if (ActionsToExecute->size() != 0) {
-			ActionsToExecute->clear();
 		}
 	}
 	else {

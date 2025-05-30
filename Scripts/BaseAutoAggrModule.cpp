@@ -60,13 +60,17 @@ void BaseAutoAggrModule::CheckCurrTarget(CallbackRecArgs_Upd& args) {
 			ActionMediator.ResetCurrActions();
 			float alloDist = Owner.GetBattleStats().GetAARadius();
 			ActionMediator.AddAction((IEntityAction*)new EntityAction_AutoAttack(Owner, *Target));
-			ActionMediator.AddAction((IEntityAction*)new EntityAction_FollowObject(Owner,Owner, Target->GetTransform(), alloDist));
+
+			if (IsFollowTargets) {
+
+				ActionMediator.AddAction((IEntityAction*)new EntityAction_FollowObject(Owner, Owner, Target->GetTransform(), alloDist));
+			}
 		}
 	}
 	else {
 
 		if (Owner.GetAAModule().CheckTargetReach()) {		//Reach the target to AA
-			IsAttack = false;
+			IsAttack = true;
 		}
 		else {
 			Vector2f pos=Owner.GetPosition();
@@ -120,11 +124,14 @@ void BaseAutoAggrModule::FindTarget(CallbackRecArgs_Upd& args) {
 				ActionMediator.AddAction((IEntityAction*)new EntityAction_AutoAttack(Owner , *Target));
 				IsAttack = true;
 			}
-			else {									//Owner needs to follow target first
+			else{									//Owner needs to follow target first
 
-				float alloDist = Owner.GetBattleStats().GetAARadius();
-				ActionMediator.AddAction((IEntityAction*)new EntityAction_AutoAttack(Owner, *Target));
-				ActionMediator.AddAction((IEntityAction*)new EntityAction_FollowObject(Owner, Owner, Target->GetTransform(), alloDist));
+				if (IsFollowTargets) {
+
+					float alloDist = Owner.GetBattleStats().GetAARadius();
+					ActionMediator.AddAction((IEntityAction*)new EntityAction_AutoAttack(Owner, *Target));
+					ActionMediator.AddAction((IEntityAction*)new EntityAction_FollowObject(Owner, Owner, Target->GetTransform(), alloDist));
+				}
 				IsAttack = false;
 			}
 		}

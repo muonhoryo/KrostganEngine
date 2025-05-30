@@ -67,5 +67,6 @@ const vector<EntityOrderType> UnitObject::AllowedOrdersCatalog = vector<EntityOr
 EntityOrderType::MovingToPoint,
 EntityOrderType::AttackTarget,
 EntityOrderType::HoldPosition,
-EntityOrderType::Cancel
+EntityOrderType::Cancel,
+EntityOrderType::Idle
 };

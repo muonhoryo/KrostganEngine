@@ -40,8 +40,9 @@ namespace KrostganEngine::PlayerControl {
 
 		static void GiveOrderToSelected_MoveToPoint(Vector2f targetGlobalPos);
 		static void GiveOrderToSelected_AttackTarget(IAttackableObj& target);
-		static void GiveOrderToSelected_HoldPosition();
+		static void GiveOrderToSelected_Idle();
 		static void GiveOrderToSelected_Cancel();
+		static void GiveOrderToSelected_HoldPosition();
 	};
 
 	class EntitiesCtrlInputHandler :public ICallbackRec_Upd {

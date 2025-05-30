@@ -5,6 +5,7 @@ namespace KrostganEngine::EntitiesControl {
 		MovingToPoint,
 		AttackTarget,
 		HoldPosition,
-		Cancel
+		Cancel,
+		Idle
 	};
 }

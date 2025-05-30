@@ -1,13 +1,13 @@
 #pragma once
 
-#include <EntityOrder_HoldPosition.h>
+#include <EntityOrder_Idle.h>
 #include <SFML/System.hpp>
 
 using namespace sf;
 using namespace KrostganEngine::GameObjects;
 
 namespace KrostganEngine::EntitiesControl {
-	class EntityOrder_Cancel : public EntityOrder_HoldPosition {
+	class EntityOrder_Cancel : public EntityOrder_Idle {
 	public:
 		EntityOrder_Cancel(OrdersExecutor& Owner);
 

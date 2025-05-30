@@ -110,8 +110,12 @@ namespace KrostganEngine::GameObjects {
 		~AutoAggressionModule();
 		void TurnOn();
 		void TurnOff();
+		void TurnTargetFollowingOn();
+		void TurnTargetFollowingOff();
+		void Restart();
 
-		bool GetActiveState();
+		bool GetActiveState()const ;
+		bool GetIsFollTarState()const;
 
 		void Update(CallbackRecArgs_Upd args) override;
 
@@ -120,9 +124,12 @@ namespace KrostganEngine::GameObjects {
 
 		virtual void TurnOnAction();
 		virtual void TurnOffAction();
+		virtual void TurnTarFollOnAction();
+		virtual void TurnTarFollOffAction();
 		virtual void UpdateAction(CallbackRecArgs_Upd& args) = 0;
 
 		ExecutorActionsMediator& ActionMediator;
 		bool IsActive;
+		bool IsFollowTargets;
 	};
 }

@@ -46,16 +46,25 @@ void EntCtrlMode_Base::HandleInput(CallbackRecArgs_Upd& args) {
 			{
 				Owner.SetNewMode(*new EntCtrlMode_AttackOrder(Owner));
 				cout << "Handle target of attack order" << endl;
-				return;
+				break;
 			}
-			case Keyboard::H:
+			case Keyboard::I:
 			{
-				GiveOrderToSelected_HoldPosition();
+				GiveOrderToSelected_Idle();
+				break;
 			}
 			case Keyboard::C:
 			{
 				GiveOrderToSelected_Cancel();
+				break;
 			}
+			case Keyboard::H:
+			{
+				GiveOrderToSelected_HoldPosition();
+				break;
+			}
+			default:
+				break;
 			}
 		}
 	}

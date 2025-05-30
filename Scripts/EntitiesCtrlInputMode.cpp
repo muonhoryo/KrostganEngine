@@ -65,7 +65,7 @@ void EntitiesCtrlInputMode::GiveOrderToSelected_AttackTarget(IAttackableObj& tar
 	}
 	cout << "Give an order: Attack target " << endl;
 }
-void EntitiesCtrlInputMode::GiveOrderToSelected_HoldPosition() {
+void EntitiesCtrlInputMode::GiveOrderToSelected_Idle() {
 	if (!GivingOrderCondition())
 		return;
 
@@ -75,11 +75,11 @@ void EntitiesCtrlInputMode::GiveOrderToSelected_HoldPosition() {
 	for (;begIt != endIt;) {
 		parEl = dynamic_cast<Entity*>(*begIt);
 		if (parEl != nullptr) {
-			parEl->TryAddOrder(new EntityOrder_HoldPosition(*parEl),true);
+			parEl->TryAddOrder(new EntityOrder_Idle(*parEl),true);
 		}
 		++begIt;
 	}
-	cout << "Give an order: Hold position " << endl;
+	cout << "Give an order: Idle " << endl;
 }
 void EntitiesCtrlInputMode::GiveOrderToSelected_Cancel() {
 	if (!GivingOrderCondition())
@@ -96,4 +96,20 @@ void EntitiesCtrlInputMode::GiveOrderToSelected_Cancel() {
 		++begIt;
 	}
 	cout << "Give an order: Cancel " << endl;
+}
+void EntitiesCtrlInputMode::GiveOrderToSelected_HoldPosition() {
+	if (!GivingOrderCondition())
+		return;
+
+	auto begIt = GroupSelectionSystem::GetEntitiesBegIter();
+	auto endIt = GroupSelectionSystem::GetEntitiesEndIter();
+	Entity* parEl;
+	for (;begIt != endIt;) {
+		parEl = dynamic_cast<Entity*>(*begIt);
+		if (parEl != nullptr) {
+			parEl->TryAddOrder(new EntityOrder_HoldPosition(*parEl), true);
+		}
+		++begIt;
+	}
+	cout << "Give an order: Hold position" << endl;
 }

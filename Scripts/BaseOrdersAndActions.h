@@ -5,8 +5,9 @@
 //Compiled orders
 #include <EntityOrder_MoveToPoint.h>
 #include <EntityOrder_AttackTarget.h>
-#include <EntityOrder_HoldPosition.h>
+#include <EntityOrder_Idle.h>
 #include <EntityOrder_Cancel.h>
+#include <EntityOrder_HoldPosition.h>
 //Entity's base actions
 #include <EntityAction_MoveTo.h>
 //Entity's actions

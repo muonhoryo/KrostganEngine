@@ -372,10 +372,13 @@
     <ClCompile Include="Scripts\EntityAutoAggrRadVisualizer.cpp">
       <Filter>Исходные файлы\Debug</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\EntityOrder_HoldPosition.cpp">
+    <ClCompile Include="Scripts\EntityOrder_Idle.cpp">
       <Filter>Исходные файлы\CoreSystems\EntitiesControl\Orders\BaseOrders</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\EntityOrder_Cancel.cpp">
+      <Filter>Исходные файлы\CoreSystems\EntitiesControl\Orders\BaseOrders</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\EntityOrder_HoldPosition.cpp">
       <Filter>Исходные файлы\CoreSystems\EntitiesControl\Orders\BaseOrders</Filter>
     </ClCompile>
   </ItemGroup>
@@ -632,10 +635,13 @@
     <ClInclude Include="Scripts\EntityAutoAggrRadVisualizer.h">
       <Filter>Файлы заголовков\Debug\Visualization</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\EntityOrder_HoldPosition.h">
+    <ClInclude Include="Scripts\EntityOrder_Idle.h">
       <Filter>Файлы заголовков\CoreSystems\EntitiesControl\Orders\BaseOrders</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\EntityOrder_Cancel.h">
+      <Filter>Файлы заголовков\CoreSystems\EntitiesControl\Orders\BaseOrders</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\EntityOrder_HoldPosition.h">
       <Filter>Файлы заголовков\CoreSystems\EntitiesControl\Orders\BaseOrders</Filter>
     </ClInclude>
   </ItemGroup>
