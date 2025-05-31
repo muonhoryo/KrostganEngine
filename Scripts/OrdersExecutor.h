@@ -47,7 +47,7 @@ namespace KrostganEngine::GameObjects {
 	private:
 		EventHandler<const IEntityOrder*> GetOrderEventHandler = EventHandler<const IEntityOrder*>(GetOrderEvent);
 		EventHandler<const IEntityOrder*> ExecuteOrderEventHandler = EventHandler<const IEntityOrder*>(ExecuteOrderEvent);
-		NoArgsEventHandler ResetOrderListEventHandler = NoArgsEventHandler(ResetOrderListEventHandler);
+		NoArgsEventHandler ResetOrderListEventHandler = NoArgsEventHandler(ResetOrderListEvent);
 
 		list<IEntityOrder*> OrdersQueue;
 		list<IEntityAction*>* ActionsToExecute;

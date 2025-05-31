@@ -20,8 +20,9 @@ namespace KrostganEngine {
 	template <typename TArguments>
 	class ExecutedEvent final {
 	public:
-		ExecutedEvent() {
-			Subscribers = forward_list<IEventSubscriber<TArguments>*>();
+		ExecutedEvent():
+			Subscribers(forward_list<IEventSubscriber<TArguments>*>()){
+
 		}
 		void Add(IEventSubscriber<TArguments>* subscriber) {
 			Subscribers.push_front(subscriber);

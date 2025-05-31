@@ -16,6 +16,9 @@ EntCtrlMode_Base::EntCtrlMode_Base(EntitiesCtrlInputHandler& Owner)
 
 void EntCtrlMode_Base::HandleInput(CallbackRecArgs_Upd& args) {
 	for (auto& input : args.PlayerInput) {
+		if (Owner.HandleShiftInput(input))
+			continue;
+
 		if (input.type == Event::MouseButtonPressed) {
 			if (input.key.code == Mouse::Right) {
 				IAttackableObj* target=nullptr;
@@ -24,12 +27,12 @@ void EntCtrlMode_Base::HandleInput(CallbackRecArgs_Upd& args) {
 					IFractionMember* fracMember = dynamic_cast<IFractionMember*>(target);
 					Relation rel = fracMember != nullptr ? FractionsSystem::GetRelation(Fraction::Player, fracMember->GetFraction()) : Relation::Neutral;
 					if (rel == Relation::Enemy)
-						GiveOrderToSelected_AttackTarget(*target);
+						GiveOrderToSelected_AttackTarget(*target,Owner.GetShiftPresState());
 					else
-						GiveOrderToSelected_MoveToPoint(pos);
+						GiveOrderToSelected_MoveToPoint(pos, Owner.GetShiftPresState());
 				}
 				else {
-					GiveOrderToSelected_MoveToPoint(pos);
+					GiveOrderToSelected_MoveToPoint(pos, Owner.GetShiftPresState());
 				}
 			}
 			else if(input.mouseButton.button == Mouse::Button::Left) {
@@ -46,11 +49,11 @@ void EntCtrlMode_Base::HandleInput(CallbackRecArgs_Upd& args) {
 			{
 				Owner.SetNewMode(*new EntCtrlMode_AttackOrder(Owner));
 				cout << "Handle target of attack order" << endl;
-				break;
+				return;
 			}
 			case Keyboard::I:
 			{
-				GiveOrderToSelected_Idle();
+				GiveOrderToSelected_Idle(Owner.GetShiftPresState());
 				break;
 			}
 			case Keyboard::C:
@@ -60,7 +63,7 @@ void EntCtrlMode_Base::HandleInput(CallbackRecArgs_Upd& args) {
 			}
 			case Keyboard::H:
 			{
-				GiveOrderToSelected_HoldPosition();
+				GiveOrderToSelected_HoldPosition(Owner.GetShiftPresState());
 				break;
 			}
 			default:

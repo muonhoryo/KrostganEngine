@@ -33,7 +33,7 @@ bool EntitiesCtrlInputMode::GivingOrderCondition() {
 	return GroupSelectionSystem::GetToPlayertRelOfSelEntities() == Relation::Ally;
 }
 
-void EntitiesCtrlInputMode::GiveOrderToSelected_MoveToPoint(Vector2f targetGlobalPos) {
+void EntitiesCtrlInputMode::GiveOrderToSelected_MoveToPoint(Vector2f targetGlobalPos,bool isGrouped) {
 	if (!GivingOrderCondition())
 		return;
 
@@ -43,13 +43,13 @@ void EntitiesCtrlInputMode::GiveOrderToSelected_MoveToPoint(Vector2f targetGloba
 	for (;begIt != endIt;) {
 		parEl = dynamic_cast<Entity*>(*begIt);
 		if (parEl != nullptr) {
-			parEl->TryAddOrder(new EntityOrder_MoveToPoint(*parEl,*parEl, targetGlobalPos), true);
+			parEl->TryAddOrder(new EntityOrder_MoveToPoint(*parEl,*parEl, targetGlobalPos), !isGrouped);
 		}
 		++begIt;
 	}
 	cout << "Give an order: Move to " << ToString<float>(targetGlobalPos) << endl;
 }
-void EntitiesCtrlInputMode::GiveOrderToSelected_AttackTarget(IAttackableObj& target) {
+void EntitiesCtrlInputMode::GiveOrderToSelected_AttackTarget(IAttackableObj& target,bool isGrouped) {
 	if (!GivingOrderCondition())
 		return;
 
@@ -59,13 +59,13 @@ void EntitiesCtrlInputMode::GiveOrderToSelected_AttackTarget(IAttackableObj& tar
 	for (;begIt != endIt;) {
 		parEl = dynamic_cast<Entity*>(*begIt);
 		if (parEl != nullptr) {
-			parEl->TryAddOrder(new EntityOrder_AttackTarget(*parEl, *parEl,target), true);
+			parEl->TryAddOrder(new EntityOrder_AttackTarget(*parEl, *parEl,target), !isGrouped);
 		}
 		++begIt;
 	}
 	cout << "Give an order: Attack target " << endl;
 }
-void EntitiesCtrlInputMode::GiveOrderToSelected_Idle() {
+void EntitiesCtrlInputMode::GiveOrderToSelected_Idle(bool isGrouped) {
 	if (!GivingOrderCondition())
 		return;
 
@@ -75,7 +75,7 @@ void EntitiesCtrlInputMode::GiveOrderToSelected_Idle() {
 	for (;begIt != endIt;) {
 		parEl = dynamic_cast<Entity*>(*begIt);
 		if (parEl != nullptr) {
-			parEl->TryAddOrder(new EntityOrder_Idle(*parEl),true);
+			parEl->TryAddOrder(new EntityOrder_Idle(*parEl),!isGrouped);
 		}
 		++begIt;
 	}
@@ -97,7 +97,7 @@ void EntitiesCtrlInputMode::GiveOrderToSelected_Cancel() {
 	}
 	cout << "Give an order: Cancel " << endl;
 }
-void EntitiesCtrlInputMode::GiveOrderToSelected_HoldPosition() {
+void EntitiesCtrlInputMode::GiveOrderToSelected_HoldPosition(bool isGrouped) {
 	if (!GivingOrderCondition())
 		return;
 
@@ -107,7 +107,7 @@ void EntitiesCtrlInputMode::GiveOrderToSelected_HoldPosition() {
 	for (;begIt != endIt;) {
 		parEl = dynamic_cast<Entity*>(*begIt);
 		if (parEl != nullptr) {
-			parEl->TryAddOrder(new EntityOrder_HoldPosition(*parEl), true);
+			parEl->TryAddOrder(new EntityOrder_HoldPosition(*parEl), !isGrouped);
 		}
 		++begIt;
 	}

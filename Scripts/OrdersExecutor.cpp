@@ -14,6 +14,7 @@ OrdersExecutor::OrdersExecutor(EntityBattleStats& BattleStats, AutoAttackModule*
 	ActionsToExecute(new list<IEntityAction*>()),
 	CurrentActionToExecute(nullptr),
 	CurrentOrder(nullptr){
+
 	SetAAModule(AAModule);
 	SetAutoAggrModule(AutoAggrModule);
 }
@@ -129,6 +130,8 @@ void OrdersExecutor::FirstOrderExecution() {
 		CurrentOrder = OrdersQueue.front();
 		if (CurrentOrder->CheckExecCondition()) {
 			OrdersQueue.pop_front();
+			ExecuteOrderEventHandler.Execute(CurrentOrder);
+			delete CurrentOrder;
 		}
 		else {
 			UnloadActionsToDo();
@@ -137,6 +140,7 @@ void OrdersExecutor::FirstOrderExecution() {
 			return;
 		}
 	}
+	CurrentOrder = nullptr;
 }
 bool OrdersExecutor::IsFirstOrderExecution() {
 	return CurrentOrder == nullptr;
@@ -147,7 +151,6 @@ void OrdersExecutor::UnloadCurrentOrder() {
 
 	OrdersQueue.pop_front();
 	CurrentOrder->OnEndExecution();
-	auto parOrder = dynamic_cast<EntityOrder_GlobalPosTarget*>(CurrentOrder);
 	ExecuteOrderEventHandler.Execute(CurrentOrder);
 	delete CurrentOrder;
 	CurrentOrder = nullptr;

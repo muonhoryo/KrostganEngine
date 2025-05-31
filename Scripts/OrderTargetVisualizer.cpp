@@ -153,6 +153,7 @@ void OrderTargetsVisualizer::Clear() {
 	begIt = DynPointsHandls.begin();
 	++begIt;
 	DynPointsHandls.erase(begIt, endIt);
+	Visual.ReduceSize(1);
 }
 
 vector<Vector2f>& OrderTargetsVisualizer::InitializeVisualVector() {
@@ -160,9 +161,3 @@ vector<Vector2f>& OrderTargetsVisualizer::InitializeVisualVector() {
 	vec.push_back(Owner.GetPosition());
 	return vec;
 }
-
-		
-
-
-
-

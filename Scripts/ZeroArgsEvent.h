@@ -19,8 +19,9 @@ namespace KrostganEngine {
 
 	class NoArgsExecutedEvent final {
 	public:
-		NoArgsExecutedEvent() {
-			Subscribers = forward_list<INoArgsEventSubscriber*>();
+		NoArgsExecutedEvent():
+			Subscribers(forward_list<INoArgsEventSubscriber*>()){
+
 		}
 		void Add(INoArgsEventSubscriber* subscriber) {
 			Subscribers.push_front(subscriber);
@@ -37,7 +38,7 @@ namespace KrostganEngine {
 
 	class NoArgsEventHandler final {
 	private:
-		NoArgsExecutedEvent Owner;
+		NoArgsExecutedEvent& Owner;
 	public:
 		NoArgsEventHandler(NoArgsExecutedEvent& Owner) :Owner(Owner) {
 		}

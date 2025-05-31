@@ -12,7 +12,7 @@ LinesVisPrimitive::LinesVisPrimitive(vector<Vector2f>& pointsCoord, Color edgeCo
 	if (pointsCount== 0) {
 		throw exception("Lines primitive cannot be created without points");
 	}
-	Vertexes = VertexArray(PrimitiveType::Lines, pointsCount);
+	Vertexes = VertexArray(PrimitiveType::LineStrip, pointsCount);
 	for (int i = 0;i < pointsCount;i++) {
 		Vertexes[i].position = pointsCoord[i];
 		Vertexes[i].color = edgeColor;
@@ -42,12 +42,17 @@ void LinesVisPrimitive::RemovePointAt(size_t index) {
 	--count;
 	if (overWCount > 0) {
 		vector<Vector2f> points = vector<Vector2f>(overWCount);
-		for (size_t i = index+1;i < count+1;i++) {
-			points.push_back(Vertexes[i].position);
+		for (size_t i = index+1,j=0;i < count+1;) {
+			points[j] = Vertexes[i].position;
+			++i;
+			++j;
 		}
 		Vertexes.resize(count);
-		for (size_t i = index, j = 0;i < count;i++) {
+		for (size_t i = index, j = 0;i < count;) {
 			Vertexes[i].position = points[j];
+			Vertexes[i].color = Vertexes[0].color;
+			++i;
+			++j;
 		}
 	}
 	else {

@@ -23,7 +23,7 @@ void EntCtrlMode_AttackOrder::HandleInput(CallbackRecArgs_Upd& args) {
 			if (input.key.code == Mouse::Left) {
 				IAttackableObj* target = nullptr;
 				if (TryGetTargetByTypeAtPos(GetPosByCursor(), target)) {
-					GiveOrderToSelected_AttackTarget(*target);
+					GiveOrderToSelected_AttackTarget(*target, Owner.GetShiftPresState());
 				}
 			}
 			Owner.SetNewMode(*new EntCtrlMode_Base(Owner));
