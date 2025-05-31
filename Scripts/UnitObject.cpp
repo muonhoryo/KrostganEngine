@@ -65,6 +65,7 @@ float UnitObject::GetSelectSpriteMaxSize() {
 const vector<EntityOrderType> UnitObject::AllowedOrdersCatalog = vector<EntityOrderType>
 {
 EntityOrderType::MovingToPoint,
+EntityOrderType::FollowTarget,
 EntityOrderType::AttackTarget,
 EntityOrderType::HoldPosition,
 EntityOrderType::Cancel,

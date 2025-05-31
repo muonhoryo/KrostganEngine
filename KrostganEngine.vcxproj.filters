@@ -163,6 +163,9 @@
     <Filter Include="Файлы заголовков\Debug\Visualization">
       <UniqueIdentifier>{7eeb6729-4d8f-4023-be38-c55fda2b34df}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Исходные файлы\Debug\Visualization">
+      <UniqueIdentifier>{2735bfc9-1c31-4d8c-8f43-b5420a58ac04}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\main.cpp">
@@ -363,15 +366,6 @@
     <ClCompile Include="Scripts\GameObjectsManager.cpp">
       <Filter>Исходные файлы\CoreSystems\GameObjects</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\UnitColliderVisualizer.cpp">
-      <Filter>Исходные файлы\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\EntityAARadVisualizer.cpp">
-      <Filter>Исходные файлы\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\EntityAutoAggrRadVisualizer.cpp">
-      <Filter>Исходные файлы\Debug</Filter>
-    </ClCompile>
     <ClCompile Include="Scripts\EntityOrder_Idle.cpp">
       <Filter>Исходные файлы\CoreSystems\EntitiesControl\Orders\BaseOrders</Filter>
     </ClCompile>
@@ -379,6 +373,21 @@
       <Filter>Исходные файлы\CoreSystems\EntitiesControl\Orders\BaseOrders</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\EntityOrder_HoldPosition.cpp">
+      <Filter>Исходные файлы\CoreSystems\EntitiesControl\Orders\BaseOrders</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\EntityAARadVisualizer.cpp">
+      <Filter>Исходные файлы\Debug\Visualization</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\EntityAutoAggrRadVisualizer.cpp">
+      <Filter>Исходные файлы\Debug\Visualization</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\UnitColliderVisualizer.cpp">
+      <Filter>Исходные файлы\Debug\Visualization</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\DivineCommander.cpp">
+      <Filter>Исходные файлы\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\EntityOrder_FollowTarget.cpp">
       <Filter>Исходные файлы\CoreSystems\EntitiesControl\Orders\BaseOrders</Filter>
     </ClCompile>
   </ItemGroup>
@@ -642,6 +651,12 @@
       <Filter>Файлы заголовков\CoreSystems\EntitiesControl\Orders\BaseOrders</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\EntityOrder_HoldPosition.h">
+      <Filter>Файлы заголовков\CoreSystems\EntitiesControl\Orders\BaseOrders</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\DivineCommander.h">
+      <Filter>Файлы заголовков\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\EntityOrder_FollowTarget.h">
       <Filter>Файлы заголовков\CoreSystems\EntitiesControl\Orders\BaseOrders</Filter>
     </ClInclude>
   </ItemGroup>

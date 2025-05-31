@@ -1,6 +1,7 @@
 
 #include <EntitiesCtrlInputModes.h>
 #include <iostream>
+#include <GroupSelectionSystem.h>
 
 #include <Engine.h>
 
@@ -8,6 +9,7 @@ using namespace sf;
 using namespace std;
 using namespace KrostganEngine;
 using namespace KrostganEngine::PlayerControl;
+using namespace KrostganEngine::EntitiesControl;
 
 EntCtrlMode_Base::EntCtrlMode_Base(EntitiesCtrlInputHandler& Owner)
 	:EntitiesCtrlInputMode(Owner){
@@ -29,7 +31,7 @@ void EntCtrlMode_Base::HandleInput(CallbackRecArgs_Upd& args) {
 					if (rel == Relation::Enemy)
 						GiveOrderToSelected_AttackTarget(*target,Owner.GetShiftPresState());
 					else
-						GiveOrderToSelected_MoveToPoint(pos, Owner.GetShiftPresState());
+						GiveOrderToSelected_FollowObject(target->GetTransform(), Owner.GetShiftPresState());
 				}
 				else {
 					GiveOrderToSelected_MoveToPoint(pos, Owner.GetShiftPresState());

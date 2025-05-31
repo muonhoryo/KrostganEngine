@@ -4,6 +4,7 @@
 #include <EntityOrder_GlobalPosTarget.h>
 //Compiled orders
 #include <EntityOrder_MoveToPoint.h>
+#include <EntityOrder_FollowTarget.h>
 #include <EntityOrder_AttackTarget.h>
 #include <EntityOrder_Idle.h>
 #include <EntityOrder_Cancel.h>

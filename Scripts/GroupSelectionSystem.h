@@ -21,9 +21,16 @@ namespace KrostganEngine::EntitiesControl {
 		static void Add(ISelectableEntity*& entity);
 		static void Remove(ISelectableEntity*& entity);
 		static void Clear();
-		static forward_list<ISelectableEntity*>::iterator GetEntitiesBegIter();
-		static forward_list<ISelectableEntity*>::const_iterator GetEntitiesEndIter();
-		static Relation GetToPlayertRelOfSelEntities();
+
+		static forward_list<ISelectableEntity*>::iterator GetEntitiesBegIter() {
+			return Singleton->SelectedEntities.begin();
+		}
+		static forward_list<ISelectableEntity*>::const_iterator GetEntitiesEndIter() {
+			return Singleton->SelectedEntities.cend();
+		}
+		static Relation GetToPlayertRelOfSelEntities() {
+			return Singleton->SelEntsRelationToPl;
+		}
 
 		template <typename TIterator,typename TCIterator>
 		static void AddRange(TIterator itStart, TCIterator itEnd) {
@@ -43,5 +50,6 @@ namespace KrostganEngine::EntitiesControl {
 
 		forward_list<ISelectableEntity*> SelectedEntities;
 		Relation SelEntsRelationToPl;
+		Fraction SelEntsFraction;
 	};
 }

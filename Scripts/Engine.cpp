@@ -150,7 +150,7 @@ View& Engine::InstanceNewView() {
 	return view;
 }
 
-const std::string Engine::ENGINE_VERSION = "A0.0.10.0";
+const std::string Engine::ENGINE_VERSION = "A0.0.11.0";
 Engine* Engine::Singleton = nullptr;
 
 

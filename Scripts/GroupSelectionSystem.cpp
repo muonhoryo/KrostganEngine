@@ -5,8 +5,10 @@
 #include <iostream>
 #include <GameObject.h>
 #include <Extensions.h>
+#include <DivineCommander.h>
 
 using namespace std;
+using namespace KrostganEngine::Debug;
 using namespace KrostganEngine;
 using namespace KrostganEngine::GameObjects;
 using namespace KrostganEngine::EntitiesControl;
@@ -34,16 +36,46 @@ void GroupSelectionSystem::Add(ISelectableEntity*& entity) {
 	Relation rel = FractionsSystem::GetRelation(frac, Fraction::Player);
 	if (size == 0) {
 		Singleton->SelEntsRelationToPl = rel;
-	}
-	else if (rel==Relation::Ally){
-		if (Singleton->SelEntsRelationToPl != Relation::Ally) {
-			Clear();
-			Singleton->SelEntsRelationToPl = rel;
-		}
+		Singleton->SelEntsFraction = frac;
 	}
 	else {
-		return;
+
+		bool isEntAlly = rel == Relation::Ally;
+
+		bool canBeNotSingl = isEntAlly || DivineCommander::GetActivity();	//Select more than one entity only if entity is ally or divine commander is active
+		if (!canBeNotSingl) {
+			return;
+		}
+
+		if (isEntAlly) {
+
+			if (Singleton->SelEntsRelationToPl != Relation::Ally) {		//Ally selection is in priority
+
+				Clear();
+				Singleton->SelEntsRelationToPl = rel;
+				Singleton->SelEntsFraction = frac;
+			}
+			else if(Singleton->SelEntsFraction!=frac) {		//Can select only entities from one fraction at the same time even when both of them is allies
+
+				return;
+			}
+		}
+		else if(Singleton->SelEntsFraction!=frac) {		//Cannot select entites from different fraction at the same time
+
+			return;
+		}
 	}
+
+
+	//else if (rel==Relation::Ally && !DivineCommander::GetActivity()){			//Clear selection group if the group is not ally for player
+	//	if (Singleton->SelEntsRelationToPl != Relation::Ally) {		
+	//		Clear();
+	//		Singleton->SelEntsRelationToPl = rel;
+	//	}
+	//}
+	//else {
+	//	return;
+	//}
 	// Check relation of entity to player for not allowing selection more than one of not ally entity
 
 	Singleton->SelectedEntities.push_front(entity);
@@ -82,15 +114,6 @@ void GroupSelectionSystem::Clear() {
 	}
 	Singleton->SelectedEntities.clear();
 	Singleton->ClearSelectionEventHandler.Execute();
-}
-forward_list<ISelectableEntity*>::iterator GroupSelectionSystem::GetEntitiesBegIter() {
-	return Singleton->SelectedEntities.begin();
-}
-forward_list<ISelectableEntity*>::const_iterator GroupSelectionSystem::GetEntitiesEndIter() {
-	return Singleton->SelectedEntities.cend();
-}
-Relation GroupSelectionSystem::GetToPlayertRelOfSelEntities() {
-	return Singleton->SelEntsRelationToPl;
 }
 
 GroupSelectionSystem* GroupSelectionSystem::Singleton = nullptr;

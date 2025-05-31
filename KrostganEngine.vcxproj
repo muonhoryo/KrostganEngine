@@ -143,9 +143,11 @@
     <ClCompile Include="Scripts\CircleCollShape.cpp" />
     <ClCompile Include="Scripts\CircleVisPrimitive.cpp" />
     <ClCompile Include="Scripts\ColliderShapes.cpp" />
+    <ClCompile Include="Scripts\DivineCommander.cpp" />
     <ClCompile Include="Scripts\EntityAARadVisualizer.cpp" />
     <ClCompile Include="Scripts\EntityAutoAggrRadVisualizer.cpp" />
     <ClCompile Include="Scripts\EntityOrder_Cancel.cpp" />
+    <ClCompile Include="Scripts\EntityOrder_FollowTarget.cpp" />
     <ClCompile Include="Scripts\EntityOrder_HoldPosition.cpp" />
     <ClCompile Include="Scripts\EntityOrder_Idle.cpp" />
     <ClCompile Include="Scripts\UnitColliderVisualizer.cpp" />
@@ -210,7 +212,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\BaseAutoAggrModule.h" />
+    <ClInclude Include="Scripts\DivineCommander.h" />
     <ClInclude Include="Scripts\EntityOrder_Cancel.h" />
+    <ClInclude Include="Scripts\EntityOrder_FollowTarget.h" />
     <ClInclude Include="Scripts\EntityOrder_HoldPosition.h" />
     <ClInclude Include="Scripts\EntityOrder_Idle.h" />
     <ClInclude Include="Scripts\EntityAARadVisualizer.h" />
