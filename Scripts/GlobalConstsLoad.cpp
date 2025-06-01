@@ -21,6 +21,7 @@ const GlobalConsts& GlobalConstsLoad::LoadGlobalConsts() {
 	LoadedGlobalConsts.UnitsSelectArea_OneSizeSpriteResol = DeserializeValueByDefinition(GlobalConsts::DEF_UNITS_SELECTAREA_ONESIZE_SPRITERESOL, &line);
 	LoadedGlobalConsts.EPS = DeserializeValueByDefinition(GlobalConsts::DEF_EPS, &line);
 	LoadedGlobalConsts.Orders_CancelTime = DeserializeValueByDefinition(GlobalConsts::DEF_ORDERS_CANCELTIME, &line);
+	LoadedGlobalConsts.EntityAct_RepCoolDown = DeserializeValueByDefinition(GlobalConsts::DEF_ENTITY_ACTION_REPEAT_COOLDOWN, &line);
 
 	StrValuesArr.clear();
 	return LoadedGlobalConsts;

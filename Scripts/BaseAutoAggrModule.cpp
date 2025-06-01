@@ -12,7 +12,7 @@ using namespace KrostganEngine::EntitiesControl;
 using namespace KrostganEngine::Physics;
 
 BaseAutoAggrModule::BaseAutoAggrModule(Entity& Owner,ExecutorActionsMediator& ActionMediator) 
-	: AutoAggressionModule(ActionMediator),
+	: AutoAggressionModule(ActionMediator,Owner.StartExecOrderEvent),
 	Target(nullptr),
 	TargetTransform(nullptr),
 	Owner(Owner),

@@ -22,8 +22,13 @@ void EntCtrlMode_AttackOrder::HandleInput(CallbackRecArgs_Upd& args) {
 		if (input.type == Event::MouseButtonPressed) {
 			if (input.key.code == Mouse::Left) {
 				IAttackableObj* target = nullptr;
-				if (TryGetTargetByTypeAtPos(GetPosByCursor(), target)) {
+				Vector2f pos = GetPosByCursor();
+				if (TryGetTargetByTypeAtPos(pos, target)) {
+
 					GiveOrderToSelected_AttackTarget(*target, Owner.GetShiftPresState());
+				}
+				else {
+					GiveOrderToSelected_AttackArea(pos, Owner.GetShiftPresState());
 				}
 			}
 			Owner.SetNewMode(*new EntCtrlMode_Base(Owner));

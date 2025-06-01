@@ -7,14 +7,19 @@ using namespace KrostganEngine::EntitiesControl;
 using namespace KrostganEngine::Core;
 using namespace KrostganEngine::GameObjects;
 
-AutoAggressionModule::AutoAggressionModule(ExecutorActionsMediator& ActionMediator) : ICallbackRec_Upd(),
-	ActionMediator(ActionMediator)
+AutoAggressionModule::AutoAggressionModule(ExecutorActionsMediator& ActionMediator, ExecutedEvent<const IEntityOrder*>& StartExecOrderEvent) : ICallbackRec_Upd(),
+	ActionMediator(ActionMediator),
+	StartExecOrderEvent(StartExecOrderEvent),
+	StartExecOrderSubscr(*new OnStartOrderExecAction(*this))
 {
 	IsActive = false;
 	IsFollowTargets = true;
+	StartExecOrderEvent.Add(&StartExecOrderSubscr);
 }
 AutoAggressionModule::~AutoAggressionModule() {
 	delete &ActionMediator;
+	StartExecOrderEvent.Remove(&StartExecOrderSubscr);
+	delete &StartExecOrderSubscr;
 }
 
 void AutoAggressionModule::TurnOn() {
@@ -57,7 +62,6 @@ void AutoAggressionModule::Update(CallbackRecArgs_Upd args) {
 	}
 }
 
-
 void AutoAggressionModule::TurnOnAction() {
 	IsActive = true;
 }
@@ -69,4 +73,14 @@ void AutoAggressionModule::TurnTarFollOnAction() {
 }
 void AutoAggressionModule::TurnTarFollOffAction() {
 	IsFollowTargets = false;
+}
+
+AutoAggressionModule::OnStartOrderExecAction::OnStartOrderExecAction(AutoAggressionModule& Owner) 
+	:Owner(Owner) {
+}
+
+void AutoAggressionModule::OnStartOrderExecAction::Execute(const IEntityOrder* const& ord) {
+
+	if (Owner.GetActiveState())
+		Owner.Restart();
 }

@@ -390,6 +390,12 @@
     <ClCompile Include="Scripts\EntityOrder_FollowTarget.cpp">
       <Filter>Исходные файлы\CoreSystems\EntitiesControl\Orders\BaseOrders</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\EntityOrder_AttackArea.cpp">
+      <Filter>Исходные файлы\CoreSystems\EntitiesControl\Orders\BaseOrders</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\EntsCtrlOrdersGiving.cpp">
+      <Filter>Исходные файлы\CoreSystems\PlayerControl</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\GameObject.h">
@@ -657,6 +663,9 @@
       <Filter>Файлы заголовков\Debug</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\EntityOrder_FollowTarget.h">
+      <Filter>Файлы заголовков\CoreSystems\EntitiesControl\Orders\BaseOrders</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\EntityOrder_AttackArea.h">
       <Filter>Файлы заголовков\CoreSystems\EntitiesControl\Orders\BaseOrders</Filter>
     </ClInclude>
   </ItemGroup>

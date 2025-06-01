@@ -5,6 +5,7 @@ namespace KrostganEngine::EntitiesControl {
 		MovingToPoint,
 		FollowTarget,
 		AttackTarget,
+		AttackArea,
 		HoldPosition,
 		Cancel,
 		Idle

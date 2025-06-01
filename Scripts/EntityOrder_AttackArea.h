@@ -1,16 +1,18 @@
 #pragma once
 
+#include <IEntityOrder.h>
 #include <SFML/System.hpp>
 #include <OrdersExecutor.h>
-#include <EntityOrder_ObjectTarget.h>
+#include <Entity.h>
+#include <EntityOrder_GlobalPosTarget.h>
 
 using namespace sf;
 using namespace KrostganEngine::GameObjects;
 
 namespace KrostganEngine::EntitiesControl {
-	class EntityOrder_FollowTarget :public IEntityOrder, public EntityOrder_ObjectTarget {
+	class EntityOrder_AttackArea :public IEntityOrder, public EntityOrder_GlobalPosTarget {
 	public:
-		EntityOrder_FollowTarget(OrdersExecutor& Owner, TransformableObj& OwnerTransform, TransformableObj& Target);
+		EntityOrder_AttackArea(OrdersExecutor& Owner, TransformableObj& OwnerTransform, Vector2f TargetGlobalCoord);
 
 		bool CheckExecCondition() override;
 		list<IEntityAction*>* GetActions() override;
@@ -18,12 +20,7 @@ namespace KrostganEngine::EntitiesControl {
 		void OnEndExecution() override;
 		EntityOrderType GetOrderType() override;
 
-		const TransformableObj& GetTarget() const override;
-
 		OrdersExecutor& Owner;
 		TransformableObj& OwnerTransform;
-		TransformableObj& Target;
-		Clock FollRepeatTimer;
-		bool FirstExec = true;
 	};
 }

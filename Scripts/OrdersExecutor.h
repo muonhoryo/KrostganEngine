@@ -20,6 +20,7 @@ namespace KrostganEngine::GameObjects {
 	class OrdersExecutor : public virtual ICallbackRec_Upd{
 	public:
 		ExecutedEvent<const IEntityOrder*> GetOrderEvent;
+		ExecutedEvent<const IEntityOrder*> StartExecOrderEvent;
 		ExecutedEvent<const IEntityOrder*> ExecuteOrderEvent;
 		NoArgsExecutedEvent ResetOrderListEvent;
 
@@ -46,6 +47,7 @@ namespace KrostganEngine::GameObjects {
 		void SetAutoAggrModule(AutoAggressionModule* autoAggmodule);
 	private:
 		EventHandler<const IEntityOrder*> GetOrderEventHandler = EventHandler<const IEntityOrder*>(GetOrderEvent);
+		EventHandler<const IEntityOrder*> StartExecOrderEventHandler = EventHandler<const IEntityOrder*>(StartExecOrderEvent);
 		EventHandler<const IEntityOrder*> ExecuteOrderEventHandler = EventHandler<const IEntityOrder*>(ExecuteOrderEvent);
 		NoArgsEventHandler ResetOrderListEventHandler = NoArgsEventHandler(ResetOrderListEvent);
 
@@ -106,6 +108,18 @@ namespace KrostganEngine::GameObjects {
 	};
 
 	class AutoAggressionModule :public ICallbackRec_Upd {
+
+	private:
+		class OnStartOrderExecAction : public IEventSubscriber<const IEntityOrder*> {
+		public:
+			OnStartOrderExecAction(AutoAggressionModule& Owner);
+
+			void Execute(const IEntityOrder* const& ord) override;
+
+		private:
+			AutoAggressionModule& Owner;
+		};
+
 	public:
 		~AutoAggressionModule();
 		void TurnOn();
@@ -120,7 +134,7 @@ namespace KrostganEngine::GameObjects {
 		void Update(CallbackRecArgs_Upd args) override;
 
 	protected:
-		AutoAggressionModule(ExecutorActionsMediator& ActionMediator);
+		AutoAggressionModule(ExecutorActionsMediator& ActionMediator,ExecutedEvent<const IEntityOrder*>& StartExecOrderEvent);
 
 		virtual void TurnOnAction();
 		virtual void TurnOffAction();
@@ -129,6 +143,8 @@ namespace KrostganEngine::GameObjects {
 		virtual void UpdateAction(CallbackRecArgs_Upd& args) = 0;
 
 		ExecutorActionsMediator& ActionMediator;
+		ExecutedEvent<const IEntityOrder*>& StartExecOrderEvent;
+		OnStartOrderExecAction& StartExecOrderSubscr;
 		bool IsActive;
 		bool IsFollowTargets;
 	};

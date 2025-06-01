@@ -12,7 +12,6 @@ void EntityOrder_HoldPosition::OnStartExecution() {
 
 	auto& modul = Owner.GetAutoAggrModule();
 	modul.TurnTargetFollowingOff();
-	modul.Restart();
 }
 void EntityOrder_HoldPosition::OnEndExecution() {
 

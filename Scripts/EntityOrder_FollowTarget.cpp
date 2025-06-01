@@ -24,12 +24,21 @@ bool EntityOrder_FollowTarget::CheckExecCondition() {
 list<IEntityAction*>* EntityOrder_FollowTarget::GetActions() {
 	
 	float dist = Length(OwnerTransform.GetPosition() - Target.GetPosition());
-	if (dist > eps) {
-		return new list<IEntityAction*>{ new EntityAction_FollowObject(Owner,OwnerTransform,Target,eps) };
+
+	if (dist > eps)	{	//Owner is too far from target
+
+		if (FirstExec) {		//Immidiet first execution
+
+			FirstExec = false;
+			return new list<IEntityAction*>{ new EntityAction_FollowObject(Owner,OwnerTransform,Target,eps) };
+		}
+		else if (FollRepeatTimer.getElapsedTime().asSeconds() > Engine::GetGlobalConsts().EntityAct_RepCoolDown) {		//Limit requests to follow
+
+			FollRepeatTimer.restart();
+			return new list<IEntityAction*>{ new EntityAction_FollowObject(Owner,OwnerTransform,Target,eps) };
+		}
 	}
-	else {
-		return nullptr;
-	}
+	return nullptr;
 }
 void EntityOrder_FollowTarget::OnStartExecution()
 {

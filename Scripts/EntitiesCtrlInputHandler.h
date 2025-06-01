@@ -43,6 +43,7 @@ namespace KrostganEngine::PlayerControl {
 		static void GiveOrderToSelected_MoveToPoint(Vector2f targetGlobalPos,bool isGrouped);
 		static void GiveOrderToSelected_FollowObject(TransformableObj& target,bool isGrouped);
 		static void GiveOrderToSelected_AttackTarget(IAttackableObj& target,bool isGrouped);
+		static void GiveOrderToSelected_AttackArea(Vector2f targetGlobalPos, bool isGrouped);
 		static void GiveOrderToSelected_Idle(bool isGrouped);
 		static void GiveOrderToSelected_Cancel();
 		static void GiveOrderToSelected_HoldPosition(bool isGrouped);
