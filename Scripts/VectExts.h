@@ -11,6 +11,7 @@ namespace KrostganEngine {
 	//Consts
 
 	static const char VECTOR_VALUES_SEP_SYM = ';';
+	static const Vector2i VECTOR2_INT_ZERO = Vector2i(0, 0);
 
 	//Templates methods
 

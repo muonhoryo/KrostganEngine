@@ -12,9 +12,10 @@ using namespace std;
 using namespace KrostganEngine::Physics;
 
 
-Engine::Engine():RenderModule(*new EngineRenderModule(RendWin)),
-UpdateModule(*new EngineUpdateModule(RendWin)),
-PhysicsEng(*new PhysicsEngine()){
+Engine::Engine()
+	:RenderModule(*new EngineRenderModule(RendWin)),
+	UpdateModule(*new EngineUpdateModule(RendWin)),
+	PhysicsEng(*new PhysicsEngine()){
 
 	Singleton = this;
 
@@ -95,6 +96,14 @@ void Engine::SetZoom(float zoom) {
 		Singleton->Zoom = zoom;
 	}
 }
+void Engine::SetCameraPos(Vector2f pos) {
+	auto& view = InstanceNewView();
+	view.setCenter(pos);
+	Singleton->RendWin.setView(view);
+}
+void Engine::MoveCamera(Vector2f movVal) {
+	SetCameraPos(GetCameraPos() + movVal);
+}
 
 void Engine::RequestToChangeState(EngineState state) {
 	if (state != GetCurrentEngState()) {
@@ -150,7 +159,7 @@ View& Engine::InstanceNewView() {
 	return view;
 }
 
-const std::string Engine::ENGINE_VERSION = "A0.0.11.0";
+const std::string Engine::ENGINE_VERSION = "A0.0.12.0";
 Engine* Engine::Singleton = nullptr;
 
 
@@ -196,11 +205,14 @@ const ExternalGlobalResources& Engine::GetGlobalResources() {
 float Engine::GetZoom() {
 	return Singleton->Zoom;
 }
+Vector2f Engine::GetCameraPos() {
+	return Singleton->RendWin.getView().getCenter();
+}
 
 Vector2f Engine::ScreenPosToGlobalCoord(const Vector2f& screenPos) {
 	Vector2f globalCoord = Vector2f(screenPos);
 	auto& view = Singleton->RendWin.getView();
-	globalCoord -=view.getCenter();
+	globalCoord +=view.getCenter();
 	Vector2f screenSize = (Vector2f)GetScreenSize();
 	screenSize.x *= 0.5;
 	screenSize.y *= 0.5;

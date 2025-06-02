@@ -27,6 +27,8 @@ namespace KrostganEngine {
 			static void ReqToSetMode_LevelDeser();
 
 			static void SetZoom(float zoom);
+			static void SetCameraPos(Vector2f pos);
+			static void MoveCamera(Vector2f movVal);
 
 			static RenderWindow& GetRenderWindow();
 			static float GetFrameDeltaTime();
@@ -42,6 +44,7 @@ namespace KrostganEngine {
 			static const GlobalConsts& GetGlobalConsts();
 			static const ExternalGlobalResources& GetGlobalResources();
 			static float GetZoom();
+			static Vector2f GetCameraPos();
 
 			static Vector2f ScreenPosToGlobalCoord(const Vector2f& screenPos);
 			static Vector2u GetScreenSize();

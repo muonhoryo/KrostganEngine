@@ -222,6 +222,7 @@
     <ClInclude Include="Scripts\EntityOrder_Idle.h" />
     <ClInclude Include="Scripts\EntityAARadVisualizer.h" />
     <ClInclude Include="Scripts\EntityAutoAggrRadVisualizer.h" />
+    <ClInclude Include="Scripts\ExternalData.h" />
     <ClInclude Include="Scripts\UnitColliderVisualizer.h" />
     <ClInclude Include="Scripts\CursorManager.h" />
     <ClInclude Include="Scripts\EntitiesCtrlInputHandler.h" />

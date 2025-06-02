@@ -668,6 +668,9 @@
     <ClInclude Include="Scripts\EntityOrder_AttackArea.h">
       <Filter>Файлы заголовков\CoreSystems\EntitiesControl\Orders\BaseOrders</Filter>
     </ClInclude>
+    <ClInclude Include="Scripts\ExternalData.h">
+      <Filter>Файлы заголовков\CoreSystems\ExternalResources</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Config.txt">

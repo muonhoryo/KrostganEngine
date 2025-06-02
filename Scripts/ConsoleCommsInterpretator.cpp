@@ -5,8 +5,10 @@
 #include <iostream>
 #include <EngineCore.h>
 #include <DivineCommander.h>
+#include <Extensions.h>
 
 
+using namespace KrostganEngine;
 using namespace KrostganEngine::Debug;
 using namespace KrostganEngine::Core;
 using namespace std;
@@ -21,6 +23,11 @@ void ConsoleCommsInterpretator::ExecuteCommand(string input) {
 	else if (input.find(DIVIVE_COMMANDER_COMMAND) != string::npos) {
 
 		if (InterpretateComm_DivComm(input)) {
+			return;
+		}
+	}
+	else if (input.find(CAMERA_MOVING_COMMAND) != string::npos) {
+		if (InterpretateComm_CamMov(input)) {
 			return;
 		}
 	}
@@ -64,6 +71,24 @@ bool ConsoleCommsInterpretator::InterpretateComm_DivComm(string& input) {
 		cout << "Divine commander is on-line" << endl;
 	}
 	return true;
+}
+bool ConsoleCommsInterpretator::InterpretateComm_CamMov(string& input) {
+
+	auto syntax = SplitCommandSyntax(input);
+	if (syntax->size() != 3 ||
+		syntax->at(0) != CAMERA_MOVING_COMMAND) {
+
+		return false;
+	}
+
+	Vector2f pos;
+	pos.x= stof((*syntax)[1].c_str());
+	pos.y= stof((*syntax)[2].c_str());
+
+	cout << "Set camera to position: " << ToString<float>(pos) << endl;
+	Engine::SetCameraPos(pos);
+	return true;
+
 }
 
 vector<string>* ConsoleCommsInterpretator::SplitCommandSyntax(string input) {

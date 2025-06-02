@@ -24,11 +24,18 @@ namespace KrostganEngine {
 			/// <param name="input"></param>
 			/// <returns></returns>
 			static bool InterpretateComm_DivComm(string& input);
+			/// <summary>
+			/// Return true if is Camera moving command
+			/// </summary>
+			/// <param name="input"></param>
+			/// <returns></returns>
+			static bool InterpretateComm_CamMov(string& input);
 		private:
 			static vector<string>* SplitCommandSyntax(string input);
 
 			static inline const string ZOOM_COMMAND = "zoom";
 			static inline const string DIVIVE_COMMANDER_COMMAND = "divcomm";
+			static inline const string CAMERA_MOVING_COMMAND = "cammov";
 
 			static inline const char& SPLIT_COMM_DELIMS = {' '};
 		};

@@ -17,7 +17,7 @@ namespace KrostganEngine {
 			const EngineConfig& LoadEngineConfig();
 			const EngineConfig& GetLoadedConfig();
 		private:
-			EngineConfig LoadedConfig;
+			EngineConfig& LoadedConfig;
 
 			const string GetFilePath() override;
 			const char GetValuesDefEndSym() override;

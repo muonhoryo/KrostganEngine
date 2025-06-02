@@ -14,12 +14,14 @@ namespace KrostganEngine::Core {
 		float EPS;
 		float Orders_CancelTime;
 		float EntityAct_RepCoolDown;
+		float CameraMovTriggerArea;
 
 		static inline const string DEF_GAMEOBJS_ONESIZE_SPRITERESOL = "GameObjs_OneSizeSpriteResol";
 		static inline const string DEF_HEROES_SELECTAREA_ONESIZE_SPRITERESOL = "HeroesSelectArea_OneSizeSpriteResol";
 		static inline const string DEF_UNITS_SELECTAREA_ONESIZE_SPRITERESOL = "UnitsSelectArea_OneSizeSpriteResol";
 		static inline const string DEF_EPS = "EPS";
 		static inline const string DEF_ORDERS_CANCELTIME = "Order_CancelTime";		//In seconds
-		static inline const string DEF_ENTITY_ACTION_REPEAT_COOLDOWN = "EntityAct_RepCoolDown";
+		static inline const string DEF_ENTITY_ACTION_REPEAT_COOLDOWN = "EntityAct_RepCoolDown";		//In seconds
+		static inline const string DEF_CAMERA_MOVING_TRIGGER_AREA = "CameraMovTriggerArea";
 	};
 }

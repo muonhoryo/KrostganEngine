@@ -11,8 +11,8 @@ using namespace sf;
 using namespace KrostganEngine;
 using namespace KrostganEngine::Core;
 
-EngineConfigLoad::EngineConfigLoad() :ValuesListDeserializer() {
-	LoadedConfig = EngineConfig();
+EngineConfigLoad::EngineConfigLoad() :ValuesListDeserializer(),
+	LoadedConfig(*new EngineConfig()){
 }
 
 const EngineConfig& EngineConfigLoad::LoadEngineConfig() {
@@ -37,6 +37,10 @@ const EngineConfig& EngineConfigLoad::LoadEngineConfig() {
 	if (!TryGetValue(EngineConfig::DEF_CURSOR_ATTACK_HOTSPOT, &buffer))
 		throw exception("Cannot parse attack cursor hotspot");
 	LoadedConfig.CursorHotspot_Attack = ParseVec2u(buffer);
+
+	if (!TryGetValue(EngineConfig::DEF_CAMERA_MOVING_SPEED, &buffer))
+		throw exception("Cannot parse camera moving speed");
+	LoadedConfig.Camera_MovSpeed = stof(buffer);
 
 	StrValuesArr.clear();
 	return LoadedConfig;
