@@ -43,12 +43,15 @@ namespace KrostganEngine {
 			static const EngineConfig& GetEngineConfig();
 			static const GlobalConsts& GetGlobalConsts();
 			static const ExternalGlobalResources& GetGlobalResources();
+
 			static float GetZoom();
 			static Vector2f GetCameraPos();
-
 			static Vector2f ScreenPosToGlobalCoord(const Vector2f& screenPos);
 			static Vector2u GetScreenSize();
 			static Vector2f GetCursorClampedPos();
+			static bool IsMouseOnScreen();
+			static bool IsMouseOnScreen(Vector2i mousePos);
+			static bool HasWindowFocus();
 
 			static const std::string ENGINE_VERSION;
 		 private:

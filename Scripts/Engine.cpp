@@ -4,11 +4,13 @@
 #include <iostream>
 #include <Extensions.h>
 #include <SFML/System.hpp>
+#include <DivineCommander.h>
 
+using namespace std;
 using namespace sf;
 using namespace KrostganEngine;
+using namespace KrostganEngine::Debug;
 using namespace KrostganEngine::Core;
-using namespace std;
 using namespace KrostganEngine::Physics;
 
 
@@ -97,7 +99,14 @@ void Engine::SetZoom(float zoom) {
 	}
 }
 void Engine::SetCameraPos(Vector2f pos) {
+	const Rect<float>& borders = Singleton->EngineConfiguration->CameraMovingArea;
 	auto& view = InstanceNewView();
+
+	if (!DivineCommander::GetActivity()) {		//Limit camera moving if divine commander is off-line
+
+		pos.x = clamp<float>(pos.x, borders.left, borders.left + borders.width);
+		pos.y = clamp<float>(pos.y, borders.top, borders.top + borders.height);
+	}
 	view.setCenter(pos);
 	Singleton->RendWin.setView(view);
 }
@@ -159,7 +168,7 @@ View& Engine::InstanceNewView() {
 	return view;
 }
 
-const std::string Engine::ENGINE_VERSION = "A0.0.12.0";
+const std::string Engine::ENGINE_VERSION = "A0.0.14.0";
 Engine* Engine::Singleton = nullptr;
 
 
@@ -230,4 +239,15 @@ Vector2f Engine::GetCursorClampedPos() {
 		clamp<float>((float)cursorPos.x, 0, (float)screenSize.x),
 		clamp<float>((float)cursorPos.y, 0, (float)screenSize.y));
 	return globalPos;
+}
+bool Engine::IsMouseOnScreen() {
+	return IsMouseOnScreen(Mouse::getPosition(Engine::GetRenderWindow()));
+}
+bool Engine::IsMouseOnScreen(Vector2i mousePos) {
+	Vector2u screenSize = Engine::GetScreenSize();
+	return mousePos.x > 0 && mousePos.x < screenSize.x &&
+		mousePos.y>0 && mousePos.y < screenSize.y;
+}
+bool Engine::HasWindowFocus() {
+	return Singleton->RendWin.hasFocus();
 }
