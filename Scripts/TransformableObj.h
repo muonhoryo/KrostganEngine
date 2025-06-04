@@ -19,6 +19,7 @@ namespace KrostganEngine::GameObjects {
 
 	protected:
 		TransformableObj(Vector2f Position, float Scale);
+		TransformableObj();
 
 	private:
 		Vector2f Position;

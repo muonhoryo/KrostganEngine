@@ -2,17 +2,21 @@
 
 #include <PhysicsLayer.h>
 #include <ColliderShapes.h>
+#include <TransformableObj.h>
+#include <vector>
+
+using namespace std;
+using namespace KrostganEngine::GameObjects;
 
 namespace KrostganEngine::Physics {
-	class IPhysicalObject
+	class IPhysicalObject: public virtual TransformableObj
 	{
 	public:
 
 		virtual PhysicsLayer GetLayer() const = 0;
-		virtual bool IsCollide(AABBCollShape coll) const = 0;
-		virtual bool IsCollide(CircleCollShape coll) const = 0;
-		virtual bool IsCollide(ColliderShape* coll[],size_t count) const = 0;
-		virtual bool IsInCollider(Vector2f point) const = 0;
+		virtual const ColliderShape& GetCollider() const = 0;
+
+		virtual vector<IPhysicalObject*> OverlapAll() const = 0;
 
 		virtual ~IPhysicalObject();
 

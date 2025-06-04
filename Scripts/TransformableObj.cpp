@@ -5,6 +5,8 @@
 using namespace sf;
 using namespace KrostganEngine::GameObjects;
 
+TransformableObj::TransformableObj() : TransformableObj(Vector2f(0,0),1) {
+}
 TransformableObj::TransformableObj(Vector2f Position=Vector2f(0,0), float Scale=1) {
 	this->Position = Vector2f(0,0);
 	this->Scale = 1;

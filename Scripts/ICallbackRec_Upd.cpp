@@ -6,10 +6,8 @@ using namespace KrostganEngine::GameObjects;
 using namespace KrostganEngine::Core;
 
 ICallbackRec_Upd::ICallbackRec_Upd() {
-	ICallbackRec_Upd& ref = *this;
-	Engine::GetUpdateModule().Add(ref);
+	Engine::GetUpdateModule().Add(*this);
 }
 ICallbackRec_Upd::~ICallbackRec_Upd() {
-	ICallbackRec_Upd& ref = *this;
-	Engine::GetUpdateModule().Remove(ref);
+	Engine::GetUpdateModule().Remove(*this);
 }

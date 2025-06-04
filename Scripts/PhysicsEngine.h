@@ -16,7 +16,7 @@ namespace KrostganEngine::Physics {
 		PhysicsEngine();
 
 		vector<IPhysicalObject*> OverlapAABB_All(Vector2f min, Vector2f max, PhysicsLayer layer=PhysicsLayer::All);
-		vector<IPhysicalObject*> OverlapCircl_All(Vector2f center, float radius, PhysicsLayer layer = PhysicsLayer::All);
+		vector<IPhysicalObject*> OverlapCircle_All(Vector2f center, float radius, PhysicsLayer layer = PhysicsLayer::All);
 
 		IPhysicalObject* PointCast(Vector2f globalPos, PhysicsLayer layer = PhysicsLayer::All);
 
@@ -34,7 +34,7 @@ namespace KrostganEngine::Physics {
 			size_t layerCast;
 			for (auto obj : Callbacks) {
 				layerCast = (size_t)obj->GetLayer() & (size_t)layer;
-				if (layerCast != 0 && obj->IsCollide(shape))
+				if (layerCast != 0 &&  obj->GetCollider().Intersect(shape))
 					objs.push_back(obj);
 			}
 			return objs;

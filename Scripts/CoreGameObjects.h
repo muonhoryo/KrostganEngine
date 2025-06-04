@@ -6,6 +6,7 @@
 #include <Entity.h>
 #include <HeroObject.h>
 #include <TransformableObj.h>
+#include <DynamicPhysObject.h>
 
 #include <GameObjectsManager.h>
 

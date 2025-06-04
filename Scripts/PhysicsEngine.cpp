@@ -23,7 +23,7 @@ vector<IPhysicalObject*> PhysicsEngine::OverlapAABB_All(Vector2f min, Vector2f m
 /// <param name="radius"></param>
 /// <param name="layer"></param>
 /// <returns></returns>
-vector<IPhysicalObject*> PhysicsEngine::OverlapCircl_All(Vector2f center, float radius, PhysicsLayer layer) {
+vector<IPhysicalObject*> PhysicsEngine::OverlapCircle_All(Vector2f center, float radius, PhysicsLayer layer) {
 	if (radius <= eps)
 		return vector<IPhysicalObject*>();
 
@@ -37,7 +37,7 @@ IPhysicalObject* PhysicsEngine::PointCast(Vector2f globalPos, PhysicsLayer layer
 	size_t layerCast;
 	for (auto obj : Callbacks) {
 		layerCast = (size_t)obj->GetLayer() & (size_t)layer;
-		if (layerCast!=0 && obj->IsInCollider(globalPos))
+		if (layerCast!=0 && obj->GetCollider().IsPointInCollider(globalPos))
 			return obj;
 	}
 	return nullptr;

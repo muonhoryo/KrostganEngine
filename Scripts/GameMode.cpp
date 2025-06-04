@@ -22,5 +22,6 @@ GameMode::~GameMode() {
 void GameMode::ExecuteCycle() {
 
     Engine::GetUpdateModule().Execute();
+    Engine::GetLateUpdModule().Execute();
     Engine::GetRenderModule().Execute();
 }

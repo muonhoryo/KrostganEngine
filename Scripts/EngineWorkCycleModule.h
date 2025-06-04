@@ -71,11 +71,13 @@ namespace KrostganEngine::Core {
 		EngineUpdateModule(RenderWindow& Window);
 
 		void Execute() override;
+
 	private:
 		RenderWindow& Window;
 		Event& UpdateEvent;
 		vector<Event> PlayerInput;
 		Clock FrameDeltaTimer;
+
 	public:
 		void SetFrameDeltaTime(float time);
 	};
@@ -86,15 +88,21 @@ namespace KrostganEngine::Core {
 		EngineRenderModule(RenderWindow& Window);
 
 		void Execute() override;
+
 	private:
 		RenderWindow& Window;
 		Clock FrameRenderTime;
+	
 	public:
 		void SetFrameRenderTime(float time);
 	};
 
 	class EngineLateUpdateModule :public EngineCallbackHandler<ICallbackRec_LUpd>,
 		public EngineWorkCycleModule {
+
+	public:
+		EngineLateUpdateModule();
+
 		void Execute() override;
 	};
 }

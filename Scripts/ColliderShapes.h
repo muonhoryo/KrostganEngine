@@ -1,7 +1,9 @@
 #pragma once
 
 #include <SFML/System.hpp>
+#include <PhysicsStructs.h>
 
+using namespace std;
 using namespace sf;
 
 namespace KrostganEngine::Physics {
@@ -10,14 +12,20 @@ namespace KrostganEngine::Physics {
 
 	struct ColliderShape {
 	public:
-		virtual bool Intersect(CircleCollShape collision) const = 0;
-		virtual bool Intersect(AABBCollShape collision)const = 0;
+		virtual bool Intersect(const CircleCollShape& objShape) const = 0;
+		virtual bool Intersect(const AABBCollShape& objShape)const = 0;
+		virtual bool Intersect(const ColliderShape* coll[], size_t count)const = 0;
+
+		virtual bool GetCollisionResolvPoint(const CircleCollShape& subjShape, Vector2f subjMovDir,Vector2f* resolvPnt) const = 0;
+		virtual bool GetCollisionResolvPoint(const AABBCollShape& subjShape, Vector2f subjMovDir,Vector2f* resolvPnt) const = 0;
+
 		virtual bool IsPointInCollider(Vector2f point)const = 0;
 		virtual Vector2f GetClosestPoint(Vector2f point)const = 0;
+		virtual bool IntersectRay(const Ray& ray, Vector2f* interPnt) const = 0;
 
-		static bool Intersect_CircleVsCircle(CircleCollShape coll1, CircleCollShape coll2);
-		static bool Intersect_CircleVsAABB(CircleCollShape coll1, AABBCollShape coll2);
-		static bool Intersect_AABBvsAABB(AABBCollShape coll1, AABBCollShape coll2);
+		static bool Intersect_CircleVsCircle(const CircleCollShape& coll1, const CircleCollShape& coll2);
+		static bool Intersect_CircleVsAABB(const CircleCollShape& coll1, const AABBCollShape& coll2);
+		static bool Intersect_AABBvsAABB(const AABBCollShape& coll1,const AABBCollShape& coll2);
 
 	protected:
 		ColliderShape(){}
@@ -30,10 +38,16 @@ namespace KrostganEngine::Physics {
 		 Vector2f Min;
 		 Vector2f Max;
 
-		bool Intersect(CircleCollShape collision) const override;
-		bool Intersect(AABBCollShape collision) const override;
+		bool Intersect(const CircleCollShape& collision) const override;
+		bool Intersect(const AABBCollShape& collision) const override;
+		bool Intersect(const ColliderShape* coll[], size_t count)const override;
+
+		bool GetCollisionResolvPoint(const CircleCollShape& subjShape,Vector2f subjMovDir , Vector2f* resolvPnt) const override;
+		bool GetCollisionResolvPoint(const AABBCollShape& subjShape, Vector2f subjMovDir,Vector2f* resolvPnt) const override;
+
 		bool IsPointInCollider(Vector2f point) const override;
 		Vector2f GetClosestPoint(Vector2f point)const override;
+		bool IntersectRay(const Ray& ray, Vector2f* interPnt) const override;
 	};
 
 	struct CircleCollShape:ColliderShape {
@@ -42,10 +56,16 @@ namespace KrostganEngine::Physics {
 		 Vector2f Center;
 		 float Radius;
 
-		bool Intersect(CircleCollShape collision) const  override;
-		bool Intersect(AABBCollShape collision) const  override;
+		bool Intersect(const CircleCollShape& collision) const  override;
+		bool Intersect(const AABBCollShape& collision) const  override;
+		bool Intersect(const ColliderShape* coll[], size_t count)const override;
+
+		bool GetCollisionResolvPoint(const CircleCollShape& subjShape, Vector2f subjMovDir, Vector2f* resolvPnt) const override;
+		bool GetCollisionResolvPoint(const AABBCollShape& subjShape, Vector2f subjMovDir , Vector2f* resolvPnt) const override;
+
 		bool IsPointInCollider(Vector2f point) const override;
 		Vector2f GetClosestPoint(Vector2f point)const override;
+		bool IntersectRay(const Ray& ray, Vector2f* interPnt) const override;
 	};
 }
 

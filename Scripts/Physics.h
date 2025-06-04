@@ -4,3 +4,5 @@
 #include <ColliderShapes.h>
 #include <PhysicsLayer.h>
 #include <IPhysicalObject.h>
+#include <PhysicsStructs.h>
+#include <DynamicPhysObject.h>

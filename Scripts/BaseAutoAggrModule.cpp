@@ -85,7 +85,7 @@ void BaseAutoAggrModule::CheckCurrTarget(CallbackRecArgs_Upd& args) {
 void BaseAutoAggrModule::FindTarget(CallbackRecArgs_Upd& args) {
 	float radius = Owner.GetBattleStats().GetAutoAggrRadius();
 	Vector2f pos = Owner.GetPosition();
-	TargsBuffer=Engine::GetPhysicsEngine().OverlapCircl_All(pos, radius, TARGETS_MASK);
+	TargsBuffer=Engine::GetPhysicsEngine().OverlapCircle_All(pos, radius, TARGETS_MASK);
 	if (TargsBuffer.size() != 0) {
 		Target = nullptr;
 		float minDist = FLT_MAX;

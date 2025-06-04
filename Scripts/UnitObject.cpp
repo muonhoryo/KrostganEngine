@@ -62,6 +62,14 @@ float UnitObject::GetSelectSpriteMaxSize() {
 	return Engine::GetGlobalConsts().UnitsSelectArea_OneSizeSpriteResol;
 }
 
+vector<IPhysicalObject*> UnitObject::OverlapAll() const {
+	return Engine::GetPhysicsEngine().OverlapCircle_All(Collider->Center, Collider->Radius, SOLID_COLLISION_LAYER);
+}
+bool UnitObject::TryGetResolNormal(const ColliderShape& objShape, Vector2f movDir, Vector2f* resolvePoint) const {
+
+	return objShape.GetCollisionResolvPoint(*Collider, movDir, resolvePoint);
+}
+
 const vector<EntityOrderType> UnitObject::AllowedOrdersCatalog = vector<EntityOrderType>
 {
 EntityOrderType::MovingToPoint,

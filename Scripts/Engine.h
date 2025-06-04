@@ -38,6 +38,7 @@ namespace KrostganEngine {
 			static EngineState GetNextEngState();
 			static EngineRenderModule& GetRenderModule();
 			static EngineUpdateModule& GetUpdateModule();
+			static EngineLateUpdateModule& GetLateUpdModule();
 			static PhysicsEngine& GetPhysicsEngine();
 			static CursorManager& GetCursorManager();
 			static const EngineConfig& GetEngineConfig();
@@ -58,11 +59,12 @@ namespace KrostganEngine {
 			Engine();
 			void InitializeSystems();
 			void InitializeCursorManager();
-			static Engine* Singleton;
+			static inline Engine* Singleton=nullptr;
 			EngineStateHandler EngStateHandler;
 			EngineMode* CurrMode;
 			EngineRenderModule& RenderModule;
 			EngineUpdateModule& UpdateModule;
+			EngineLateUpdateModule& LateUpdateModule;
 			PhysicsEngine& PhysicsEng;
 			CursorManager* WindCursorManager;
 			const EngineConfig* EngineConfiguration;

@@ -23,6 +23,7 @@ const GlobalConsts& GlobalConstsLoad::LoadGlobalConsts() {
 	LoadedGlobalConsts.Orders_CancelTime = DeserializeValueByDefinition(GlobalConsts::DEF_ORDERS_CANCELTIME, &line);
 	LoadedGlobalConsts.EntityAct_RepCoolDown = DeserializeValueByDefinition(GlobalConsts::DEF_ENTITY_ACTION_REPEAT_COOLDOWN, &line);
 	LoadedGlobalConsts.CameraMovTriggerArea = DeserializeValueByDefinition(GlobalConsts::DEF_CAMERA_MOVING_TRIGGER_AREA, &line);
+	LoadedGlobalConsts.Physics_MaxCollsResolvCount = DeserializeValueByDefinition(GlobalConsts::DEF_PHYSICS_MAX_COLLISION_RESOLVE_COUNT, &line);
 
 	StrValuesArr.clear();
 	return LoadedGlobalConsts;

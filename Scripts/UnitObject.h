@@ -55,6 +55,9 @@ namespace KrostganEngine {
 			const Texture& GetSelectionTexture() override;
 			float GetSelectSpriteMaxSize() override;
 
+			vector<IPhysicalObject*> OverlapAll() const override ;
+			bool TryGetResolNormal(const ColliderShape& objShape, Vector2f movDir, Vector2f* resolvPnt) const override;
+
 		private:
 			PhysicsLayer Layer;
 			CircleCollShape* Collider;

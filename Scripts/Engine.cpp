@@ -17,6 +17,7 @@ using namespace KrostganEngine::Physics;
 Engine::Engine()
 	:RenderModule(*new EngineRenderModule(RendWin)),
 	UpdateModule(*new EngineUpdateModule(RendWin)),
+	LateUpdateModule(*new EngineLateUpdateModule()),
 	PhysicsEng(*new PhysicsEngine()){
 
 	Singleton = this;
@@ -169,7 +170,6 @@ View& Engine::InstanceNewView() {
 }
 
 const std::string Engine::ENGINE_VERSION = "A0.0.14.0";
-Engine* Engine::Singleton = nullptr;
 
 
 RenderWindow& Engine::GetRenderWindow() {
@@ -195,6 +195,9 @@ EngineRenderModule& Engine::GetRenderModule() {
 }
 EngineUpdateModule& Engine::GetUpdateModule() {
 	return Singleton->UpdateModule;
+}
+EngineLateUpdateModule& Engine::GetLateUpdModule() {
+	return Singleton->LateUpdateModule;
 }
 PhysicsEngine& Engine::GetPhysicsEngine() {
 	return Singleton->PhysicsEng;
@@ -245,8 +248,8 @@ bool Engine::IsMouseOnScreen() {
 }
 bool Engine::IsMouseOnScreen(Vector2i mousePos) {
 	Vector2u screenSize = Engine::GetScreenSize();
-	return mousePos.x > 0 && mousePos.x < screenSize.x &&
-		mousePos.y>0 && mousePos.y < screenSize.y;
+	return mousePos.x > 0 && mousePos.x < (int)screenSize.x &&
+		mousePos.y>0 && mousePos.y < (int)screenSize.y;
 }
 bool Engine::HasWindowFocus() {
 	return Singleton->RendWin.hasFocus();

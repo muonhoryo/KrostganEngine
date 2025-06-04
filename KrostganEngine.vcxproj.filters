@@ -396,6 +396,15 @@
     <ClCompile Include="Scripts\EntsCtrlOrdersGiving.cpp">
       <Filter>Исходные файлы\CoreSystems\PlayerControl</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\EngineLateUpdateModule.cpp">
+      <Filter>Исходные файлы\CoreSystems\EngineWorkCycles</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\DynamicPhysObject.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\ICallbackRec_LUpd.cpp">
+      <Filter>Исходные файлы\CoreSystems\EngineCallbacks</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\GameObject.h">
@@ -670,6 +679,12 @@
     </ClInclude>
     <ClInclude Include="Scripts\ExternalData.h">
       <Filter>Файлы заголовков\CoreSystems\ExternalResources</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\DynamicPhysObject.h">
+      <Filter>Файлы заголовков\CoreSystems\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\PhysicsStructs.h">
+      <Filter>Файлы заголовков\CoreSystems\Physics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

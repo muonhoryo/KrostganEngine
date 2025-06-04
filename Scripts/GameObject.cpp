@@ -15,25 +15,12 @@ using namespace KrostganEngine::GameObjects;
 
 GameObject::GameObject(const Texture& RenTexture, Vector2f RenOffset, Vector2f Position , float Size ,Color SprColor)
 	:SingleSprite(RenTexture, Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution, RenOffset, Position, Size,SprColor),
-	IPhysicalObject() {}
+	DynamicPhysObject(), TransformableObj(Position,Size) {}
 
-bool GameObject::IsCollide(AABBCollShape coll)const {
-	const ColliderShape& shape = GetCollider();
-	return shape.Intersect(coll);
+void GameObject::SetPosition(Vector2f position) {
+	DynamicPhysObject::SetPosition(position);
+	SingleSprite::SetPosition(position);
 }
-bool GameObject::IsCollide(CircleCollShape coll) const{
-	const ColliderShape& shape = GetCollider();
-	return shape.Intersect(coll);
-}
-bool GameObject::IsCollide(ColliderShape* coll[], size_t count) const{
-	int index = 0;
-	while (index < count) {
-		if (IsCollideShape(*coll[index]))
-			return true;
-	}
-	return false;
-}
-bool GameObject::IsInCollider(Vector2f point) const{
-	const ColliderShape& shape = GetCollider();
-	return shape.IsPointInCollider(point);
+void GameObject::SetScale(float scale) {
+	SingleSprite::SetScale(scale);
 }
