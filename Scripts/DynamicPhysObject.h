@@ -26,7 +26,7 @@ namespace KrostganEngine::Physics {
 	protected:
 		DynamicPhysObject();
 
-		virtual bool TryGetResolNormal(const ColliderShape& objShape,Vector2f movDir ,Vector2f* resolvPnt) const = 0;
+		virtual Vector2f GetResolvingPnt(const ColliderShape& objShape,Vector2f movDir ) const = 0;
 
 	private:
 		bool HasMoved = false;

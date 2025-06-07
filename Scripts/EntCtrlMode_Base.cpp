@@ -31,7 +31,7 @@ void EntCtrlMode_Base::HandleInput(CallbackRecArgs_Upd& args) {
 					if (rel == Relation::Enemy)
 						GiveOrderToSelected_AttackTarget(*target,Owner.GetShiftPresState());
 					else
-						GiveOrderToSelected_FollowObject(target->GetTransform(), Owner.GetShiftPresState());
+						GiveOrderToSelected_FollowObject(*target, Owner.GetShiftPresState());
 				}
 				else {
 					GiveOrderToSelected_MoveToPoint(pos, Owner.GetShiftPresState());

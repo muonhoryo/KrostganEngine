@@ -29,15 +29,11 @@ void DynamicPhysObject::Update(CallbackRecArgs_LUpd args) {
 		}
 		size_t resolCount = 0;
 		size_t max = Engine::GetGlobalConsts().Physics_MaxCollsResolvCount;
-		Vector2f resolvPnt = Vector2f(0, 0);
 		for (auto coll : colls) {
 			if (coll == this)
 				continue;
 
-			if (!TryGetResolNormal(coll->GetCollider(),MoveDirection, &resolvPnt))
-				throw exception("Cannot get resolving normal");
-
-			SetPosition(resolvPnt);
+			SetPosition(GetResolvingPnt(coll->GetCollider(), MoveDirection));
 			++resolCount;
 			if (resolCount >= max)
 				break;

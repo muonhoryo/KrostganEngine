@@ -18,12 +18,12 @@ using namespace KrostganEngine::UI;
 using namespace KrostganEngine::EntitiesControl;
 
 UnitObject::UnitObject(UnitObjectCtorParams& params)
-	:Entity(params){
-	Collider = new CircleCollShape(params.Position, params.Size * Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution * 0.5f);
-	Layer = PhysicsLayer::Units;
+	:Entity(params),
+	Collider(*new CircleCollShape(params.Position, params.Size* Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution * 0.5f)),
+	Layer(PhysicsLayer::Units){
 }
 UnitObject::~UnitObject() {
-	delete Collider;
+	delete &Collider;
 }
 
 
@@ -33,11 +33,11 @@ PhysicsLayer UnitObject::GetLayer() const {
 
 void UnitObject::SetScale(float scale) {
 	Entity::SetScale(scale);
-	Collider->Radius= scale * Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution/2;
+	Collider.Radius= scale * Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution/2;
 }
 void UnitObject::SetPosition(Vector2f pos) {
 	Entity::SetPosition(pos);
-	Collider->Center = pos;
+	Collider.Center = pos;
 }
 
 const vector<EntityOrderType>& UnitObject::GetAllowedOrdersCatalog() {
@@ -45,14 +45,7 @@ const vector<EntityOrderType>& UnitObject::GetAllowedOrdersCatalog() {
 }
 
 const ColliderShape& UnitObject::GetCollider() const {
-	return *Collider;
-}
-bool UnitObject::IsCollideShape(const ColliderShape& shape) const {
-	return shape.Intersect(*Collider);
-}
-
-Vector2f UnitObject::GetClosestPoint(Vector2f source) const {
-	return Collider->GetClosestPoint(source);
+	return Collider;
 }
 
 const Texture& UnitObject::GetSelectionTexture() {
@@ -63,11 +56,15 @@ float UnitObject::GetSelectSpriteMaxSize() {
 }
 
 vector<IPhysicalObject*> UnitObject::OverlapAll() const {
-	return Engine::GetPhysicsEngine().OverlapCircle_All(Collider->Center, Collider->Radius, SOLID_COLLISION_LAYER);
+	return Engine::GetPhysicsEngine().OverlapCircle_All(Collider.Center, Collider.Radius, SOLID_COLLISION_LAYER);
 }
-bool UnitObject::TryGetResolNormal(const ColliderShape& objShape, Vector2f movDir, Vector2f* resolvePoint) const {
+Vector2f UnitObject::GetResolvingPnt(const ColliderShape& objShape, Vector2f movDir) const {
 
-	return objShape.GetCollisionResolvPoint(*Collider, movDir, resolvePoint);
+	return objShape.GetCollisionResolvPoint(Collider, movDir);
+}
+
+Vector2f UnitObject::GetClosestPoint(Vector2f dmgDealerPos) const {
+	return Collider.GetClosestPoint(dmgDealerPos);
 }
 
 const vector<EntityOrderType> UnitObject::AllowedOrdersCatalog = vector<EntityOrderType>

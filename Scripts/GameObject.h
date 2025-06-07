@@ -25,6 +25,5 @@ namespace KrostganEngine::GameObjects {
 		GameObject(const Texture& RenTexture, Vector2f RenOffset=Vector2f(0,0), Vector2f Position = Vector2f(0, 0), float Size = 1, Color SprColor = Color::White);
 
 		virtual const ColliderShape& GetCollider() const = 0;
-		virtual bool IsCollideShape(const ColliderShape& shape) const = 0;
 	};
 }

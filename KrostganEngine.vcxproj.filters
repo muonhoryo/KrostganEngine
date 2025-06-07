@@ -166,6 +166,12 @@
     <Filter Include="Исходные файлы\Debug\Visualization">
       <UniqueIdentifier>{2735bfc9-1c31-4d8c-8f43-b5420a58ac04}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems\GameObjects\VirtualObjects">
+      <UniqueIdentifier>{e3443a89-5fbb-4fff-aa8e-9ea00bb9c427}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\CoreSystems\GameObjects\VirtualObjects">
+      <UniqueIdentifier>{5fedf5b1-8156-460f-8f98-035a776fc859}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\main.cpp">
@@ -176,9 +182,6 @@
     </ClCompile>
     <ClCompile Include="Scripts\EngineStateHandler.cpp">
       <Filter>Исходные файлы\CoreSystems</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\GameObject.cpp">
-      <Filter>Исходные файлы\CoreSystems\GameObjects</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\EngineRenderModule.cpp">
       <Filter>Исходные файлы\CoreSystems\EngineWorkCycles</Filter>
@@ -258,9 +261,6 @@
     <ClCompile Include="Scripts\IPhysicalObject.cpp">
       <Filter>Исходные файлы\CoreSystems\EngineCallbacks</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Entity.cpp">
-      <Filter>Исходные файлы\CoreSystems\GameObjects</Filter>
-    </ClCompile>
     <ClCompile Include="Scripts\ExtGlobalResourcesLoad.cpp">
       <Filter>Исходные файлы\CoreSystems\ExternalResources</Filter>
     </ClCompile>
@@ -269,9 +269,6 @@
     </ClCompile>
     <ClCompile Include="Scripts\EngineConfigLoad.cpp">
       <Filter>Исходные файлы\CoreSystems\ExternalResources</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\TransformableObj.cpp">
-      <Filter>Исходные файлы\CoreSystems\GameObjects</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\SpriteRenderer.cpp">
       <Filter>Исходные файлы\CoreSystems\UI/UX</Filter>
@@ -399,17 +396,26 @@
     <ClCompile Include="Scripts\EngineLateUpdateModule.cpp">
       <Filter>Исходные файлы\CoreSystems\EngineWorkCycles</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\DynamicPhysObject.cpp">
-      <Filter>Исходные файлы\CoreSystems\GameObjects</Filter>
-    </ClCompile>
     <ClCompile Include="Scripts\ICallbackRec_LUpd.cpp">
       <Filter>Исходные файлы\CoreSystems\EngineCallbacks</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\DynamicPhysObject.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameObjects\VirtualObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Entity.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameObjects\VirtualObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\GameObject.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameObjects\VirtualObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\TransformableObj.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameObjects\VirtualObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Wall.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Scripts\GameObject.h">
-      <Filter>Файлы заголовков\CoreSystems\GameObjects</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\CoreGameObjects.h">
       <Filter>Файлы заголовков\CoreSystems\GameObjects</Filter>
     </ClInclude>
@@ -515,9 +521,6 @@
     <ClInclude Include="Scripts\VectExts.h">
       <Filter>Файлы заголовков\Extensions</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Entity.h">
-      <Filter>Файлы заголовков\CoreSystems\GameObjects</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\ExternalGlobalResources.h">
       <Filter>Файлы заголовков\CoreSystems\ExternalResources</Filter>
     </ClInclude>
@@ -535,9 +538,6 @@
     </ClInclude>
     <ClInclude Include="Scripts\GlobalConsts.h">
       <Filter>Файлы заголовков\CoreSystems\ExternalResources</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\TransformableObj.h">
-      <Filter>Файлы заголовков\CoreSystems\GameObjects</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\SpriteRenderer.h">
       <Filter>Файлы заголовков\CoreSystems\UI/UX</Filter>
@@ -680,11 +680,23 @@
     <ClInclude Include="Scripts\ExternalData.h">
       <Filter>Файлы заголовков\CoreSystems\ExternalResources</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\DynamicPhysObject.h">
-      <Filter>Файлы заголовков\CoreSystems\GameObjects</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\PhysicsStructs.h">
       <Filter>Файлы заголовков\CoreSystems\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\DynamicPhysObject.h">
+      <Filter>Файлы заголовков\CoreSystems\GameObjects\VirtualObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Entity.h">
+      <Filter>Файлы заголовков\CoreSystems\GameObjects\VirtualObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\GameObject.h">
+      <Filter>Файлы заголовков\CoreSystems\GameObjects\VirtualObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\TransformableObj.h">
+      <Filter>Файлы заголовков\CoreSystems\GameObjects\VirtualObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Wall.h">
+      <Filter>Файлы заголовков\CoreSystems\GameObjects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -60,7 +60,6 @@ namespace KrostganEngine::GameObjects {
 		void SetScale(float scale) override;
 		void SetSpriteColor(Color color) override;
 
-		TransformableObj& GetTransform() override;
 		IHitPointModule& GetHPModule()override;
 
 	protected:

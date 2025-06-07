@@ -63,7 +63,7 @@ void BaseAutoAggrModule::CheckCurrTarget(CallbackRecArgs_Upd& args) {
 
 			if (IsFollowTargets) {
 
-				ActionMediator.AddAction((IEntityAction*)new EntityAction_FollowObject(Owner, Owner, Target->GetTransform(), alloDist));
+				ActionMediator.AddAction((IEntityAction*)new EntityAction_FollowObject(Owner, Owner, *Target, alloDist));
 			}
 		}
 	}
@@ -109,7 +109,7 @@ void BaseAutoAggrModule::FindTarget(CallbackRecArgs_Upd& args) {
 				relat = FractionsSystem::GetRelation(Owner.GetFraction(), memParTar->GetFraction());
 				if (relat != Relation::Enemy)
 					continue;
-				dist = Length(parTar->GetTransform().GetPosition() - pos);
+				dist = Length(parTar->GetPosition() - pos);
 
 				if (dist < minDist) {		//Finds nearest target
 					TargetTransform = dynamic_cast<TransformableObj*>(parTar);
@@ -137,7 +137,7 @@ void BaseAutoAggrModule::FindTarget(CallbackRecArgs_Upd& args) {
 
 					float alloDist = Owner.GetBattleStats().GetAARadius();
 					ActionMediator.AddAction((IEntityAction*)new EntityAction_AutoAttack(Owner, *Target));
-					ActionMediator.AddAction((IEntityAction*)new EntityAction_FollowObject(Owner, Owner, Target->GetTransform(), alloDist));
+					ActionMediator.AddAction((IEntityAction*)new EntityAction_FollowObject(Owner, Owner, *Target, alloDist));
 				}
 				IsAttack = false;
 			}

@@ -74,10 +74,6 @@ void Entity::SetSpriteColor(Color color) {
 	SelectionSprite->SetSpriteColor(color);
 }
 
-TransformableObj& Entity::GetTransform() {
-	return *(TransformableObj*)this;
-}
-
 IHitPointModule& Entity::GetHPModule() {
 	return *HPModule;
 }

@@ -1,6 +1,8 @@
 
 #include "ColliderShapes.h"
+#include "Extensions.h"
 
+using namespace KrostganEngine;
 using namespace KrostganEngine::Physics;
 
 AABBCollShape::AABBCollShape(Vector2f Min,Vector2f Max)
@@ -28,25 +30,29 @@ bool AABBCollShape::Intersect(const ColliderShape* coll[], size_t count)const {
 	return false;
 }
 
-bool AABBCollShape::GetCollisionResolvPoint(const CircleCollShape& subjShape, Vector2f subjMovDir, Vector2f* resolvPnt) const {
-	//NEED TO FIX
-	//NEED TO FIX
-	//NEED TO FIX
-	//NEED TO FIX
-	//NEED TO FIX
-	//NEED TO FIX
-	//NEED TO FIX
-	*resolvPnt = Vector2f(1, 0);
-	return true;
-	//NEED TO FIX
-	//NEED TO FIX
-	//NEED TO FIX
-	//NEED TO FIX
-	//NEED TO FIX
-	//NEED TO FIX
-	//NEED TO FIX
+Vector2f AABBCollShape::GetCollisionResolvPoint(const CircleCollShape& subjShape, Vector2f subjMovDir) const {
+
+	Vector2f neaPnt = GetClosestPoint(subjShape.Center);
+	if (SquareLength(neaPnt - subjShape.Center) > subjShape.Radius * subjShape.Radius)
+		return subjShape.Center;
+
+	Vector2f dir;
+	float len;
+	if (IsPointInCollider(subjShape.Center)) {
+		
+		dir = neaPnt - subjShape.Center;
+		len = Length(dir) + subjShape.Radius;
+	}
+	else {
+
+		dir = subjShape.Center - neaPnt;
+		len = subjShape.Radius - Length(dir);
+	}
+	dir = Normalize(dir);
+	dir = Vector2f(dir.x * len, dir.y * len);
+	return subjShape.Center + dir;
 }
-bool AABBCollShape::GetCollisionResolvPoint(const AABBCollShape& subjShape, Vector2f subjMovDir, Vector2f* resolvPnt) const {
+Vector2f AABBCollShape::GetCollisionResolvPoint(const AABBCollShape& subjShape, Vector2f subjMovDir)const {
 	//NEED TO FIX
 	//NEED TO FIX
 	//NEED TO FIX
@@ -54,8 +60,7 @@ bool AABBCollShape::GetCollisionResolvPoint(const AABBCollShape& subjShape, Vect
 	//NEED TO FIX
 	//NEED TO FIX
 	//NEED TO FIX
-	*resolvPnt = Vector2f(1, 0);
-	return true;
+	return Vector2f(1, 0);
 	//NEED TO FIX
 	//NEED TO FIX
 	//NEED TO FIX

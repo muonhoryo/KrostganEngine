@@ -47,20 +47,18 @@ namespace KrostganEngine {
 			const vector<EntityOrderType>& GetAllowedOrdersCatalog() override;
 
 		protected:
-			const ColliderShape& GetCollider() const override;
-			bool IsCollideShape(const ColliderShape& shape) const override;
-
-			Vector2f GetClosestPoint(Vector2f sources) const override;
-
 			const Texture& GetSelectionTexture() override;
 			float GetSelectSpriteMaxSize() override;
 
+			const ColliderShape& GetCollider() const override;
 			vector<IPhysicalObject*> OverlapAll() const override ;
-			bool TryGetResolNormal(const ColliderShape& objShape, Vector2f movDir, Vector2f* resolvPnt) const override;
+			Vector2f GetResolvingPnt(const ColliderShape& objShape, Vector2f movDir) const override;
+
+			Vector2f GetClosestPoint(Vector2f dmgDealerPos) const override;
 
 		private:
 			PhysicsLayer Layer;
-			CircleCollShape* Collider;
+			CircleCollShape& Collider;
 			static const vector<EntityOrderType> AllowedOrdersCatalog;
 		};
 	}

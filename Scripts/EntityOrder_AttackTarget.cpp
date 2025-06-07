@@ -30,7 +30,7 @@ list<IEntityAction*>* EntityOrder_AttackTarget::GetActions() {
 	else {									//Owner needs to follow target first
 		
 		float alloDist = Owner.GetBattleStats().GetAARadius();
-		actions.push_back((IEntityAction*)new EntityAction_FollowObject(Owner,OwnerTransform, Target.GetTransform(), alloDist));
+		actions.push_back((IEntityAction*)new EntityAction_FollowObject(Owner,OwnerTransform, Target, alloDist));
 		actions.push_back((IEntityAction*)new EntityAction_AutoAttack(Owner, Target));
 	}
 	return &actions;
@@ -50,5 +50,5 @@ EntityOrderType EntityOrder_AttackTarget::GetOrderType() {
 }
 
 const TransformableObj& EntityOrder_AttackTarget::GetTarget() const {
-	return Target.GetTransform();
+	return Target;
 }

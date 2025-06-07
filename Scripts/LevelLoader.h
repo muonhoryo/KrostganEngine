@@ -15,28 +15,36 @@ namespace KrostganEngine::Core {
 		UnitsLoadEventArgs(forward_list<UnitObject*>* LoadedUnits);
 		forward_list<UnitObject*>* LoadedUnits;
 	};
+	struct WallsLoadEventArgs {
+		WallsLoadEventArgs(forward_list<WallObject*>* LoadedWalls);
+		forward_list<WallObject*>* LoadedWalls;
+	};
 	struct GraphicsLoadEventArgs {
 		GraphicsLoadEventArgs(forward_list<ICallbackRec_GraphRen*>* LoadedGraphics);
 		forward_list<ICallbackRec_GraphRen*>* LoadedGraphics;
 	};
 
 	class UnitsLoadEventAction :public IEventSubscriber<UnitsLoadEventArgs> {};
+	class WallsLoadEventAction:public IEventSubscriber<WallsLoadEventArgs>{};
 	class GraphicsLoadEventAction :public IEventSubscriber<GraphicsLoadEventArgs> {};
 
 
 	class LevelLoader {
 	public:
-		static ExecutedEvent<UnitsLoadEventArgs> UnitsLoadEvent;
-		static ExecutedEvent<GraphicsLoadEventArgs> GraphicsLoadEvent;
+		static inline ExecutedEvent<UnitsLoadEventArgs> UnitsLoadEvent = ExecutedEvent<UnitsLoadEventArgs>();
+		static inline ExecutedEvent<WallsLoadEventArgs> WallsLoadEvent=ExecutedEvent<WallsLoadEventArgs>();
+		static inline ExecutedEvent<GraphicsLoadEventArgs> GraphicsLoadEvent = ExecutedEvent<GraphicsLoadEventArgs>();
 
-		static forward_list <UnitObject*> LoadedUnits;
-		static forward_list <ICallbackRec_GraphRen*> LoadedGraphics;
+		static inline forward_list<UnitObject*> LoadedUnits= forward_list<UnitObject*>();
+		static inline forward_list <WallObject*> LoadedWalls = forward_list<WallObject*>();
+		static inline forward_list <ICallbackRec_GraphRen*> LoadedGraphics= forward_list<ICallbackRec_GraphRen*>();
 
 		static void LoadLevel(const LevelLoadingInfo& levelInfo);
 
 
 	private:
-		static EventHandler <UnitsLoadEventArgs> UnitsLoadEventHan;
-		static EventHandler<GraphicsLoadEventArgs> GraphicsLoadEventHan;
+		static inline EventHandler <UnitsLoadEventArgs> UnitsLoadEventHan= EventHandler<UnitsLoadEventArgs>(UnitsLoadEvent);
+		static inline EventHandler<WallsLoadEventArgs> WallsLoadEventHan = EventHandler<WallsLoadEventArgs>(WallsLoadEvent);
+		static inline EventHandler<GraphicsLoadEventArgs> GraphicsLoadEventHan= EventHandler<GraphicsLoadEventArgs>(GraphicsLoadEvent);
 	};
 }

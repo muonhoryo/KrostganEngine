@@ -214,6 +214,7 @@
     <ClCompile Include="Scripts\UnitObject.cpp" />
     <ClCompile Include="Scripts\ValuesListDeserializer.cpp" />
     <ClCompile Include="Scripts\VectExts.cpp" />
+    <ClCompile Include="Scripts\Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\BaseAutoAggrModule.h" />
@@ -308,6 +309,7 @@
     <ClInclude Include="Scripts\UnitObject.h" />
     <ClInclude Include="Scripts\ValuesListDeserializer.h" />
     <ClInclude Include="Scripts\VectExts.h" />
+    <ClInclude Include="Scripts\Wall.h" />
     <ClInclude Include="Scripts\ZeroArgsEvent.h" />
   </ItemGroup>
   <ItemGroup>

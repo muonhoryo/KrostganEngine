@@ -7,10 +7,9 @@
 using namespace sf;
 
 namespace KrostganEngine::GameObjects {
-	class IAttackableObj {
+	class IAttackableObj : public virtual TransformableObj {
 	public:
 		virtual IHitPointModule& GetHPModule()=0;
-		virtual TransformableObj& GetTransform() = 0;
 		virtual Vector2f GetClosestPoint(Vector2f dmgDealerPos) const = 0;
 		
 	protected:

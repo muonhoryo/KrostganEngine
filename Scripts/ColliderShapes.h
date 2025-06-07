@@ -16,8 +16,8 @@ namespace KrostganEngine::Physics {
 		virtual bool Intersect(const AABBCollShape& objShape)const = 0;
 		virtual bool Intersect(const ColliderShape* coll[], size_t count)const = 0;
 
-		virtual bool GetCollisionResolvPoint(const CircleCollShape& subjShape, Vector2f subjMovDir,Vector2f* resolvPnt) const = 0;
-		virtual bool GetCollisionResolvPoint(const AABBCollShape& subjShape, Vector2f subjMovDir,Vector2f* resolvPnt) const = 0;
+		virtual Vector2f GetCollisionResolvPoint(const CircleCollShape& subjShape, Vector2f subjMovDir) const = 0;
+		virtual Vector2f GetCollisionResolvPoint(const AABBCollShape& subjShape, Vector2f subjMovDir) const = 0;
 
 		virtual bool IsPointInCollider(Vector2f point)const = 0;
 		virtual Vector2f GetClosestPoint(Vector2f point)const = 0;
@@ -42,8 +42,8 @@ namespace KrostganEngine::Physics {
 		bool Intersect(const AABBCollShape& collision) const override;
 		bool Intersect(const ColliderShape* coll[], size_t count)const override;
 
-		bool GetCollisionResolvPoint(const CircleCollShape& subjShape,Vector2f subjMovDir , Vector2f* resolvPnt) const override;
-		bool GetCollisionResolvPoint(const AABBCollShape& subjShape, Vector2f subjMovDir,Vector2f* resolvPnt) const override;
+		Vector2f GetCollisionResolvPoint(const CircleCollShape& subjShape,Vector2f subjMovDir ) const override;
+		Vector2f GetCollisionResolvPoint(const AABBCollShape& subjShape, Vector2f subjMovDir) const override;
 
 		bool IsPointInCollider(Vector2f point) const override;
 		Vector2f GetClosestPoint(Vector2f point)const override;
@@ -60,8 +60,8 @@ namespace KrostganEngine::Physics {
 		bool Intersect(const AABBCollShape& collision) const  override;
 		bool Intersect(const ColliderShape* coll[], size_t count)const override;
 
-		bool GetCollisionResolvPoint(const CircleCollShape& subjShape, Vector2f subjMovDir, Vector2f* resolvPnt) const override;
-		bool GetCollisionResolvPoint(const AABBCollShape& subjShape, Vector2f subjMovDir , Vector2f* resolvPnt) const override;
+		Vector2f GetCollisionResolvPoint(const CircleCollShape& subjShape, Vector2f subjMovDir) const override;
+		Vector2f GetCollisionResolvPoint(const AABBCollShape& subjShape, Vector2f subjMovDir ) const override;
 
 		bool IsPointInCollider(Vector2f point) const override;
 		Vector2f GetClosestPoint(Vector2f point)const override;

@@ -3,6 +3,7 @@
 #include <LevelLoading.h>
 #include <string>
 #include <EntityBattleStats.h>
+#include <forward_list>
 
 using namespace std;
 using namespace KrostganEngine::GameObjects;
@@ -19,18 +20,22 @@ namespace KrostganEngine {
 		private:
 			LevelSerialization() {};
 
-			static UnitLoadInfo* ParseUnitInfo(vector<string>* params);
-			static bool GetSerValueOfParam(vector<string>& params, const string& paramName, string* output);
+			static void ParseObjInfo(vector<string>& params, LevelLoadingInfo& levelInfo);
+			static UnitLoadInfo& ParseUnitInfo(vector<string>& params);
+			static WallLoadInfo& ParseWallInfo(vector<string>& params);
+
+			static bool TryGetSerValueOfParam(vector<string>& params, const string& paramName, string* output);
 			static EntityBattleStats& GetBattleStats(vector<string>& params, string* buffer);
 		};
 
-		struct LevelSerializationParDefNames {
+		struct LevelSerParDefNames {
 			static inline const string OBJECT_NAME = "Name";
 			static inline const string OBJECT_SPRITE_PATH = "SpritePath";
 			static inline const string OBJECT_SPRITE_OFFSET = "SpriteOffset";
 			static inline const string OBJECT_POSITION = "Position";
 			static inline const string OBJECT_SIZE = "Size";
-
+			static inline const string OBJECT_TYPE = "Type";
+			
 			static inline const string ENTITY_MAX_HP = "MaxHP";
 			static inline const string ENTITY_CURR_HP = "CurrentHP";
 			static inline const string ENTITY_AA_DAMAGE = "AADamage";
@@ -40,6 +45,11 @@ namespace KrostganEngine {
 			static inline const string ENTITY_AUTO_AGGRESSIONS_RADIUS = "AutoAggrRadius";
 
 			static inline const string UNIT_MOVINGSPEED = "MovingSpeed";
+		};
+		struct LevelSerObjectsTypes {
+
+			static inline const string OBJECT_TYPE_UNIT = "Unit";
+			static inline const string OBJECT_TYPE_WALL = "Wall";
 		};
 	}
 }

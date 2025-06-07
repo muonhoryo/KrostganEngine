@@ -30,8 +30,19 @@ bool CircleCollShape::Intersect(const ColliderShape* coll[], size_t count)const 
 	return false;
 }
 
-bool CircleCollShape::GetCollisionResolvPoint(const CircleCollShape& subjShape, Vector2f subjMovDir , Vector2f* resolvPnt) const {
+Vector2f CircleCollShape::GetCollisionResolvPoint(const CircleCollShape& subjShape, Vector2f subjMovDir ) const {
 	
+	float diff;
+	Vector2f dir = subjShape.Center - Center;
+	diff = Radius + subjShape.Radius - Length(dir);
+
+	if (diff < 0)
+		return subjShape.Center;
+
+	dir = Normalize(dir);
+	return  subjShape.Center+Vector2f(dir.x * diff, dir.y * diff);
+
+	/*
 	if (Radius < eps || subjShape.Radius < eps)
 		return false;
 	
@@ -49,9 +60,9 @@ bool CircleCollShape::GetCollisionResolvPoint(const CircleCollShape& subjShape, 
 		return false;
 	en = en - st;
 	*resolvPnt=subjShape.Center+en;
-	return true;
+	return true;*/
 }
-bool CircleCollShape::GetCollisionResolvPoint(const AABBCollShape& subjShape, Vector2f subjMovDir, Vector2f* resolvPnt) const {
+Vector2f CircleCollShape::GetCollisionResolvPoint(const AABBCollShape& subjShape, Vector2f subjMovDir) const {
 	//NEED TO FIX
 	//NEED TO FIX
 	//NEED TO FIX
@@ -59,8 +70,7 @@ bool CircleCollShape::GetCollisionResolvPoint(const AABBCollShape& subjShape, Ve
 	//NEED TO FIX
 	//NEED TO FIX
 	//NEED TO FIX
-	*resolvPnt = Vector2f(1, 0);
-	return true;
+	return Vector2f(1, 0);
 	//NEED TO FIX
 	//NEED TO FIX
 	//NEED TO FIX
