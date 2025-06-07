@@ -21,7 +21,7 @@ namespace KrostganEngine::GameObjects {
 		virtual bool CheckTargetReach(const IAttackableObj& potentTarget) = 0;
 		virtual bool TryDealDamageToTarget() = 0;
 
-		virtual IAttackableObj& GetCurrentTarget();
+		virtual IAttackableObj* GetCurrentTarget();
 
 		float GetRemReloadTime() const;
 

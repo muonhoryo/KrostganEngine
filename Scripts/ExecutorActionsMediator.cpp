@@ -22,3 +22,9 @@ void ExecutorActionsMediator::SetQueue(list<IEntityAction*>& actions) {
 void ExecutorActionsMediator::ResetCurrActions() {
 	Owner.UnloadActionsToDo();
 }
+
+size_t ExecutorActionsMediator::GetActionsCount() const {
+	if (Owner.ActionsToExecute == nullptr)
+		return 0;
+	return Owner.ActionsToExecute->size();
+}

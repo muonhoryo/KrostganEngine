@@ -70,6 +70,9 @@ void BaseAutoAggrModule::CheckCurrTarget(CallbackRecArgs_Upd& args) {
 	else {
 
 		if (Owner.GetAAModule().CheckTargetReach()) {		//Reach the target to AA
+
+			if(ActionMediator.GetActionsCount()==0)
+				ActionMediator.AddAction((IEntityAction*)new EntityAction_AutoAttack(Owner, *Target));
 			IsAttack = true;
 		}
 		else {
@@ -83,10 +86,12 @@ void BaseAutoAggrModule::CheckCurrTarget(CallbackRecArgs_Upd& args) {
 	}
 }
 void BaseAutoAggrModule::FindTarget(CallbackRecArgs_Upd& args) {
+
 	float radius = Owner.GetBattleStats().GetAutoAggrRadius();
 	Vector2f pos = Owner.GetPosition();
 	TargsBuffer=Engine::GetPhysicsEngine().OverlapCircle_All(pos, radius, TARGETS_MASK);
-	if (TargsBuffer.size() != 0) {
+	if (TargsBuffer.size() != 0) {		//Has potential targets in auto-aggr radius
+
 		Target = nullptr;
 		float minDist = FLT_MAX;
 		IAttackableObj* parTar = nullptr;
@@ -105,7 +110,8 @@ void BaseAutoAggrModule::FindTarget(CallbackRecArgs_Upd& args) {
 				if (relat != Relation::Enemy)
 					continue;
 				dist = Length(parTar->GetTransform().GetPosition() - pos);
-				if (dist < minDist) {
+
+				if (dist < minDist) {		//Finds nearest target
 					TargetTransform = dynamic_cast<TransformableObj*>(parTar);
 					if (TargetTransform == nullptr)
 						continue;
@@ -115,6 +121,7 @@ void BaseAutoAggrModule::FindTarget(CallbackRecArgs_Upd& args) {
 			}
 		}
 		if (Target != nullptr) {
+
 			HasTarget = true;
 			auto& aaMod = Owner.GetAAModule();
 			aaMod.SetAsTarget(Target);

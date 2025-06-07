@@ -49,7 +49,7 @@ void AutoAggressionModule::Restart() {
 	TurnOnAction();
 }
 
-bool AutoAggressionModule::GetActiveState()const {
+bool AutoAggressionModule::GetActivityState()const {
 	return IsActive;
 }
 bool AutoAggressionModule::GetIsFollTarState()const {
@@ -81,6 +81,6 @@ AutoAggressionModule::OnStartOrderExecAction::OnStartOrderExecAction(AutoAggress
 
 void AutoAggressionModule::OnStartOrderExecAction::Execute(const IEntityOrder* const& ord) {
 
-	if (Owner.GetActiveState())
+	if (Owner.GetActivityState())
 		Owner.Restart();
 }

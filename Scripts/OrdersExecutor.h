@@ -99,6 +99,8 @@ namespace KrostganEngine::GameObjects {
 		void SetQueue(list<IEntityAction*>& actions);
 		void ResetCurrActions();
 
+		size_t GetActionsCount() const;
+
 	private:
 		ExecutorActionsMediator(OrdersExecutor& Owner);
 
@@ -128,7 +130,7 @@ namespace KrostganEngine::GameObjects {
 		void TurnTargetFollowingOff();
 		void Restart();
 
-		bool GetActiveState()const ;
+		bool GetActivityState()const ;
 		bool GetIsFollTarState()const;
 
 		void Update(CallbackRecArgs_Upd args) override;

@@ -8,8 +8,8 @@ AutoAttackModule::AutoAttackModule():ICallbackRec_Upd(),
 	RemReloadTime = 0;
 }
 
-IAttackableObj& AutoAttackModule::GetCurrentTarget() {
-	return *Target;
+IAttackableObj* AutoAttackModule::GetCurrentTarget() {
+	return Target;
 }
 
 float AutoAttackModule::GetRemReloadTime() const {
