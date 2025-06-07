@@ -27,7 +27,6 @@ void DynamicPhysObject::Update(CallbackRecArgs_LUpd args) {
 			HasMoved = false;
 			return;
 		}
-		cout << "Resolving collision" << endl;
 		size_t resolCount = 0;
 		size_t max = Engine::GetGlobalConsts().Physics_MaxCollsResolvCount;
 		Vector2f resolvPnt = Vector2f(0, 0);
