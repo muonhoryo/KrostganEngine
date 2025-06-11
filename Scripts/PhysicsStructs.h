@@ -14,4 +14,12 @@ namespace KrostganEngine::Physics {
 		Vector2f Origin;
 		Vector2f Direction;
 	};
+	struct Segment {
+		Segment(Vector2f First,Vector2f Second)
+			:First(First),
+			Second(Second){}
+
+		Vector2f First;
+		Vector2f Second;
+	};
 }

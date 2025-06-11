@@ -52,7 +52,7 @@ namespace KrostganEngine {
 
 			const ColliderShape& GetCollider() const override;
 			vector<IPhysicalObject*> OverlapAll() const override ;
-			Vector2f GetResolvingPnt(const ColliderShape& objShape, Vector2f movDir) const override;
+			Vector2f GetResolvingPnt(const ColliderShape& objShape, Vector2f movDir, bool isSlideColl) const override;
 
 			Vector2f GetClosestPoint(Vector2f dmgDealerPos) const override;
 

@@ -20,7 +20,7 @@ namespace KrostganEngine::GameObjects {
 	protected:
 		const ColliderShape& GetCollider() const override;
 		vector<IPhysicalObject*> OverlapAll() const override;
-		Vector2f GetResolvingPnt(const ColliderShape& objShape, Vector2f movDir) const override;
+		Vector2f GetResolvingPnt(const ColliderShape& objShape, Vector2f movDir, bool isSlideColl) const override;
 
 	private:
 		AABBCollShape* Collider;

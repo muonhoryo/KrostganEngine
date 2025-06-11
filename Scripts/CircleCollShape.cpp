@@ -30,39 +30,45 @@ bool CircleCollShape::Intersect(const ColliderShape* coll[], size_t count)const 
 	return false;
 }
 
-Vector2f CircleCollShape::GetCollisionResolvPoint(const CircleCollShape& subjShape, Vector2f subjMovDir ) const {
+Vector2f CircleCollShape::GetCollisionResolvPoint(const CircleCollShape& subjShape, Vector2f subjMovDir, bool isSlideColl) const {
 	
-	float diff;
-	Vector2f dir = subjShape.Center - Center;
-	diff = Radius + subjShape.Radius - Length(dir);
+	if (isSlideColl) {
 
-	if (diff < 0)
-		return subjShape.Center;
+		float diff;
+		Vector2f dir = subjShape.Center - Center;
+		diff = Radius + subjShape.Radius - Length(dir);
 
-	dir = Normalize(dir);
-	return  subjShape.Center+Vector2f(dir.x * diff, dir.y * diff);
+		if (diff < 0)
+			return subjShape.Center;
 
-	/*
-	if (Radius < eps || subjShape.Radius < eps)
-		return false;
-	
-	Vector2f mid =subjShape.Center-Center;
-	float relat = Radius / (subjShape.Radius + Radius);
-	mid = Vector2f(mid.x * relat, mid.y * relat);
-	mid = Center + mid;
-	Ray ray = Ray(mid, subjMovDir);
-	Vector2f st;
-	if (!subjShape.IntersectRay(ray, &st))
-		return false;
-	ray.Direction = -ray.Direction;
-	Vector2f en;
-	if (!IntersectRay(ray, &en))
-		return false;
-	en = en - st;
-	*resolvPnt=subjShape.Center+en;
-	return true;*/
+		dir = Normalize(dir);
+		return  subjShape.Center + Vector2f(dir.x * diff, dir.y * diff);
+	}
+	else {
+
+
+		if (Radius < eps || subjShape.Radius < eps)
+			return subjShape.Center;
+
+		Vector2f mid = subjShape.Center - Center;
+		float relat = Radius / (subjShape.Radius + Radius);
+		mid = Vector2f(mid.x * relat, mid.y * relat);
+		mid = Center + mid;
+		Ray ray = Ray(mid, subjMovDir);
+		Vector2f st;
+		if (!subjShape.IntersectRay(ray, &st))
+			return subjShape.Center;
+		ray.Direction = -ray.Direction;
+		Vector2f en;
+		if (!IntersectRay(ray, &en))
+			return subjShape.Center;
+		en = en - st;
+		return subjShape.Center + en;
+
+	}
+
 }
-Vector2f CircleCollShape::GetCollisionResolvPoint(const AABBCollShape& subjShape, Vector2f subjMovDir) const {
+Vector2f CircleCollShape::GetCollisionResolvPoint(const AABBCollShape& subjShape, Vector2f subjMovDir, bool isSlideColl) const {
 	//NEED TO FIX
 	//NEED TO FIX
 	//NEED TO FIX
@@ -93,7 +99,7 @@ Vector2f CircleCollShape::GetClosestPoint(Vector2f point)const {
 	diff += Center;
 	return diff;
 }
-bool CircleCollShape::IntersectRay(const Ray& ray, Vector2f* interPnt) const {
+bool CircleCollShape::IntersectRay(const Ray& ray, Vector2f* interPnt, bool selFarthest) const {
 	Vector2f l = Center - ray.Origin;
 	float l2oc = Dot(l, l);
 	float tca = Dot(l, ray.Direction);
@@ -118,7 +124,12 @@ bool CircleCollShape::IntersectRay(const Ray& ray, Vector2f* interPnt) const {
 	else if (t2 < eps)
 		t2 = t1;
 	else
-		t1 = min(t1, t2);
+	{
+		if (selFarthest)
+			t1 = max(t1, t2);
+		else
+			t1 = min(t1, t2);
+	}
 
 	*interPnt = Vector2f(
 		ray.Origin.x + ray.Direction.x * t1,

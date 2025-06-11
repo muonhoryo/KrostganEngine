@@ -58,9 +58,9 @@ float UnitObject::GetSelectSpriteMaxSize() {
 vector<IPhysicalObject*> UnitObject::OverlapAll() const {
 	return Engine::GetPhysicsEngine().OverlapCircle_All(Collider.Center, Collider.Radius, SOLID_COLLISION_LAYER);
 }
-Vector2f UnitObject::GetResolvingPnt(const ColliderShape& objShape, Vector2f movDir) const {
+Vector2f UnitObject::GetResolvingPnt(const ColliderShape& objShape, Vector2f movDir, bool isSlideColl) const {
 
-	return objShape.GetCollisionResolvPoint(Collider, movDir);
+	return objShape.GetCollisionResolvPoint(Collider, movDir,isSlideColl);
 }
 
 Vector2f UnitObject::GetClosestPoint(Vector2f dmgDealerPos) const {

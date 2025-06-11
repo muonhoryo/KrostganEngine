@@ -1,9 +1,11 @@
 
-#include "ColliderShapes.h"
-#include "Extensions.h"
+#include <ColliderShapes.h>
+#include <Extensions.h>
+#include <Engine.h>
 
 using namespace KrostganEngine;
 using namespace KrostganEngine::Physics;
+using namespace KrostganEngine;
 
 AABBCollShape::AABBCollShape(Vector2f Min,Vector2f Max)
 {
@@ -30,7 +32,7 @@ bool AABBCollShape::Intersect(const ColliderShape* coll[], size_t count)const {
 	return false;
 }
 
-Vector2f AABBCollShape::GetCollisionResolvPoint(const CircleCollShape& subjShape, Vector2f subjMovDir) const {
+Vector2f AABBCollShape::GetCollisionResolvPoint(const CircleCollShape& subjShape, Vector2f subjMovDir, bool isSlideColl) const {
 
 	Vector2f neaPnt = GetClosestPoint(subjShape.Center);
 	if (SquareLength(neaPnt - subjShape.Center) > subjShape.Radius * subjShape.Radius)
@@ -39,7 +41,7 @@ Vector2f AABBCollShape::GetCollisionResolvPoint(const CircleCollShape& subjShape
 	Vector2f dir;
 	float len;
 	if (IsPointInCollider(subjShape.Center)) {
-		
+
 		dir = neaPnt - subjShape.Center;
 		len = Length(dir) + subjShape.Radius;
 	}
@@ -51,8 +53,65 @@ Vector2f AABBCollShape::GetCollisionResolvPoint(const CircleCollShape& subjShape
 	dir = Normalize(dir);
 	dir = Vector2f(dir.x * len, dir.y * len);
 	return subjShape.Center + dir;
+
+		////UNWORKING CODE OF COLLISION NON-SLIDING RESOLVING
+
+		//Vector2i intersDir;
+		//{
+		//	size_t mask =		//opposite corner mask
+		//		(subjMovDir.x > 0 ? 0 : 1) |
+		//		(subjMovDir.y > 0 ? 0 : 2); 
+		//	Vector2f cornr = GetCornerByMask(mask);		//get opposite to movdir corner
+		//	Vector2f diff = Vector2f(abs(cornr.x - subjShape.Center.x), abs(cornr.y - subjShape.Center.y));		//Get differencies between corner and center
+		//	Vector2f size = GetSize();
+		//	diff = Vector2f(diff.x / size.x, diff.y / size.y);		//calculate proportional differencies
+		//	bool isXmoreY = diff.x > diff.y;
+		//	intersDir = Vector2i(
+		//		isXmoreY ? ((mask & 1) == 0 ? 1 : -1):0,
+		//		!isXmoreY ? ((mask & 2) == 0 ? 1 : -1):0);
+		//}
+		//Vector2f anch = subjShape.Center + (Vector2f(intersDir.x * subjShape.Radius, intersDir.y * subjShape.Radius));
+		//Segment intersSide = Segment(
+		//	Vector2f(
+		//		(intersDir.x > 0) ? Max.x : Min.x,
+		//		(intersDir.y < 0) ? Min.y : Max.y),
+		//	Vector2f(
+		//		(intersDir.x < 0) ? Min.x : Max.x,
+		//		(intersDir.x > 0) ? Max.y : Min.y));	
+
+		//Vector2f rayPnt;
+		//if (Engine::GetPhysicsEngine().Intersect(Ray(anch,-subjMovDir), intersSide, &rayPnt)) {
+
+		//	return rayPnt - anch;
+		//}
+		//else {
+
+		//	Vector2f circlPnt;
+		//	Vector2f corner;
+		//	Vector2f maxInterResolvVec;
+		//	Vector2f interResolvVec;
+		//	float maxDist_sqr=-1;
+		//	float dist_sqr;
+		//	for (size_t i = 0;i < 4;i++) {
+
+		//		corner = GetCornerByMask(i);
+		//		if (subjShape.IntersectRay(Ray(corner, subjMovDir), &circlPnt, true)) {
+		//			
+		//			interResolvVec = corner - circlPnt;
+		//			dist_sqr = SquareLength(interResolvVec);
+		//			if (dist_sqr > maxDist_sqr) {
+		//				maxInterResolvVec = interResolvVec;
+		//				maxDist_sqr = dist_sqr;
+		//			}
+		//		}
+		//	}
+		//	if (maxDist_sqr < 0)
+		//		return subjShape.Center;
+		//	else
+		//		return subjShape.Center + maxInterResolvVec;
+		//}
 }
-Vector2f AABBCollShape::GetCollisionResolvPoint(const AABBCollShape& subjShape, Vector2f subjMovDir)const {
+Vector2f AABBCollShape::GetCollisionResolvPoint(const AABBCollShape& subjShape, Vector2f subjMovDir,bool isSlideColl)const {
 	//NEED TO FIX
 	//NEED TO FIX
 	//NEED TO FIX
@@ -141,7 +200,7 @@ Vector2f AABBCollShape::GetClosestPoint(Vector2f point) const {
 	}
 	return clPoint;
 }
-bool AABBCollShape::IntersectRay(const Ray& ray, Vector2f* interPnt) const {
+bool AABBCollShape::IntersectRay(const Ray& ray, Vector2f* interPnt, bool selFarthest) const {
 	//NEED TO FIX
 	//NEED TO FIX
 	//NEED TO FIX
@@ -158,4 +217,16 @@ bool AABBCollShape::IntersectRay(const Ray& ray, Vector2f* interPnt) const {
 	//NEED TO FIX
 	//NEED TO FIX
 	//NEED TO FIX
+}
+
+Vector2f AABBCollShape::GetCenter() const {
+	return Vector2f((Min.x + Max.x) * 0.5f, (Min.y + Max.y) * 0.5f);
+}
+Vector2f AABBCollShape::GetCornerByMask(size_t mask) const {
+	return Vector2f(
+		((mask & 1) == 0) ? Min.x : Max.x,
+		((mask & 2) == 0) ? Min.y : Max.y);
+}
+Vector2f AABBCollShape::GetSize() const {
+	return Vector2f(Max.x - Min.x, Max.y - Min.y);
 }

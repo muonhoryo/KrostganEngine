@@ -169,7 +169,7 @@ View& Engine::InstanceNewView() {
 	return view;
 }
 
-const std::string Engine::ENGINE_VERSION = "A0.0.16.0";
+const std::string Engine::ENGINE_VERSION = "A0.1.0.0";
 
 
 RenderWindow& Engine::GetRenderWindow() {

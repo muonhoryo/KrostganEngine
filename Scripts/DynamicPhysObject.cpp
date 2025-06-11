@@ -29,11 +29,17 @@ void DynamicPhysObject::Update(CallbackRecArgs_LUpd args) {
 		}
 		size_t resolCount = 0;
 		size_t max = Engine::GetGlobalConsts().Physics_MaxCollsResolvCount;
+		DynamicPhysObject* dynPhObj = nullptr;
+		Vector2f resolPnt;
+		bool isSlide;
 		for (auto coll : colls) {
 			if (coll == this)
 				continue;
 
-			SetPosition(GetResolvingPnt(coll->GetCollider(), MoveDirection));
+			//dynPhObj = dynamic_cast<DynamicPhysObject*>(coll);
+			//isSlide = (dynPhObj == nullptr) || (!dynPhObj->HasMoved);
+			resolPnt = GetResolvingPnt(coll->GetCollider(), MoveDirection, true);
+			SetPosition(resolPnt);
 			++resolCount;
 			if (resolCount >= max)
 				break;

@@ -5,6 +5,7 @@
 #include <vector>
 #include <PhysicsLayer.h>
 #include <SFML/System.hpp>
+#include <PhysicsStructs.h>
 
 using namespace sf;
 using namespace KrostganEngine::Core;
@@ -19,6 +20,8 @@ namespace KrostganEngine::Physics {
 		vector<IPhysicalObject*> OverlapCircle_All(Vector2f center, float radius, PhysicsLayer layer = PhysicsLayer::All);
 
 		IPhysicalObject* PointCast(Vector2f globalPos, PhysicsLayer layer = PhysicsLayer::All);
+
+		bool Intersect(const Ray& ray, const Segment& seg, Vector2f* interPnt);
 
 	private:
 		/// <summary>
