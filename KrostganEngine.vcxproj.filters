@@ -115,26 +115,8 @@
     <Filter Include="Исходные файлы\CoreSystems\EntitiesControl\Orders\EntityActions">
       <UniqueIdentifier>{52f97b20-e0d7-41bb-9527-9ebdc18cc5c0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Файлы заголовков\CoreSystems\GameObjects\EntityBattleStats">
-      <UniqueIdentifier>{b7508e81-192e-49c2-91af-37df94037153}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Исходные файлы\CoreSystems\GameObjects\EntityBattleStats">
-      <UniqueIdentifier>{791f15e4-3d76-4545-a025-275c70345a6f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Исходные файлы\CoreSystems\EntitiesControl\Orders\BaseOrders">
       <UniqueIdentifier>{66928b83-3043-4d09-9bbe-5dad90722650}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Файлы заголовков\CoreSystems\GameObjects\HitPointSystem">
-      <UniqueIdentifier>{73399606-5f27-464f-a470-55f7f895ad4c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Исходные файлы\CoreSystems\GameObjects\HitPointSystem">
-      <UniqueIdentifier>{d4d4163c-7af6-4534-b49f-948bb3b847fb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Файлы заголовков\CoreSystems\GameObjects\GameObjsBaseFightSystem">
-      <UniqueIdentifier>{7246b361-6bca-4b84-93a3-3e589725b3a1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Исходные файлы\CoreSystems\GameObjects\GameObjsBaseFightSystem">
-      <UniqueIdentifier>{2f9e9f53-962e-4987-996b-d998bdc40a4d}</UniqueIdentifier>
     </Filter>
     <Filter Include="Исходные файлы\CoreSystems\PlayerControl\EntitiesCtrlModes">
       <UniqueIdentifier>{e417bccc-fef5-419b-a656-d87dd324665f}</UniqueIdentifier>
@@ -171,6 +153,39 @@
     </Filter>
     <Filter Include="Исходные файлы\CoreSystems\GameObjects\VirtualObjects">
       <UniqueIdentifier>{5fedf5b1-8156-460f-8f98-035a776fc859}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\UI/UX\AutoAttackAnimation">
+      <UniqueIdentifier>{96be3e06-6db8-4509-81da-95f23d1d5ffd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems\GameObjects\FightingSystems">
+      <UniqueIdentifier>{316d669b-6f39-4cbf-b9b1-b16848e9b712}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems\GameObjects\FightingSystems\GameObjsBaseFightSystem">
+      <UniqueIdentifier>{7246b361-6bca-4b84-93a3-3e589725b3a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems\GameObjects\FightingSystems\HitPointSystem">
+      <UniqueIdentifier>{73399606-5f27-464f-a470-55f7f895ad4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems\GameObjects\FightingSystems\BattleInfo">
+      <UniqueIdentifier>{b7508e81-192e-49c2-91af-37df94037153}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems\GameObjects\FightingSystems\HitPointSystem\HPModules">
+      <UniqueIdentifier>{c0c41e47-0c43-4800-ad05-df89ebd012cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\CoreSystems\GameObjects\FightingSystems">
+      <UniqueIdentifier>{9da7a243-a12e-4771-98e1-42933db39d09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\CoreSystems\GameObjects\FightingSystems\HitPointSystem">
+      <UniqueIdentifier>{d4d4163c-7af6-4534-b49f-948bb3b847fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\CoreSystems\GameObjects\FightingSystems\EntityBattleStats">
+      <UniqueIdentifier>{791f15e4-3d76-4545-a025-275c70345a6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\CoreSystems\GameObjects\FightingSystems\GameObjsBaseFightSystem">
+      <UniqueIdentifier>{2f9e9f53-962e-4987-996b-d998bdc40a4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\UI/UX\AutoAttackAnimation">
+      <UniqueIdentifier>{84fa2bfc-e965-4c7f-905f-8ede9c9a368b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -283,7 +298,7 @@
       <Filter>Исходные файлы\CoreSystems\EntitiesControl\Orders\EntityActions</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\EntityBattleStats.cpp">
-      <Filter>Исходные файлы\CoreSystems\GameObjects\EntityBattleStats</Filter>
+      <Filter>Исходные файлы\CoreSystems\GameObjects\FightingSystems\EntityBattleStats</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\EntityOrder_MoveToPoint.cpp">
       <Filter>Исходные файлы\CoreSystems\EntitiesControl\Orders\BaseOrders</Filter>
@@ -292,16 +307,16 @@
       <Filter>Исходные файлы\CoreSystems\UI/UX\Primitives</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\EntityHPModule.cpp">
-      <Filter>Исходные файлы\CoreSystems\GameObjects\HitPointSystem</Filter>
+      <Filter>Исходные файлы\CoreSystems\GameObjects\FightingSystems\HitPointSystem</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\IHitPointModule.cpp">
-      <Filter>Исходные файлы\CoreSystems\GameObjects\HitPointSystem</Filter>
+      <Filter>Исходные файлы\CoreSystems\GameObjects\FightingSystems\HitPointSystem</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\EntityBaseAAModule.cpp">
-      <Filter>Исходные файлы\CoreSystems\GameObjects\GameObjsBaseFightSystem</Filter>
+      <Filter>Исходные файлы\CoreSystems\GameObjects\FightingSystems\GameObjsBaseFightSystem</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\AutoAttackModule.cpp">
-      <Filter>Исходные файлы\CoreSystems\GameObjects\GameObjsBaseFightSystem</Filter>
+      <Filter>Исходные файлы\CoreSystems\GameObjects\FightingSystems\GameObjsBaseFightSystem</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\EntityOrder_AttackTarget.cpp">
       <Filter>Исходные файлы\CoreSystems\EntitiesControl\Orders\BaseOrders</Filter>
@@ -413,6 +428,18 @@
     </ClCompile>
     <ClCompile Include="Scripts\Wall.cpp">
       <Filter>Исходные файлы\CoreSystems\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\LineAAAnimation.cpp">
+      <Filter>Исходные файлы\UI/UX\AutoAttackAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\OutlineLineVisual.cpp">
+      <Filter>Исходные файлы\CoreSystems\UI/UX\Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\WideLineVisual.cpp">
+      <Filter>Исходные файлы\CoreSystems\UI/UX\Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\ICallbackRec_GraphPostRen.cpp">
+      <Filter>Исходные файлы\CoreSystems\EngineCallbacks</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -570,31 +597,28 @@
       <Filter>Файлы заголовков\CoreSystems\EntitiesControl\Orders\EntityActions</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\EntityBattleStats.h">
-      <Filter>Файлы заголовков\CoreSystems\GameObjects\EntityBattleStats</Filter>
+      <Filter>Файлы заголовков\CoreSystems\GameObjects\FightingSystems\BattleInfo</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\BaseOrdersAndActions.h">
       <Filter>Файлы заголовков\CoreSystems\EntitiesControl\Orders</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\IHitPointModule.h">
-      <Filter>Файлы заголовков\CoreSystems\GameObjects\HitPointSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\EntityHPModule.h">
-      <Filter>Файлы заголовков\CoreSystems\GameObjects\HitPointSystem</Filter>
+      <Filter>Файлы заголовков\CoreSystems\GameObjects\FightingSystems\HitPointSystem</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\IAttackableObj.h">
-      <Filter>Файлы заголовков\CoreSystems\GameObjects\HitPointSystem</Filter>
+      <Filter>Файлы заголовков\CoreSystems\GameObjects\FightingSystems\HitPointSystem</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\AutoAttackModule.h">
-      <Filter>Файлы заголовков\CoreSystems\GameObjects\GameObjsBaseFightSystem</Filter>
+      <Filter>Файлы заголовков\CoreSystems\GameObjects\FightingSystems\GameObjsBaseFightSystem</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\HPSystem.h">
-      <Filter>Файлы заголовков\CoreSystems\GameObjects\HitPointSystem</Filter>
+      <Filter>Файлы заголовков\CoreSystems\GameObjects\FightingSystems\HitPointSystem</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\GameObjsBaseFightSystem.h">
-      <Filter>Файлы заголовков\CoreSystems\GameObjects\GameObjsBaseFightSystem</Filter>
+      <Filter>Файлы заголовков\CoreSystems\GameObjects\FightingSystems\GameObjsBaseFightSystem</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\EntityBaseAAModule.h">
-      <Filter>Файлы заголовков\CoreSystems\GameObjects\GameObjsBaseFightSystem</Filter>
+      <Filter>Файлы заголовков\CoreSystems\GameObjects\FightingSystems\GameObjsBaseFightSystem</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\EntityOrder_AttackTarget.h">
       <Filter>Файлы заголовков\CoreSystems\EntitiesControl\Orders\BaseOrders</Filter>
@@ -697,6 +721,33 @@
     </ClInclude>
     <ClInclude Include="Scripts\Wall.h">
       <Filter>Файлы заголовков\CoreSystems\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\UIUXVisual.h">
+      <Filter>Файлы заголовков\UI/UX</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\AutoAttackAnimation.h">
+      <Filter>Файлы заголовков\UI/UX\AutoAttackAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\AttackInfo.h">
+      <Filter>Файлы заголовков\CoreSystems\GameObjects\FightingSystems\BattleInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\FightingSystems.h">
+      <Filter>Файлы заголовков\CoreSystems\GameObjects\FightingSystems</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\BattleInfo.h">
+      <Filter>Файлы заголовков\CoreSystems\GameObjects\FightingSystems\BattleInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\AutoAttackInfo.h">
+      <Filter>Файлы заголовков\CoreSystems\GameObjects\FightingSystems\BattleInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\EntityHPModule.h">
+      <Filter>Файлы заголовков\CoreSystems\GameObjects\FightingSystems\HitPointSystem\HPModules</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\LineAAAnimation.h">
+      <Filter>Файлы заголовков\UI/UX\AutoAttackAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\ICallbackRec_GraphPostRen.h">
+      <Filter>Файлы заголовков\CoreSystems\EngineCallbacks</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

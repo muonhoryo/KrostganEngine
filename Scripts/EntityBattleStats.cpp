@@ -75,6 +75,9 @@ void EntityBattleStats::SetAADamage(size_t damage) {
 float EntityBattleStats::GetAASpeed() const {
 	return AASpeed;
 }
+float EntityBattleStats::GetAACooldown() const {
+	return GetAACooldown(AASpeed);
+}
 void EntityBattleStats::SetAASpeed(float speed) {
 	if (speed < 0)
 		throw exception("AA speed cannot be less than zero");

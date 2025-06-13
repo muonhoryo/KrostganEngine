@@ -7,9 +7,13 @@ using namespace KrostganEngine::GameObjects;
 using namespace KrostganEngine::Core;
 
 ICallbackRec_GraphRen::ICallbackRec_GraphRen() {
-	Engine::GetRenderModule().Add(*this);
+
+	EngineCallbackHandler<ICallbackRec_GraphRen>& mod = Engine::GetRenderModule();
+	mod.Add(*this);
 }
 ICallbackRec_GraphRen::~ICallbackRec_GraphRen() {
-	Engine::GetRenderModule().Remove(*this);
+
+	EngineCallbackHandler<ICallbackRec_GraphRen>& mod = Engine::GetRenderModule();
+	mod.Remove(*this);
 	cout << "Remove graphics from render" << endl;
 }

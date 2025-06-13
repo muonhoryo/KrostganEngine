@@ -18,11 +18,23 @@ LinesVisPrimitive::LinesVisPrimitive(vector<Vector2f>& pointsCoord, Color edgeCo
 		Vertexes[i].color = edgeColor;
 	}
 }
+LinesVisPrimitive::LinesVisPrimitive(vector<Vector2f>& pointsCoord, vector<Color>& edgeColors) {
 
-Color LinesVisPrimitive::GetEdgeColor() {
-	return Vertexes[0].color;
+	size_t pointsCount = pointsCoord.size();
+	if (pointsCount == 0) {
+		throw exception("Lines primitive cannot be created without points");
+	}
+	Vertexes = VertexArray(PrimitiveType::LineStrip, pointsCount);
+	for (int i = 0;i < pointsCount;i++) {
+		Vertexes[i].position = pointsCoord[i];
+		Vertexes[i].color = edgeColors[i];
+	}
 }
-size_t LinesVisPrimitive::GetPointsCount() {
+
+Color LinesVisPrimitive::GetEdgeColor(size_t index)const {
+	return Vertexes[index].color;
+}
+size_t LinesVisPrimitive::GetPointsCount()const {
 	return Vertexes.getVertexCount();
 }
 
@@ -66,10 +78,13 @@ void LinesVisPrimitive::ReduceSize(size_t newCount) {
 		return;
 	Vertexes.resize(newCount);
 }
-void LinesVisPrimitive::SetEdgeColor(Color color) {
+void LinesVisPrimitive::SetEdgeColor_AllPnts(Color color) {
 	for (int i = 0;i < GetPointsCount();i++) {
 		Vertexes[i].color = color;
 	}
+}
+void LinesVisPrimitive::SetEdgeColor(Color color,size_t index) {
+	Vertexes[index].color = color;
 }
 void LinesVisPrimitive::SetPointPosition(Vector2f newPos, size_t pointIndex) {
 	if (pointIndex >= GetPointsCount())

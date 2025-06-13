@@ -7,6 +7,7 @@
 #include <ICallbackRec_GraphRen.h>
 #include <ICallbackRec_Upd.h>
 #include <ICallbackRec_LUpd.h>
+#include <ICallbackRec_GraphPostRen.h>
 
 using namespace sf;
 using namespace std;
@@ -63,10 +64,12 @@ namespace KrostganEngine::Core {
 		EngineCallbackHandler() : Callbacks(*new forward_list<TCallback*>) {};
 
 		forward_list<TCallback*>& Callbacks;
+
+		friend class EngineWorkCycleModule;
+		friend class EngineRenderModule;
 	};
 
-	class EngineUpdateModule :public EngineCallbackHandler<ICallbackRec_Upd>,
-		public EngineWorkCycleModule {
+	class EngineUpdateModule : public EngineWorkCycleModule, public EngineCallbackHandler<ICallbackRec_Upd> {
 	public:
 		EngineUpdateModule(RenderWindow& Window);
 
@@ -82,7 +85,7 @@ namespace KrostganEngine::Core {
 		void SetFrameDeltaTime(float time);
 	};
 
-	class EngineRenderModule :public EngineCallbackHandler<ICallbackRec_GraphRen>,
+	class EngineRenderModule :public EngineCallbackHandler<ICallbackRec_GraphRen>, public EngineCallbackHandler<ICallbackRec_GraphPostRen>,
 		public EngineWorkCycleModule {
 	public:
 		EngineRenderModule(RenderWindow& Window);
@@ -92,8 +95,18 @@ namespace KrostganEngine::Core {
 	private:
 		RenderWindow& Window;
 		Clock FrameRenderTime;
+
+		//EngineCallbackHandler<ICallbackRec_GraphRen> ObjectsRender;
+		//EngineCallbackHandler<ICallbackRec_GraphPostRen> UIRender;
 	
 	public:
+		/*EngineCallbackHandler<ICallbackRec_GraphRen> const& GetObjectsRender() const {
+			return ObjectsRender;
+		}
+		EngineCallbackHandler<ICallbackRec_GraphPostRen> const& GetUIRender() const {
+			return UIRender;
+		}*/
+
 		void SetFrameRenderTime(float time);
 	};
 

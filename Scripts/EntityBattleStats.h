@@ -13,6 +13,7 @@ namespace KrostganEngine::GameObjects {
 		//Attack
 		size_t GetAADamage() const;
 		float GetAASpeed() const;
+		float GetAACooldown() const;
 		float GetAARadius() const;
 		//View
 		float GetAutoAggrRadius() const;
@@ -30,6 +31,10 @@ namespace KrostganEngine::GameObjects {
 		//View
 		void SetAutoAggrRadius(float radius);
 
+		static float GetAACooldown(float AASpeed) {
+			return (float)1 / AASpeed;
+		}
+
 	private:
 		//HitPoint
 		size_t MaxHP;
@@ -38,7 +43,7 @@ namespace KrostganEngine::GameObjects {
 		float MovingSpeed;
 		//Attack
 		size_t AADamage;
-		float AASpeed;
+		float AASpeed;		//Amount of dealt attack in 1 second
 		float AARadius;
 		//View
 		float AutoAggrRadius;

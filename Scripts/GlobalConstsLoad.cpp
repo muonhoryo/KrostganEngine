@@ -24,6 +24,7 @@ const GlobalConsts& GlobalConstsLoad::LoadGlobalConsts() {
 	LoadedGlobalConsts.EntityAct_RepCoolDown = DeserializeValueByDefinition(GlobalConsts::DEF_ENTITY_ACTION_REPEAT_COOLDOWN, &line);
 	LoadedGlobalConsts.CameraMovTriggerArea = DeserializeValueByDefinition(GlobalConsts::DEF_CAMERA_MOVING_TRIGGER_AREA, &line);
 	LoadedGlobalConsts.Physics_MaxCollsResolvCount = DeserializeValueByDefinition(GlobalConsts::DEF_PHYSICS_MAX_COLLISION_RESOLVE_COUNT, &line);
+	LoadedGlobalConsts.AAAnim_LineWidth = DeserializeValueByDefinition(GlobalConsts::DEF_AA_ANIM_LINE_WIDTH, &line);
 
 	StrValuesArr.clear();
 	return LoadedGlobalConsts;

@@ -6,7 +6,8 @@
 using namespace std;
 using namespace KrostganEngine::Core;
 
-EngineRenderModule::EngineRenderModule(RenderWindow& Window):EngineCallbackHandler(),Window(Window)
+EngineRenderModule::EngineRenderModule(RenderWindow& Window): EngineCallbackHandler<ICallbackRec_GraphRen>(), EngineCallbackHandler<ICallbackRec_GraphPostRen>(),
+	Window(Window)
 {
 }
 void EngineRenderModule::Execute() {
@@ -14,7 +15,10 @@ void EngineRenderModule::Execute() {
 	if (!Window.isOpen())
 		return;
 	Window.clear();
-	for (auto rec : Callbacks) {
+	for (auto rec : EngineCallbackHandler<ICallbackRec_GraphRen>::Callbacks) {
+		(*rec).RenderGraphic(Window);
+	}
+	for (auto rec : EngineCallbackHandler<ICallbackRec_GraphPostRen>::Callbacks) {
 		(*rec).RenderGraphic(Window);
 	}
 	Window.display();

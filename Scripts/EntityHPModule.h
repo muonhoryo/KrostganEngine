@@ -8,7 +8,7 @@ namespace KrostganEngine::GameObjects {
 	public:
 		EntityHPModule(EntityBattleStats& BattleStats);
 
-		void TakeDamage(size_t damage) override;
+		void TakeDamage(AttackInfo attInfo) override;
 		void Death() override;
 
 	private:

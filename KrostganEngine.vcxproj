@@ -154,7 +154,10 @@
     <ClCompile Include="Scripts\EntityOrder_Idle.cpp" />
     <ClCompile Include="Scripts\EntsCtrlOrdersGiving.cpp" />
     <ClCompile Include="Scripts\DynamicPhysObject.cpp" />
+    <ClCompile Include="Scripts\ICallbackRec_GraphPostRen.cpp" />
     <ClCompile Include="Scripts\ICallbackRec_LUpd.cpp" />
+    <ClCompile Include="Scripts\LineAAAnimation.cpp" />
+    <ClCompile Include="Scripts\OutlineLineVisual.cpp" />
     <ClCompile Include="Scripts\UnitColliderVisualizer.cpp" />
     <ClCompile Include="Scripts\ConsoleCommsInterpretator.cpp" />
     <ClCompile Include="Scripts\CursorManager.cpp" />
@@ -215,9 +218,14 @@
     <ClCompile Include="Scripts\ValuesListDeserializer.cpp" />
     <ClCompile Include="Scripts\VectExts.cpp" />
     <ClCompile Include="Scripts\Wall.cpp" />
+    <ClCompile Include="Scripts\WideLineVisual.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Scripts\AutoAttackAnimation.h" />
+    <ClInclude Include="Scripts\AutoAttackInfo.h" />
     <ClInclude Include="Scripts\BaseAutoAggrModule.h" />
+    <ClInclude Include="Scripts\BattleInfo.h" />
+    <ClInclude Include="Scripts\AttackInfo.h" />
     <ClInclude Include="Scripts\DivineCommander.h" />
     <ClInclude Include="Scripts\EntityOrder_AttackArea.h" />
     <ClInclude Include="Scripts\EntityOrder_Cancel.h" />
@@ -228,7 +236,11 @@
     <ClInclude Include="Scripts\EntityAutoAggrRadVisualizer.h" />
     <ClInclude Include="Scripts\ExternalData.h" />
     <ClInclude Include="Scripts\DynamicPhysObject.h" />
+    <ClInclude Include="Scripts\FightingSystems.h" />
+    <ClInclude Include="Scripts\ICallbackRec_GraphPostRen.h" />
+    <ClInclude Include="Scripts\LineAAAnimation.h" />
     <ClInclude Include="Scripts\PhysicsStructs.h" />
+    <ClInclude Include="Scripts\UIUXVisual.h" />
     <ClInclude Include="Scripts\UnitColliderVisualizer.h" />
     <ClInclude Include="Scripts\CursorManager.h" />
     <ClInclude Include="Scripts\EntitiesCtrlInputHandler.h" />

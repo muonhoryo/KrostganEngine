@@ -9,13 +9,13 @@ EntityHPModule::EntityHPModule(EntityBattleStats& BattleStats)
 	:BattleStats(BattleStats){
 }
 
-void EntityHPModule::TakeDamage(size_t damage) {
+void EntityHPModule::TakeDamage(AttackInfo attInfo) {
 	size_t currHP = BattleStats.GetCurrentHP();
-	if (currHP <= damage)
+	if (currHP <= attInfo.DealtDmg)
 		Death();
 	else {
-		BattleStats.SetCurrentHP(currHP - damage);
-		cout << "Take damage " << damage << ": remained " << BattleStats.GetCurrentHP() << " / " << BattleStats.GetMaxHP()<<" health" << endl;
+		BattleStats.SetCurrentHP(currHP - attInfo.DealtDmg);
+		cout << "Take damage " << attInfo.DealtDmg << ": remained " << BattleStats.GetCurrentHP() << " / " << BattleStats.GetMaxHP()<<" health" << endl;
 	}
 }
 void EntityHPModule::Death() {

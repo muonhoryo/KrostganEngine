@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Events.h>
+#include <AttackInfo.h>
 
 namespace KrostganEngine::GameObjects {
 	struct ObjectDeathEventArgs {
@@ -12,7 +13,7 @@ namespace KrostganEngine::GameObjects {
 
 		bool GetIsDeadState() const { return IsDead; }
 
-		virtual void TakeDamage(size_t damage)=0;
+		virtual void TakeDamage(AttackInfo attInfo)=0;
 		virtual void Death() = 0;
 
 	protected:

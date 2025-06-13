@@ -3,9 +3,12 @@
 
 using namespace KrostganEngine::GameObjects;
 
-AutoAttackModule::AutoAttackModule():ICallbackRec_Upd(),
-	Target(nullptr){
-	RemReloadTime = 0;
+AutoAttackModule::AutoAttackModule(AutoAttackAnimation& AAAnimation):ICallbackRec_Upd(),
+	Target(nullptr),
+	AAAnimation(AAAnimation)
+{}
+AutoAttackModule::~AutoAttackModule() {
+	delete &AAAnimation;
 }
 
 IAttackableObj* AutoAttackModule::GetCurrentTarget() {

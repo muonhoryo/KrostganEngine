@@ -2,13 +2,15 @@
 #include <EntityBaseAAModule.h>
 #include <Extensions.h>
 #include <Engine.h>
+#include <LineAAAnimation.h>
 
 using namespace KrostganEngine;
 using namespace KrostganEngine::Core;
 using namespace KrostganEngine::GameObjects;
+using namespace KrostganEngine::UI;
 
 EntityBaseAAModule::EntityBaseAAModule(EntityBattleStats& BattleStats,TransformableObj& Owner)
-	:AutoAttackModule(),
+	:AutoAttackModule(*new LineAAAnimation(Owner)),
 	BattleStats(BattleStats),
 	Owner(Owner){
 	if (BattleStats.GetAASpeed() <= eps)
@@ -36,12 +38,18 @@ bool EntityBaseAAModule::TryDealDamageToTarget() {
 	{
 		if (RemReloadTime <= 0) {
 			size_t dealedDmg = BattleStats.GetAADamage();
-			Target->GetHPModule().TakeDamage(dealedDmg);
 			float aaSpeed = BattleStats.GetAASpeed();
-			if (aaSpeed == 0)
+			AutoAttackInfo attInfo = AutoAttackInfo(dealedDmg, *Target, aaSpeed);
+			Target->GetHPModule().TakeDamage(attInfo);
+			if (BattleStats.GetAASpeed() == 0) {
+
 				RemReloadTime = FLT_MAX;
-			else
-				RemReloadTime = (float)1 / aaSpeed;
+			}
+			else {
+
+				RemReloadTime = BattleStats.GetAACooldown();
+				AAAnimation.OnDealDmg(attInfo);
+			}
 			return true;
 		}
 	}
