@@ -187,6 +187,39 @@
     <Filter Include="Исходные файлы\UI/UX\AutoAttackAnimation">
       <UniqueIdentifier>{84fa2bfc-e965-4c7f-905f-8ede9c9a368b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems\Memory">
+      <UniqueIdentifier>{00b0883e-ab66-4e86-bd82-f4f93e0a374d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\CoreSystems\Memory">
+      <UniqueIdentifier>{e10c92b0-4e07-4472-ad4f-810007414712}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\CoreSystems\Memory\WatchPointer">
+      <UniqueIdentifier>{55608b4a-00b3-49f2-b110-d1a8ba4fad99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\CoreSystems\GameObjects\FightingSystems\HitPointSystem\DeathModules">
+      <UniqueIdentifier>{512258e7-22d0-40f4-996f-a025313fcd79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\CoreSystems\GameObjects\FightingSystems\HitPointSystem\HPModules">
+      <UniqueIdentifier>{aadb3c27-fbc8-403d-94a5-7ca8eb052cb4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems\GameObjects\FightingSystems\HitPointSystem\DeathModules">
+      <UniqueIdentifier>{c6b4e5bf-1405-4db0-8105-c5126ca908d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems\Visual">
+      <UniqueIdentifier>{2ea7eb67-2a6a-4f43-b2cc-69206da0817c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Visual">
+      <UniqueIdentifier>{27fb7be1-0b00-4de0-9546-4f1b2cae976d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Visual\Effects">
+      <UniqueIdentifier>{bc5fa112-c392-4c8e-9e15-710dd2cf87fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\CoreSystems\Visual">
+      <UniqueIdentifier>{e26e5e4e-06d1-476a-b004-b816dafca3c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\CoreSystems\Visual\Effects">
+      <UniqueIdentifier>{becd9275-5422-4aa1-8496-bc86fe0d203b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\main.cpp">
@@ -305,12 +338,6 @@
     </ClCompile>
     <ClCompile Include="Scripts\LinesVisPrimitive.cpp">
       <Filter>Исходные файлы\CoreSystems\UI/UX\Primitives</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\EntityHPModule.cpp">
-      <Filter>Исходные файлы\CoreSystems\GameObjects\FightingSystems\HitPointSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\IHitPointModule.cpp">
-      <Filter>Исходные файлы\CoreSystems\GameObjects\FightingSystems\HitPointSystem</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\EntityBaseAAModule.cpp">
       <Filter>Исходные файлы\CoreSystems\GameObjects\FightingSystems\GameObjsBaseFightSystem</Filter>
@@ -441,6 +468,24 @@
     <ClCompile Include="Scripts\ICallbackRec_GraphPostRen.cpp">
       <Filter>Исходные файлы\CoreSystems\EngineCallbacks</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\IHitPointModule.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameObjects\FightingSystems\HitPointSystem\HPModules</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\EntityHPModule.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameObjects\FightingSystems\HitPointSystem\HPModules</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\IDeathModule.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameObjects\FightingSystems\HitPointSystem\DeathModules</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\EntityDeathModule.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameObjects\FightingSystems\HitPointSystem\DeathModules</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\UnitDeathEffect.cpp">
+      <Filter>Исходные файлы\CoreSystems\Visual\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\UnitDeathModule.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameObjects\FightingSystems\HitPointSystem\DeathModules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\CoreGameObjects.h">
@@ -566,12 +611,6 @@
     <ClInclude Include="Scripts\GlobalConsts.h">
       <Filter>Файлы заголовков\CoreSystems\ExternalResources</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\SpriteRenderer.h">
-      <Filter>Файлы заголовков\CoreSystems\UI/UX</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\SingleSprite.h">
-      <Filter>Файлы заголовков\CoreSystems\UI/UX</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\HeroObject.h">
       <Filter>Файлы заголовков\CoreSystems\GameObjects</Filter>
     </ClInclude>
@@ -601,9 +640,6 @@
     </ClInclude>
     <ClInclude Include="Scripts\BaseOrdersAndActions.h">
       <Filter>Файлы заголовков\CoreSystems\EntitiesControl\Orders</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\IHitPointModule.h">
-      <Filter>Файлы заголовков\CoreSystems\GameObjects\FightingSystems\HitPointSystem</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\IAttackableObj.h">
       <Filter>Файлы заголовков\CoreSystems\GameObjects\FightingSystems\HitPointSystem</Filter>
@@ -748,6 +784,30 @@
     </ClInclude>
     <ClInclude Include="Scripts\ICallbackRec_GraphPostRen.h">
       <Filter>Файлы заголовков\CoreSystems\EngineCallbacks</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\CallbackDelegates.h">
+      <Filter>Файлы заголовков\CoreSystems\EngineCallbacks</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\VisualOnDeathDestroyer.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\SpriteRenderer.h">
+      <Filter>Файлы заголовков\CoreSystems\Visual</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\CoreVisual.h">
+      <Filter>Файлы заголовков\CoreSystems\Visual</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\SingleSprite.h">
+      <Filter>Файлы заголовков\CoreSystems\Visual</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\UnitDeathEffect.h">
+      <Filter>Файлы заголовков\Visual\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\GameVisualEffects.h">
+      <Filter>Файлы заголовков\Visual\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\GameVisual.h">
+      <Filter>Файлы заголовков\Visual</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

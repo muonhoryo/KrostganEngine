@@ -25,48 +25,104 @@ namespace KrostganEngine::Core {
 	template<typename TCallback>
 	class EngineCallbackHandler {
 	public:
-		void Initialize(forward_list < TCallback*> callbacks) {
+		/*void Initialize(forward_list < TCallback*> callbacks) {
 			Unload();
-			for (auto cb : callbacks) {
-				Callbacks.push_front(cb);
+			for (TCallback* cb : callbacks) {
+
+				Add(*cb);
 			}
 		};
 		void Unload() {
 			Callbacks.clear();
-		};
-		void Remove( TCallback& callbckToDel) {
+		};*/
+		void Remove(TCallback& callbckToDel) {
+
 			TCallback* elRef = Callbacks.front();
-			if (elRef == &callbckToDel)
-			{
-				Callbacks.pop_front();
-				return;
-			}
 			bool isFound = false;
-			auto itToD = Callbacks.begin();
-			auto it = Callbacks.begin();
-			++it;
-			for (; it != Callbacks.end(); ++it) {
-				elRef = *it;
-				if (elRef== &callbckToDel) {
-					isFound = true;
-					break;
-				}
-				++itToD;
+			auto itToD = Callbacks.before_begin();
+			size_t offset = 0;
+			if (elRef == &callbckToDel) {
+
+				isFound = true;
 			}
-			if(isFound)
-				Callbacks.erase_after(itToD);
+			auto it = Callbacks.begin();
+			if (!isFound) {
+				++offset;
+				++itToD;
+				++it;
+				for (; it != Callbacks.end(); ++it) {
+					elRef = *it;
+					if (elRef == &callbckToDel) {
+						isFound = true;
+						break;
+					}
+					++itToD;
+					++offset;
+				}
+			}
+			if (isFound)
+			{
+				if (IsIteratingCallbacks) {
+
+					*(++itToD) = nullptr;
+					DelayedDelCallbks.push_front(offset);
+					++DelayedDelCallbksCount;
+				}
+				else {
+					
+					if (DelayedDelCallbksCount > 0)
+						DeleteDelayedCallbacks();
+
+					Callbacks.erase_after(itToD);
+				}
+			}
 		};
 		void Add(TCallback& callbck) {
+
 			Callbacks.push_front(&callbck);
+			if (DelayedDelCallbksCount > 0) {
+
+				for (auto& it : DelayedDelCallbks)
+				{
+					++it;
+				}
+			}
 		};
 
+		void DeleteDelayedCallbacks() {
+
+			if (DelayedDelCallbksCount != 0) {
+
+				DelayedDelCallbks.sort(greater<>());
+				typename forward_list<TCallback*>::iterator it;
+				while (DelayedDelCallbksCount > 0) {
+					it = Callbacks.before_begin();
+					for (size_t i = 0;i < DelayedDelCallbks.front();i++) {
+						++it;
+					}
+					Callbacks.erase_after(it);
+					DelayedDelCallbks.pop_front();
+					--DelayedDelCallbksCount;
+				}
+			}
+		}
+
 	protected:
-		EngineCallbackHandler() : Callbacks(*new forward_list<TCallback*>) {};
+		EngineCallbackHandler() {};
 
-		forward_list<TCallback*>& Callbacks;
+		forward_list<TCallback*> Callbacks = forward_list<TCallback*>();
 
-		friend class EngineWorkCycleModule;
+		bool IsIteratingCallbacks = false;
+
+	private:
+		/// <summary>
+		/// Offset for iterators to element before target to delete
+		/// </summary>
+		forward_list<size_t> DelayedDelCallbks = forward_list<size_t>();
+		size_t DelayedDelCallbksCount = 0;
+
 		friend class EngineRenderModule;
+		friend class EngineWorkCycleModule;
 	};
 
 	class EngineUpdateModule : public EngineWorkCycleModule, public EngineCallbackHandler<ICallbackRec_Upd> {
@@ -96,16 +152,8 @@ namespace KrostganEngine::Core {
 		RenderWindow& Window;
 		Clock FrameRenderTime;
 
-		//EngineCallbackHandler<ICallbackRec_GraphRen> ObjectsRender;
-		//EngineCallbackHandler<ICallbackRec_GraphPostRen> UIRender;
 	
 	public:
-		/*EngineCallbackHandler<ICallbackRec_GraphRen> const& GetObjectsRender() const {
-			return ObjectsRender;
-		}
-		EngineCallbackHandler<ICallbackRec_GraphPostRen> const& GetUIRender() const {
-			return UIRender;
-		}*/
 
 		void SetFrameRenderTime(float time);
 	};

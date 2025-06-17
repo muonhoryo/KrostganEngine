@@ -71,6 +71,40 @@ namespace KrostganEngine::Physics {
 		Vector2f GetClosestPoint(Vector2f point)const override;
 		bool IntersectRay(const Ray& ray, Vector2f* interPnt, bool selFarthest=false) const override;
 	};
+
+	struct EmptyShape :ColliderShape {
+
+		bool Intersect(const CircleCollShape& collision) const  override {
+			return false;
+		}
+		bool Intersect(const AABBCollShape& collision) const  override {
+			return false;
+		}
+		bool Intersect(const ColliderShape* coll[], size_t count)const override {
+			return false;
+		}
+
+		Vector2f GetCollisionResolvPoint(const CircleCollShape& subjShape, Vector2f subjMovDir, bool isSlideColl) const override {
+			return subjShape.Center;
+		}
+		Vector2f GetCollisionResolvPoint(const AABBCollShape& subjShape, Vector2f subjMovDir, bool isSlideColl) const override {
+			return subjShape.GetCenter();
+		}
+
+		bool IsPointInCollider(Vector2f point) const override {
+			return false;
+		}
+		Vector2f GetClosestPoint(Vector2f point)const override {
+			return point;
+		}
+		bool IntersectRay(const Ray& ray, Vector2f* interPnt, bool selFarthest = false) const override {
+			return false;
+		}
+		EmptyShape() : ColliderShape() {
+
+		}
+		~EmptyShape() {}
+	};
 }
 
 

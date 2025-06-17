@@ -1,15 +1,14 @@
 #pragma once
 
 #include <EntityBattleStats.h>
-#include <IHitPointModule.h>
+#include <IAttackableObj.h>
 
 namespace KrostganEngine::GameObjects {
 	class EntityHPModule:public IHitPointModule {
 	public:
-		EntityHPModule(EntityBattleStats& BattleStats);
+		EntityHPModule(IDeathModule& DeathModule,EntityBattleStats& BattleStats);
 
 		void TakeDamage(AttackInfo attInfo) override;
-		void Death() override;
 
 	private:
 		EntityBattleStats& BattleStats;

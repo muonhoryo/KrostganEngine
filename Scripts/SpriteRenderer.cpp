@@ -7,7 +7,7 @@
 #include <Extensions.h>
 
 using namespace sf;
-using namespace KrostganEngine::UI;
+using namespace KrostganEngine::Visual;
 using namespace KrostganEngine::Core;
 
 SpriteRenderer::SpriteRenderer(const Texture& RenTexture, Vector2f Offset, Color SprColor) :

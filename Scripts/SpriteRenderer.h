@@ -6,7 +6,7 @@
 using namespace sf;
 using namespace KrostganEngine::Core;
 
-namespace KrostganEngine::UI {
+namespace KrostganEngine::Visual {
 	class SpriteRenderer :public ICallbackRec_GraphRen {
 	public:
 		SpriteRenderer(const Texture& RenTexture, Vector2f offset=Vector2f(0,0), Color SprColor = Color::White);

@@ -1,7 +1,7 @@
 #pragma once
 
 namespace KrostganEngine::EntitiesControl {
-	class ISelectableEntity {
+	class ISelectableEntity{
 	public:
 		virtual void SelectionOn()=0;
 		virtual void SelectionOff()=0;

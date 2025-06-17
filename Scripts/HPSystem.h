@@ -1,5 +1,5 @@
 #pragma once
 
-#include <EntityHPModule.h>
 #include <IAttackableObj.h>
-#include <IHitPointModule.h>
+
+#include <EntityHPModule.h>

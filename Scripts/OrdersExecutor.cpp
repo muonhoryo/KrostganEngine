@@ -22,8 +22,28 @@ OrdersExecutor::~OrdersExecutor() {
 
 }
 
+bool OrdersExecutor::GetAbilityToDoOrders() const {
+	return AbleToDoOrders;
+}
+void OrdersExecutor::AllowOrdersExecution() {
+	if (!AbleToDoOrders)
+	{
+		AbleToDoOrders = true;
+	}
+}
+void OrdersExecutor::ProhibitOrdersExecution() {
+	if (AbleToDoOrders) {
+
+		AbleToDoOrders = false;
+		AutoAggrModule->TurnOff();
+		AAModule->SetAsTarget(nullptr);
+		ResetOrdersQueue();
+	}
+}
+
 bool OrdersExecutor::TryAddOrder(IEntityOrder* order, bool clearOrdQueue) {
-	if (CollectionsExts::IndexOf(GetAllowedOrdersCatalog(), order->GetOrderType()) != string::npos) { //Order's type is allowed
+	if (AbleToDoOrders && 
+		CollectionsExts::IndexOf(GetAllowedOrdersCatalog(), order->GetOrderType()) != string::npos) { //Order's type is allowed
 
 		EntityOrder_ObjectTarget* parOrd = dynamic_cast<EntityOrder_ObjectTarget*>(order);
 		if (parOrd != nullptr &&

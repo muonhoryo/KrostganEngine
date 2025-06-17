@@ -22,6 +22,17 @@ using namespace KrostganEngine::UI;
 
 namespace KrostganEngine {
 	namespace GameObjects {
+		class UnitObject;
+
+		class UnitDeathModule : public EntityDeathModule {
+		public:
+			UnitDeathModule(Entity& Owner) : EntityDeathModule(Owner) {
+
+			}
+
+			void Death() override;
+		};
+
 		struct UnitObjectCtorParams : public EntityCtorParams {
 			void Init_AAModule(Entity& owner) override {
 				AAModule = new EntityBaseAAModule(*BattleStats, owner);
@@ -29,15 +40,18 @@ namespace KrostganEngine {
 			void Init_AutoAggrModule(Entity& owner,ExecutorActionsMediator& mediator) override {
 				AutoAggrModule= new BaseAutoAggrModule(owner, mediator);
 			}
+			void Init_DeathModule(Entity& owner) override {
+				DeathModule = new UnitDeathModule(owner);
+			}
 			void Init_HPModule() override {
-				HPModule = new EntityHPModule(*BattleStats);
+				HPModule = new EntityHPModule(*GetDeathModule(), *BattleStats);
 			}
 		};
 
 		class UnitObject :public Entity {
 		public: 
 			UnitObject(UnitObjectCtorParams& params);
-			~UnitObject();
+			virtual ~UnitObject();
 
 			PhysicsLayer GetLayer() const override;
 
@@ -50,8 +64,8 @@ namespace KrostganEngine {
 			const Texture& GetSelectionTexture() override;
 			float GetSelectSpriteMaxSize() override;
 
-			const ColliderShape& GetCollider() const override;
-			vector<IPhysicalObject*> OverlapAll() const override ;
+			vector<IPhysicalObject*> OverlapAll_Action() const override ;
+			const ColliderShape& GetCollider_Action() const override;
 			Vector2f GetResolvingPnt(const ColliderShape& objShape, Vector2f movDir, bool isSlideColl) const override;
 
 			Vector2f GetClosestPoint(Vector2f dmgDealerPos) const override;
@@ -61,5 +75,6 @@ namespace KrostganEngine {
 			CircleCollShape& Collider;
 			static const vector<EntityOrderType> AllowedOrdersCatalog;
 		};
+
 	}
 }

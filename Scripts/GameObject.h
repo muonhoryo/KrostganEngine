@@ -7,11 +7,13 @@
 
 using namespace sf;
 using namespace KrostganEngine::Physics;
-using namespace KrostganEngine::UI;
+using namespace KrostganEngine::Visual;
 
 namespace KrostganEngine::GameObjects {
 	class GameObject :public SingleSprite,  public DynamicPhysObject {
 	public:
+		virtual ~GameObject(){}
+
 		void SetPosition(Vector2f position) override;
 		void SetScale(float scale) override;
 

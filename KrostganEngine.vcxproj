@@ -147,6 +147,7 @@
     <ClCompile Include="Scripts\EngineLateUpdateModule.cpp" />
     <ClCompile Include="Scripts\EntityAARadVisualizer.cpp" />
     <ClCompile Include="Scripts\EntityAutoAggrRadVisualizer.cpp" />
+    <ClCompile Include="Scripts\EntityDeathModule.cpp" />
     <ClCompile Include="Scripts\EntityOrder_AttackArea.cpp" />
     <ClCompile Include="Scripts\EntityOrder_Cancel.cpp" />
     <ClCompile Include="Scripts\EntityOrder_FollowTarget.cpp" />
@@ -156,6 +157,7 @@
     <ClCompile Include="Scripts\DynamicPhysObject.cpp" />
     <ClCompile Include="Scripts\ICallbackRec_GraphPostRen.cpp" />
     <ClCompile Include="Scripts\ICallbackRec_LUpd.cpp" />
+    <ClCompile Include="Scripts\IDeathModule.cpp" />
     <ClCompile Include="Scripts\LineAAAnimation.cpp" />
     <ClCompile Include="Scripts\OutlineLineVisual.cpp" />
     <ClCompile Include="Scripts\UnitColliderVisualizer.cpp" />
@@ -214,6 +216,8 @@
     <ClCompile Include="Scripts\GameObject.cpp" />
     <ClCompile Include="Scripts\main.cpp" />
     <ClCompile Include="Scripts\TransformableObj.cpp" />
+    <ClCompile Include="Scripts\UnitDeathEffect.cpp" />
+    <ClCompile Include="Scripts\UnitDeathModule.cpp" />
     <ClCompile Include="Scripts\UnitObject.cpp" />
     <ClCompile Include="Scripts\ValuesListDeserializer.cpp" />
     <ClCompile Include="Scripts\VectExts.cpp" />
@@ -226,6 +230,8 @@
     <ClInclude Include="Scripts\BaseAutoAggrModule.h" />
     <ClInclude Include="Scripts\BattleInfo.h" />
     <ClInclude Include="Scripts\AttackInfo.h" />
+    <ClInclude Include="Scripts\CallbackDelegates.h" />
+    <ClInclude Include="Scripts\CoreVisual.h" />
     <ClInclude Include="Scripts\DivineCommander.h" />
     <ClInclude Include="Scripts\EntityOrder_AttackArea.h" />
     <ClInclude Include="Scripts\EntityOrder_Cancel.h" />
@@ -237,6 +243,8 @@
     <ClInclude Include="Scripts\ExternalData.h" />
     <ClInclude Include="Scripts\DynamicPhysObject.h" />
     <ClInclude Include="Scripts\FightingSystems.h" />
+    <ClInclude Include="Scripts\GameVisual.h" />
+    <ClInclude Include="Scripts\GameVisualEffects.h" />
     <ClInclude Include="Scripts\ICallbackRec_GraphPostRen.h" />
     <ClInclude Include="Scripts\LineAAAnimation.h" />
     <ClInclude Include="Scripts\PhysicsStructs.h" />
@@ -290,7 +298,6 @@
     <ClInclude Include="Scripts\GroupSelectionSystem.h" />
     <ClInclude Include="Scripts\HeroObject.h" />
     <ClInclude Include="Scripts\IAttackableObj.h" />
-    <ClInclude Include="Scripts\IHitPointModule.h" />
     <ClInclude Include="Scripts\ICallbackRec_LUpd.h" />
     <ClInclude Include="Scripts\ICallbackRec_Upd.h" />
     <ClInclude Include="Scripts\IEntityAction.h" />
@@ -318,9 +325,11 @@
     <ClInclude Include="Scripts\GameObject.h" />
     <ClInclude Include="Scripts\CoreUIUX.h" />
     <ClInclude Include="Scripts\TransformableObj.h" />
+    <ClInclude Include="Scripts\UnitDeathEffect.h" />
     <ClInclude Include="Scripts\UnitObject.h" />
     <ClInclude Include="Scripts\ValuesListDeserializer.h" />
     <ClInclude Include="Scripts\VectExts.h" />
+    <ClInclude Include="Scripts\VisualOnDeathDestroyer.h" />
     <ClInclude Include="Scripts\Wall.h" />
     <ClInclude Include="Scripts\ZeroArgsEvent.h" />
   </ItemGroup>

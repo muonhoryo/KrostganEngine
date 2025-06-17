@@ -10,12 +10,12 @@ using namespace KrostganEngine::UI;
 namespace KrostganEngine::Debug {
 	class EntityAutoAggrRadVisualizer : public CircleVisPrimitive {
 	public:
-		EntityAutoAggrRadVisualizer(const Entity& Owner);
+		EntityAutoAggrRadVisualizer(Entity& Owner);
 		~EntityAutoAggrRadVisualizer();
 
 		void RenderGraphic(RenderWindow& window) override;
 
 	private:
-		const Entity& Owner;
+		Entity& Owner;
 	};
 }

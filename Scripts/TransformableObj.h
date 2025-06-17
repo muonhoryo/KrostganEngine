@@ -5,7 +5,7 @@
 using namespace sf;
 
 namespace KrostganEngine::GameObjects {
-	class TransformableObj {
+	class TransformableObj{
 	public:
 		~TransformableObj(){}
 

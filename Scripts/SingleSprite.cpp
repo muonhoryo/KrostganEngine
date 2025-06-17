@@ -3,7 +3,7 @@
 #include <SFML/System.hpp>
 
 using namespace sf;
-using namespace KrostganEngine::UI;
+using namespace KrostganEngine::Visual;
 
 SingleSprite::SingleSprite(const Texture& RenTexture, float maxSpriteSize,Vector2f RenOffset, Vector2f Position, float Scale, Color SprColor)
 	:TransformableObj(Position,1),

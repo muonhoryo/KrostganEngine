@@ -23,7 +23,7 @@ void LineAAAnimation::RenderGraphic(RenderWindow& window) {
 
 			LineRender.SetStart(Owner.GetPosition());
 			LineRender.SetEnd(Target->GetPosition());
-			float transparency = (1 - time)/Cooldown;
+			float transparency = (Cooldown - time)/Cooldown;
 			Color clr = LineRender.GetEdgeColor();
 			clr = Color(clr.r, clr.g, clr.b, (Uint8)(transparency * 255));
 			LineRender.SetColor(clr);

@@ -27,6 +27,10 @@ namespace KrostganEngine::GameObjects {
 		bool TryAddOrder(IEntityOrder* order, bool clearOrdQueue = false);
 		void ResetOrdersQueue();
 
+		bool GetAbilityToDoOrders() const;
+		void AllowOrdersExecution();
+		void ProhibitOrdersExecution();
+
 		list<IEntityOrder*>::const_iterator GetOrderQueueIter_Begin() const;
 		list<IEntityOrder*>::const_iterator GetOrderQueueIter_AfterEnd() const;
 		EntityBattleStats& GetBattleStats() const;
@@ -59,6 +63,8 @@ namespace KrostganEngine::GameObjects {
 		EntityBattleStats& BattleStats;
 		AutoAttackModule* AAModule;
 		AutoAggressionModule* AutoAggrModule;
+
+		bool AbleToDoOrders = true;
 
 		void HandleOrders(CallbackRecArgs_Upd& args);
 		void HandleActionsToDo(CallbackRecArgs_Upd& args);

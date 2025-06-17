@@ -5,7 +5,7 @@
 
 using namespace KrostganEngine::GameObjects;
 
-namespace KrostganEngine::UI {
+namespace KrostganEngine::Visual {
 	class SingleSprite :public SpriteRenderer,public virtual TransformableObj {
 
 	public:

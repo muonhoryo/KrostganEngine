@@ -19,7 +19,7 @@ EntityOrder_AttackTarget::EntityOrder_AttackTarget(OrdersExecutor& Owner,Transfo
 {}
 
 bool EntityOrder_AttackTarget::CheckExecCondition() {
-	return Target.GetHPModule().GetIsDeadState();
+	return Target.GetHPModule().DeathModule.GetIsDeadState();
 }
 list<IEntityAction*>* EntityOrder_AttackTarget::GetActions() {
 	list<IEntityAction*>& actions=*new list<IEntityAction*>();

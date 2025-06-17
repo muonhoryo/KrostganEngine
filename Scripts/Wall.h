@@ -13,7 +13,7 @@ namespace KrostganEngine::GameObjects {
 
 	public:
 		WallObject(const Texture& RenTexture, Vector2f RenOffset, Vector2f Position, float Size);
-		~WallObject();
+		virtual ~WallObject();
 
 		PhysicsLayer GetLayer() const override;
 

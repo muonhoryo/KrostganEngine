@@ -4,8 +4,8 @@
 using namespace KrostganEngine::GameObjects;
 
 AutoAttackModule::AutoAttackModule(AutoAttackAnimation& AAAnimation):ICallbackRec_Upd(),
-	Target(nullptr),
-	AAAnimation(AAAnimation)
+	AAAnimation(AAAnimation),
+	Target(nullptr)
 {}
 AutoAttackModule::~AutoAttackModule() {
 	delete &AAAnimation;

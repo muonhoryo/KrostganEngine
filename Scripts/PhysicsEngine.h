@@ -23,6 +23,8 @@ namespace KrostganEngine::Physics {
 
 		bool Intersect(const Ray& ray, const Segment& seg, Vector2f* interPnt);
 
+		static inline const EmptyShape& EmptyCollInstance = *new EmptyShape();
+
 	private:
 		/// <summary>
 		/// Return empty array if didnt overlap any colliders

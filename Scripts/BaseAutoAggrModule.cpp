@@ -47,7 +47,7 @@ void BaseAutoAggrModule::UpdateAction(CallbackRecArgs_Upd& args) {
 }
 
 void BaseAutoAggrModule::CheckCurrTarget(CallbackRecArgs_Upd& args) {
-	if (Target->GetHPModule().GetIsDeadState()) {
+	if (Target->GetHPModule().DeathModule.GetIsDeadState() ) {
 
 		TurnFindTargetState();
 		return;

@@ -11,7 +11,7 @@ namespace KrostganEngine::GameObjects {
 	class HeroObject:UnitObject {
 	public:
 		HeroObject(UnitObjectCtorParams& params);
-		~HeroObject();
+		virtual ~HeroObject();
 
 	protected:
 		const Texture& GetSelectionTexture() override;

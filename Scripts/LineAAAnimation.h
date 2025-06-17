@@ -26,6 +26,7 @@ namespace KrostganEngine::UI {
 		WideLineVisual LineRender;
 		float Cooldown=0;
 		Clock HidingTimer;
+		float StartTime;
 		bool IsRender = false;
 		TransformableObj* Target;
 	};

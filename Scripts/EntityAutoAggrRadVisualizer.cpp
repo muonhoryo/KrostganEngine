@@ -5,9 +5,10 @@ using namespace KrostganEngine;
 using namespace KrostganEngine::Debug;
 using namespace KrostganEngine::Physics;
 
-EntityAutoAggrRadVisualizer::EntityAutoAggrRadVisualizer(const Entity& Owner) : CircleVisPrimitive(Vector2f(0, 0), 1, Color::Yellow, 30),
+EntityAutoAggrRadVisualizer::EntityAutoAggrRadVisualizer(Entity& Owner) : CircleVisPrimitive(Vector2f(0, 0), 1, Color::Yellow, 30),
 Owner(Owner) {
 
+	Owner.GetHPModule().DeathModule.DeathEvent.Add((IEventSubscriber<ObjectDeathEventArgs>*)new VisualOnDeathDestroyer_PostRen(*this, Owner));
 }
 EntityAutoAggrRadVisualizer ::~EntityAutoAggrRadVisualizer() {
 

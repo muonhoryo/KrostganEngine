@@ -25,6 +25,7 @@ const GlobalConsts& GlobalConstsLoad::LoadGlobalConsts() {
 	LoadedGlobalConsts.CameraMovTriggerArea = DeserializeValueByDefinition(GlobalConsts::DEF_CAMERA_MOVING_TRIGGER_AREA, &line);
 	LoadedGlobalConsts.Physics_MaxCollsResolvCount = DeserializeValueByDefinition(GlobalConsts::DEF_PHYSICS_MAX_COLLISION_RESOLVE_COUNT, &line);
 	LoadedGlobalConsts.AAAnim_LineWidth = DeserializeValueByDefinition(GlobalConsts::DEF_AA_ANIM_LINE_WIDTH, &line);
+	LoadedGlobalConsts.AverageLifeTime_DeathEffect = DeserializeValueByDefinition(GlobalConsts::DEF_AVERGAE_LIFETIME_DEATHEFFECT, &line);
 
 	StrValuesArr.clear();
 	return LoadedGlobalConsts;

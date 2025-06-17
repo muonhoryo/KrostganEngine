@@ -22,9 +22,18 @@ EntityBaseAAModule::EntityBaseAAModule(EntityBattleStats& BattleStats,Transforma
 /// </summary>
 /// <param name="target"></param>
 void EntityBaseAAModule::SetAsTarget(IAttackableObj* target) {
-	Target = target;
+	if (target != nullptr) {
+
+		Target = target;
+	}
+	else
+	{
+		Target = nullptr;
+	}
 }
 bool EntityBaseAAModule::CheckTargetReach() {
+	if (Target->GetHPModule().DeathModule.GetIsDeadState())
+		return false;
 	return CheckTargetReach(*Target);
 }
 bool EntityBaseAAModule::CheckTargetReach(const IAttackableObj& potentTarget) {
@@ -39,7 +48,7 @@ bool EntityBaseAAModule::TryDealDamageToTarget() {
 		if (RemReloadTime <= 0) {
 			size_t dealedDmg = BattleStats.GetAADamage();
 			float aaSpeed = BattleStats.GetAASpeed();
-			AutoAttackInfo attInfo = AutoAttackInfo(dealedDmg, *Target, aaSpeed);
+			AutoAttackInfo attInfo = AutoAttackInfo(dealedDmg,*Target, aaSpeed);
 			Target->GetHPModule().TakeDamage(attInfo);
 			if (BattleStats.GetAASpeed() == 0) {
 

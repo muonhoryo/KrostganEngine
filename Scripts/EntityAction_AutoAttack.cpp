@@ -19,7 +19,7 @@ EntityAction_AutoAttack::EntityAction_AutoAttack(OrdersExecutor& Owner, IAttacka
 {}
 
 bool EntityAction_AutoAttack::CheckExecCondition() {
-	if (TargetHPModule.GetIsDeadState())
+	if (TargetHPModule.DeathModule.GetIsDeadState())
 		return true;
 	return !AAModule.CheckTargetReach();
 }

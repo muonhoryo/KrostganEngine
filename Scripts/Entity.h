@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Gameobject.h>
+#include <GameObject.h>
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
 #include <SingleSprite.h>
@@ -8,7 +8,6 @@
 #include <EntityBattleStats.h>
 #include <vector>
 #include <CoreUIUX.h>
-#include <IHitPointModule.h>
 #include <IAttackableObj.h>
 #include <AutoAttackModule.h>
 #include <ISelectableEntity.h>
@@ -19,7 +18,7 @@
 using namespace sf;
 using namespace std;
 using namespace KrostganEngine::EntitiesControl;
-using namespace KrostganEngine::UI;
+using namespace KrostganEngine::Visual;
 
 namespace KrostganEngine::GameObjects {
 	class Entity;
@@ -35,22 +34,25 @@ namespace KrostganEngine::GameObjects {
 		AutoAttackModule* GetAAModule() const { return AAModule; }
 		AutoAggressionModule* GetAutoAggrModule() const { return AutoAggrModule; }
 		IHitPointModule* GetHPModule() const { return HPModule; }
+		IDeathModule* GetDeathModule() const { return DeathModule; }
 
 	protected:
 		virtual void Init_AAModule(Entity& owner) = 0;
 		virtual void Init_AutoAggrModule(Entity& owner, ExecutorActionsMediator& mediator) = 0;
+		virtual void Init_DeathModule(Entity& owner) = 0;
 		virtual void Init_HPModule() = 0;
 
 		AutoAttackModule* AAModule=nullptr;
 		AutoAggressionModule* AutoAggrModule=nullptr;
 		IHitPointModule* HPModule=nullptr;
+		IDeathModule* DeathModule = nullptr;
 
 		friend class Entity;
 	};
 
 	class Entity :public GameObject,public ISelectableEntity,public IAttackableObj, public IFractionMember,public OrdersExecutor {
 	public:
-		~Entity();
+		virtual ~Entity();
 
 		void SelectionOn() override;
 		void SelectionOff() override;
@@ -59,6 +61,14 @@ namespace KrostganEngine::GameObjects {
 		void SetPosition(Vector2f position) override;
 		void SetScale(float scale) override;
 		void SetSpriteColor(Color color) override;
+
+		void RenderGraphic(RenderWindow& window) override;
+		void Update(CallbackRecArgs_LUpd args) override;
+		vector<IPhysicalObject*> OverlapAll() const override final;
+		const ColliderShape& GetCollider() const override final;
+
+		virtual vector<IPhysicalObject*> OverlapAll_Action() const = 0;
+		virtual const ColliderShape& GetCollider_Action() const = 0;
 
 		IHitPointModule& GetHPModule()override;
 
@@ -82,5 +92,15 @@ namespace KrostganEngine::GameObjects {
 		Fraction EntityFraction;
 
 		Color GetSprColorFromFraction(Fraction frac);
+	};
+
+	class EntityDeathModule : public IDeathModule {
+	public:
+		EntityDeathModule(Entity& Owner);
+
+		void Death() override;
+
+	protected:
+		Entity& ParOwner;
 	};
 }

@@ -2,6 +2,5 @@
 
 #include <GroupSelectionQuad.h>
 #include <PrimitiveVisualShapes.h>
-#include <SingleSprite.h>
-#include <SpriteRenderer.h>
 #include <CursorManager.h>
+#include <VisualOnDeathDestroyer.h>

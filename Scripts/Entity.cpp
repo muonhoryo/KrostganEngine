@@ -13,7 +13,7 @@ using namespace sf;
 using namespace KrostganEngine;
 using namespace KrostganEngine::GameObjects;
 using namespace KrostganEngine::EntitiesControl;
-using namespace KrostganEngine::UI;
+using namespace KrostganEngine::Visual;
 
 Entity::Entity(EntityCtorParams& params)
 	:GameObject(*params.RenTexture, params.RenOffset, params.Position, params.Size, GetSprColorFromFraction(params.EntityFraction)),
@@ -22,6 +22,7 @@ Entity::Entity(EntityCtorParams& params)
 {
 	params.Init_AAModule(*this);
 	params.Init_AutoAggrModule(*this,GetActionsMediator());
+	params.Init_DeathModule(*this);
 	params.Init_HPModule();
 	SetAAModule(params.GetAAModule());
 	SetAutoAggrModule(params.GetAutoAggrModule());
@@ -36,10 +37,12 @@ Entity::Entity(EntityCtorParams& params)
 
 Entity::~Entity() {
 	SelectionOff();
+	delete HPModule;
+	delete SelectionSprite;
 }
 
 void Entity::SelectionOn() {
-	if (!IsEntitySelected) {
+	if (!IsEntitySelected && !HPModule->DeathModule.GetIsDeadState()) {
 		IsEntitySelected = true;
 		SelectionSprite = new SingleSprite(GetSelectionTexture(), GetSelectSpriteMaxSize(), GetSelectSpriteRenOffset(), 
 			GetPosition(), GetScale(),GetSpriteColor());
@@ -72,6 +75,34 @@ void Entity::SetScale(float scale) {
 void Entity::SetSpriteColor(Color color) {
 	SpriteRenderer::SetSpriteColor(color);
 	SelectionSprite->SetSpriteColor(color);
+}
+
+void Entity::RenderGraphic(RenderWindow& window) {
+
+	if (!HPModule->DeathModule.GetIsDeadState()) {
+		SingleSprite::RenderGraphic(window);
+	}
+}
+void Entity::Update(CallbackRecArgs_LUpd args) {
+
+	if (!HPModule->DeathModule.GetIsDeadState()) {
+		DynamicPhysObject::Update(args);
+	}
+}
+vector<IPhysicalObject*> Entity::OverlapAll() const {
+
+	if (!HPModule->DeathModule.GetIsDeadState()) {
+		return OverlapAll_Action();
+	}
+	else
+		return vector<IPhysicalObject*>();
+}
+const ColliderShape& Entity::GetCollider() const {
+	if (!HPModule->DeathModule.GetIsDeadState()) {
+		return GetCollider_Action();
+	}
+	else
+		return PhysicsEngine::EmptyCollInstance;
 }
 
 IHitPointModule& Entity::GetHPModule() {

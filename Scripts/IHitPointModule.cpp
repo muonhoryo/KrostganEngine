@@ -1,10 +1,8 @@
 
-#include <IHitPointModule.h>
+#include <IAttackableObj.h>
 
 using namespace KrostganEngine::GameObjects;
 
-ObjectDeathEventArgs::ObjectDeathEventArgs(){}
-
-IHitPointModule::IHitPointModule() 
-	:DeathEvHandler(EventHandler<ObjectDeathEventArgs>(DeathEvent)){
+IHitPointModule::IHitPointModule(IDeathModule& DeathModule)
+	:DeathModule(DeathModule){
 }
