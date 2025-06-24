@@ -7,7 +7,7 @@
 #include <IEntityOrder.h>
 #include <IEntityAction.h>
 #include <EntityHPModule.h>
-#include <GameObjectsManager.h>
+#include <EntitiesObserver.h>
 
 using namespace sf;
 using namespace KrostganEngine;
@@ -32,13 +32,15 @@ Entity::Entity(EntityCtorParams& params)
 	IsEntitySelected = false;
 	SelectionSprite = nullptr;
 
-	GameObjectsManager::AddEntity(this);
+	EntitiesObserver::AddEntity(this);
 }
 
 Entity::~Entity() {
 	SelectionOff();
 	delete HPModule;
 	delete SelectionSprite;
+
+	EntitiesObserver::RemoveEntity(this);
 }
 
 void Entity::SelectionOn() {

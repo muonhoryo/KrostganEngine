@@ -49,7 +49,7 @@ const ColliderShape& UnitObject::GetCollider_Action() const {
 }
 
 const Texture& UnitObject::GetSelectionTexture() {
-	return Engine::GetGlobalResources().UnitsSelectionAreaSprite;
+	return *Engine::GetGlobalResources().UnitsSelectionAreaSprite;
 }
 float UnitObject::GetSelectSpriteMaxSize() {
 	return Engine::GetGlobalConsts().UnitsSelectArea_OneSizeSpriteResol;

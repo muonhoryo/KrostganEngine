@@ -9,7 +9,7 @@
 #include <HeroObject.h>
 #include <Wall.h>
 
-#include <GameObjectsManager.h>
+#include <EntitiesObserver.h>
 
 #include <EntityBattleStats.h>
 #include <GameObjsBaseFightSystem.h>

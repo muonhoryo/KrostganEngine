@@ -6,7 +6,7 @@ using namespace std;
 using namespace KrostganEngine::Core;
 
 namespace KrostganEngine::Core {
-	class GameObjectsManager {
+	class EntitiesObserver {
 	public:
 		static void AddEntity(Entity* entity);
 		static void RemoveEntity(Entity* entity);
@@ -14,7 +14,7 @@ namespace KrostganEngine::Core {
 		static forward_list<Entity*>::const_iterator GetAfterEndIter();
 
 	private:
-		GameObjectsManager();
+		EntitiesObserver();
 
 		static forward_list<Entity*> EntitiesInGameLevel;
 	};

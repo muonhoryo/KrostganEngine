@@ -26,6 +26,9 @@ const GlobalConsts& GlobalConstsLoad::LoadGlobalConsts() {
 	LoadedGlobalConsts.Physics_MaxCollsResolvCount = DeserializeValueByDefinition(GlobalConsts::DEF_PHYSICS_MAX_COLLISION_RESOLVE_COUNT, &line);
 	LoadedGlobalConsts.AAAnim_LineWidth = DeserializeValueByDefinition(GlobalConsts::DEF_AA_ANIM_LINE_WIDTH, &line);
 	LoadedGlobalConsts.AverageLifeTime_DeathEffect = DeserializeValueByDefinition(GlobalConsts::DEF_AVERGAE_LIFETIME_DEATHEFFECT, &line);
+	LoadedGlobalConsts.LoseMsg_AppearingTime = DeserializeValueByDefinition(GlobalConsts::DEF_LOSEMESSAG_APPEARING_TIME, &line);
+	LoadedGlobalConsts.LoseMsg_ShowingTime = DeserializeValueByDefinition(GlobalConsts::DEF_LOSEMESSAG_SHOWING_TIME, &line);
+	LoadedGlobalConsts.LoseMsg_TransitTime = DeserializeValueByDefinition(GlobalConsts::DEF_LOSEMESSAG_TRANSIT_TIME, &line);
 
 	StrValuesArr.clear();
 	return LoadedGlobalConsts;

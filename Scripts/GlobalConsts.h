@@ -18,6 +18,9 @@ namespace KrostganEngine::Core {
 		size_t Physics_MaxCollsResolvCount;
 		float AAAnim_LineWidth;
 		float AverageLifeTime_DeathEffect;
+		float LoseMsg_AppearingTime;
+		float LoseMsg_ShowingTime;
+		float LoseMsg_TransitTime;
 
 		static inline const string DEF_GAMEOBJS_ONESIZE_SPRITERESOL = "GameObjs_OneSizeSpriteResol";
 		static inline const string DEF_HEROES_SELECTAREA_ONESIZE_SPRITERESOL = "HeroesSelectArea_OneSizeSpriteResol";
@@ -29,5 +32,8 @@ namespace KrostganEngine::Core {
 		static inline const string DEF_PHYSICS_MAX_COLLISION_RESOLVE_COUNT = "Physics_MaxCollsResolvCount";
 		static inline const string DEF_AA_ANIM_LINE_WIDTH = "AAAnim_LineWidth";
 		static inline const string DEF_AVERGAE_LIFETIME_DEATHEFFECT = "AverageLifeTime_DeathEffect";	//In seconds
+		static inline const string DEF_LOSEMESSAG_APPEARING_TIME = "LoseMsg_AppearingTime";		//In seconds
+		static inline const string DEF_LOSEMESSAG_SHOWING_TIME = "LoseMsg_ShowingTime";		//In seconds
+		static inline const string DEF_LOSEMESSAG_TRANSIT_TIME = "LoseMsg_TransitTime";		//In seconds
 	};
 }

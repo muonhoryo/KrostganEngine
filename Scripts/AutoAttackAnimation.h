@@ -9,7 +9,7 @@ namespace KrostganEngine::UI {
 	class AutoAttackAnimation {
 
 	public:
-		~AutoAttackAnimation(){}
+		virtual ~AutoAttackAnimation(){}
 
 		virtual void OnDealDmg(AutoAttackInfo attInfo) = 0;
 

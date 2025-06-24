@@ -1,20 +1,36 @@
 
 #include <EntitiesCtrlInputHandler.h>
 #include <EntitiesCtrlInputModes.h>
+#include <GroupSelectionSystem.h>
+#include <iostream>
 
+using namespace std;
 using namespace KrostganEngine::Core;
 using namespace KrostganEngine::PlayerControl;
+using namespace KrostganEngine::EntitiesControl;
 
-EntitiesCtrlInputHandler::EntitiesCtrlInputHandler():EntitiesCtrlInputHandler(new EntCtrlMode_Base(*this)){}
-EntitiesCtrlInputHandler::EntitiesCtrlInputHandler(EntitiesCtrlInputMode* CurrMode) 
-	:CurrMode(CurrMode){
-
-}
+EntitiesCtrlInputHandler::EntitiesCtrlInputHandler():EntitiesCtrlInputHandler(new EntCtrlMode_Base(*this)) {}
 
 void EntitiesCtrlInputHandler::SetNewMode(EntitiesCtrlInputMode& newMode) {
 	if (&newMode!=nullptr) {
 		delete CurrMode;
 		CurrMode = &newMode;
+	}
+}
+void EntitiesCtrlInputHandler::TurnOn() {
+
+	if (!IsActive) {
+		
+		IsActive = true;
+	}
+}
+void EntitiesCtrlInputHandler::TurnOff() {
+
+	if (IsActive) {
+
+		SetNewMode(*new EntCtrlMode_Base(*this));
+		GroupSelectionSystem::Clear();
+		IsActive = false;
 	}
 }
 
@@ -40,5 +56,8 @@ bool EntitiesCtrlInputHandler::HandleShiftInput(const Event& ev) {
 }
 
 void EntitiesCtrlInputHandler::Update(CallbackRecArgs_Upd args) {
-	CurrMode->HandleInput(args);
+
+	if (IsActive) {
+		CurrMode->HandleInput(args);
+	}
 }

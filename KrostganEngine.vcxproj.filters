@@ -220,6 +220,12 @@
     <Filter Include="Исходные файлы\CoreSystems\Visual\Effects">
       <UniqueIdentifier>{becd9275-5422-4aa1-8496-bc86fe0d203b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы заголовков\GameTransitionScripts">
+      <UniqueIdentifier>{d8caed45-2a2b-4e06-a03a-917d01ba2626}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\GameTransitionScripts">
+      <UniqueIdentifier>{b9033fb9-af87-4a80-afa2-d16bb6c004f9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\main.cpp">
@@ -402,7 +408,7 @@
     <ClCompile Include="Scripts\ExecutorActionsMediator.cpp">
       <Filter>Исходные файлы\CoreSystems\GameObjects\OrdersSystem</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\GameObjectsManager.cpp">
+    <ClCompile Include="Scripts\EntitiesObserver.cpp">
       <Filter>Исходные файлы\CoreSystems\GameObjects</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\EntityOrder_Idle.cpp">
@@ -485,6 +491,12 @@
     </ClCompile>
     <ClCompile Include="Scripts\UnitDeathModule.cpp">
       <Filter>Исходные файлы\CoreSystems\GameObjects\FightingSystems\HitPointSystem\DeathModules</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\HeroDeathModule.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameObjects\FightingSystems\HitPointSystem\DeathModules</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\LoseScript.cpp">
+      <Filter>Исходные файлы\GameTransitionScripts</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -707,7 +719,7 @@
     <ClInclude Include="Scripts\BaseAutoAggrModule.h">
       <Filter>Файлы заголовков\CoreSystems\GameObjects\OrdersSystem</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\GameObjectsManager.h">
+    <ClInclude Include="Scripts\EntitiesObserver.h">
       <Filter>Файлы заголовков\CoreSystems\GameObjects</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\UnitColliderVisualizer.h">
@@ -788,9 +800,6 @@
     <ClInclude Include="Scripts\CallbackDelegates.h">
       <Filter>Файлы заголовков\CoreSystems\EngineCallbacks</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\VisualOnDeathDestroyer.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\SpriteRenderer.h">
       <Filter>Файлы заголовков\CoreSystems\Visual</Filter>
     </ClInclude>
@@ -808,6 +817,18 @@
     </ClInclude>
     <ClInclude Include="Scripts\GameVisual.h">
       <Filter>Файлы заголовков\Visual</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\TextBlock.h">
+      <Filter>Файлы заголовков\UI/UX</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\VisualOnDeathDestroyer.h">
+      <Filter>Файлы заголовков\CoreSystems\Visual</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\LoseScript.h">
+      <Filter>Файлы заголовков\GameTransitionScripts</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\GameTransitions.h">
+      <Filter>Файлы заголовков\GameTransitionScripts</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

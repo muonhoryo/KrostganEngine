@@ -365,3 +365,5 @@ FodyWeavers.xsd
 *.txt
 *.dll
 *.png
+*.ttf
+*.otf

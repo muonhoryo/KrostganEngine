@@ -20,6 +20,10 @@ OrdersExecutor::OrdersExecutor(EntityBattleStats& BattleStats, AutoAttackModule*
 }
 OrdersExecutor::~OrdersExecutor() {
 
+	delete AAModule;
+	delete AutoAggrModule;
+	if(ActionsToExecute!=nullptr)
+		delete ActionsToExecute;
 }
 
 bool OrdersExecutor::GetAbilityToDoOrders() const {

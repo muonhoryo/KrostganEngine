@@ -15,14 +15,14 @@ const ExternalGlobalResources& ExtGlobalResourcesLoad::LoadGlobalResources() {
 	DeserializeValues();
 
 	string* buffer = new string();
+	LoadedGlobalResources = new ExternalGlobalResources();
 	Texture* texs[4]{};
 
-	texs[0] = LoadTextureByDefinition(ExternalGlobalResources::DEF_UNITS_SELECTIONAREA_SPRITE_PATH, *buffer);
-	texs[1] = LoadTextureByDefinition(ExternalGlobalResources::DEF_HEROES_SELECTIONAREA_SPRITE_PATH, *buffer);
-	texs[2] = LoadTextureByDefinition(ExternalGlobalResources::DEF_CURSOR_ATTACK_SPRITE_PATH, *buffer);
-	texs[3] = LoadTextureByDefinition(ExternalGlobalResources::DEF_UNIT_DEATHEFFECT_SPRITE_PATH, *buffer);
-
-	LoadedGlobalResources = new ExternalGlobalResources(*texs[0], *texs[1],*texs[2],*texs[3]);
+	LoadedGlobalResources->UnitsSelectionAreaSprite = LoadTextureByDefinition(ExternalGlobalResources::DEF_UNITS_SELECTIONAREA_SPRITE_PATH, *buffer);
+	LoadedGlobalResources->HeroesSelectionAreaSprite = LoadTextureByDefinition(ExternalGlobalResources::DEF_HEROES_SELECTIONAREA_SPRITE_PATH, *buffer);
+	LoadedGlobalResources->CursorSprite_Attack= LoadTextureByDefinition(ExternalGlobalResources::DEF_CURSOR_ATTACK_SPRITE_PATH, *buffer);
+	LoadedGlobalResources->UnitDeathEffectSprite= LoadTextureByDefinition(ExternalGlobalResources::DEF_UNIT_DEATHEFFECT_SPRITE_PATH, *buffer);
+	LoadedGlobalResources->DefaultFont = LoadFontByDefinition(ExternalGlobalResources::DEF_DEFAULT_FONT_PATH, *buffer);
 
 	delete buffer;
 
@@ -53,6 +53,13 @@ Texture* ExtGlobalResourcesLoad::LoadTextureByDefinition(const string& definitio
 	Texture* tex = new Texture();
 	tex->loadFromFile(buffer);
 	return tex;
+}
+Font* ExtGlobalResourcesLoad::LoadFontByDefinition(const string& definition, string& buffer) {
+	GetValueByDefinition(definition, buffer);
+	FStreamExts::ClearPath(&buffer);
+	Font* font = new Font();
+	font->loadFromFile(buffer);
+	return font;
 }
 
 const string ExtGlobalResourcesLoad::GLOBAL_RESOURCES_PATH = "GlobalResources.txt";

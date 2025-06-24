@@ -57,7 +57,7 @@ void Engine::InitializeCursorManager() {
 	Cursor& att = *new Cursor();
 
 	def.loadFromSystem(Cursor::Arrow);
-	Image img_att = GlobalResources->CursorSprite_Attack.copyToImage();
+	Image img_att = GlobalResources->CursorSprite_Attack->copyToImage();
 	Vector2u hotSpot = EngineConfiguration->CursorHotspot_Attack;
 	att.loadFromPixels(img_att.getPixelsPtr(), img_att.getSize(),hotSpot);
 
@@ -126,14 +126,17 @@ void Engine::RequestToChangeState(EngineState state) {
 	}
 }
 void Engine::SetMode_Game() {
+	delete Singleton->CurrMode;
 	Singleton->EngStateHandler.GameSt = new GameMode();
 	Singleton->CurrMode = Singleton->EngStateHandler.GameSt;
 }
 void Engine::SetMode_MainMenu() {
+	delete Singleton->CurrMode;
 	Singleton->EngStateHandler.MainMenuSt = new MainMenuMode();
 	Singleton->CurrMode = Singleton->EngStateHandler.MainMenuSt;
 }
 void Engine::SetMode_LevelDeser() {
+	delete Singleton->CurrMode;
 	Singleton->EngStateHandler.LevelDeserSt = new LevelDeserializationMode();
 	Singleton->CurrMode = Singleton->EngStateHandler.LevelDeserSt;
 }

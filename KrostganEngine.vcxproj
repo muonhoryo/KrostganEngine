@@ -43,7 +43,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -155,10 +155,12 @@
     <ClCompile Include="Scripts\EntityOrder_Idle.cpp" />
     <ClCompile Include="Scripts\EntsCtrlOrdersGiving.cpp" />
     <ClCompile Include="Scripts\DynamicPhysObject.cpp" />
+    <ClCompile Include="Scripts\HeroDeathModule.cpp" />
     <ClCompile Include="Scripts\ICallbackRec_GraphPostRen.cpp" />
     <ClCompile Include="Scripts\ICallbackRec_LUpd.cpp" />
     <ClCompile Include="Scripts\IDeathModule.cpp" />
     <ClCompile Include="Scripts\LineAAAnimation.cpp" />
+    <ClCompile Include="Scripts\LoseScript.cpp" />
     <ClCompile Include="Scripts\OutlineLineVisual.cpp" />
     <ClCompile Include="Scripts\UnitColliderVisualizer.cpp" />
     <ClCompile Include="Scripts\ConsoleCommsInterpretator.cpp" />
@@ -187,7 +189,7 @@
     <ClCompile Include="Scripts\FStreamExts.cpp" />
     <ClCompile Include="Scripts\GameMode.cpp" />
     <ClCompile Include="Scripts\CallbackRecArgs_Upd.cpp" />
-    <ClCompile Include="Scripts\GameObjectsManager.cpp" />
+    <ClCompile Include="Scripts\EntitiesObserver.cpp" />
     <ClCompile Include="Scripts\GameUI.cpp" />
     <ClCompile Include="Scripts\GlobalConstsLoad.cpp" />
     <ClCompile Include="Scripts\GroupSelectionQuad.cpp" />
@@ -243,11 +245,14 @@
     <ClInclude Include="Scripts\ExternalData.h" />
     <ClInclude Include="Scripts\DynamicPhysObject.h" />
     <ClInclude Include="Scripts\FightingSystems.h" />
+    <ClInclude Include="Scripts\GameTransitions.h" />
     <ClInclude Include="Scripts\GameVisual.h" />
     <ClInclude Include="Scripts\GameVisualEffects.h" />
     <ClInclude Include="Scripts\ICallbackRec_GraphPostRen.h" />
     <ClInclude Include="Scripts\LineAAAnimation.h" />
+    <ClInclude Include="Scripts\LoseScript.h" />
     <ClInclude Include="Scripts\PhysicsStructs.h" />
+    <ClInclude Include="Scripts\TextBlock.h" />
     <ClInclude Include="Scripts\UIUXVisual.h" />
     <ClInclude Include="Scripts\UnitColliderVisualizer.h" />
     <ClInclude Include="Scripts\CursorManager.h" />
@@ -260,7 +265,7 @@
     <ClInclude Include="Scripts\FractionsSystem.h" />
     <ClInclude Include="Scripts\EntityOrder_AttackTarget.h" />
     <ClInclude Include="Scripts\EntityOrder_ObjectTarget.h" />
-    <ClInclude Include="Scripts\GameObjectsManager.h" />
+    <ClInclude Include="Scripts\EntitiesObserver.h" />
     <ClInclude Include="Scripts\GameObjsBaseFightSystem.h" />
     <ClInclude Include="Scripts\GameUI.h" />
     <ClInclude Include="Scripts\HPSystem.h" />

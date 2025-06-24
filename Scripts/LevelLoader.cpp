@@ -12,57 +12,83 @@ using namespace KrostganEngine::Core;
 using namespace KrostganEngine;
 using namespace KrostganEngine::GameObjects;
 
-UnitsLoadEventArgs::UnitsLoadEventArgs(forward_list<UnitObject*>* LoadedUnits) {
-	this->LoadedUnits = LoadedUnits;
-}
-GraphicsLoadEventArgs::GraphicsLoadEventArgs(forward_list<ICallbackRec_GraphRen*>* LoadedGraphics) {
-	this->LoadedGraphics = LoadedGraphics;
-}
-WallsLoadEventArgs::WallsLoadEventArgs(forward_list<WallObject*>* LoadedWalls) {
-	this->LoadedWalls = LoadedWalls;
-}
-
 void LevelLoader::LoadLevel(const LevelLoadingInfo& levelInfo) {
 
-	Texture* tex; {
-
-		UnitObject* unitObj;
-		for (UnitLoadInfo* un : levelInfo.Units) {
-			tex = new Texture();
-			tex->loadFromFile(un->TexturePath);
-			UnitObjectCtorParams& params = *new UnitObjectCtorParams();
-			params.BattleStats = un->BattleStats;
-			params.EntityFraction = un->EntityFraction;
-			params.RenTexture = tex;
-			params.RenOffset = un->SpriteOffset;
-			params.Position = un->Position;
-			params.Size = un->Size;
-			unitObj = new UnitObject(params);
-			delete& params;
-			LoadedUnits.push_front(unitObj);
-		}
-		for (UnitObject* un : LoadedUnits) {
-			LoadedGraphics.push_front(un);
-		}
-	}
-	UnitsLoadEventArgs& unArgs = *new UnitsLoadEventArgs(&LoadedUnits);
-	UnitsLoadEventHan.Execute(unArgs);
+	Texture* tex=nullptr;
 
 	{
-		WallObject* wallObj;
-		for (WallLoadInfo* wl : levelInfo.Walls) {
-			tex = new Texture();
-			tex->loadFromFile(wl->TexturePath);
-			wallObj = new WallObject(*tex, wl->SpriteOffset, wl->Position, wl->Size);
-			LoadedWalls.push_front(wallObj);
-		}
-		for (WallObject* wl : LoadedWalls) {
-			LoadedGraphics.push_front(wl);
+		UnitObject* unit = nullptr;
+		for (UnitLoadInfo* un : levelInfo.Units) {
+
+			unit = &LoadUnit(*un, tex);
+			LoadedUnits.push_front(unit);
+			LoadedGraphics.push_front(unit);
 		}
 	}
-	WallsLoadEventArgs& wlArgs = *new WallsLoadEventArgs(&LoadedWalls);
-	WallsLoadEventHan.Execute(wlArgs);
+	{
+		HeroObject* hero = nullptr;
+		for (HeroLoadInfo* he : levelInfo.Heroes) {
+
+			hero = &LoadHero(*he, tex);
+			LoadedUnits.push_front((UnitObject*)hero);
+			LoadedHeroes.push_front(hero);
+			LoadedGraphics.push_front((ICallbackRec_GraphRen*)hero);
+		}
+
+		HeroesLoadEventArgs& heArgs = *new HeroesLoadEventArgs(&LoadedHeroes);
+		HeroesLoadEventHan.Execute(heArgs);
+
+		UnitsLoadEventArgs& unArgs = *new UnitsLoadEventArgs(&LoadedUnits);
+		UnitsLoadEventHan.Execute(unArgs);
+	}
+	{
+		WallObject* wall = nullptr;
+		for (WallLoadInfo* wl : levelInfo.Walls) {
+
+			wall = &LoadWall(*wl, tex);
+			LoadedWalls.push_front(wall);
+			LoadedGraphics.push_front(wall);
+		}
+
+		WallsLoadEventArgs& wlArgs = *new WallsLoadEventArgs(&LoadedWalls);
+		WallsLoadEventHan.Execute(wlArgs);
+	}
 
 	GraphicsLoadEventArgs& gArgs = *new GraphicsLoadEventArgs(&LoadedGraphics);
 	GraphicsLoadEventHan.Execute(gArgs);
+}
+
+UnitObjectCtorParams& LevelLoader::GetUnitParams(const UnitLoadInfo& info, Texture* texBuffer) {
+
+	texBuffer = new Texture();
+	texBuffer->loadFromFile(info.TexturePath);
+	UnitObjectCtorParams& params = *new UnitObjectCtorParams();
+	params.BattleStats = info.BattleStats;
+	params.EntityFraction = info.EntityFraction;
+	params.RenTexture = texBuffer;
+	params.RenOffset = info.SpriteOffset;
+	params.Position = info.Position;
+	params.Size = info.Size;
+	return params;
+}
+UnitObject& LevelLoader::LoadUnit(const UnitLoadInfo& info, Texture* texBuffer) {
+
+	auto& params = GetUnitParams(info, texBuffer);
+	UnitObject* unitObj = new UnitObject(params);
+	delete& params;
+	return *unitObj;
+}
+HeroObject& LevelLoader::LoadHero(const HeroLoadInfo& info,Texture* texBuffer) {
+	UnitObjectCtorParams& unParams = GetUnitParams(info, texBuffer);
+	HeroObjectCtorParams& params = *new HeroObjectCtorParams(unParams);
+	delete &unParams;
+	HeroObject* heroObj = new HeroObject(params);
+	delete& params;
+	return *heroObj;
+}
+WallObject& LevelLoader::LoadWall(const WallLoadInfo& info, Texture* texBuffer) {
+
+	texBuffer = new Texture();
+	texBuffer->loadFromFile(info.TexturePath);
+	return *new WallObject(*texBuffer, info.SpriteOffset, info.Position, info.Size);
 }

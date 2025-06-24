@@ -22,6 +22,7 @@ namespace KrostganEngine {
 
 			static void ParseObjInfo(vector<string>& params, LevelLoadingInfo& levelInfo);
 			static UnitLoadInfo& ParseUnitInfo(vector<string>& params);
+			static HeroLoadInfo& ParseHeroInfo(vector<string>& params);
 			static WallLoadInfo& ParseWallInfo(vector<string>& params);
 
 			static bool TryGetSerValueOfParam(vector<string>& params, const string& paramName, string* output);
@@ -50,6 +51,7 @@ namespace KrostganEngine {
 
 			static inline const string OBJECT_TYPE_UNIT = "Unit";
 			static inline const string OBJECT_TYPE_WALL = "Wall";
+			static inline const string OBJECT_TYPE_HERO = "Hero";
 		};
 	}
 }

@@ -1,6 +1,7 @@
 
 #include <EngineModes.h>
 #include <Engine.h>
+#include <EngineWorkCycleModule.h>
 
 using namespace KrostganEngine::Core;
 using namespace sf;
@@ -13,11 +14,20 @@ GameMode::GameMode() :EngineMode() {
     BaseInputHandl = new BaseInputHandler();
     EntitiesCtrlHandler = new EntitiesCtrlInputHandler();
     GameInterface = new GameUI();
+
+    Engine::SetCameraPos(Vector2f(0, 0));
 }
 GameMode::~GameMode() {
 	delete BaseInputHandl;
     delete EntitiesCtrlHandler;
     delete GameInterface;
+
+    EngineCallbackHandler<ICallbackRec_GraphPostRen>& postRenMod = Engine::GetRenderModule();
+    EngineCallbackHandler<ICallbackRec_GraphRen>& renMod = Engine::GetRenderModule();
+    Engine::GetUpdateModule().Unload();
+    Engine::GetLateUpdModule().Unload();
+    postRenMod.Unload();
+    renMod.Unload();
 }
 void GameMode::ExecuteCycle() {
 

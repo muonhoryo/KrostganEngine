@@ -1,6 +1,7 @@
 #pragma once
 
 #include <forward_list>
+#include <list>
 #include <vector>
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
@@ -35,28 +36,53 @@ namespace KrostganEngine::Core {
 		void Unload() {
 			Callbacks.clear();
 		};*/
+		void Unload() {
+			
+			IsIteratingCallbacks = true;
+
+			if (DelayedDelCallbksCount > 0)
+				DeleteDelayedCallbacks();
+
+			if (Callbacks.size() > 0) {
+				auto it = Callbacks.end();
+				auto end = Callbacks.begin();
+				--it;
+				for (;it != end;--it) {
+					if (*it != nullptr) {
+
+						delete* it;
+						*it = nullptr;
+					}
+				}
+				delete* it;
+				*it = nullptr;
+				Callbacks.clear();
+
+				DelayedDelCallbksCount = 0;
+				DelayedDelCallbks.clear();
+			}
+
+			IsIteratingCallbacks = false;
+		}
 		void Remove(TCallback& callbckToDel) {
 
 			TCallback* elRef = Callbacks.front();
 			bool isFound = false;
-			auto itToD = Callbacks.before_begin();
+			auto itToD = Callbacks.begin();
 			size_t offset = 0;
 			if (elRef == &callbckToDel) {
 
 				isFound = true;
 			}
-			auto it = Callbacks.begin();
 			if (!isFound) {
 				++offset;
 				++itToD;
-				++it;
-				for (; it != Callbacks.end(); ++it) {
-					elRef = *it;
+				for (; itToD != Callbacks.end(); ++itToD) {
+					elRef = *itToD;
 					if (elRef == &callbckToDel) {
 						isFound = true;
 						break;
 					}
-					++itToD;
 					++offset;
 				}
 			}
@@ -64,7 +90,7 @@ namespace KrostganEngine::Core {
 			{
 				if (IsIteratingCallbacks) {
 
-					*(++itToD) = nullptr;
+					*itToD = nullptr;
 					DelayedDelCallbks.push_front(offset);
 					++DelayedDelCallbksCount;
 				}
@@ -73,7 +99,7 @@ namespace KrostganEngine::Core {
 					if (DelayedDelCallbksCount > 0)
 						DeleteDelayedCallbacks();
 
-					Callbacks.erase_after(itToD);
+					Callbacks.erase(itToD);
 				}
 			}
 		};
@@ -94,13 +120,13 @@ namespace KrostganEngine::Core {
 			if (DelayedDelCallbksCount != 0) {
 
 				DelayedDelCallbks.sort(greater<>());
-				typename forward_list<TCallback*>::iterator it;
+				typename list<TCallback*>::iterator it;
 				while (DelayedDelCallbksCount > 0) {
-					it = Callbacks.before_begin();
+					it = Callbacks.begin();
 					for (size_t i = 0;i < DelayedDelCallbks.front();i++) {
 						++it;
 					}
-					Callbacks.erase_after(it);
+					Callbacks.erase(it);
 					DelayedDelCallbks.pop_front();
 					--DelayedDelCallbksCount;
 				}
@@ -110,7 +136,7 @@ namespace KrostganEngine::Core {
 	protected:
 		EngineCallbackHandler() {};
 
-		forward_list<TCallback*> Callbacks = forward_list<TCallback*>();
+		list<TCallback*> Callbacks = list<TCallback*>();
 
 		bool IsIteratingCallbacks = false;
 

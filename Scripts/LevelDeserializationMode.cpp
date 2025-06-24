@@ -15,8 +15,8 @@ void LevelDeserializationMode :: ExecuteCycle() {
     //Create object's debug-visualizer
     //ATTENTION!!!! Memory leak
     UnitObject* ent = nullptr;
-    auto beg = GameObjectsManager::GetBeginIter();
-    auto end = GameObjectsManager::GetAfterEndIter();
+    auto beg = EntitiesObserver::GetBeginIter();
+    auto end = EntitiesObserver::GetAfterEndIter();
     for (;beg != end;++beg) {
         ent = dynamic_cast<UnitObject*>(*beg);
         if (ent != nullptr) {

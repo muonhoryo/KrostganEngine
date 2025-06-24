@@ -24,7 +24,8 @@ LevelLoadingInfo& LevelSerialization::DeserializeLevel(string serPath) {
 		throw exception("Cannot open level file");
 	forward_list<UnitLoadInfo*>& units = *new forward_list<UnitLoadInfo*>();
 	forward_list<WallLoadInfo*>& walls = *new forward_list<WallLoadInfo*>();
-	LevelLoadingInfo& levelInfo = *new LevelLoadingInfo(units,walls);
+	forward_list<HeroLoadInfo*>& heroes = *new forward_list<HeroLoadInfo*>();
+	LevelLoadingInfo& levelInfo = *new LevelLoadingInfo(units,heroes,walls);
 
 	vector<string>& params = *new vector<string>();
 	if (st.is_open()) {
@@ -59,6 +60,10 @@ void LevelSerialization::ParseObjInfo(vector<string>& params, LevelLoadingInfo& 
 		if (output->find(LevelSerObjectsTypes::OBJECT_TYPE_UNIT)!=string::npos) {
 
 			levelInfo.Units.push_front(&ParseUnitInfo(params));
+		}
+		else if (output->find(LevelSerObjectsTypes::OBJECT_TYPE_HERO) != string::npos) {
+
+			levelInfo.Heroes.push_front(&ParseHeroInfo(params));
 		}
 		else if (output->find(LevelSerObjectsTypes::OBJECT_TYPE_WALL)) {
 			
@@ -112,6 +117,10 @@ UnitLoadInfo& LevelSerialization::ParseUnitInfo(vector<string>& params) {
 		endl << "Sprite offset: " << ToString(info.SpriteOffset) << endl << "Position: " + ToString(info.Position)
 		<< endl << "Size: " << info.Size << endl << "Fraction: " << (int)info.EntityFraction << endl;
 	return info;
+}
+HeroLoadInfo& LevelSerialization::ParseHeroInfo(vector<string>& params) {
+
+	return (HeroLoadInfo&)ParseUnitInfo(params);
 }
 WallLoadInfo& LevelSerialization::ParseWallInfo(vector<string>& params) {
 

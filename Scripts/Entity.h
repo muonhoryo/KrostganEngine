@@ -24,9 +24,9 @@ namespace KrostganEngine::GameObjects {
 	class Entity;
 
 	struct EntityCtorParams {
-		EntityBattleStats* BattleStats;
-		Fraction EntityFraction;
-		const Texture* RenTexture;
+		EntityBattleStats* BattleStats=nullptr;
+		Fraction EntityFraction=Fraction::Neutral;
+		const Texture* RenTexture=nullptr;
 		Vector2f RenOffset;
 		Vector2f Position;
 		float Size;

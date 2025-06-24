@@ -52,9 +52,27 @@ namespace KrostganEngine::PlayerControl {
 	class EntitiesCtrlInputHandler :public ICallbackRec_Upd {
 	public:
 		EntitiesCtrlInputHandler();
-		EntitiesCtrlInputHandler(EntitiesCtrlInputMode* CurrMode);
+		EntitiesCtrlInputHandler(EntitiesCtrlInputMode* CurrMode)
+			:CurrMode(CurrMode) {
+
+			if (Instance != nullptr)
+				delete Instance;
+
+			Instance = this;
+		}
+		~EntitiesCtrlInputHandler()
+		{
+			Instance = nullptr;
+			delete CurrMode;
+		}
+
+		static EntitiesCtrlInputHandler* GetInstance() {
+			return Instance;
+		}
 
 		void SetNewMode(EntitiesCtrlInputMode& newMode);
+		void TurnOn();
+		void TurnOff();
 
 		bool GetShiftPresState();
 
@@ -68,8 +86,10 @@ namespace KrostganEngine::PlayerControl {
 		void Update(CallbackRecArgs_Upd args) override;
 
 	private:
+		static inline EntitiesCtrlInputHandler* Instance = nullptr;
 		EntitiesCtrlInputMode* CurrMode;
 
 		bool IsShiftPressed = false;
+		bool IsActive = true;
 	};
 }

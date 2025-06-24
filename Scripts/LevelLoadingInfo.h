@@ -28,16 +28,21 @@ namespace KrostganEngine::Core {
 		EntityBattleStats* BattleStats;
 		Fraction EntityFraction=Fraction::Neutral;
 	};
+	struct HeroLoadInfo : public UnitLoadInfo {
+		HeroLoadInfo():UnitLoadInfo(){}
+	};
 	struct WallLoadInfo :public GameObjectLoadInfo {
 		WallLoadInfo() : GameObjectLoadInfo() {};
 	};
 	struct LevelLoadingInfo final {
 
 		forward_list<UnitLoadInfo*>& Units;
+		forward_list<HeroLoadInfo*>& Heroes;
 		forward_list<WallLoadInfo*>& Walls;
 
-		LevelLoadingInfo(forward_list<UnitLoadInfo*>& Units, forward_list<WallLoadInfo*>& Walls) 
+		LevelLoadingInfo(forward_list<UnitLoadInfo*>& Units,forward_list<HeroLoadInfo*>& Heroes ,forward_list<WallLoadInfo*>& Walls) 
 			:Units(Units),
+			Heroes(Heroes),
 			Walls(Walls)
 		{}
 		~LevelLoadingInfo();

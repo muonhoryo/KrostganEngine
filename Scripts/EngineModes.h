@@ -13,6 +13,8 @@ using namespace KrostganEngine::PlayerControl;
 namespace KrostganEngine::Core {
 	class EngineMode {
 	public:
+		virtual ~EngineMode(){}
+
 		virtual void ExecuteCycle() = 0;
 	protected:
 		EngineMode() {}

@@ -20,6 +20,7 @@ namespace KrostganEngine::Core {
 
 		void GetValueByDefinition(const string& definition, string& buffer);
 		Texture* LoadTextureByDefinition(const string& definition,string& buffer);
+		Font* LoadFontByDefinition(const string& definition, string& buffer);
 
 		static const string GLOBAL_RESOURCES_PATH;
 		static const char RESOURCE_DEF_END_SYM;

@@ -74,6 +74,7 @@ namespace KrostganEngine::UI {
 	class WideLineVisual :public ICallbackRec_GraphPostRen {
 	public:
 		WideLineVisual(Vector2f Start, Vector2f End, float Width, Color LineColor);
+		~WideLineVisual(){}
 
 		Vector2f GetStart() const {
 			return Start;
