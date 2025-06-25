@@ -35,6 +35,34 @@ vector<IPhysicalObject*> PhysicsEngine::OverlapCircle_All(Vector2f center, float
 	return objs;
 }
 
+vector<IPhysicalObject*> PhysicsEngine::RayCast_All(Vector2f origin, Vector2f direction, float distance, PhysicsLayer layer) {
+	Vector2f second = origin + Vector2f(direction.x * distance, direction.y * distance);
+	return RayCast_All(*new Segment(origin,second), layer);
+}
+vector<IPhysicalObject*> PhysicsEngine::RayCast_All(const Segment& segm, PhysicsLayer layer) {
+
+	vector<IPhysicalObject*> result;
+	float diffX = segm.First.x - segm.Second.x;
+	float diffY = segm.First.y - segm.Second.y;
+	if (diffX<eps || diffX>-eps ||
+		diffY<eps || diffY>-eps) {
+
+		for (IPhysicalObject* tar : Callbacks) {
+			if (((int)tar->GetLayer() & (int)layer) != 0)
+				result.push_back(tar);
+		}
+	}
+	else {
+
+		vector<IPhysicalObject*> potentTargets = OverlapAABB_All(segm.First, segm.Second, layer);
+		for (IPhysicalObject* tar : potentTargets) {
+			if (((int)tar->GetLayer() & (int)layer) != 0)
+				result.push_back(tar);
+		}
+	}
+	return result;
+}
+
 IPhysicalObject* PhysicsEngine::PointCast(Vector2f globalPos, PhysicsLayer layer) {
 	size_t layerCast;
 	for (auto obj : Callbacks) {
@@ -43,6 +71,37 @@ IPhysicalObject* PhysicsEngine::PointCast(Vector2f globalPos, PhysicsLayer layer
 			return obj;
 	}
 	return nullptr;
+}
+
+bool PhysicsEngine::RayHit(Segment segm, PhysicsLayer layer) {
+
+	float diffX = segm.First.x - segm.Second.x;
+	float diffY = segm.First.y - segm.Second.y;
+	int maskCastRes;
+	if (diffX<eps || diffX>-eps ||
+		diffY<eps || diffY>-eps) {
+
+		for (IPhysicalObject* tar : Callbacks) {
+			maskCastRes = ((int)tar->GetLayer()) & ((int)layer);
+			if (maskCastRes != 0 && tar->GetCollider().IntersectSegment(segm)) {
+
+				return true;
+			}
+		}
+	}
+	else {
+
+		vector<IPhysicalObject*> potentTargets = OverlapAABB_All(segm.First, segm.Second, layer);
+		for (IPhysicalObject* tar : potentTargets) {
+			maskCastRes = ((int)tar->GetLayer()) & ((int)layer);
+			if (maskCastRes != 0 && tar->GetCollider().IntersectSegment(segm)) {
+
+				return true;
+			}
+		}
+	}
+	return false;
+
 }
 
 bool PhysicsEngine::Intersect(const Ray& ray, const Segment& seg, Vector2f* interPnt) {
@@ -70,4 +129,124 @@ bool PhysicsEngine::Intersect(const Ray& ray, const Segment& seg, Vector2f* inte
 	else {
 		return false;
 	}
+}
+bool PhysicsEngine::Intersect(const Segment& first, const Segment& second, Vector2f* interPnt) {
+
+	if (max(first.First.x, first.Second.x) < min(second.First.x, second.Second.x) ||
+		min(first.First.x, first.Second.x) > max(second.First.x, second.Second.x) ||
+		max(first.First.y, first.Second.y) < min(second.First.y, second.Second.y) ||
+		min(first.First.y, first.Second.y) > max(second.First.y, second.Second.y)) {
+		return false;
+	}
+
+	Vector2f dir1 = first.Second- first.First;
+	Vector2f dir2 = second.Second - second.First;
+	Vector2f n1 = Vector2f(dir1.y, -dir1.x);
+	Vector2f n2 = Vector2f(dir2.y, -dir2.x);
+	float det = n1.x * n2.y - n1.y * n2.x;
+	if (det<eps && det>-eps) {
+		return false;
+	}
+	float d1 = -Dot(first.First, n1);
+	float d2 = -Dot(second.First, n2);
+
+	*interPnt = Vector2f((d2 * n1.y - d1 * n2.y) / det, (d1 * n2.x - d2 * n1.x) / det);
+
+	//x
+	if (first.First.x > first.Second.x) {
+		if (interPnt->x > first.First.x)
+			return false;
+		else if (interPnt->x < first.Second.x)
+			return false;
+	}
+	else {
+		if (interPnt->x > first.Second.x)
+			return false;
+		else if (interPnt->x < first.First.x)
+			return false;
+	}
+
+	if (second.First.x > second.Second.x) {
+		if (interPnt->x > second.First.x)
+			return false;
+		else if (interPnt->x < second.Second.x)
+			return false;
+	}
+	else {
+		if (interPnt->x > second.Second.x)
+			return false;
+		else if (interPnt->x < second.First.x)
+			return false;
+	}
+	//y
+	if (first.First.y > first.Second.y) {
+		if (interPnt->y > first.First.y)
+			return false;
+		else if (interPnt->y < first.Second.y)
+			return false;
+	}
+	else {
+		if (interPnt->y > first.Second.y)
+			return false;
+		else if (interPnt->y < first.First.y)
+			return false;
+	}
+
+	if (second.First.x > second.Second.x) {
+		if (interPnt->x > second.First.x)
+			return false;
+		else if (interPnt->x < second.Second.x)
+			return false;
+	}
+	else {
+		if (interPnt->x > second.Second.x)
+			return false;
+		else if (interPnt->x < second.First.x)
+			return false;
+	}
+	return true;
+}
+float PhysicsEngine::DistanceToPoint(const Segment& segm, Vector2f pnt) {
+
+	Vector2f delta = segm.Second - segm.First;
+	Vector2f diff = pnt - delta;
+	float t = Dot(segm.First, diff);
+	if (t > 0)
+	{
+		float dt = Length(delta);
+		if (t < dt)
+			t /= dt;
+		else
+			t = 1;
+	}
+	else
+		t = 0;
+	return Length(segm.First + t * delta - pnt);
+}
+PhysicsEngine::PointClassify PhysicsEngine::Classify(const Segment& segm, Vector2f pnt) {
+	
+	Vector2f a2b = segm.Second - segm.First;
+	Vector2f a2p = pnt - segm.First;
+	float area = a2b.x * a2p.y - a2p.x * a2b.y;
+
+	if (area > eps)
+		return PointClassify::Left;
+
+	if (area < -eps)
+		return PointClassify::Right;
+
+	if (Length(a2p) < eps)
+		return PointClassify::Start;
+
+	if (Length(pnt - segm.Second) < eps)
+		return PointClassify::End;
+
+	if (((a2b.x * a2p.x) < 0) || ((a2b.y * a2p.y) < 0))
+		return PointClassify::Behind;
+
+	if (Length(a2b) < Length(a2p))
+		return PointClassify::Beyond;
+
+	return PointClassify::Between;
+
 }

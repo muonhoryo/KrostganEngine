@@ -21,6 +21,8 @@ namespace KrostganEngine::Core {
 		float LoseMsg_AppearingTime;
 		float LoseMsg_ShowingTime;
 		float LoseMsg_TransitTime;
+		float Units_MovingAbilityCheckTick;
+		float Units_ImmobilityCheckValue;
 
 		static inline const string DEF_GAMEOBJS_ONESIZE_SPRITERESOL = "GameObjs_OneSizeSpriteResol";
 		static inline const string DEF_HEROES_SELECTAREA_ONESIZE_SPRITERESOL = "HeroesSelectArea_OneSizeSpriteResol";
@@ -35,5 +37,7 @@ namespace KrostganEngine::Core {
 		static inline const string DEF_LOSEMESSAG_APPEARING_TIME = "LoseMsg_AppearingTime";		//In seconds
 		static inline const string DEF_LOSEMESSAG_SHOWING_TIME = "LoseMsg_ShowingTime";		//In seconds
 		static inline const string DEF_LOSEMESSAG_TRANSIT_TIME = "LoseMsg_TransitTime";		//In seconds
+		static inline const string DEF_UNITS_MOVING_ABILITY_CHECK_TICK = "Units_MovingAbilityCheckTick";		//In seconds
+		static inline const string DEF_UNITS_IMMOBILITY_CHECK_VALUE = "Units_ImmobilityCheckValue";		//In seconds
 	};
 }

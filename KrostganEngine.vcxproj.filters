@@ -19,9 +19,6 @@
     <Filter Include="Исходные файлы\CoreSystems\EngineWorkCycles">
       <UniqueIdentifier>{e568dd13-d1ac-4e7f-8dc0-bd77e82e34f2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Исходные файлы\CoreSystems\LevelLoading">
-      <UniqueIdentifier>{1fc4e247-e754-4bc6-ac03-7bbc7fe4c169}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Исходные файлы\Extensions">
       <UniqueIdentifier>{e37f1323-c92c-46e1-b9ad-4b64b96afbfe}</UniqueIdentifier>
     </Filter>
@@ -33,9 +30,6 @@
     </Filter>
     <Filter Include="Файлы заголовков\CoreSystems\EngineWorkCycles">
       <UniqueIdentifier>{9b38be29-8e5a-4a14-b948-60bbccbbbd53}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Файлы заголовков\CoreSystems\LevelLoading">
-      <UniqueIdentifier>{89d5f938-0c88-4096-a2f8-526a86dc40c6}</UniqueIdentifier>
     </Filter>
     <Filter Include="Файлы заголовков\Extensions">
       <UniqueIdentifier>{98ff38d7-5a64-4ed6-a9d7-d2eda6514b93}</UniqueIdentifier>
@@ -226,6 +220,30 @@
     <Filter Include="Исходные файлы\GameTransitionScripts">
       <UniqueIdentifier>{b9033fb9-af87-4a80-afa2-d16bb6c004f9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems\GameLevel">
+      <UniqueIdentifier>{54aef88f-d6e0-4d7a-8301-a233487ccbd3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems\GameLevel\LevelLoading">
+      <UniqueIdentifier>{89d5f938-0c88-4096-a2f8-526a86dc40c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems\GameLevel\PathFinding">
+      <UniqueIdentifier>{1db42ecd-56fe-4768-8037-6e11371d371f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\CoreSystems\Level">
+      <UniqueIdentifier>{fc29407a-9105-4c6f-9731-b62749356b97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\CoreSystems\Level\LevelLoading">
+      <UniqueIdentifier>{1fc4e247-e754-4bc6-ac03-7bbc7fe4c169}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\CoreSystems\Level\PathFinding">
+      <UniqueIdentifier>{2db86986-3a96-4f06-a168-3ec2a8ef325d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\CoreSystems\GameObjects\FightingSystems\HitPointSystem\RegenModuls">
+      <UniqueIdentifier>{1a014c8b-0f04-4401-b42e-64f231a4f055}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems\GameObjects\FightingSystems\HitPointSystem\RegenModules">
+      <UniqueIdentifier>{8f4fb5c9-66a3-45d2-ae5b-7bb95d039f27}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\main.cpp">
@@ -241,13 +259,13 @@
       <Filter>Исходные файлы\CoreSystems\EngineWorkCycles</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\LevelLoader.cpp">
-      <Filter>Исходные файлы\CoreSystems\LevelLoading</Filter>
+      <Filter>Исходные файлы\CoreSystems\Level\LevelLoading</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\LevelLoadingInfo.cpp">
-      <Filter>Исходные файлы\CoreSystems\LevelLoading</Filter>
+      <Filter>Исходные файлы\CoreSystems\Level\LevelLoading</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\LevelSerialization.cpp">
-      <Filter>Исходные файлы\CoreSystems\LevelLoading</Filter>
+      <Filter>Исходные файлы\CoreSystems\Level\LevelLoading</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\UnitObject.cpp">
       <Filter>Исходные файлы\CoreSystems\GameObjects</Filter>
@@ -498,6 +516,18 @@
     <ClCompile Include="Scripts\LoseScript.cpp">
       <Filter>Исходные файлы\GameTransitionScripts</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\LevelCellMapDeser.cpp">
+      <Filter>Исходные файлы\CoreSystems\Level\LevelLoading</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\ObjectsCatalog.cpp">
+      <Filter>Исходные файлы\CoreSystems\Level\LevelLoading</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\BypassVertex.cpp">
+      <Filter>Исходные файлы\CoreSystems\Level\PathFinding</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\CommonHPRegenModule.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameObjects\FightingSystems\HitPointSystem\RegenModuls</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\CoreGameObjects.h">
@@ -525,16 +555,16 @@
       <Filter>Файлы заголовков\CoreSystems\EngineWorkCycles</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\LevelLoader.h">
-      <Filter>Файлы заголовков\CoreSystems\LevelLoading</Filter>
+      <Filter>Файлы заголовков\CoreSystems\GameLevel\LevelLoading</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\LevelLoading.h">
-      <Filter>Файлы заголовков\CoreSystems\LevelLoading</Filter>
+      <Filter>Файлы заголовков\CoreSystems\GameLevel\LevelLoading</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\LevelSerialization.h">
-      <Filter>Файлы заголовков\CoreSystems\LevelLoading</Filter>
+      <Filter>Файлы заголовков\CoreSystems\GameLevel\LevelLoading</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\LevelLoadingInfo.h">
-      <Filter>Файлы заголовков\CoreSystems\LevelLoading</Filter>
+      <Filter>Файлы заголовков\CoreSystems\GameLevel\LevelLoading</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Extensions.h">
       <Filter>Файлы заголовков\Extensions</Filter>
@@ -829,6 +859,33 @@
     </ClInclude>
     <ClInclude Include="Scripts\GameTransitions.h">
       <Filter>Файлы заголовков\GameTransitionScripts</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\ObjectsCatalog.h">
+      <Filter>Файлы заголовков\CoreSystems\GameLevel\LevelLoading</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\LevelCellMapDeser.h">
+      <Filter>Файлы заголовков\CoreSystems\GameLevel\LevelLoading</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\GameLevel.h">
+      <Filter>Файлы заголовков\CoreSystems\GameLevel</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\LevelBypassMap.h">
+      <Filter>Файлы заголовков\CoreSystems\GameLevel\PathFinding</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\LevelPathFinding.h">
+      <Filter>Файлы заголовков\CoreSystems\GameLevel\PathFinding</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\BypassVertex.h">
+      <Filter>Файлы заголовков\CoreSystems\GameLevel\PathFinding</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\PathFinding_Diijkstra.h">
+      <Filter>Файлы заголовков\CoreSystems\GameLevel\PathFinding</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\CommonHPRegenModule.h">
+      <Filter>Файлы заголовков\CoreSystems\GameObjects\FightingSystems\HitPointSystem\RegenModules</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\HPRegenModules.h">
+      <Filter>Файлы заголовков\CoreSystems\GameObjects\FightingSystems\HitPointSystem\RegenModules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

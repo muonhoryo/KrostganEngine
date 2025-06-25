@@ -16,10 +16,7 @@ namespace KrostganEngine::GameObjects {
 			:EntityHPModule(DeathModule,BattleStats,nullptr){
 		}
 		EntityHPModule(IDeathModule& DeathModule, EntityBattleStats& BattleStats, HPRegenModule* RegenModule);
-		~EntityHPModule() {
-			if (RegenModule != nullptr)
-				delete RegenModule;
-		}
+		~EntityHPModule();
 
 		void TakeDamage(AttackInfo attInfo) override;
 

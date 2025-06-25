@@ -12,7 +12,7 @@ EntityAction_MoveToPoint::EntityAction_MoveToPoint(OrdersExecutor& Owner, Transf
 }
 
 bool EntityAction_MoveToPoint::CheckExecCondition() {
-	return IsDataInv||DistToTarget <= eps;
+	return GetCantMoveState() || IsDataInv||DistToTarget <= eps;
 }
 void EntityAction_MoveToPoint::Execute() {
 	MoveTo(TargetGlobalCoord);

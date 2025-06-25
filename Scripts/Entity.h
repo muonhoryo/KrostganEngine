@@ -29,7 +29,7 @@ namespace KrostganEngine::GameObjects {
 		const Texture* RenTexture=nullptr;
 		Vector2f RenOffset;
 		Vector2f Position;
-		float Size;
+		float Size=1;
 
 		AutoAttackModule* GetAAModule() const { return AAModule; }
 		AutoAggressionModule* GetAutoAggrModule() const { return AutoAggrModule; }

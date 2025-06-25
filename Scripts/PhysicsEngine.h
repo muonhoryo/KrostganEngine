@@ -14,14 +14,32 @@ namespace KrostganEngine::Physics {
 	class PhysicsEngine: public EngineCallbackHandler<IPhysicalObject>
 	{
 	public:
+
+		enum class PointClassify {
+			Left,
+			Right,
+			Beyond,
+			Behind,
+			Start,
+			End,
+			Between
+		};
+
 		PhysicsEngine();
 
 		vector<IPhysicalObject*> OverlapAABB_All(Vector2f min, Vector2f max, PhysicsLayer layer=PhysicsLayer::All);
 		vector<IPhysicalObject*> OverlapCircle_All(Vector2f center, float radius, PhysicsLayer layer = PhysicsLayer::All);
+		vector<IPhysicalObject*> RayCast_All(Vector2f origin, Vector2f direction, float distance, PhysicsLayer layer = PhysicsLayer::All);
+		vector<IPhysicalObject*> RayCast_All(const Segment& segm, PhysicsLayer layer = PhysicsLayer::All);
 
 		IPhysicalObject* PointCast(Vector2f globalPos, PhysicsLayer layer = PhysicsLayer::All);
 
-		bool Intersect(const Ray& ray, const Segment& seg, Vector2f* interPnt);
+		bool RayHit(Segment segm, PhysicsLayer layer = PhysicsLayer::All);
+
+		static bool Intersect(const Ray& ray, const Segment& seg, Vector2f* interPnt);
+		static bool Intersect(const Segment& first, const Segment& second, Vector2f* interPnt);
+		static float DistanceToPoint(const Segment& segm,Vector2f pnt);
+		static PointClassify Classify(const Segment& segm, Vector2f pnt);
 
 		static inline const EmptyShape& EmptyCollInstance = *new EmptyShape();
 

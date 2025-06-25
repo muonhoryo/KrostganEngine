@@ -14,81 +14,38 @@ using namespace KrostganEngine::GameObjects;
 
 void LevelLoader::LoadLevel(const LevelLoadingInfo& levelInfo) {
 
-	Texture* tex=nullptr;
+	if (LoadedLevel != nullptr)
+		delete LoadedLevel;
+	LoadedLevel = new LoadedObjects();
 
-	{
-		UnitObject* unit = nullptr;
-		for (UnitLoadInfo* un : levelInfo.Units) {
+	LevelCellMapDeser::CellInfo* cell = nullptr;
+	for (int i = 0;i < levelInfo.LevelMap.size();++i) {
+		for (int j = 0;j < (*levelInfo.LevelMap[i]).size();++j) {
+			cell = (*levelInfo.LevelMap[i])[j];
+			if (cell->CatalogID != LevelCellMapDeser::EMPTY_CATALOG_ID) {
 
-			unit = &LoadUnit(*un, tex);
-			LoadedUnits.push_front(unit);
-			LoadedGraphics.push_front(unit);
+				ObjectsCatalog::GetObjectInfo(cell->CatalogID)->InstanceObject(*LoadedLevel,
+					LevelCellMapDeser::GetCellGlobalPosition(Vector2u(i,j)),
+					&cell->AdditionalParams);
+			}
 		}
 	}
-	{
-		HeroObject* hero = nullptr;
-		for (HeroLoadInfo* he : levelInfo.Heroes) {
 
-			hero = &LoadHero(*he, tex);
-			LoadedUnits.push_front((UnitObject*)hero);
-			LoadedHeroes.push_front(hero);
-			LoadedGraphics.push_front((ICallbackRec_GraphRen*)hero);
-		}
-
-		HeroesLoadEventArgs& heArgs = *new HeroesLoadEventArgs(&LoadedHeroes);
-		HeroesLoadEventHan.Execute(heArgs);
-
-		UnitsLoadEventArgs& unArgs = *new UnitsLoadEventArgs(&LoadedUnits);
-		UnitsLoadEventHan.Execute(unArgs);
-	}
-	{
-		WallObject* wall = nullptr;
-		for (WallLoadInfo* wl : levelInfo.Walls) {
-
-			wall = &LoadWall(*wl, tex);
-			LoadedWalls.push_front(wall);
-			LoadedGraphics.push_front(wall);
-		}
-
-		WallsLoadEventArgs& wlArgs = *new WallsLoadEventArgs(&LoadedWalls);
-		WallsLoadEventHan.Execute(wlArgs);
+	for (auto obj : levelInfo.UniqueObjects) {
+		obj->InstanceObject(*LoadedLevel);
 	}
 
-	GraphicsLoadEventArgs& gArgs = *new GraphicsLoadEventArgs(&LoadedGraphics);
+	HeroesLoadEventArgs& heArgs = *new HeroesLoadEventArgs(&LoadedLevel->LoadedHeroes);
+	HeroesLoadEventHan.Execute(heArgs);
+
+	UnitsLoadEventArgs& unArgs = *new UnitsLoadEventArgs(&LoadedLevel->LoadedUnits);
+	UnitsLoadEventHan.Execute(unArgs);
+
+	WallsLoadEventArgs& wlArgs = *new WallsLoadEventArgs(&LoadedLevel->LoadedWalls);
+	WallsLoadEventHan.Execute(wlArgs);
+
+	GraphicsLoadEventArgs& gArgs = *new GraphicsLoadEventArgs(&LoadedLevel->LoadedGraphics);
 	GraphicsLoadEventHan.Execute(gArgs);
-}
 
-UnitObjectCtorParams& LevelLoader::GetUnitParams(const UnitLoadInfo& info, Texture* texBuffer) {
-
-	texBuffer = new Texture();
-	texBuffer->loadFromFile(info.TexturePath);
-	UnitObjectCtorParams& params = *new UnitObjectCtorParams();
-	params.BattleStats = info.BattleStats;
-	params.EntityFraction = info.EntityFraction;
-	params.RenTexture = texBuffer;
-	params.RenOffset = info.SpriteOffset;
-	params.Position = info.Position;
-	params.Size = info.Size;
-	return params;
-}
-UnitObject& LevelLoader::LoadUnit(const UnitLoadInfo& info, Texture* texBuffer) {
-
-	auto& params = GetUnitParams(info, texBuffer);
-	UnitObject* unitObj = new UnitObject(params);
-	delete& params;
-	return *unitObj;
-}
-HeroObject& LevelLoader::LoadHero(const HeroLoadInfo& info,Texture* texBuffer) {
-	UnitObjectCtorParams& unParams = GetUnitParams(info, texBuffer);
-	HeroObjectCtorParams& params = *new HeroObjectCtorParams(unParams);
-	delete &unParams;
-	HeroObject* heroObj = new HeroObject(params);
-	delete& params;
-	return *heroObj;
-}
-WallObject& LevelLoader::LoadWall(const WallLoadInfo& info, Texture* texBuffer) {
-
-	texBuffer = new Texture();
-	texBuffer->loadFromFile(info.TexturePath);
-	return *new WallObject(*texBuffer, info.SpriteOffset, info.Position, info.Size);
+	LevelBypassMapManager::LoadFromLevelMap(levelInfo.LevelMap);
 }

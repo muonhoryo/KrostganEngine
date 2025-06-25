@@ -15,7 +15,7 @@
 #include <Physics.h>
 #include <ExternalData.h>
 #include <EngineWorkCycleModule.h>
-#include <LevelLoading.h>
+#include <GameLevel.h>
 #include <CoreGameObjects.h>
 #include <CoreEntitiesControl.h>
 #include <CorePlayerControl.h>

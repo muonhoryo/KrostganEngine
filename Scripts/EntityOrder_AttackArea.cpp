@@ -3,6 +3,7 @@
 #include <EntityAction_MoveToPoint.h>
 #include <Extensions.h>
 #include <Engine.h>
+#include <PathFinding_Diijkstra.h>
 
 using namespace sf;
 using namespace KrostganEngine;
@@ -19,9 +20,32 @@ bool EntityOrder_AttackArea::CheckExecCondition() {
 	return dist <= eps;
 }
 list <IEntityAction*>* EntityOrder_AttackArea::GetActions() {
+
 	list<IEntityAction*>* lst = new list<IEntityAction*>();
-	IEntityAction* act = new EntityAction_MoveToPoint(Owner, OwnerTransform, TargetGlobalPos);
-	lst->push_back(act);
+
+	Segment ray(OwnerTransform.GetPosition(), TargetGlobalPos);
+	if (Engine::GetPhysicsEngine().RayHit(ray,
+		(PhysicsLayer)((int)PhysicsLayer::Decorations | (int)PhysicsLayer::Buildings)))
+	{
+		list<Vector2f>* pnts= PathFinding_Diijkstra::GetPath(ray.First, ray.Second);
+		if (pnts == nullptr || pnts->size() == 0) {
+
+			IEntityAction* act = new EntityAction_MoveToPoint(Owner, OwnerTransform, TargetGlobalPos);
+			lst->push_back(act);
+		}
+		else {
+			for (Vector2f pnt : *pnts) {
+
+				IEntityAction* act = new EntityAction_MoveToPoint(Owner, OwnerTransform, pnt);
+				lst->push_back(act);
+			}
+		}
+	}
+	else {
+
+		IEntityAction* act = new EntityAction_MoveToPoint(Owner, OwnerTransform, TargetGlobalPos);
+		lst->push_back(act);
+	}
 	return lst;
 }
 EntityOrderType EntityOrder_AttackArea::GetOrderType() {

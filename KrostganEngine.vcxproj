@@ -140,6 +140,7 @@
     <ClCompile Include="Scripts\AutoAttackModule.cpp" />
     <ClCompile Include="Scripts\BaseAutoAggrModule.cpp" />
     <ClCompile Include="Scripts\BaseInputHandler.cpp" />
+    <ClCompile Include="Scripts\BypassVertex.cpp" />
     <ClCompile Include="Scripts\CircleCollShape.cpp" />
     <ClCompile Include="Scripts\CircleVisPrimitive.cpp" />
     <ClCompile Include="Scripts\ColliderShapes.cpp" />
@@ -162,6 +163,8 @@
     <ClCompile Include="Scripts\IDeathModule.cpp" />
     <ClCompile Include="Scripts\LineAAAnimation.cpp" />
     <ClCompile Include="Scripts\LoseScript.cpp" />
+    <ClCompile Include="Scripts\ObjectsCatalog.cpp" />
+    <ClCompile Include="Scripts\LevelCellMapDeser.cpp" />
     <ClCompile Include="Scripts\OutlineLineVisual.cpp" />
     <ClCompile Include="Scripts\UnitColliderVisualizer.cpp" />
     <ClCompile Include="Scripts\ConsoleCommsInterpretator.cpp" />
@@ -233,6 +236,7 @@
     <ClInclude Include="Scripts\BaseAutoAggrModule.h" />
     <ClInclude Include="Scripts\BattleInfo.h" />
     <ClInclude Include="Scripts\AttackInfo.h" />
+    <ClInclude Include="Scripts\BypassVertex.h" />
     <ClInclude Include="Scripts\CallbackDelegates.h" />
     <ClInclude Include="Scripts\CommonHPRegenModule.h" />
     <ClInclude Include="Scripts\CoreVisual.h" />
@@ -247,13 +251,19 @@
     <ClInclude Include="Scripts\ExternalData.h" />
     <ClInclude Include="Scripts\DynamicPhysObject.h" />
     <ClInclude Include="Scripts\FightingSystems.h" />
+    <ClInclude Include="Scripts\GameLevel.h" />
     <ClInclude Include="Scripts\GameTransitions.h" />
     <ClInclude Include="Scripts\GameVisual.h" />
     <ClInclude Include="Scripts\GameVisualEffects.h" />
     <ClInclude Include="Scripts\HPRegenModules.h" />
     <ClInclude Include="Scripts\ICallbackRec_GraphPostRen.h" />
+    <ClInclude Include="Scripts\LevelBypassMap.h" />
+    <ClInclude Include="Scripts\LevelCellMapDeser.h" />
+    <ClInclude Include="Scripts\LevelPathFinding.h" />
     <ClInclude Include="Scripts\LineAAAnimation.h" />
     <ClInclude Include="Scripts\LoseScript.h" />
+    <ClInclude Include="Scripts\ObjectsCatalog.h" />
+    <ClInclude Include="Scripts\PathFinding_Diijkstra.h" />
     <ClInclude Include="Scripts\PhysicsStructs.h" />
     <ClInclude Include="Scripts\TextBlock.h" />
     <ClInclude Include="Scripts\UIUXVisual.h" />

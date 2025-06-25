@@ -5,6 +5,7 @@
 #include <Engine.h>
 #include <EntityAction_AutoAttack.h>
 #include <EntityAction_FollowObject.h>
+#include <PathFinding_Diijkstra.h>
 
 using namespace sf;
 using namespace KrostganEngine;
@@ -22,20 +23,44 @@ bool EntityOrder_FollowTarget::CheckExecCondition() {
 	return false;
 }
 list<IEntityAction*>* EntityOrder_FollowTarget::GetActions() {
-	
-	float dist = Length(OwnerTransform.GetPosition() - Target.GetPosition());
 
-	if (dist > eps)	{	//Owner is too far from target
+	list<IEntityAction*>* lst = new list<IEntityAction*>();
 
-		if (FirstExec) {		//Immidiet first execution
+	Segment ray(OwnerTransform.GetPosition(), Target.GetPosition());
+	if (Engine::GetPhysicsEngine().RayHit(ray,
+		(PhysicsLayer)((int)PhysicsLayer::Decorations | (int)PhysicsLayer::Buildings)))
+	{
+		IEntityAction* act = nullptr;
+		list<Vector2f>* pnts = PathFinding_Diijkstra::GetPath(ray.First, ray.Second);
+		if (pnts != nullptr && pnts->size() > 1) {
+			typename list<Vector2f>::iterator end = pnts->end();
+			--end;
+			for (auto it = pnts->begin(); it != end;++it) {
 
-			FirstExec = false;
-			return new list<IEntityAction*>{ new EntityAction_FollowObject(Owner,OwnerTransform,Target,eps) };
+				act= new EntityAction_MoveToPoint(Owner, OwnerTransform, *it);
+				lst->push_back(act);
+			}
 		}
-		else if (FollRepeatTimer.getElapsedTime().asSeconds() > Engine::GetGlobalConsts().EntityAct_RepCoolDown) {		//Limit requests to follow
+		act = new EntityAction_FollowObject(Owner, OwnerTransform, Target, eps);
+		lst->push_back(act);
+		return lst;
+	}
+	else {
 
-			FollRepeatTimer.restart();
-			return new list<IEntityAction*>{ new EntityAction_FollowObject(Owner,OwnerTransform,Target,eps) };
+		float dist = Length(OwnerTransform.GetPosition() - Target.GetPosition());
+		if (dist > eps) {	//Owner is too far from target
+
+			if (FirstExec) {		//Immidiet first execution
+
+				FirstExec = false;
+				lst->push_back(new EntityAction_FollowObject(Owner,OwnerTransform,Target,eps));
+			}
+			else if (FollRepeatTimer.getElapsedTime().asSeconds() > Engine::GetGlobalConsts().EntityAct_RepCoolDown) {		//Limit requests to follow
+
+				FollRepeatTimer.restart();
+				lst->push_back(new EntityAction_FollowObject(Owner, OwnerTransform, Target, eps));
+			}
+			return lst;
 		}
 	}
 	return nullptr;

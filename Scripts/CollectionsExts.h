@@ -18,5 +18,15 @@ namespace KrostganEngine {
 			}
 			return string::npos;
 		}
+
+		template <typename TCollectionsType,typename TElementsType>
+		static bool Contains(const TCollectionsType& list, TElementsType const& element) {
+			for (TElementsType el: list) {
+				if (el == element) {
+					return true;
+				}
+			}
+			return false;
+		}
 	};
 }

@@ -15,7 +15,7 @@ EntityAction_FollowObject::EntityAction_FollowObject(OrdersExecutor& Owner, Tran
 }
 
 bool EntityAction_FollowObject::CheckExecCondition() {
-	return IsDataInv||DistToTarget-DistToFoll <= eps;
+	return GetCantMoveState() || IsDataInv||DistToTarget-DistToFoll <= eps;
 }
 void EntityAction_FollowObject::Execute() {
 	MoveTo(Target.GetPosition());

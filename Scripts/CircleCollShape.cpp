@@ -136,3 +136,8 @@ bool CircleCollShape::IntersectRay(const Ray& ray, Vector2f* interPnt, bool selF
 		ray.Origin.y + ray.Direction.y * t1);
 	return true;
 }
+bool CircleCollShape::IntersectSegment(const Segment& segm) const {
+
+	float dist = PhysicsEngine::DistanceToPoint(segm, Center);
+	return dist - Radius < eps;
+}

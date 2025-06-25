@@ -4,6 +4,7 @@
 #include <Engine.h>
 #include <EntityAction_AutoAttack.h>
 #include <EntityAction_FollowObject.h>
+#include <PathFinding_Diijkstra.h>
 
 using namespace sf;
 using namespace KrostganEngine;
@@ -22,18 +23,36 @@ bool EntityOrder_AttackTarget::CheckExecCondition() {
 	return Target.GetHPModule().DeathModule.GetIsDeadState();
 }
 list<IEntityAction*>* EntityOrder_AttackTarget::GetActions() {
-	list<IEntityAction*>& actions=*new list<IEntityAction*>();
+	list<IEntityAction*>* lst = new list<IEntityAction*>();
+
 	if (Owner.GetAAModule().CheckTargetReach(Target)) {			//Target is in attack range of executor
-		
-		actions.push_back((IEntityAction*)new EntityAction_AutoAttack(Owner, Target));
+
+		lst->push_back((IEntityAction*)new EntityAction_AutoAttack(Owner, Target));
 	}
 	else {									//Owner needs to follow target first
-		
+
+		Segment ray(OwnerTransform.GetPosition(), Target.GetPosition());
+		if (Engine::GetPhysicsEngine().RayHit(ray,
+			(PhysicsLayer)((int)PhysicsLayer::Decorations | (int)PhysicsLayer::Buildings)))
+		{
+			list<Vector2f>* pnts = PathFinding_Diijkstra::GetPath(ray.First, ray.Second);
+			if (pnts != nullptr && pnts->size() >1) {
+
+				typename list<Vector2f>::iterator end = pnts->end();
+				--end;
+				for (auto it = pnts->begin(); it != end;++it) {
+
+					IEntityAction* act = new EntityAction_MoveToPoint(Owner, OwnerTransform, *it);
+					lst->push_back(act);
+				}
+			}
+		}
 		float alloDist = Owner.GetBattleStats().GetAARadius();
-		actions.push_back((IEntityAction*)new EntityAction_FollowObject(Owner,OwnerTransform, Target, alloDist));
-		actions.push_back((IEntityAction*)new EntityAction_AutoAttack(Owner, Target));
+		lst->push_back((IEntityAction*)new EntityAction_FollowObject(Owner, OwnerTransform, Target, alloDist));
+		lst->push_back((IEntityAction*)new EntityAction_AutoAttack(Owner, Target));
 	}
-	return &actions;
+
+	return lst;
 }
 void EntityOrder_AttackTarget::OnStartExecution() 
 {

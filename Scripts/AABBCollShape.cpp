@@ -218,6 +218,36 @@ bool AABBCollShape::IntersectRay(const Ray& ray, Vector2f* interPnt, bool selFar
 	//NEED TO FIX
 	//NEED TO FIX
 }
+bool AABBCollShape::IntersectSegment(const Segment& segm) const {
+	
+	if (IsPointInCollider(segm.First) || IsPointInCollider(segm.Second))
+		return true;
+
+	Segment segm2(Vector2f(0,0),Vector2f(0,0));
+	Vector2f pnt;
+
+	segm2.First = GetCornerByMask(0);
+	segm2.Second = GetCornerByMask(1);
+	if (PhysicsEngine::Intersect(segm, segm2, &pnt))
+		return true;
+
+	segm2.First = GetCornerByMask(1);
+	segm2.Second = GetCornerByMask(3);
+	if (PhysicsEngine::Intersect(segm, segm2, &pnt))
+		return true;
+
+	segm2.First = GetCornerByMask(3);
+	segm2.Second = GetCornerByMask(2);
+	if (PhysicsEngine::Intersect(segm, segm2, &pnt))
+		return true;
+
+	segm2.First = GetCornerByMask(2);
+	segm2.Second = GetCornerByMask(0);
+	if (PhysicsEngine::Intersect(segm, segm2, &pnt))
+		return true;
+
+	return false;
+}
 
 Vector2f AABBCollShape::GetCenter() const {
 	return Vector2f((Min.x + Max.x) * 0.5f, (Min.y + Max.y) * 0.5f);

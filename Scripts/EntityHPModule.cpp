@@ -9,6 +9,11 @@ EntityHPModule::EntityHPModule(IDeathModule& DeathModule, EntityBattleStats& Bat
 	BattleStats(BattleStats),
 	RegenModule(RegenModule){
 }
+EntityHPModule::~EntityHPModule() {
+
+	if (RegenModule != nullptr)
+		delete RegenModule;
+}
 
 void EntityHPModule::TakeDamage(AttackInfo attInfo) {
 	size_t currHP = BattleStats.GetCurrentHP();

@@ -27,8 +27,10 @@ const GlobalConsts& GlobalConstsLoad::LoadGlobalConsts() {
 	LoadedGlobalConsts.AAAnim_LineWidth = DeserializeValueByDefinition(GlobalConsts::DEF_AA_ANIM_LINE_WIDTH, &line);
 	LoadedGlobalConsts.AverageLifeTime_DeathEffect = DeserializeValueByDefinition(GlobalConsts::DEF_AVERGAE_LIFETIME_DEATHEFFECT, &line);
 	LoadedGlobalConsts.LoseMsg_AppearingTime = DeserializeValueByDefinition(GlobalConsts::DEF_LOSEMESSAG_APPEARING_TIME, &line);
+	LoadedGlobalConsts.Units_ImmobilityCheckValue = DeserializeValueByDefinition(GlobalConsts::DEF_UNITS_IMMOBILITY_CHECK_VALUE, &line);
 	LoadedGlobalConsts.LoseMsg_ShowingTime = DeserializeValueByDefinition(GlobalConsts::DEF_LOSEMESSAG_SHOWING_TIME, &line);
 	LoadedGlobalConsts.LoseMsg_TransitTime = DeserializeValueByDefinition(GlobalConsts::DEF_LOSEMESSAG_TRANSIT_TIME, &line);
+	LoadedGlobalConsts.Units_MovingAbilityCheckTick = DeserializeValueByDefinition(GlobalConsts::DEF_UNITS_MOVING_ABILITY_CHECK_TICK, &line);
 
 	StrValuesArr.clear();
 	return LoadedGlobalConsts;
@@ -49,7 +51,8 @@ float GlobalConstsLoad::DeserializeValueByDefinition(const string& definition, s
 		string str = "Missing value of " + definition;
 		throw exception(str.c_str());
 	}
-	return stof(*buffer);
+	float res = stof(*buffer);
+	return res;
 }
 
 const string GlobalConstsLoad::CONSTS_PATH = "GlobalConsts.txt";

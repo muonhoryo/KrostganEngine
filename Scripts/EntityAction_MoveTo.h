@@ -18,6 +18,16 @@ namespace KrostganEngine::EntitiesControl {
 		OrdersExecutor& Owner;
 		TransformableObj& OwnerTransform;
 
+		bool GetCantMoveState() const{
+			return CantMove;
+		}
+
 		void MoveTo(Vector2f targetCood);
+
+	private:
+		bool CantMove = false;
+		Vector2f PrevPos;
+		Clock MovingAbilityChecker;
+		bool FirstExecute = false;
 	};
 }

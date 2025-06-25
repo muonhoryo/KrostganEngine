@@ -3,6 +3,7 @@
 #include <Engine.h>
 #include <Extensions.h>
 #include <list>
+#include <PathFinding_Diijkstra.h>
 
 using namespace std;
 using namespace KrostganEngine;
@@ -64,6 +65,24 @@ void BaseAutoAggrModule::CheckCurrTarget(CallbackRecArgs_Upd& args) {
 			if (IsFollowTargets) {
 
 				ActionMediator.AddAction((IEntityAction*)new EntityAction_FollowObject(Owner, Owner, *Target, alloDist));
+
+				Segment segm(Owner.GetPosition(), Target->GetPosition());
+				if (Engine::GetPhysicsEngine().RayHit(segm,
+					(PhysicsLayer)((int)PhysicsLayer::Decorations | (int)PhysicsLayer::Buildings))) {
+
+					list<Vector2f>* lst = PathFinding_Diijkstra::GetPath(segm.First, segm.Second);
+					if (lst != nullptr && lst->size() > 1) {
+
+						typename list<Vector2f>::reverse_iterator beg = lst->rbegin();
+						++beg;
+						typename list<Vector2f>::reverse_iterator end = lst->rend();
+
+						for (;beg != end;++beg) {
+
+							ActionMediator.AddAction((IEntityAction*)new EntityAction_MoveToPoint(Owner, Owner, *beg));
+						}
+					}
+				}
 			}
 		}
 	}
@@ -138,6 +157,24 @@ void BaseAutoAggrModule::FindTarget(CallbackRecArgs_Upd& args) {
 					float alloDist = Owner.GetBattleStats().GetAARadius();
 					ActionMediator.AddAction((IEntityAction*)new EntityAction_AutoAttack(Owner, *Target));
 					ActionMediator.AddAction((IEntityAction*)new EntityAction_FollowObject(Owner, Owner, *Target, alloDist));
+
+					Segment segm(Owner.GetPosition(), Target->GetPosition());
+					if (Engine::GetPhysicsEngine().RayHit(segm,
+						(PhysicsLayer)((int)PhysicsLayer::Decorations | (int)PhysicsLayer::Buildings))) {
+
+						list<Vector2f>* lst = PathFinding_Diijkstra::GetPath(segm.First, segm.Second);
+						if (lst != nullptr && lst->size() > 1) {
+
+							typename list<Vector2f>::reverse_iterator beg = lst->rbegin();
+							++beg;
+							typename list<Vector2f>::reverse_iterator end = lst->rend();
+
+							for (;beg != end;++beg) {
+
+								ActionMediator.AddAction((IEntityAction*)new EntityAction_MoveToPoint(Owner, Owner, *beg));
+							}
+						}
+					}
 				}
 				IsAttack = false;
 			}

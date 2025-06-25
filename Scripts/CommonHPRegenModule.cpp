@@ -9,7 +9,9 @@ void CommonHPRegenModule::Regen(CallbackRecArgs_Upd& args) {
 
 	if (IsRegen) {
 
-		if (CooldownTimer.getElapsedTime().asSeconds() >= BattleStats.GetHPRegenTick()) {
+		float time = CooldownTimer.getElapsedTime().asSeconds();
+		float tick = BattleStats.GetHPRegenTick();
+		if (time>= tick) {
 
 			CooldownTimer.restart();
 			size_t newHPCount = BattleStats.GetCurrentHP() + BattleStats.GetHPRegenCount();
