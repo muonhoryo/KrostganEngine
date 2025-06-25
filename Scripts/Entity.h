@@ -35,17 +35,20 @@ namespace KrostganEngine::GameObjects {
 		AutoAggressionModule* GetAutoAggrModule() const { return AutoAggrModule; }
 		IHitPointModule* GetHPModule() const { return HPModule; }
 		IDeathModule* GetDeathModule() const { return DeathModule; }
+		HPRegenModule* GetHPRegenModule() const { return RegenModule; }
 
 	protected:
 		virtual void Init_AAModule(Entity& owner) = 0;
 		virtual void Init_AutoAggrModule(Entity& owner, ExecutorActionsMediator& mediator) = 0;
 		virtual void Init_DeathModule(Entity& owner) = 0;
 		virtual void Init_HPModule() = 0;
+		virtual void Init_HPRegenModule(EntityBattleStats& stats) = 0;
 
 		AutoAttackModule* AAModule=nullptr;
 		AutoAggressionModule* AutoAggrModule=nullptr;
 		IHitPointModule* HPModule=nullptr;
 		IDeathModule* DeathModule = nullptr;
+		HPRegenModule* RegenModule = nullptr;
 
 		friend class Entity;
 	};

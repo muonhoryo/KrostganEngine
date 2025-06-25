@@ -39,6 +39,8 @@ namespace KrostganEngine {
 			
 			static inline const string ENTITY_MAX_HP = "MaxHP";
 			static inline const string ENTITY_CURR_HP = "CurrentHP";
+			static inline const string ENTITY_REGEN_HP_COUNT = "HPRegenCount";
+			static inline const string ENTITY_REGEN_HP_TICK= "HPRegenTick";
 			static inline const string ENTITY_AA_DAMAGE = "AADamage";
 			static inline const string ENTITY_AA_SPEED = "AASpeed";
 			static inline const string ENTITY_AA_RADIUS = "AARadius";

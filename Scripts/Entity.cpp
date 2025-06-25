@@ -23,6 +23,7 @@ Entity::Entity(EntityCtorParams& params)
 	params.Init_AAModule(*this);
 	params.Init_AutoAggrModule(*this,GetActionsMediator());
 	params.Init_DeathModule(*this);
+	params.Init_HPRegenModule(*params.BattleStats);
 	params.Init_HPModule();
 	SetAAModule(params.GetAAModule());
 	SetAutoAggrModule(params.GetAutoAggrModule());

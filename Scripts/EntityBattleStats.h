@@ -8,6 +8,12 @@ namespace KrostganEngine::GameObjects {
 		//HitPoint
 		size_t GetMaxHP() const;
 		size_t GetCurrentHP() const;
+		size_t GetHPRegenCount() const {
+			return RegenHP_Amount;
+		}
+		float GetHPRegenTick() const {
+			return RegenHP_Tick;
+		}
 		//Moving
 		float GetMovingSpeed() const;
 		//Attack
@@ -22,6 +28,16 @@ namespace KrostganEngine::GameObjects {
 		void SetMaxHP(size_t hp);
 		void SetCurrentHP(size_t hp);
 		void RestoreHealth();
+		void SetHPRegenAmount(size_t amount) {
+			if (amount >= 0) {
+				RegenHP_Amount = amount;
+			}
+		}
+		void SetHPRegenTick(float tick) {
+			if (tick > 0) {
+				RegenHP_Tick = tick;
+			}
+		}
 		//Moving
 		void SetMovingSpeed(float speed);
 		//Attack
@@ -37,15 +53,17 @@ namespace KrostganEngine::GameObjects {
 
 	private:
 		//HitPoint
-		size_t MaxHP;
-		size_t CurrentHP;
+		size_t MaxHP=1;
+		size_t CurrentHP=1;
+		size_t RegenHP_Amount=1;		//Amount of restored hp in 1 tick
+		float RegenHP_Tick=1;		//Cooldown between hp's restoring by regeneration
 		//Moving
-		float MovingSpeed;
+		float MovingSpeed=1;
 		//Attack
-		size_t AADamage;
-		float AASpeed;		//Amount of dealt attack in 1 second
-		float AARadius;
+		size_t AADamage=0;
+		float AASpeed=0;		//Amount of dealt attack in 1 second
+		float AARadius=0;
 		//View
-		float AutoAggrRadius;
+		float AutoAggrRadius=0;
 	};
 }

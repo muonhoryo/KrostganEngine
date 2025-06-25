@@ -143,6 +143,7 @@
     <ClCompile Include="Scripts\CircleCollShape.cpp" />
     <ClCompile Include="Scripts\CircleVisPrimitive.cpp" />
     <ClCompile Include="Scripts\ColliderShapes.cpp" />
+    <ClCompile Include="Scripts\CommonHPRegenModule.cpp" />
     <ClCompile Include="Scripts\DivineCommander.cpp" />
     <ClCompile Include="Scripts\EngineLateUpdateModule.cpp" />
     <ClCompile Include="Scripts\EntityAARadVisualizer.cpp" />
@@ -233,6 +234,7 @@
     <ClInclude Include="Scripts\BattleInfo.h" />
     <ClInclude Include="Scripts\AttackInfo.h" />
     <ClInclude Include="Scripts\CallbackDelegates.h" />
+    <ClInclude Include="Scripts\CommonHPRegenModule.h" />
     <ClInclude Include="Scripts\CoreVisual.h" />
     <ClInclude Include="Scripts\DivineCommander.h" />
     <ClInclude Include="Scripts\EntityOrder_AttackArea.h" />
@@ -248,6 +250,7 @@
     <ClInclude Include="Scripts\GameTransitions.h" />
     <ClInclude Include="Scripts\GameVisual.h" />
     <ClInclude Include="Scripts\GameVisualEffects.h" />
+    <ClInclude Include="Scripts\HPRegenModules.h" />
     <ClInclude Include="Scripts\ICallbackRec_GraphPostRen.h" />
     <ClInclude Include="Scripts\LineAAAnimation.h" />
     <ClInclude Include="Scripts\LoseScript.h" />

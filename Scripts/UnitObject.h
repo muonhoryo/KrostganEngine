@@ -11,6 +11,7 @@
 #include <EntityBaseAAModule.h>
 #include <BaseAutoAggrModule.h>
 #include <EntityHPModule.h>
+#include <HPRegenModules.h>
 
 #include <CoreUIUX.h>
 
@@ -27,7 +28,6 @@ namespace KrostganEngine {
 		class UnitDeathModule : public EntityDeathModule {
 		public:
 			UnitDeathModule(Entity& Owner) : EntityDeathModule(Owner) {
-
 			}
 
 			void Death() override;
@@ -43,8 +43,11 @@ namespace KrostganEngine {
 			void Init_DeathModule(Entity& owner) override {
 				DeathModule = new UnitDeathModule(owner);
 			}
+			void Init_HPRegenModule(EntityBattleStats& stats) override {
+				RegenModule = new CommonHPRegenModule(*BattleStats);
+			}
 			void Init_HPModule() override {
-				HPModule = new EntityHPModule(*GetDeathModule(), *BattleStats);
+				HPModule = new EntityHPModule(*GetDeathModule(), *BattleStats,GetHPRegenModule());
 			}
 		};
 

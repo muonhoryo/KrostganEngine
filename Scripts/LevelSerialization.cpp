@@ -198,6 +198,18 @@ EntityBattleStats& LevelSerialization::GetBattleStats(vector<string>& params, st
 			bStats.SetCurrentHP(bStat_s_t);
 	}
 
+	//HPRegenAmount
+	if (TryGetSerValueOfParam(params, LevelSerParDefNames::ENTITY_REGEN_HP_COUNT, buffer)) {
+		bStat_s_t = stoi(*buffer);
+		bStats.SetHPRegenAmount(bStat_s_t);
+	}
+
+	//HPRegenTick
+	if (TryGetSerValueOfParam(params, LevelSerParDefNames::ENTITY_REGEN_HP_TICK, buffer)) {
+		bStat_f = stof(*buffer);
+		bStats.SetHPRegenTick(bStat_f);
+	}
+
 	//AADamage
 	if (TryGetSerValueOfParam(params, LevelSerParDefNames::ENTITY_AA_DAMAGE, buffer)) {
 		bStat_s_t = stoi(*buffer);

@@ -3,3 +3,5 @@
 #include <IAttackableObj.h>
 
 #include <EntityHPModule.h>
+
+#include <HPRegenModules.h>

@@ -5,8 +5,9 @@
 using namespace std;
 using namespace KrostganEngine::GameObjects;
 
-EntityHPModule::EntityHPModule(IDeathModule& DeathModule, EntityBattleStats& BattleStats) : IHitPointModule(DeathModule),
-	BattleStats(BattleStats){
+EntityHPModule::EntityHPModule(IDeathModule& DeathModule, EntityBattleStats& BattleStats, HPRegenModule* RegenModule) : IHitPointModule(DeathModule),
+	BattleStats(BattleStats),
+	RegenModule(RegenModule){
 }
 
 void EntityHPModule::TakeDamage(AttackInfo attInfo) {
