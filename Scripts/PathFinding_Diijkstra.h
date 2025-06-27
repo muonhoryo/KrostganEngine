@@ -56,6 +56,8 @@ namespace KrostganEngine::Core {
 					if ((*it)->Cost < (*curr)->Cost)
 						curr = it;
 				}
+				if (result != nullptr && (*curr)->Cost > result->Cost)
+					break;
 				//handle ways
 				head = (*curr)->Way.back();
 				if (CollectionsExts::Contains(endVerts, head)) {
@@ -84,7 +86,7 @@ namespace KrostganEngine::Core {
 				vector<BypassWay*> ways = vector<BypassWay*>(head->GetWays());
 				sort(ways.begin(),ways.end(), WaysSorting());
 
-				for (BypassWay* currWay : head->GetWays()) {
+				for (BypassWay* currWay : ways) {
 					if (&currWay->First == head)
 						handlePnt = &currWay->Second;
 					else

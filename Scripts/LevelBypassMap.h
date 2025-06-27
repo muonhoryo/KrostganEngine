@@ -4,8 +4,10 @@
 #include <BypassVertex.h>
 #include <ObjectsCatalog.h>
 #include <vector>
+#include <PrimitiveVisualShapes.h>
 
 using namespace std;
+using namespace KrostganEngine::UI;
 
 namespace KrostganEngine::Core {
 	class LevelBypassMapManager {

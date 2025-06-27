@@ -132,6 +132,7 @@ bool PhysicsEngine::Intersect(const Ray& ray, const Segment& seg, Vector2f* inte
 }
 bool PhysicsEngine::Intersect(const Segment& first, const Segment& second, Vector2f* interPnt) {
 
+
 	if (max(first.First.x, first.Second.x) < min(second.First.x, second.Second.x) ||
 		min(first.First.x, first.Second.x) > max(second.First.x, second.Second.x) ||
 		max(first.First.y, first.Second.y) < min(second.First.y, second.Second.y) ||
@@ -139,72 +140,82 @@ bool PhysicsEngine::Intersect(const Segment& first, const Segment& second, Vecto
 		return false;
 	}
 
-	Vector2f dir1 = first.Second- first.First;
-	Vector2f dir2 = second.Second - second.First;
-	Vector2f n1 = Vector2f(dir1.y, -dir1.x);
-	Vector2f n2 = Vector2f(dir2.y, -dir2.x);
-	float det = n1.x * n2.y - n1.y * n2.x;
-	if (det<eps && det>-eps) {
-		return false;
-	}
-	float d1 = -Dot(first.First, n1);
-	float d2 = -Dot(second.First, n2);
+	float area1 = ((first.Second.x - first.First.x) * (second.First.y - first.First.y) -
+		(first.Second.y - first.First.y) * (second.First.x - first.First.x)) *
+		((first.Second.x - first.First.x) * (second.Second.y - first.First.y) -
+			(first.Second.y - first.First.y) * (second.Second.x - first.First.x));
+	float area2 = ((second.Second.x - second.First.x) * (first.First.y - second.First.y) -
+		(second.Second.y - second.First.y) * (first.First.x - second.First.x)) *
+		((second.Second.x - second.First.x) * (first.Second.y - second.First.y) -
+			(second.Second.y - second.First.y) * (first.Second.x - second.First.x));
 
-	*interPnt = Vector2f((d2 * n1.y - d1 * n2.y) / det, (d1 * n2.x - d2 * n1.x) / det);
+	return area1 <= 0 && area2 <= 0;
+	//Vector2f dir1 = first.Second- first.First;
+	//Vector2f dir2 = second.Second - second.First;
+	//Vector2f n1 = Vector2f(dir1.y, -dir1.x);
+	//Vector2f n2 = Vector2f(dir2.y, -dir2.x);
+	//float det = n1.x * n2.y - n1.y * n2.x;
+	//if (det<eps && det>-eps) {
+	//	return false;
+	//}
+	//float d1 = -Dot(first.First, n1);
+	//float d2 = -Dot(second.First, n2);
 
-	//x
-	if (first.First.x > first.Second.x) {
-		if (interPnt->x > first.First.x)
-			return false;
-		else if (interPnt->x < first.Second.x)
-			return false;
-	}
-	else {
-		if (interPnt->x > first.Second.x)
-			return false;
-		else if (interPnt->x < first.First.x)
-			return false;
-	}
+	//*interPnt = Vector2f((d2 * n1.y - d1 * n2.y) / det, (d1 * n2.x - d2 * n1.x) / det);
 
-	if (second.First.x > second.Second.x) {
-		if (interPnt->x > second.First.x)
-			return false;
-		else if (interPnt->x < second.Second.x)
-			return false;
-	}
-	else {
-		if (interPnt->x > second.Second.x)
-			return false;
-		else if (interPnt->x < second.First.x)
-			return false;
-	}
-	//y
-	if (first.First.y > first.Second.y) {
-		if (interPnt->y > first.First.y)
-			return false;
-		else if (interPnt->y < first.Second.y)
-			return false;
-	}
-	else {
-		if (interPnt->y > first.Second.y)
-			return false;
-		else if (interPnt->y < first.First.y)
-			return false;
-	}
+	////x
+	//if (first.First.x > first.Second.x) {
+	//	if (interPnt->x > first.First.x)
+	//		return false;
+	//	else if (interPnt->x < first.Second.x)
+	//		return false;
+	//}
+	//else {
+	//	if (interPnt->x > first.Second.x)
+	//		return false;
+	//	else if (interPnt->x < first.First.x)
+	//		return false;
+	//}
 
-	if (second.First.x > second.Second.x) {
-		if (interPnt->x > second.First.x)
-			return false;
-		else if (interPnt->x < second.Second.x)
-			return false;
-	}
-	else {
-		if (interPnt->x > second.Second.x)
-			return false;
-		else if (interPnt->x < second.First.x)
-			return false;
-	}
-	return true;
+	//if (second.First.x > second.Second.x) {
+	//	if (interPnt->x > second.First.x)
+	//		return false;
+	//	else if (interPnt->x < second.Second.x)
+	//		return false;
+	//}
+	//else {
+	//	if (interPnt->x > second.Second.x)
+	//		return false;
+	//	else if (interPnt->x < second.First.x)
+	//		return false;
+	//}
+	////y
+	//if (first.First.y > first.Second.y) {
+	//	if (interPnt->y > first.First.y)
+	//		return false;
+	//	else if (interPnt->y < first.Second.y)
+	//		return false;
+	//}
+	//else {
+	//	if (interPnt->y > first.Second.y)
+	//		return false;
+	//	else if (interPnt->y < first.First.y)
+	//		return false;
+	//}
+
+	//if (second.First.x > second.Second.x) {
+	//	if (interPnt->x > second.First.x)
+	//		return false;
+	//	else if (interPnt->x < second.Second.x)
+	//		return false;
+	//}
+	//else {
+	//	if (interPnt->x > second.Second.x)
+	//		return false;
+	//	else if (interPnt->x < second.First.x)
+	//		return false;
+	//}
+	//return true;
 }
 float PhysicsEngine::DistanceToPoint(const Segment& segm, Vector2f pnt) {
 

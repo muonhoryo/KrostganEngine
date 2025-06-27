@@ -15,7 +15,7 @@ void LevelDeserializationMode :: ExecuteCycle() {
 
     //Create object's debug-visualizer
     //ATTENTION!!!! Memory leak
-    UnitObject* ent = nullptr;
+    /*UnitObject* ent = nullptr;
     auto beg = EntitiesObserver::GetBeginIter();
     auto end = EntitiesObserver::GetAfterEndIter();
     for (;beg != end;++beg) {
@@ -25,5 +25,5 @@ void LevelDeserializationMode :: ExecuteCycle() {
             new EntityAARadVisualizer(*ent);
             new EntityAutoAggrRadVisualizer(*ent);
         }
-    }
+    }*/
 }
