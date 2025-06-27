@@ -528,6 +528,9 @@
     <ClCompile Include="Scripts\CommonHPRegenModule.cpp">
       <Filter>Исходные файлы\CoreSystems\GameObjects\FightingSystems\HitPointSystem\RegenModuls</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\WinScript.cpp">
+      <Filter>Исходные файлы\GameTransitionScripts</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\CoreGameObjects.h">
@@ -886,6 +889,9 @@
     </ClInclude>
     <ClInclude Include="Scripts\HPRegenModules.h">
       <Filter>Файлы заголовков\CoreSystems\GameObjects\FightingSystems\HitPointSystem\RegenModules</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\WinScript.h">
+      <Filter>Файлы заголовков\GameTransitionScripts</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

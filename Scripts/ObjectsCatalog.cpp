@@ -126,7 +126,11 @@ UnitLoadInfo& ObjsCatalogDeserial::ParseUnitInfo(vector<string>& params) {
 }
 HeroLoadInfo& ObjsCatalogDeserial::ParseHeroInfo(vector<string>& params) {
 
-	return (HeroLoadInfo&)ParseUnitInfo(params);
+	UnitLoadInfo& info = ParseUnitInfo(params);
+
+	HeroLoadInfo& heInfo = *new HeroLoadInfo(*(HeroLoadInfo*)&info);
+	delete &info;
+	return  heInfo;
 }
 WallLoadInfo& ObjsCatalogDeserial::ParseWallInfo(vector<string>& params) {
 

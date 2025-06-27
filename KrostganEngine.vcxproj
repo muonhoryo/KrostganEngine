@@ -229,6 +229,7 @@
     <ClCompile Include="Scripts\VectExts.cpp" />
     <ClCompile Include="Scripts\Wall.cpp" />
     <ClCompile Include="Scripts\WideLineVisual.cpp" />
+    <ClCompile Include="Scripts\WinScript.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\AutoAttackAnimation.h" />
@@ -349,6 +350,7 @@
     <ClInclude Include="Scripts\VectExts.h" />
     <ClInclude Include="Scripts\VisualOnDeathDestroyer.h" />
     <ClInclude Include="Scripts\Wall.h" />
+    <ClInclude Include="Scripts\WinScript.h" />
     <ClInclude Include="Scripts\ZeroArgsEvent.h" />
   </ItemGroup>
   <ItemGroup>
