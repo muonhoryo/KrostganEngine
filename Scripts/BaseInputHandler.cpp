@@ -29,6 +29,14 @@ void BaseInputHandler::Update(CallbackRecArgs_Upd args) {
 					ConsoleCommsInterpretator::ExecuteCommand(input);
 				Engine::GetRenderWindow().requestFocus();
 			}
+			else if (input.key.code == Keyboard::Escape) {
+
+				Engine::GetRenderWindow().close();
+				exit(0);
+			}
+			else if (input.key.code == Keyboard::F5) {
+				Engine::SetFullScreen(!Engine::IsFullScreenWindow());
+			}
 		}
 	}	
 
@@ -40,8 +48,8 @@ void BaseInputHandler::Update(CallbackRecArgs_Upd args) {
 		float trigger = Engine::GetGlobalConsts().CameraMovTriggerArea;
 		Vector2u scrSize = Engine::GetScreenSize();
 		Vector2i cameraMov = Vector2i(
-			curPos.x < trigger ? -1 : (float)scrSize.x - curPos.x < trigger ? 1 : 0,
-			curPos.y < trigger ? -1 : (float)scrSize.y - curPos.y < trigger ? 1 : 0);
+			curPos.x < trigger ? -1 : (float)scrSize.x - curPos.x <= trigger ? 1 : 0,
+			curPos.y < trigger ? -1 : (float)scrSize.y - curPos.y <= trigger ? 1 : 0);
 
 		if (cameraMov != VECTOR2_INT_ZERO) {
 

@@ -32,6 +32,7 @@ Engine::Engine()
 	string header = "Krostgan Engine " + Engine::ENGINE_VERSION;
 	Vector2f resol = EngineConfiguration->WindowResolution;
 	RendWin.create(VideoMode(resol.x,resol.y), header,Style::Close);
+	IsFullscreen = false;
 	View view;
 	view.setCenter(0, 0);
 	view.setSize(resol.x, resol.y);
@@ -113,6 +114,17 @@ void Engine::SetCameraPos(Vector2f pos) {
 }
 void Engine::MoveCamera(Vector2f movVal) {
 	SetCameraPos(GetCameraPos() + movVal);
+}
+void Engine::SetFullScreen(bool isFull) {
+
+	if (isFull != IsFullScreenWindow()) {
+
+		auto& wind = GetRenderWindow();
+		Vector2u resol = Singleton->GetScreenSize();
+		wind.create(VideoMode(resol.x, resol.y), "Krostgan Engine " + Engine::ENGINE_VERSION,
+			isFull ? (sf::Style::Close | sf::Style::Fullscreen) : sf::Style::Close);
+		Singleton->IsFullscreen = isFull;
+	}
 }
 
 void Engine::RequestToChangeState(EngineState state) {
@@ -217,6 +229,9 @@ const GlobalConsts& Engine::GetGlobalConsts() {
 const ExternalGlobalResources& Engine::GetGlobalResources() {
 	return *Singleton->GlobalResources;
 }
+bool Engine::IsFullScreenWindow() {
+	return Singleton->IsFullscreen;
+}
 float Engine::GetZoom() {
 	return Singleton->Zoom;
 }
@@ -251,8 +266,8 @@ bool Engine::IsMouseOnScreen() {
 }
 bool Engine::IsMouseOnScreen(Vector2i mousePos) {
 	Vector2u screenSize = Engine::GetScreenSize();
-	return mousePos.x > 0 && mousePos.x < (int)screenSize.x &&
-		mousePos.y>0 && mousePos.y < (int)screenSize.y;
+	return mousePos.x >= 0 && mousePos.x <= (int)screenSize.x &&
+		mousePos.y>=0 && mousePos.y <= (int)screenSize.y;
 }
 bool Engine::HasWindowFocus() {
 	return Singleton->RendWin.hasFocus();
