@@ -147,6 +147,7 @@
     <ClCompile Include="Scripts\CommonHPRegenModule.cpp" />
     <ClCompile Include="Scripts\DivineCommander.cpp" />
     <ClCompile Include="Scripts\EngineLateUpdateModule.cpp" />
+    <ClCompile Include="Scripts\Engine_ModeSelection.cpp" />
     <ClCompile Include="Scripts\EntityAARadVisualizer.cpp" />
     <ClCompile Include="Scripts\EntityAutoAggrRadVisualizer.cpp" />
     <ClCompile Include="Scripts\EntityDeathModule.cpp" />
@@ -166,6 +167,8 @@
     <ClCompile Include="Scripts\ObjectsCatalog.cpp" />
     <ClCompile Include="Scripts\LevelCellMapDeser.cpp" />
     <ClCompile Include="Scripts\OutlineLineVisual.cpp" />
+    <ClCompile Include="Scripts\StartMessageMode.cpp" />
+    <ClCompile Include="Scripts\TextBlockcpp.cpp" />
     <ClCompile Include="Scripts\UnitColliderVisualizer.cpp" />
     <ClCompile Include="Scripts\ConsoleCommsInterpretator.cpp" />
     <ClCompile Include="Scripts\CursorManager.cpp" />

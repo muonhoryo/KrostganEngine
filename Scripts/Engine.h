@@ -22,10 +22,38 @@ namespace KrostganEngine {
 			static Engine& GetInstance();
 			static void StartEngine();
 
+			//ModeSelection
+
+			static void ReqToSetStartMode();
+
 			static void ReqToSetMode_MainMenu();
 			static void ReqToSetMode_Game();
 			static void ReqToSetMode_LevelDeser();
+			static void ReqToSetMode_StartMsg();
 
+			static bool IsNeedToInterrupt();
+			static EngineState GetCurrentEngState();
+			static EngineState GetNextEngState();
+
+		 private:
+			 EngineStateHandler EngStateHandler;
+			 EngineMode* CurrMode;
+
+			 static void RequestToChangeState(EngineState state);
+
+			 static void SetMode_MainMenu();
+			 static void SetMode_Game();
+			 static void SetMode_LevelDeser();
+			 static void SetMode_StartMsg();
+
+			 static void ResolveInterruption();
+			 static void ResetInterruption();
+
+			 static EngineMode* GetCurrentEngMode();
+
+			//
+
+		 public:
 			static void SetZoom(float zoom);
 			static void SetCameraPos(Vector2f pos);
 			static void MoveCamera(Vector2f movVal);
@@ -34,9 +62,6 @@ namespace KrostganEngine {
 			static RenderWindow& GetRenderWindow();
 			static float GetFrameDeltaTime();
 			static float GetFrameRenderTime();
-			static bool IsNeedToInterrupt();
-			static EngineState GetCurrentEngState();
-			static EngineState GetNextEngState();
 			static EngineRenderModule& GetRenderModule();
 			static EngineUpdateModule& GetUpdateModule();
 			static EngineLateUpdateModule& GetLateUpdModule();
@@ -62,8 +87,6 @@ namespace KrostganEngine {
 			void InitializeSystems();
 			void InitializeCursorManager();
 			static inline Engine* Singleton=nullptr;
-			EngineStateHandler EngStateHandler;
-			EngineMode* CurrMode;
 			EngineRenderModule& RenderModule;
 			EngineUpdateModule& UpdateModule;
 			EngineLateUpdateModule& LateUpdateModule;
@@ -84,15 +107,6 @@ namespace KrostganEngine {
 			float FrameRenderTime = 0;
 			float Zoom = 1;
 			bool IsFullscreen;
-
-			static void RequestToChangeState(EngineState state);
-			static void SetMode_MainMenu();
-			static void SetMode_Game();
-			static void SetMode_LevelDeser();
-			static void ResolveInterruption();
-			static void ResetInterruption();
-
-			static EngineMode* GetCurrentEngMode();
 			static View& InstanceNewView();
 
 			friend static void EngineUpdateModule::SetFrameDeltaTime(float time);
