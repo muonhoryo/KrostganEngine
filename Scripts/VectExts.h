@@ -2,6 +2,7 @@
 
 #include <SFML/System.hpp>
 #include <string>
+#include <Engine.h>
 
 using namespace sf;
 using namespace std;
@@ -55,6 +56,12 @@ namespace KrostganEngine {
 	static Vector2f Normalize(Vector2<T> vect) {
 		float len = Length(vect);
 		return Vector2f(vect.x / len, vect.y / len);
+	}
+
+	template <typename T>
+	static bool Equal(Vector2<T> first, Vector2<T> second) {
+
+		return SquareLength(second - first) <=eps;
 	}
 
 	//Global methods

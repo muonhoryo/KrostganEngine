@@ -29,7 +29,7 @@ void EntitiesCtrlInputMode::GiveOrderToSelected_MoveToPoint(Vector2f targetGloba
 	for (;begIt != endIt;) {
 		parEl = dynamic_cast<Entity*>(*begIt);
 		if (parEl != nullptr) {
-			parEl->TryAddOrder(new EntityOrder_MoveToPoint(*parEl, *parEl, targetGlobalPos), !isGrouped);
+			parEl->TryAddOrder(new EntityOrder_MoveToPoint(*parEl, *parEl, targetGlobalPos,parEl->GetCollider().GetBoundedCircle().Radius), !isGrouped);
 		}
 		++begIt;
 	}

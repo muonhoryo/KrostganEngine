@@ -141,3 +141,7 @@ bool CircleCollShape::IntersectSegment(const Segment& segm) const {
 	float dist = PhysicsEngine::DistanceToPoint(segm, Center);
 	return dist - Radius < eps;
 }
+
+CircleCollShape CircleCollShape::GetBoundedCircle()const {
+	return CircleCollShape(Center,Radius);
+}

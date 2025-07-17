@@ -17,6 +17,7 @@ void BypassVertex::AddWay(BypassWay& way) {
 		throw exception("The way doesn't contains target vertex");
 
 	Ways.push_back(&way);
+	sort(Ways.begin(), Ways.end(), [](BypassWay* first, BypassWay* second) {return first->Cost < second->Cost;});
 }
 BypassWay& BypassVertex::GenerateWay(BypassVertex& secondPnt) {
 

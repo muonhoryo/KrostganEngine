@@ -19,6 +19,12 @@ namespace KrostganEngine::EntitiesControl {
 		TransformableObj& OwnerTransform;
 
 		bool GetCantMoveState() const{
+			if (CantMove) {
+				return true;
+			}
+			else {
+				return false;
+			}
 			return CantMove;
 		}
 

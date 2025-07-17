@@ -10,13 +10,20 @@ using namespace KrostganEngine;
 using namespace KrostganEngine::GameObjects;
 using namespace KrostganEngine::EntitiesControl;
 
-EntityOrder_MoveToPoint::EntityOrder_MoveToPoint(OrdersExecutor& Owner, TransformableObj& OwnerTransform,Vector2f TargetGlobalCoord) : EntityOrder_GlobalPosTarget(TargetGlobalCoord),
-	Owner(Owner),
-	OwnerTransform(OwnerTransform){
+EntityOrder_MoveToPoint::EntityOrder_MoveToPoint
+		(OrdersExecutor& Owner, 
+		TransformableObj& OwnerTransform,
+		Vector2f TargetGlobalCoord,
+		float ToTargetMinDistance)
+	:EntityOrder_GlobalPosTarget(TargetGlobalCoord),
+	Owner				(Owner),
+	OwnerTransform		(OwnerTransform),
+	ToTargetMinDistance	(ToTargetMinDistance){
+
 }
 
 bool EntityOrder_MoveToPoint::CheckExecCondition() {
-	float dist = Length(TargetGlobalPos - OwnerTransform.GetPosition());
+	float dist = Length(TargetGlobalPos - OwnerTransform.GetPosition())-ToTargetMinDistance;
 	return dist <= eps;
 }
 list <IEntityAction*>* EntityOrder_MoveToPoint::GetActions() {

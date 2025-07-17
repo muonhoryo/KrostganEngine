@@ -7,6 +7,14 @@ using namespace std;
 
 namespace KrostganEngine {
 	struct CollectionsExts {
+		/// <summary>
+		/// Return string::npos if list hasn't value
+		/// </summary>
+		/// <typeparam name="TCollectionsType"></typeparam>
+		/// <typeparam name="TElementsType"></typeparam>
+		/// <param name="list"></param>
+		/// <param name="value"></param>
+		/// <returns></returns>
 		template <typename TCollectionsType,typename TElementsType>
 		static size_t IndexOf(const TCollectionsType& list,TElementsType const& value) {
 			size_t i = 0;

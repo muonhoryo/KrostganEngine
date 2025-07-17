@@ -24,6 +24,8 @@ namespace KrostganEngine::Physics {
 		virtual bool IntersectRay(const Ray& ray, Vector2f* interPnt,bool selFarthest=false) const = 0;
 		virtual bool IntersectSegment(const Segment& segm) const = 0;
 
+		virtual CircleCollShape GetBoundedCircle()const = 0;
+
 		static bool Intersect_CircleVsCircle(const CircleCollShape& coll1, const CircleCollShape& coll2);
 		static bool Intersect_CircleVsAABB(const CircleCollShape& coll1, const AABBCollShape& coll2);
 		static bool Intersect_AABBvsAABB(const AABBCollShape& coll1,const AABBCollShape& coll2);
@@ -51,6 +53,8 @@ namespace KrostganEngine::Physics {
 		bool IntersectRay(const Ray& ray, Vector2f* interPnt, bool selFarthest=false) const override;
 		bool IntersectSegment(const Segment& segm) const override;
 
+		CircleCollShape GetBoundedCircle()const override;
+
 		Vector2f GetCenter() const;
 		Vector2f GetCornerByMask(size_t mask) const;
 		Vector2f GetSize() const;
@@ -73,6 +77,8 @@ namespace KrostganEngine::Physics {
 		Vector2f GetClosestPoint(Vector2f point)const override;
 		bool IntersectRay(const Ray& ray, Vector2f* interPnt, bool selFarthest=false) const override;
 		bool IntersectSegment(const Segment& segm) const override;
+
+		CircleCollShape GetBoundedCircle()const override;
 	};
 
 	struct EmptyShape :ColliderShape {
@@ -106,6 +112,11 @@ namespace KrostganEngine::Physics {
 		bool IntersectSegment(const Segment& segm) const override {
 			return false;
 		}
+
+		CircleCollShape GetBoundedCircle()const override {
+			return CircleCollShape(Vector2f(0,0), 0);
+		}
+
 		EmptyShape() : ColliderShape() {
 
 		}

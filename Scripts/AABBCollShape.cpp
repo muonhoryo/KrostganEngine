@@ -249,6 +249,12 @@ bool AABBCollShape::IntersectSegment(const Segment& segm) const {
 	return false;
 }
 
+CircleCollShape AABBCollShape::GetBoundedCircle()const {
+	Vector2f size = GetSize();
+	size *= 0.5f;
+	return CircleCollShape(GetCenter(), Length(size));
+}
+
 Vector2f AABBCollShape::GetCenter() const {
 	return Vector2f((Min.x + Max.x) * 0.5f, (Min.y + Max.y) * 0.5f);
 }
