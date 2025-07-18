@@ -16,9 +16,6 @@
     <Filter Include="Исходные файлы\CoreSystems">
       <UniqueIdentifier>{06d82c06-98eb-47ad-9190-5cf44f374fa2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Исходные файлы\CoreSystems\EngineWorkCycles">
-      <UniqueIdentifier>{e568dd13-d1ac-4e7f-8dc0-bd77e82e34f2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Исходные файлы\Extensions">
       <UniqueIdentifier>{e37f1323-c92c-46e1-b9ad-4b64b96afbfe}</UniqueIdentifier>
     </Filter>
@@ -33,9 +30,6 @@
     </Filter>
     <Filter Include="Файлы заголовков\Extensions">
       <UniqueIdentifier>{98ff38d7-5a64-4ed6-a9d7-d2eda6514b93}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Исходные файлы\CoreSystems\EngineModes">
-      <UniqueIdentifier>{eb68c48d-28a9-4f99-955e-6f7a334eff33}</UniqueIdentifier>
     </Filter>
     <Filter Include="Файлы заголовков\Debug">
       <UniqueIdentifier>{a5b74747-94ad-4a78-ad6c-11c1e41de456}</UniqueIdentifier>
@@ -238,6 +232,12 @@
     <Filter Include="Исходные файлы\CoreSystems\Engine">
       <UniqueIdentifier>{735b060d-d78c-4eb6-a64a-ecf70c12a078}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Исходные файлы\CoreSystems\Engine\EngineModes">
+      <UniqueIdentifier>{eb68c48d-28a9-4f99-955e-6f7a334eff33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\CoreSystems\Engine\EngineWorkCycles">
+      <UniqueIdentifier>{e568dd13-d1ac-4e7f-8dc0-bd77e82e34f2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\main.cpp">
@@ -247,7 +247,7 @@
       <Filter>Исходные файлы\CoreSystems</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\EngineRenderModule.cpp">
-      <Filter>Исходные файлы\CoreSystems\EngineWorkCycles</Filter>
+      <Filter>Исходные файлы\CoreSystems\Engine\EngineWorkCycles</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\LevelLoader.cpp">
       <Filter>Исходные файлы\CoreSystems\GameLevel\LevelLoading</Filter>
@@ -262,16 +262,16 @@
       <Filter>Исходные файлы\CoreSystems\GameObjects</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\EngineUpdateModule.cpp">
-      <Filter>Исходные файлы\CoreSystems\EngineWorkCycles</Filter>
+      <Filter>Исходные файлы\CoreSystems\Engine\EngineWorkCycles</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\GameMode.cpp">
-      <Filter>Исходные файлы\CoreSystems\EngineModes</Filter>
+      <Filter>Исходные файлы\CoreSystems\Engine\EngineModes</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\MainMenuMode.cpp">
-      <Filter>Исходные файлы\CoreSystems\EngineModes</Filter>
+      <Filter>Исходные файлы\CoreSystems\Engine\EngineModes</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\LevelDeserializationMode.cpp">
-      <Filter>Исходные файлы\CoreSystems\EngineModes</Filter>
+      <Filter>Исходные файлы\CoreSystems\Engine\EngineModes</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\CallbackRecArgs_Upd.cpp">
       <Filter>Исходные файлы\CoreSystems\EngineCallbacks</Filter>
@@ -451,7 +451,7 @@
       <Filter>Исходные файлы\CoreSystems\PlayerControl</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\EngineLateUpdateModule.cpp">
-      <Filter>Исходные файлы\CoreSystems\EngineWorkCycles</Filter>
+      <Filter>Исходные файлы\CoreSystems\Engine\EngineWorkCycles</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\ICallbackRec_LUpd.cpp">
       <Filter>Исходные файлы\CoreSystems\EngineCallbacks</Filter>
@@ -522,12 +522,6 @@
     <ClCompile Include="Scripts\WinScript.cpp">
       <Filter>Исходные файлы\GameTransitionScripts</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\StartMessageMode.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\TextBlockcpp.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="Scripts\Engine.cpp">
       <Filter>Исходные файлы\CoreSystems\Engine</Filter>
     </ClCompile>
@@ -536,6 +530,12 @@
     </ClCompile>
     <ClCompile Include="Scripts\PlayerInputManager.cpp">
       <Filter>Исходные файлы\CoreSystems\PlayerControl</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\StartMessageMode.cpp">
+      <Filter>Исходные файлы\CoreSystems\Engine\EngineModes</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\TextBlock.cpp">
+      <Filter>Исходные файлы\UI/UX</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

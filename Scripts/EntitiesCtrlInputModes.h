@@ -14,6 +14,9 @@ namespace KrostganEngine::PlayerControl {
 		EntCtrlMode_Base(EntitiesCtrlInputHandler& Owner);
 
 		void HandleInput(CallbackRecArgs_Upd& args) override;
+
+	private:
+		static bool AbleToGiveOrders();
 	};
 
 	class EntCtrlMode_AttackOrder :public EntitiesCtrlInputMode {

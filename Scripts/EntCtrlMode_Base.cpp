@@ -2,6 +2,7 @@
 #include <EntitiesCtrlInputModes.h>
 #include <iostream>
 #include <GroupSelectionSystem.h>
+#include <DivineCommander.h>
 
 #include <Engine.h>
 
@@ -10,19 +11,32 @@ using namespace std;
 using namespace KrostganEngine;
 using namespace KrostganEngine::PlayerControl;
 using namespace KrostganEngine::EntitiesControl;
+using namespace KrostganEngine::Debug;
 
 EntCtrlMode_Base::EntCtrlMode_Base(EntitiesCtrlInputHandler& Owner)
 	:EntitiesCtrlInputMode(Owner){
 	cout << "Turn input handling mode to Base"<<endl;
 }
 
+bool EntCtrlMode_Base::AbleToGiveOrders() {
+	return DivineCommander::GetActivity() ||
+		GroupSelectionSystem::GetToPlayertRelOfSelEntities() == Relation::Ally;
+}
+
 void EntCtrlMode_Base::HandleInput(CallbackRecArgs_Upd& args) {
+
 	for (auto& input : args.PlayerInput) {
 		if (Owner.HandleShiftInput(input))
 			continue;
 
 		if (input.type == Event::MouseButtonPressed) {
+
+			//Attack, follow or move
 			if (input.key.code == Mouse::Right) {
+
+				if (!AbleToGiveOrders())
+					continue;
+
 				IAttackableObj* target=nullptr;
 				Vector2f pos = GetPosByCursor();
 				if (TryGetTargetByTypeAtPos(pos, target)) {
@@ -37,39 +51,48 @@ void EntCtrlMode_Base::HandleInput(CallbackRecArgs_Upd& args) {
 					GiveOrderToSelected_MoveToPoint(pos, Owner.GetShiftPresState());
 				}
 			}
+			
+			//Select units
 			else if(input.mouseButton.button == Mouse::Button::Left) {
+
 				Vector2f mousePos= Vector2f((float)input.mouseButton.x, (float)input.mouseButton.y);
 				Owner.SetNewMode(*new EntCtrlMode_GroupSelect(Owner,mousePos));
 				return;
 			}
 		}
-		else if (input.type == Event::KeyPressed) {
-			
-			switch (input.key.code)
-			{
-			case Keyboard::A:
-			{
-				Owner.SetNewMode(*new EntCtrlMode_AttackOrder(Owner));
-				cout << "Handle target of attack order" << endl;
-				return;
-			}
-			case Keyboard::I:
-			{
-				GiveOrderToSelected_Idle(Owner.GetShiftPresState());
-				break;
-			}
-			case Keyboard::C:
-			{
-				GiveOrderToSelected_Cancel();
-				break;
-			}
-			case Keyboard::H:
-			{
-				GiveOrderToSelected_HoldPosition(Owner.GetShiftPresState());
-				break;
-			}
-			default:
-				break;
+		else {	//Give order
+
+			if (!AbleToGiveOrders())
+				continue;
+
+			if (input.type == Event::KeyPressed) {
+
+				switch (input.key.code)
+				{
+				case Keyboard::A:
+				{
+					Owner.SetNewMode(*new EntCtrlMode_AttackOrder(Owner));
+					cout << "Handle target of attack order" << endl;
+					return;
+				}
+				case Keyboard::I:
+				{
+					GiveOrderToSelected_Idle(Owner.GetShiftPresState());
+					break;
+				}
+				case Keyboard::C:
+				{
+					GiveOrderToSelected_Cancel();
+					break;
+				}
+				case Keyboard::H:
+				{
+					GiveOrderToSelected_HoldPosition(Owner.GetShiftPresState());
+					break;
+				}
+				default:
+					break;
+				}
 			}
 		}
 	}

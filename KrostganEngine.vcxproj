@@ -169,7 +169,7 @@
     <ClCompile Include="Scripts\OutlineLineVisual.cpp" />
     <ClCompile Include="Scripts\PlayerInputManager.cpp" />
     <ClCompile Include="Scripts\StartMessageMode.cpp" />
-    <ClCompile Include="Scripts\TextBlockcpp.cpp" />
+    <ClCompile Include="Scripts\TextBlock.cpp" />
     <ClCompile Include="Scripts\UnitColliderVisualizer.cpp" />
     <ClCompile Include="Scripts\ConsoleCommsInterpretator.cpp" />
     <ClCompile Include="Scripts\CursorManager.cpp" />
