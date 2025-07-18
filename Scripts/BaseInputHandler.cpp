@@ -3,6 +3,7 @@
 #include <ConsoleCommsInterpretator.h>
 #include <EngineCore.h>
 #include <Extensions.h>
+#include <PlayerInputManager.h>
 
 using namespace KrostganEngine;
 using namespace KrostganEngine::PlayerControl;
@@ -11,6 +12,7 @@ using namespace KrostganEngine::Core;
 
 
 BaseInputHandler::BaseInputHandler() {
+
 }
 void BaseInputHandler::Update(CallbackRecArgs_Upd args) {
 
@@ -29,7 +31,11 @@ void BaseInputHandler::Update(CallbackRecArgs_Upd args) {
 					ConsoleCommsInterpretator::ExecuteCommand(input);
 				Engine::GetRenderWindow().requestFocus();
 			}
-			else if (input.key.code == Keyboard::Escape) {
+			else if (input.key.code == Keyboard::F3){
+
+				//if (PlayerInputManager::GetBtnState_Escape()) {
+				//	continue;
+				//}
 
 				Engine::GetRenderWindow().close();
 				exit(0);

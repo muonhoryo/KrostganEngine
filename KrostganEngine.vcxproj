@@ -167,6 +167,7 @@
     <ClCompile Include="Scripts\ObjectsCatalog.cpp" />
     <ClCompile Include="Scripts\LevelCellMapDeser.cpp" />
     <ClCompile Include="Scripts\OutlineLineVisual.cpp" />
+    <ClCompile Include="Scripts\PlayerInputManager.cpp" />
     <ClCompile Include="Scripts\StartMessageMode.cpp" />
     <ClCompile Include="Scripts\TextBlockcpp.cpp" />
     <ClCompile Include="Scripts\UnitColliderVisualizer.cpp" />
@@ -269,6 +270,7 @@
     <ClInclude Include="Scripts\ObjectsCatalog.h" />
     <ClInclude Include="Scripts\PathFinding_Diijkstra.h" />
     <ClInclude Include="Scripts\PhysicsStructs.h" />
+    <ClInclude Include="Scripts\PlayerInputManager.h" />
     <ClInclude Include="Scripts\TextBlock.h" />
     <ClInclude Include="Scripts\UIUXVisual.h" />
     <ClInclude Include="Scripts\UnitColliderVisualizer.h" />

@@ -31,6 +31,7 @@ const GlobalConsts& GlobalConstsLoad::LoadGlobalConsts() {
 	LoadedGlobalConsts.LoseMsg_ShowingTime = DeserializeValueByDefinition(GlobalConsts::DEF_LOSEMESSAG_SHOWING_TIME, &line);
 	LoadedGlobalConsts.LoseMsg_TransitTime = DeserializeValueByDefinition(GlobalConsts::DEF_LOSEMESSAG_TRANSIT_TIME, &line);
 	LoadedGlobalConsts.Units_MovingAbilityCheckTick = DeserializeValueByDefinition(GlobalConsts::DEF_UNITS_MOVING_ABILITY_CHECK_TICK, &line);
+	LoadedGlobalConsts.EscapeBtn_PressDelay = DeserializeValueByDefinition(GlobalConsts::DEF_ESCAPE_BTN_PRESS_DELAY, &line);
 
 	StrValuesArr.clear();
 	return LoadedGlobalConsts;

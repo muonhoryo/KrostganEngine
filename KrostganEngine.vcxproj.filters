@@ -534,6 +534,9 @@
     <ClCompile Include="Scripts\Engine_ModeSelection.cpp">
       <Filter>Исходные файлы\CoreSystems\Engine</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\PlayerInputManager.cpp">
+      <Filter>Исходные файлы\CoreSystems\PlayerControl</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\CoreGameObjects.h">
@@ -895,6 +898,9 @@
     </ClInclude>
     <ClInclude Include="Scripts\WinScript.h">
       <Filter>Файлы заголовков\GameTransitionScripts</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\PlayerInputManager.h">
+      <Filter>Файлы заголовков\CoreSystems\PlayerControl</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

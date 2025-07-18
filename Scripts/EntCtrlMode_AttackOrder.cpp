@@ -12,9 +12,11 @@ EntCtrlMode_AttackOrder::EntCtrlMode_AttackOrder(EntitiesCtrlInputHandler& Owner
 
 	Engine::GetCursorManager().SetAttackOrderSprite();
 	cout << "Turn input handling mode to Attack order" << endl;
+	PlayerInputManager::SetBtnState_Escape(true);
 }
 EntCtrlMode_AttackOrder::~EntCtrlMode_AttackOrder() {
 	Engine::GetCursorManager().SetDefaultSprite();
+	PlayerInputManager::SetBtnState_Escape(false);
 }
 
 void EntCtrlMode_AttackOrder::HandleInput(CallbackRecArgs_Upd& args) {
@@ -31,6 +33,12 @@ void EntCtrlMode_AttackOrder::HandleInput(CallbackRecArgs_Upd& args) {
 					GiveOrderToSelected_AttackArea(pos, Owner.GetShiftPresState());
 				}
 			}
+			Owner.SetNewMode(*new EntCtrlMode_Base(Owner));
+			return;
+		}
+		else if (input.type == Event::KeyPressed &&
+			(input.key.code==Keyboard::Escape||input.key.code==Keyboard::A)) {
+
 			Owner.SetNewMode(*new EntCtrlMode_Base(Owner));
 			return;
 		}
