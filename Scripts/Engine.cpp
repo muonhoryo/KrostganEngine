@@ -13,6 +13,7 @@ using namespace KrostganEngine::Debug;
 using namespace KrostganEngine::Core;
 using namespace KrostganEngine::Physics;
 
+const std::string Engine::ENGINE_VERSION = "A0.2.4.0";
 
 Engine::Engine()
 	:RenderModule(*new EngineRenderModule(RendWin)),
@@ -119,9 +120,6 @@ View& Engine::InstanceNewView() {
 	View& view = *new View(Singleton->RendWin.getView());
 	return view;
 }
-
-const std::string Engine::ENGINE_VERSION = "A0.2.3.0";
-
 
 RenderWindow& Engine::GetRenderWindow() {
 	return Engine::Singleton->RendWin;

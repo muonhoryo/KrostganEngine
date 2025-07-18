@@ -1,6 +1,7 @@
 #pragma once
 
 #include <forward_list>
+#include <vector>
 
 using namespace std;
 
@@ -46,7 +47,20 @@ namespace KrostganEngine {
 		EventHandler(ExecutedEvent<TArguments>& Owner):Owner(Owner) {
 		}
 		void Execute(const TArguments& args) {
-			for (IEventSubscriber<TArguments>* sub : Owner.Subscribers)
+
+			typename forward_list< IEventSubscriber<TArguments>*>::iterator it = Owner.Subscribers.begin();
+			typename forward_list< IEventSubscriber<TArguments>*>::iterator end = Owner.Subscribers.end();
+			int size = distance(it,end);
+			vector<IEventSubscriber<TArguments>*> subscrs = vector<IEventSubscriber<TArguments>*>(size);
+
+			for (int i = 0;it != end;) {
+
+				subscrs[i] = *it;
+				++i;
+				++it;
+			}
+
+			for (IEventSubscriber<TArguments>* sub : subscrs)
 			{
 				sub->Execute(args);
 			}

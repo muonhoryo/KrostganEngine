@@ -6,11 +6,13 @@
 #include <Events.h>
 #include <LevelLoadingInfo.h>
 #include <ICallbackRec_GraphRen.h>
+#include <iostream>
 
 using namespace std;
 using namespace KrostganEngine::GameObjects;
 
 namespace KrostganEngine::Core {
+
 	struct UnitsLoadEventArgs {
 		UnitsLoadEventArgs(forward_list<UnitObject*>* LoadedUnits)
 			:LoadedUnits(LoadedUnits){

@@ -45,7 +45,22 @@ namespace KrostganEngine {
 		void Execute()  {
 			for (INoArgsEventSubscriber* sub : Owner.Subscribers)
 			{
-				sub->Execute();
+				typename forward_list< INoArgsEventSubscriber*>::iterator it = Owner.Subscribers.begin();
+				typename forward_list< INoArgsEventSubscriber*>::iterator end = Owner.Subscribers.end();
+				int size = distance(it, end);
+				vector<INoArgsEventSubscriber*> subscrs = vector<INoArgsEventSubscriber*>(size);
+
+				for (int i = 0;it != end;) {
+
+					subscrs[i] = *it;
+					++i;
+					++it;
+				}
+
+				for (INoArgsEventSubscriber* sub : subscrs)
+				{
+					sub->Execute();
+				}
 			}
 		}
 	};
