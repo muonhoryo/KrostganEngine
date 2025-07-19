@@ -1,11 +1,12 @@
 #pragma once
 
 #include <SFML/System.hpp>
+#include <watch_ptr.h>
 
 using namespace sf;
 
 namespace KrostganEngine::GameObjects {
-	class TransformableObj{
+	class TransformableObj : public virtual w_ptr_observable{
 	public:
 		~TransformableObj(){}
 

@@ -4,9 +4,11 @@
 #include <ColliderShapes.h>
 #include <TransformableObj.h>
 #include <vector>
+#include <watch_ptr.h>
 
 using namespace std;
 using namespace KrostganEngine::GameObjects;
+using namespace KrostganEngine;
 
 namespace KrostganEngine::Physics {
 	class IPhysicalObject: public virtual TransformableObj

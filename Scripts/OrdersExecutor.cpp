@@ -52,8 +52,12 @@ bool OrdersExecutor::TryAddOrder(IEntityOrder* order, bool clearOrdQueue) {
 		EntityOrder_ObjectTarget* parOrd = dynamic_cast<EntityOrder_ObjectTarget*>(order);
 		if (parOrd != nullptr &&
 			!parOrd->CanTargetItself()) {			//Order's target is object, but it cannot be executor
-			const OrdersExecutor* ordTar =dynamic_cast<const OrdersExecutor*>( & parOrd->GetTarget());
+
+			const TransformableObj* tar = parOrd->GetTarget();
+			const OrdersExecutor* ordTar =dynamic_cast<const OrdersExecutor*>(tar);
 			if (ordTar == this) {		//Order's target is executor
+
+				delete order;
 				return false;
 			}
 		}
@@ -66,6 +70,7 @@ bool OrdersExecutor::TryAddOrder(IEntityOrder* order, bool clearOrdQueue) {
 		GetOrderEventHandler.Execute(order);
 		return true;
 	}
+	delete order;
 	return false;
 }
 void OrdersExecutor::ResetOrdersQueue() {

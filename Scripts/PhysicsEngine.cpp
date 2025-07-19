@@ -47,7 +47,12 @@ vector<IPhysicalObject*> PhysicsEngine::RayCast_All(const Segment& segm, Physics
 	if (diffX<eps || diffX>-eps ||
 		diffY<eps || diffY>-eps) {
 
-		for (IPhysicalObject* tar : Callbacks) {
+
+		for (auto tar : Callbacks) {
+
+			if (tar == nullptr)
+				continue;
+			
 			if (((int)tar->GetLayer() & (int)layer) != 0)
 				result.push_back(tar);
 		}
@@ -64,8 +69,14 @@ vector<IPhysicalObject*> PhysicsEngine::RayCast_All(const Segment& segm, Physics
 }
 
 IPhysicalObject* PhysicsEngine::PointCast(Vector2f globalPos, PhysicsLayer layer) {
+	
 	size_t layerCast;
+
 	for (auto obj : Callbacks) {
+
+		if (obj == nullptr)
+			continue;
+
 		layerCast = (size_t)obj->GetLayer() & (size_t)layer;
 		if (layerCast!=0 && obj->GetCollider().IsPointInCollider(globalPos))
 			return obj;
@@ -81,7 +92,11 @@ bool PhysicsEngine::RayHit(Segment segm, PhysicsLayer layer) {
 	if (diffX<eps || diffX>-eps ||
 		diffY<eps || diffY>-eps) {
 
-		for (IPhysicalObject* tar : Callbacks) {
+		for (auto tar : Callbacks) {
+
+			if (tar == nullptr)
+				continue;
+
 			maskCastRes = ((int)tar->GetLayer()) & ((int)layer);
 			if (maskCastRes != 0 && tar->GetCollider().IntersectSegment(segm)) {
 

@@ -22,14 +22,14 @@ void EngineRenderModule::Execute() {
 		if (rec == nullptr)
 			continue;
 
-		(*rec).RenderGraphic(Window);
+		rec->RenderGraphic(Window);
 	}
 	for (auto rec : EngineCallbackHandler<ICallbackRec_GraphPostRen>::Callbacks) {
 
 		if (rec == nullptr)
 			continue;
 
-		(*rec).RenderGraphic(Window);
+		rec->RenderGraphic(Window);
 	}
 	EngineCallbackHandler<ICallbackRec_GraphRen>::IsIteratingCallbacks = false;
 	EngineCallbackHandler<ICallbackRec_GraphPostRen>::IsIteratingCallbacks = false;

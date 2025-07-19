@@ -9,7 +9,7 @@ namespace KrostganEngine::GameObjects {
 	public:
 		EntityBaseAAModule(EntityBattleStats& BattleStats,TransformableObj& Owner);
 
-		void SetAsTarget(IAttackableObj* target) override;
+		void SetAsTarget(watch_ptr_handler_wr<IAttackableObj>* target) override;
 		bool CheckTargetReach() override;
 		bool CheckTargetReach(const IAttackableObj& potentTarget) override;
 		bool TryDealDamageToTarget() override;

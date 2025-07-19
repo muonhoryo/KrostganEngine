@@ -105,7 +105,7 @@ namespace KrostganEngine::Core {
 					}
 
 					//Check way
-					if (next_par->IsOut)
+					if (next_par==nullptr || next_par->IsOut)
 						continue;
 					endPntIndex = CollectionsExts::IndexOf(endPnts, next_par);
 					isEndPntNext = endPntIndex != string::npos;

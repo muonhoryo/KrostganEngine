@@ -10,19 +10,22 @@ using namespace KrostganEngine;
 using namespace KrostganEngine::GameObjects;
 using namespace KrostganEngine::EntitiesControl;
 
-EntityAction_AutoAttack::EntityAction_AutoAttack(OrdersExecutor& Owner, IAttackableObj& Target)
+EntityAction_AutoAttack::EntityAction_AutoAttack(OrdersExecutor& Owner, watch_ptr_handler_wr<IAttackableObj> Target)
 	:IEntityAction(),
 	Owner(Owner),
 	Target(Target),
-	TargetHPModule(Target.GetHPModule()),
+	TargetHPModule(Target.GetPtr_t()->GetHPModule()),
 	AAModule(Owner.GetAAModule())
 {}
 
 bool EntityAction_AutoAttack::CheckExecCondition() {
-	if (TargetHPModule.DeathModule.GetIsDeadState())
+
+	IAttackableObj* ptr = Target.GetPtr_t();
+	if (ptr == nullptr || TargetHPModule.DeathModule.GetIsDeadState())
 		return true;
 	return !AAModule.CheckTargetReach();
 }
 void EntityAction_AutoAttack::Execute() {
-	AAModule.TryDealDamageToTarget();
+	if(Target.GetPtr_t()!=nullptr)
+		AAModule.TryDealDamageToTarget();
 }

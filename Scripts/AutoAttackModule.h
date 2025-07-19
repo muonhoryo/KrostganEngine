@@ -12,7 +12,7 @@ namespace KrostganEngine::GameObjects {
 	public:
 		virtual ~AutoAttackModule();
 
-		virtual void SetAsTarget(IAttackableObj* target) = 0;
+		virtual void SetAsTarget(watch_ptr_handler_wr<IAttackableObj>* target) = 0;
 		/// <summary>
 		/// Return true if attacked target is in attack range.
 		/// </summary>
@@ -34,7 +34,7 @@ namespace KrostganEngine::GameObjects {
 	protected:
 		AutoAttackModule(AutoAttackAnimation& AAAnimation);
 
-		IAttackableObj* Target;
+		watch_ptr_handler_wr<IAttackableObj>* Target;
 		/// <summary>
 		/// In milliseconds
 		/// </summary>

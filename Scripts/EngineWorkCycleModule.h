@@ -12,7 +12,7 @@
 
 using namespace sf;
 using namespace std;
-using namespace KrostganEngine::Core;
+using namespace KrostganEngine;
 
 namespace KrostganEngine::Core {
 	class EngineWorkCycleModule {
@@ -50,11 +50,9 @@ namespace KrostganEngine::Core {
 				for (;it != end;--it) {
 					if (*it != nullptr) {
 
-						delete* it;
 						*it = nullptr;
 					}
 				}
-				delete* it;
 				*it = nullptr;
 				Callbacks.clear();
 
@@ -70,7 +68,7 @@ namespace KrostganEngine::Core {
 			bool isFound = false;
 			auto itToD = Callbacks.begin();
 			size_t offset = 0;
-			if (elRef == &callbckToDel) {
+			if (elRef==&callbckToDel) {
 
 				isFound = true;
 			}
@@ -79,7 +77,7 @@ namespace KrostganEngine::Core {
 				++itToD;
 				for (; itToD != Callbacks.end(); ++itToD) {
 					elRef = *itToD;
-					if (elRef == &callbckToDel) {
+					if (elRef==&callbckToDel) {
 						isFound = true;
 						break;
 					}
@@ -103,6 +101,11 @@ namespace KrostganEngine::Core {
 				}
 			}
 		};
+		/// <summary>
+		/// Return reference to watch_ptr_wr with added pointer of callbck
+		/// </summary>
+		/// <param name="callbck"></param>
+		/// <returns></returns>
 		void Add(TCallback& callbck) {
 
 			Callbacks.push_front(&callbck);

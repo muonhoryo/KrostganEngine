@@ -3,14 +3,20 @@
 #include <SFML/System.hpp>
 #include <OrdersExecutor.h>
 #include <EntityOrder_ObjectTarget.h>
+#include <watch_ptr.h>
 
 using namespace sf;
 using namespace KrostganEngine::GameObjects;
+using namespace KrostganEngine;
 
 namespace KrostganEngine::EntitiesControl {
 	class EntityOrder_FollowTarget :public IEntityOrder, public EntityOrder_ObjectTarget {
 	public:
-		EntityOrder_FollowTarget(OrdersExecutor& Owner, TransformableObj& OwnerTransform, TransformableObj& Target);
+		EntityOrder_FollowTarget
+			(OrdersExecutor&							Owner, 
+			TransformableObj&							OwnerTransform, 
+			watch_ptr_handler_wr_c<TransformableObj>	Target);
+		~EntityOrder_FollowTarget();
 
 		bool CheckExecCondition() override;
 		list<IEntityAction*>* GetActions() override;
@@ -18,11 +24,11 @@ namespace KrostganEngine::EntitiesControl {
 		void OnEndExecution() override;
 		EntityOrderType GetOrderType() override;
 
-		const TransformableObj& GetTarget() const override;
+		const TransformableObj* GetTarget() const override;
 
 		OrdersExecutor& Owner;
 		TransformableObj& OwnerTransform;
-		TransformableObj& Target;
+		watch_ptr_handler_wr_c<TransformableObj> Target;
 		Clock FollRepeatTimer;
 		bool FirstExec = true;
 	};

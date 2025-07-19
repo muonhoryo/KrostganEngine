@@ -14,6 +14,7 @@
 #include <Events.h>
 #include <RelationsSystem.h>
 #include <OrdersExecutor.h>
+#include <CallbackDelegates.h>
 
 using namespace sf;
 using namespace std;
@@ -105,5 +106,17 @@ namespace KrostganEngine::GameObjects {
 
 	protected:
 		Entity& ParOwner;
+
+		class DelayedDeath final: public CallbackDelegate_Upd {
+		public:
+			DelayedDeath(Entity& Owner):CallbackDelegate_Upd(),
+				Owner(Owner){}
+
+			void Execute(CallbackRecArgs_Upd args) override {
+				delete& Owner;
+			}
+		private:
+			Entity& Owner;
+		};
 	};
 }

@@ -105,7 +105,7 @@ void OrderTargetsVisualizer::TryAddOrderInList(const IEntityOrder* order) {
 	}
 	const EntityOrder_ObjectTarget* tarOrd = dynamic_cast<const EntityOrder_ObjectTarget*>(order);
 	if (tarOrd != nullptr) {
-		AddPoint_Back(tarOrd->GetTarget());
+		AddPoint_Back(*tarOrd->GetTarget());
 	}
 }
 

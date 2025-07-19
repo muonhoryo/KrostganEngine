@@ -23,4 +23,6 @@ void EntityDeathModule::Death() {
 	ObjectDeathEventArgs& args = *new ObjectDeathEventArgs();
 	DeathEvHandler.Execute(args);
 	delete& args;
+
+	new DelayedDeath(ParOwner);
 }

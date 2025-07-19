@@ -21,8 +21,13 @@ EntityBaseAAModule::EntityBaseAAModule(EntityBattleStats& BattleStats,Transforma
 /// If target is nullptr, stops AAModule
 /// </summary>
 /// <param name="target"></param>
-void EntityBaseAAModule::SetAsTarget(IAttackableObj* target) {
-	if (target != nullptr) {
+void EntityBaseAAModule::SetAsTarget(watch_ptr_handler_wr<IAttackableObj>* target) {
+
+	if (Target != nullptr)
+		delete Target;
+
+	if (target != nullptr &&
+		target->GetPtr_t()!=nullptr) {
 
 		Target = target;
 	}
@@ -32,9 +37,13 @@ void EntityBaseAAModule::SetAsTarget(IAttackableObj* target) {
 	}
 }
 bool EntityBaseAAModule::CheckTargetReach() {
-	if (Target->GetHPModule().DeathModule.GetIsDeadState())
+
+	if (Target == nullptr)
 		return false;
-	return CheckTargetReach(*Target);
+	auto ptr = Target->GetPtr_t();
+	if(ptr==nullptr || ptr->GetHPModule().DeathModule.GetIsDeadState())
+		return false;
+	return CheckTargetReach(*ptr);
 }
 bool EntityBaseAAModule::CheckTargetReach(const IAttackableObj& potentTarget) {
 	Vector2f pos = Owner.GetPosition();
@@ -48,8 +57,8 @@ bool EntityBaseAAModule::TryDealDamageToTarget() {
 		if (RemReloadTime <= 0) {
 			size_t dealedDmg = BattleStats.GetAADamage();
 			float aaSpeed = BattleStats.GetAASpeed();
-			AutoAttackInfo attInfo = AutoAttackInfo(dealedDmg,*Target, aaSpeed);
-			Target->GetHPModule().TakeDamage(attInfo);
+			AutoAttackInfo attInfo = AutoAttackInfo(dealedDmg,watch_ptr_handler_wr<IAttackableObj>(*Target), aaSpeed);
+			Target->GetPtr_t()->GetHPModule().TakeDamage(attInfo);
 			if (BattleStats.GetAASpeed() == 0) {
 
 				RemReloadTime = FLT_MAX;

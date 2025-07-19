@@ -17,7 +17,7 @@ namespace KrostganEngine::UI {
 			Target(nullptr){
 
 		}
-		~LineAAAnimation(){}
+		~LineAAAnimation();
 
 		void OnDealDmg(AutoAttackInfo attInfo) override;
 
@@ -28,6 +28,6 @@ namespace KrostganEngine::UI {
 		float Cooldown=0;
 		Clock HidingTimer;
 		bool IsRender = false;
-		TransformableObj* Target;
+		watch_ptr_handler_wr<TransformableObj>* Target;
 	};
 }

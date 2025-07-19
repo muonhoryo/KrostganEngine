@@ -4,70 +4,65 @@
 #include <ICallbackRec_LUpd.h>
 #include <ICallbackRec_GraphRen.h>
 #include <ICallbackRec_GraphPostRen.h>
+#include <Events.h>
+
+using namespace KrostganEngine;
 
 namespace KrostganEngine::Core {
-	template <typename TArg>
+
 	class CallbackDelegate_Upd :public ICallbackRec_Upd {
+
 	public:
-		CallbackDelegate_Upd(void(*Delegate)(TArg a), TArg arg) :ICallbackRec_Upd(),
-			Delegate(Delegate), arg(arg){}
+		CallbackDelegate_Upd() :ICallbackRec_Upd(){}
 
 		void Update(CallbackRecArgs_Upd args) override {
-			Delegate(arg);
+			Execute(args);
 			delete this;
 		}
 
-	private:
-		void(*Delegate)(TArg a);
-
-		TArg arg;
+	protected:
+		virtual void Execute(CallbackRecArgs_Upd args) = 0;
 	};
-	template<typename TArg>
-	class CallbackDelegate_LUpd :  public ICallbackRec_LUpd {
+
+	class CallbackDelegate_LUpd :public ICallbackRec_LUpd {
+
 	public:
-		CallbackDelegate_LUpd(void(*Delegate)(TArg a), TArg arg) :ICallbackRec_LUpd(),
-			Delegate(Delegate), arg(arg) {}
+		CallbackDelegate_LUpd() :ICallbackRec_LUpd() {}
 
 		void Update(CallbackRecArgs_LUpd args) override {
-			Delegate(arg);
+			Execute(args);
 			delete this;
 		}
 
-	private:
-		void(*Delegate)(TArg a);
-
-		TArg arg;
+	protected:
+		virtual void Execute(CallbackRecArgs_LUpd args) = 0;
 	};
-	template <typename TArg>
-	class CallbackDelegate_GraphRen :  public ICallbackRec_GraphRen {
+
+	class CallbackDelegate_GraphRen :public ICallbackRec_GraphRen {
+
 	public:
-		CallbackDelegate_GraphRen(void(*Delegate)(TArg a), TArg arg) :ICallbackRec_GraphRen(),
-			Delegate(Delegate), arg(arg) {}
+		CallbackDelegate_GraphRen() :ICallbackRec_GraphRen() {}
 
 		void RenderGraphic(RenderWindow& window) override {
-			Delegate(arg);
+			Execute(window);
 			delete this;
 		}
 
-	private:
-		void(*Delegate)(TArg a);
-
-		TArg arg;
+	protected:
+		virtual void Execute(RenderWindow& window) = 0;
 	};
-	template <typename TArg>
+
 	class CallbackDelegate_GraphPostRen :public ICallbackRec_GraphPostRen {
+
 	public:
-		CallbackDelegate_GraphPostRen(void(*Delegate)(TArg a), TArg arg) :ICallbackRec_GraphPostRen(),
-			Delegate(Delegate), arg(arg) {}
+		CallbackDelegate_GraphPostRen() :ICallbackRec_GraphPostRen() {}
 
 		void RenderGraphic(RenderWindow& window) override {
-			Delegate(arg);
+			Execute(window);
 			delete this;
 		}
 
-	private:
-		void(*Delegate)(TArg a);
-
-		TArg arg;
+	protected:
+		virtual void Execute(RenderWindow& window) = 0;
 	};
 }

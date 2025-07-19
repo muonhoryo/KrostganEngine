@@ -43,10 +43,21 @@ void EntitiesCtrlInputMode::GiveOrderToSelected_FollowObject(TransformableObj& t
 	auto begIt = GroupSelectionSystem::GetEntitiesBegIter();
 	auto endIt = GroupSelectionSystem::GetEntitiesEndIter();
 	Entity* parEl;
+	watch_ptr_handler* wtch_ptr = nullptr;
+	EntityOrder_FollowTarget* ord = nullptr;
 	for (;begIt != endIt;) {
+
 		parEl = dynamic_cast<Entity*>(*begIt);
+
 		if (parEl != nullptr) {
-			parEl->TryAddOrder(new EntityOrder_FollowTarget(*parEl, *parEl, target), !isGrouped);
+
+			wtch_ptr = &target.GetPtr();
+			if (wtch_ptr == nullptr)
+				throw exception("Cant observe object with watch_ptr");
+
+			ord = new EntityOrder_FollowTarget(*parEl, *parEl, watch_ptr_handler_wr_c<TransformableObj>(*wtch_ptr));
+			parEl->TryAddOrder(ord, !isGrouped);
+			delete wtch_ptr;
 		}
 		++begIt;
 	}
@@ -60,10 +71,21 @@ void EntitiesCtrlInputMode::GiveOrderToSelected_AttackTarget(IAttackableObj& tar
 	auto begIt = GroupSelectionSystem::GetEntitiesBegIter();
 	auto endIt = GroupSelectionSystem::GetEntitiesEndIter();
 	Entity* parEl;
+	watch_ptr_handler* wtch_ptr = nullptr;
+	EntityOrder_AttackTarget* ord = nullptr;
 	for (;begIt != endIt;) {
+
 		parEl = dynamic_cast<Entity*>(*begIt);
+
 		if (parEl != nullptr) {
-			parEl->TryAddOrder(new EntityOrder_AttackTarget(*parEl, *parEl, target), !isGrouped);
+
+			wtch_ptr = &target.GetPtr();
+			if (wtch_ptr == nullptr)
+				throw exception("Cant observe object with watch_ptr");
+
+			ord = new EntityOrder_AttackTarget(*parEl, *parEl, watch_ptr_handler_wr<IAttackableObj>(*wtch_ptr));
+			parEl->TryAddOrder(ord, !isGrouped);
+			delete wtch_ptr;
 		}
 		++begIt;
 	}

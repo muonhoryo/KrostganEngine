@@ -13,7 +13,9 @@ void EngineLateUpdateModule::Execute() {
 
 	CallbackRecArgs_LUpd args = CallbackRecArgs_LUpd();
 	IsIteratingCallbacks = true;
+
 	for (auto scr : Callbacks) {
+
 		if (scr == nullptr)
 			continue;
 

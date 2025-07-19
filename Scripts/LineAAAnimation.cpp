@@ -5,15 +5,23 @@
 using namespace KrostganEngine::UI;
 using namespace KrostganEngine::GameObjects;
 
+LineAAAnimation::~LineAAAnimation() {
+
+	if (Target != nullptr)
+		delete Target;
+}
+
 void LineAAAnimation::OnDealDmg(AutoAttackInfo attInfo) {
 
 	IsRender = true;
 	Cooldown = EntityBattleStats::GetAACooldown(attInfo.AASpeed);
 	HidingTimer.restart();
 	LineRender.SetColor(Color::Red);
-	Target = &attInfo.Target;
+	Target = new watch_ptr_handler_wr<TransformableObj>(attInfo.Target);
 	LineRender.SetStart(Owner.GetPosition());
-	LineRender.SetEnd(Target->GetPosition());
+	auto ptr = Target->GetPtr_t();
+	if(ptr!=nullptr)
+		LineRender.SetEnd(ptr->GetPosition());
 }
 void LineAAAnimation::RenderGraphic(RenderWindow& window) {
 
@@ -22,7 +30,9 @@ void LineAAAnimation::RenderGraphic(RenderWindow& window) {
 		if (time < Cooldown) {
 
 			LineRender.SetStart(Owner.GetPosition());
-			LineRender.SetEnd(Target->GetPosition());
+			auto ptr = Target->GetPtr_t();
+			if(ptr!=nullptr)
+				LineRender.SetEnd(ptr->GetPosition());
 			float transparency = (Cooldown - time)/Cooldown;
 			Color clr = LineRender.GetEdgeColor();
 			clr = Color(clr.r, clr.g, clr.b, (Uint8)(transparency * 255));

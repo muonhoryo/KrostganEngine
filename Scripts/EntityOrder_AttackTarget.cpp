@@ -10,28 +10,41 @@ using namespace sf;
 using namespace KrostganEngine;
 using namespace KrostganEngine::GameObjects;
 using namespace KrostganEngine::EntitiesControl;
+using namespace KrostganEngine::Core;
 
-EntityOrder_AttackTarget::EntityOrder_AttackTarget(OrdersExecutor& Owner,TransformableObj& OwnerTransform, IAttackableObj& Target)
+EntityOrder_AttackTarget::EntityOrder_AttackTarget(OrdersExecutor& Owner,TransformableObj& OwnerTransform, 
+	watch_ptr_handler_wr<IAttackableObj> Target)
 	:IEntityOrder(),
 	Owner(Owner),
 	OwnerTransform(OwnerTransform),
 	Target(Target),
 	AAModule(Owner.GetAAModule())
 {}
+EntityOrder_AttackTarget::~EntityOrder_AttackTarget() {
+
+}
 
 bool EntityOrder_AttackTarget::CheckExecCondition() {
-	return Target.GetHPModule().DeathModule.GetIsDeadState();
+	
+	IAttackableObj* ptr = Target.GetPtr_t();
+	return ptr==nullptr || ptr->GetHPModule().DeathModule.GetIsDeadState();
 }
 list<IEntityAction*>* EntityOrder_AttackTarget::GetActions() {
+
+	IAttackableObj* ptr = Target.GetPtr_t();
+	if (ptr == nullptr)
+		return nullptr;
+
 	list<IEntityAction*>* lst = new list<IEntityAction*>();
 
-	if (Owner.GetAAModule().CheckTargetReach(Target)) {			//Target is in attack range of executor
+	if (Owner.GetAAModule().CheckTargetReach(*ptr)) {			//Target is in attack range of executor
 
-		lst->push_back((IEntityAction*)new EntityAction_AutoAttack(Owner, Target));
+		EntityAction_AutoAttack* act = new EntityAction_AutoAttack(Owner, watch_ptr_handler_wr<IAttackableObj>(Target));
+		lst->push_back((IEntityAction*)act);
 	}
 	else {									//Owner needs to follow target first
 
-		Segment ray(OwnerTransform.GetPosition(), Target.GetPosition());
+		Segment ray(OwnerTransform.GetPosition(), ptr->GetPosition());
 		if (Engine::GetPhysicsEngine().RayHit(ray,
 			(PhysicsLayer)((int)PhysicsLayer::Decorations | (int)PhysicsLayer::Buildings)))
 		{
@@ -48,8 +61,12 @@ list<IEntityAction*>* EntityOrder_AttackTarget::GetActions() {
 			}
 		}
 		float alloDist = Owner.GetBattleStats().GetAARadius();
-		lst->push_back((IEntityAction*)new EntityAction_FollowObject(Owner, OwnerTransform, Target, alloDist));
-		lst->push_back((IEntityAction*)new EntityAction_AutoAttack(Owner, Target));
+		EntityAction_FollowObject* folAct = new EntityAction_FollowObject(Owner, OwnerTransform, 
+			*new watch_ptr_handler_wr_c<TransformableObj>(Target),
+			alloDist);
+		EntityAction_AutoAttack* aaAct = new EntityAction_AutoAttack(Owner, watch_ptr_handler_wr<IAttackableObj>(Target));
+		lst->push_back((IEntityAction*)folAct);
+		lst->push_back((IEntityAction*)aaAct);
 	}
 
 	return lst;
@@ -57,7 +74,7 @@ list<IEntityAction*>* EntityOrder_AttackTarget::GetActions() {
 void EntityOrder_AttackTarget::OnStartExecution() 
 {
 	Owner.GetAutoAggrModule().TurnOff();
-	AAModule.SetAsTarget(&Target);
+	AAModule.SetAsTarget(new watch_ptr_handler_wr<IAttackableObj>(Target));
 }
 void EntityOrder_AttackTarget::OnEndExecution() 
 {
@@ -68,6 +85,6 @@ EntityOrderType EntityOrder_AttackTarget::GetOrderType() {
 	return EntityOrderType::AttackTarget;
 }
 
-const TransformableObj& EntityOrder_AttackTarget::GetTarget() const {
-	return Target;
+const TransformableObj* EntityOrder_AttackTarget::GetTarget() const {
+	return Target.GetPtr_t_c();
 }

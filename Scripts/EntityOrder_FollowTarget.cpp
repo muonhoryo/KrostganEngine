@@ -12,21 +12,30 @@ using namespace KrostganEngine;
 using namespace KrostganEngine::GameObjects;
 using namespace KrostganEngine::EntitiesControl;
 
-EntityOrder_FollowTarget::EntityOrder_FollowTarget(OrdersExecutor& Owner, TransformableObj& OwnerTransform, TransformableObj& Target)
+EntityOrder_FollowTarget::EntityOrder_FollowTarget
+	(OrdersExecutor&							Owner, 
+	TransformableObj&							OwnerTransform, 
+	watch_ptr_handler_wr_c<TransformableObj>	Target)
 	:IEntityOrder(),
-	Owner(Owner),
-	OwnerTransform(OwnerTransform),
-	Target(Target)
+	Owner			(Owner),
+	OwnerTransform	(OwnerTransform),
+	Target			(Target)
 {}
+EntityOrder_FollowTarget::~EntityOrder_FollowTarget() {
+}
 
 bool EntityOrder_FollowTarget::CheckExecCondition() {
-	return false;
+	return Target.GetPtr_t() == nullptr;
 }
 list<IEntityAction*>* EntityOrder_FollowTarget::GetActions() {
 
+	auto ptr = Target.GetPtr_t();
+	if (ptr == nullptr)
+		return nullptr;
+
 	list<IEntityAction*>* lst = new list<IEntityAction*>();
 
-	Segment ray(OwnerTransform.GetPosition(), Target.GetPosition());
+	Segment ray(OwnerTransform.GetPosition(), ptr->GetPosition());
 	if (Engine::GetPhysicsEngine().RayHit(ray,
 		(PhysicsLayer)((int)PhysicsLayer::Decorations | (int)PhysicsLayer::Buildings)))
 	{
@@ -47,7 +56,7 @@ list<IEntityAction*>* EntityOrder_FollowTarget::GetActions() {
 	}
 	else {
 
-		float dist = Length(OwnerTransform.GetPosition() - Target.GetPosition());
+		float dist = Length(OwnerTransform.GetPosition() - ptr->GetPosition());
 		if (dist > eps) {	//Owner is too far from target
 
 			if (FirstExec) {		//Immidiet first execution
@@ -77,6 +86,6 @@ EntityOrderType EntityOrder_FollowTarget::GetOrderType() {
 	return EntityOrderType::FollowTarget;
 }
 
-const TransformableObj& EntityOrder_FollowTarget::GetTarget() const {
-	return Target;
+const TransformableObj* EntityOrder_FollowTarget::GetTarget() const {
+	return Target.GetPtr_t();
 }

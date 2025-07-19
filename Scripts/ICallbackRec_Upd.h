@@ -3,9 +3,11 @@
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include <watch_ptr.h>
 
 using namespace sf;
 using namespace std;
+using namespace KrostganEngine;
 
 namespace KrostganEngine::Core {
 	struct CallbackRecArgs_Upd {
@@ -14,11 +16,15 @@ namespace KrostganEngine::Core {
 		float LastFrameDeltaTime; //Milliseconds
 	};
 
-	class ICallbackRec_Upd {
+	class ICallbackRec_Upd : public virtual w_ptr_observable {
+	
 	public:
 		virtual void Update(CallbackRecArgs_Upd args) = 0;
+		
 		virtual ~ICallbackRec_Upd();
+
 	protected:
 		ICallbackRec_Upd();
+
 	};
 }

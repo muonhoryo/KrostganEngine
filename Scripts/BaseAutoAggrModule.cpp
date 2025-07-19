@@ -23,10 +23,14 @@ BaseAutoAggrModule::BaseAutoAggrModule(Entity& Owner,ExecutorActionsMediator& Ac
 }
 BaseAutoAggrModule::~BaseAutoAggrModule() {
 
+	if (Target != nullptr)
+		delete Target;
 }
 
-IAttackableObj& BaseAutoAggrModule::GetCurrTarget() const {
-	return *Target;
+IAttackableObj* BaseAutoAggrModule::GetCurrTarget() const {
+	if (Target == nullptr)
+		return nullptr;
+	return Target->GetPtr_t();
 }
 
 void BaseAutoAggrModule::TurnOnAction() {
@@ -48,11 +52,21 @@ void BaseAutoAggrModule::UpdateAction(CallbackRecArgs_Upd& args) {
 }
 
 void BaseAutoAggrModule::CheckCurrTarget(CallbackRecArgs_Upd& args) {
-	if (Target->GetHPModule().DeathModule.GetIsDeadState() ) {
 
+	if (Target == nullptr)
+	{
 		TurnFindTargetState();
 		return;
 	}
+
+	auto t_ptr = Target->GetPtr_t();
+	if (t_ptr == nullptr ||
+		t_ptr->GetHPModule().DeathModule.GetIsDeadState())
+	{
+		TurnFindTargetState();
+		return;
+	}
+
 	if (IsAttack) {		//Is there target in owner's attack range
 
 		if (!Owner.GetAAModule().CheckTargetReach()) {	//Target left the range of AA
@@ -60,13 +74,15 @@ void BaseAutoAggrModule::CheckCurrTarget(CallbackRecArgs_Upd& args) {
 			IsAttack = false;
 			ActionMediator.ResetCurrActions();
 			float alloDist = Owner.GetBattleStats().GetAARadius();
-			ActionMediator.AddAction((IEntityAction*)new EntityAction_AutoAttack(Owner, *Target));
+			ActionMediator.AddAction((IEntityAction*)new EntityAction_AutoAttack(Owner, watch_ptr_handler_wr<IAttackableObj>(*Target)));
 
 			if (IsFollowTargets) {
 
-				ActionMediator.AddAction((IEntityAction*)new EntityAction_FollowObject(Owner, Owner, *Target, alloDist));
+				auto folAct = new EntityAction_FollowObject(Owner, Owner,watch_ptr_handler_wr_c<TransformableObj>(*Target), alloDist);
 
-				Segment segm(Owner.GetPosition(), Target->GetPosition());
+				ActionMediator.AddAction((IEntityAction*)folAct);
+
+				Segment segm(Owner.GetPosition(), t_ptr->GetPosition());
 				if (Engine::GetPhysicsEngine().RayHit(segm,
 					(PhysicsLayer)((int)PhysicsLayer::Decorations | (int)PhysicsLayer::Buildings))) {
 
@@ -90,13 +106,16 @@ void BaseAutoAggrModule::CheckCurrTarget(CallbackRecArgs_Upd& args) {
 
 		if (Owner.GetAAModule().CheckTargetReach()) {		//Reach the target to AA
 
-			if(ActionMediator.GetActionsCount()==0)
-				ActionMediator.AddAction((IEntityAction*)new EntityAction_AutoAttack(Owner, *Target));
+			if (ActionMediator.GetActionsCount() == 0) {
+
+				auto aaAct = new EntityAction_AutoAttack(Owner, watch_ptr_handler_wr<IAttackableObj>(*Target));
+				ActionMediator.AddAction((IEntityAction*)aaAct);
+			}
 			IsAttack = true;
 		}
 		else {
 			Vector2f pos=Owner.GetPosition();
-			float dist = Length(pos- Target->GetClosestPoint(pos));
+			float dist = Length(pos- t_ptr->GetClosestPoint(pos));
 			float alloDist = Owner.GetBattleStats().GetAutoAggrRadius();
 			if (dist-alloDist> eps) {
 				TurnFindTargetState();
@@ -110,6 +129,9 @@ void BaseAutoAggrModule::FindTarget(CallbackRecArgs_Upd& args) {
 	Vector2f pos = Owner.GetPosition();
 	TargsBuffer=Engine::GetPhysicsEngine().OverlapCircle_All(pos, radius, TARGETS_MASK);
 	if (TargsBuffer.size() != 0) {		//Has potential targets in auto-aggr radius
+
+		if (Target != nullptr)
+			delete Target;
 
 		Target = nullptr;
 		float minDist = FLT_MAX;
@@ -134,7 +156,12 @@ void BaseAutoAggrModule::FindTarget(CallbackRecArgs_Upd& args) {
 					TargetTransform = dynamic_cast<TransformableObj*>(parTar);
 					if (TargetTransform == nullptr)
 						continue;
-					Target = parTar;
+
+					auto& t_ptr = parTar->GetPtr();
+
+					Target = new watch_ptr_handler_wr<IAttackableObj>(t_ptr);
+
+					delete &t_ptr;
 					minDist = dist;
 				}
 			}
@@ -143,11 +170,13 @@ void BaseAutoAggrModule::FindTarget(CallbackRecArgs_Upd& args) {
 
 			HasTarget = true;
 			auto& aaMod = Owner.GetAAModule();
-			aaMod.SetAsTarget(Target);
+			auto ptr= Target->GetPtr_t();
+			aaMod.SetAsTarget(new watch_ptr_handler_wr<IAttackableObj>(*(watch_ptr_handler*)Target));
 			ActionMediator.ResetCurrActions();
-			if (aaMod.CheckTargetReach(*Target)) {			//Target is in attack range of executor
+			if (aaMod.CheckTargetReach(*ptr)) {			//Target is in attack range of executor
 
-				ActionMediator.AddAction((IEntityAction*)new EntityAction_AutoAttack(Owner , *Target));
+				auto aaAct = new EntityAction_AutoAttack(Owner, watch_ptr_handler_wr<IAttackableObj>(*Target));
+				ActionMediator.AddAction((IEntityAction*)aaAct);
 				IsAttack = true;
 			}
 			else{									//Owner needs to follow target first
@@ -155,10 +184,12 @@ void BaseAutoAggrModule::FindTarget(CallbackRecArgs_Upd& args) {
 				if (IsFollowTargets) {
 
 					float alloDist = Owner.GetBattleStats().GetAARadius();
-					ActionMediator.AddAction((IEntityAction*)new EntityAction_AutoAttack(Owner, *Target));
-					ActionMediator.AddAction((IEntityAction*)new EntityAction_FollowObject(Owner, Owner, *Target, alloDist));
+					auto aaAct_ = new EntityAction_AutoAttack(Owner, watch_ptr_handler_wr<IAttackableObj>(*Target));
+					auto folAct = new EntityAction_FollowObject(Owner, Owner, watch_ptr_handler_wr_c<TransformableObj>(*Target), alloDist);
+					ActionMediator.AddAction((IEntityAction*)aaAct_);
+					ActionMediator.AddAction((IEntityAction*)folAct);
 
-					Segment segm(Owner.GetPosition(), Target->GetPosition());
+					Segment segm(Owner.GetPosition(), ptr->GetPosition());
 					if (Engine::GetPhysicsEngine().RayHit(segm,
 						(PhysicsLayer)((int)PhysicsLayer::Decorations | (int)PhysicsLayer::Buildings))) {
 
@@ -182,7 +213,11 @@ void BaseAutoAggrModule::FindTarget(CallbackRecArgs_Upd& args) {
 	}
 }
 void BaseAutoAggrModule::TurnFindTargetState() {
-	Target = nullptr;
+	if (Target != nullptr) {
+
+		delete Target;
+		Target = nullptr;
+	}
 	Owner.GetAAModule().SetAsTarget(nullptr);
 	HasTarget = false;
 	ActionMediator.ResetCurrActions();

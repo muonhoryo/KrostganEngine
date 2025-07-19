@@ -4,6 +4,7 @@
 
 using namespace sf;
 using namespace KrostganEngine::GameObjects;
+using namespace KrostganEngine;
 
 TransformableObj::TransformableObj() : TransformableObj(Vector2f(0,0),1) {
 }

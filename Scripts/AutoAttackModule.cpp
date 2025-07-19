@@ -9,10 +9,12 @@ AutoAttackModule::AutoAttackModule(AutoAttackAnimation& AAAnimation):ICallbackRe
 {}
 AutoAttackModule::~AutoAttackModule() {
 	delete &AAAnimation;
+	if (Target != nullptr)
+		delete Target;
 }
 
 IAttackableObj* AutoAttackModule::GetCurrentTarget() {
-	return Target;
+	return Target->GetPtr_t();
 }
 
 float AutoAttackModule::GetRemReloadTime() const {
