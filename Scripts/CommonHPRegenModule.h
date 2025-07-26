@@ -9,7 +9,7 @@ namespace KrostganEngine::GameObjects {
 	class CommonHPRegenModule :public HPRegenModule {
 
 	public:
-		CommonHPRegenModule(EntityBattleStats& BattleStats) : HPRegenModule(BattleStats){
+		CommonHPRegenModule(EntityHPModule& HPModule) : HPRegenModule(HPModule){
 
 			CooldownTimer.restart();
 		}

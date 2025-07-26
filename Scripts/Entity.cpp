@@ -16,22 +16,37 @@ using namespace KrostganEngine::EntitiesControl;
 using namespace KrostganEngine::Visual;
 
 Entity::Entity(EntityCtorParams& params)
-	:GameObject(*params.RenTexture, params.RenOffset, params.Position, params.Size, GetSprColorFromFraction(params.EntityFraction)),
-	ISelectableEntity(), ICallbackRec_Upd(), IFractionMember(),
-	OrdersExecutor(*params.BattleStats, nullptr, nullptr)
+	:GameObject(
+		params.RenSprite->Tex,
+		params.RenSprite->Offset, 
+		params.Position, 
+		params.Size, 
+		GetSprColorFromFraction(params.EntityFraction),
+		params.RenSprite->RenShader),
+			ISelectableEntity(), 
+		ICallbackRec_Upd(), 
+		IFractionMember(),
+		OrdersExecutor(
+			*params.BattleStats, 
+			nullptr, 
+			nullptr),
+		EntityFraction			(params.EntityFraction),
+		HPBar					(params.HPBarSprite),
+		SelectionSpriteSource	(params.SelectionSprite)
+
 {
 	params.Init_AAModule(*this);
 	params.Init_AutoAggrModule(*this,GetActionsMediator());
 	params.Init_DeathModule(*this);
-	params.Init_HPRegenModule(*params.BattleStats);
 	params.Init_HPModule();
+	params.Init_HPRegenModule();
 	SetAAModule(params.GetAAModule());
 	SetAutoAggrModule(params.GetAutoAggrModule());
 	HPModule = params.HPModule;
 
-	this->EntityFraction = params.EntityFraction;
-	IsEntitySelected = false;
-	SelectionSprite = nullptr;
+	SetPosition(GetPosition());
+	SetScale(GetScale());
+	SetSpriteColor(GetSpriteColor());
 
 	EntitiesObserver::AddEntity(this);
 }
@@ -39,7 +54,9 @@ Entity::Entity(EntityCtorParams& params)
 Entity::~Entity() {
 	SelectionOff();
 	delete HPModule;
-	delete SelectionSprite;
+	if(SelectionSprite!=nullptr)
+		delete SelectionSprite;
+	delete HPBar;
 
 	EntitiesObserver::RemoveEntity(this);
 }
@@ -47,8 +64,13 @@ Entity::~Entity() {
 void Entity::SelectionOn() {
 	if (!IsEntitySelected && !HPModule->DeathModule.GetIsDeadState()) {
 		IsEntitySelected = true;
-		SelectionSprite = new SingleSprite(GetSelectionTexture(), GetSelectSpriteMaxSize(), GetSelectSpriteRenOffset(), 
-			GetPosition(), GetScale(),GetSpriteColor());
+		SelectionSprite = new SingleSprite(
+			SelectionSpriteSource->Tex,
+			SelectionSpriteSource->MaxSize, 
+			SelectionSpriteSource->Offset, 
+			GetPosition(),
+			GetScale(),
+			GetSpriteColor());
 	}
 }
 void Entity::SelectionOff() {
@@ -69,15 +91,19 @@ void Entity::SetPosition(Vector2f position) {
 	GameObject::SetPosition(position);
 	if (IsEntitySelected)
 		SelectionSprite->SetPosition(position);
+	HPBar->SetPosition(position);
 }
 void Entity::SetScale(float scale) {
 	GameObject::SetScale(scale);
 	if (IsEntitySelected)
 		SelectionSprite->SetScale(scale);
+	HPBar->SetScale(scale);
 }
 void Entity::SetSpriteColor(Color color) {
 	SpriteRenderer::SetSpriteColor(color);
-	SelectionSprite->SetSpriteColor(color);
+	if(SelectionSprite!=nullptr)
+		SelectionSprite->SetSpriteColor(color);
+	HPBar->SetSpriteColor(color);
 }
 
 void Entity::RenderGraphic(RenderWindow& window) {

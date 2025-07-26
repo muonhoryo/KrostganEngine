@@ -5,6 +5,7 @@
 #include <Extensions.h>
 #include <SFML/System.hpp>
 #include <DivineCommander.h>
+#include <CoreVisual.h>
 
 using namespace std;
 using namespace sf;
@@ -12,6 +13,7 @@ using namespace KrostganEngine;
 using namespace KrostganEngine::Debug;
 using namespace KrostganEngine::Core;
 using namespace KrostganEngine::Physics;
+using namespace KrostganEngine::Visual;
 
 const std::string Engine::ENGINE_VERSION = "A0.2.5.0";
 
@@ -28,7 +30,7 @@ Engine::Engine()
 	GlobalConstsLoad consts = GlobalConstsLoad();
 	Consts = &consts.LoadGlobalConsts();
 	ExtGlobalResourcesLoad resources = ExtGlobalResourcesLoad();
-	GlobalResources = &resources.LoadGlobalResources();
+	resources.LoadGlobalResources();
 
 	string header = "Krostgan Engine " + Engine::ENGINE_VERSION;
 	Vector2f resol = EngineConfiguration->WindowResolution;
@@ -57,7 +59,9 @@ void Engine::InitializeCursorManager() {
 	Cursor& att = *new Cursor();
 
 	def.loadFromSystem(Cursor::Arrow);
-	Image img_att = GlobalResources->CursorSprite_Attack->copyToImage();
+	const string& defintion = ExternalGlobalResources::CORE_RES_CURSORTEX_ATTACK;
+	auto& tex = ExternalGlobalResources::GetRes_t<ExtGlRes_Texture>(defintion)->Tex;
+	Image img_att = tex.copyToImage();
 	Vector2u hotSpot = EngineConfiguration->CursorHotspot_Attack;
 	att.loadFromPixels(img_att.getPixelsPtr(), img_att.getSize(),hotSpot);
 

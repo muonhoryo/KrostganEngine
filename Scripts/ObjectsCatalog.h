@@ -76,24 +76,25 @@ namespace KrostganEngine::Core {
 		static inline const string OBJECT_TYPE_HERO = "Hero";
 	};
 	struct SerializationParDefNames {
-		static inline const string OBJECT_NAME = "Name";
-		static inline const string OBJECT_SPRITE_PATH = "SpritePath";
-		static inline const string OBJECT_SPRITE_OFFSET = "SpriteOffset";
-		static inline const string OBJECT_POSITION = "Position";
-		static inline const string OBJECT_SIZE = "Size";
-		static inline const string OBJECT_TYPE = "Type";
-		static inline const string OBJECT_CATALOG_ID = "CatalogID";
+		static inline const string OBJECT_NAME			= "Name";
+		static inline const string OBJECT_SPRITE_SOURCE	= "SpritesSource";
+		static inline const string OBJECT_POSITION		= "Position";
+		static inline const string OBJECT_SIZE			= "Size";
+		static inline const string OBJECT_TYPE			= "Type";
+		static inline const string OBJECT_CATALOG_ID	= "CatalogID";
 
-		static inline const string ENTITY_MAX_HP = "MaxHP";
-		static inline const string ENTITY_CURR_HP = "CurrentHP";
-		static inline const string ENTITY_REGEN_HP_COUNT = "HPRegenCount";
-		static inline const string ENTITY_REGEN_HP_TICK = "HPRegenTick";
-		static inline const string ENTITY_AA_DAMAGE = "AADamage";
-		static inline const string ENTITY_AA_SPEED = "AASpeed";
-		static inline const string ENTITY_AA_RADIUS = "AARadius";
-		static inline const string ENTITY_FRACTION = "Fraction";
-		static inline const string ENTITY_AUTO_AGGRESSIONS_RADIUS = "AutoAggrRadius";
+		static inline const string ENTITY_MAX_HP				= "MaxHP";
+		static inline const string ENTITY_REGEN_HP_COUNT		= "HPRegenCount";
+		static inline const string ENTITY_REGEN_HP_TICK			= "HPRegenTick";
+		static inline const string ENTITY_AA_DAMAGE				= "AADamage";
+		static inline const string ENTITY_AA_SPEED				= "AASpeed";
+		static inline const string ENTITY_AA_RADIUS				= "AARadius";
+		static inline const string ENTITY_FRACTION				= "Fraction";
+		static inline const string ENTITY_AUTO_AGGR_RADIUS		= "AutoAggrRadius";
+		static inline const string ENTITY_SELECT_AREA_SOURCE	= "SelectionAreaSource";
+		static inline const string ENTITY_HPBAR_SPRITE_SOURCE	= "HPBarSprite";
+		static inline const string ENTITY_HPBAR_MASK			= "HPBarMask";
 
-		static inline const string UNIT_MOVINGSPEED = "MovingSpeed";
+		static inline const string UNIT_MOVINGSPEED		= "MovingSpeed";
 	};
 }

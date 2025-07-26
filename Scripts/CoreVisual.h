@@ -2,3 +2,4 @@
 
 #include <SpriteRenderer.h>
 #include <SingleSprite.h>
+#include <IndicatorFill.h>

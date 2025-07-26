@@ -48,13 +48,6 @@ const ColliderShape& UnitObject::GetCollider_Action() const {
 	return Collider;
 }
 
-const Texture& UnitObject::GetSelectionTexture() {
-	return *Engine::GetGlobalResources().UnitsSelectionAreaSprite;
-}
-float UnitObject::GetSelectSpriteMaxSize() {
-	return Engine::GetGlobalConsts().UnitsSelectArea_OneSizeSpriteResol;
-}
-
 vector<IPhysicalObject*> UnitObject::OverlapAll_Action() const {
 	return Engine::GetPhysicsEngine().OverlapCircle_All(Collider.Center, Collider.Radius, SOLID_COLLISION_LAYER);
 }

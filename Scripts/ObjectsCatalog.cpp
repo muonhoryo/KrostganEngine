@@ -86,14 +86,10 @@ UnitLoadInfo& ObjsCatalogDeserial::ParseUnitInfo(vector<string>& params) {
 		info.CatalogID = stoi(*buffer);
 	}
 
-	if (!TryGetSerValueOfParam(params, SerializationParDefNames::OBJECT_SPRITE_PATH, buffer))
+	if (!TryGetSerValueOfParam(params, SerializationParDefNames::OBJECT_SPRITE_SOURCE, buffer))
 		throw exception("Cannot get path of sprite");
 	FStreamExts::ClearPath(buffer);
-	info.TexturePath = *buffer;
-
-	if (!TryGetSerValueOfParam(params, SerializationParDefNames::OBJECT_SPRITE_OFFSET, buffer))
-		throw exception("Cannot get offset of sprite");
-	info.SpriteOffset = ParseVec2f(*buffer);
+	info.SpriteSource= *buffer;
 
 	if (TryGetSerValueOfParam(params, SerializationParDefNames::OBJECT_POSITION, buffer)) {
 
@@ -112,6 +108,21 @@ UnitLoadInfo& ObjsCatalogDeserial::ParseUnitInfo(vector<string>& params) {
 	else
 		info.EntityFraction = FractionsSystem::FractionNames.at(*buffer);
 
+	if (!TryGetSerValueOfParam(params, SerializationParDefNames::ENTITY_HPBAR_SPRITE_SOURCE, buffer))
+		throw exception("Cant get hpbar sprite");
+	FStreamExts::ClearPath(buffer);
+	info.HPBarSpriteSource = *buffer;
+
+	if (!TryGetSerValueOfParam(params, SerializationParDefNames::ENTITY_HPBAR_MASK, buffer))
+		throw exception("Cant get hpbar mask");
+	FStreamExts::ClearPath(buffer);
+	info.HPBarMaskSource = *buffer;
+
+	if (!TryGetSerValueOfParam(params, SerializationParDefNames::ENTITY_SELECT_AREA_SOURCE, buffer))
+		throw exception("Cant get selection area");
+	FStreamExts::ClearPath(buffer);
+	info.SelectionAreaSource = *buffer;
+
 	//Fill battle stats of unit
 	EntityBattleStats& bStats = GetBattleStats(params, buffer);
 
@@ -119,9 +130,8 @@ UnitLoadInfo& ObjsCatalogDeserial::ParseUnitInfo(vector<string>& params) {
 
 	delete buffer;
 
-	cout << "Loaded unit:" << endl << "Name: " << info.Name << endl << "Sprite path: " << info.TexturePath <<
-		endl << "Sprite offset: " << ToString(info.SpriteOffset) << endl << 
-		"Size: " << info.Size << endl << "Fraction: " << (int)info.EntityFraction << endl;
+	cout << "Loaded unit:" << endl << "Name: " << info.Name << endl << "Sprite: " << info.SpriteSource<<
+		endl << "Size: " << info.Size << endl << "Fraction: " << (int)info.EntityFraction << endl;
 	return info;
 }
 HeroLoadInfo& ObjsCatalogDeserial::ParseHeroInfo(vector<string>& params) {
@@ -152,14 +162,10 @@ WallLoadInfo& ObjsCatalogDeserial::ParseWallInfo(vector<string>& params) {
 		throw exception("Cannot get name of object");
 	info.Name = *buffer;
 
-	if (!TryGetSerValueOfParam(params, SerializationParDefNames::OBJECT_SPRITE_PATH, buffer))
-		throw exception("Cannot get path of sprite");
+	if (!TryGetSerValueOfParam(params, SerializationParDefNames::OBJECT_SPRITE_SOURCE, buffer))
+		throw exception("Cannot get source of sprite");
 	FStreamExts::ClearPath(buffer);
-	info.TexturePath = *buffer;
-
-	if (!TryGetSerValueOfParam(params, SerializationParDefNames::OBJECT_SPRITE_OFFSET, buffer))
-		throw exception("Cannot get offset of sprite");
-	info.SpriteOffset = ParseVec2f(*buffer);
+	info.SpriteSource= *buffer;
 
 	if (!TryGetSerValueOfParam(params, SerializationParDefNames::OBJECT_SIZE, buffer))
 		throw exception("Cant get size of object");
@@ -167,8 +173,8 @@ WallLoadInfo& ObjsCatalogDeserial::ParseWallInfo(vector<string>& params) {
 
 	delete buffer;
 
-	cout << "Loaded wall: " << endl << "Name: " << info.Name << endl << "Sprite path: " << info.TexturePath <<
-		endl << "Sprite offset: " << ToString(info.SpriteOffset) << endl << "Size: " << info.Size << endl;
+	cout << "Loaded wall: " << endl << "Name: " << info.Name << endl << "Sprite path: " << info.SpriteSource<<
+		endl << "Size: " << info.Size << endl;
 	return info;
 }
 
@@ -205,13 +211,6 @@ EntityBattleStats& ObjsCatalogDeserial::GetBattleStats(vector<string>& params, s
 			bStats.SetMaxHP(bStat_s_t);
 	}
 
-	//CurrentHP
-	if (TryGetSerValueOfParam(params, SerializationParDefNames::ENTITY_CURR_HP, buffer)) {
-		bStat_s_t = stoi(*buffer);
-		if (bStat_s_t > 0)
-			bStats.SetCurrentHP(bStat_s_t);
-	}
-
 	//HPRegenAmount
 	if (TryGetSerValueOfParam(params, SerializationParDefNames::ENTITY_REGEN_HP_COUNT, buffer)) {
 		bStat_s_t = stoi(*buffer);
@@ -245,7 +244,7 @@ EntityBattleStats& ObjsCatalogDeserial::GetBattleStats(vector<string>& params, s
 	}
 
 	//AutoAggrRadius
-	if (TryGetSerValueOfParam(params, SerializationParDefNames::ENTITY_AUTO_AGGRESSIONS_RADIUS, buffer)) {
+	if (TryGetSerValueOfParam(params, SerializationParDefNames::ENTITY_AUTO_AGGR_RADIUS, buffer)) {
 		bStat_f = stof(*buffer);
 		if (bStat_f > 0)
 			bStats.SetAutoAggrRadius(bStat_f);

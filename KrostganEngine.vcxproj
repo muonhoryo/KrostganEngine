@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -158,10 +158,12 @@
     <ClCompile Include="Scripts\EntityOrder_Idle.cpp" />
     <ClCompile Include="Scripts\EntsCtrlOrdersGiving.cpp" />
     <ClCompile Include="Scripts\DynamicPhysObject.cpp" />
+    <ClCompile Include="Scripts\ExternalGlobalResources.cpp" />
     <ClCompile Include="Scripts\HeroDeathModule.cpp" />
     <ClCompile Include="Scripts\ICallbackRec_GraphPostRen.cpp" />
     <ClCompile Include="Scripts\ICallbackRec_LUpd.cpp" />
     <ClCompile Include="Scripts\IDeathModule.cpp" />
+    <ClCompile Include="Scripts\IndicatorFill.cpp" />
     <ClCompile Include="Scripts\LineAAAnimation.cpp" />
     <ClCompile Include="Scripts\LoseScript.cpp" />
     <ClCompile Include="Scripts\ObjectsCatalog.cpp" />
@@ -258,6 +260,11 @@
     <ClInclude Include="Scripts\EntityAutoAggrRadVisualizer.h" />
     <ClInclude Include="Scripts\ExternalData.h" />
     <ClInclude Include="Scripts\DynamicPhysObject.h" />
+    <ClInclude Include="Scripts\ExtGlResources.h" />
+    <ClInclude Include="Scripts\ExtGlRes_Font.h" />
+    <ClInclude Include="Scripts\ExtGlRes_Shader.h" />
+    <ClInclude Include="Scripts\ExtGlRes_Sprite.h" />
+    <ClInclude Include="Scripts\ExtGlRes_Texture.h" />
     <ClInclude Include="Scripts\FightingSystems.h" />
     <ClInclude Include="Scripts\GameLevel.h" />
     <ClInclude Include="Scripts\GameTransitions.h" />
@@ -265,6 +272,7 @@
     <ClInclude Include="Scripts\GameVisualEffects.h" />
     <ClInclude Include="Scripts\HPRegenModules.h" />
     <ClInclude Include="Scripts\ICallbackRec_GraphPostRen.h" />
+    <ClInclude Include="Scripts\IndicatorFill.h" />
     <ClInclude Include="Scripts\kv_memory.h" />
     <ClInclude Include="Scripts\LevelBypassMap.h" />
     <ClInclude Include="Scripts\LevelCellMapDeser.h" />
@@ -369,6 +377,9 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Sprites\UnitSprite_Guardian.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Scripts\Shaders\MaskableImage.frag" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

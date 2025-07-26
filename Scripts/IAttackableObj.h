@@ -26,8 +26,14 @@ namespace KrostganEngine::GameObjects {
 
 	class IHitPointModule {
 	public:
+		virtual ~IHitPointModule(){}
 
-		virtual void TakeDamage(AttackInfo attInfo) = 0;
+		virtual void TakeDamage		(AttackInfo attInfo) = 0;
+		virtual void SetCurrentHP	(size_t hp) = 0;
+		virtual void RestoreHealth	() = 0;
+
+		virtual size_t	GetCurrentHP()	const = 0;
+		virtual size_t	GetMaxHP()		const = 0;
 
 		IDeathModule& DeathModule;
 

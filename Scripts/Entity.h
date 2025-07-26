@@ -15,41 +15,45 @@
 #include <RelationsSystem.h>
 #include <OrdersExecutor.h>
 #include <CallbackDelegates.h>
+#include <ExtGlResources.h>
 
 using namespace sf;
 using namespace std;
 using namespace KrostganEngine::EntitiesControl;
 using namespace KrostganEngine::Visual;
+using namespace KrostganEngine::Core;
 
 namespace KrostganEngine::GameObjects {
 	class Entity;
 
 	struct EntityCtorParams {
-		EntityBattleStats* BattleStats=nullptr;
-		Fraction EntityFraction=Fraction::Neutral;
-		const Texture* RenTexture=nullptr;
-		Vector2f RenOffset;
-		Vector2f Position;
-		float Size=1;
 
-		AutoAttackModule* GetAAModule() const { return AAModule; }
-		AutoAggressionModule* GetAutoAggrModule() const { return AutoAggrModule; }
-		IHitPointModule* GetHPModule() const { return HPModule; }
-		IDeathModule* GetDeathModule() const { return DeathModule; }
-		HPRegenModule* GetHPRegenModule() const { return RegenModule; }
+		EntityBattleStats*		BattleStats		=	nullptr;
+		Fraction				EntityFraction	=	Fraction::Neutral;
+		const ExtGlRes_Sprite*	RenSprite		=	nullptr;
+		const ExtGlRes_Sprite*	SelectionSprite	=	nullptr;
+		Vector2f				Position;
+		float					Size			=	1;
+		IndicatorFill*			HPBarSprite		=	nullptr;
+		
+		AutoAttackModule*		GetAAModule()			const { return AAModule; }
+		AutoAggressionModule*	GetAutoAggrModule()		const { return AutoAggrModule; }
+		EntityHPModule*			GetHPModule()			const { return HPModule; }
+		IDeathModule*			GetDeathModule()		const { return DeathModule; }
+		HPRegenModule*			GetHPRegenModule()		const { return RegenModule; }
 
 	protected:
-		virtual void Init_AAModule(Entity& owner) = 0;
-		virtual void Init_AutoAggrModule(Entity& owner, ExecutorActionsMediator& mediator) = 0;
-		virtual void Init_DeathModule(Entity& owner) = 0;
-		virtual void Init_HPModule() = 0;
-		virtual void Init_HPRegenModule(EntityBattleStats& stats) = 0;
+		virtual void Init_AAModule			(Entity& owner) = 0;
+		virtual void Init_AutoAggrModule	(Entity& owner, ExecutorActionsMediator& mediator) = 0;
+		virtual void Init_DeathModule		(Entity& owner) = 0;
+		virtual void Init_HPModule			() = 0;
+		virtual void Init_HPRegenModule		() = 0;
 
-		AutoAttackModule* AAModule=nullptr;
-		AutoAggressionModule* AutoAggrModule=nullptr;
-		IHitPointModule* HPModule=nullptr;
-		IDeathModule* DeathModule = nullptr;
-		HPRegenModule* RegenModule = nullptr;
+		AutoAttackModule*		AAModule		= nullptr;
+		AutoAggressionModule*	AutoAggrModule	= nullptr;
+		EntityHPModule*			HPModule		= nullptr;
+		IDeathModule*			DeathModule		= nullptr;
+		HPRegenModule*			RegenModule		= nullptr;
 
 		friend class Entity;
 	};
@@ -62,31 +66,29 @@ namespace KrostganEngine::GameObjects {
 		void SelectionOff() override;
 		bool IsSelected() override;
 
-		void SetPosition(Vector2f position) override;
-		void SetScale(float scale) override;
-		void SetSpriteColor(Color color) override;
+		void SetPosition	(Vector2f position) override;
+		void SetScale		(float scale) override;
+		void SetSpriteColor	(Color color) override;
 
-		void RenderGraphic(RenderWindow& window) override;
-		void Update(CallbackRecArgs_LUpd args) override;
-		vector<IPhysicalObject*> OverlapAll() const override final;
-		const ColliderShape& GetCollider() const override final;
+		void						RenderGraphic	(RenderWindow& window) override;
+		void						Update			(CallbackRecArgs_LUpd args) override;
+		vector<IPhysicalObject*>	OverlapAll		() const override final;
+		const ColliderShape&		GetCollider		() const override final;
 
-		virtual vector<IPhysicalObject*> OverlapAll_Action() const = 0;
-		virtual const ColliderShape& GetCollider_Action() const = 0;
+		virtual vector<IPhysicalObject*>	OverlapAll_Action() const = 0;
+		virtual const ColliderShape&		GetCollider_Action() const = 0;
 
-		IHitPointModule& GetHPModule()override;
+		IHitPointModule& GetHPModule() override;
 
 	protected:
 		Entity(EntityCtorParams& params);
 
-		virtual const Texture& GetSelectionTexture()=0;
-		virtual float GetSelectSpriteMaxSize() = 0;
-		virtual Vector2f GetSelectSpriteRenOffset() { return Vector2f(0, 0); };
-
 	private:
-		bool IsEntitySelected;
-		SingleSprite* SelectionSprite;
-		IHitPointModule* HPModule;
+		bool					IsEntitySelected		=	false;
+		const ExtGlRes_Sprite*	SelectionSpriteSource	=	nullptr;
+		SingleSprite*			SelectionSprite			=	nullptr;
+		IHitPointModule*		HPModule;
+		IndicatorFill*			HPBar;
 		
 		friend class AutoAggressionModule;
 	public:
@@ -96,6 +98,8 @@ namespace KrostganEngine::GameObjects {
 		Fraction EntityFraction;
 
 		Color GetSprColorFromFraction(Fraction frac);
+
+		static const inline string MASK_SHADER_PATH = "Scripts/Shaders/MaskableImage.frag";
 	};
 
 	class EntityDeathModule : public IDeathModule {

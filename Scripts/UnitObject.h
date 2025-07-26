@@ -43,11 +43,12 @@ namespace KrostganEngine {
 			void Init_DeathModule(Entity& owner) override {
 				DeathModule = new UnitDeathModule(owner);
 			}
-			void Init_HPRegenModule(EntityBattleStats& stats) override {
-				RegenModule = new CommonHPRegenModule(*BattleStats);
-			}
 			void Init_HPModule() override {
-				HPModule = new EntityHPModule(*GetDeathModule(), *BattleStats,GetHPRegenModule());
+				HPModule = new EntityHPModule(*GetDeathModule(), *BattleStats,*HPBarSprite);
+			}
+			void Init_HPRegenModule() override {
+				RegenModule = new CommonHPRegenModule(*HPModule);
+				((EntityHPModule*)HPModule)->SetRegenModule(RegenModule);
 			}
 		};
 
@@ -64,9 +65,6 @@ namespace KrostganEngine {
 			const vector<EntityOrderType>& GetAllowedOrdersCatalog() override;
 
 		protected:
-			const Texture& GetSelectionTexture() override;
-			float GetSelectSpriteMaxSize() override;
-
 			vector<IPhysicalObject*> OverlapAll_Action() const override ;
 			const ColliderShape& GetCollider_Action() const override;
 			Vector2f GetResolvingPnt(const ColliderShape& objShape, Vector2f movDir, bool isSlideColl) const override;

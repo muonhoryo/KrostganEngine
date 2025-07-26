@@ -1,8 +1,11 @@
 #pragma once
 
+#include <ValuesListDeserializer.h>
+
 #include <EngineConfig.h>
-#include <EngineConfigLoad.h>
 #include <GlobalConsts.h>
+
+#include <EngineConfigLoad.h>
 #include <GlobalConstsLoad.h>
-#include <ExternalGlobalResources.h>
-#include <ExtGlobalResourcesLoad.h>
+
+#include <ExtGlResources.h>

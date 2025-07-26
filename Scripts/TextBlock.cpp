@@ -6,7 +6,7 @@ using namespace KrostganEngine::UI;
 using namespace KrostganEngine;
 
 TextBlock::TextBlock(const string& textStr, unsigned int characterSize)
-	:text(*new Text(textStr, *Engine::GetGlobalResources().DefaultFont, characterSize)) {
+	:text(*new Text(textStr,ExternalGlobalResources::Get_DefaultFont(), characterSize)) {
 
 	text.setPosition(ScreenPosition);
 }

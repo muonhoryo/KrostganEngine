@@ -10,11 +10,34 @@ using namespace sf;
 using namespace KrostganEngine::Visual;
 using namespace KrostganEngine::Core;
 
-SpriteRenderer::SpriteRenderer(const Texture& RenTexture, Vector2f Offset, Color SprColor) :
-	SpriteRenderer(RenTexture, (float)max(RenTexture.getSize().x, RenTexture.getSize().y), Offset)
-{}
-SpriteRenderer::SpriteRenderer(const Texture& RenTexture, float maxSizeInPixels, Vector2f Offset, Color SprColor) :
-	ICallbackRec_GraphRen() {
+SpriteRenderer::SpriteRenderer(
+	const Texture&	RenTexture, 
+	Vector2f		Offset, 
+	Color			SprColor,
+	Shader*			RendShader)
+		
+	:SpriteRenderer(
+		RenTexture, 
+		(float)max(RenTexture.getSize().x, RenTexture.getSize().y), 
+		Offset,
+		SprColor,
+		RendShader)
+{
+	
+}
+SpriteRenderer::SpriteRenderer(
+	const Texture&	RenTexture, 
+	float			maxSizeInPixels, 
+	Vector2f		Offset, 
+	Color			SprColor,
+	Shader*			RendShader) 
+		:ICallbackRec_GraphRen(),
+		Offset		(Offset),
+		RendShader	(RendShader){
+
+	if (RendShader != nullptr)		
+		RenderSt.shader = RendShader;
+
 	RenSprite.setTexture(RenTexture);
 	Vector2u texSize = RenTexture.getSize();
 	RenSprite.setOrigin(Vector2f((float)texSize.x/2,(float)texSize.y/2));
@@ -30,32 +53,32 @@ SpriteRenderer::SpriteRenderer(const Texture& RenTexture, float maxSizeInPixels,
 	TextureResizingMult = maxSizeInPixels / GetMaxSpritePixSize();
 	ResizeSprite(Vector2f(1, 1));
 	SetSpriteColor(SprColor);
-	this->Offset = Offset;
 }
 
-void SpriteRenderer::RenderGraphic(RenderWindow& window) {
-	window.draw(RenSprite);
+void	SpriteRenderer::RenderGraphic	(RenderWindow& window) {
+
+	window.draw(RenSprite,RenderSt);
 }
 
-const Texture& SpriteRenderer::GetRenTexture() {
+const Texture&	SpriteRenderer::GetRenTexture()				const{
 	return *RenSprite.getTexture();
 }
-Vector2f SpriteRenderer::GetSpriteOffset() {
+Vector2f		SpriteRenderer::GetSpriteOffset()			const{
 	return Offset;
 }
-Vector2f SpriteRenderer::GetSpriteGlobalPosition() {
+Vector2f		SpriteRenderer::GetSpriteGlobalPosition()	const{
 	return RenSprite.getPosition();
 }
-Vector2f SpriteRenderer::GetSpriteInharitedPosition() {
+Vector2f		SpriteRenderer::GetSpriteInharitedPosition() const{
 	return  GetSpriteGlobalPosition()-GetSpriteOffset();
 }
-float SpriteRenderer::GetSpriteMinMaxRatio() {
+float			SpriteRenderer::GetSpriteMinMaxRatio()		const{
 	return MinMaxSizeRatio;
 }
-bool SpriteRenderer::IsSpriteVertical() {
+bool			SpriteRenderer::IsSpriteVertical()			const{
 	return IsVertical;
 }
-float SpriteRenderer::GetMaxSpritePixSize() {
+float			SpriteRenderer::GetMaxSpritePixSize()		const{
 	if (IsVertical) {
 		return RenSprite.getTexture()->getSize().y* RenSprite.getScale().y;
 	}
@@ -63,7 +86,7 @@ float SpriteRenderer::GetMaxSpritePixSize() {
 		return RenSprite.getTexture()->getSize().x * RenSprite.getScale().x;
 	}
 }
-float SpriteRenderer::GetMinSpritePixSize() {
+float			SpriteRenderer::GetMinSpritePixSize()		const{
 	if (IsVertical) {
 		return RenSprite.getTexture()->getSize().x * RenSprite.getScale().x;
 	}
@@ -71,24 +94,27 @@ float SpriteRenderer::GetMinSpritePixSize() {
 		return RenSprite.getTexture()->getSize().y * RenSprite.getScale().y;
 	}
 }
-Vector2f SpriteRenderer::GetSpriteSize() {
+Vector2f		SpriteRenderer::GetSpriteSize()				const{
 	return MainSize;
 }
-Color SpriteRenderer::GetSpriteColor() {
+Color			SpriteRenderer::GetSpriteColor()			const{
 	return RenSprite.getColor();
 }
+Shader*			SpriteRenderer::GetShader()					const {
+	return RendShader;
+}
 
-void SpriteRenderer::SetSpriteOffset(Vector2f offset) {
+void	SpriteRenderer::SetSpriteOffset	(Vector2f offset) {
 	Vector2f inharPos = GetSpriteInharitedPosition();
 	Offset = offset;
 	SetSpriteInharitedPosition(inharPos);
 }
-void SpriteRenderer::ResizeSprite(Vector2f size) {
+void	SpriteRenderer::ResizeSprite	(Vector2f size) {
 	Vector2f newScale = size * TextureResizingMult;
 	RenSprite.setScale(newScale);
 	MainSize = size;
 }
-void SpriteRenderer::SetSpriteColor(Color color) {
+void	SpriteRenderer::SetSpriteColor	(Color color) {
 	RenSprite.setColor(color);
 }
 

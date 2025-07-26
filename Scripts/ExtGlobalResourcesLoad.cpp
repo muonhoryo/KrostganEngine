@@ -4,34 +4,223 @@
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
 #include <Extensions.h>
+#include <iostream>
+#include <fstream>
 
 using namespace sf;
 using namespace std;
 using namespace KrostganEngine::Core;
 
-ExtGlobalResourcesLoad::ExtGlobalResourcesLoad() :ValuesListDeserializer() { LoadedGlobalResources = nullptr; }
+ExtGlobalResourcesLoad::ExtGlobalResourcesLoad() :ValuesListDeserializer() { }
 
-const ExternalGlobalResources& ExtGlobalResourcesLoad::LoadGlobalResources() {
-	DeserializeValues();
+void ExtGlobalResourcesLoad::LoadGlobalResources() {
 
-	string* buffer = new string();
-	LoadedGlobalResources = new ExternalGlobalResources();
-	Texture* texs[4]{};
+	ExternalGlobalResources::Unload();
 
-	LoadedGlobalResources->UnitsSelectionAreaSprite = LoadTextureByDefinition(ExternalGlobalResources::DEF_UNITS_SELECTIONAREA_SPRITE_PATH, *buffer);
-	LoadedGlobalResources->HeroesSelectionAreaSprite = LoadTextureByDefinition(ExternalGlobalResources::DEF_HEROES_SELECTIONAREA_SPRITE_PATH, *buffer);
-	LoadedGlobalResources->CursorSprite_Attack= LoadTextureByDefinition(ExternalGlobalResources::DEF_CURSOR_ATTACK_SPRITE_PATH, *buffer);
-	LoadedGlobalResources->UnitDeathEffectSprite= LoadTextureByDefinition(ExternalGlobalResources::DEF_UNIT_DEATHEFFECT_SPRITE_PATH, *buffer);
-	LoadedGlobalResources->DefaultFont = LoadFontByDefinition(ExternalGlobalResources::DEF_DEFAULT_FONT_PATH, *buffer);
-
-	delete buffer;
-
-	return *LoadedGlobalResources;
+	LoadAdditionalResources();
+	LoadCoreResources();
 }
-const ExternalGlobalResources& ExtGlobalResourcesLoad::GetLoadedResources() {
-	if (LoadedGlobalResources == nullptr)
-		return LoadGlobalResources();
-	return *LoadedGlobalResources;
+
+void ExtGlobalResourcesLoad::LoadAdditionalResources() {
+
+	string line;
+	ifstream st(GetFilePath());
+	if (st.bad() == true ||
+		st.fail() == true)
+		throw exception("Cannot open resource file");
+
+	while (getline(st, line)) {
+
+		if (line.find(RESOURCE_DEF_SEP_LINE) != string::npos) {
+
+			DeserializeValues(ParamsBuffer);
+			ExternalGlobalResources::AddRes(DeserRes());
+			ParamsBuffer.clear();
+		}
+		else {
+
+			ParamsBuffer.push_back(line);
+		}
+	}
+	st.close();
+	size_t size = ParamsBuffer.size();
+	if (size > 1 ||
+		size == 1 && ParamsBuffer[0].size() > 1) {
+
+		DeserializeValues(ParamsBuffer);
+		ExternalGlobalResources::AddRes(DeserRes());
+	}
+	ParamsBuffer.clear();
+
+	//LoadedGlobalResources->UnitsSelectionAreaSprite = LoadTextureByPathDef(ExternalGlobalResources::DEF_UNITS_SELECTIONAREA_SPRITE_PATH, *buffer);
+	//LoadedGlobalResources->HeroesSelectionAreaSprite = LoadTextureByPathDef(ExternalGlobalResources::DEF_HEROES_SELECTIONAREA_SPRITE_PATH, *buffer);
+	//LoadedGlobalResources->CursorSprite_Attack = LoadTextureByPathDef(ExternalGlobalResources::DEF_CURSOR_ATTACK_SPRITE_PATH, *buffer);
+	//LoadedGlobalResources->UnitDeathEffectSprite = LoadTextureByPathDef(ExternalGlobalResources::DEF_UNIT_DEATHEFFECT_SPRITE_PATH, *buffer);
+	//LoadedGlobalResources->UnitsHPBarSpritePath = LoadTextureByPathDef(ExternalGlobalResources::DEF_UNITS_HP_BAR_SPRITE_PATH, *buffer);
+	//LoadedGlobalResources->HeroesHPBarSpritePath = LoadTextureByPathDef(ExternalGlobalResources::DEF_HEROES_HP_BAR_SPRITE_PATH, *buffer);
+	//LoadedGlobalResources->UnitsHPBarMaskPath = LoadTextureByPathDef(ExternalGlobalResources::DEF_UNITS_HP_BAR_MASK_PATH, *buffer);
+	//LoadedGlobalResources->HeroesHPBarMaskPath = LoadTextureByPathDef(ExternalGlobalResources::DEF_HEROES_HP_BAR_MASK_PATH, *buffer);
+
+	//LoadedGlobalResources->DefaultFont = LoadFontByDefinition(ExternalGlobalResources::DEF_DEFAULT_FONT_PATH, *buffer);
+}
+void ExtGlobalResourcesLoad::LoadCoreResources() {
+
+}
+
+ExtGlResource& ExtGlobalResourcesLoad::DeserRes() {
+
+	string serType;
+	GetValueByDef(DEF_RESOURCE_TYPE, serType);
+
+	if (serType.find(RESOURCETYPE_TEXTURE) != string::npos) {
+
+		return DeserRes_Texture();
+	}
+	else if (serType.find(RESOURCETYPE_SPRITE) != string::npos) {
+
+		return DeserRes_Sprite();
+	}
+	else if (serType.find(RESOURCETYPE_FONT) != string::npos) {
+
+		return DeserRes_Font();
+	}
+	else if (serType.find(RESOURCETYPE_SHADER) != string::npos) {
+
+		return DeserRes_Shader();
+	}
+	else
+		throw exception("Cant parse resource type");
+
+}
+
+ExtGlRes_Texture&	ExtGlobalResourcesLoad::DeserRes_Texture(){
+
+	string* name=new string();
+	GetValueByDef(DEF_RESOURCE_NAME, *name);
+	FStreamExts::ClearPath(name);
+	const Texture* tex = nullptr;
+	GetValueByDef(DEF_PATH ,LineBuffer);
+	tex = LoadTextureByPath();
+	auto& res = *new ExtGlRes_Texture(*name, *tex);
+	delete name;
+	return res;
+}
+ExtGlRes_Sprite&	ExtGlobalResourcesLoad::DeserRes_Sprite(){
+
+	string* name = new string();
+	GetValueByDef(DEF_RESOURCE_NAME, *name);
+	FStreamExts::ClearPath(name);
+	const Texture* tex = nullptr;
+	GetValueByDef(DEF_SOURCE, LineBuffer);
+	FStreamExts::ClearPath(&LineBuffer);
+	if (CouldBeName(LineBuffer)) {
+		tex = GetTextureByName();
+	}
+	else {
+		tex = LoadTextureByPath();
+	}
+	Vector2f offset = DeserValueByDef_Vec2f(DEF_SPRITE_OFFSET, LineBuffer);
+	Shader* shad = nullptr;
+	if (TryGetValue(DEF_RENDER_SHADER, LineBuffer)) {
+
+		FStreamExts::ClearPath(&LineBuffer);
+		shad = GetShaderByName();
+	}
+	float maxSize = 0;
+	if (TryGetValue(DEF_SPRITE_MAXSIZE, LineBuffer)) {
+
+		maxSize = stof(LineBuffer);
+	}
+	else {
+
+		maxSize = Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution;
+	}
+	auto& res = *new ExtGlRes_Sprite(*name, *tex, offset,maxSize,shad);
+	delete name;
+	return res;
+}
+ExtGlRes_Font& ExtGlobalResourcesLoad::DeserRes_Font() {
+
+	string* name = new string();
+	GetValueByDef(DEF_RESOURCE_NAME, *name);
+	FStreamExts::ClearPath(name);
+	Font* font = nullptr;
+	GetValueByDef(DEF_PATH, LineBuffer);
+	FStreamExts::ClearPath(&LineBuffer);
+	font = LoadFontByPath();
+	auto& res = *new ExtGlRes_Font(*name, *font);
+	delete name;
+	return res;
+}
+ExtGlRes_Shader& ExtGlobalResourcesLoad::DeserRes_Shader() {
+
+	string* name = new string();
+	GetValueByDef(DEF_RESOURCE_NAME, *name);
+	FStreamExts::ClearPath(name);
+	Shader* shad = new Shader();
+	GetValueByDef(DEF_PATH, LineBuffer);
+	FStreamExts::ClearPath(&LineBuffer);
+	shad=LoadShaderByPath();
+	auto& res = *new ExtGlRes_Shader(*name, *shad);
+	delete name;
+	return res;
+}
+
+Texture*	ExtGlobalResourcesLoad::LoadTextureByPath() {
+
+	FStreamExts::ClearPath(&LineBuffer);
+	Texture* tex = new Texture();
+	tex->loadFromFile(LineBuffer);
+	return tex;
+}
+Font*		ExtGlobalResourcesLoad::LoadFontByPath(){
+
+	FStreamExts::ClearPath(&LineBuffer);
+	Font* font = new Font();
+	font->loadFromFile(LineBuffer);
+	return font;
+}
+Shader* ExtGlobalResourcesLoad::LoadShaderByPath() {
+
+	FStreamExts::ClearPath(&LineBuffer);
+	string shadPath = string(LineBuffer);
+	Shader* shad = new Shader();
+	GetValueByDef(DEF_SHADER_TYPE, LineBuffer);
+	Shader::Type type;
+	if (LineBuffer.find(SHADERTYPE_FRAG) != string::npos) {
+		type = Shader::Fragment;
+	}
+	else if (LineBuffer.find(SHADERTYPE_VERT) != string::npos) {
+		type = Shader::Vertex;
+	}
+	else if (LineBuffer.find(SHADERTYPE_GEO) != string::npos) {
+		type = Shader::Geometry;
+	}
+	else
+		throw exception("Cant get shader type");
+	LineBuffer.clear();
+	LineBuffer.append(shadPath);
+	shad->loadFromFile(LineBuffer, type);
+	return shad;
+}
+
+const Texture*	ExtGlobalResourcesLoad::GetTextureByName() const{
+	ExtGlResource* res = ExternalGlobalResources::GetRes(LineBuffer);
+	if (res == nullptr)
+		return nullptr;
+	return &dynamic_cast<ExtGlRes_Texture*>(res)->Tex;
+}
+const Font*		ExtGlobalResourcesLoad::GetFontByName() const{
+	ExtGlResource* res = ExternalGlobalResources::GetRes(LineBuffer);
+	if (res == nullptr)
+		return nullptr;
+	return &dynamic_cast<ExtGlRes_Font*>(res)->Font_;
+}
+Shader*	ExtGlobalResourcesLoad::GetShaderByName() const{
+	ExtGlResource* res = ExternalGlobalResources::GetRes(LineBuffer);
+	if (res == nullptr)
+		return nullptr;
+	return &dynamic_cast<ExtGlRes_Shader*>(res)->Shader_;
 }
 
 const string ExtGlobalResourcesLoad::GetFilePath() {
@@ -40,27 +229,3 @@ const string ExtGlobalResourcesLoad::GetFilePath() {
 const char ExtGlobalResourcesLoad::GetValuesDefEndSym() {
 	return RESOURCE_DEF_END_SYM;
 }
-
-void ExtGlobalResourcesLoad::GetValueByDefinition(const string& definition, string& buffer) {
-	if (!TryGetValue(definition, &buffer)) {
-		string std = "Missing value of " + definition;
-		throw exception(std.c_str());
-	}
-}
-Texture* ExtGlobalResourcesLoad::LoadTextureByDefinition(const string& definition, string& buffer) {
-	GetValueByDefinition(definition, buffer);
-	FStreamExts::ClearPath(&buffer);
-	Texture* tex = new Texture();
-	tex->loadFromFile(buffer);
-	return tex;
-}
-Font* ExtGlobalResourcesLoad::LoadFontByDefinition(const string& definition, string& buffer) {
-	GetValueByDefinition(definition, buffer);
-	FStreamExts::ClearPath(&buffer);
-	Font* font = new Font();
-	font->loadFromFile(buffer);
-	return font;
-}
-
-const string ExtGlobalResourcesLoad::GLOBAL_RESOURCES_PATH = "GlobalResources.txt";
-const char ExtGlobalResourcesLoad::RESOURCE_DEF_END_SYM = ':';

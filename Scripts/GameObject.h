@@ -24,7 +24,13 @@ namespace KrostganEngine::GameObjects {
 			(size_t)PhysicsLayer::Units |
 			(size_t)PhysicsLayer::Items);
 	protected:
-		GameObject(const Texture& RenTexture, Vector2f RenOffset=Vector2f(0,0), Vector2f Position = Vector2f(0, 0), float Size = 1, Color SprColor = Color::White);
+		GameObject(
+			const Texture&	RenTexture,
+			Vector2f		RenOffset	=	Vector2f(0,0), 
+			Vector2f		Position	=	Vector2f(0, 0),
+			float			Size		=	1,
+			Color			SprColor	=	Color::White,
+			Shader*			RenShader	=	nullptr);
 
 		virtual const ColliderShape& GetCollider() const = 0;
 	};

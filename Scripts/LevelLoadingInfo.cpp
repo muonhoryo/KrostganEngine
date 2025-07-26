@@ -33,16 +33,29 @@ GameObject* UnitLoadInfo::InstanceObject(LoadedObjects& levInfo, Vector2f positi
 
 UnitObjectCtorParams& UnitLoadInfo::GetUnitParams() {
 
-	Texture* texBuffer = new Texture();
-	texBuffer->loadFromFile(TexturePath);
+	FStreamExts::ClearPath(&SpriteSource);
+
+	ExtGlRes_Sprite* spr = dynamic_cast<ExtGlRes_Sprite*>(ExternalGlobalResources::GetRes(SpriteSource));
+	ExtGlRes_Sprite* selSpr = dynamic_cast<ExtGlRes_Sprite*>(ExternalGlobalResources::GetRes(SelectionAreaSource));
+	ExtGlRes_Sprite* hpbarSpr= dynamic_cast<ExtGlRes_Sprite*>(ExternalGlobalResources::GetRes(HPBarSpriteSource));
+	ExtGlRes_Texture* hpbarMask= dynamic_cast<ExtGlRes_Texture*>(ExternalGlobalResources::GetRes(HPBarMaskSource));
+	auto hpBarShad = hpbarSpr->RenShader;
+
 	UnitObjectCtorParams& params = *new UnitObjectCtorParams();
 
-	params.BattleStats		=		new EntityBattleStats(*BattleStats);
-	params.EntityFraction	=		EntityFraction;
-	params.RenTexture		=		texBuffer;
-	params.RenOffset		=		SpriteOffset;
-	params.Position			=		Position;
-	params.Size				=		Size;
+	params.BattleStats		=	new EntityBattleStats(*BattleStats);
+	params.EntityFraction	=	EntityFraction;
+	params.RenSprite		=	spr;
+	params.SelectionSprite	=	selSpr;
+	params.Position			=	Position;
+	params.Size				=	Size;
+	params.HPBarSprite		=	new IndicatorFill(
+									hpbarSpr->Tex,
+									hpbarMask->Tex, 
+									*hpbarSpr->RenShader,
+									Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution,
+									hpbarSpr->Offset);
+
 	return params;
 }
 
@@ -83,8 +96,7 @@ GameObject* WallLoadInfo::InstanceObject(LoadedObjects& levInfo, Vector2f positi
 		Position = position;
 	}
 
-
-	Texture* texBuffer = new Texture();
-	texBuffer->loadFromFile(TexturePath);
-	return new WallObject(*texBuffer, SpriteOffset, Position, Size);
+	FStreamExts::ClearPath(&SpriteSource);
+	ExtGlRes_Sprite* spr = dynamic_cast<ExtGlRes_Sprite*>(ExternalGlobalResources::GetRes(SpriteSource));
+	return new WallObject(spr->Tex, spr->Offset, Position, Size);
 }

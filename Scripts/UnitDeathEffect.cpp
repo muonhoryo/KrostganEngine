@@ -8,7 +8,7 @@ using namespace KrostganEngine::Visual;
 using namespace KrostganEngine::GameObjects;
 
 UnitDeathEffect::UnitDeathEffect(float LifeTime, Vector2f RenOffset,Vector2f Position, float Size, Color SprColor)
-	:SingleSprite(*Engine::GetGlobalResources().UnitDeathEffectSprite,
+	:SingleSprite(ExternalGlobalResources::Get_UnitDeathEffect_Tex(),
 		Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution,
 		RenOffset,
 		Position,

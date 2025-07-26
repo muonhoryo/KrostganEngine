@@ -1,43 +1,50 @@
 #pragma once
 
+#include <Events.h>
+
 namespace KrostganEngine::GameObjects {
 	struct EntityBattleStats {
 	public:
-		EntityBattleStats();
+		EntityBattleStats(){}
 
+		enum class StatType {
+			MaxHP,
+			RegenHP_Amount,
+			RegenHP_Tick,
+			MovingSpeed,
+			AADamage,
+			AASpeed,
+			AARadius,
+			AutoAggrRadius
+		};
+
+		ExecutedEvent<StatType> StatChangedEvent;
+
+	private:
+		EventHandler<StatType> StatChangedEventHan = EventHandler<StatType>(StatChangedEvent);
+
+	public:
+
+		static	float	GetAACooldown	(float AASpeed) { return (float)1 / AASpeed; }
 		//HitPoint
-		size_t GetMaxHP() const;
-		size_t GetCurrentHP() const;
-		size_t GetHPRegenCount() const {
-			return RegenHP_Amount;
-		}
-		float GetHPRegenTick() const {
-			return RegenHP_Tick;
-		}
+		size_t	GetMaxHP()			const { return MaxHP; }
+
+		size_t	GetHPRegenCount()	const { return RegenHP_Amount; }
+		float	GetHPRegenTick()	const { return RegenHP_Tick; }
 		//Moving
-		float GetMovingSpeed() const;
+		float	GetMovingSpeed()	const { return MovingSpeed; }
 		//Attack
-		size_t GetAADamage() const;
-		float GetAASpeed() const;
-		float GetAACooldown() const;
-		float GetAARadius() const;
+		size_t	GetAADamage()		const { return AADamage; }
+		float	GetAASpeed()		const { return AASpeed; }
+		float	GetAACooldown()		const { return GetAACooldown(AASpeed); }
+		float	GetAARadius()		const { return AARadius; }
 		//View
-		float GetAutoAggrRadius() const;
+		float	GetAutoAggrRadius()	const { return AutoAggrRadius; }
 
 		//HitPoint
 		void SetMaxHP(size_t hp);
-		void SetCurrentHP(size_t hp);
-		void RestoreHealth();
-		void SetHPRegenAmount(size_t amount) {
-			if (amount >= 0) {
-				RegenHP_Amount = amount;
-			}
-		}
-		void SetHPRegenTick(float tick) {
-			if (tick > 0) {
-				RegenHP_Tick = tick;
-			}
-		}
+		void SetHPRegenAmount(size_t amount);
+		void SetHPRegenTick(float tick);
 		//Moving
 		void SetMovingSpeed(float speed);
 		//Attack
@@ -47,23 +54,19 @@ namespace KrostganEngine::GameObjects {
 		//View
 		void SetAutoAggrRadius(float radius);
 
-		static float GetAACooldown(float AASpeed) {
-			return (float)1 / AASpeed;
-		}
 
 	private:
 		//HitPoint
-		size_t MaxHP=1;
-		size_t CurrentHP=1;
-		size_t RegenHP_Amount=1;		//Amount of restored hp in 1 tick
-		float RegenHP_Tick=1;		//Cooldown between hp's restoring by regeneration
+		size_t	MaxHP			=	1;
+		size_t	RegenHP_Amount	=	1;		//Amount of restored hp in 1 tick
+		float	RegenHP_Tick	=	1;		//Cooldown between hp's restoring by regeneration
 		//Moving
-		float MovingSpeed=1;
+		float	MovingSpeed		=	1;
 		//Attack
-		size_t AADamage=0;
-		float AASpeed=0;		//Amount of dealt attack in 1 second
-		float AARadius=0;
+		size_t	AADamage		=	0;
+		float	AASpeed			=	0;		//Amount of dealt attack in 1 second
+		float	AARadius		=	0;
 		//View
-		float AutoAggrRadius=0;
+		float	AutoAggrRadius	=	0;
 	};
 }

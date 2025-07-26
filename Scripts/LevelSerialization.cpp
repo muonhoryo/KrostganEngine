@@ -35,34 +35,6 @@ LevelLoadingInfo& LevelSerialization::DeserializeLevel(string serPath) {
 
 					params.push_back(line);
 					map=&LevelCellMapDeser::Deserialize(params, &columnCount);
-
-					//LevelCellMapDeser::CellInfo* el=nullptr;
-					//float step = Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution;
-
-					//for (int i = 0;i < res.size();++i) {
-					//	for (int j = 0;j < columnCount;++j) {
-					//		if (j < res[i]->size()) {
-					//			el = (*res[i])[j];
-					//			if (el->CatalogID != LevelCellMapDeser::EMPTY_CATALOG_ID) {
-
-					//				ObjectsCatalog::GetObjectInfo(el->CatalogID)->InstanceObject(levelInfo,
-					//					Vector2f(j * step, i * step),
-					//					&el->AdditionalParams);
-					//			}
-					//			delete el;
-					//		}
-					//	}
-					//	delete res[i];
-					//}
-
-					//for (vector<LevelCellMapDeser::CellInfo*>* vec : res) {
-					//	for (LevelCellMapDeser::CellInfo* inf : *vec) {
-					//		delete inf;
-					//	}
-					//	vec->clear();
-					//	delete vec;
-					//}
-					//res.clear();
 					isDeserObstrMap = false;
 					mapDeserialized = true;
 					params.clear();

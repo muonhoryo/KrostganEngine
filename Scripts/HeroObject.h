@@ -34,9 +34,5 @@ namespace KrostganEngine::GameObjects {
 	public:
 		HeroObject(HeroObjectCtorParams& params);
 		virtual ~HeroObject();
-
-	protected:
-		const Texture& GetSelectionTexture() override;
-		float GetSelectSpriteMaxSize() override;
 	};
 }

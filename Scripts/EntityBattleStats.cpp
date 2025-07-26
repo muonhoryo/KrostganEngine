@@ -5,105 +5,82 @@
 using namespace std;
 using namespace KrostganEngine::GameObjects;
 
-EntityBattleStats::EntityBattleStats() 
-{
-	MovingSpeed = 0;
-	MaxHP = 1;
-	CurrentHP = 1;
-	AADamage = 0;
-	AASpeed = 0;
-	AARadius = 0;
-	AutoAggrRadius = 0;
-}
-
 //
 // 
 //HitPoint
 //
 //
-size_t EntityBattleStats::GetMaxHP() const {
-	return MaxHP;
-}
 void EntityBattleStats::SetMaxHP(size_t hp) {
 	if (hp == 0)
 		throw exception("Hit points count must be more than zero");
 
-	if (CurrentHP > hp)
-		CurrentHP = hp;
 	MaxHP = hp;
-}
-size_t EntityBattleStats::GetCurrentHP() const {
-	return CurrentHP;
-}
-void EntityBattleStats::SetCurrentHP(size_t hp) {
-	if (hp == 0)
-		throw exception("Hit points count must be more than zero");
 
-	if (hp > MaxHP)
-		CurrentHP = MaxHP;
-	else
-		CurrentHP = hp;
+	StatChangedEventHan.Execute(StatType::MaxHP);
 }
-void EntityBattleStats::RestoreHealth() {
-	SetCurrentHP(MaxHP);
+void EntityBattleStats::SetHPRegenAmount(size_t amount) {
+	if (amount >= 0) {
+		RegenHP_Amount = amount;
+	}
+
+	StatChangedEventHan.Execute(StatType::RegenHP_Amount);
+}
+void EntityBattleStats::SetHPRegenTick(float tick) {
+	if (tick > 0) {
+		RegenHP_Tick = tick;
+	}
+
+	StatChangedEventHan.Execute(StatType::RegenHP_Tick);
 }
 //
 //
 //Moving
 //
 //
-float EntityBattleStats::GetMovingSpeed() const {
-	return MovingSpeed;
-}
 void EntityBattleStats::SetMovingSpeed(float speed){
 	if (speed < 0)
 		throw exception("Moving spedd cannot be less than zero.");
 	
 	MovingSpeed = speed;
+
+	StatChangedEventHan.Execute(StatType::MovingSpeed);
 }
 //
 //
 //Attack
 //
 //
-size_t EntityBattleStats::GetAADamage() const {
-	return AADamage;
-}
 void EntityBattleStats::SetAADamage(size_t damage) {
 	AADamage = damage;
-}
-float EntityBattleStats::GetAASpeed() const {
-	return AASpeed;
-}
-float EntityBattleStats::GetAACooldown() const {
-	return GetAACooldown(AASpeed);
+
+	StatChangedEventHan.Execute(StatType::AADamage);
 }
 void EntityBattleStats::SetAASpeed(float speed) {
 	if (speed < 0)
 		throw exception("AA speed cannot be less than zero");
 
 	AASpeed = speed;
-}
-float EntityBattleStats::GetAARadius() const {
-	return AARadius;
+
+	StatChangedEventHan.Execute(StatType::AASpeed);
 }
 void EntityBattleStats::SetAARadius(float radius) {
 	if (radius < 0)
 		throw exception("AA radius cannot be less than zero");
 
 	AARadius = radius;
+
+	StatChangedEventHan.Execute(StatType::AARadius);
 }
 //
 // 
 // View
 // 
 //
-float EntityBattleStats::GetAutoAggrRadius()const {
-	return AutoAggrRadius;
-}
 void EntityBattleStats::SetAutoAggrRadius(float radius) {
 	if (radius < 0)
 		throw exception("AutoAggression radius cannot be less than zero");
 
 	AutoAggrRadius = radius;
+
+	StatChangedEventHan.Execute(StatType::AutoAggrRadius);
 }

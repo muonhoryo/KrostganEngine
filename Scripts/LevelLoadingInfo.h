@@ -19,10 +19,11 @@ namespace KrostganEngine::Core {
 	struct LoadedObjects;
 
 	struct GameObjectLoadInfo {
+
 		GameObjectLoadInfo(){}
+
 		string Name="";
-		string TexturePath="";
-		Vector2f SpriteOffset=Vector2f(0,0);
+		string SpriteSource="";
 		Vector2f Position = Vector2f(0, 0);
 		size_t CatalogID = 0;
 		float Size = 1;
@@ -33,16 +34,27 @@ namespace KrostganEngine::Core {
 		}
 	};
 
-	struct UnitLoadInfo : public GameObjectLoadInfo {
-		UnitLoadInfo() :GameObjectLoadInfo(),BattleStats(nullptr) {};
+	struct EntityLoadInfo : public GameObjectLoadInfo{
 
-		EntityBattleStats*	BattleStats;
-		Fraction	EntityFraction	=	Fraction::Neutral;
+		string HPBarSpriteSource	= "";
+		string HPBarMaskSource		= "";
+		string SelectionAreaSource	= "";
+
+	protected:
+		EntityLoadInfo():GameObjectLoadInfo(){}
+	};
+
+	struct UnitLoadInfo : public EntityLoadInfo{
+
+		UnitLoadInfo() : EntityLoadInfo(){}
+
+		EntityBattleStats*	BattleStats			=	nullptr ;
+		Fraction			EntityFraction		=	Fraction::Neutral;
 	
 		GameObject*	InstanceObject(LoadedObjects& levInfo, Vector2f position , vector<string>* additParams = nullptr) override;
 
 	protected:
-		UnitObjectCtorParams& GetUnitParams( );
+		UnitObjectCtorParams& GetUnitParams();
 	};
 
 	struct HeroLoadInfo : public UnitLoadInfo {

@@ -7,28 +7,32 @@ using namespace KrostganEngine::GameObjects;
 
 void CommonHPRegenModule::Regen(CallbackRecArgs_Upd& args) {
 
+	auto& stats = HPModule.GetStats();
+	size_t curHP = HPModule.GetCurrentHP();
+	size_t maxHP = stats.GetMaxHP();
 	if (IsRegen) {
 
 		float time = CooldownTimer.getElapsedTime().asSeconds();
-		float tick = BattleStats.GetHPRegenTick();
+		float tick = stats.GetHPRegenTick();
+		size_t regCount = stats.GetHPRegenCount();
 		if (time>= tick) {
 
 			CooldownTimer.restart();
-			size_t newHPCount = BattleStats.GetCurrentHP() + BattleStats.GetHPRegenCount();
-			if (newHPCount >= BattleStats.GetMaxHP()) {
-				cout << "Regen hp from " << BattleStats.GetCurrentHP() << " to " << BattleStats.GetMaxHP() << " / " << BattleStats.GetMaxHP() << endl;
-				BattleStats.RestoreHealth();
+			size_t newHPCount = curHP + regCount;
+			if (newHPCount >= maxHP) {
+				cout << "Regen hp from " << curHP << " to " << maxHP<< " / " << maxHP << endl;
+				HPModule.RestoreHealth();
 				IsRegen = false;
 			}
 			else {
-				cout << "Regen hp from " << BattleStats.GetCurrentHP() << " to " << newHPCount << " / " << BattleStats.GetMaxHP() << endl;
-				BattleStats.SetCurrentHP(newHPCount);
+				cout << "Regen hp from " << curHP<< " to " << newHPCount << " / " << maxHP << endl;
+				HPModule.SetCurrentHP(newHPCount);
 			}
 		}
 	}
 	else {
 
-		if (BattleStats.GetCurrentHP() < BattleStats.GetMaxHP()) {
+		if (curHP < maxHP) {
 			IsRegen = true;
 			CooldownTimer.restart();
 		}

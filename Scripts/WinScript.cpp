@@ -26,7 +26,7 @@ WinScript::WinScript()
 		{
 			auto& stats = hero->GetBattleStats();
 			stats.SetMaxHP(1000000);
-			stats.RestoreHealth();
+			hero->GetHPModule().RestoreHealth();
 			break;
 		}
 	}

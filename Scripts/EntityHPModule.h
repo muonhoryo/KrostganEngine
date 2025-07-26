@@ -3,8 +3,11 @@
 #include <EntityBattleStats.h>
 #include <IAttackableObj.h>
 #include <ICallbackRec_Upd.h>
+#include <CoreVisual.h>
 
+using namespace KrostganEngine;
 using namespace KrostganEngine::Core;
+using namespace KrostganEngine::Visual;
 
 namespace KrostganEngine::GameObjects {
 	
@@ -12,27 +15,58 @@ namespace KrostganEngine::GameObjects {
 
 	class EntityHPModule:public IHitPointModule {
 	public:
-		EntityHPModule(IDeathModule& DeathModule, EntityBattleStats& BattleStats)
-			:EntityHPModule(DeathModule,BattleStats,nullptr){
-		}
-		EntityHPModule(IDeathModule& DeathModule, EntityBattleStats& BattleStats, HPRegenModule* RegenModule);
-		~EntityHPModule();
+		EntityHPModule(
+			IDeathModule&		DeathModule, 
+			EntityBattleStats&	BattleStats,
+			IndicatorFill&		HPBar);
 
-		void TakeDamage(AttackInfo attInfo) override;
+		virtual ~EntityHPModule();
+
+		void TakeDamage		(AttackInfo attInfo) override;
+		void SetCurrentHP	(size_t hp) override;
+		void RestoreHealth	() override;
+		void SetRegenModule	(HPRegenModule* Module);
+
+		size_t			GetCurrentHP	()	const { return CurrentHP; }
+		size_t			GetMaxHP		()	const { return BattleStats.GetMaxHP(); }
+		HPRegenModule*	GetRegenModule	()	const { return RegenModule; }
 
 		const EntityBattleStats& GetStats() const {
 			return BattleStats;
 		}
 
 	private:
-		EntityBattleStats& BattleStats;
-		HPRegenModule* RegenModule;
+		EntityBattleStats&	BattleStats;
+		HPRegenModule*		RegenModule	= nullptr;
+		IndicatorFill&		HPBar;
+		size_t				CurrentHP	= 1;
+
+	private:
+		class StatChangedEvSubs : public IEventSubscriber<EntityBattleStats::StatType> {
+		public:
+			StatChangedEvSubs(EntityHPModule& Owner)
+				:Owner(Owner){}
+
+			void Execute(const EntityBattleStats::StatType& args) override {
+
+				if (args == EntityBattleStats::StatType::MaxHP) {
+					size_t hp = Owner.GetCurrentHP();
+					float rel = (float)hp/ (float)Owner.GetMaxHP();
+					Owner.SetCurrentHP(hp * rel);
+				}
+			}
+
+		private:
+			EntityHPModule& Owner;
+		};
+
+		StatChangedEvSubs* Subscriber;
 	};
 
 	class HPRegenModule : public ICallbackRec_Upd {
 
 	public:
-		virtual ~HPRegenModule(){ }
+		//virtual ~HPRegenModule(){ }
 
 		void Update(CallbackRecArgs_Upd args) override final {
 			if (IsActive) {
@@ -41,13 +75,14 @@ namespace KrostganEngine::GameObjects {
 		}
 
 	protected:
-		HPRegenModule(EntityBattleStats& BattleStats)
-			:BattleStats(BattleStats){
+		HPRegenModule(EntityHPModule& HPModule)
+			:HPModule(HPModule){
+
 		}
 
 		virtual void Regen(CallbackRecArgs_Upd& args) = 0;
 
-		EntityBattleStats & BattleStats;
-		bool IsActive = true;
+		EntityHPModule&			HPModule;
+		bool					IsActive		= true;
 	};
 }

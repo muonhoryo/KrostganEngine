@@ -9,33 +9,47 @@ using namespace KrostganEngine::Core;
 namespace KrostganEngine::Visual {
 	class SpriteRenderer :public ICallbackRec_GraphRen {
 	public:
-		SpriteRenderer(const Texture& RenTexture, Vector2f offset=Vector2f(0,0), Color SprColor = Color::White);
-		SpriteRenderer(const Texture& RenTexture, float maxSizeInPixels, Vector2f offset=Vector2f(0,0), Color SprColor = Color::White);
+		SpriteRenderer(
+			const Texture&	RenTexture, 
+			Vector2f		offset		=	Vector2f(0,0), 
+			Color			SprColor	=	Color::White,
+			Shader*			RendShader	=	nullptr);
+
+		SpriteRenderer(
+			const Texture&	RenTexture, 
+			float			maxSizeInPixels, 
+			Vector2f		offset				=	Vector2f(0,0), 
+			Color			SprColor			=	Color::White,
+			Shader*			RendShader			=	nullptr);
 
 		void RenderGraphic(RenderWindow& window) override;
 
-		const Texture& GetRenTexture();
-		Vector2f GetSpriteOffset();
-		Vector2f GetSpriteGlobalPosition();
-		Vector2f GetSpriteInharitedPosition();
-		float GetSpriteMinMaxRatio();
-		float GetMaxSpritePixSize();
-		float GetMinSpritePixSize();
-		Vector2f GetSpriteSize();
-		bool IsSpriteVertical();
-		Color GetSpriteColor();
+		const Texture&	GetRenTexture()					const;
+		Vector2f		GetSpriteOffset()				const;
+		Vector2f		GetSpriteGlobalPosition()		const;
+		Vector2f		GetSpriteInharitedPosition()	const;
+		float			GetSpriteMinMaxRatio()			const;
+		float			GetMaxSpritePixSize()			const;
+		float			GetMinSpritePixSize()			const;
+		Vector2f		GetSpriteSize()					const;
+		bool			IsSpriteVertical()				const;
+		Color			GetSpriteColor()				const;
+		Shader*			GetShader()						const;
 
-		void SetSpriteOffset(Vector2f offset);
-		void ResizeSprite(Vector2f maxSize);
-		virtual void SetSpriteColor(Color color);
+		void	SetSpriteOffset(Vector2f offset);
+		void	ResizeSprite(Vector2f maxSize);
+
+		virtual void	SetSpriteColor(Color color);
 	protected:
 		void SetSpriteInharitedPosition(Vector2f position);
 	private:
-		Sprite RenSprite;
-		Vector2f Offset;
-		float MinMaxSizeRatio;
-		bool IsVertical;
-		float TextureResizingMult;
-		Vector2f MainSize;
+		Sprite			RenSprite;
+		Vector2f		Offset;
+		float			MinMaxSizeRatio;
+		bool			IsVertical;
+		float			TextureResizingMult;
+		Vector2f		MainSize;
+		RenderStates	RenderSt;
+		Shader*			RendShader;
 	};
 }

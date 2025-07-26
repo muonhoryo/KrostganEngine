@@ -11,10 +11,3 @@ using namespace KrostganEngine::EntitiesControl;
 
 HeroObject::HeroObject(HeroObjectCtorParams& params) : UnitObject(params){}
 HeroObject::~HeroObject(){}
-
-const Texture& HeroObject::GetSelectionTexture() {
-	return *Engine::GetGlobalResources().HeroesSelectionAreaSprite;
-}
-float HeroObject::GetSelectSpriteMaxSize() {
-	return Engine::GetGlobalConsts().HeroesSelectArea_OneSizeSpriteResol;
-}

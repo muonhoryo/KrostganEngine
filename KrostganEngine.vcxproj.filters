@@ -196,9 +196,6 @@
     <Filter Include="Исходные файлы\CoreSystems\Visual">
       <UniqueIdentifier>{e26e5e4e-06d1-476a-b004-b816dafca3c5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Исходные файлы\CoreSystems\Visual\Effects">
-      <UniqueIdentifier>{becd9275-5422-4aa1-8496-bc86fe0d203b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Файлы заголовков\GameTransitionScripts">
       <UniqueIdentifier>{d8caed45-2a2b-4e06-a03a-917d01ba2626}</UniqueIdentifier>
     </Filter>
@@ -249,6 +246,27 @@
     </Filter>
     <Filter Include="Файлы заголовков\Memory\WatchPtr">
       <UniqueIdentifier>{de64cb8c-28c9-4052-945e-00f9fda3f754}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{e23544da-9d37-4890-8f32-471303f917ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Vertex">
+      <UniqueIdentifier>{7b105e64-cfab-4eaa-8b25-22c9755aa176}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Fragments">
+      <UniqueIdentifier>{e6bb497a-5eb6-4228-a3bb-1c0d74f7ec31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Visual">
+      <UniqueIdentifier>{e0da4216-6e5f-448a-a3e8-96965d20f43a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Visual\Effects">
+      <UniqueIdentifier>{becd9275-5422-4aa1-8496-bc86fe0d203b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems\ExternalResources\ExtGlResources">
+      <UniqueIdentifier>{6be9a988-779c-4b84-8bc4-63edcb9c2136}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems\ExternalResources\ExtGlResources\Resources">
+      <UniqueIdentifier>{cd438c38-5cb4-4fab-b905-b3d48dff4641}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -344,12 +362,6 @@
     </ClCompile>
     <ClCompile Include="Scripts\EngineConfigLoad.cpp">
       <Filter>Исходные файлы\CoreSystems\ExternalResources</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\SpriteRenderer.cpp">
-      <Filter>Исходные файлы\CoreSystems\UI/UX</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\SingleSprite.cpp">
-      <Filter>Исходные файлы\CoreSystems\UI/UX</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\HeroObject.cpp">
       <Filter>Исходные файлы\CoreSystems\GameObjects</Filter>
@@ -508,7 +520,7 @@
       <Filter>Исходные файлы\CoreSystems\GameObjects\FightingSystems\HitPointSystem\DeathModules</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\UnitDeathEffect.cpp">
-      <Filter>Исходные файлы\CoreSystems\Visual\Effects</Filter>
+      <Filter>Исходные файлы\Visual\Effects</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\UnitDeathModule.cpp">
       <Filter>Исходные файлы\CoreSystems\GameObjects\FightingSystems\HitPointSystem\DeathModules</Filter>
@@ -557,6 +569,18 @@
     </ClCompile>
     <ClCompile Include="Scripts\watch_ptr_handler_c.cpp">
       <Filter>Исходные файлы\Memory\WatchPointer</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\SingleSprite.cpp">
+      <Filter>Исходные файлы\CoreSystems\Visual</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\SpriteRenderer.cpp">
+      <Filter>Исходные файлы\CoreSystems\Visual</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\IndicatorFill.cpp">
+      <Filter>Исходные файлы\CoreSystems\Visual</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\ExternalGlobalResources.cpp">
+      <Filter>Исходные файлы\CoreSystems\ExternalResources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -617,9 +641,6 @@
     <ClInclude Include="Scripts\ICallbackRec_LUpd.h">
       <Filter>Файлы заголовков\CoreSystems\EngineCallbacks</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\ValuesListDeserializer.h">
-      <Filter>Файлы заголовков\CoreSystems</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\CorePlayerControl.h">
       <Filter>Файлы заголовков\CoreSystems\PlayerControl</Filter>
     </ClInclude>
@@ -665,12 +686,6 @@
     <ClInclude Include="Scripts\VectExts.h">
       <Filter>Файлы заголовков\Extensions</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\ExternalGlobalResources.h">
-      <Filter>Файлы заголовков\CoreSystems\ExternalResources</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\ExtGlobalResourcesLoad.h">
-      <Filter>Файлы заголовков\CoreSystems\ExternalResources</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\GlobalConstsLoad.h">
       <Filter>Файлы заголовков\CoreSystems\ExternalResources</Filter>
     </ClInclude>
@@ -712,9 +727,6 @@
     </ClInclude>
     <ClInclude Include="Scripts\BaseOrdersAndActions.h">
       <Filter>Файлы заголовков\CoreSystems\EntitiesControl\Orders</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\IAttackableObj.h">
-      <Filter>Файлы заголовков\CoreSystems\GameObjects\FightingSystems\HitPointSystem</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\AutoAttackModule.h">
       <Filter>Файлы заголовков\CoreSystems\GameObjects\FightingSystems\GameObjsBaseFightSystem</Filter>
@@ -881,9 +893,6 @@
     <ClInclude Include="Scripts\TextBlock.h">
       <Filter>Файлы заголовков\UI/UX</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\VisualOnDeathDestroyer.h">
-      <Filter>Файлы заголовков\CoreSystems\Visual</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\LoseScript.h">
       <Filter>Файлы заголовков\GameTransitionScripts</Filter>
     </ClInclude>
@@ -929,6 +938,39 @@
     <ClInclude Include="Scripts\watch_ptr.h">
       <Filter>Файлы заголовков\Memory\WatchPtr</Filter>
     </ClInclude>
+    <ClInclude Include="Scripts\IAttackableObj.h">
+      <Filter>Файлы заголовков\CoreSystems\GameObjects\FightingSystems\HitPointSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\VisualOnDeathDestroyer.h">
+      <Filter>Файлы заголовков\Debug\Visualization</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\ExternalGlobalResources.h">
+      <Filter>Файлы заголовков\CoreSystems\ExternalResources\ExtGlResources</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\ExtGlobalResourcesLoad.h">
+      <Filter>Файлы заголовков\CoreSystems\ExternalResources\ExtGlResources</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\ExtGlRes_Texture.h">
+      <Filter>Файлы заголовков\CoreSystems\ExternalResources\ExtGlResources\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\ExtGlResources.h">
+      <Filter>Файлы заголовков\CoreSystems\ExternalResources\ExtGlResources</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\ValuesListDeserializer.h">
+      <Filter>Файлы заголовков\CoreSystems\ExternalResources</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\ExtGlRes_Sprite.h">
+      <Filter>Файлы заголовков\CoreSystems\ExternalResources\ExtGlResources\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\ExtGlRes_Font.h">
+      <Filter>Файлы заголовков\CoreSystems\ExternalResources\ExtGlResources\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\ExtGlRes_Shader.h">
+      <Filter>Файлы заголовков\CoreSystems\ExternalResources\ExtGlResources\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\IndicatorFill.h">
+      <Filter>Файлы заголовков\CoreSystems\Visual</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Config.txt">
@@ -942,5 +984,10 @@
     <Image Include="Assets\Sprites\UnitSprite_Guardian.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Scripts\Shaders\MaskableImage.frag">
+      <Filter>Shaders\Fragments</Filter>
+    </None>
   </ItemGroup>
 </Project>
