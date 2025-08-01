@@ -5,43 +5,62 @@
 using namespace KrostganEngine::UI;
 using namespace KrostganEngine::GameObjects;
 
+
+LineAAAnimation::LineAAAnimation(TransformableObj& Owner)
+	:AutoAttackAnimation(Owner),
+	LineRender(Owner.GetPosition(), Owner.GetPosition(), Engine::GetGlobalConsts().AAAnim_LineWidth, Color::Red),
+	LineEffect(*new FadingVisualEff_MRes(LineRender)){
+
+	auto hitSpr = ExternalGlobalResources::GetRes_t<ExtGlRes_Sprite>(ExternalGlobalResources::CORE_RES_AA_HITSPRITE);
+	HitSprite = new SingleSprite(
+		hitSpr->Tex,
+		Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution,
+		hitSpr->Offset,
+		Owner.GetPosition(),
+		1,
+		Color::Red,
+		hitSpr->RenShader);
+	HitEffect = new FadingVisualEff_MRes(*HitSprite);
+	LineRender.AddEffect(LineEffect);
+	HitSprite->AddEffect(*HitEffect);
+}
+
 LineAAAnimation::~LineAAAnimation() {
 
 	if (Target != nullptr)
 		delete Target;
+	delete HitSprite;
+	delete HitEffect;
+	delete &LineEffect;
 }
 
 void LineAAAnimation::OnDealDmg(AutoAttackInfo attInfo) {
 
-	IsRender = true;
-	Cooldown = EntityBattleStats::GetAACooldown(attInfo.AASpeed);
-	HidingTimer.restart();
-	LineRender.SetColor(Color::Red);
+	float cdown = EntityBattleStats::GetAACooldown(attInfo.AASpeed);
+	LineEffect.ResetFade(cdown);
+	HitEffect->ResetFade(cdown);
 	Target = new watch_ptr_handler_wr<TransformableObj>(attInfo.Target);
 	LineRender.SetStart(Owner.GetPosition());
 	auto ptr = Target->GetPtr_t();
-	if(ptr!=nullptr)
+	if (ptr != nullptr) {
+
 		LineRender.SetEnd(ptr->GetPosition());
+		HitSprite->SetPosition(ptr->GetPosition());
+	}
+	
 }
 void LineAAAnimation::RenderGraphic(RenderWindow& window) {
 
-	if (IsRender) {
-		float time = HidingTimer.getElapsedTime().asSeconds();
-		if (time < Cooldown) {
+	if (LineEffect.GetIsFadingState()) {
 
-			LineRender.SetStart(Owner.GetPosition());
+		LineRender.SetStart(Owner.GetPosition());
+		if (Target != nullptr) {
 			auto ptr = Target->GetPtr_t();
-			if(ptr!=nullptr)
+			if (ptr != nullptr) {
+
 				LineRender.SetEnd(ptr->GetPosition());
-			float transparency = (Cooldown - time)/Cooldown;
-			Color clr = LineRender.GetEdgeColor();
-			clr = Color(clr.r, clr.g, clr.b, (Uint8)(transparency * 255));
-			LineRender.SetColor(clr);
-		}
-		else {
-			IsRender = false;
-			Color clr = LineRender.GetEdgeColor();
-			LineRender.SetColor(Color(clr.r, clr.g, clr.b, 0));
+				HitSprite->SetPosition(ptr->GetPosition());
+			}
 		}
 	}
 }

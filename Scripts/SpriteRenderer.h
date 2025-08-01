@@ -2,12 +2,13 @@
 
 #include <ICallbackRec_GraphRen.h>
 #include <SFML/Graphics.hpp>
+#include <VisualEffectsSystem.h>
 
 using namespace sf;
 using namespace KrostganEngine::Core;
 
 namespace KrostganEngine::Visual {
-	class SpriteRenderer :public ICallbackRec_GraphRen {
+	class SpriteRenderer :public ICallbackRec_GraphRen, public IColoredObject{
 	public:
 		SpriteRenderer(
 			const Texture&	RenTexture, 
@@ -24,22 +25,22 @@ namespace KrostganEngine::Visual {
 
 		void RenderGraphic(RenderWindow& window) override;
 
-		const Texture&	GetRenTexture()					const;
-		Vector2f		GetSpriteOffset()				const;
-		Vector2f		GetSpriteGlobalPosition()		const;
-		Vector2f		GetSpriteInharitedPosition()	const;
-		float			GetSpriteMinMaxRatio()			const;
-		float			GetMaxSpritePixSize()			const;
-		float			GetMinSpritePixSize()			const;
-		Vector2f		GetSpriteSize()					const;
-		bool			IsSpriteVertical()				const;
-		Color			GetSpriteColor()				const;
-		Shader*			GetShader()						const;
-
+		const Texture&	GetRenTexture				() const;
+		Vector2f		GetSpriteOffset				() const;
+		Vector2f		GetSpriteGlobalPosition		() const;
+		Vector2f		GetSpriteInharitedPosition	() const;
+		float			GetSpriteMinMaxRatio		() const;
+		float			GetMaxSpritePixSize			() const;
+		float			GetMinSpritePixSize			() const;
+		Vector2f		GetSpriteSize				() const;
+		bool			IsSpriteVertical			() const;
+		Shader*			GetShader					() const;
+		
 		void	SetSpriteOffset(Vector2f offset);
 		void	ResizeSprite(Vector2f maxSize);
 
-		virtual void	SetSpriteColor(Color color);
+		void			SetColor(Color color) override;
+		Color			GetColor() const override;
 	protected:
 		void SetSpriteInharitedPosition(Vector2f position);
 	private:

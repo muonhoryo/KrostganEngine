@@ -51,17 +51,6 @@ void ExtGlobalResourcesLoad::LoadAdditionalResources() {
 		ExternalGlobalResources::AddRes(DeserRes());
 	}
 	ParamsBuffer.clear();
-
-	//LoadedGlobalResources->UnitsSelectionAreaSprite = LoadTextureByPathDef(ExternalGlobalResources::DEF_UNITS_SELECTIONAREA_SPRITE_PATH, *buffer);
-	//LoadedGlobalResources->HeroesSelectionAreaSprite = LoadTextureByPathDef(ExternalGlobalResources::DEF_HEROES_SELECTIONAREA_SPRITE_PATH, *buffer);
-	//LoadedGlobalResources->CursorSprite_Attack = LoadTextureByPathDef(ExternalGlobalResources::DEF_CURSOR_ATTACK_SPRITE_PATH, *buffer);
-	//LoadedGlobalResources->UnitDeathEffectSprite = LoadTextureByPathDef(ExternalGlobalResources::DEF_UNIT_DEATHEFFECT_SPRITE_PATH, *buffer);
-	//LoadedGlobalResources->UnitsHPBarSpritePath = LoadTextureByPathDef(ExternalGlobalResources::DEF_UNITS_HP_BAR_SPRITE_PATH, *buffer);
-	//LoadedGlobalResources->HeroesHPBarSpritePath = LoadTextureByPathDef(ExternalGlobalResources::DEF_HEROES_HP_BAR_SPRITE_PATH, *buffer);
-	//LoadedGlobalResources->UnitsHPBarMaskPath = LoadTextureByPathDef(ExternalGlobalResources::DEF_UNITS_HP_BAR_MASK_PATH, *buffer);
-	//LoadedGlobalResources->HeroesHPBarMaskPath = LoadTextureByPathDef(ExternalGlobalResources::DEF_HEROES_HP_BAR_MASK_PATH, *buffer);
-
-	//LoadedGlobalResources->DefaultFont = LoadFontByDefinition(ExternalGlobalResources::DEF_DEFAULT_FONT_PATH, *buffer);
 }
 void ExtGlobalResourcesLoad::LoadCoreResources() {
 

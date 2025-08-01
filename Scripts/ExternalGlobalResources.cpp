@@ -11,6 +11,3 @@ const Font& ExternalGlobalResources::Get_DefaultFont() {
 const Texture& ExternalGlobalResources::Get_CursorTex_Attack() {
 	return GetRes_t<ExtGlRes_Texture>(CORE_RES_CURSORTEX_ATTACK)->Tex;
 }
-const Texture& ExternalGlobalResources::Get_UnitDeathEffect_Tex() {
-	return GetRes_t<ExtGlRes_Texture>(CORE_RES_UNIT_DEATHEFFECT_TEX)->Tex;
-}

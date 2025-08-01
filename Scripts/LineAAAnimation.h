@@ -3,20 +3,18 @@
 #include <AutoAttackAnimation.h>
 #include <CoreUIUX.h>
 #include <Engine.h>
+#include <GameVisualEffects.h>
 
 using namespace std;
 using namespace sf;
 using namespace KrostganEngine::GameObjects;
+using namespace KrostganEngine::Visual;
 
 namespace KrostganEngine::UI {
 	class LineAAAnimation :public AutoAttackAnimation ,public ICallbackRec_GraphRen{
 
 	public:
-		LineAAAnimation(TransformableObj& Owner) : AutoAttackAnimation(Owner),
-			LineRender(Owner.GetPosition(),Owner.GetPosition(),Engine::GetGlobalConsts().AAAnim_LineWidth, Color::Red),
-			Target(nullptr){
-
-		}
+		LineAAAnimation(TransformableObj& Owner);
 		~LineAAAnimation();
 
 		void OnDealDmg(AutoAttackInfo attInfo) override;
@@ -25,9 +23,9 @@ namespace KrostganEngine::UI {
 
 	private:
 		WideLineVisual LineRender;
-		float Cooldown=0;
-		Clock HidingTimer;
-		bool IsRender = false;
-		watch_ptr_handler_wr<TransformableObj>* Target;
+		SingleSprite* HitSprite=nullptr;
+		FadingVisualEff_MRes& LineEffect;
+		FadingVisualEff_MRes* HitEffect = nullptr;
+		watch_ptr_handler_wr<TransformableObj>* Target = nullptr;
 	};
 }

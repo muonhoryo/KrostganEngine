@@ -268,6 +268,18 @@
     <Filter Include="Файлы заголовков\CoreSystems\ExternalResources\ExtGlResources\Resources">
       <UniqueIdentifier>{cd438c38-5cb4-4fab-b905-b3d48dff4641}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems\Visual\VisualEffectsSystem">
+      <UniqueIdentifier>{1fe1d200-0000-4462-8137-06f9ba69171b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems\Visual\VisualEffectsSystem\EffectObjects">
+      <UniqueIdentifier>{064bf444-ccf0-49d3-96ba-8e012748a098}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Visual\Effects\Fading">
+      <UniqueIdentifier>{060b0921-92c2-4c05-b1bb-5b4a13da804b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Visual\Effects\Fading">
+      <UniqueIdentifier>{a58fa376-0df0-4ced-b634-5c6696476a6f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\main.cpp">
@@ -519,9 +531,6 @@
     <ClCompile Include="Scripts\EntityDeathModule.cpp">
       <Filter>Исходные файлы\CoreSystems\GameObjects\FightingSystems\HitPointSystem\DeathModules</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\UnitDeathEffect.cpp">
-      <Filter>Исходные файлы\Visual\Effects</Filter>
-    </ClCompile>
     <ClCompile Include="Scripts\UnitDeathModule.cpp">
       <Filter>Исходные файлы\CoreSystems\GameObjects\FightingSystems\HitPointSystem\DeathModules</Filter>
     </ClCompile>
@@ -581,6 +590,15 @@
     </ClCompile>
     <ClCompile Include="Scripts\ExternalGlobalResources.cpp">
       <Filter>Исходные файлы\CoreSystems\ExternalResources</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\FadingVisualEffect.cpp">
+      <Filter>Исходные файлы\Visual\Effects\Fading</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\FadingVisualEff_Des.cpp">
+      <Filter>Исходные файлы\Visual\Effects\Fading</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\FadingVisualEff_MRes.cpp">
+      <Filter>Исходные файлы\Visual\Effects\Fading</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -881,9 +899,6 @@
     <ClInclude Include="Scripts\SingleSprite.h">
       <Filter>Файлы заголовков\CoreSystems\Visual</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\UnitDeathEffect.h">
-      <Filter>Файлы заголовков\Visual\Effects</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\GameVisualEffects.h">
       <Filter>Файлы заголовков\Visual\Effects</Filter>
     </ClInclude>
@@ -970,6 +985,27 @@
     </ClInclude>
     <ClInclude Include="Scripts\IndicatorFill.h">
       <Filter>Файлы заголовков\CoreSystems\Visual</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\VisualEffectsSystem.h">
+      <Filter>Файлы заголовков\CoreSystems\Visual\VisualEffectsSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\VisualEffectsCore.h">
+      <Filter>Файлы заголовков\CoreSystems\Visual\VisualEffectsSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\IColoredObject.h">
+      <Filter>Файлы заголовков\CoreSystems\Visual\VisualEffectsSystem\EffectObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\EffectObjects.h">
+      <Filter>Файлы заголовков\CoreSystems\Visual\VisualEffectsSystem\EffectObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\FadingVisualEff_Des.h">
+      <Filter>Файлы заголовков\Visual\Effects\Fading</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\FadingVisualEffect.h">
+      <Filter>Файлы заголовков\Visual\Effects\Fading</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\FadingVisualEff_MRes.h">
+      <Filter>Файлы заголовков\Visual\Effects\Fading</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

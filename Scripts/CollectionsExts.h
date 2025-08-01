@@ -36,5 +36,26 @@ namespace KrostganEngine {
 			}
 			return false;
 		}
+
+		/// <summary>
+		/// Return true if element was removed
+		/// </summary>
+		/// <typeparam name="TCollectionsType"></typeparam>
+		/// <typeparam name="TElementsType"></typeparam>
+		/// <param name="list"></param>
+		/// <param name="elementToRem"></param>
+		/// <returns></returns>
+		template <typename TCollectionsType, typename TElementsType>
+		static bool Remove(TCollectionsType& list, TElementsType const& elementToRem) {
+			auto it = list.begin();
+			auto end = list.end();
+			for (;it != end;++it) {
+				if ((*it) == elementToRem) {
+					list.erase(it);
+					return true;
+				}
+			}
+			return false;
+		}
 	};
 }

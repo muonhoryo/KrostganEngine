@@ -34,28 +34,15 @@ namespace KrostganEngine::Core {
 
 	public:
 		//Core resources
-		static inline const size_t CORE_RES_COUNT = 3;
+		static inline const size_t CORE_RES_COUNT = 4;
 
 		static inline const string CORE_RES_DEFAULT_FONT			= "Default_Font";
 		static inline const string CORE_RES_CURSORTEX_ATTACK		= "CursorTex_Attack";
-		static inline const string CORE_RES_UNIT_DEATHEFFECT_TEX	= "UnitDeathEffect_Tex";
+		static inline const string CORE_RES_UNIT_DEATHEFFECT		= "UnitDeathEffectSprite";
+		static inline const string CORE_RES_AA_HITSPRITE			= "AAHitSprite";
 
 		static const Font&		Get_DefaultFont();
 		static const Texture&	Get_CursorTex_Attack();
-		static const Texture&	Get_UnitDeathEffect_Tex();
-
-		//static inline const string CORE_RES_DEFAULT_CURSOR_TEX	= "Default_CursorTex";
-
-		//static inline const string DEF_UNITS_SELECTIONAREA_SPRITE_PATH = "UnitsSelectionAreaSprPath";
-		//static inline const string DEF_HEROES_SELECTIONAREA_SPRITE_PATH = "HeroesSelectionAreaSprPath";
-		//static inline const string DEF_CURSOR_ATTACK_SPRITE_PATH = "CursorSprite_Attack";
-		//static inline const string DEF_UNIT_DEATHEFFECT_SPRITE_PATH = "UnitDeathEffectSprite";
-		//static inline const string DEF_UNITS_HP_BAR_SPRITE_PATH = "UnitsHPBarSprPath";
-		//static inline const string DEF_HEROES_HP_BAR_SPRITE_PATH = "HeroesHPBarSprPath";
-		//static inline const string DEF_UNITS_HP_BAR_MASK_PATH = "UnitsHPBarMaskPath";
-		//static inline const string DEF_HEROES_HP_BAR_MASK_PATH = "HeroesHPBarMaskPath";
-
-		//static inline const string DEF_DEFAULT_FONT_PATH = "DefaultFont";
 
 	private:
 		ExternalGlobalResources(){}

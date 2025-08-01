@@ -68,7 +68,7 @@ namespace KrostganEngine::GameObjects {
 
 		void SetPosition	(Vector2f position) override;
 		void SetScale		(float scale) override;
-		void SetSpriteColor	(Color color) override;
+		void SetColor		(Color color) override;
 
 		void						RenderGraphic	(RenderWindow& window) override;
 		void						Update			(CallbackRecArgs_LUpd args) override;

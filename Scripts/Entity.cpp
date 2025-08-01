@@ -46,7 +46,7 @@ Entity::Entity(EntityCtorParams& params)
 
 	SetPosition(GetPosition());
 	SetScale(GetScale());
-	SetSpriteColor(GetSpriteColor());
+	SetColor(GetColor());
 
 	EntitiesObserver::AddEntity(this);
 }
@@ -70,7 +70,7 @@ void Entity::SelectionOn() {
 			SelectionSpriteSource->Offset, 
 			GetPosition(),
 			GetScale(),
-			GetSpriteColor());
+			GetColor());
 	}
 }
 void Entity::SelectionOff() {
@@ -99,11 +99,11 @@ void Entity::SetScale(float scale) {
 		SelectionSprite->SetScale(scale);
 	HPBar->SetScale(scale);
 }
-void Entity::SetSpriteColor(Color color) {
-	SpriteRenderer::SetSpriteColor(color);
+void Entity::SetColor(Color color) {
+	SpriteRenderer::SetColor(color);
 	if(SelectionSprite!=nullptr)
-		SelectionSprite->SetSpriteColor(color);
-	HPBar->SetSpriteColor(color);
+		SelectionSprite->SetColor(color);
+	HPBar->SetColor(color);
 }
 
 void Entity::RenderGraphic(RenderWindow& window) {

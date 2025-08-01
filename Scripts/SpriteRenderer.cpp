@@ -52,33 +52,34 @@ SpriteRenderer::SpriteRenderer(
 	}
 	TextureResizingMult = maxSizeInPixels / GetMaxSpritePixSize();
 	ResizeSprite(Vector2f(1, 1));
-	SetSpriteColor(SprColor);
+	SetColor(SprColor);
 }
 
 void	SpriteRenderer::RenderGraphic	(RenderWindow& window) {
 
 	window.draw(RenSprite,RenderSt);
+	UpdateEffects();
 }
 
-const Texture&	SpriteRenderer::GetRenTexture()				const{
+const Texture&	SpriteRenderer::GetRenTexture() const{
 	return *RenSprite.getTexture();
 }
-Vector2f		SpriteRenderer::GetSpriteOffset()			const{
+Vector2f		SpriteRenderer::GetSpriteOffset() const{
 	return Offset;
 }
-Vector2f		SpriteRenderer::GetSpriteGlobalPosition()	const{
+Vector2f		SpriteRenderer::GetSpriteGlobalPosition() const{
 	return RenSprite.getPosition();
 }
 Vector2f		SpriteRenderer::GetSpriteInharitedPosition() const{
 	return  GetSpriteGlobalPosition()-GetSpriteOffset();
 }
-float			SpriteRenderer::GetSpriteMinMaxRatio()		const{
+float			SpriteRenderer::GetSpriteMinMaxRatio() const{
 	return MinMaxSizeRatio;
 }
-bool			SpriteRenderer::IsSpriteVertical()			const{
+bool			SpriteRenderer::IsSpriteVertical() const{
 	return IsVertical;
 }
-float			SpriteRenderer::GetMaxSpritePixSize()		const{
+float			SpriteRenderer::GetMaxSpritePixSize() const{
 	if (IsVertical) {
 		return RenSprite.getTexture()->getSize().y* RenSprite.getScale().y;
 	}
@@ -86,7 +87,7 @@ float			SpriteRenderer::GetMaxSpritePixSize()		const{
 		return RenSprite.getTexture()->getSize().x * RenSprite.getScale().x;
 	}
 }
-float			SpriteRenderer::GetMinSpritePixSize()		const{
+float			SpriteRenderer::GetMinSpritePixSize() const{
 	if (IsVertical) {
 		return RenSprite.getTexture()->getSize().x * RenSprite.getScale().x;
 	}
@@ -94,13 +95,13 @@ float			SpriteRenderer::GetMinSpritePixSize()		const{
 		return RenSprite.getTexture()->getSize().y * RenSprite.getScale().y;
 	}
 }
-Vector2f		SpriteRenderer::GetSpriteSize()				const{
+Vector2f		SpriteRenderer::GetSpriteSize() const{
 	return MainSize;
 }
-Color			SpriteRenderer::GetSpriteColor()			const{
+Color			SpriteRenderer::GetColor() const{
 	return RenSprite.getColor();
 }
-Shader*			SpriteRenderer::GetShader()					const {
+Shader*			SpriteRenderer::GetShader() const {
 	return RendShader;
 }
 
@@ -114,7 +115,7 @@ void	SpriteRenderer::ResizeSprite	(Vector2f size) {
 	RenSprite.setScale(newScale);
 	MainSize = size;
 }
-void	SpriteRenderer::SetSpriteColor	(Color color) {
+void	SpriteRenderer::SetColor		(Color color) {
 	RenSprite.setColor(color);
 }
 

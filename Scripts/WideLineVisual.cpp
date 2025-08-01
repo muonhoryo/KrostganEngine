@@ -2,6 +2,8 @@
 #include <PrimitiveVisualShapes.h>
 #include <Extensions.h>
 
+#include <iostream>
+
 using namespace std;
 using namespace sf;
 using namespace KrostganEngine;
@@ -20,6 +22,7 @@ WideLineVisual::WideLineVisual(Vector2f Start, Vector2f End, float Width, Color 
 
 void WideLineVisual::RenderGraphic(RenderWindow& window) {
 	window.draw(Vertexes);
+	UpdateEffects();
 }
 
 void WideLineVisual::SetStart(Vector2f start) {
@@ -46,6 +49,7 @@ void WideLineVisual::SetColor(Color color) {
 	Vertexes[1].color = color;
 	Vertexes[2].color = color;
 	Vertexes[3].color = color;
+	LineColor = color;
 }
 
 void WideLineVisual::Rebuild() {
@@ -56,4 +60,9 @@ void WideLineVisual::Rebuild() {
 	Vertexes[1] = Start - n;
 	Vertexes[2] = End + n;
 	Vertexes[3] = End - n;
+
+	Vertexes[0].color = LineColor;
+	Vertexes[1].color = LineColor;
+	Vertexes[2].color = LineColor;
+	Vertexes[3].color = LineColor;
 }

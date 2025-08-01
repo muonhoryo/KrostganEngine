@@ -4,10 +4,12 @@
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include <VisualEffectsSystem.h>
 
 using namespace sf;
 using namespace std;
 using namespace KrostganEngine::Core;
+using namespace KrostganEngine::Visual;
 
 namespace KrostganEngine::UI {
 	class QuadVisPrimitive :public ICallbackRec_GraphPostRen {
@@ -71,10 +73,10 @@ namespace KrostganEngine::UI {
 		VertexArray Vertexes;
 	};
 
-	class WideLineVisual :public ICallbackRec_GraphPostRen {
+	class WideLineVisual :public ICallbackRec_GraphPostRen, public IColoredObject{
 	public:
 		WideLineVisual(Vector2f Start, Vector2f End, float Width, Color LineColor);
-		~WideLineVisual(){}
+		virtual ~WideLineVisual(){}
 
 		Vector2f GetStart() const {
 			return Start;
@@ -85,7 +87,7 @@ namespace KrostganEngine::UI {
 		float GetWidth() const {
 			return Width;
 		}
-		Color GetEdgeColor() const{
+		Color GetColor() const{
 			return LineColor;
 		}
 
