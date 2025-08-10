@@ -27,5 +27,5 @@ bool EntityAction_FollowObject::CheckExecCondition() {
 void EntityAction_FollowObject::Execute() {
 	auto ptr = Target.GetPtr_t();
 	if(ptr!=nullptr)
-		MoveTo(ptr->GetPosition());
+		MoveTo(ptr->GetGlobalPosition());
 }

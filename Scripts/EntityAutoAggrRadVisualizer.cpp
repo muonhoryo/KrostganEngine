@@ -15,7 +15,7 @@ EntityAutoAggrRadVisualizer ::~EntityAutoAggrRadVisualizer() {
 }
 
 void EntityAutoAggrRadVisualizer::RenderGraphic(RenderWindow& window) {
-	SetCenter(Owner.GetPosition());
+	SetCenter(Owner.GetGlobalPosition());
 	float size = Owner.GetBattleStats().GetAutoAggrRadius();
 	if (abs(size - GetRadius()) > eps)
 		SetRadius(size);

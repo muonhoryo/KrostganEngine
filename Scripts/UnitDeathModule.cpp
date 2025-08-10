@@ -10,11 +10,10 @@ using namespace KrostganEngine;
 void UnitDeathModule::Death() {
 
 	auto dSprRes = ExternalGlobalResources::GetRes_t<ExtGlRes_Sprite>(ExternalGlobalResources::CORE_RES_UNIT_DEATHEFFECT);
-	auto dSpr = new SingleSprite(
+	auto dSpr = new SquareScaleSprite(
 		dSprRes->Tex,
 		Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution,
-		dSprRes->Offset,
-		Owner.GetPosition(),
+		Owner.GetGlobalPosition(),
 		1,
 		dynamic_cast<UnitObject*>(&Owner)->GetColor(),
 		dSprRes->RenShader);

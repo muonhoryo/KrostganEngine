@@ -11,16 +11,13 @@ namespace KrostganEngine::Core {
 		ExtGlRes_Sprite(
 			const string&	Name,
 			const Texture&	Tex,
-			Vector2f		Offset,
 			float			MaxSize,
 			Shader*	RenShader)
 				:ExtGlRes_Texture(Name,Tex),
-				Offset			(Offset),
 				MaxSize			(MaxSize),
 				RenShader		(RenShader)
 		{}
 
-		const Vector2f	Offset;
 		const float		MaxSize;
 		Shader*			RenShader	= nullptr;
 	};

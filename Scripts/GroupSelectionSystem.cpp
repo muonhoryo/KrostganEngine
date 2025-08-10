@@ -84,7 +84,7 @@ void GroupSelectionSystem::Add(ISelectableEntity*& entity) {
 
 	GameObject* ref = dynamic_cast<GameObject*>(entity);
 	if (ref != nullptr) {
-		cout <<ToString(ref->GetSpriteGlobalPosition()) << endl;
+		cout <<ToString(ref->GetGlobalPosition()) << endl;
 	}
 	else {
 		cout << " null " << endl;

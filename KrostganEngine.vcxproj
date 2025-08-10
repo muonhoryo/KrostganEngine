@@ -222,7 +222,7 @@
     <ClCompile Include="Scripts\OrderTargetVisualizer.cpp" />
     <ClCompile Include="Scripts\PhysicsEngine.cpp" />
     <ClCompile Include="Scripts\QuadVisPrimitive.cpp" />
-    <ClCompile Include="Scripts\SingleSprite.cpp" />
+    <ClCompile Include="Scripts\SquareScaleSprite.cpp" />
     <ClCompile Include="Scripts\SpriteRenderer.cpp" />
     <ClCompile Include="Scripts\Engine.cpp" />
     <ClCompile Include="Scripts\LevelDeserializationMode.cpp" />
@@ -280,6 +280,7 @@
     <ClInclude Include="Scripts\ICallbackRec_GraphPostRen.h" />
     <ClInclude Include="Scripts\IColoredObject.h" />
     <ClInclude Include="Scripts\IndicatorFill.h" />
+    <ClInclude Include="Scripts\ITransfObj.h" />
     <ClInclude Include="Scripts\kv_memory.h" />
     <ClInclude Include="Scripts\LevelBypassMap.h" />
     <ClInclude Include="Scripts\LevelCellMapDeser.h" />
@@ -357,7 +358,7 @@
     <ClInclude Include="Scripts\PhysicsLayer.h" />
     <ClInclude Include="Scripts\CorePlayerControl.h" />
     <ClInclude Include="Scripts\PrimitiveVisualShapes.h" />
-    <ClInclude Include="Scripts\SingleSprite.h" />
+    <ClInclude Include="Scripts\SquareScaleSprite.h" />
     <ClInclude Include="Scripts\SpriteRenderer.h" />
     <ClInclude Include="Scripts\Engine.h" />
     <ClInclude Include="Scripts\EngineCore.h" />

@@ -10,38 +10,20 @@ using namespace sf;
 using namespace KrostganEngine::Visual;
 using namespace KrostganEngine::Core;
 
-SpriteRenderer::SpriteRenderer(
-	const Texture&	RenTexture, 
-	Vector2f		Offset, 
-	Color			SprColor,
-	Shader*			RendShader)
-		
-	:SpriteRenderer(
-		RenTexture, 
-		(float)max(RenTexture.getSize().x, RenTexture.getSize().y), 
-		Offset,
-		SprColor,
-		RendShader)
-{
-	
-}
-SpriteRenderer::SpriteRenderer(
-	const Texture&	RenTexture, 
-	float			maxSizeInPixels, 
-	Vector2f		Offset, 
-	Color			SprColor,
-	Shader*			RendShader) 
-		:ICallbackRec_GraphRen(),
-		Offset		(Offset),
-		RendShader	(RendShader){
+//
+//
+//ctors
+//
+//
 
-	if (RendShader != nullptr)		
+void SpriteRenderer::ctor_Initialize(const Texture& renTexture,float maxSizeInPixels) {
+
+	if (RendShader != nullptr)
 		RenderSt.shader = RendShader;
 
-	RenSprite.setTexture(RenTexture);
-	Vector2u texSize = RenTexture.getSize();
-	RenSprite.setOrigin(Vector2f((float)texSize.x/2,(float)texSize.y/2));
-	Vector2u size = RenTexture.getSize();
+	RenSprite->setTexture(renTexture);
+	Texture tex;
+	Vector2u size = renTexture.getSize();
 	if (size.x < size.y) {
 		MinMaxSizeRatio = (float)size.x / (float)size.y;
 		IsVertical = true;
@@ -50,75 +32,169 @@ SpriteRenderer::SpriteRenderer(
 		MinMaxSizeRatio = (float)size.y / (float)size.x;
 		IsVertical = false;
 	}
-	TextureResizingMult = maxSizeInPixels / GetMaxSpritePixSize();
-	ResizeSprite(Vector2f(1, 1));
+	TextureResizingCoef = maxSizeInPixels / max(size.x, size.y);
+
+}
+Sprite& SpriteRenderer::ctor_InitOwner() {
+	RenSprite = new Sprite();
+	return *RenSprite;
+}
+
+SpriteRenderer::SpriteRenderer(
+	const Texture&	RenTexture,
+	Vector2f		GlobalPosition,
+	Vector2f		GlobalScale,
+	Color			SprColor,
+	Shader*			RendShader)
+		
+	:SpriteRenderer(
+		RenTexture,
+		(float)max(RenTexture.getSize().x, RenTexture.getSize().y),
+		GlobalPosition,
+		GlobalScale,
+		SprColor,
+		RendShader)
+{}
+
+SpriteRenderer::SpriteRenderer(
+	const Texture&	RenTexture, 
+	float			maxSizeInPixels,
+	Vector2f		GlobalPosition,
+	Vector2f		GlobalScale,
+	Color			SprColor,
+	Shader*			RendShader) 
+		:ICallbackRec_GraphRen(),
+		TransformableObj(ctor_InitOwner(), GlobalPosition, GlobalScale, ctor_GetOrigin(RenTexture)),
+		RendShader	(RendShader){
+
+	ctor_Initialize(RenTexture,maxSizeInPixels);
+
+	SetGlobalScale(GlobalScale*TextureResizingCoef);
+	SetGlobalPosition(GlobalPosition);
 	SetColor(SprColor);
 }
 
-void	SpriteRenderer::RenderGraphic	(RenderWindow& window) {
+SpriteRenderer::SpriteRenderer(
+	const Texture&		RenTexture,
+	TransformableObj&	Parent,
+	Vector2f			GlobalPosition,
+	Vector2f			LocalScale,
+	Color				SprColor,
+	Shader*				RendShader)
+	
+	:SpriteRenderer(
+		RenTexture,
+		Parent,
+		(float)max(RenTexture.getSize().x,RenTexture.getSize().y),
+		GlobalPosition,
+		LocalScale,
+		SprColor,
+		RendShader)
+{}
 
-	window.draw(RenSprite,RenderSt);
-	UpdateEffects();
+SpriteRenderer::SpriteRenderer(
+	const Texture& RenTexture,
+	TransformableObj& Parent,
+	float				maxSizeInPixels,
+	Vector2f			GlobalPosition,
+	Vector2f			LocalScale,
+	Color				SprColor,
+	Shader*				RendShader)
+		:ICallbackRec_GraphRen(),
+		TransformableObj(ctor_InitOwner(),Parent, GlobalPosition,LocalScale,ctor_GetOrigin(RenTexture)),
+		RendShader(RendShader) {
+
+	ctor_Initialize(RenTexture, maxSizeInPixels);
+
+	SetLocalScale(LocalScale * TextureResizingCoef);
+	SetGlobalPosition(GlobalPosition);
+	SetColor(SprColor);
 }
 
-const Texture&	SpriteRenderer::GetRenTexture() const{
-	return *RenSprite.getTexture();
+SpriteRenderer::~SpriteRenderer() {
+	delete RenSprite;
 }
-Vector2f		SpriteRenderer::GetSpriteOffset() const{
-	return Offset;
+
+//
+//
+//getters
+//
+//
+
+const Texture& SpriteRenderer::GetRenTexture() const {
+	return *RenSprite->getTexture();
 }
-Vector2f		SpriteRenderer::GetSpriteGlobalPosition() const{
-	return RenSprite.getPosition();
-}
-Vector2f		SpriteRenderer::GetSpriteInharitedPosition() const{
-	return  GetSpriteGlobalPosition()-GetSpriteOffset();
-}
-float			SpriteRenderer::GetSpriteMinMaxRatio() const{
+float			SpriteRenderer::GetSpriteMinMaxRatio() const {
 	return MinMaxSizeRatio;
 }
-bool			SpriteRenderer::IsSpriteVertical() const{
+bool			SpriteRenderer::IsSpriteVertical() const {
 	return IsVertical;
 }
-float			SpriteRenderer::GetMaxSpritePixSize() const{
-	if (IsVertical) {
-		return RenSprite.getTexture()->getSize().y* RenSprite.getScale().y;
+
+float	SpriteRenderer::GetMaxSpritePixSize() const {
+	return GetSpritePixSize(true);
+}
+float	SpriteRenderer::GetMinSpritePixSize() const {
+	return GetSpritePixSize(false);
+}
+float	SpriteRenderer::GetSpritePixSize(bool isMax) const {
+	Vector2f scale = RenSprite->getScale();
+	if (IsVertical == isMax) {
+
+		return RenSprite->getTexture()->getSize().y * scale.y;
 	}
 	else {
-		return RenSprite.getTexture()->getSize().x * RenSprite.getScale().x;
+
+		return RenSprite->getTexture()->getSize().x * scale.x;
 	}
 }
-float			SpriteRenderer::GetMinSpritePixSize() const{
-	if (IsVertical) {
-		return RenSprite.getTexture()->getSize().x * RenSprite.getScale().x;
-	}
-	else {
-		return RenSprite.getTexture()->getSize().y * RenSprite.getScale().y;
-	}
+
+//Vector2f	SpriteRenderer::GetGlobalScale() const {
+//	return SpriteFillSize_Global;
+//}
+//Vector2f	SpriteRenderer::GetLocalScale() const {
+//	return SpriteFillSize_Local;
+//}
+
+Color			SpriteRenderer::GetColor() const {
+	return RenSprite->getColor();
 }
-Vector2f		SpriteRenderer::GetSpriteSize() const{
-	return MainSize;
-}
-Color			SpriteRenderer::GetColor() const{
-	return RenSprite.getColor();
-}
-Shader*			SpriteRenderer::GetShader() const {
+Shader* SpriteRenderer::GetShader() const {
 	return RendShader;
 }
 
-void	SpriteRenderer::SetSpriteOffset	(Vector2f offset) {
-	Vector2f inharPos = GetSpriteInharitedPosition();
-	Offset = offset;
-	SetSpriteInharitedPosition(inharPos);
-}
-void	SpriteRenderer::ResizeSprite	(Vector2f size) {
-	Vector2f newScale = size * TextureResizingMult;
-	RenSprite.setScale(newScale);
-	MainSize = size;
-}
-void	SpriteRenderer::SetColor		(Color color) {
-	RenSprite.setColor(color);
+//
+//
+//override methods
+//
+//
+
+void	SpriteRenderer::RenderGraphic	(RenderWindow& window) {
+
+	window.draw(*RenSprite,RenderSt);
+	UpdateEffects();
 }
 
-void SpriteRenderer::SetSpriteInharitedPosition(Vector2f position) {
-	RenSprite.setPosition(position + GetSpriteOffset());
+//
+//void SpriteRenderer::SetGlobalScale(Vector2f scale) {
+//
+//	Vector2f newScale = Vector2f(scale.x * TextureResizingCoef, scale.y * TextureResizingCoef);
+//	TransformableObj::SetGlobalScale(newScale);
+//	newScale = TransformableObj::GetLocalScale();
+//	newScale = Vector2f(newScale.x / TextureResizingCoef, newScale.y / TextureResizingCoef);
+//	SpriteFillSize_Local = newScale;
+//	SpriteFillSize_Global = scale;
+//}
+//void SpriteRenderer::SetLocalScale(Vector2f scale) {
+//
+//	Vector2f newScale = Vector2f(scale.x * TextureResizingCoef, scale.y * TextureResizingCoef);
+//	TransformableObj::SetLocalScale(newScale);
+//	SpriteFillSize_Local = scale;
+//	newScale = TransformableObj::GetGlobalScale();
+//	newScale = Vector2f(newScale.x / TextureResizingCoef, newScale.y / TextureResizingCoef);
+//	SpriteFillSize_Global = newScale;
+//}
+
+void	SpriteRenderer::SetColor		(Color color) {
+	RenSprite->setColor(color);
 }

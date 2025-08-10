@@ -4,6 +4,7 @@
 #include <CoreGameObjects.h>
 #include <Events.h>
 #include <list>
+#include <watch_ptr.h>
 
 using namespace std;
 using namespace KrostganEngine;
@@ -14,15 +15,15 @@ namespace KrostganEngine::UI {
 	private:
 		class FollOrdTarHandler:public ICallbackRec_Upd {
 		public:
-			FollOrdTarHandler(OrderTargetsVisualizer& Owner,const TransformableObj& Target, size_t PointIndex);
+			FollOrdTarHandler(OrderTargetsVisualizer& Owner, watch_ptr_handler_wr_c<ITransfObj> Target, size_t PointIndex);
 			~FollOrdTarHandler();
 
 			void Update(CallbackRecArgs_Upd args) override;
 
 			size_t PointIndex;
 		private:
-			OrderTargetsVisualizer& Owner;
-			const TransformableObj& Target;
+			OrderTargetsVisualizer&				Owner;
+			watch_ptr_handler_wr_c<ITransfObj>	Target;
 		};
 
 		class AddOrderSubscriber :public IEventSubscriber<const IEntityOrder*> {
@@ -71,7 +72,7 @@ namespace KrostganEngine::UI {
 		void TryAddOrderInList(const IEntityOrder* order);
 
 		void AddPoint_Back(Vector2f point);
-		void AddPoint_Back(const TransformableObj& target);
+		void AddPoint_Back(ITransfObj& target);
 
 		void RemovePoint_Forward();
 

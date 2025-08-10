@@ -1,6 +1,6 @@
 #pragma once
 
 #include <SpriteRenderer.h>
-#include <SingleSprite.h>
+#include <SquareScaleSprite.h>
 #include <IndicatorFill.h>
 #include <VisualEffectsSystem.h>

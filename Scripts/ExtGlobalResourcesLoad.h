@@ -60,7 +60,6 @@ namespace KrostganEngine::Core {
 		static const inline string DEF_SOURCE			= "Source";
 		static const inline string DEF_PATH				= "Path";
 
-		static const inline string DEF_SPRITE_OFFSET	= "Offset";
 		static const inline string DEF_SPRITE_MAXSIZE	= "MaxSize";
 
 		static const inline string DEF_RENDER_SHADER	= "Shader";

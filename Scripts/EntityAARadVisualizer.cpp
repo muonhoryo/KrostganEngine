@@ -15,7 +15,7 @@ EntityAARadVisualizer::~EntityAARadVisualizer() {
 }
 
 void EntityAARadVisualizer::RenderGraphic(RenderWindow& window) {
-	SetCenter(Owner.GetPosition());
+	SetCenter(Owner.GetGlobalPosition());
 	float size = Owner.GetBattleStats().GetAARadius();
 	if (abs(size - GetRadius()) > eps)
 		SetRadius(size);

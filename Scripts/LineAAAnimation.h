@@ -23,7 +23,7 @@ namespace KrostganEngine::UI {
 
 	private:
 		WideLineVisual LineRender;
-		SingleSprite* HitSprite=nullptr;
+		SquareScaleSprite* HitSprite=nullptr;
 		FadingVisualEff_MRes& LineEffect;
 		FadingVisualEff_MRes* HitEffect = nullptr;
 		watch_ptr_handler_wr<TransformableObj>* Target = nullptr;

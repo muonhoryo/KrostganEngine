@@ -15,15 +15,15 @@ GameObject* UnitLoadInfo::InstanceObject(LoadedObjects& levInfo, Vector2f positi
 	string* output = new string();
 	if (additParams!=nullptr && 
 		ObjsCatalogDeserial::TryGetSerValueOfParam(*additParams, SerializationParDefNames::OBJECT_POSITION, output)) {
-		params.Position = ParseVec2f(*output);
+		params.GlobalPosition = ParseVec2f(*output);
 	}
 	else {
-		params.Position = position;
+		params.GlobalPosition = position;
 	}
 
 	UnitObject* unit = new UnitObject(params);
 	levInfo.LoadedUnits.push_front(unit);
-	levInfo.LoadedGraphics.push_front(unit);
+	//levInfo.LoadedGraphics.push_front(unit);
 
 	delete output;
 	delete &params;
@@ -47,14 +47,15 @@ UnitObjectCtorParams& UnitLoadInfo::GetUnitParams() {
 	params.EntityFraction	=	EntityFraction;
 	params.RenSprite		=	spr;
 	params.SelectionSprite	=	selSpr;
-	params.Position			=	Position;
-	params.Size				=	Size;
+	params.GlobalPosition			=	Position;
+	params.LocalScale				=	Size;
 	params.HPBarSprite		=	new IndicatorFill(
 									hpbarSpr->Tex,
 									hpbarMask->Tex, 
 									*hpbarSpr->RenShader,
-									Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution,
-									hpbarSpr->Offset);
+									hpbarSpr->MaxSize,
+									params.GlobalPosition,
+									params.LocalScale);
 
 	return params;
 }
@@ -65,10 +66,10 @@ GameObject* HeroLoadInfo::InstanceObject(LoadedObjects& levInfo, Vector2f positi
 
 	string* output = new string();
 	if (ObjsCatalogDeserial::TryGetSerValueOfParam(*additParams, SerializationParDefNames::OBJECT_POSITION, output)) {
-		unParams.Position = ParseVec2f(*output);
+		unParams.GlobalPosition = ParseVec2f(*output);
 	}
 	else {
-		unParams.Position = position;
+		unParams.GlobalPosition = position;
 	}
 
 	HeroObjectCtorParams& heParams = *new HeroObjectCtorParams(unParams);
@@ -76,7 +77,7 @@ GameObject* HeroLoadInfo::InstanceObject(LoadedObjects& levInfo, Vector2f positi
 	HeroObject* hero = new HeroObject(heParams);
 	levInfo.LoadedUnits.push_front(hero);
 	levInfo.LoadedHeroes.push_front(hero);
-	levInfo.LoadedGraphics.push_front(hero);
+	//levInfo.LoadedGraphics.push_front(hero);
 
 	delete output;
 	delete &unParams;
@@ -98,5 +99,5 @@ GameObject* WallLoadInfo::InstanceObject(LoadedObjects& levInfo, Vector2f positi
 
 	FStreamExts::ClearPath(&SpriteSource);
 	ExtGlRes_Sprite* spr = dynamic_cast<ExtGlRes_Sprite*>(ExternalGlobalResources::GetRes(SpriteSource));
-	return new WallObject(spr->Tex, spr->Offset, Position, Size);
+	return new WallObject(spr->Tex, Position, Size);
 }

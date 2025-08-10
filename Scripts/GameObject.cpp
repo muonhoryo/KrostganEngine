@@ -13,28 +13,56 @@ using namespace KrostganEngine::Physics;
 using namespace KrostganEngine::Core;
 using namespace KrostganEngine::GameObjects;
 
+GameObject::~GameObject() {
+	delete& BodySprite;
+	delete Transf;
+}
 GameObject::GameObject(
 	const Texture&	RenTexture, 
-	Vector2f		RenOffset, 
-	Vector2f		Position , 
-	float			Size ,
+	Vector2f		GlobalPosition ,
+	float			LocalScale,
 	Color			SprColor,
 	Shader*			RenShader)
-	:SingleSprite(
-		RenTexture, 
-		Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution, 
-		RenOffset, 
-		Position, 
-		Size,
-		SprColor,
-		RenShader),
-	DynamicPhysObject(), 
-	TransformableObj(Position,Size) {}
+		:DynamicPhysObject(),
+		TransformableObj(
+			ctor_InitOwner(),
+			GlobalPosition,
+			LocalScale),
+		BodySprite(*new SquareScaleSprite(
+			RenTexture,
+			*this,
+			Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution,
+			GlobalPosition,
+			LocalScale,
+			SprColor,
+			RenShader))
+{}
 
-void GameObject::SetPosition(Vector2f position) {
-	DynamicPhysObject::SetPosition(position);
-	SingleSprite::SetPosition(position);
+void GameObject::SetGlobalPosition(Vector2f position) {
+
+	TransformableObj::SetGlobalPosition(position);
+	HasMoved = true;
 }
-void GameObject::SetScale(float scale) {
-	SingleSprite::SetScale(scale);
+void GameObject::SetLocalPosition(Vector2f position) {
+
+	TransformableObj::SetLocalPosition(position);
+	HasMoved = true;
+}
+void GameObject::SetGlobalScale(Vector2f scale) {
+	float scl = GetScale_Inter(scale);
+	TransformableObj::SetGlobalScale(Vector2f(scl, scl));
+}
+void GameObject::SetLocalScale(Vector2f scale) {
+	float scl = GetScale_Inter(scale);
+	TransformableObj::SetLocalScale(Vector2f(scl, scl));
+}
+float GameObject::GetScale_Inter(const Vector2f& scale) const {
+	return min(scale.x, scale.y);
+}
+
+Color	GameObject::GetColor() const {
+	return BodySprite.GetColor();
+}
+void	GameObject::SetColor(Color color) {
+	BodySprite.SetColor(color);
 }

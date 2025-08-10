@@ -18,21 +18,21 @@ using namespace KrostganEngine::Visual;
 Entity::Entity(EntityCtorParams& params)
 	:GameObject(
 		params.RenSprite->Tex,
-		params.RenSprite->Offset, 
-		params.Position, 
-		params.Size, 
+		params.GlobalPosition, 
+		params.LocalScale, 
 		GetSprColorFromFraction(params.EntityFraction),
 		params.RenSprite->RenShader),
-			ISelectableEntity(), 
-		ICallbackRec_Upd(), 
-		IFractionMember(),
-		OrdersExecutor(
-			*params.BattleStats, 
-			nullptr, 
-			nullptr),
-		EntityFraction			(params.EntityFraction),
-		HPBar					(params.HPBarSprite),
-		SelectionSpriteSource	(params.SelectionSprite)
+	ISelectableEntity(), 
+	ICallbackRec_Upd(), 
+	IFractionMember(),
+	OrdersExecutor(
+		*params.BattleStats, 
+		nullptr, 
+		nullptr),
+
+	EntityFraction			(params.EntityFraction),
+	HPBar					(params.HPBarSprite),
+	SelectionSpriteSource	(params.SelectionSprite)
 
 {
 	params.Init_AAModule(*this);
@@ -44,8 +44,7 @@ Entity::Entity(EntityCtorParams& params)
 	SetAutoAggrModule(params.GetAutoAggrModule());
 	HPModule = params.HPModule;
 
-	SetPosition(GetPosition());
-	SetScale(GetScale());
+	HPBar->SetParent(this);
 	SetColor(GetColor());
 
 	EntitiesObserver::AddEntity(this);
@@ -54,23 +53,31 @@ Entity::Entity(EntityCtorParams& params)
 Entity::~Entity() {
 	SelectionOff();
 	delete HPModule;
-	if(SelectionSprite!=nullptr)
-		delete SelectionSprite;
-	delete HPBar;
 
 	EntitiesObserver::RemoveEntity(this);
 }
 
+void Entity::SetColor(Color color) {
+
+	BodySprite.SetColor(color);
+	if (SelectionSprite != nullptr)
+		SelectionSprite->SetColor(color);
+	HPBar->SetColor(color);
+}
+
 void Entity::SelectionOn() {
+
 	if (!IsEntitySelected && !HPModule->DeathModule.GetIsDeadState()) {
+
 		IsEntitySelected = true;
-		SelectionSprite = new SingleSprite(
+		SelectionSprite = new SquareScaleSprite(
 			SelectionSpriteSource->Tex,
-			SelectionSpriteSource->MaxSize, 
-			SelectionSpriteSource->Offset, 
-			GetPosition(),
-			GetScale(),
-			GetColor());
+			*this,
+			SelectionSpriteSource->MaxSize,
+			GetGlobalPosition(),
+			1,
+			GetColor(),
+			nullptr);
 	}
 }
 void Entity::SelectionOff() {
@@ -87,31 +94,13 @@ bool Entity::IsSelected() {
 	return IsEntitySelected;
 }
 
-void Entity::SetPosition(Vector2f position) {
-	GameObject::SetPosition(position);
-	if (IsEntitySelected)
-		SelectionSprite->SetPosition(position);
-	HPBar->SetPosition(position);
+void Entity::SetGlobalPosition(Vector2f position) {
+	GameObject::SetGlobalPosition(position);
 }
-void Entity::SetScale(float scale) {
-	GameObject::SetScale(scale);
-	if (IsEntitySelected)
-		SelectionSprite->SetScale(scale);
-	HPBar->SetScale(scale);
-}
-void Entity::SetColor(Color color) {
-	SpriteRenderer::SetColor(color);
-	if(SelectionSprite!=nullptr)
-		SelectionSprite->SetColor(color);
-	HPBar->SetColor(color);
+void Entity::SetGlobalScale(Vector2f scale) {
+	GameObject::SetGlobalScale(scale);
 }
 
-void Entity::RenderGraphic(RenderWindow& window) {
-
-	if (!HPModule->DeathModule.GetIsDeadState()) {
-		SingleSprite::RenderGraphic(window);
-	}
-}
 void Entity::Update(CallbackRecArgs_LUpd args) {
 
 	if (!HPModule->DeathModule.GetIsDeadState()) {

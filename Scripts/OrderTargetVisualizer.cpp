@@ -9,7 +9,7 @@ using namespace KrostganEngine::UI;
 //
 //
 
-OrderTargetsVisualizer::FollOrdTarHandler::FollOrdTarHandler(OrderTargetsVisualizer& Owner, const TransformableObj& Target, size_t PointIndex)
+OrderTargetsVisualizer::FollOrdTarHandler::FollOrdTarHandler(OrderTargetsVisualizer& Owner, watch_ptr_handler_wr_c<ITransfObj> Target, size_t PointIndex)
 	:ICallbackRec_Upd(),
 	Owner(Owner),
 	Target(Target),
@@ -19,7 +19,12 @@ OrderTargetsVisualizer::FollOrdTarHandler::~FollOrdTarHandler() {
 }
 
 void OrderTargetsVisualizer::FollOrdTarHandler::Update(CallbackRecArgs_Upd args) {
-	Owner.ReplacePoint(PointIndex, Target.GetPosition());
+
+	Vector2f pos;
+	auto ptr = Target.GetPtr_t();
+	if (ptr != nullptr) {
+		Owner.ReplacePoint(PointIndex, ptr->GetGlobalPosition());
+	}
 }
 
 //
@@ -73,7 +78,7 @@ OrderTargetsVisualizer::OrderTargetsVisualizer(Entity& Owner)
 	ClearSub(new ClearOrdsQueueSubscriber(*this)),
 	Visual(LinesVisPrimitive(InitializeVisualVector(), Color::Green)) {
 
-	DynPointsHandls.push_front(new FollOrdTarHandler(*this, Owner, 0));
+	DynPointsHandls.push_front(new FollOrdTarHandler(*this, Owner.GetPtr(), 0));
 	auto itBeg = Owner.GetOrderQueueIter_Begin();
 	auto itEnd = Owner.GetOrderQueueIter_AfterEnd();
 	for (;itBeg != itEnd;++itBeg)
@@ -105,7 +110,8 @@ void OrderTargetsVisualizer::TryAddOrderInList(const IEntityOrder* order) {
 	}
 	const EntityOrder_ObjectTarget* tarOrd = dynamic_cast<const EntityOrder_ObjectTarget*>(order);
 	if (tarOrd != nullptr) {
-		AddPoint_Back(*tarOrd->GetTarget());
+		ITransfObj& ref = *const_cast<ITransfObj*>(tarOrd->GetTarget());	//const_cast, because watch_ptr doesn't work with const objects
+		AddPoint_Back(ref);
 	}
 }
 
@@ -113,9 +119,9 @@ void OrderTargetsVisualizer::AddPoint_Back(Vector2f point) {
 	Visual.AddPoint(point);
 }
 
-void OrderTargetsVisualizer::AddPoint_Back(const TransformableObj& target) {
-	Visual.AddPoint(target.GetPosition());
-	DynPointsHandls.push_back(new FollOrdTarHandler(*this, target, Visual.GetPointsCount() - 1));
+void OrderTargetsVisualizer::AddPoint_Back(ITransfObj& target) {
+	Visual.AddPoint(target.GetGlobalPosition());
+	DynPointsHandls.push_back(new FollOrdTarHandler(*this, target.GetPtr(), Visual.GetPointsCount() - 1));
 }
 
 void OrderTargetsVisualizer::RemovePoint_Forward() {
@@ -158,6 +164,6 @@ void OrderTargetsVisualizer::Clear() {
 
 vector<Vector2f>& OrderTargetsVisualizer::InitializeVisualVector() {
 	vector<Vector2f>& vec = *new vector<Vector2f>();
-	vec.push_back(Owner.GetPosition());
+	vec.push_back(Owner.GetGlobalPosition());
 	return vec;
 }

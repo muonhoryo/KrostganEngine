@@ -46,7 +46,7 @@ bool EntityBaseAAModule::CheckTargetReach() {
 	return CheckTargetReach(*ptr);
 }
 bool EntityBaseAAModule::CheckTargetReach(const IAttackableObj& potentTarget) {
-	Vector2f pos = Owner.GetPosition();
+	Vector2f pos = Owner.GetGlobalPosition();
 	Vector2f closPoint = potentTarget.GetClosestPoint(pos);
 	float dist = Length(closPoint - pos);
 	return dist - BattleStats.GetAARadius() <= eps;

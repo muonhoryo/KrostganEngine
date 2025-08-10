@@ -8,8 +8,8 @@ using namespace KrostganEngine;
 using namespace KrostganEngine::Physics;
 using namespace KrostganEngine::GameObjects;
 
-WallObject::WallObject(const Texture& RenTexture, Vector2f RenOffset, Vector2f Position, float Size) 
-	: GameObject(RenTexture,RenOffset,Position,Size){
+WallObject::WallObject(const Texture& RenTexture, Vector2f Position, float Size) 
+	:GameObject(RenTexture,Position,Size){
 
 	float innerRad = Size * Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution*0.5f;
 	Collider = new AABBCollShape(Vector2f(Position.x - innerRad, Position.y - innerRad), Vector2f(Position.x + innerRad, Position.y + innerRad));

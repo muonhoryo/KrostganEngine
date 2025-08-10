@@ -3,7 +3,7 @@
 #include <GameObject.h>
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
-#include <SingleSprite.h>
+#include <SquareScaleSprite.h>
 #include <ICallbackRec_Upd.h>
 #include <EntityBattleStats.h>
 #include <vector>
@@ -32,8 +32,8 @@ namespace KrostganEngine::GameObjects {
 		Fraction				EntityFraction	=	Fraction::Neutral;
 		const ExtGlRes_Sprite*	RenSprite		=	nullptr;
 		const ExtGlRes_Sprite*	SelectionSprite	=	nullptr;
-		Vector2f				Position;
-		float					Size			=	1;
+		Vector2f				GlobalPosition;
+		float					LocalScale		=	1;
 		IndicatorFill*			HPBarSprite		=	nullptr;
 		
 		AutoAttackModule*		GetAAModule()			const { return AAModule; }
@@ -66,11 +66,11 @@ namespace KrostganEngine::GameObjects {
 		void SelectionOff() override;
 		bool IsSelected() override;
 
-		void SetPosition	(Vector2f position) override;
-		void SetScale		(float scale) override;
-		void SetColor		(Color color) override;
+		void SetGlobalPosition	(Vector2f position) override;
+		void SetGlobalScale		(Vector2f scale) override;
 
-		void						RenderGraphic	(RenderWindow& window) override;
+		void SetColor(Color color) override;
+
 		void						Update			(CallbackRecArgs_LUpd args) override;
 		vector<IPhysicalObject*>	OverlapAll		() const override final;
 		const ColliderShape&		GetCollider		() const override final;
@@ -86,7 +86,7 @@ namespace KrostganEngine::GameObjects {
 	private:
 		bool					IsEntitySelected		=	false;
 		const ExtGlRes_Sprite*	SelectionSpriteSource	=	nullptr;
-		SingleSprite*			SelectionSprite			=	nullptr;
+		SquareScaleSprite*		SelectionSprite			=	nullptr;
 		IHitPointModule*		HPModule;
 		IndicatorFill*			HPBar;
 		

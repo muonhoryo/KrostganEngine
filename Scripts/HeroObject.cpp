@@ -9,5 +9,7 @@ using namespace sf;
 using namespace KrostganEngine::GameObjects;
 using namespace KrostganEngine::EntitiesControl;
 
-HeroObject::HeroObject(HeroObjectCtorParams& params) : UnitObject(params){}
+HeroObject::HeroObject(HeroObjectCtorParams& params) 
+	:UnitObject(params)
+	{}
 HeroObject::~HeroObject(){}

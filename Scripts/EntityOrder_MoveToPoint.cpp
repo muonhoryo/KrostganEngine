@@ -23,14 +23,14 @@ EntityOrder_MoveToPoint::EntityOrder_MoveToPoint
 }
 
 bool EntityOrder_MoveToPoint::CheckExecCondition() {
-	float dist = Length(TargetGlobalPos - OwnerTransform.GetPosition())-ToTargetMinDistance;
+	float dist = Length(TargetGlobalPos - OwnerTransform.GetGlobalPosition())-ToTargetMinDistance;
 	return dist <= eps;
 }
 list <IEntityAction*>* EntityOrder_MoveToPoint::GetActions() {
 
 	list<IEntityAction*>* lst = new list<IEntityAction*>();
 
-	Segment ray(OwnerTransform.GetPosition(), TargetGlobalPos);
+	Segment ray(OwnerTransform.GetGlobalPosition(), TargetGlobalPos);
 	if (Engine::GetPhysicsEngine().RayHit(ray,
 		(PhysicsLayer)((int)PhysicsLayer::Decorations | (int)PhysicsLayer::Buildings)))
 	{

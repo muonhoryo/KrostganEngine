@@ -19,9 +19,9 @@ using namespace KrostganEngine::EntitiesControl;
 
 UnitObject::UnitObject(UnitObjectCtorParams& params)
 	:Entity(params),
-	Collider(*new CircleCollShape(params.Position, params.Size* Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution * 0.5f)),
-	Layer(PhysicsLayer::Units){
-}
+	Collider(*new CircleCollShape(params.GlobalPosition, params.LocalScale* Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution * 0.5f)),
+	Layer(PhysicsLayer::Units)
+{}
 UnitObject::~UnitObject() {
 	delete &Collider;
 }
@@ -31,12 +31,12 @@ PhysicsLayer UnitObject::GetLayer() const {
 	return Layer;
 }
 
-void UnitObject::SetScale(float scale) {
-	Entity::SetScale(scale);
-	Collider.Radius= scale * Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution/2;
+void UnitObject::SetGlobalScale(Vector2f  scale) {
+	Entity::SetGlobalScale(scale);
+	Collider.Radius= GetGlobalScale_Sin() * Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution * 0.5;
 }
-void UnitObject::SetPosition(Vector2f pos) {
-	Entity::SetPosition(pos);
+void UnitObject::SetGlobalPosition(Vector2f pos) {
+	Entity::SetGlobalPosition(pos);
 	Collider.Center = pos;
 }
 

@@ -13,7 +13,7 @@ EntityAction_MoveTo::EntityAction_MoveTo(OrdersExecutor& Owner,TransformableObj&
 	:IEntityAction(),
 	Owner(Owner),
 	OwnerTransform(OwnerTransform),
-	PrevPos(OwnerTransform.GetPosition()){
+	PrevPos(OwnerTransform.GetGlobalPosition()){
 
 	MovingAbilityChecker.restart();
 	DistToTarget = FLT_MAX;
@@ -35,22 +35,22 @@ void EntityAction_MoveTo::MoveTo(Vector2f targetCoord) {
 
 			MovingAbilityChecker.restart();
 			float immobilityValue = Engine::GetGlobalConsts().Units_ImmobilityCheckValue;
-			if (SquareLength(OwnerTransform.GetPosition() - PrevPos) < immobilityValue) {
+			if (SquareLength(OwnerTransform.GetGlobalPosition() - PrevPos) < immobilityValue) {
 				CantMove = true;
 			}
-			PrevPos = OwnerTransform.GetPosition();
+			PrevPos = OwnerTransform.GetGlobalPosition();
 		}
 	}
 
-	Vector2f movDirection = targetCoord - OwnerTransform.GetPosition();
+	Vector2f movDirection = targetCoord - OwnerTransform.GetGlobalPosition();
 	DistToTarget = Length(movDirection);
 	if (DistToTarget <= Owner.GetBattleStats().GetMovingSpeed()) {
-		OwnerTransform.SetPosition(targetCoord);
+		OwnerTransform.SetGlobalPosition(targetCoord);
 		DistToTarget = 0;
 	}
 	else {
 		movDirection = Normalize(movDirection);
-		Vector2f nextPos = OwnerTransform.GetPosition() + (movDirection * Owner.GetBattleStats().GetMovingSpeed());
-		OwnerTransform.SetPosition(nextPos);
+		Vector2f nextPos = OwnerTransform.GetGlobalPosition() + (movDirection * Owner.GetBattleStats().GetMovingSpeed());
+		OwnerTransform.SetGlobalPosition(nextPos);
 	}
 }

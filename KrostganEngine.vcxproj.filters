@@ -280,6 +280,9 @@
     <Filter Include="Исходные файлы\Visual\Effects\Fading">
       <UniqueIdentifier>{a58fa376-0df0-4ced-b634-5c6696476a6f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems\GameObjects\TransformableObjs">
+      <UniqueIdentifier>{7e7636fe-9271-4c1c-971d-8644205e5b1c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\main.cpp">
@@ -579,7 +582,7 @@
     <ClCompile Include="Scripts\watch_ptr_handler_c.cpp">
       <Filter>Исходные файлы\Memory\WatchPointer</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\SingleSprite.cpp">
+    <ClCompile Include="Scripts\SquareScaleSprite.cpp">
       <Filter>Исходные файлы\CoreSystems\Visual</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\SpriteRenderer.cpp">
@@ -854,9 +857,6 @@
     <ClInclude Include="Scripts\GameObject.h">
       <Filter>Файлы заголовков\CoreSystems\GameObjects\VirtualObjects</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\TransformableObj.h">
-      <Filter>Файлы заголовков\CoreSystems\GameObjects\VirtualObjects</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\Wall.h">
       <Filter>Файлы заголовков\CoreSystems\GameObjects</Filter>
     </ClInclude>
@@ -896,7 +896,7 @@
     <ClInclude Include="Scripts\CoreVisual.h">
       <Filter>Файлы заголовков\CoreSystems\Visual</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\SingleSprite.h">
+    <ClInclude Include="Scripts\SquareScaleSprite.h">
       <Filter>Файлы заголовков\CoreSystems\Visual</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\GameVisualEffects.h">
@@ -1006,6 +1006,12 @@
     </ClInclude>
     <ClInclude Include="Scripts\FadingVisualEff_MRes.h">
       <Filter>Файлы заголовков\Visual\Effects\Fading</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\ITransfObj.h">
+      <Filter>Файлы заголовков\CoreSystems\GameObjects\TransformableObjs</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\TransformableObj.h">
+      <Filter>Файлы заголовков\CoreSystems\GameObjects\TransformableObjs</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

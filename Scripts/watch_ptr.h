@@ -27,13 +27,13 @@ namespace KrostganEngine {
 		}
 
 	public:
-		watch_ptr_handler& GetPtrHandler();
-		void				Reset();
+		watch_ptr_handler&			GetPtrHandler();
+		void						Reset();
 
-		w_ptr_observable* GetPtr() const {
+		w_ptr_observable*			GetPtr() const {
 			return target;
 		}
-		w_ptr_observable const* GetPtr_c() const {
+		w_ptr_observable const*		GetPtr_c() const {
 			return target;
 		}
 
@@ -120,6 +120,10 @@ namespace KrostganEngine {
 		}
 	};
 
+	/// <summary>
+	/// !!!WARNING!!! To get watch_ptr_handler of w_ptr_observable ref to w_ptr_observable couldn't be const, because with getting 
+	/// watch_ptr_handler it's internal counter is incremented
+	/// </summary>
 	class w_ptr_observable {
 
 	protected:

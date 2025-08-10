@@ -44,7 +44,7 @@ list<IEntityAction*>* EntityOrder_AttackTarget::GetActions() {
 	}
 	else {									//Owner needs to follow target first
 
-		Segment ray(OwnerTransform.GetPosition(), ptr->GetPosition());
+		Segment ray(OwnerTransform.GetGlobalPosition(), ptr->GetGlobalPosition());
 		if (Engine::GetPhysicsEngine().RayHit(ray,
 			(PhysicsLayer)((int)PhysicsLayer::Decorations | (int)PhysicsLayer::Buildings)))
 		{
@@ -85,6 +85,6 @@ EntityOrderType EntityOrder_AttackTarget::GetOrderType() {
 	return EntityOrderType::AttackTarget;
 }
 
-const TransformableObj* EntityOrder_AttackTarget::GetTarget() const {
+const ITransfObj* EntityOrder_AttackTarget::GetTarget() const {
 	return Target.GetPtr_t_c();
 }

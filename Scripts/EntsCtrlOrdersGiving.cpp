@@ -36,7 +36,7 @@ void EntitiesCtrlInputMode::GiveOrderToSelected_MoveToPoint(Vector2f targetGloba
 	cout << "Give an order: Move to " << ToString<float>(targetGlobalPos) << endl;
 }
 
-void EntitiesCtrlInputMode::GiveOrderToSelected_FollowObject(TransformableObj& target, bool isGrouped) {
+void EntitiesCtrlInputMode::GiveOrderToSelected_FollowObject(ITransfObj& target, bool isGrouped) {
 	if (!GivingOrderCondition())
 		return;
 

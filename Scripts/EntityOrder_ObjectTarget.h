@@ -2,7 +2,7 @@
 
 #include <IEntityOrder.h>
 #include <SFML/System.hpp>
-#include <TransformableObj.h>
+#include <ITransfObj.h>
 
 using namespace sf;
 using namespace KrostganEngine::GameObjects;
@@ -10,7 +10,7 @@ using namespace KrostganEngine::GameObjects;
 namespace KrostganEngine::EntitiesControl {
 	class EntityOrder_ObjectTarget {
 	public:
-		virtual const TransformableObj * GetTarget() const = 0;
+		virtual const ITransfObj* GetTarget() const = 0;
 		virtual bool CanTargetItself() { return false; }
 
 	protected:

@@ -82,7 +82,7 @@ void BaseAutoAggrModule::CheckCurrTarget(CallbackRecArgs_Upd& args) {
 
 				ActionMediator.AddAction((IEntityAction*)folAct);
 
-				Segment segm(Owner.GetPosition(), t_ptr->GetPosition());
+				Segment segm(Owner.GetGlobalPosition(), t_ptr->GetGlobalPosition());
 				if (Engine::GetPhysicsEngine().RayHit(segm,
 					(PhysicsLayer)((int)PhysicsLayer::Decorations | (int)PhysicsLayer::Buildings))) {
 
@@ -114,7 +114,7 @@ void BaseAutoAggrModule::CheckCurrTarget(CallbackRecArgs_Upd& args) {
 			IsAttack = true;
 		}
 		else {
-			Vector2f pos=Owner.GetPosition();
+			Vector2f pos=Owner.GetGlobalPosition();
 			float dist = Length(pos- t_ptr->GetClosestPoint(pos));
 			float alloDist = Owner.GetBattleStats().GetAutoAggrRadius();
 			if (dist-alloDist> eps) {
@@ -126,7 +126,7 @@ void BaseAutoAggrModule::CheckCurrTarget(CallbackRecArgs_Upd& args) {
 void BaseAutoAggrModule::FindTarget(CallbackRecArgs_Upd& args) {
 
 	float radius = Owner.GetBattleStats().GetAutoAggrRadius();
-	Vector2f pos = Owner.GetPosition();
+	Vector2f pos = Owner.GetGlobalPosition();
 	TargsBuffer=Engine::GetPhysicsEngine().OverlapCircle_All(pos, radius, TARGETS_MASK);
 	if (TargsBuffer.size() != 0) {		//Has potential targets in auto-aggr radius
 
@@ -150,7 +150,7 @@ void BaseAutoAggrModule::FindTarget(CallbackRecArgs_Upd& args) {
 				relat = FractionsSystem::GetRelation(Owner.GetFraction(), memParTar->GetFraction());
 				if (relat != Relation::Enemy)
 					continue;
-				dist = Length(parTar->GetPosition() - pos);
+				dist = Length(parTar->GetGlobalPosition() - pos);
 
 				if (dist < minDist) {		//Finds nearest target
 					TargetTransform = dynamic_cast<TransformableObj*>(parTar);
@@ -189,7 +189,7 @@ void BaseAutoAggrModule::FindTarget(CallbackRecArgs_Upd& args) {
 					ActionMediator.AddAction((IEntityAction*)aaAct_);
 					ActionMediator.AddAction((IEntityAction*)folAct);
 
-					Segment segm(Owner.GetPosition(), ptr->GetPosition());
+					Segment segm(Owner.GetGlobalPosition(), ptr->GetGlobalPosition());
 					if (Engine::GetPhysicsEngine().RayHit(segm,
 						(PhysicsLayer)((int)PhysicsLayer::Decorations | (int)PhysicsLayer::Buildings))) {
 

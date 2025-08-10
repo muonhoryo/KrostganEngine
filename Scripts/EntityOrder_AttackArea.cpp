@@ -16,14 +16,14 @@ OwnerTransform(OwnerTransform) {
 }
 
 bool EntityOrder_AttackArea::CheckExecCondition() {
-	float dist = Length(TargetGlobalPos - OwnerTransform.GetPosition());
+	float dist = Length(TargetGlobalPos - OwnerTransform.GetGlobalPosition());
 	return dist <= eps;
 }
 list <IEntityAction*>* EntityOrder_AttackArea::GetActions() {
 
 	list<IEntityAction*>* lst = new list<IEntityAction*>();
 
-	Segment ray(OwnerTransform.GetPosition(), TargetGlobalPos);
+	Segment ray(OwnerTransform.GetGlobalPosition(), TargetGlobalPos);
 	if (Engine::GetPhysicsEngine().RayHit(ray,
 		(PhysicsLayer)((int)PhysicsLayer::Decorations | (int)PhysicsLayer::Buildings)))
 	{

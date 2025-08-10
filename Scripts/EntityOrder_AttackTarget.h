@@ -22,7 +22,7 @@ namespace KrostganEngine::EntitiesControl {
 		void OnEndExecution() override;
 		EntityOrderType GetOrderType() override;
 
-		const TransformableObj* GetTarget() const override;
+		const ITransfObj* GetTarget() const override;
 
 		OrdersExecutor& Owner;
 		TransformableObj& OwnerTransform;

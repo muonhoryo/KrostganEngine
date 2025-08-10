@@ -15,7 +15,7 @@ using namespace KrostganEngine::EntitiesControl;
 EntityOrder_FollowTarget::EntityOrder_FollowTarget
 	(OrdersExecutor&							Owner, 
 	TransformableObj&							OwnerTransform, 
-	watch_ptr_handler_wr_c<TransformableObj>	Target)
+	watch_ptr_handler_wr_c<ITransfObj>		Target)
 	:IEntityOrder(),
 	Owner			(Owner),
 	OwnerTransform	(OwnerTransform),
@@ -35,7 +35,7 @@ list<IEntityAction*>* EntityOrder_FollowTarget::GetActions() {
 
 	list<IEntityAction*>* lst = new list<IEntityAction*>();
 
-	Segment ray(OwnerTransform.GetPosition(), ptr->GetPosition());
+	Segment ray(OwnerTransform.GetGlobalPosition(), ptr->GetGlobalPosition());
 	if (Engine::GetPhysicsEngine().RayHit(ray,
 		(PhysicsLayer)((int)PhysicsLayer::Decorations | (int)PhysicsLayer::Buildings)))
 	{
@@ -56,7 +56,7 @@ list<IEntityAction*>* EntityOrder_FollowTarget::GetActions() {
 	}
 	else {
 
-		float dist = Length(OwnerTransform.GetPosition() - ptr->GetPosition());
+		float dist = Length(OwnerTransform.GetGlobalPosition() - ptr->GetGlobalPosition());
 		if (dist > eps) {	//Owner is too far from target
 
 			if (FirstExec) {		//Immidiet first execution
@@ -86,6 +86,6 @@ EntityOrderType EntityOrder_FollowTarget::GetOrderType() {
 	return EntityOrderType::FollowTarget;
 }
 
-const TransformableObj* EntityOrder_FollowTarget::GetTarget() const {
+const ITransfObj* EntityOrder_FollowTarget::GetTarget() const {
 	return Target.GetPtr_t();
 }

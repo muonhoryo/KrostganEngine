@@ -108,7 +108,6 @@ ExtGlRes_Sprite&	ExtGlobalResourcesLoad::DeserRes_Sprite(){
 	else {
 		tex = LoadTextureByPath();
 	}
-	Vector2f offset = DeserValueByDef_Vec2f(DEF_SPRITE_OFFSET, LineBuffer);
 	Shader* shad = nullptr;
 	if (TryGetValue(DEF_RENDER_SHADER, LineBuffer)) {
 
@@ -124,7 +123,7 @@ ExtGlRes_Sprite&	ExtGlobalResourcesLoad::DeserRes_Sprite(){
 
 		maxSize = Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution;
 	}
-	auto& res = *new ExtGlRes_Sprite(*name, *tex, offset,maxSize,shad);
+	auto& res = *new ExtGlRes_Sprite(*name, *tex,maxSize,shad);
 	delete name;
 	return res;
 }

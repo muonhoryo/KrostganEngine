@@ -59,8 +59,8 @@ namespace KrostganEngine {
 
 			PhysicsLayer GetLayer() const override;
 
-			void SetScale(float size) override;
-			void SetPosition(Vector2f pos) override;
+			void SetGlobalScale(Vector2f size) override;
+			void SetGlobalPosition(Vector2f pos) override;
 
 			const vector<EntityOrderType>& GetAllowedOrdersCatalog() override;
 

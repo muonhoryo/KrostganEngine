@@ -12,13 +12,8 @@ namespace KrostganEngine::Physics {
 	public:
 		virtual ~DynamicPhysObject();
 
-		void SetPosition(Vector2f position) override;
-
 		void Update(CallbackRecArgs_LUpd args) override;
 
-		Vector2f GetLastMoveDirection() const {
-			return MoveDirection;
-		}
 		bool GetHasMovedState() const {
 			return HasMoved;
 		}
@@ -28,8 +23,6 @@ namespace KrostganEngine::Physics {
 
 		virtual Vector2f GetResolvingPnt(const ColliderShape& objShape,Vector2f movDir,bool isSlideColl=true) const = 0;
 
-	private:
 		bool HasMoved = false;
-		Vector2f MoveDirection;
 	};
 }

@@ -2,6 +2,7 @@
 
 #include <GameObject.h>
 #include <Entity.h>
+#include <ITransfObj.h>
 #include <TransformableObj.h>
 #include <DynamicPhysObject.h>
 

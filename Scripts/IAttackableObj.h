@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SFML/System.hpp>
+#include <ITransfObj.h>
 #include <TransformableObj.h>
 #include <Events.h>
 #include <AttackInfo.h>
@@ -12,7 +13,7 @@ namespace KrostganEngine::GameObjects {
 	class IDeathModule;
 
 
-	class IAttackableObj : public virtual TransformableObj {
+	class IAttackableObj : public virtual ITransfObj {
 	public:
 		virtual ~IAttackableObj(){}
 
