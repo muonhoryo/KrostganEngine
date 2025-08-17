@@ -3,11 +3,12 @@
 #include <ITransfObj.h>
 #include <SFML/Graphics.hpp>
 
+using namespace sf;
+
 #define DEFAULT_SCALE		Vector2f(1,1)
 #define DEFAULT_POSITION	Vector2f(0,0)
 #define DEFAULT_ORIGIN		Vector2f(0,0)
 
-using namespace sf;
 
 namespace KrostganEngine::GameObjects {
 	class TransformableObj : public virtual ITransfObj {
@@ -32,9 +33,18 @@ namespace KrostganEngine::GameObjects {
 		void Move_Global	(Vector2f moveValue) override;
 		void Move_Local		(Vector2f moveValue) override;
 
-		void				SetParent				(TransformableObj* parent);
-		TransformableObj&	GetParent				();
+		void						SetParent	(TransformableObj* parent);
+		TransformableObj*			GetParent	();
+		TransformableObj const*		GetParent_c	() const;
+		/// <summary>
+		/// Set is object should be deleted with its parent or not
+		/// </summary>
+		/// <param name="desWithPar"></param>
 		virtual void		SetDesWithParent		(bool desWithPar);
+		/// <summary>
+		/// Return is object should be deleted with its parent or not
+		/// </summary>
+		/// <returns></returns>
 		bool				GetDesWithParentState	() const;
 
 	protected:
@@ -61,6 +71,25 @@ namespace KrostganEngine::GameObjects {
 			float				GlobalScale		= 1,
 			Vector2f			Origin			= DEFAULT_ORIGIN);
 
+		vector<TransformableObj*>::const_iterator GetChildrenStart() const;
+		vector<TransformableObj*>::const_iterator GetChildrenEnd() const;
+
+		virtual Vector2f	GetLocalPositionFromParent	();
+		virtual Vector2f	GetLocalScaleFromParent		();
+		virtual Vector2f	TransformLocalPosToGlobal	(Vector2f localPos);
+
+		/// <summary>
+		/// Scale object itself by scale-param
+		/// </summary>
+		/// <param name="scale"></param>
+		virtual void		ScaleObject					(Vector2f scale);
+
+		virtual void		SetChildrenPosition			();
+		virtual void		SetChildrenScale			();
+
+		virtual void SetPosition_Inherit();
+		virtual void SetScale_Inherit();
+
 	private:
 		//Vector2f	GlobalScale		= DEFAULT_SCALE;
 		Vector2f	LocalPosition	= DEFAULT_POSITION;
@@ -72,21 +101,6 @@ namespace KrostganEngine::GameObjects {
 		bool				DesWithPar	= true;
 
 		vector<TransformableObj*> ChildObjs;
-
-		/// <summary>
-		/// Calculate local position from parent's transform and owner's transform
-		/// </summary>
-		/// <returns></returns>
-		Vector2f GetLocalPosition_Inter	();
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="position"> - global position of object</param>
-		/// <param name="isFree"> - is exist parent of this object</param>
-		void SetGlobalPosition_Inter	(Vector2f position,bool isFree);
-
-		void SetPosition_Inherit	();
-		void SetScale_Inherit		(Vector2f parentGlScale);
 
 		void AddChild		(TransformableObj& child);
 		void RemoveChild	(TransformableObj& child);

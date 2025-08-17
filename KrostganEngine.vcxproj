@@ -174,7 +174,9 @@
     <ClCompile Include="Scripts\OutlineLineVisual.cpp" />
     <ClCompile Include="Scripts\PlayerInputManager.cpp" />
     <ClCompile Include="Scripts\StartMessageMode.cpp" />
-    <ClCompile Include="Scripts\TextBlock.cpp" />
+    <ClCompile Include="Scripts\UIElement.cpp" />
+    <ClCompile Include="Scripts\UISprite.cpp" />
+    <ClCompile Include="Scripts\UIText.cpp" />
     <ClCompile Include="Scripts\UnitColliderVisualizer.cpp" />
     <ClCompile Include="Scripts\ConsoleCommsInterpretator.cpp" />
     <ClCompile Include="Scripts\CursorManager.cpp" />
@@ -233,6 +235,7 @@
     <ClCompile Include="Scripts\TransformableObj.cpp" />
     <ClCompile Include="Scripts\UnitDeathModule.cpp" />
     <ClCompile Include="Scripts\UnitObject.cpp" />
+    <ClCompile Include="Scripts\UserInterfaceManager.cpp" />
     <ClCompile Include="Scripts\ValuesListDeserializer.cpp" />
     <ClCompile Include="Scripts\VectExts.cpp" />
     <ClCompile Include="Scripts\Wall.cpp" />
@@ -291,7 +294,12 @@
     <ClInclude Include="Scripts\PathFinding_Diijkstra.h" />
     <ClInclude Include="Scripts\PhysicsStructs.h" />
     <ClInclude Include="Scripts\PlayerInputManager.h" />
-    <ClInclude Include="Scripts\TextBlock.h" />
+    <ClInclude Include="Scripts\SpriteRenderer.h" />
+    <ClInclude Include="Scripts\UIElement.h" />
+    <ClInclude Include="Scripts\UIEmpty.h" />
+    <ClInclude Include="Scripts\UIMan_WinResizeEvSubs.h" />
+    <ClInclude Include="Scripts\UISprite.h" />
+    <ClInclude Include="Scripts\UIText.h" />
     <ClInclude Include="Scripts\UIUXVisual.h" />
     <ClInclude Include="Scripts\UnitColliderVisualizer.h" />
     <ClInclude Include="Scripts\CursorManager.h" />
@@ -359,7 +367,6 @@
     <ClInclude Include="Scripts\CorePlayerControl.h" />
     <ClInclude Include="Scripts\PrimitiveVisualShapes.h" />
     <ClInclude Include="Scripts\SquareScaleSprite.h" />
-    <ClInclude Include="Scripts\SpriteRenderer.h" />
     <ClInclude Include="Scripts\Engine.h" />
     <ClInclude Include="Scripts\EngineCore.h" />
     <ClInclude Include="Scripts\EngineModes.h" />
@@ -367,9 +374,10 @@
     <ClInclude Include="Scripts\EngineConfigLoad.h" />
     <ClInclude Include="Scripts\ICallbackRec_GraphRen.h" />
     <ClInclude Include="Scripts\GameObject.h" />
-    <ClInclude Include="Scripts\CoreUIUX.h" />
+    <ClInclude Include="Scripts\CoreVisual_UI.h" />
     <ClInclude Include="Scripts\TransformableObj.h" />
     <ClInclude Include="Scripts\UnitObject.h" />
+    <ClInclude Include="Scripts\UserInterfaceManager.h" />
     <ClInclude Include="Scripts\ValuesListDeserializer.h" />
     <ClInclude Include="Scripts\VectExts.h" />
     <ClInclude Include="Scripts\VisualEffectsSystem.h" />

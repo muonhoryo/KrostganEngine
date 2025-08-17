@@ -2,6 +2,7 @@
 
 #include <SFML/System.hpp>
 #include <ICallbackRec_GraphRen.h>
+#include <CoreVisual_UI.h>
 #include <UIUXVisual.h>
 
 using namespace sf;
@@ -29,7 +30,7 @@ namespace KrostganEngine::GameTransitions {
 		float MessageShowingTime;
 		float TransitTime;
 		float MessageAppearingDeltaTime;
-		TextBlock* Message=nullptr;
-		TextBlock* Message2 = nullptr;
+		UIText* Message=nullptr;
+		UIText* Message2 = nullptr;
 	};
 }

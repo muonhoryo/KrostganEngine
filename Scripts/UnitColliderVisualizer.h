@@ -1,7 +1,7 @@
 #pragma once
 
 #include <EngineCore.h>
-#include <CoreUIUX.h>
+#include <CoreVisual_UI.h>
 #include <VisualOnDeathDestroyer.h>
 
 using namespace KrostganEngine::Core;

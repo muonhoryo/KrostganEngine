@@ -2,7 +2,6 @@
 
 #include <SFML/System.hpp>
 #include <ITransfObj.h>
-#include <TransformableObj.h>
 #include <Events.h>
 #include <AttackInfo.h>
 

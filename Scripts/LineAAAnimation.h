@@ -1,7 +1,7 @@
 #pragma once
 
 #include <AutoAttackAnimation.h>
-#include <CoreUIUX.h>
+#include <CoreVisual_UI.h>
 #include <Engine.h>
 #include <GameVisualEffects.h>
 

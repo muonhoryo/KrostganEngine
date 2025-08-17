@@ -7,7 +7,7 @@
 #include <ICallbackRec_Upd.h>
 #include <EntityBattleStats.h>
 #include <vector>
-#include <CoreUIUX.h>
+#include <CoreVisual_UI.h>
 #include <IAttackableObj.h>
 #include <AutoAttackModule.h>
 #include <ISelectableEntity.h>

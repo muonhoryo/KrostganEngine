@@ -1,7 +1,5 @@
 
-#include <ICallbackRec_GraphRen.h>
 #include <SpriteRenderer.h>
-#include <SFML/Graphics.hpp>
 #include <Engine.h>
 #include <iostream>
 #include <Extensions.h>
@@ -22,7 +20,6 @@ void SpriteRenderer::ctor_Initialize(const Texture& renTexture,float maxSizeInPi
 		RenderSt.shader = RendShader;
 
 	RenSprite->setTexture(renTexture);
-	Texture tex;
 	Vector2u size = renTexture.getSize();
 	if (size.x < size.y) {
 		MinMaxSizeRatio = (float)size.x / (float)size.y;
@@ -63,8 +60,7 @@ SpriteRenderer::SpriteRenderer(
 	Vector2f		GlobalScale,
 	Color			SprColor,
 	Shader*			RendShader) 
-		:ICallbackRec_GraphRen(),
-		TransformableObj(ctor_InitOwner(), GlobalPosition, GlobalScale, ctor_GetOrigin(RenTexture)),
+		:TransformableObj(ctor_InitOwner(), GlobalPosition, GlobalScale, ctor_GetOrigin(RenTexture)),
 		RendShader	(RendShader){
 
 	ctor_Initialize(RenTexture,maxSizeInPixels);
@@ -100,8 +96,7 @@ SpriteRenderer::SpriteRenderer(
 	Vector2f			LocalScale,
 	Color				SprColor,
 	Shader*				RendShader)
-		:ICallbackRec_GraphRen(),
-		TransformableObj(ctor_InitOwner(),Parent, GlobalPosition,LocalScale,ctor_GetOrigin(RenTexture)),
+		:TransformableObj(ctor_InitOwner(),Parent, GlobalPosition,LocalScale,ctor_GetOrigin(RenTexture)),
 		RendShader(RendShader) {
 
 	ctor_Initialize(RenTexture, maxSizeInPixels);
@@ -113,6 +108,12 @@ SpriteRenderer::SpriteRenderer(
 
 SpriteRenderer::~SpriteRenderer() {
 	delete RenSprite;
+}
+
+void SpriteRenderer::RenderGraphic(RenderWindow& window) {
+
+	window.draw(*RenSprite, RenderSt);
+	UpdateEffects();
 }
 
 //
@@ -131,7 +132,7 @@ bool			SpriteRenderer::IsSpriteVertical() const {
 	return IsVertical;
 }
 
-float	SpriteRenderer::GetMaxSpritePixSize() const {
+float			SpriteRenderer::GetMaxSpritePixSize() const {
 	return GetSpritePixSize(true);
 }
 float	SpriteRenderer::GetMinSpritePixSize() const {
@@ -149,17 +150,10 @@ float	SpriteRenderer::GetSpritePixSize(bool isMax) const {
 	}
 }
 
-//Vector2f	SpriteRenderer::GetGlobalScale() const {
-//	return SpriteFillSize_Global;
-//}
-//Vector2f	SpriteRenderer::GetLocalScale() const {
-//	return SpriteFillSize_Local;
-//}
-
-Color			SpriteRenderer::GetColor() const {
+Color		SpriteRenderer::GetColor() const {
 	return RenSprite->getColor();
 }
-Shader* SpriteRenderer::GetShader() const {
+Shader*		SpriteRenderer::GetShader() const {
 	return RendShader;
 }
 
@@ -168,32 +162,6 @@ Shader* SpriteRenderer::GetShader() const {
 //override methods
 //
 //
-
-void	SpriteRenderer::RenderGraphic	(RenderWindow& window) {
-
-	window.draw(*RenSprite,RenderSt);
-	UpdateEffects();
-}
-
-//
-//void SpriteRenderer::SetGlobalScale(Vector2f scale) {
-//
-//	Vector2f newScale = Vector2f(scale.x * TextureResizingCoef, scale.y * TextureResizingCoef);
-//	TransformableObj::SetGlobalScale(newScale);
-//	newScale = TransformableObj::GetLocalScale();
-//	newScale = Vector2f(newScale.x / TextureResizingCoef, newScale.y / TextureResizingCoef);
-//	SpriteFillSize_Local = newScale;
-//	SpriteFillSize_Global = scale;
-//}
-//void SpriteRenderer::SetLocalScale(Vector2f scale) {
-//
-//	Vector2f newScale = Vector2f(scale.x * TextureResizingCoef, scale.y * TextureResizingCoef);
-//	TransformableObj::SetLocalScale(newScale);
-//	SpriteFillSize_Local = scale;
-//	newScale = TransformableObj::GetGlobalScale();
-//	newScale = Vector2f(newScale.x / TextureResizingCoef, newScale.y / TextureResizingCoef);
-//	SpriteFillSize_Global = newScale;
-//}
 
 void	SpriteRenderer::SetColor		(Color color) {
 	RenSprite->setColor(color);

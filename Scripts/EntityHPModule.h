@@ -3,7 +3,7 @@
 #include <EntityBattleStats.h>
 #include <IAttackableObj.h>
 #include <ICallbackRec_Upd.h>
-#include <CoreVisual.h>
+#include <IndicatorFill.h>
 
 using namespace KrostganEngine;
 using namespace KrostganEngine::Core;
@@ -41,7 +41,6 @@ namespace KrostganEngine::GameObjects {
 		IndicatorFill&		HPBar;
 		size_t				CurrentHP	= 1;
 
-	private:
 		class StatChangedEvSubs : public IEventSubscriber<EntityBattleStats::StatType> {
 		public:
 			StatChangedEvSubs(EntityHPModule& Owner)
@@ -66,7 +65,7 @@ namespace KrostganEngine::GameObjects {
 	class HPRegenModule : public ICallbackRec_Upd {
 
 	public:
-		//virtual ~HPRegenModule(){ }
+		virtual ~HPRegenModule(){ }
 
 		void Update(CallbackRecArgs_Upd args) override final {
 			if (IsActive) {

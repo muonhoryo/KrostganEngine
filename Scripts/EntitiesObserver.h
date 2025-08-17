@@ -3,7 +3,7 @@
 #include <Entity.h>
 
 using namespace std;
-using namespace KrostganEngine::Core;
+using namespace KrostganEngine::GameObjects;
 
 namespace KrostganEngine::Core {
 	class EntitiesObserver {

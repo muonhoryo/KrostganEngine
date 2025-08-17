@@ -2,7 +2,7 @@
 
 #include <EntitiesCtrlInputHandler.h>
 #include <Physics.h>
-#include <CoreUIUX.h>
+#include <CoreVisual_UI.h>
 
 using namespace KrostganEngine::UI;
 using namespace KrostganEngine::Physics;

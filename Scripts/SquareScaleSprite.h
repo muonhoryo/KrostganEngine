@@ -9,6 +9,7 @@ namespace KrostganEngine::Visual {
 	class SquareScaleSprite :public SpriteRenderer{
 
 	public:
+		virtual ~SquareScaleSprite(){}
 		SquareScaleSprite(
 			const Texture&	RenTexture, 
 			float			maxSpriteSize, 

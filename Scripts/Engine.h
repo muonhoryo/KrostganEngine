@@ -7,23 +7,55 @@
 #include <ExternalData.h>
 #include <Physics.h>
 #include <CursorManager.h>
+#include <Events.h>
 
 #define eps Engine::GetGlobalConsts().EPS
 
 using namespace sf;
+using namespace KrostganEngine;
 using namespace KrostganEngine::UI;
 using namespace KrostganEngine::Physics;
 
-namespace KrostganEngine {
-	namespace Core {
-		 class Engine {
+namespace KrostganEngine::Core {
+		 class Engine final {
+
+		//
+		//
+		//Events
+		//
+		//
+		 public:
+			 struct WindowResizeEvArgs {
+
+				 WindowResizeEvArgs(Vector2u OldSize,Vector2u NewSize)
+					 :OldSize(OldSize),NewSize(NewSize)
+				 {}
+
+				 Vector2u OldSize;
+				 Vector2u NewSize;
+			 };
+
+			 static inline ExecutedEvent<WindowResizeEvArgs> ResizeWindowEvent;
+
+		 private:
+			 static inline EventHandler<WindowResizeEvArgs> ResizeWindowEventHandler = 
+				 EventHandler<WindowResizeEvArgs>(ResizeWindowEvent);
 			 
+		//
+		//
+		//Engine running
+		//
+		//
 		 public:
 			static Engine& GetInstance();
 			static void StartEngine();
 
-			//ModeSelection
-
+		//
+		//
+		//ModeSelection
+		//
+		//
+		 public:
 			static void ReqToSetStartMode();
 
 			static void ReqToSetMode_MainMenu();
@@ -51,8 +83,11 @@ namespace KrostganEngine {
 
 			 static EngineMode* GetCurrentEngMode();
 
-			//
-
+		//
+		//
+		//Engine working
+		//
+		//
 		 public:
 			static void SetZoom(float zoom);
 			static void SetCameraPos(Vector2f pos);
@@ -112,5 +147,4 @@ namespace KrostganEngine {
 			friend static void EngineUpdateModule::SetFrameDeltaTime(float time);
 			friend static void EngineRenderModule::SetFrameRenderTime(float time);
 		};
-	}
 }

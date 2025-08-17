@@ -1,6 +1,6 @@
 #pragma once
 
-#include <CoreUIUX.h>
+#include <CoreVisual_UI.h>
 #include <CoreGameObjects.h>
 #include <Events.h>
 #include <list>

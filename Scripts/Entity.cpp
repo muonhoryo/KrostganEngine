@@ -44,6 +44,7 @@ Entity::Entity(EntityCtorParams& params)
 	SetAutoAggrModule(params.GetAutoAggrModule());
 	HPModule = params.HPModule;
 
+	HPBar->SetGlobalPosition(GetGlobalPosition());
 	HPBar->SetParent(this);
 	SetColor(GetColor());
 

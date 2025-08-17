@@ -15,7 +15,7 @@ using namespace KrostganEngine::Core;
 using namespace KrostganEngine::Physics;
 using namespace KrostganEngine::Visual;
 
-const std::string Engine::ENGINE_VERSION = "A0.2.8.1";
+const std::string Engine::ENGINE_VERSION = "A0.2.9.0";
 
 Engine::Engine()
 	:RenderModule(*new EngineRenderModule(RendWin)),
@@ -42,6 +42,9 @@ Engine::Engine()
 	view.zoom(Zoom);
 	RendWin.setView(view);
 	RendWin.setFramerateLimit(EngineConfiguration->FrameRateLimit);
+	WindowResizeEvArgs resArgs(Vector2u(0, 0), (Vector2u)resol);
+	ResizeWindowEventHandler.Execute(resArgs);
+	UserInterfaceManager::Initialize();
 	CurrMode = nullptr;
 	EngStateHandler = EngineStateHandler();
 
@@ -117,6 +120,8 @@ void Engine::SetFullScreen(bool isFull) {
 		wind.create(VideoMode(resol.x, resol.y), "Krostgan Engine " + Engine::ENGINE_VERSION,
 			isFull ? (sf::Style::Close | sf::Style::Fullscreen) : sf::Style::Close);
 		Singleton->IsFullscreen = isFull;
+		WindowResizeEvArgs resArgs(resol, Singleton->GetScreenSize());
+		Singleton->ResizeWindowEventHandler.Execute(resArgs);
 	}
 }
 

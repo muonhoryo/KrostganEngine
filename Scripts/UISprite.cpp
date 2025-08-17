@@ -1,0 +1,134 @@
+
+#include <UISprite.h>
+#include <Engine.h>
+#include <iostream>
+#include <Extensions.h>
+
+using namespace sf;
+using namespace KrostganEngine::Visual;
+using namespace KrostganEngine::UI;
+using namespace KrostganEngine::Core;
+
+//
+//
+//ctors
+//
+//
+
+void UISprite::ctor_Initialize(const Texture& renTexture) {
+
+	if (RendShader != nullptr)
+		RenderSt.shader = RendShader;
+
+	RenSprite->setTexture(renTexture);
+}
+Sprite& UISprite::ctor_InitOwner() {
+	RenSprite = new Sprite();
+	return *RenSprite;
+}
+
+UISprite::UISprite(
+	const Texture& RenTexture,
+	Vector2f		GlobalPosition,
+	Vector2f		GlobalScale,
+	Vector2f		Anchor,
+	Color			SprColor,
+	Shader* RendShader)
+		:UIElement(ctor_InitOwner(), GlobalPosition, GlobalScale, Anchor,(Vector2f)GetRenTexture().getSize()),
+		RendShader(RendShader)
+{
+	ctor_Initialize(RenTexture);
+
+	//SetGlobalScale(GlobalScale );
+	//SetGlobalPosition(GlobalPosition);
+	SetColor(SprColor);
+}
+
+UISprite::UISprite(
+	const Texture& RenTexture,
+	Vector2f		GlobalPosition,
+	float			GlobalScale,
+	Vector2f		Anchor,
+	Color			SprColor,
+	Shader*			RendShader)
+		:UISprite(
+			RenTexture,
+			GlobalPosition,
+			Vector2f(GlobalScale,GlobalScale),
+			Anchor,
+			SprColor,
+			RendShader)
+{}
+
+UISprite::UISprite(
+	const Texture&		RenTexture,
+	UIElement*			Parent,
+	Vector2f			GlobalPosition,
+	Vector2f			LocalScale,
+	Vector2f			Anchor,
+	Color				SprColor,
+	Shader*				RendShader)
+		:UIElement(ctor_InitOwner(), Parent, GlobalPosition, LocalScale, Anchor,(Vector2f)GetRenTexture().getSize()),
+		RendShader(RendShader)
+{
+	ctor_Initialize(RenTexture);
+
+	//SetLocalScale(LocalScale );
+	//SetGlobalPosition(GlobalPosition);
+	SetColor(SprColor);
+}
+
+UISprite::UISprite(
+	const Texture&	RenTexture,
+	UIElement*		Parent,
+	Vector2f		GlobalPosition,
+	float			LocalScale,
+	Vector2f		Anchor,
+	Color			SprColor,
+	Shader*			RendShader)
+		:UISprite(
+			RenTexture,
+			Parent,
+			GlobalPosition,
+			Vector2f(LocalScale,LocalScale),
+			Anchor,
+			SprColor,
+			RendShader)
+{}
+
+UISprite::~UISprite() {
+	delete RenSprite;
+}
+
+void UISprite::RenderGraphic(RenderWindow& window) {
+
+	window.draw(*RenSprite, RenderSt);
+	UpdateEffects();
+}
+
+//
+//
+//getters
+//
+//
+
+const Texture& UISprite::GetRenTexture() const {
+	return *RenSprite->getTexture();
+}
+
+Color			UISprite::GetColor() const {
+	return RenSprite->getColor();
+}
+Shader*			UISprite::GetShader() const {
+	return RendShader;
+}
+
+//
+//
+//override methods
+//
+//
+
+void	UISprite::SetColor(Color color) {
+	RenSprite->setColor(color);
+}

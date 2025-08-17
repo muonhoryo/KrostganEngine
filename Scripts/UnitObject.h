@@ -13,7 +13,7 @@
 #include <EntityHPModule.h>
 #include <HPRegenModules.h>
 
-#include <CoreUIUX.h>
+#include <CoreVisual_UI.h>
 
 using namespace sf;
 using namespace std;

@@ -58,23 +58,8 @@
     <Filter Include="Исходные файлы\CoreSystems\GameObjects">
       <UniqueIdentifier>{fb538d48-4313-485b-bf9c-38f2abf3bfd1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Файлы заголовков\CoreSystems\ExternalResources">
-      <UniqueIdentifier>{86b65db4-36fa-4d83-801d-8e9025f9a7b6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Исходные файлы\CoreSystems\ExternalResources">
       <UniqueIdentifier>{1a09639f-d312-4ea5-8ecb-f3ff7aaebdc2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Файлы заголовков\CoreSystems\UI/UX">
-      <UniqueIdentifier>{1b6b2ee0-f94a-44ba-af1d-af3b1517a850}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Файлы заголовков\CoreSystems\UI/UX\Primitives">
-      <UniqueIdentifier>{37c69a07-d98f-4e52-9180-cc5f4fc21a17}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Исходные файлы\CoreSystems\UI/UX">
-      <UniqueIdentifier>{62d5be82-9ec4-4630-8976-209b90775b58}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Исходные файлы\CoreSystems\UI/UX\Primitives">
-      <UniqueIdentifier>{59bae570-18c7-4e52-84f2-8ab1ac93b208}</UniqueIdentifier>
     </Filter>
     <Filter Include="Исходные файлы\CoreSystems\EntitiesControl">
       <UniqueIdentifier>{5604d52a-41bc-432f-8c58-31039c89d00d}</UniqueIdentifier>
@@ -112,17 +97,11 @@
     <Filter Include="Файлы заголовков\CoreSystems\EntitiesControl\Orders\BaseOrders\OrderComponents">
       <UniqueIdentifier>{008e50a3-f08d-45aa-ab41-df008f0b5e9a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Файлы заголовков\UI/UX">
-      <UniqueIdentifier>{2a498f39-da0f-40fe-b978-d56f12374f60}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Файлы заголовков\CoreSystems\EntitiesControl\RelationsSystem">
       <UniqueIdentifier>{b4fc3cd2-3e2c-43e5-8dcd-eeddc0339807}</UniqueIdentifier>
     </Filter>
     <Filter Include="Исходные файлы\CoreSystems\EntitiesControl\RelationsSystem">
       <UniqueIdentifier>{8448677f-19fc-422b-abda-de4333c48d2f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Исходные файлы\UI/UX">
-      <UniqueIdentifier>{22eea0bd-aa0c-40af-bdfd-1e412c208dd0}</UniqueIdentifier>
     </Filter>
     <Filter Include="Файлы заголовков\CoreSystems\GameObjects\OrdersSystem">
       <UniqueIdentifier>{7e218a6a-a054-457d-977d-e6d792cd9cb8}</UniqueIdentifier>
@@ -141,9 +120,6 @@
     </Filter>
     <Filter Include="Исходные файлы\CoreSystems\GameObjects\VirtualObjects">
       <UniqueIdentifier>{5fedf5b1-8156-460f-8f98-035a776fc859}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Файлы заголовков\UI/UX\AutoAttackAnimation">
-      <UniqueIdentifier>{96be3e06-6db8-4509-81da-95f23d1d5ffd}</UniqueIdentifier>
     </Filter>
     <Filter Include="Файлы заголовков\CoreSystems\GameObjects\FightingSystems">
       <UniqueIdentifier>{316d669b-6f39-4cbf-b9b1-b16848e9b712}</UniqueIdentifier>
@@ -171,9 +147,6 @@
     </Filter>
     <Filter Include="Исходные файлы\CoreSystems\GameObjects\FightingSystems\GameObjsBaseFightSystem">
       <UniqueIdentifier>{2f9e9f53-962e-4987-996b-d998bdc40a4d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Исходные файлы\UI/UX\AutoAttackAnimation">
-      <UniqueIdentifier>{84fa2bfc-e965-4c7f-905f-8ede9c9a368b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Исходные файлы\CoreSystems\GameObjects\FightingSystems\HitPointSystem\DeathModules">
       <UniqueIdentifier>{512258e7-22d0-40f4-996f-a025313fcd79}</UniqueIdentifier>
@@ -262,12 +235,6 @@
     <Filter Include="Исходные файлы\Visual\Effects">
       <UniqueIdentifier>{becd9275-5422-4aa1-8496-bc86fe0d203b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Файлы заголовков\CoreSystems\ExternalResources\ExtGlResources">
-      <UniqueIdentifier>{6be9a988-779c-4b84-8bc4-63edcb9c2136}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Файлы заголовков\CoreSystems\ExternalResources\ExtGlResources\Resources">
-      <UniqueIdentifier>{cd438c38-5cb4-4fab-b905-b3d48dff4641}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Файлы заголовков\CoreSystems\Visual\VisualEffectsSystem">
       <UniqueIdentifier>{1fe1d200-0000-4462-8137-06f9ba69171b}</UniqueIdentifier>
     </Filter>
@@ -282,6 +249,45 @@
     </Filter>
     <Filter Include="Файлы заголовков\CoreSystems\GameObjects\TransformableObjs">
       <UniqueIdentifier>{7e7636fe-9271-4c1c-971d-8644205e5b1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems\Visual\UI/UX">
+      <UniqueIdentifier>{1b6b2ee0-f94a-44ba-af1d-af3b1517a850}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems\Visual\UI/UX\Primitives">
+      <UniqueIdentifier>{37c69a07-d98f-4e52-9180-cc5f4fc21a17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems\ExternalData">
+      <UniqueIdentifier>{86b65db4-36fa-4d83-801d-8e9025f9a7b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems\ExternalData\ExtGlResources">
+      <UniqueIdentifier>{6be9a988-779c-4b84-8bc4-63edcb9c2136}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems\ExternalData\ExtGlResources\Resources">
+      <UniqueIdentifier>{cd438c38-5cb4-4fab-b905-b3d48dff4641}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Visual\UI/UX">
+      <UniqueIdentifier>{22eea0bd-aa0c-40af-bdfd-1e412c208dd0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Visual\UI/UX\AutoAttackAnimation">
+      <UniqueIdentifier>{84fa2bfc-e965-4c7f-905f-8ede9c9a368b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\CoreSystems\Visual\UI/UX">
+      <UniqueIdentifier>{62d5be82-9ec4-4630-8976-209b90775b58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\CoreSystems\Visual\UI/UX\Primitives">
+      <UniqueIdentifier>{59bae570-18c7-4e52-84f2-8ab1ac93b208}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems\Visual\UI/UX\UIElements">
+      <UniqueIdentifier>{9f6ce8bd-e9b5-46f6-8cb5-afe44a3438a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Visual\UI/UX">
+      <UniqueIdentifier>{2a498f39-da0f-40fe-b978-d56f12374f60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Visual\UI/UX\AutoAttackAnimation">
+      <UniqueIdentifier>{96be3e06-6db8-4509-81da-95f23d1d5ffd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\CoreSystems\Visual\UI/UX\UIElements">
+      <UniqueIdentifier>{8a19d4f7-76f2-4c31-ba7e-07676c80026e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -346,7 +352,7 @@
       <Filter>Исходные файлы\CoreSystems\EntitiesControl</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\GroupSelectionQuad.cpp">
-      <Filter>Исходные файлы\CoreSystems\UI/UX</Filter>
+      <Filter>Исходные файлы\CoreSystems\Visual\UI/UX</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\AABBCollShape.cpp">
       <Filter>Исходные файлы\CoreSystems\Physics\CollisionShapes</Filter>
@@ -361,10 +367,10 @@
       <Filter>Исходные файлы\Extensions</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\CircleVisPrimitive.cpp">
-      <Filter>Исходные файлы\CoreSystems\UI/UX\Primitives</Filter>
+      <Filter>Исходные файлы\CoreSystems\Visual\UI/UX\Primitives</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\QuadVisPrimitive.cpp">
-      <Filter>Исходные файлы\CoreSystems\UI/UX\Primitives</Filter>
+      <Filter>Исходные файлы\CoreSystems\Visual\UI/UX\Primitives</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\IPhysicalObject.cpp">
       <Filter>Исходные файлы\CoreSystems\EngineCallbacks</Filter>
@@ -391,7 +397,7 @@
       <Filter>Исходные файлы\CoreSystems\EntitiesControl\Orders\BaseOrders</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\LinesVisPrimitive.cpp">
-      <Filter>Исходные файлы\CoreSystems\UI/UX\Primitives</Filter>
+      <Filter>Исходные файлы\CoreSystems\Visual\UI/UX\Primitives</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\EntityBaseAAModule.cpp">
       <Filter>Исходные файлы\CoreSystems\GameObjects\FightingSystems\GameObjsBaseFightSystem</Filter>
@@ -427,16 +433,16 @@
       <Filter>Исходные файлы\CoreSystems\PlayerControl\EntitiesCtrlModes</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\CursorManager.cpp">
-      <Filter>Исходные файлы\CoreSystems\UI/UX</Filter>
+      <Filter>Исходные файлы\CoreSystems\Visual\UI/UX</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\OrderTargetVisualizer.cpp">
-      <Filter>Исходные файлы\UI/UX</Filter>
+      <Filter>Исходные файлы\Visual\UI/UX</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\GameUI.cpp">
-      <Filter>Исходные файлы\UI/UX</Filter>
+      <Filter>Исходные файлы\Visual\UI/UX</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\OrderTargsVisManager.cpp">
-      <Filter>Исходные файлы\UI/UX</Filter>
+      <Filter>Исходные файлы\Visual\UI/UX</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\FractionSystem.cpp">
       <Filter>Исходные файлы\CoreSystems\EntitiesControl\RelationsSystem</Filter>
@@ -511,13 +517,13 @@
       <Filter>Исходные файлы\CoreSystems\GameObjects</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\LineAAAnimation.cpp">
-      <Filter>Исходные файлы\UI/UX\AutoAttackAnimation</Filter>
+      <Filter>Исходные файлы\Visual\UI/UX\AutoAttackAnimation</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\OutlineLineVisual.cpp">
-      <Filter>Исходные файлы\CoreSystems\UI/UX\Primitives</Filter>
+      <Filter>Исходные файлы\CoreSystems\Visual\UI/UX\Primitives</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\WideLineVisual.cpp">
-      <Filter>Исходные файлы\CoreSystems\UI/UX\Primitives</Filter>
+      <Filter>Исходные файлы\CoreSystems\Visual\UI/UX\Primitives</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\ICallbackRec_GraphPostRen.cpp">
       <Filter>Исходные файлы\CoreSystems\EngineCallbacks</Filter>
@@ -570,9 +576,6 @@
     <ClCompile Include="Scripts\StartMessageMode.cpp">
       <Filter>Исходные файлы\CoreSystems\Engine\EngineModes</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\TextBlock.cpp">
-      <Filter>Исходные файлы\UI/UX</Filter>
-    </ClCompile>
     <ClCompile Include="Scripts\watch_ptr.cpp">
       <Filter>Исходные файлы\Memory\WatchPointer</Filter>
     </ClCompile>
@@ -602,6 +605,18 @@
     </ClCompile>
     <ClCompile Include="Scripts\FadingVisualEff_MRes.cpp">
       <Filter>Исходные файлы\Visual\Effects\Fading</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\UIElement.cpp">
+      <Filter>Исходные файлы\CoreSystems\Visual\UI/UX\UIElements</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\UISprite.cpp">
+      <Filter>Исходные файлы\CoreSystems\Visual\UI/UX\UIElements</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\UIText.cpp">
+      <Filter>Исходные файлы\CoreSystems\Visual\UI/UX\UIElements</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\UserInterfaceManager.cpp">
+      <Filter>Исходные файлы\CoreSystems\Visual\UI/UX</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -690,13 +705,13 @@
       <Filter>Файлы заголовков\CoreSystems\EntitiesControl</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\GroupSelectionQuad.h">
-      <Filter>Файлы заголовков\CoreSystems\UI/UX</Filter>
+      <Filter>Файлы заголовков\CoreSystems\Visual\UI/UX</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\CoreUIUX.h">
-      <Filter>Файлы заголовков\CoreSystems\UI/UX</Filter>
+    <ClInclude Include="Scripts\CoreVisual_UI.h">
+      <Filter>Файлы заголовков\CoreSystems\Visual\UI/UX</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\PrimitiveVisualShapes.h">
-      <Filter>Файлы заголовков\CoreSystems\UI/UX\Primitives</Filter>
+      <Filter>Файлы заголовков\CoreSystems\Visual\UI/UX\Primitives</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\IPhysicalObject.h">
       <Filter>Файлы заголовков\CoreSystems\EngineCallbacks</Filter>
@@ -708,16 +723,16 @@
       <Filter>Файлы заголовков\Extensions</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\GlobalConstsLoad.h">
-      <Filter>Файлы заголовков\CoreSystems\ExternalResources</Filter>
+      <Filter>Файлы заголовков\CoreSystems\ExternalData</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\EngineConfig.h">
-      <Filter>Файлы заголовков\CoreSystems\ExternalResources</Filter>
+      <Filter>Файлы заголовков\CoreSystems\ExternalData</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\EngineConfigLoad.h">
-      <Filter>Файлы заголовков\CoreSystems\ExternalResources</Filter>
+      <Filter>Файлы заголовков\CoreSystems\ExternalData</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\GlobalConsts.h">
-      <Filter>Файлы заголовков\CoreSystems\ExternalResources</Filter>
+      <Filter>Файлы заголовков\CoreSystems\ExternalData</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\HeroObject.h">
       <Filter>Файлы заголовков\CoreSystems\GameObjects</Filter>
@@ -786,16 +801,16 @@
       <Filter>Файлы заголовков\CoreSystems\EntitiesControl\Orders\BaseOrders\OrderComponents</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\CursorManager.h">
-      <Filter>Файлы заголовков\CoreSystems\UI/UX</Filter>
+      <Filter>Файлы заголовков\CoreSystems\Visual\UI/UX</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\OrderTargetsVisualizer.h">
-      <Filter>Файлы заголовков\UI/UX</Filter>
+      <Filter>Файлы заголовков\Visual\UI/UX</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\ZeroArgsEvent.h">
       <Filter>Файлы заголовков\Events</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\GameUI.h">
-      <Filter>Файлы заголовков\UI/UX</Filter>
+      <Filter>Файлы заголовков\Visual\UI/UX</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\FractionsSystem.h">
       <Filter>Файлы заголовков\CoreSystems\EntitiesControl\RelationsSystem</Filter>
@@ -843,7 +858,7 @@
       <Filter>Файлы заголовков\CoreSystems\EntitiesControl\Orders\BaseOrders</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\ExternalData.h">
-      <Filter>Файлы заголовков\CoreSystems\ExternalResources</Filter>
+      <Filter>Файлы заголовков\CoreSystems\ExternalData</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\PhysicsStructs.h">
       <Filter>Файлы заголовков\CoreSystems\Physics</Filter>
@@ -861,10 +876,10 @@
       <Filter>Файлы заголовков\CoreSystems\GameObjects</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\UIUXVisual.h">
-      <Filter>Файлы заголовков\UI/UX</Filter>
+      <Filter>Файлы заголовков\Visual\UI/UX</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\AutoAttackAnimation.h">
-      <Filter>Файлы заголовков\UI/UX\AutoAttackAnimation</Filter>
+      <Filter>Файлы заголовков\Visual\UI/UX\AutoAttackAnimation</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\AttackInfo.h">
       <Filter>Файлы заголовков\CoreSystems\GameObjects\FightingSystems\BattleInfo</Filter>
@@ -882,16 +897,13 @@
       <Filter>Файлы заголовков\CoreSystems\GameObjects\FightingSystems\HitPointSystem\HPModules</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\LineAAAnimation.h">
-      <Filter>Файлы заголовков\UI/UX\AutoAttackAnimation</Filter>
+      <Filter>Файлы заголовков\Visual\UI/UX\AutoAttackAnimation</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\ICallbackRec_GraphPostRen.h">
       <Filter>Файлы заголовков\CoreSystems\EngineCallbacks</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\CallbackDelegates.h">
       <Filter>Файлы заголовков\CoreSystems\EngineCallbacks</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\SpriteRenderer.h">
-      <Filter>Файлы заголовков\CoreSystems\Visual</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\CoreVisual.h">
       <Filter>Файлы заголовков\CoreSystems\Visual</Filter>
@@ -904,9 +916,6 @@
     </ClInclude>
     <ClInclude Include="Scripts\GameVisual.h">
       <Filter>Файлы заголовков\Visual</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\TextBlock.h">
-      <Filter>Файлы заголовков\UI/UX</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\LoseScript.h">
       <Filter>Файлы заголовков\GameTransitionScripts</Filter>
@@ -960,28 +969,28 @@
       <Filter>Файлы заголовков\Debug\Visualization</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\ExternalGlobalResources.h">
-      <Filter>Файлы заголовков\CoreSystems\ExternalResources\ExtGlResources</Filter>
+      <Filter>Файлы заголовков\CoreSystems\ExternalData\ExtGlResources</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\ExtGlobalResourcesLoad.h">
-      <Filter>Файлы заголовков\CoreSystems\ExternalResources\ExtGlResources</Filter>
+      <Filter>Файлы заголовков\CoreSystems\ExternalData\ExtGlResources</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\ExtGlRes_Texture.h">
-      <Filter>Файлы заголовков\CoreSystems\ExternalResources\ExtGlResources\Resources</Filter>
+      <Filter>Файлы заголовков\CoreSystems\ExternalData\ExtGlResources\Resources</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\ExtGlResources.h">
-      <Filter>Файлы заголовков\CoreSystems\ExternalResources\ExtGlResources</Filter>
+      <Filter>Файлы заголовков\CoreSystems\ExternalData\ExtGlResources</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\ValuesListDeserializer.h">
-      <Filter>Файлы заголовков\CoreSystems\ExternalResources</Filter>
+      <Filter>Файлы заголовков\CoreSystems\ExternalData</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\ExtGlRes_Sprite.h">
-      <Filter>Файлы заголовков\CoreSystems\ExternalResources\ExtGlResources\Resources</Filter>
+      <Filter>Файлы заголовков\CoreSystems\ExternalData\ExtGlResources\Resources</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\ExtGlRes_Font.h">
-      <Filter>Файлы заголовков\CoreSystems\ExternalResources\ExtGlResources\Resources</Filter>
+      <Filter>Файлы заголовков\CoreSystems\ExternalData\ExtGlResources\Resources</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\ExtGlRes_Shader.h">
-      <Filter>Файлы заголовков\CoreSystems\ExternalResources\ExtGlResources\Resources</Filter>
+      <Filter>Файлы заголовков\CoreSystems\ExternalData\ExtGlResources\Resources</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\IndicatorFill.h">
       <Filter>Файлы заголовков\CoreSystems\Visual</Filter>
@@ -1012,6 +1021,27 @@
     </ClInclude>
     <ClInclude Include="Scripts\TransformableObj.h">
       <Filter>Файлы заголовков\CoreSystems\GameObjects\TransformableObjs</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\SpriteRenderer.h">
+      <Filter>Файлы заголовков\CoreSystems\Visual</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\UISprite.h">
+      <Filter>Файлы заголовков\CoreSystems\Visual\UI/UX\UIElements</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\UIText.h">
+      <Filter>Файлы заголовков\CoreSystems\Visual\UI/UX\UIElements</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\UIEmpty.h">
+      <Filter>Файлы заголовков\CoreSystems\Visual\UI/UX\UIElements</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\UserInterfaceManager.h">
+      <Filter>Файлы заголовков\CoreSystems\Visual\UI/UX</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\UIElement.h">
+      <Filter>Файлы заголовков\CoreSystems\Visual\UI/UX\UIElements</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\UIMan_WinResizeEvSubs.h">
+      <Filter>Файлы заголовков\CoreSystems\Visual\UI/UX</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

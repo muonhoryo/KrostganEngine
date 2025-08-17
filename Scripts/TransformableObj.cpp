@@ -36,8 +36,6 @@ TransformableObj::TransformableObj
 	Parent.AddChild(*this);
 	SetLocalScale(LocalScale);
 	SetGlobalPosition(GlobalPosition);
-
-	pos = GetGlobalPosition();
 }
 
 TransformableObj::TransformableObj
@@ -71,23 +69,20 @@ TransformableObj::TransformableObj
 		:TransformableObj(Owner, GlobalPosition,Vector2f(GlobalScale, GlobalScale),Origin)
 {}
 
+//
+//
+//	getters
+//
+//
+
 Vector2f			TransformableObj::GetGlobalPosition() const {
 	return Owner.getPosition();
 }
 Vector2f			TransformableObj::GetLocalPosition() const {
 	return LocalPosition;
-	/*if (Parent == nullptr) {
-
-		return Owner.getPosition();
-	}
-	else {
-
-		return Parent->Owner.getInverseTransform().transformPoint(GetGlobalPosition());
-	}*/
 }
 Vector2f			TransformableObj::GetGlobalScale() const{
 	return Owner.getScale();
-	//return GlobalScale;
 }
 Vector2f			TransformableObj::GetLocalScale() const {
 	return LocalScale;
@@ -105,71 +100,96 @@ const Transform& TransformableObj::GetInverseTransform() const {
 	return Owner.getInverseTransform();
 }
 
-void TransformableObj::SetGlobalPosition	(Vector2f position) {
-	SetGlobalPosition_Inter(position, Parent == nullptr);
-}
-void TransformableObj::SetLocalPosition		(Vector2f position) {
+//
+//
+//	setters
+//
+//
 
-	if (Parent == nullptr) {
-
-		SetGlobalPosition_Inter(position,false);
-		LocalPosition = position;
-	}
-	else {
-
-		Vector2f oldpos = GetGlobalPosition();
-		Vector2f origin = Parent->GetOrigin();
-		Parent->SetOrigin(Vector2f(0,0));
-		Owner.setPosition(Parent->GetTransform().transformPoint(position));
-		PrevMovStep = GetGlobalPosition() - oldpos;
-		LocalPosition = position;
-		Parent->SetOrigin(origin);
-		for (auto ch : ChildObjs) {
-			ch->SetPosition_Inherit();
-		}
-	}
-}
-Vector2f TransformableObj::GetLocalPosition_Inter() {
-	return Parent->GetInverseTransform().transformPoint(GetGlobalPosition());
-}
-void TransformableObj::SetGlobalPosition_Inter(Vector2f position, bool isFree) {
+void		TransformableObj::SetGlobalPosition	(Vector2f position) {
 
 	Vector2f oldpos = GetGlobalPosition();
 	Owner.setPosition(position);
 	PrevMovStep = GetGlobalPosition() - oldpos;
 
-	if (isFree) {
+	if (Parent==nullptr) {
 		LocalPosition = GetGlobalPosition();
 	}
 	else {
-		Vector2f origin = Parent->GetOrigin();
-		Parent->SetOrigin(Vector2f(0,0));
-		LocalPosition = GetLocalPosition_Inter();
-		Parent->SetOrigin(Vector2f(0, 0));
+		LocalPosition = GetLocalPositionFromParent();
 	}
+	SetChildrenPosition();
+}
+/// <summary>
+/// Calculate local position of element from parent's transform
+/// </summary>
+/// <returns></returns>
+Vector2f	TransformableObj::GetLocalPositionFromParent() {
+	
+	Vector2f origin = Parent->GetOrigin();
+	Parent->SetOrigin(DEFAULT_ORIGIN);
+	Vector2f result = Parent->GetInverseTransform().transformPoint(GetGlobalPosition());
+	Parent->SetOrigin(origin);
+	return result;
+}
+Vector2f	TransformableObj::GetLocalScaleFromParent() {
+	Vector2f parScale = Parent->GetGlobalScale();
+	Vector2f ownScale = GetGlobalScale();
+	ownScale = Vector2f(ownScale.x / parScale.x, ownScale.y / parScale.y);
+	return ownScale;
+}
 
+void TransformableObj::SetLocalPosition		(Vector2f position) {
+
+	if (Parent == nullptr) {
+
+		SetGlobalPosition(position);
+	}
+	else {
+
+		Vector2f oldPos = GetGlobalPosition();
+		Owner.setPosition(TransformLocalPosToGlobal(position));
+		PrevMovStep = GetGlobalPosition() - oldPos;
+		LocalPosition = position;
+		SetChildrenPosition();
+	}
+}
+Vector2f TransformableObj::TransformLocalPosToGlobal(Vector2f localPos) {
+
+	Vector2f origin = Parent->GetOrigin();
+	Parent->SetOrigin(DEFAULT_ORIGIN);
+	Vector2f result = Parent->GetTransform().transformPoint(localPos);
+	Parent->SetOrigin(origin);
+	return result;
+}
+
+void TransformableObj::SetGlobalScale	(Vector2f scale) {
+
+	ScaleObject(scale);
+	SetChildrenScale();
+}
+void TransformableObj::ScaleObject		(Vector2f scale) {
+
+	Vector2f glScale = GetGlobalScale();
+	Vector2f coef(scale.x / glScale.x, scale.y / glScale.y);
+	Owner.setScale(scale);
+	LocalScale = Vector2f(coef.x * LocalScale.x, coef.y * LocalScale.y);
+}
+void TransformableObj::SetLocalScale	(Vector2f scale) {
+
+	LocalScale = scale;
+	SetScale_Inherit();
+	SetChildrenScale();
+}
+
+void TransformableObj::SetChildrenPosition() {
 	for (auto ch : ChildObjs) {
 		ch->SetPosition_Inherit();
 	}
 }
-
-void TransformableObj::SetGlobalScale		(Vector2f scale) {
-
-	Vector2f glScale = GetGlobalScale();
-	Vector2f coef (scale.x / glScale.x,scale.y/ glScale.y);
-	Owner.setScale(scale);
-	LocalScale= Vector2f(coef.x * LocalScale.x,coef.y * LocalScale.y);
-	//GlobalScale = scale;
+void TransformableObj::SetChildrenScale() {
 	for (auto ch : ChildObjs) {
-		ch->SetScale_Inherit(GetGlobalScale());
-	}
-}
-void TransformableObj::SetLocalScale		(Vector2f scale) {
-
-	LocalScale = scale;
-	SetScale_Inherit(Parent == nullptr ? DEFAULT_SCALE : Parent->GetGlobalScale());
-	for (auto ch : ChildObjs) {
-		ch->SetScale_Inherit(GetGlobalScale());
+		ch->SetScale_Inherit();
 	}
 }
 
@@ -196,30 +216,29 @@ void				TransformableObj::SetParent(TransformableObj* parent) {
 	Vector2f scale = GetGlobalScale();
 	if (Parent != nullptr) {
 
-		SetScale_Inherit(DEFAULT_SCALE);
 		Parent->RemoveChild(*this);
 		Parent = nullptr;
 	}
 	if (parent != nullptr) {
 
 		Parent = parent;
-		SetPosition_Inherit();
-		SetScale_Inherit(parent->GetGlobalScale());
+		LocalPosition = GetLocalPositionFromParent();
+		LocalScale = GetLocalScaleFromParent();
 		Parent->AddChild(*this);
 	}
 	else {
+		auto& owner = Owner;
 		SetGlobalPosition(pos);
 		SetGlobalScale(scale);
 	}
-	for (auto ch : ChildObjs) {
-		ch->SetPosition_Inherit();
-	}
-	for (auto ch : ChildObjs) {
-		ch->SetScale_Inherit(GetGlobalScale());
-	}
+	SetChildrenPosition();
+	SetChildrenScale();
 }
-TransformableObj&	TransformableObj::GetParent() {
-	return *Parent;
+TransformableObj*			TransformableObj::GetParent() {
+	return Parent;
+}
+TransformableObj const*		TransformableObj::GetParent_c() const {
+	return Parent;
 }
 
 void TransformableObj::SetDesWithParent(bool desWithPar) {
@@ -233,11 +252,15 @@ void TransformableObj::SetPosition_Inherit() {
 
 	SetLocalPosition(GetLocalPosition());
 }
-void TransformableObj::SetScale_Inherit(Vector2f parentGlScale) {
+void TransformableObj::SetScale_Inherit() {
 
-	Owner.setScale(LocalScale.x * parentGlScale.x, LocalScale.y * parentGlScale.y);
-	//GlobalScale = Vector2f(LocalScale.x * parentGlScale.x, LocalScale.y * parentGlScale.y);
-	//Owner.setScale(GlobalScale);
+	if (Parent == nullptr)
+		Owner.setScale(LocalScale);
+	else {
+
+		Vector2f parentGlScale = Parent->GetGlobalScale();
+		Owner.setScale(LocalScale.x * parentGlScale.x, LocalScale.y * parentGlScale.y);
+	}
 }
 
 void TransformableObj::AddChild(TransformableObj& child) {
@@ -246,6 +269,12 @@ void TransformableObj::AddChild(TransformableObj& child) {
 }
 void TransformableObj::RemoveChild(TransformableObj& child) {
 
-	if(CollectionsExts::Contains<vector<TransformableObj*>, TransformableObj*>(ChildObjs,&child))
+	if (CollectionsExts::Contains<vector<TransformableObj*>, TransformableObj*>(ChildObjs, &child))
 		CollectionsExts::Remove<vector<TransformableObj*>, TransformableObj*>(ChildObjs, &child);
+}
+vector<TransformableObj*>::const_iterator TransformableObj::GetChildrenStart() const {
+	return ChildObjs.cbegin();
+}
+vector<TransformableObj*>::const_iterator TransformableObj::GetChildrenEnd() const {
+	return ChildObjs.cend();
 }

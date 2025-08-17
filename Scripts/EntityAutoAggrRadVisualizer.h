@@ -1,7 +1,7 @@
 #pragma once
 
 #include <EngineCore.h>
-#include <CoreUIUX.h>
+#include <CoreVisual_UI.h>
 
 using namespace KrostganEngine::Core;
 using namespace KrostganEngine::GameObjects;

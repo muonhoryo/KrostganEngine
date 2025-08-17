@@ -26,21 +26,25 @@ void LoseScript::RenderGraphic(RenderWindow& window) {
 	{
 		if (time >= MessageAppearingTime) {
 
-			Message = new TextBlock("You are dead", 50U);
-			Message2 = new TextBlock("Level will be restarted in a few seconds", 50u);
-			Vector2u screenSize = Engine::GetScreenSize();
+			Message = new UIText(
+				nullptr,
+				"You are dead",
+				50u,
+				DEFAULT_POSITION,
+				1,
+				Vector2f(0.5,0.5));
+			Message2 = new UIText(
+				nullptr,
+				"Level will be restarted in a few seconds", 
+				50u,
+				DEFAULT_POSITION,
+				1,
+				Vector2f(0.5,0.5));
 
-			Rect bounds = Message->text.getGlobalBounds();
-			Vector2f center = Vector2f(bounds.left + 0.5f * bounds.width, bounds.top + bounds.height*0.5f);
-			Message->text.setOrigin(center);
-			Message->ScreenPosition = Vector2f(((float)screenSize.x) / 2, ((float)screenSize.y) / 2);
-			Message->text.setFillColor(Color(255U,255U,255U,0U));
-
-			bounds = Message2->text.getGlobalBounds();
-			center = Vector2f(bounds.left + 0.5f * bounds.width, bounds.top + bounds.height + 0.5f);
-			Message2->text.setOrigin(center);
-			Message2->ScreenPosition=Vector2f(((float)screenSize.x) / 2, ((float)screenSize.y) / 2+100);
-			Message2->text.setFillColor(Color(255U, 255U, 255U, 0U));
+			Message->SetColor(Color(255U, 255U, 255U, 0U));
+			Message2->SetColor(Color(255U, 255U, 255U, 0U));
+			Message->SetLocalPosition(Vector2f(-Message->GetPixelSize().x * 0.5, -100));
+			Message2->SetLocalPosition(Vector2f(-Message2->GetPixelSize().x * 0.5, 0));
 
 			Stage = LoseMessageStage::Appearing;
 		}
@@ -51,16 +55,16 @@ void LoseScript::RenderGraphic(RenderWindow& window) {
 		if (time < MessageShowingTime) {
 
 			float diff = time - MessageAppearingTime;
-			Color clr = Message->text.getFillColor();
+			Color clr =	Message->GetColor();
 			float transparency = diff / MessageAppearingDeltaTime;
-			Message->text.setFillColor(Color(clr.r, clr.g, clr.b, (Uint8)(transparency * 255)));
-			Message2->text.setFillColor(Color(clr.r, clr.g, clr.b, (Uint8)(transparency * 255)));
+			Message->SetColor(Color(clr.r, clr.g, clr.b, (Uint8)(transparency * 255)));
+			Message2->SetColor(Color(clr.r, clr.g, clr.b, (Uint8)(transparency * 255)));
 		}
 		else {
 
-			Color clr = Message->text.getFillColor();
-			Message->text.setFillColor(Color(clr.r, clr.g, clr.b));
-			Message2->text.setFillColor(Color(clr.r, clr.g, clr.b));
+			Color clr = Message->GetColor();
+			Message->SetColor(Color(clr.r, clr.g, clr.b));
+			Message2->SetColor(Color(clr.r, clr.g, clr.b));
 			Stage = LoseMessageStage::Showing;
 		}
 		break;

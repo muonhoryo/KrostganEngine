@@ -4,6 +4,7 @@
 #include <ICallbackRec_Upd.h>
 #include <CoreEntitiesControl.h>
 #include <CorePlayerControl.h>
+#include <CoreVisual_UI.h>
 #include <UIUXVisual.h>
 
 using namespace sf;
@@ -66,13 +67,13 @@ namespace KrostganEngine::Core {
 
 			void Update(CallbackRecArgs_Upd args) override;
 
-			bool HasPressed = false;
-			TextBlock* LoadMessage = nullptr;
+			bool		HasPressed = false;
+			UIText*		LoadMessage = nullptr;
 		};
 
 	private:
-		TextBlock Message;
-		StartMsgInputHandler InputHandler;
+		UIText					Message;
+		StartMsgInputHandler	InputHandler;
 
 		static inline const string MessageText = "Welcome to sector 17 of the Krostgan's Valley, commander.\n"
 			"Your current objective is eleminating the enemy's hero.\n"
@@ -80,6 +81,8 @@ namespace KrostganEngine::Core {
 			"and the forces are unevenly distributed throughout the location.\n"
 			"Press Enter to proceed to combat.\n"
 			"Good luck!";
+		static inline const Vector2f MESSAGE_ANCHOR = Vector2f(0.25, 0.25);
+		static inline const Vector2f LOAD_MESSAGE_ANCHOR = Vector2f(0.9, 0.9);
 
 	public:
 		StartMessageMode();

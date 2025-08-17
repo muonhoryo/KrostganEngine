@@ -5,6 +5,11 @@
 using namespace std;
 using namespace KrostganEngine::GameObjects;
 
+CommonHPRegenModule::CommonHPRegenModule(EntityHPModule& HPModule) : HPRegenModule(HPModule) {
+
+	CooldownTimer.restart();
+}
+
 void CommonHPRegenModule::Regen(CallbackRecArgs_Upd& args) {
 
 	auto& stats = HPModule.GetStats();
