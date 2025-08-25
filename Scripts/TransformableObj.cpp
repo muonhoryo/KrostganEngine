@@ -246,5 +246,6 @@ void TransformableObj::AddChild(TransformableObj& child) {
 }
 void TransformableObj::RemoveChild(TransformableObj& child) {
 
-	CollectionsExts::Remove<vector<TransformableObj*>, TransformableObj*>(ChildObjs, &child);
+	if(CollectionsExts::Contains<vector<TransformableObj*>, TransformableObj*>(ChildObjs,&child))
+		CollectionsExts::Remove<vector<TransformableObj*>, TransformableObj*>(ChildObjs, &child);
 }

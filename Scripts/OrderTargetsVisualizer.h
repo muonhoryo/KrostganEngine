@@ -57,7 +57,7 @@ namespace KrostganEngine::UI {
 		~OrderTargetsVisualizer();
 
 	private:
-		Entity& Owner;
+		watch_ptr_handler_wr<Entity> Owner;
 		IEventSubscriber<const IEntityOrder*>* AddSub;
 		IEventSubscriber<const IEntityOrder*>* RemSub;
 		INoArgsEventSubscriber* ClearSub;

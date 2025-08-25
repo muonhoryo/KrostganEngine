@@ -72,7 +72,7 @@ void OrderTargetsVisualizer::ClearOrdsQueueSubscriber::Execute() {
 //
 
 OrderTargetsVisualizer::OrderTargetsVisualizer(Entity& Owner) 
-	:Owner(Owner),
+	:Owner(Owner.GetPtr()),
 	AddSub(new AddOrderSubscriber(*this)),
 	RemSub(new RemoveOrderSubscriber(*this)),
 	ClearSub(new ClearOrdsQueueSubscriber(*this)),
@@ -90,9 +90,14 @@ OrderTargetsVisualizer::OrderTargetsVisualizer(Entity& Owner)
 	Owner.ResetOrderListEvent.Add(ClearSub);
 }
 OrderTargetsVisualizer::~OrderTargetsVisualizer() {
-	Owner.GetOrderEvent.Remove(AddSub);
-	Owner.ExecuteOrderEvent.Remove(RemSub);
-	Owner.ResetOrderListEvent.Remove(ClearSub);
+
+	Entity* ptr = Owner.GetPtr_t();
+	if (ptr != nullptr) {
+
+		ptr->GetOrderEvent.Remove(AddSub);
+		ptr->ExecuteOrderEvent.Remove(RemSub);
+		ptr->ResetOrderListEvent.Remove(ClearSub);
+	}
 	for (auto fl : DynPointsHandls) {
 		delete fl;
 	}
@@ -164,6 +169,6 @@ void OrderTargetsVisualizer::Clear() {
 
 vector<Vector2f>& OrderTargetsVisualizer::InitializeVisualVector() {
 	vector<Vector2f>& vec = *new vector<Vector2f>();
-	vec.push_back(Owner.GetGlobalPosition());
+	vec.push_back(Owner.GetPtr_t()->GetGlobalPosition());
 	return vec;
 }

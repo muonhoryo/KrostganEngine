@@ -83,8 +83,12 @@ void OrderTargsVisManager::Initialize_EntitiesTargetViss() {
 	EntitiesTargetViss = map<Entity*, OrderTargetsVisualizer*>();
 	auto begIt = GroupSelectionSystem::GetEntitiesBegIter();
 	auto endIt = GroupSelectionSystem::GetEntitiesEndIter();
+	
+	ISelectableEntity* ent = nullptr;
 	for (;begIt != endIt;++begIt) {
-		TryInsertEntity(*begIt);
+		ent = (*begIt).GetPtr_t();
+		if(ent!=nullptr)
+			TryInsertEntity(ent);
 	}
 }
 

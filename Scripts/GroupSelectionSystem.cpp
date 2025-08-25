@@ -78,7 +78,7 @@ void GroupSelectionSystem::Add(ISelectableEntity*& entity) {
 	//}
 	// Check relation of entity to player for not allowing selection more than one of not ally entity
 
-	Singleton->SelectedEntities.push_front(entity);
+	Singleton->SelectedEntities.push_front(entity->GetPtr());
 	entity->SelectionOn();
 	Singleton->AddSelectableEventHandler.Execute(entity);
 
@@ -95,7 +95,7 @@ void GroupSelectionSystem::Remove(ISelectableEntity*& entity) {
 	auto it = Singleton->SelectedEntities.begin();
 	bool isFound = false;
 	for (;it != Singleton->SelectedEntities.cend();++it) {
-		if (*it == entity) {
+		if ((*it).GetPtr_t() == entity) {
 			isFound = true;
 			break;
 		}
@@ -108,9 +108,13 @@ void GroupSelectionSystem::Remove(ISelectableEntity*& entity) {
 	}
 }
 void GroupSelectionSystem::Clear() {
-	for (auto en : Singleton->SelectedEntities) {
-		en->SelectionOff();
-		Singleton->RemoveSelectableEventHandler.Execute(en);
+	
+	ISelectableEntity* ptr = nullptr;
+	for (auto& en : Singleton->SelectedEntities) {
+		ptr = en.GetPtr_t();
+		if(ptr!=nullptr)
+			ptr->SelectionOff();
+		Singleton->RemoveSelectableEventHandler.Execute(ptr);
 	}
 	Singleton->SelectedEntities.clear();
 	Singleton->ClearSelectionEventHandler.Execute();
