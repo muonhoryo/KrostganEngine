@@ -22,6 +22,7 @@ void EntCtrlMode_GroupSelect::HandleInput(CallbackRecArgs_Upd& args) {
 	for (auto& ev : args.PlayerInput) {
 		if (ev.type == Event::MouseButtonReleased &&
 			ev.mouseButton.button == Mouse::Button::Left) {
+
 			SelectionEnd = GetCursorGlobalPos();
 			Vector2f minPos;
 			Vector2f maxPos;
@@ -53,7 +54,8 @@ void EntCtrlMode_GroupSelect::HandleInput(CallbackRecArgs_Upd& args) {
 			}
 			cout << "Selected objects count: " << units.size() << endl;
 			if (units.size() > 0) {
-				GroupSelectionSystem::Clear();
+				if(!Owner.GetShiftPresState())
+					GroupSelectionSystem::Clear();
 				GroupSelectionSystem::AddRange(selecUnits.begin(), selecUnits.cend());
 			}
 			Owner.SetNewMode(*new EntCtrlMode_Base(Owner));
