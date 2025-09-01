@@ -9,12 +9,18 @@ using namespace sf;
 using namespace KrostganEngine;
 using namespace KrostganEngine::UI;
 
-WideLineVisual::WideLineVisual(Vector2f Start, Vector2f End, float Width, Color LineColor) 
-	:Start(Start),
-	End(End),
-	Width(Width),
-	LineColor(LineColor),
-	Vertexes(VertexArray(PrimitiveType::TriangleStrip,4)){
+WideLineVisual::WideLineVisual(
+	Vector2f	Start,
+	Vector2f	End,
+	float		Width,
+	Color		LineColor,
+	char		RendLayer) 
+		:Start(Start),
+		End(End),
+		Width(Width),
+		LineColor(LineColor),
+		Vertexes(VertexArray(PrimitiveType::TriangleStrip,4)),
+		ICallbackRec_GraphPostRen(RendLayer){
 
 	Rebuild();
 	SetColor(LineColor);

@@ -15,6 +15,11 @@ using namespace std;
 using namespace KrostganEngine;
 
 namespace KrostganEngine::Core {
+
+	static bool PostRenCallbks_SortPred(ICallbackRec_GraphPostRen*const& first, ICallbackRec_GraphPostRen*const& second) {
+		return first->GetRendLayer() < second->GetRendLayer();
+	}
+
 	class EngineWorkCycleModule {
 	public:
 		virtual void Execute() = 0;
@@ -26,17 +31,7 @@ namespace KrostganEngine::Core {
 	template<typename TCallback>
 	class EngineCallbackHandler {
 	public:
-		/*void Initialize(forward_list < TCallback*> callbacks) {
-			Unload();
-			for (TCallback* cb : callbacks) {
-
-				Add(*cb);
-			}
-		};
-		void Unload() {
-			Callbacks.clear();
-		};*/
-		void Unload() {
+		virtual void Unload() {
 			
 			IsIteratingCallbacks = true;
 
@@ -62,7 +57,7 @@ namespace KrostganEngine::Core {
 
 			IsIteratingCallbacks = false;
 		}
-		void Remove(TCallback& callbckToDel) {
+		virtual void Remove(TCallback& callbckToDel) {
 
 			TCallback* elRef = Callbacks.front();
 			bool isFound = false;
@@ -106,7 +101,7 @@ namespace KrostganEngine::Core {
 		/// </summary>
 		/// <param name="callbck"></param>
 		/// <returns></returns>
-		void Add(TCallback& callbck) {
+		virtual void Add(TCallback& callbck) {
 
 			Callbacks.push_front(&callbck);
 			if (DelayedDelCallbksCount > 0) {
@@ -138,6 +133,10 @@ namespace KrostganEngine::Core {
 
 	protected:
 		EngineCallbackHandler() {};
+
+		//void Sort(int (*PR)(TCallback*,TCallback*)) {
+		//	Callbacks.sort(PR);
+		//}
 
 		list<TCallback*> Callbacks = list<TCallback*>();
 
@@ -177,14 +176,18 @@ namespace KrostganEngine::Core {
 
 		void Execute() override;
 
+		void Add(ICallbackRec_GraphPostRen& callbck) override;
+
 	private:
+
 		RenderWindow& Window;
 		Clock FrameRenderTime;
+		bool NeedToSort = true;
 
-	
 	public:
 
 		void SetFrameRenderTime(float time);
+		void SetNeedToSort();
 	};
 
 	class EngineLateUpdateModule :public EngineCallbackHandler<ICallbackRec_LUpd>,

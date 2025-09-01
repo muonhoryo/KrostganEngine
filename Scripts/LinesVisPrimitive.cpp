@@ -7,7 +7,12 @@ using namespace KrostganEngine::UI;
 
 
 
-LinesVisPrimitive::LinesVisPrimitive(vector<Vector2f>& pointsCoord, Color edgeColor) {
+LinesVisPrimitive::LinesVisPrimitive(
+	vector<Vector2f>&	pointsCoord, 
+	Color				edgeColor,
+	char				RendLayer)
+		:ICallbackRec_GraphPostRen(RendLayer)
+{
 	size_t pointsCount = pointsCoord.size();
 	if (pointsCount== 0) {
 		throw exception("Lines primitive cannot be created without points");
@@ -18,7 +23,11 @@ LinesVisPrimitive::LinesVisPrimitive(vector<Vector2f>& pointsCoord, Color edgeCo
 		Vertexes[i].color = edgeColor;
 	}
 }
-LinesVisPrimitive::LinesVisPrimitive(vector<Vector2f>& pointsCoord, vector<Color>& edgeColors) {
+LinesVisPrimitive::LinesVisPrimitive(
+	vector<Vector2f>&	pointsCoord, 
+	vector<Color>&		edgeColors,
+	char				RendLayer)
+		:ICallbackRec_GraphPostRen(RendLayer){
 
 	size_t pointsCount = pointsCoord.size();
 	if (pointsCount == 0) {

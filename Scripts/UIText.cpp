@@ -26,14 +26,16 @@ UIText::UIText(
 	unsigned int	characterSize,
 	Vector2f		GlobalPosition,
 	Vector2f		LocalScale,
-	Vector2f		Anchor)
+	Vector2f		Anchor,
+	char			RendLayer)
 		:UIElement(
 			ctor_InitOwner(textStr,characterSize),
 			Parent,
 			GlobalPosition,
 			LocalScale,
 			Anchor,
-			ctor_GetUISize(textStr,characterSize))
+			ctor_GetUISize(textStr,characterSize),
+			RendLayer)
 {
 	auto par = GetParent();
 	auto owner = text;
@@ -46,14 +48,16 @@ UIText::UIText(
 	unsigned int		characterSize,
 	Vector2f			GlobalPosition,
 	float				LocalScale,
-	Vector2f			Anchor)
+	Vector2f			Anchor,
+	char				RendLayer)
 		:UIText(
 			Parent,
 			textStr,
 			characterSize,
 			GlobalPosition,
 			Vector2f(LocalScale,LocalScale),
-			Anchor)
+			Anchor,
+			RendLayer)
 {}
 
 UIText::UIText(
@@ -61,13 +65,15 @@ UIText::UIText(
 	unsigned int		characterSize,
 	Vector2f			GlobalPosition,
 	Vector2f			GlobalScale,
-	Vector2f			Anchor)
+	Vector2f			Anchor,
+	char				RendLayer)
 		:UIElement(
 			ctor_InitOwner(textStr,characterSize),
 			GlobalPosition,
 			GlobalScale,
 			Anchor,
-			ctor_GetUISize(textStr,characterSize))
+			ctor_GetUISize(textStr,characterSize),
+			RendLayer)
 {}
 
 UIText::UIText(
@@ -75,13 +81,15 @@ UIText::UIText(
 	unsigned int		characterSize,
 	Vector2f			GlobalPosition,
 	float				GlobalScale,
-	Vector2f			Anchor)
+	Vector2f			Anchor,
+	char				RendLayer)
 		:UIText(
 			textStr,
 			characterSize,
 			GlobalPosition,
 			Vector2f(GlobalScale,GlobalScale),
-			Anchor)
+			Anchor,
+			RendLayer)
 {}
 
 void UIText::RenderGraphic(RenderWindow& window) {

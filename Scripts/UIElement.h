@@ -62,7 +62,8 @@ namespace KrostganEngine::UI {
 			Vector2f			GlobalPosition	= DEFAULT_POSITION,
 			Vector2f			LocalScale		= DEFAULT_SCALE,
 			Vector2f			Anchor			= DEFAULT_ANCHOR,
-			Vector2f			UISize			= DEFAULT_SCALE);
+			Vector2f			UISize			= DEFAULT_SCALE,
+			char				RendLayer		= 0);
 
 		/// <summary>
 		/// Nullptr as the Parent means that parent of the element will be root of UI (UserInterfaceManager::GetRoot())
@@ -79,21 +80,24 @@ namespace KrostganEngine::UI {
 			Vector2f			GlobalPosition	= DEFAULT_POSITION,
 			float				LocalScale		= 1,
 			Vector2f			Anchor			= DEFAULT_ANCHOR,
-			Vector2f			UISize			= DEFAULT_SCALE);
+			Vector2f			UISize			= DEFAULT_SCALE,
+			char				RendLayer		= 0);
 
 		UIElement(
 			Transformable&		Owner,
 			Vector2f			GlobalPosition	= DEFAULT_POSITION,
 			Vector2f			GlobalScale		= DEFAULT_SCALE,
 			Vector2f			Anchor			= DEFAULT_ANCHOR,
-			Vector2f			UISize			= DEFAULT_SCALE);
+			Vector2f			UISize			= DEFAULT_SCALE,
+			char				RendLayer		= 0);
 		
 		UIElement(
 			Transformable&		Owner,
 			Vector2f			GlobalPosition	= DEFAULT_POSITION,
 			float				GlobalScale		= 1,
 			Vector2f			Anchor			= DEFAULT_ANCHOR,
-			Vector2f			UISize			= DEFAULT_SCALE);
+			Vector2f			UISize			= DEFAULT_SCALE,
+			char				RendLayer		= 0);
 
 		//Rewrite algorithm of local position's calculation by binding transform's center of
 		//child element to anchor of parent (not to its origin)

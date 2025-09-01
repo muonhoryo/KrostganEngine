@@ -13,8 +13,14 @@ namespace KrostganEngine::Core {
 		virtual void RenderGraphic(RenderWindow& window) = 0;
 		virtual ~ICallbackRec_GraphPostRen();
 
+		char GetRendLayer() const;
+		void SetRendLayer(char layer);
+
 	protected:
-		ICallbackRec_GraphPostRen();
+		ICallbackRec_GraphPostRen(char RendLayer = 0);
+
+	private:
+		char RendLayer = 0;
 
 	};
 }

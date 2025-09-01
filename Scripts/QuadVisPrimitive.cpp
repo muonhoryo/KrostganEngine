@@ -6,7 +6,15 @@
 using namespace sf;
 using namespace KrostganEngine::UI;
 
-QuadVisPrimitive::QuadVisPrimitive(Vector2f lt, Vector2f rt, Vector2f rb, Vector2f lb, Color edgeColor){
+QuadVisPrimitive::QuadVisPrimitive(
+	Vector2f	lt,
+	Vector2f	rt, 
+	Vector2f	rb, 
+	Vector2f	lb,
+	Color		edgeColor,
+	char		RendLayer)
+		:ICallbackRec_GraphPostRen(RendLayer){
+
 	Vertexes = VertexArray(PrimitiveType::LineStrip, 5);
 	SetPoints(lt, rt, rb, lb);
 	SetEdgeColor(edgeColor);
@@ -57,7 +65,7 @@ void QuadVisPrimitive::RenderGraphic(RenderWindow& window) {
 	window.draw(Vertexes);
 }
 
-QuadVisPrimitive& QuadVisPrimitive::InstanceQuad(Vector2f corner1, Vector2f corner2,Color edgeColor) {
+QuadVisPrimitive& QuadVisPrimitive::InstanceQuad(Vector2f corner1, Vector2f corner2,Color edgeColor,char RendLayer) {
 	float minX, minY, maxX, maxY;
 	if (corner1.x < corner2.x) {
 		minX = corner1.x;
@@ -76,5 +84,11 @@ QuadVisPrimitive& QuadVisPrimitive::InstanceQuad(Vector2f corner1, Vector2f corn
 		maxY = corner1.y;
 	}
 
-	return *new QuadVisPrimitive(Vector2f(minX, minY), Vector2f(maxX, minY), Vector2f(maxX, maxY), Vector2f(minX, maxY), edgeColor);
+	return *new QuadVisPrimitive(
+		Vector2f(minX, minY), 
+		Vector2f(maxX, minY),
+		Vector2f(maxX, maxY), 
+		Vector2f(minX, maxY), 
+		edgeColor, 
+		RendLayer);
 }

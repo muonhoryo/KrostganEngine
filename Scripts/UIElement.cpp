@@ -19,8 +19,9 @@ UIElement::UIElement(
 	Vector2f			GlobalPosition,
 	Vector2f			LocalScale,
 	Vector2f			Anchor,
-	Vector2f			UISize)
-		:ICallbackRec_GraphPostRen(),
+	Vector2f			UISize,
+	char				RendLayer )
+		:ICallbackRec_GraphPostRen(RendLayer),
 		TransformableObj(
 			Owner,
 			Parent==nullptr?UserInterfaceManager::GetRoot():*Parent,
@@ -39,8 +40,9 @@ UIElement::UIElement(
 	Vector2f			GlobalPosition,
 	float				LocalScale,
 	Vector2f			Anchor,
-	Vector2f			UISize)
-		:UIElement(Owner,Parent,GlobalPosition,Vector2f(LocalScale,LocalScale),Anchor,UISize)
+	Vector2f			UISize,
+	char				RendLayer)
+		:UIElement(Owner,Parent,GlobalPosition,Vector2f(LocalScale,LocalScale),Anchor,UISize,RendLayer)
 {}
 
 UIElement::UIElement(
@@ -48,8 +50,9 @@ UIElement::UIElement(
 	Vector2f			GlobalPosition,
 	Vector2f			GlobalScale,
 	Vector2f			Anchor,
-	Vector2f			UISize)
-		:ICallbackRec_GraphPostRen(),
+	Vector2f			UISize,
+	char				RendLayer)
+		:ICallbackRec_GraphPostRen(RendLayer),
 		TransformableObj(Owner,GlobalPosition,GlobalScale),
 		Anchor(Anchor)
 {
@@ -63,8 +66,9 @@ UIElement::UIElement(
 	Vector2f			GlobalPosition,
 	float				GlobalScale,
 	Vector2f			Anchor,
-	Vector2f			UISize)
-		:UIElement(Owner,GlobalPosition,Vector2f(GlobalScale,GlobalScale),Anchor,UISize)
+	Vector2f			UISize,
+	char				RendLayer)
+		:UIElement(Owner,GlobalPosition,Vector2f(GlobalScale,GlobalScale),Anchor,UISize,RendLayer)
 {}
 
 //

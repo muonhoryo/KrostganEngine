@@ -16,7 +16,8 @@ StartMessageMode::StartMessageMode() : EngineMode(),
 		UserInterfaceManager::GetRoot().GetAnchoredGlobalPos(MESSAGE_ANCHOR),
 		1,
 		//Vector2f(0, 0)),
-		Vector2f(MESSAGE_ANCHOR)),
+		Vector2f(MESSAGE_ANCHOR),
+		15),
 	InputHandler(StartMsgInputHandler()){
 
 	Message.SetColor(Color(255U, 255U, 255U, 255U));

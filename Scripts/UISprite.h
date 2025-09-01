@@ -15,7 +15,8 @@ namespace KrostganEngine::UI {
 			Vector2f		GlobalScale		= DEFAULT_SCALE,
 			Vector2f		Anchor			= DEFAULT_ANCHOR,
 			Color			SprColor		= Color::White,
-			Shader*			RendShader		= nullptr);
+			Shader*			RendShader		= nullptr,
+			char			RendLayer		= 0);
 		
 		UISprite(
 			const Texture&	RenTexture,
@@ -23,7 +24,8 @@ namespace KrostganEngine::UI {
 			float			GlobalScale		= 1,
 			Vector2f		Anchor			= DEFAULT_ANCHOR,
 			Color			SprColor		= Color::White,
-			Shader*			RendShader		= nullptr);
+			Shader*			RendShader		= nullptr,
+			char			RendLayer		= 0);
 
 		UISprite(
 			const Texture&	RenTexture,
@@ -32,7 +34,8 @@ namespace KrostganEngine::UI {
 			Vector2f		LocalScale		= DEFAULT_SCALE,
 			Vector2f		Anchor			= DEFAULT_ANCHOR,
 			Color			SprColor		= Color::White,
-			Shader*			RendShader = nullptr);
+			Shader*			RendShader		= nullptr,
+			char			RendLayer		= 0);
 		
 		UISprite(
 			const Texture&	RenTexture,
@@ -41,7 +44,8 @@ namespace KrostganEngine::UI {
 			float			LocalScale		= 1,
 			Vector2f		Anchor			= DEFAULT_ANCHOR,
 			Color			SprColor		= Color::White,
-			Shader*			RendShader		= nullptr);
+			Shader*			RendShader		= nullptr,
+			char			RendLayer		= 0);
 		
 		virtual ~UISprite();
 

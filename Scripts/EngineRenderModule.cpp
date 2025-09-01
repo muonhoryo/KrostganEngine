@@ -24,6 +24,11 @@ void EngineRenderModule::Execute() {
 
 		rec->RenderGraphic(Window);
 	}
+	if (NeedToSort) {
+		//bool (*pred)(const ICallbackRec_GraphPostRen*&, const ICallbackRec_GraphPostRen*&) = PostRenCallbks_SortPred;
+		EngineCallbackHandler<ICallbackRec_GraphPostRen>::Callbacks.sort(PostRenCallbks_SortPred);
+		NeedToSort = false;
+	}
 	for (auto rec : EngineCallbackHandler<ICallbackRec_GraphPostRen>::Callbacks) {
 
 		if (rec == nullptr)
@@ -41,4 +46,12 @@ void EngineRenderModule::Execute() {
 
 void EngineRenderModule::SetFrameRenderTime(float time) {
 	Engine::Singleton->FrameRenderTime = time;
+}
+void EngineRenderModule::SetNeedToSort() {
+	NeedToSort = true;
+}
+
+void EngineRenderModule::Add(ICallbackRec_GraphPostRen& callbck) {
+	EngineCallbackHandler<ICallbackRec_GraphPostRen>::Add(callbck);
+	NeedToSort = true;
 }

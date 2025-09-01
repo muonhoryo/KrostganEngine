@@ -10,7 +10,14 @@ using namespace std;
 using namespace KrostganEngine;
 using namespace KrostganEngine::UI;
 
-CircleVisPrimitive::CircleVisPrimitive(Vector2f center, float radius, Color edgeColor,size_t pointsCount) {
+CircleVisPrimitive::CircleVisPrimitive(
+	Vector2f	center, 
+	float		radius, 
+	Color		edgeColor,
+	size_t		pointsCount,
+	char		RendLayer)
+		:ICallbackRec_GraphPostRen(RendLayer)
+{
 	CirShape = CircleShape(radius, pointsCount);
 	CirShape.setOrigin(Vector2f(radius,radius));
 	CirShape.setFillColor(Color::Transparent);

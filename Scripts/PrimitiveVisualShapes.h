@@ -14,8 +14,13 @@ using namespace KrostganEngine::Visual;
 namespace KrostganEngine::UI {
 	class QuadVisPrimitive :public ICallbackRec_GraphPostRen {
 	public:
-		QuadVisPrimitive(Vector2f lt, Vector2f rt, Vector2f rb, Vector2f lb,
-			Color edgeColor);
+		QuadVisPrimitive(
+			Vector2f lt, 
+			Vector2f rt, 
+			Vector2f rb, 
+			Vector2f lb,
+			Color	edgeColor,
+			char	RendLayer = 0);
 
 		FloatRect GetBounds();
 		Color GetEdgeColor();
@@ -26,14 +31,19 @@ namespace KrostganEngine::UI {
 
 		void RenderGraphic(RenderWindow& window) override;
 
-		static QuadVisPrimitive& InstanceQuad(Vector2f corner1, Vector2f corner2, Color edgeColor);
+		static QuadVisPrimitive& InstanceQuad(Vector2f corner1, Vector2f corner2, Color edgeColor,char RendLayer = 0);
 	private:
 		VertexArray Vertexes;
 	};
 
 	class CircleVisPrimitive : public ICallbackRec_GraphPostRen {
 	public:
-		CircleVisPrimitive(Vector2f center, float radius,Color edgeColor,size_t pointsCount);
+		CircleVisPrimitive(
+			Vector2f	center, 
+			float		radius,
+			Color		edgeColor,
+			size_t		pointsCount,
+			char		RendLayer = 0);
 
 		Vector2f GetCenter();
 		float GetRadius();
@@ -53,8 +63,8 @@ namespace KrostganEngine::UI {
 
 	class LinesVisPrimitive :public ICallbackRec_GraphPostRen {
 	public:
-		LinesVisPrimitive(vector<Vector2f>& pointsCoord, Color edgesColor);
-		LinesVisPrimitive(vector<Vector2f>& pointsCoord, vector<Color>& edgeColors);
+		LinesVisPrimitive(vector<Vector2f>& pointsCoord, Color edgesColor,char RendLayer=0);
+		LinesVisPrimitive(vector<Vector2f>& pointsCoord, vector<Color>& edgeColors, char RendLayer=0);
 		virtual ~LinesVisPrimitive() {};
 		
 		Color GetEdgeColor(size_t index) const;
@@ -75,7 +85,12 @@ namespace KrostganEngine::UI {
 
 	class WideLineVisual :public ICallbackRec_GraphPostRen, public IColoredObject{
 	public:
-		WideLineVisual(Vector2f Start, Vector2f End, float Width, Color LineColor);
+		WideLineVisual(
+			Vector2f	Start, 
+			Vector2f	End, 
+			float		Width, 
+			Color		LineColor,
+			char		RendLayer = 0);
 		virtual ~WideLineVisual(){}
 
 		Vector2f GetStart() const {

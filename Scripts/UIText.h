@@ -15,9 +15,10 @@ namespace KrostganEngine::UI {
 			UIElement*		Parent,
 			const string	textStr			= "",
 			unsigned int	characterSize	= 30,
-			Vector2f		GlobalPosition = DEFAULT_POSITION,
-			Vector2f		LocalScale = DEFAULT_SCALE,
-			Vector2f		Anchor = DEFAULT_ANCHOR);
+			Vector2f		GlobalPosition	= DEFAULT_POSITION,
+			Vector2f		LocalScale		= DEFAULT_SCALE,
+			Vector2f		Anchor			= DEFAULT_ANCHOR,
+			char			RendLayer		= 0);
 
 		UIText(
 			UIElement*			Parent,
@@ -25,21 +26,24 @@ namespace KrostganEngine::UI {
 			unsigned int		characterSize	= 30,
 			Vector2f			GlobalPosition	= DEFAULT_POSITION,
 			float				LocalScale		= 1,
-			Vector2f			Anchor			= DEFAULT_ANCHOR);
+			Vector2f			Anchor			= DEFAULT_ANCHOR,
+			char				RendLayer		= 0);
 
 		UIText(
 			const string		textStr			= "",
 			unsigned int		characterSize	= 30,
 			Vector2f			GlobalPosition	= DEFAULT_POSITION,
 			Vector2f			GlobalScale		= DEFAULT_SCALE,
-			Vector2f			Anchor			= DEFAULT_ANCHOR);
+			Vector2f			Anchor			= DEFAULT_ANCHOR,
+			char				RendLayer		= 0);
 
 		UIText(
 			const string		textStr			= "",
 			unsigned int		characterSize	= 30,
 			Vector2f			GlobalPosition	= DEFAULT_POSITION,
 			float				GlobalScale		= 1,
-			Vector2f			Anchor			= DEFAULT_ANCHOR);
+			Vector2f			Anchor			= DEFAULT_ANCHOR,
+			char				RendLayer		= 0);
 
 		void RenderGraphic(RenderWindow& window) override;
 
