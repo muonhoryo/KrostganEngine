@@ -44,6 +44,3 @@ const string GlobalConstsLoad::GetFilePath() {
 const char GlobalConstsLoad::GetValuesDefEndSym() {
 	return CONFIG_DEF_END_SYM;
 }
-
-const string GlobalConstsLoad::CONSTS_PATH = "GlobalConsts.txt";
-const char GlobalConstsLoad::CONFIG_DEF_END_SYM = ':';

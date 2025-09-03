@@ -10,7 +10,7 @@ using namespace KrostganEngine::Core;
 using namespace KrostganEngine;
 
 ValuesListDeserializer::ValuesListDeserializer() {
-	StrValuesArr = vector<ValueDefPair>();
+	StrValuesArr = vector<ValueDefPair*>();
 }
 ValuesListDeserializer::~ValuesListDeserializer() {
 	StrValuesArr.clear();
@@ -26,7 +26,7 @@ void ValuesListDeserializer::DeserializeValues() {
 		st.fail() == true) {
 		throw exception("Cannot open file");
 	}
-	ValueDefPair conf;
+	ValueDefPair* conf;
 	string name;
 	string value;
 	size_t index;
@@ -36,7 +36,7 @@ void ValuesListDeserializer::DeserializeValues() {
 			index = line.find(defEndSym);
 			name = line.substr(0, index);
 			value = line.substr(index + 1, line.length() - index - 1);
-			conf = ValueDefPair(name, value);
+			conf = new ValueDefPair(name, value);
 			StrValuesArr.push_back(conf);
 		}
 	}
@@ -46,7 +46,7 @@ void ValuesListDeserializer::DeserializeValues(vector<string>& serValues) {
 
 	StrValuesArr.clear();
 
-	ValueDefPair conf;
+	ValueDefPair* conf;
 	string name;
 	string value;
 	size_t index;
@@ -55,7 +55,7 @@ void ValuesListDeserializer::DeserializeValues(vector<string>& serValues) {
 		index = line.find(defEndSym);
 		name = line.substr(0, index);
 		value = line.substr(index + 1, line.length() - index - 1);
-		conf = ValueDefPair(name, value);
+		conf = new ValueDefPair(name, value);
 		StrValuesArr.push_back(conf);
 	}
 }
@@ -63,11 +63,11 @@ bool ValuesListDeserializer::TryGetValue(const string& definition, string& value
 	
 	value.clear();
 
-	for (auto& conf : StrValuesArr) {
-		if (conf.Name.find(definition) != string::npos) {
-			const char* source = conf.Value.c_str();
-			char* dest = new char[conf.Value.size()];
-			strcpy_s(dest, conf.Value.size() + 1, source);
+	for (auto conf : StrValuesArr) {
+		if (conf->Name.find(definition) != string::npos) {
+			const char* source = conf->Value.c_str();
+			char* dest = new char[conf->Value.size()];
+			strcpy_s(dest, conf->Value.size() + 1, source);
 			value.append(dest);
 
 			cout << value << endl;

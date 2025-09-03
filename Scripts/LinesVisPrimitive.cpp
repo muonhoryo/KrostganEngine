@@ -101,6 +101,6 @@ void LinesVisPrimitive::SetPointPosition(Vector2f newPos, size_t pointIndex) {
 	Vertexes[pointIndex].position = newPos;
 }
 
-void LinesVisPrimitive::RenderGraphic(RenderWindow& window) {
+void LinesVisPrimitive::RenderGraphicAction(RenderWindow& window) {
 	window.draw(Vertexes);
 }

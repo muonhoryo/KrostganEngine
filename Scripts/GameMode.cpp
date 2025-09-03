@@ -10,12 +10,15 @@ using namespace KrostganEngine::EntitiesControl;
 
 
 GameMode::GameMode() :EngineMode() {
+
     Window = &Engine::GetRenderWindow();
     BaseInputHandl = new BaseInputHandler();
     EntitiesCtrlHandler = new EntitiesCtrlInputHandler();
     GameInterface = new GameUI();
 
     Engine::SetCameraPos(Vector2f(0, 0));
+
+    UserInterfaceLoader::Load_GameUI();
 }
 GameMode::~GameMode() {
 	delete BaseInputHandl;
@@ -28,6 +31,7 @@ GameMode::~GameMode() {
     Engine::GetLateUpdModule().Unload();
     postRenMod.Unload();
     renMod.Unload();
+    UserInterfaceManager::Initialize();
 }
 void GameMode::ExecuteCycle() {
 

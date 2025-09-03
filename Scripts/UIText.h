@@ -4,6 +4,8 @@
 #include <SFML/Graphics.hpp>
 #include <CoreVisual.h>
 
+#define DEFAULT_FONTSIZE 30u
+
 using namespace std;
 using namespace KrostganEngine::Core;
 using namespace sf;
@@ -14,8 +16,8 @@ namespace KrostganEngine::UI {
 		UIText(
 			UIElement*		Parent,
 			const string	textStr			= "",
-			unsigned int	characterSize	= 30,
-			Vector2f		GlobalPosition	= DEFAULT_POSITION,
+			unsigned int	characterSize	= DEFAULT_FONTSIZE,
+			Vector2f		LocalPosition	= DEFAULT_POSITION,
 			Vector2f		LocalScale		= DEFAULT_SCALE,
 			Vector2f		Anchor			= DEFAULT_ANCHOR,
 			char			RendLayer		= 0);
@@ -23,15 +25,15 @@ namespace KrostganEngine::UI {
 		UIText(
 			UIElement*			Parent,
 			const string		textStr			= "",
-			unsigned int		characterSize	= 30,
-			Vector2f			GlobalPosition	= DEFAULT_POSITION,
+			unsigned int		characterSize	= DEFAULT_FONTSIZE,
+			Vector2f			LocalPosition	= DEFAULT_POSITION,
 			float				LocalScale		= 1,
 			Vector2f			Anchor			= DEFAULT_ANCHOR,
 			char				RendLayer		= 0);
 
 		UIText(
 			const string		textStr			= "",
-			unsigned int		characterSize	= 30,
+			unsigned int		characterSize	= DEFAULT_FONTSIZE,
 			Vector2f			GlobalPosition	= DEFAULT_POSITION,
 			Vector2f			GlobalScale		= DEFAULT_SCALE,
 			Vector2f			Anchor			= DEFAULT_ANCHOR,
@@ -39,21 +41,23 @@ namespace KrostganEngine::UI {
 
 		UIText(
 			const string		textStr			= "",
-			unsigned int		characterSize	= 30,
+			unsigned int		characterSize	= DEFAULT_FONTSIZE,
 			Vector2f			GlobalPosition	= DEFAULT_POSITION,
 			float				GlobalScale		= 1,
 			Vector2f			Anchor			= DEFAULT_ANCHOR,
 			char				RendLayer		= 0);
 
-		void RenderGraphic(RenderWindow& window) override;
-
 		Color	GetColor() const override;
 		void	SetColor(Color color) override;
+
+		void	SetFont(const Font& font);
 
 		Text* text;
 		Vector2f ScreenPosition = Vector2f(0, 0);
 
 	protected:
+
+		void RenderGraphicAction(RenderWindow& window) override;
 
 		Text& ctor_InitOwner(const string& textStr, unsigned int characterSize);
 		/// <summary>

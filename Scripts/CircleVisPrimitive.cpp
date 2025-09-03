@@ -55,6 +55,6 @@ void CircleVisPrimitive::SetPointsCount(size_t count) {
 	CirShape.setPointCount(count);
 }
 
-void CircleVisPrimitive::RenderGraphic(RenderWindow& window) {
+void CircleVisPrimitive::RenderGraphicAction(RenderWindow& window) {
 	window.draw(CirShape);
 }

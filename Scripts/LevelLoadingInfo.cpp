@@ -33,7 +33,7 @@ GameObject* UnitLoadInfo::InstanceObject(LoadedObjects& levInfo, Vector2f positi
 
 UnitObjectCtorParams& UnitLoadInfo::GetUnitParams() {
 
-	FStreamExts::ClearPath(&SpriteSource);
+	FStreamExts::ClearPath(SpriteSource);
 
 	ExtGlRes_Sprite* spr = dynamic_cast<ExtGlRes_Sprite*>(ExternalGlobalResources::GetRes(SpriteSource));
 	ExtGlRes_Sprite* selSpr = dynamic_cast<ExtGlRes_Sprite*>(ExternalGlobalResources::GetRes(SelectionAreaSource));
@@ -97,7 +97,7 @@ GameObject* WallLoadInfo::InstanceObject(LoadedObjects& levInfo, Vector2f positi
 		Position = position;
 	}
 
-	FStreamExts::ClearPath(&SpriteSource);
+	FStreamExts::ClearPath(SpriteSource);
 	ExtGlRes_Sprite* spr = dynamic_cast<ExtGlRes_Sprite*>(ExternalGlobalResources::GetRes(SpriteSource));
 	return new WallObject(spr->Tex, Position, Size);
 }

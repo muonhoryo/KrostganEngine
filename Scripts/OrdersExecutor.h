@@ -19,6 +19,8 @@ namespace KrostganEngine::GameObjects {
 
 	class OrdersExecutor : public virtual ICallbackRec_Upd{
 	public:
+		virtual ~OrdersExecutor();
+
 		ExecutedEvent<const IEntityOrder*> GetOrderEvent;
 		ExecutedEvent<const IEntityOrder*> StartExecOrderEvent;
 		ExecutedEvent<const IEntityOrder*> ExecuteOrderEvent;
@@ -41,7 +43,6 @@ namespace KrostganEngine::GameObjects {
 
 	protected:
 		OrdersExecutor(EntityBattleStats& BattleStats, AutoAttackModule* AAModule, AutoAggressionModule* AutoAggrModule);
-		~OrdersExecutor();
 
 		virtual const vector<EntityOrderType>& GetAllowedOrdersCatalog() = 0;
 

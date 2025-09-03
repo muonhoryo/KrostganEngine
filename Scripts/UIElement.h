@@ -19,7 +19,7 @@ namespace KrostganEngine::UI {
 		void SetGlobalUISize		(Vector2f globalSize);
 		void SetLocalScaleByUISize	(Vector2f uiSize);
 		void SetGlobalScaleByUISize	(Vector2f uiSize);
-		
+
 		Vector2f	GetAnchor() const;
 		Vector2f	GetLocalUISize() const;
 		Vector2f	GetGlobalUISize() const;
@@ -59,7 +59,7 @@ namespace KrostganEngine::UI {
 		UIElement(
 			Transformable&		Owner,
 			UIElement*			Parent,
-			Vector2f			GlobalPosition	= DEFAULT_POSITION,
+			Vector2f			LocalPosition	= DEFAULT_POSITION,
 			Vector2f			LocalScale		= DEFAULT_SCALE,
 			Vector2f			Anchor			= DEFAULT_ANCHOR,
 			Vector2f			UISize			= DEFAULT_SCALE,
@@ -77,7 +77,7 @@ namespace KrostganEngine::UI {
 		UIElement(
 			Transformable&		Owner,
 			UIElement*			Parent,
-			Vector2f			GlobalPosition	= DEFAULT_POSITION,
+			Vector2f			LocalPosition = DEFAULT_POSITION,
 			float				LocalScale		= 1,
 			Vector2f			Anchor			= DEFAULT_ANCHOR,
 			Vector2f			UISize			= DEFAULT_SCALE,

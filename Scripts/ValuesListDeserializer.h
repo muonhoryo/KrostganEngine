@@ -86,7 +86,7 @@ namespace KrostganEngine::Core {
 		/// <returns></returns>
 		Vector2f		DeserValueByDef_Vec2f	(const string& definition, string& value);
 
-		vector<ValueDefPair> StrValuesArr;
+		vector<ValueDefPair*> StrValuesArr;
 
 		virtual const string	GetFilePath()			{ return ""; }
 		virtual const char		GetValuesDefEndSym()	{ return ' '; }

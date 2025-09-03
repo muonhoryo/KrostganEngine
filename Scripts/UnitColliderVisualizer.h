@@ -14,7 +14,7 @@ namespace KrostganEngine::Debug {
 		UnitColliderVisualizer(UnitObject& Owner);
 		~UnitColliderVisualizer();
 
-		void RenderGraphic(RenderWindow& window) override;
+		void RenderGraphicAction(RenderWindow& window) override;
 
 	private:
 		UnitObject& Owner;

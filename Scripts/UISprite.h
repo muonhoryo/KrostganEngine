@@ -30,7 +30,7 @@ namespace KrostganEngine::UI {
 		UISprite(
 			const Texture&	RenTexture,
 			UIElement*		Parent,
-			Vector2f		GlobalPosition	= DEFAULT_POSITION,
+			Vector2f		LocalPosition	= DEFAULT_POSITION,
 			Vector2f		LocalScale		= DEFAULT_SCALE,
 			Vector2f		Anchor			= DEFAULT_ANCHOR,
 			Color			SprColor		= Color::White,
@@ -40,7 +40,7 @@ namespace KrostganEngine::UI {
 		UISprite(
 			const Texture&	RenTexture,
 			UIElement*		Parent,
-			Vector2f		GlobalPosition	= DEFAULT_POSITION,
+			Vector2f		LocalPosition	= DEFAULT_POSITION,
 			float			LocalScale		= 1,
 			Vector2f		Anchor			= DEFAULT_ANCHOR,
 			Color			SprColor		= Color::White,
@@ -56,9 +56,9 @@ namespace KrostganEngine::UI {
 		void			SetColor(Color color) override;
 		Color			GetColor() const override;
 
-		void	RenderGraphic(RenderWindow& window) override;
-
 	protected:
+		void	RenderGraphicAction(RenderWindow& window) override;
+
 		void		ctor_Initialize(const Texture& renTexture);
 		Sprite&		ctor_InitOwner();
 		/*Vector2f	ctor_GetOrigin(const Texture& tex) const {

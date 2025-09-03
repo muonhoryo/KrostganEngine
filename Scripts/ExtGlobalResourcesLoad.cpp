@@ -86,7 +86,7 @@ ExtGlRes_Texture&	ExtGlobalResourcesLoad::DeserRes_Texture(){
 
 	string* name=new string();
 	GetValueByDef(DEF_RESOURCE_NAME, *name);
-	FStreamExts::ClearPath(name);
+	FStreamExts::ClearPath(*name);
 	const Texture* tex = nullptr;
 	GetValueByDef(DEF_PATH ,LineBuffer);
 	tex = LoadTextureByPath();
@@ -98,10 +98,10 @@ ExtGlRes_Sprite&	ExtGlobalResourcesLoad::DeserRes_Sprite(){
 
 	string* name = new string();
 	GetValueByDef(DEF_RESOURCE_NAME, *name);
-	FStreamExts::ClearPath(name);
+	FStreamExts::ClearPath(*name);
 	const Texture* tex = nullptr;
 	GetValueByDef(DEF_SOURCE, LineBuffer);
-	FStreamExts::ClearPath(&LineBuffer);
+	FStreamExts::ClearPath(LineBuffer);
 	if (CouldBeName(LineBuffer)) {
 		tex = GetTextureByName();
 	}
@@ -111,7 +111,7 @@ ExtGlRes_Sprite&	ExtGlobalResourcesLoad::DeserRes_Sprite(){
 	Shader* shad = nullptr;
 	if (TryGetValue(DEF_RENDER_SHADER, LineBuffer)) {
 
-		FStreamExts::ClearPath(&LineBuffer);
+		FStreamExts::ClearPath(LineBuffer);
 		shad = GetShaderByName();
 	}
 	float maxSize = 0;
@@ -131,10 +131,10 @@ ExtGlRes_Font& ExtGlobalResourcesLoad::DeserRes_Font() {
 
 	string* name = new string();
 	GetValueByDef(DEF_RESOURCE_NAME, *name);
-	FStreamExts::ClearPath(name);
+	FStreamExts::ClearPath(*name);
 	Font* font = nullptr;
 	GetValueByDef(DEF_PATH, LineBuffer);
-	FStreamExts::ClearPath(&LineBuffer);
+	FStreamExts::ClearPath(LineBuffer);
 	font = LoadFontByPath();
 	auto& res = *new ExtGlRes_Font(*name, *font);
 	delete name;
@@ -144,10 +144,10 @@ ExtGlRes_Shader& ExtGlobalResourcesLoad::DeserRes_Shader() {
 
 	string* name = new string();
 	GetValueByDef(DEF_RESOURCE_NAME, *name);
-	FStreamExts::ClearPath(name);
+	FStreamExts::ClearPath(*name);
 	Shader* shad = new Shader();
 	GetValueByDef(DEF_PATH, LineBuffer);
-	FStreamExts::ClearPath(&LineBuffer);
+	FStreamExts::ClearPath(LineBuffer);
 	shad=LoadShaderByPath();
 	auto& res = *new ExtGlRes_Shader(*name, *shad);
 	delete name;
@@ -156,21 +156,21 @@ ExtGlRes_Shader& ExtGlobalResourcesLoad::DeserRes_Shader() {
 
 Texture*	ExtGlobalResourcesLoad::LoadTextureByPath() {
 
-	FStreamExts::ClearPath(&LineBuffer);
+	FStreamExts::ClearPath(LineBuffer);
 	Texture* tex = new Texture();
 	tex->loadFromFile(LineBuffer);
 	return tex;
 }
 Font*		ExtGlobalResourcesLoad::LoadFontByPath(){
 
-	FStreamExts::ClearPath(&LineBuffer);
+	FStreamExts::ClearPath(LineBuffer);
 	Font* font = new Font();
 	font->loadFromFile(LineBuffer);
 	return font;
 }
 Shader* ExtGlobalResourcesLoad::LoadShaderByPath() {
 
-	FStreamExts::ClearPath(&LineBuffer);
+	FStreamExts::ClearPath(LineBuffer);
 	string shadPath = string(LineBuffer);
 	Shader* shad = new Shader();
 	GetValueByDef(DEF_SHADER_TYPE, LineBuffer);

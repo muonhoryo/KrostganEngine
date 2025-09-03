@@ -18,7 +18,7 @@ UnitColliderVisualizer::~UnitColliderVisualizer() {
 
 }
 
-void UnitColliderVisualizer::RenderGraphic(RenderWindow& window) {
+void UnitColliderVisualizer::RenderGraphicAction(RenderWindow& window) {
 	SetCenter(Owner.GetGlobalPosition());
 	float size = Owner.GetGlobalScale_Sin();
 	if (fabs(size - GetRadius()) > eps)

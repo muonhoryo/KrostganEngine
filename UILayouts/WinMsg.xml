@@ -1,0 +1,18 @@
+<root>
+	<TextBlock
+		Text="The enemy hero is eliminated.
+Victory is yours."
+		FontSize="50"
+		AnchorX="0.5"
+		AnchorY="0.5"
+		Color="FFFFFF00"
+		PosY="-200">
+	</TextBlock>
+	<TextBlock
+		Text="Level will be restarted in a few seconds"
+		FontSize="50"
+		AnchorX="0.5"
+		AnchorY="0.5"
+		Color="FFFFFF00">
+	</TextBlock>
+</root>

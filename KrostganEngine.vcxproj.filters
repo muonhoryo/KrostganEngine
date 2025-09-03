@@ -58,9 +58,6 @@
     <Filter Include="Исходные файлы\CoreSystems\GameObjects">
       <UniqueIdentifier>{fb538d48-4313-485b-bf9c-38f2abf3bfd1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Исходные файлы\CoreSystems\ExternalResources">
-      <UniqueIdentifier>{1a09639f-d312-4ea5-8ecb-f3ff7aaebdc2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Исходные файлы\CoreSystems\EntitiesControl">
       <UniqueIdentifier>{5604d52a-41bc-432f-8c58-31039c89d00d}</UniqueIdentifier>
     </Filter>
@@ -289,6 +286,18 @@
     <Filter Include="Исходные файлы\CoreSystems\Visual\UI/UX\UIElements">
       <UniqueIdentifier>{8a19d4f7-76f2-4c31-ba7e-07676c80026e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="rapidxml">
+      <UniqueIdentifier>{72181b21-3d49-4e3b-a3ba-a11ffe90ceb9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\CoreSystems\ExternalData">
+      <UniqueIdentifier>{1a09639f-d312-4ea5-8ecb-f3ff7aaebdc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UILayouts">
+      <UniqueIdentifier>{6c398806-3123-4e56-8284-7ce16dc75701}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Visual\Effects\Highlight">
+      <UniqueIdentifier>{b298f701-ecff-408c-aad7-1fdc8c8ee5d1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\main.cpp">
@@ -376,13 +385,13 @@
       <Filter>Исходные файлы\CoreSystems\EngineCallbacks</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\ExtGlobalResourcesLoad.cpp">
-      <Filter>Исходные файлы\CoreSystems\ExternalResources</Filter>
+      <Filter>Исходные файлы\CoreSystems\ExternalData</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\GlobalConstsLoad.cpp">
-      <Filter>Исходные файлы\CoreSystems\ExternalResources</Filter>
+      <Filter>Исходные файлы\CoreSystems\ExternalData</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\EngineConfigLoad.cpp">
-      <Filter>Исходные файлы\CoreSystems\ExternalResources</Filter>
+      <Filter>Исходные файлы\CoreSystems\ExternalData</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\HeroObject.cpp">
       <Filter>Исходные файлы\CoreSystems\GameObjects</Filter>
@@ -595,7 +604,7 @@
       <Filter>Исходные файлы\CoreSystems\Visual</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\ExternalGlobalResources.cpp">
-      <Filter>Исходные файлы\CoreSystems\ExternalResources</Filter>
+      <Filter>Исходные файлы\CoreSystems\ExternalData</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\FadingVisualEffect.cpp">
       <Filter>Исходные файлы\Visual\Effects\Fading</Filter>
@@ -617,6 +626,18 @@
     </ClCompile>
     <ClCompile Include="Scripts\UserInterfaceManager.cpp">
       <Filter>Исходные файлы\CoreSystems\Visual\UI/UX</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\UserInterfacesDeserializer.cpp">
+      <Filter>Исходные файлы\CoreSystems\ExternalData</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\UserInterfaceLoader.cpp">
+      <Filter>Исходные файлы\CoreSystems\ExternalData</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\HighlightVisualEffect.cpp">
+      <Filter>Исходные файлы\Visual\Effects\Highlight</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\HighlightVisualEff_MRes.cpp">
+      <Filter>Исходные файлы\Visual\Effects\Highlight</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1043,6 +1064,30 @@
     <ClInclude Include="Scripts\UIMan_WinResizeEvSubs.h">
       <Filter>Файлы заголовков\CoreSystems\Visual\UI/UX</Filter>
     </ClInclude>
+    <ClInclude Include="Scripts\rapidxml\rapidxml.hpp">
+      <Filter>rapidxml</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\rapidxml\rapidxml_iterators.hpp">
+      <Filter>rapidxml</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\rapidxml\rapidxml_print.hpp">
+      <Filter>rapidxml</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\rapidxml\rapidxml_utils.hpp">
+      <Filter>rapidxml</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\UserInterfacesDeserializer.h">
+      <Filter>Файлы заголовков\CoreSystems\ExternalData</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\UserInterfaceLoader.h">
+      <Filter>Файлы заголовков\CoreSystems\ExternalData</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\HighlightVisualEffect.h">
+      <Filter>Файлы заголовков\Visual\Effects\Fading</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\HighlightVisualEff_MRes.h">
+      <Filter>Файлы заголовков\Visual\Effects\Fading</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Config.txt">
@@ -1061,5 +1106,22 @@
     <None Include="Scripts\Shaders\MaskableImage.frag">
       <Filter>Shaders\Fragments</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="UILayouts\GameUI.xml">
+      <Filter>UILayouts</Filter>
+    </Xml>
+    <Xml Include="UILayouts\LevelDeserialization.xml">
+      <Filter>UILayouts</Filter>
+    </Xml>
+    <Xml Include="UILayouts\LoseMsg.xml">
+      <Filter>UILayouts</Filter>
+    </Xml>
+    <Xml Include="UILayouts\MainMenu.xml">
+      <Filter>UILayouts</Filter>
+    </Xml>
+    <Xml Include="UILayouts\WinMsg.xml">
+      <Filter>UILayouts</Filter>
+    </Xml>
   </ItemGroup>
 </Project>

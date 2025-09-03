@@ -29,7 +29,7 @@ namespace KrostganEngine::UI {
 		void SetPointsBy2Corners(Vector2f corner1, Vector2f corner2);
 		void SetEdgeColor(Color edgeColor);
 
-		void RenderGraphic(RenderWindow& window) override;
+		void RenderGraphicAction(RenderWindow& window) override;
 
 		static QuadVisPrimitive& InstanceQuad(Vector2f corner1, Vector2f corner2, Color edgeColor,char RendLayer = 0);
 	private:
@@ -55,7 +55,7 @@ namespace KrostganEngine::UI {
 		void SetEdgeColor(Color color);
 		void SetPointsCount(size_t count);
 
-		void RenderGraphic(RenderWindow& window) override;
+		void RenderGraphicAction(RenderWindow& window) override;
 
 	private:
 		CircleShape CirShape;
@@ -77,7 +77,7 @@ namespace KrostganEngine::UI {
 		virtual void SetEdgeColor(Color color, size_t index);
 		virtual void SetPointPosition(Vector2f newPos, size_t pointIndex);
 
-		void RenderGraphic(RenderWindow& window) override;
+		void RenderGraphicAction(RenderWindow& window) override;
 
 	protected:
 		VertexArray Vertexes;
@@ -111,7 +111,7 @@ namespace KrostganEngine::UI {
 		void SetWidth(float width);
 		void SetColor(Color color);
 
-		void RenderGraphic(RenderWindow& window) override;
+		void RenderGraphicAction(RenderWindow& window) override;
 
 	private:
 		Vector2f Start;

@@ -1,0 +1,17 @@
+<root>
+	<TextBlock
+		Text="You are dead"
+		FontSize="50"
+		AnchorX="0.25"
+		AnchorY="0.25"
+		Color="FFFFFF00"
+		PosY="-100">
+	</TextBlock>
+	<TextBlock
+		Text="Level will be restarted in a few seconds"
+		FontSize="50"
+		AnchorX="0.25"
+		AnchorY="0.25"
+		Color="FFFFFF00">
+	</TextBlock>
+</root>

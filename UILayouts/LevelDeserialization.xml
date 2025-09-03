@@ -1,0 +1,21 @@
+<root>
+	<TextBlock 
+		Text="Welcome to sector 17 of the Krostgan's Valley, commander.
+Your current objective is eleminating the enemy's hero.
+The enemy is superior to you, but their fighters are same like your mercenaries,
+and the forces are unevenly distributed throughout the location.
+Press Enter to proceed to combat.
+Good luck!"
+		FontSize="25"
+		AnchorX="0.25"
+		AnchorY="0.25"
+		Color="FFFFFFFF">
+	</TextBlock>
+	<TextBlock
+		Text="Loading..."
+		FontSize="30"
+		AnchorX="0.9"
+		AnchorY="0.9"
+		Color="00FF00FF">
+	</TextBlock>
+</root>

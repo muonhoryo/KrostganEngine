@@ -32,6 +32,9 @@ Engine::Engine()
 	ExtGlobalResourcesLoad resources = ExtGlobalResourcesLoad();
 	resources.LoadGlobalResources();
 
+	auto uiDeser=new UserInterfacesDeserializer();
+	uiDeser->Deserialize();
+
 	string header = "Krostgan Engine " + Engine::ENGINE_VERSION;
 	Vector2f resol = EngineConfiguration->WindowResolution;
 	RendWin.create(VideoMode(resol.x,resol.y), header,Style::Close);

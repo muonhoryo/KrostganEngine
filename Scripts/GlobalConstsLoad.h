@@ -22,7 +22,7 @@ namespace KrostganEngine::Core {
 		const string GetFilePath() override;
 		const char GetValuesDefEndSym() override;
 
-		static const string CONSTS_PATH;
-		static const char CONFIG_DEF_END_SYM;
+		static inline const string CONSTS_PATH = "GlobalConsts.txt";
+		static inline const char CONFIG_DEF_END_SYM = ':';
 	};
 }

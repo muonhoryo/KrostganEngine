@@ -1,6 +1,7 @@
 
 #include <LoseScript.h>
 #include <Engine.h>
+#include <GameVisualEffects.h>
 
 using namespace KrostganEngine::GameTransitions;
 using namespace KrostganEngine::UI;
@@ -14,7 +15,8 @@ LoseScript::LoseScript()
 	MessageAppearingDeltaTime(MessageShowingTime - MessageAppearingTime) {
 
 	EntitiesCtrlInputHandler::GetInstance()->TurnOff();
-	LostTimer.restart(); 
+	LostTimer.restart();
+	UserInterfaceLoader::UnloadCurrent();
 }
 
 void LoseScript::RenderGraphic(RenderWindow& window) {
@@ -26,25 +28,20 @@ void LoseScript::RenderGraphic(RenderWindow& window) {
 	{
 		if (time >= MessageAppearingTime) {
 
-			Message = new UIText(
-				nullptr,
-				"You are dead",
-				50u,
-				DEFAULT_POSITION,
-				1,
-				Vector2f(0.5,0.5));
-			Message2 = new UIText(
-				nullptr,
-				"Level will be restarted in a few seconds", 
-				50u,
-				DEFAULT_POSITION,
-				1,
-				Vector2f(0.5,0.5));
+			UserInterfaceLoader::Load_LoseMessage();
+			auto beg = UserInterfaceManager::GetRoot().GetChildrenBegin();
+			auto end = UserInterfaceManager::GetRoot().GetChildrenEnd();
+			IColoredObject* el = nullptr;
+			HighlightVisualEff_MRes* eff = nullptr;
+			for (;beg != end;++beg) {
+				el = dynamic_cast<IColoredObject*>(*beg);
+				if (el != nullptr) {
 
-			Message->SetColor(Color(255U, 255U, 255U, 0U));
-			Message2->SetColor(Color(255U, 255U, 255U, 0U));
-			Message->SetLocalPosition(Vector2f(-Message->GetPixelSize().x * 0.5, -100));
-			Message2->SetLocalPosition(Vector2f(-Message2->GetPixelSize().x * 0.5, 0));
+					eff = new HighlightVisualEff_MRes(MessageAppearingDeltaTime, *el);
+					el->AddEffect(*eff);
+					eff->ResetHighlight();
+				}
+			}
 
 			Stage = LoseMessageStage::Appearing;
 		}
@@ -52,19 +49,7 @@ void LoseScript::RenderGraphic(RenderWindow& window) {
 	}
 	case KrostganEngine::GameTransitions::LoseScript::LoseMessageStage::Appearing:
 	{
-		if (time < MessageShowingTime) {
-
-			float diff = time - MessageAppearingTime;
-			Color clr =	Message->GetColor();
-			float transparency = diff / MessageAppearingDeltaTime;
-			Message->SetColor(Color(clr.r, clr.g, clr.b, (Uint8)(transparency * 255)));
-			Message2->SetColor(Color(clr.r, clr.g, clr.b, (Uint8)(transparency * 255)));
-		}
-		else {
-
-			Color clr = Message->GetColor();
-			Message->SetColor(Color(clr.r, clr.g, clr.b));
-			Message2->SetColor(Color(clr.r, clr.g, clr.b));
+		if (time >= MessageShowingTime) {
 			Stage = LoseMessageStage::Showing;
 		}
 		break;
@@ -73,8 +58,6 @@ void LoseScript::RenderGraphic(RenderWindow& window) {
 	{
 		if (time >= TransitTime) {
 
-			delete Message;
-			delete Message2;
 			Engine::ReqToSetMode_LevelDeser();
 			delete this;
 		}

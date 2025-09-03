@@ -45,9 +45,11 @@ namespace KrostganEngine::Core {
 				for (;it != end;--it) {
 					if (*it != nullptr) {
 
+						delete* it;
 						*it = nullptr;
 					}
 				}
+				delete* it;
 				*it = nullptr;
 				Callbacks.clear();
 

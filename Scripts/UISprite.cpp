@@ -72,7 +72,7 @@ UISprite::UISprite(
 UISprite::UISprite(
 	const Texture&		RenTexture,
 	UIElement*			Parent,
-	Vector2f			GlobalPosition,
+	Vector2f			LocalPosition,
 	Vector2f			LocalScale,
 	Vector2f			Anchor,
 	Color				SprColor,
@@ -81,7 +81,7 @@ UISprite::UISprite(
 		:UIElement(
 			ctor_InitOwner(), 
 			Parent, 
-			GlobalPosition, 
+			LocalPosition,
 			LocalScale, 
 			Anchor,
 			(Vector2f)GetRenTexture().getSize(),
@@ -98,7 +98,7 @@ UISprite::UISprite(
 UISprite::UISprite(
 	const Texture&	RenTexture,
 	UIElement*		Parent,
-	Vector2f		GlobalPosition,
+	Vector2f		LocalPosition,
 	float			LocalScale,
 	Vector2f		Anchor,
 	Color			SprColor,
@@ -107,7 +107,7 @@ UISprite::UISprite(
 		:UISprite(
 			RenTexture,
 			Parent,
-			GlobalPosition,
+			LocalPosition,
 			Vector2f(LocalScale,LocalScale),
 			Anchor,
 			SprColor,
@@ -119,7 +119,7 @@ UISprite::~UISprite() {
 	delete RenSprite;
 }
 
-void UISprite::RenderGraphic(RenderWindow& window) {
+void UISprite::RenderGraphicAction(RenderWindow& window) {
 
 	window.draw(*RenSprite, RenderSt);
 	UpdateEffects();

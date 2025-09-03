@@ -9,3 +9,6 @@
 #include <GlobalConstsLoad.h>
 
 #include <ExtGlResources.h>
+
+#include <UserInterfacesDeserializer.h>
+#include <UserInterfaceLoader.h>

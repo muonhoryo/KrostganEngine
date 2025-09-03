@@ -19,10 +19,22 @@ ICallbackRec_GraphPostRen::~ICallbackRec_GraphPostRen() {
 	cout << "Remove ui graphics from render" << endl;
 }
 
+void ICallbackRec_GraphPostRen::RenderGraphic(RenderWindow& window) {
+	if (IsActive)
+		RenderGraphicAction(window);
+}
+
 char ICallbackRec_GraphPostRen::GetRendLayer() const {
 	return RendLayer;
 }
+bool ICallbackRec_GraphPostRen::GetActivity() const {
+	return IsActive;
+}
+
 void ICallbackRec_GraphPostRen::SetRendLayer(char layer) {
 	RendLayer = layer;
 	Engine::GetRenderModule().SetNeedToSort();
+}
+void ICallbackRec_GraphPostRen::SetActivity(bool isActive) {
+	IsActive = isActive;
 }

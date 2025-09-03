@@ -5,8 +5,10 @@ using namespace KrostganEngine;
 
 void Engine::ReqToSetStartMode() {
 
-	ReqToSetMode_StartMsg();
-	SetMode_StartMsg();
+	ReqToSetMode_MainMenu();
+	SetMode_MainMenu();
+	/*ReqToSetMode_StartMsg();
+	SetMode_StartMsg();*/
 	ResetInterruption();
 }
 
@@ -19,9 +21,9 @@ void Engine::ReqToSetMode_MainMenu() {
 void Engine::ReqToSetMode_LevelDeser() {
 	Engine::RequestToChangeState(EngineState::LevelDeserialization);
 }
-void Engine::ReqToSetMode_StartMsg() {
-	Engine::RequestToChangeState(EngineState::StartMessage);
-}
+//void Engine::ReqToSetMode_StartMsg() {
+//	Engine::RequestToChangeState(EngineState::StartMessage);
+//}
 
 bool Engine::IsNeedToInterrupt() {
 	return Singleton->EngStateHandler.NeedToInterrupt;
@@ -59,11 +61,11 @@ void Engine::SetMode_LevelDeser() {
 	Singleton->EngStateHandler.LevelDeserSt = new LevelDeserializationMode();
 	Singleton->CurrMode = Singleton->EngStateHandler.LevelDeserSt;
 }
-void Engine::SetMode_StartMsg() {
-	delete Singleton->CurrMode;
-	Singleton->EngStateHandler.StartMsgSt = new StartMessageMode();
-	Singleton->CurrMode = Singleton->EngStateHandler.StartMsgSt;
-}
+//void Engine::SetMode_StartMsg() {
+//	delete Singleton->CurrMode;
+//	Singleton->EngStateHandler.StartMsgSt = new StartMessageMode();
+//	Singleton->CurrMode = Singleton->EngStateHandler.StartMsgSt;
+//}
 
 void Engine::ResolveInterruption() {
 	switch (Singleton->EngStateHandler.NextState)
@@ -79,9 +81,9 @@ void Engine::ResolveInterruption() {
 	case EngineState::LevelDeserialization:
 		Engine::SetMode_LevelDeser();
 		break;
-	case EngineState::StartMessage:
+	/*case EngineState::StartMessage:
 		Engine::SetMode_StartMsg();
-		break;
+		break;*/
 	default:
 		break;
 	}

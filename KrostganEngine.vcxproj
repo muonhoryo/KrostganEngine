@@ -104,8 +104,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>SFML_STATIC;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\SFML-2.5.1\include;D:\create\c++\KrostganEngine;D:\create\c++\KrostganEngine\Scripts;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>C:\SFML-2.5.1\include;D:\create\c++\KrostganEngine;D:\create\c++\KrostganEngine\Scripts;D:\create\c++\KrostganEngine\Scripts\rapidxml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -163,6 +163,8 @@
     <ClCompile Include="Scripts\FadingVisualEff_Des.cpp" />
     <ClCompile Include="Scripts\FadingVisualEff_MRes.cpp" />
     <ClCompile Include="Scripts\HeroDeathModule.cpp" />
+    <ClCompile Include="Scripts\HighlightVisualEffect.cpp" />
+    <ClCompile Include="Scripts\HighlightVisualEff_MRes.cpp" />
     <ClCompile Include="Scripts\ICallbackRec_GraphPostRen.cpp" />
     <ClCompile Include="Scripts\ICallbackRec_LUpd.cpp" />
     <ClCompile Include="Scripts\IDeathModule.cpp" />
@@ -235,7 +237,9 @@
     <ClCompile Include="Scripts\TransformableObj.cpp" />
     <ClCompile Include="Scripts\UnitDeathModule.cpp" />
     <ClCompile Include="Scripts\UnitObject.cpp" />
+    <ClCompile Include="Scripts\UserInterfaceLoader.cpp" />
     <ClCompile Include="Scripts\UserInterfaceManager.cpp" />
+    <ClCompile Include="Scripts\UserInterfacesDeserializer.cpp" />
     <ClCompile Include="Scripts\ValuesListDeserializer.cpp" />
     <ClCompile Include="Scripts\VectExts.cpp" />
     <ClCompile Include="Scripts\Wall.cpp" />
@@ -279,6 +283,8 @@
     <ClInclude Include="Scripts\GameTransitions.h" />
     <ClInclude Include="Scripts\GameVisual.h" />
     <ClInclude Include="Scripts\GameVisualEffects.h" />
+    <ClInclude Include="Scripts\HighlightVisualEffect.h" />
+    <ClInclude Include="Scripts\HighlightVisualEff_MRes.h" />
     <ClInclude Include="Scripts\HPRegenModules.h" />
     <ClInclude Include="Scripts\ICallbackRec_GraphPostRen.h" />
     <ClInclude Include="Scripts\IColoredObject.h" />
@@ -294,6 +300,10 @@
     <ClInclude Include="Scripts\PathFinding_Diijkstra.h" />
     <ClInclude Include="Scripts\PhysicsStructs.h" />
     <ClInclude Include="Scripts\PlayerInputManager.h" />
+    <ClInclude Include="Scripts\rapidxml\rapidxml.hpp" />
+    <ClInclude Include="Scripts\rapidxml\rapidxml_iterators.hpp" />
+    <ClInclude Include="Scripts\rapidxml\rapidxml_print.hpp" />
+    <ClInclude Include="Scripts\rapidxml\rapidxml_utils.hpp" />
     <ClInclude Include="Scripts\SpriteRenderer.h" />
     <ClInclude Include="Scripts\UIElement.h" />
     <ClInclude Include="Scripts\UIEmpty.h" />
@@ -377,7 +387,9 @@
     <ClInclude Include="Scripts\CoreVisual_UI.h" />
     <ClInclude Include="Scripts\TransformableObj.h" />
     <ClInclude Include="Scripts\UnitObject.h" />
+    <ClInclude Include="Scripts\UserInterfaceLoader.h" />
     <ClInclude Include="Scripts\UserInterfaceManager.h" />
+    <ClInclude Include="Scripts\UserInterfacesDeserializer.h" />
     <ClInclude Include="Scripts\ValuesListDeserializer.h" />
     <ClInclude Include="Scripts\VectExts.h" />
     <ClInclude Include="Scripts\VisualEffectsSystem.h" />
@@ -397,6 +409,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Shaders\MaskableImage.frag" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="UILayouts\GameUI.xml" />
+    <Xml Include="UILayouts\LevelDeserialization.xml" />
+    <Xml Include="UILayouts\LoseMsg.xml" />
+    <Xml Include="UILayouts\MainMenu.xml" />
+    <Xml Include="UILayouts\WinMsg.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

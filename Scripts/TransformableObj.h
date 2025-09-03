@@ -33,9 +33,14 @@ namespace KrostganEngine::GameObjects {
 		void Move_Global	(Vector2f moveValue) override;
 		void Move_Local		(Vector2f moveValue) override;
 
-		void						SetParent	(TransformableObj* parent);
-		TransformableObj*			GetParent	();
-		TransformableObj const*		GetParent_c	() const;
+		void						SetParent		(TransformableObj* parent);
+		void						DestroyChildren();
+
+		TransformableObj*							GetParent			();
+		TransformableObj const*						GetParent_c			() const;
+		vector<TransformableObj*>::const_iterator	GetChildrenBegin	() const;
+		vector<TransformableObj*>::const_iterator	GetChildrenEnd		() const;
+
 		/// <summary>
 		/// Set is object should be deleted with its parent or not
 		/// </summary>
@@ -70,9 +75,6 @@ namespace KrostganEngine::GameObjects {
 			Vector2f			GlobalPosition	= DEFAULT_POSITION,
 			float				GlobalScale		= 1,
 			Vector2f			Origin			= DEFAULT_ORIGIN);
-
-		vector<TransformableObj*>::const_iterator GetChildrenStart() const;
-		vector<TransformableObj*>::const_iterator GetChildrenEnd() const;
 
 		virtual Vector2f	GetLocalPositionFromParent	();
 		virtual Vector2f	GetLocalScaleFromParent		();

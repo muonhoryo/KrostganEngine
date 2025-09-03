@@ -57,5 +57,29 @@ namespace KrostganEngine {
 			}
 			return false;
 		}
+
+		template<typename TInput>
+		struct GetFuncPredicate {
+			virtual bool Condition(TInput input) const = 0;
+		};
+		/// <summary>
+		/// Return nullptr if collection doesn't contain element
+		/// </summary>
+		/// <typeparam name="TCollectionType"></typeparam>
+		/// <typeparam name="TElementsType"></typeparam>
+		/// <param name="list"></param>
+		/// <param name="elementToFind"></param>
+		/// <returns></returns>
+		template<typename TCollectionType, typename TElementsType>
+		static TElementsType Get(
+			const TCollectionType&							collection, 
+			const GetFuncPredicate<TElementsType const&>&	cond) {
+			
+			for (auto el : collection) {
+				if (cond.Condition(el))
+					return el;
+			}
+			return nullptr;
+		}
 	};
 }

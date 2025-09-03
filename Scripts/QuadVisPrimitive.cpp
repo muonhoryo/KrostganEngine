@@ -61,7 +61,7 @@ void QuadVisPrimitive::SetEdgeColor(Color edgeColor) {
 	Vertexes[4].color = edgeColor;
 }
 
-void QuadVisPrimitive::RenderGraphic(RenderWindow& window) {
+void QuadVisPrimitive::RenderGraphicAction(RenderWindow& window) {
 	window.draw(Vertexes);
 }
 

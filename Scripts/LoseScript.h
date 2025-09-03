@@ -30,7 +30,5 @@ namespace KrostganEngine::GameTransitions {
 		float MessageShowingTime;
 		float TransitTime;
 		float MessageAppearingDeltaTime;
-		UIText* Message=nullptr;
-		UIText* Message2 = nullptr;
 	};
 }

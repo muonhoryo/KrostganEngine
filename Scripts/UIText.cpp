@@ -24,29 +24,25 @@ UIText::UIText(
 	UIElement*		Parent,
 	const string	textStr,
 	unsigned int	characterSize,
-	Vector2f		GlobalPosition,
+	Vector2f		LocalPosition,
 	Vector2f		LocalScale,
 	Vector2f		Anchor,
 	char			RendLayer)
 		:UIElement(
 			ctor_InitOwner(textStr,characterSize),
 			Parent,
-			GlobalPosition,
+			LocalPosition,
 			LocalScale,
 			Anchor,
 			ctor_GetUISize(textStr,characterSize),
 			RendLayer)
-{
-	auto par = GetParent();
-	auto owner = text;
-	Vector2f pos = GetGlobalPosition();
-} 
+{} 
 
 UIText::UIText(
 	UIElement*			Parent,
 	const string		textStr,
 	unsigned int		characterSize,
-	Vector2f			GlobalPosition,
+	Vector2f			LocalPosition,
 	float				LocalScale,
 	Vector2f			Anchor,
 	char				RendLayer)
@@ -54,7 +50,7 @@ UIText::UIText(
 			Parent,
 			textStr,
 			characterSize,
-			GlobalPosition,
+			LocalPosition,
 			Vector2f(LocalScale,LocalScale),
 			Anchor,
 			RendLayer)
@@ -92,12 +88,16 @@ UIText::UIText(
 			RendLayer)
 {}
 
-void UIText::RenderGraphic(RenderWindow& window) {
+void UIText::RenderGraphicAction(RenderWindow& window) {
 	window.draw(*text);
+	UpdateEffects();
 }
 Color	UIText::GetColor() const {
 	return text->getFillColor();
 }
 void	UIText::SetColor(Color color) {
 	text->setFillColor(color);
+}
+void	UIText::SetFont(const Font& font) {
+	text->setFont(font);
 }

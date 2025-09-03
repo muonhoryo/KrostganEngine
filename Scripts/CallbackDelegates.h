@@ -57,7 +57,7 @@ namespace KrostganEngine::Core {
 	public:
 		CallbackDelegate_GraphPostRen() :ICallbackRec_GraphPostRen() {}
 
-		void RenderGraphic(RenderWindow& window) override {
+		void RenderGraphicAction(RenderWindow& window) override {
 			Execute(window);
 			delete this;
 		}

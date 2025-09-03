@@ -7,8 +7,8 @@ namespace KrostganEngine::Core {
 		None,
 		MainMenu,
 		Game,
-		LevelDeserialization,
-		StartMessage
+		LevelDeserialization
+		//StartMessage
 	};
 	struct EngineStateHandler {
 
@@ -21,7 +21,7 @@ namespace KrostganEngine::Core {
 			MainMenuMode* MainMenuSt;
 			GameMode* GameSt;
 			LevelDeserializationMode* LevelDeserSt;
-			StartMessageMode* StartMsgSt;
+			//StartMessageMode* StartMsgSt;
 		};
 
 		EngineStateHandler();

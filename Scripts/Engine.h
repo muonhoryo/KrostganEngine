@@ -61,7 +61,7 @@ namespace KrostganEngine::Core {
 			static void ReqToSetMode_MainMenu();
 			static void ReqToSetMode_Game();
 			static void ReqToSetMode_LevelDeser();
-			static void ReqToSetMode_StartMsg();
+			//static void ReqToSetMode_StartMsg();
 
 			static bool IsNeedToInterrupt();
 			static EngineState GetCurrentEngState();
@@ -76,7 +76,7 @@ namespace KrostganEngine::Core {
 			 static void SetMode_MainMenu();
 			 static void SetMode_Game();
 			 static void SetMode_LevelDeser();
-			 static void SetMode_StartMsg();
+			 //static void SetMode_StartMsg();
 
 			 static void ResolveInterruption();
 			 static void ResetInterruption();

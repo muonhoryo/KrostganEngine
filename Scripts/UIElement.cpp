@@ -16,7 +16,7 @@ void UIElement::ctor_initialize(Vector2f UISize) {
 UIElement::UIElement(
 	Transformable&		Owner,
 	UIElement*			Parent,
-	Vector2f			GlobalPosition,
+	Vector2f			LocalPosition,
 	Vector2f			LocalScale,
 	Vector2f			Anchor,
 	Vector2f			UISize,
@@ -25,24 +25,24 @@ UIElement::UIElement(
 		TransformableObj(
 			Owner,
 			Parent==nullptr?UserInterfaceManager::GetRoot():*Parent,
-			GlobalPosition,
+			LocalPosition,
 			LocalScale),
 		Anchor(Anchor)
 {
 	ctor_initialize(UISize);
 	SetLocalScale(LocalScale);
-	SetGlobalPosition(GlobalPosition);
+	SetLocalPosition(LocalPosition);
 }
 
 UIElement::UIElement(
 	Transformable&		Owner,
 	UIElement*			Parent,
-	Vector2f			GlobalPosition,
+	Vector2f			LocalPosition,
 	float				LocalScale,
 	Vector2f			Anchor,
 	Vector2f			UISize,
 	char				RendLayer)
-		:UIElement(Owner,Parent,GlobalPosition,Vector2f(LocalScale,LocalScale),Anchor,UISize,RendLayer)
+		:UIElement(Owner,Parent, LocalPosition,Vector2f(LocalScale,LocalScale),Anchor,UISize,RendLayer)
 {}
 
 UIElement::UIElement(
@@ -149,7 +149,7 @@ void UIElement::SetUISize_Inherit() {
 void UIElement::SetChildren_UISize() {
 	
 	UIElement* ch = nullptr;
-	for (auto it = GetChildrenStart();it != GetChildrenEnd();++it) {
+	for (auto it = GetChildrenBegin();it != GetChildrenEnd();++it) {
 		ch = dynamic_cast<UIElement*>(*it);
 		if (ch != nullptr)
 			ch->SetUISize_Inherit();

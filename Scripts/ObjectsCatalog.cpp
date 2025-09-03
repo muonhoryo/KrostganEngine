@@ -88,7 +88,7 @@ UnitLoadInfo& ObjsCatalogDeserial::ParseUnitInfo(vector<string>& params) {
 
 	if (!TryGetSerValueOfParam(params, SerializationParDefNames::OBJECT_SPRITE_SOURCE, buffer))
 		throw exception("Cannot get path of sprite");
-	FStreamExts::ClearPath(buffer);
+	FStreamExts::ClearPath(*buffer);
 	info.SpriteSource= *buffer;
 
 	if (TryGetSerValueOfParam(params, SerializationParDefNames::OBJECT_POSITION, buffer)) {
@@ -102,7 +102,7 @@ UnitLoadInfo& ObjsCatalogDeserial::ParseUnitInfo(vector<string>& params) {
 
 	if (!TryGetSerValueOfParam(params, SerializationParDefNames::ENTITY_FRACTION, buffer))
 		throw exception("Cannot get fraction of entity");
-	FStreamExts::ClearPath(buffer);
+	FStreamExts::ClearPath(*buffer);
 	if (FractionsSystem::FractionNames.find(*buffer) == FractionsSystem::FractionNames.end())
 		info.EntityFraction = Fraction::Neutral;
 	else
@@ -110,17 +110,17 @@ UnitLoadInfo& ObjsCatalogDeserial::ParseUnitInfo(vector<string>& params) {
 
 	if (!TryGetSerValueOfParam(params, SerializationParDefNames::ENTITY_HPBAR_SPRITE_SOURCE, buffer))
 		throw exception("Cant get hpbar sprite");
-	FStreamExts::ClearPath(buffer);
+	FStreamExts::ClearPath(*buffer);
 	info.HPBarSpriteSource = *buffer;
 
 	if (!TryGetSerValueOfParam(params, SerializationParDefNames::ENTITY_HPBAR_MASK, buffer))
 		throw exception("Cant get hpbar mask");
-	FStreamExts::ClearPath(buffer);
+	FStreamExts::ClearPath(*buffer);
 	info.HPBarMaskSource = *buffer;
 
 	if (!TryGetSerValueOfParam(params, SerializationParDefNames::ENTITY_SELECT_AREA_SOURCE, buffer))
 		throw exception("Cant get selection area");
-	FStreamExts::ClearPath(buffer);
+	FStreamExts::ClearPath(*buffer);
 	info.SelectionAreaSource = *buffer;
 
 	//Fill battle stats of unit
@@ -164,7 +164,7 @@ WallLoadInfo& ObjsCatalogDeserial::ParseWallInfo(vector<string>& params) {
 
 	if (!TryGetSerValueOfParam(params, SerializationParDefNames::OBJECT_SPRITE_SOURCE, buffer))
 		throw exception("Cannot get source of sprite");
-	FStreamExts::ClearPath(buffer);
+	FStreamExts::ClearPath(*buffer);
 	info.SpriteSource= *buffer;
 
 	if (!TryGetSerValueOfParam(params, SerializationParDefNames::OBJECT_SIZE, buffer))

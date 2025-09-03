@@ -234,11 +234,28 @@ void				TransformableObj::SetParent(TransformableObj* parent) {
 	SetChildrenPosition();
 	SetChildrenScale();
 }
+void						TransformableObj::DestroyChildren() {
+
+	vector<TransformableObj*> children = vector<TransformableObj*>(ChildObjs);
+	for (auto ch : children) {
+		ch->SetParent(nullptr);
+		if (ch->GetDesWithParentState())
+			delete ch;
+	}
+	ChildObjs.clear();
+}
+
 TransformableObj*			TransformableObj::GetParent() {
 	return Parent;
 }
 TransformableObj const*		TransformableObj::GetParent_c() const {
 	return Parent;
+}
+vector<TransformableObj*>::const_iterator TransformableObj::GetChildrenBegin() const{
+	return ChildObjs.cbegin();
+}
+vector<TransformableObj*>::const_iterator	TransformableObj::GetChildrenEnd() const {
+	return ChildObjs.cend();
 }
 
 void TransformableObj::SetDesWithParent(bool desWithPar) {
@@ -265,16 +282,11 @@ void TransformableObj::SetScale_Inherit() {
 
 void TransformableObj::AddChild(TransformableObj& child) {
 
+	auto th = this;
 	ChildObjs.push_back(&child);
 }
 void TransformableObj::RemoveChild(TransformableObj& child) {
 
 	if (CollectionsExts::Contains<vector<TransformableObj*>, TransformableObj*>(ChildObjs, &child))
 		CollectionsExts::Remove<vector<TransformableObj*>, TransformableObj*>(ChildObjs, &child);
-}
-vector<TransformableObj*>::const_iterator TransformableObj::GetChildrenStart() const {
-	return ChildObjs.cbegin();
-}
-vector<TransformableObj*>::const_iterator TransformableObj::GetChildrenEnd() const {
-	return ChildObjs.cend();
 }

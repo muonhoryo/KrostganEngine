@@ -26,7 +26,7 @@ WideLineVisual::WideLineVisual(
 	SetColor(LineColor);
 }
 
-void WideLineVisual::RenderGraphic(RenderWindow& window) {
+void WideLineVisual::RenderGraphicAction(RenderWindow& window) {
 	window.draw(Vertexes);
 	UpdateEffects();
 }
