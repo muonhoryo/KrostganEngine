@@ -168,6 +168,7 @@
     <ClCompile Include="Scripts\ICallbackRec_GraphPostRen.cpp" />
     <ClCompile Include="Scripts\ICallbackRec_LUpd.cpp" />
     <ClCompile Include="Scripts\IDeathModule.cpp" />
+    <ClCompile Include="Scripts\IHierarchyTrObj.cpp" />
     <ClCompile Include="Scripts\IndicatorFill.cpp" />
     <ClCompile Include="Scripts\LineAAAnimation.cpp" />
     <ClCompile Include="Scripts\LoseScript.cpp" />
@@ -234,7 +235,7 @@
     <ClCompile Include="Scripts\EngineConfigLoad.cpp" />
     <ClCompile Include="Scripts\GameObject.cpp" />
     <ClCompile Include="Scripts\main.cpp" />
-    <ClCompile Include="Scripts\TransformableObj.cpp" />
+    <ClCompile Include="Scripts\WorldTransfObj.cpp" />
     <ClCompile Include="Scripts\UnitDeathModule.cpp" />
     <ClCompile Include="Scripts\UnitObject.cpp" />
     <ClCompile Include="Scripts\UserInterfaceLoader.cpp" />
@@ -288,8 +289,12 @@
     <ClInclude Include="Scripts\HPRegenModules.h" />
     <ClInclude Include="Scripts\ICallbackRec_GraphPostRen.h" />
     <ClInclude Include="Scripts\IColoredObject.h" />
+    <ClInclude Include="Scripts\HierarchyTrObj.h" />
+    <ClInclude Include="Scripts\IHierarchyTrObj.h" />
     <ClInclude Include="Scripts\IndicatorFill.h" />
-    <ClInclude Include="Scripts\ITransfObj.h" />
+    <ClInclude Include="Scripts\IStepTracingObj.h" />
+    <ClInclude Include="Scripts\ITransformableObj.h" />
+    <ClInclude Include="Scripts\TransformableObj.h" />
     <ClInclude Include="Scripts\kv_memory.h" />
     <ClInclude Include="Scripts\LevelBypassMap.h" />
     <ClInclude Include="Scripts\LevelCellMapDeser.h" />
@@ -385,7 +390,7 @@
     <ClInclude Include="Scripts\ICallbackRec_GraphRen.h" />
     <ClInclude Include="Scripts\GameObject.h" />
     <ClInclude Include="Scripts\CoreVisual_UI.h" />
-    <ClInclude Include="Scripts\TransformableObj.h" />
+    <ClInclude Include="Scripts\WorldTransfObj.h" />
     <ClInclude Include="Scripts\UnitObject.h" />
     <ClInclude Include="Scripts\UserInterfaceLoader.h" />
     <ClInclude Include="Scripts\UserInterfaceManager.h" />

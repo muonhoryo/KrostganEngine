@@ -9,7 +9,7 @@ using namespace KrostganEngine;
 using namespace KrostganEngine::EntitiesControl;
 using namespace KrostganEngine::GameObjects;
 
-EntityAction_MoveTo::EntityAction_MoveTo(OrdersExecutor& Owner,TransformableObj& OwnerTransform)
+EntityAction_MoveTo::EntityAction_MoveTo(OrdersExecutor& Owner,WorldTransfObj& OwnerTransform)
 	:IEntityAction(),
 	Owner(Owner),
 	OwnerTransform(OwnerTransform),

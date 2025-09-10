@@ -8,7 +8,7 @@ using namespace KrostganEngine::GameObjects;
 namespace KrostganEngine::EntitiesControl {
 	class EntityAction_MoveToPoint :public EntityAction_MoveTo{
 	public:
-		EntityAction_MoveToPoint(OrdersExecutor& Owner,TransformableObj& OwnerTransform,Vector2f TargetGlobalCoord);
+		EntityAction_MoveToPoint(OrdersExecutor& Owner,WorldTransfObj& OwnerTransform,Vector2f TargetGlobalCoord);
 
 		bool CheckExecCondition() override;
 		void Execute() override;

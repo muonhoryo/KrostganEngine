@@ -1,18 +1,19 @@
 #pragma once
 
 #include <SFML/System.hpp>
-#include <ITransfObj.h>
+#include <ITransformableObj.h>
 #include <Events.h>
 #include <AttackInfo.h>
 
 using namespace sf;
+using namespace KrostganEngine::Core;
 
 namespace KrostganEngine::GameObjects {
 	class IHitPointModule;
 	class IDeathModule;
 
 
-	class IAttackableObj : public virtual ITransfObj {
+	class IAttackableObj : public virtual ITransformableObj {
 	public:
 		virtual ~IAttackableObj(){}
 

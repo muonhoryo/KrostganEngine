@@ -9,7 +9,7 @@ using namespace KrostganEngine::Core;
 using namespace KrostganEngine::GameObjects;
 using namespace KrostganEngine::UI;
 
-EntityBaseAAModule::EntityBaseAAModule(EntityBattleStats& BattleStats,TransformableObj& Owner)
+EntityBaseAAModule::EntityBaseAAModule(EntityBattleStats& BattleStats,WorldTransfObj& Owner)
 	:AutoAttackModule(*new LineAAAnimation(Owner)),
 	BattleStats(BattleStats),
 	Owner(Owner){

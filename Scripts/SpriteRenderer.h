@@ -2,7 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <VisualEffectsSystem.h>
-#include <TransformableObj.h>
+#include <WorldTransfObj.h>
 #include <ICallbackRec_GraphRen.h>
 
 using namespace sf;
@@ -10,7 +10,7 @@ using namespace KrostganEngine::Core;
 using namespace KrostganEngine::GameObjects;
 
 namespace KrostganEngine::Visual {
-	class SpriteRenderer :public virtual ICallbackRec_GraphRen, public IColoredObject, public TransformableObj {
+	class SpriteRenderer :public virtual ICallbackRec_GraphRen, public IColoredObject, public WorldTransfObj {
 	public:
 		SpriteRenderer(
 			const Texture& RenTexture,
@@ -29,7 +29,7 @@ namespace KrostganEngine::Visual {
 
 		SpriteRenderer(
 			const Texture& RenTexture,
-			TransformableObj& Parent,
+			WorldTransfObj& Parent,
 			Vector2f			GlobalPosition = Vector2f(0, 0),
 			Vector2f			LocalScale = DEFAULT_SCALE,
 			Color				SprColor = Color::White,
@@ -37,7 +37,7 @@ namespace KrostganEngine::Visual {
 
 		SpriteRenderer(
 			const Texture& RenTexture,
-			TransformableObj& Parent,
+			WorldTransfObj& Parent,
 			float				maxSizeInPixels,
 			Vector2f			GlobalPosition = Vector2f(0, 0),
 			Vector2f			LocalScale = DEFAULT_SCALE,

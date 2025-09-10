@@ -10,7 +10,7 @@ using namespace KrostganEngine;
 using namespace KrostganEngine::GameObjects;
 using namespace KrostganEngine::EntitiesControl;
 
-EntityOrder_AttackArea::EntityOrder_AttackArea(OrdersExecutor& Owner, TransformableObj& OwnerTransform, Vector2f TargetGlobalCoord) : EntityOrder_GlobalPosTarget(TargetGlobalCoord),
+EntityOrder_AttackArea::EntityOrder_AttackArea(OrdersExecutor& Owner, WorldTransfObj& OwnerTransform, Vector2f TargetGlobalCoord) : EntityOrder_GlobalPosTarget(TargetGlobalCoord),
 Owner(Owner),
 OwnerTransform(OwnerTransform) {
 }

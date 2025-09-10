@@ -6,7 +6,7 @@ using namespace KrostganEngine::UI;
 using namespace KrostganEngine::GameObjects;
 
 
-LineAAAnimation::LineAAAnimation(TransformableObj& Owner)
+LineAAAnimation::LineAAAnimation(WorldTransfObj& Owner)
 	:AutoAttackAnimation(Owner),
 	LineRender(Owner.GetGlobalPosition(), Owner.GetGlobalPosition(), Engine::GetGlobalConsts().AAAnim_LineWidth, Color::Red),
 	LineEffect(*new FadingVisualEff_MRes(LineRender)){
@@ -39,7 +39,7 @@ void LineAAAnimation::OnDealDmg(AutoAttackInfo attInfo) {
 	float cdown = EntityBattleStats::GetAACooldown(attInfo.AASpeed);
 	LineEffect.ResetFade(cdown);
 	HitEffect->ResetFade(cdown);
-	Target = new watch_ptr_handler_wr<TransformableObj>(attInfo.Target);
+	Target = new watch_ptr_handler_wr<WorldTransfObj>(attInfo.Target);
 	LineRender.SetStart(Owner.GetGlobalPosition());
 	auto ptr = Target->GetPtr_t();
 	if (ptr != nullptr) {

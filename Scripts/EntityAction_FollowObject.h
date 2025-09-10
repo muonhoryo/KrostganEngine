@@ -11,15 +11,15 @@ namespace KrostganEngine::EntitiesControl {
 	public:
 		EntityAction_FollowObject	
 			(OrdersExecutor&							Owner,
-			TransformableObj&							OwnerTransform, 
-			watch_ptr_handler_wr_c<TransformableObj>	Target,
+			WorldTransfObj&							OwnerTransform, 
+			watch_ptr_handler_wr_c<WorldTransfObj>	Target,
 			const float									DistToFoll);
 		~EntityAction_FollowObject();
 
 		bool CheckExecCondition() override;
 		void Execute() override;
 
-		watch_ptr_handler_wr_c<TransformableObj>	Target;
+		watch_ptr_handler_wr_c<WorldTransfObj>	Target;
 		const float									DistToFoll;
 	};
 }

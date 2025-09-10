@@ -30,7 +30,7 @@ void LoseScript::RenderGraphic(RenderWindow& window) {
 
 			UserInterfaceLoader::Load_LoseMessage();
 			auto beg = UserInterfaceManager::GetRoot().GetChildrenBegin();
-			auto end = UserInterfaceManager::GetRoot().GetChildrenEnd();
+			auto end = UserInterfaceManager::GetRoot().GetChildrenCEnd();
 			IColoredObject* el = nullptr;
 			HighlightVisualEff_MRes* eff = nullptr;
 			for (;beg != end;++beg) {

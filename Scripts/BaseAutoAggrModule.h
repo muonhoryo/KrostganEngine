@@ -30,7 +30,7 @@ namespace KrostganEngine::GameObjects {
 		void TurnFindTargetState();
 
 		watch_ptr_handler_wr<IAttackableObj>* Target;
-		TransformableObj* TargetTransform;
+		WorldTransfObj* TargetTransform;
 		Entity& Owner;
 
 		bool HasTarget;

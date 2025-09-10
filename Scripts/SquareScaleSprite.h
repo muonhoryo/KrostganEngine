@@ -20,7 +20,7 @@ namespace KrostganEngine::Visual {
 
 		SquareScaleSprite(
 			const Texture&		RenTexture,
-			TransformableObj&	Parent,
+			WorldTransfObj&	Parent,
 			float				maxSpriteSize,
 			Vector2f			GlobalPosition	= Vector2f(0, 0),
 			float				LocalScale		= 1,

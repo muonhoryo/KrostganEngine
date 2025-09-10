@@ -14,7 +14,7 @@ namespace KrostganEngine::UI {
 	class LineAAAnimation :public AutoAttackAnimation ,public ICallbackRec_GraphRen{
 
 	public:
-		LineAAAnimation(TransformableObj& Owner);
+		LineAAAnimation(WorldTransfObj& Owner);
 		~LineAAAnimation();
 
 		void OnDealDmg(AutoAttackInfo attInfo) override;
@@ -26,6 +26,6 @@ namespace KrostganEngine::UI {
 		SquareScaleSprite* HitSprite=nullptr;
 		FadingVisualEff_MRes& LineEffect;
 		FadingVisualEff_MRes* HitEffect = nullptr;
-		watch_ptr_handler_wr<TransformableObj>* Target = nullptr;
+		watch_ptr_handler_wr<WorldTransfObj>* Target = nullptr;
 	};
 }

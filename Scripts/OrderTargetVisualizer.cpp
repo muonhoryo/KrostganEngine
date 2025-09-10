@@ -9,7 +9,7 @@ using namespace KrostganEngine::UI;
 //
 //
 
-OrderTargetsVisualizer::FollOrdTarHandler::FollOrdTarHandler(OrderTargetsVisualizer& Owner, watch_ptr_handler_wr_c<ITransfObj> Target, size_t PointIndex)
+OrderTargetsVisualizer::FollOrdTarHandler::FollOrdTarHandler(OrderTargetsVisualizer& Owner, watch_ptr_handler_wr_c<ITransformableObj> Target, size_t PointIndex)
 	:ICallbackRec_Upd(),
 	Owner(Owner),
 	Target(Target),
@@ -115,7 +115,7 @@ void OrderTargetsVisualizer::TryAddOrderInList(const IEntityOrder* order) {
 	}
 	const EntityOrder_ObjectTarget* tarOrd = dynamic_cast<const EntityOrder_ObjectTarget*>(order);
 	if (tarOrd != nullptr) {
-		ITransfObj& ref = *const_cast<ITransfObj*>(tarOrd->GetTarget());	//const_cast, because watch_ptr doesn't work with const objects
+		ITransformableObj& ref = *const_cast<ITransformableObj*>(tarOrd->GetTarget());	//const_cast, because watch_ptr doesn't work with const objects
 		AddPoint_Back(ref);
 	}
 }
@@ -124,7 +124,7 @@ void OrderTargetsVisualizer::AddPoint_Back(Vector2f point) {
 	Visual.AddPoint(point);
 }
 
-void OrderTargetsVisualizer::AddPoint_Back(ITransfObj& target) {
+void OrderTargetsVisualizer::AddPoint_Back(ITransformableObj& target) {
 	Visual.AddPoint(target.GetGlobalPosition());
 	DynPointsHandls.push_back(new FollOrdTarHandler(*this, target.GetPtr(), Visual.GetPointsCount() - 1));
 }

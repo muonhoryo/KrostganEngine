@@ -37,7 +37,7 @@ void EntitiesCtrlInputMode::GiveOrderToSelected_MoveToPoint(Vector2f targetGloba
 	cout << "Give an order: Move to " << ToString<float>(targetGlobalPos) << endl;
 }
 
-void EntitiesCtrlInputMode::GiveOrderToSelected_FollowObject(ITransfObj& target, bool isGrouped) {
+void EntitiesCtrlInputMode::GiveOrderToSelected_FollowObject(ITransformableObj& target, bool isGrouped) {
 	if (!GivingOrderCondition())
 		return;
 
@@ -56,7 +56,7 @@ void EntitiesCtrlInputMode::GiveOrderToSelected_FollowObject(ITransfObj& target,
 			if (wtch_ptr == nullptr)
 				throw exception("Cant observe object with watch_ptr");
 
-			ord = new EntityOrder_FollowTarget(*parEl, *parEl, watch_ptr_handler_wr_c<TransformableObj>(*wtch_ptr));
+			ord = new EntityOrder_FollowTarget(*parEl, *parEl, watch_ptr_handler_wr_c<WorldTransfObj>(*wtch_ptr));
 			parEl->TryAddOrder(ord, !isGrouped);
 			delete wtch_ptr;
 		}

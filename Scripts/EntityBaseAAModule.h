@@ -7,7 +7,7 @@
 namespace KrostganEngine::GameObjects {
 	class EntityBaseAAModule:public AutoAttackModule {
 	public:
-		EntityBaseAAModule(EntityBattleStats& BattleStats,TransformableObj& Owner);
+		EntityBaseAAModule(EntityBattleStats& BattleStats,WorldTransfObj& Owner);
 
 		void SetAsTarget(watch_ptr_handler_wr<IAttackableObj>* target) override;
 		bool CheckTargetReach() override;
@@ -16,6 +16,6 @@ namespace KrostganEngine::GameObjects {
 
 	private:
 		EntityBattleStats& BattleStats;
-		TransformableObj& Owner;
+		WorldTransfObj& Owner;
 	};
 }

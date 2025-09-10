@@ -22,7 +22,7 @@ IndicatorFill::IndicatorFill(
 IndicatorFill::IndicatorFill(
 	const Texture &		RenTexture,
 	const Texture &		MaskTexture,
-	TransformableObj &	Parent,
+	WorldTransfObj &	Parent,
 	Shader &			RendShader,
 	float				maxSpriteSize,
 	Vector2f			GlobalPosition,

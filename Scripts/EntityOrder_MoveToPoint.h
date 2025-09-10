@@ -12,7 +12,7 @@ using namespace KrostganEngine::GameObjects;
 namespace KrostganEngine::EntitiesControl {
 	class EntityOrder_MoveToPoint :public IEntityOrder,public EntityOrder_GlobalPosTarget {
 	public:
-		EntityOrder_MoveToPoint(OrdersExecutor& Owner,TransformableObj& OwnerTransform,
+		EntityOrder_MoveToPoint(OrdersExecutor& Owner,WorldTransfObj& OwnerTransform,
 			Vector2f TargetGlobalCoord,float ToTargetMinDistance=0);
 
 		bool CheckExecCondition() override;
@@ -22,7 +22,7 @@ namespace KrostganEngine::EntitiesControl {
 		EntityOrderType GetOrderType() override;
 
 		OrdersExecutor& Owner;
-		TransformableObj& OwnerTransform;
+		WorldTransfObj& OwnerTransform;
 		float ToTargetMinDistance;
 	};
 }

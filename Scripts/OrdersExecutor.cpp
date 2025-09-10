@@ -53,7 +53,7 @@ bool OrdersExecutor::TryAddOrder(IEntityOrder* order, bool clearOrdQueue) {
 		if (parOrd != nullptr &&
 			!parOrd->CanTargetItself()) {			//Order's target is object, but it cannot be executor
 
-			const ITransfObj* tar = parOrd->GetTarget();
+			const ITransformableObj* tar = parOrd->GetTarget();
 			const OrdersExecutor* ordTar =dynamic_cast<const OrdersExecutor*>(tar);
 			if (ordTar == this) {		//Order's target is executor
 

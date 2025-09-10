@@ -12,7 +12,7 @@ using namespace KrostganEngine::GameObjects;
 namespace KrostganEngine::EntitiesControl {
 	class EntityOrder_AttackArea :public IEntityOrder, public EntityOrder_GlobalPosTarget {
 	public:
-		EntityOrder_AttackArea(OrdersExecutor& Owner, TransformableObj& OwnerTransform, Vector2f TargetGlobalCoord);
+		EntityOrder_AttackArea(OrdersExecutor& Owner, WorldTransfObj& OwnerTransform, Vector2f TargetGlobalCoord);
 
 		bool CheckExecCondition() override;
 		list<IEntityAction*>* GetActions() override;
@@ -21,6 +21,6 @@ namespace KrostganEngine::EntitiesControl {
 		EntityOrderType GetOrderType() override;
 
 		OrdersExecutor& Owner;
-		TransformableObj& OwnerTransform;
+		WorldTransfObj& OwnerTransform;
 	};
 }

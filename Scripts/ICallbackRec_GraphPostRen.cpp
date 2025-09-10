@@ -20,7 +20,7 @@ ICallbackRec_GraphPostRen::~ICallbackRec_GraphPostRen() {
 }
 
 void ICallbackRec_GraphPostRen::RenderGraphic(RenderWindow& window) {
-	if (IsActive)
+	if (GetActivity())
 		RenderGraphicAction(window);
 }
 

@@ -519,7 +519,7 @@
     <ClCompile Include="Scripts\GameObject.cpp">
       <Filter>Исходные файлы\CoreSystems\GameObjects\VirtualObjects</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\TransformableObj.cpp">
+    <ClCompile Include="Scripts\WorldTransfObj.cpp">
       <Filter>Исходные файлы\CoreSystems\GameObjects\VirtualObjects</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\Wall.cpp">
@@ -638,6 +638,9 @@
     </ClCompile>
     <ClCompile Include="Scripts\HighlightVisualEff_MRes.cpp">
       <Filter>Исходные файлы\Visual\Effects\Highlight</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\IHierarchyTrObj.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameObjects\VirtualObjects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1037,10 +1040,10 @@
     <ClInclude Include="Scripts\FadingVisualEff_MRes.h">
       <Filter>Файлы заголовков\Visual\Effects\Fading</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\ITransfObj.h">
+    <ClInclude Include="Scripts\TransformableObj.h">
       <Filter>Файлы заголовков\CoreSystems\GameObjects\TransformableObjs</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\TransformableObj.h">
+    <ClInclude Include="Scripts\WorldTransfObj.h">
       <Filter>Файлы заголовков\CoreSystems\GameObjects\TransformableObjs</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\SpriteRenderer.h">
@@ -1087,6 +1090,18 @@
     </ClInclude>
     <ClInclude Include="Scripts\HighlightVisualEff_MRes.h">
       <Filter>Файлы заголовков\Visual\Effects\Fading</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\HierarchyTrObj.h">
+      <Filter>Файлы заголовков\CoreSystems\GameObjects\TransformableObjs</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\ITransformableObj.h">
+      <Filter>Файлы заголовков\CoreSystems\GameObjects\TransformableObjs</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\IHierarchyTrObj.h">
+      <Filter>Файлы заголовков\CoreSystems\GameObjects\TransformableObjs</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\IStepTracingObj.h">
+      <Filter>Файлы заголовков\CoreSystems\GameObjects\TransformableObjs</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

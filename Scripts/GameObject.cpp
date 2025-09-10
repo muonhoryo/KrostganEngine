@@ -24,7 +24,7 @@ GameObject::GameObject(
 	Color			SprColor,
 	Shader*			RenShader)
 		:DynamicPhysObject(),
-		TransformableObj(
+		WorldTransfObj(
 			ctor_InitOwner(),
 			GlobalPosition,
 			LocalScale),
@@ -40,21 +40,21 @@ GameObject::GameObject(
 
 void GameObject::SetGlobalPosition(Vector2f position) {
 
-	TransformableObj::SetGlobalPosition(position);
+	WorldTransfObj::SetGlobalPosition(position);
 	HasMoved = true;
 }
 void GameObject::SetLocalPosition(Vector2f position) {
 
-	TransformableObj::SetLocalPosition(position);
+	WorldTransfObj::SetLocalPosition(position);
 	HasMoved = true;
 }
 void GameObject::SetGlobalScale(Vector2f scale) {
 	float scl = GetScale_Inter(scale);
-	TransformableObj::SetGlobalScale(Vector2f(scl, scl));
+	WorldTransfObj::SetGlobalScale(Vector2f(scl, scl));
 }
 void GameObject::SetLocalScale(Vector2f scale) {
 	float scl = GetScale_Inter(scale);
-	TransformableObj::SetLocalScale(Vector2f(scl, scl));
+	WorldTransfObj::SetLocalScale(Vector2f(scl, scl));
 }
 float GameObject::GetScale_Inter(const Vector2f& scale) const {
 	return min(scale.x, scale.y);

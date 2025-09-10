@@ -12,7 +12,7 @@ using namespace KrostganEngine::GameObjects;
 using namespace KrostganEngine::EntitiesControl;
 using namespace KrostganEngine::Core;
 
-EntityOrder_AttackTarget::EntityOrder_AttackTarget(OrdersExecutor& Owner,TransformableObj& OwnerTransform, 
+EntityOrder_AttackTarget::EntityOrder_AttackTarget(OrdersExecutor& Owner,WorldTransfObj& OwnerTransform, 
 	watch_ptr_handler_wr<IAttackableObj> Target)
 	:IEntityOrder(),
 	Owner(Owner),
@@ -62,7 +62,7 @@ list<IEntityAction*>* EntityOrder_AttackTarget::GetActions() {
 		}
 		float alloDist = Owner.GetBattleStats().GetAARadius();
 		EntityAction_FollowObject* folAct = new EntityAction_FollowObject(Owner, OwnerTransform, 
-			*new watch_ptr_handler_wr_c<TransformableObj>(Target),
+			*new watch_ptr_handler_wr_c<WorldTransfObj>(Target),
 			alloDist);
 		EntityAction_AutoAttack* aaAct = new EntityAction_AutoAttack(Owner, watch_ptr_handler_wr<IAttackableObj>(Target));
 		lst->push_back((IEntityAction*)folAct);
@@ -85,6 +85,6 @@ EntityOrderType EntityOrder_AttackTarget::GetOrderType() {
 	return EntityOrderType::AttackTarget;
 }
 
-const ITransfObj* EntityOrder_AttackTarget::GetTarget() const {
+const ITransformableObj* EntityOrder_AttackTarget::GetTarget() const {
 	return Target.GetPtr_t_c();
 }

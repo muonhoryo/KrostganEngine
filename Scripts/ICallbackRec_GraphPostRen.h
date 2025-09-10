@@ -13,8 +13,8 @@ namespace KrostganEngine::Core {
 		void RenderGraphic(RenderWindow& window);
 		virtual ~ICallbackRec_GraphPostRen();
 
-		char GetRendLayer() const;
-		bool GetActivity() const;
+		char			GetRendLayer() const;
+		virtual bool	GetActivity() const;
 
 		void SetRendLayer(char layer);
 		void SetActivity(bool isActive);
@@ -24,7 +24,6 @@ namespace KrostganEngine::Core {
 
 		virtual void RenderGraphicAction(RenderWindow& window) = 0;
 
-	private:
 		char RendLayer	= 0;
 		bool IsActive	= true;
 	};

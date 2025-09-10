@@ -10,8 +10,8 @@ using namespace KrostganEngine::EntitiesControl;
 
 EntityAction_FollowObject::EntityAction_FollowObject
 	(OrdersExecutor&								Owner, 
-	TransformableObj&								OwnerTransform, 
-	watch_ptr_handler_wr_c<TransformableObj>	Target,
+	WorldTransfObj&								OwnerTransform, 
+	watch_ptr_handler_wr_c<WorldTransfObj>	Target,
 	const float									DistToFoll)
 	:EntityAction_MoveTo	(Owner,OwnerTransform),
 	Target		(Target),

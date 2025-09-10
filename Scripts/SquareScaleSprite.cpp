@@ -18,7 +18,7 @@ SquareScaleSprite::SquareScaleSprite(
 
 SquareScaleSprite::SquareScaleSprite(
 	const Texture& RenTexture,
-	TransformableObj& Parent,
+	WorldTransfObj& Parent,
 	float				maxSpriteSize,
 	Vector2f			GlobalPosition,
 	float				LocalScale,

@@ -12,7 +12,7 @@ using namespace KrostganEngine::EntitiesControl;
 
 EntityOrder_MoveToPoint::EntityOrder_MoveToPoint
 		(OrdersExecutor& Owner, 
-		TransformableObj& OwnerTransform,
+		WorldTransfObj& OwnerTransform,
 		Vector2f TargetGlobalCoord,
 		float ToTargetMinDistance)
 	:EntityOrder_GlobalPosTarget(TargetGlobalCoord),

@@ -6,7 +6,7 @@ using namespace sf;
 using namespace KrostganEngine;
 using namespace KrostganEngine::EntitiesControl;
 
-EntityAction_MoveToPoint::EntityAction_MoveToPoint(OrdersExecutor& Owner, TransformableObj& OwnerTransform,Vector2f TargetGlobalCoord)
+EntityAction_MoveToPoint::EntityAction_MoveToPoint(OrdersExecutor& Owner, WorldTransfObj& OwnerTransform,Vector2f TargetGlobalCoord)
 	:EntityAction_MoveTo(Owner,OwnerTransform),
 	TargetGlobalCoord(TargetGlobalCoord){
 }

@@ -12,7 +12,7 @@ namespace KrostganEngine::EntitiesControl {
 	public:
 		EntityOrder_AttackTarget
 			(OrdersExecutor&						Owner, 
-			TransformableObj&						OwnerTransform,
+			WorldTransfObj&						OwnerTransform,
 			watch_ptr_handler_wr<IAttackableObj>	Target);
 		~EntityOrder_AttackTarget();
 
@@ -22,10 +22,10 @@ namespace KrostganEngine::EntitiesControl {
 		void OnEndExecution() override;
 		EntityOrderType GetOrderType() override;
 
-		const ITransfObj* GetTarget() const override;
+		const ITransformableObj* GetTarget() const override;
 
 		OrdersExecutor& Owner;
-		TransformableObj& OwnerTransform;
+		WorldTransfObj& OwnerTransform;
 		//Cashed
 		AutoAttackModule& AAModule;
 		watch_ptr_handler_wr<IAttackableObj> Target;

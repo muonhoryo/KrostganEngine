@@ -2,8 +2,14 @@
 
 #include <GameObject.h>
 #include <Entity.h>
-#include <ITransfObj.h>
+
+#include <ITransformableObj.h>
 #include <TransformableObj.h>
+#include <IHierarchyTrObj.h>
+#include <HierarchyTrObj.h>
+#include <IStepTracingObj.h>
+#include <WorldTransfObj.h>
+
 #include <DynamicPhysObject.h>
 
 #include <UnitObject.h>

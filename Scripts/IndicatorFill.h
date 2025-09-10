@@ -19,7 +19,7 @@ namespace KrostganEngine::Visual {
 		IndicatorFill(
 			const Texture&		RenTexture,
 			const Texture&		MaskTexture,
-			TransformableObj&	Parent,
+			WorldTransfObj&	Parent,
 			Shader&				RendShader,
 			float				maxSpriteSize,
 			Vector2f			GlobalPosition = Vector2f(0, 0),

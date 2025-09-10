@@ -14,8 +14,8 @@ using namespace KrostganEngine::EntitiesControl;
 
 EntityOrder_FollowTarget::EntityOrder_FollowTarget
 	(OrdersExecutor&							Owner, 
-	TransformableObj&							OwnerTransform, 
-	watch_ptr_handler_wr_c<ITransfObj>		Target)
+	WorldTransfObj&							OwnerTransform, 
+	watch_ptr_handler_wr_c<TransformableObj>		Target)
 	:IEntityOrder(),
 	Owner			(Owner),
 	OwnerTransform	(OwnerTransform),
@@ -86,6 +86,6 @@ EntityOrderType EntityOrder_FollowTarget::GetOrderType() {
 	return EntityOrderType::FollowTarget;
 }
 
-const ITransfObj* EntityOrder_FollowTarget::GetTarget() const {
+const TransformableObj* EntityOrder_FollowTarget::GetTarget() const {
 	return Target.GetPtr_t();
 }

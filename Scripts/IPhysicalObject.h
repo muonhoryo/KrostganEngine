@@ -2,16 +2,16 @@
 
 #include <PhysicsLayer.h>
 #include <ColliderShapes.h>
-#include <ITransfObj.h>
+#include <ITransformableObj.h>
 #include <vector>
 #include <watch_ptr.h>
 
 using namespace std;
-using namespace KrostganEngine::GameObjects;
+using namespace KrostganEngine::Core;
 using namespace KrostganEngine;
 
 namespace KrostganEngine::Physics {
-	class IPhysicalObject: public virtual ITransfObj
+	class IPhysicalObject: public virtual ITransformableObj
 	{
 	public:
 

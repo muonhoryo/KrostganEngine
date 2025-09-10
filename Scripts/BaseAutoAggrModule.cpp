@@ -78,7 +78,7 @@ void BaseAutoAggrModule::CheckCurrTarget(CallbackRecArgs_Upd& args) {
 
 			if (IsFollowTargets) {
 
-				auto folAct = new EntityAction_FollowObject(Owner, Owner,watch_ptr_handler_wr_c<TransformableObj>(*Target), alloDist);
+				auto folAct = new EntityAction_FollowObject(Owner, Owner,watch_ptr_handler_wr_c<WorldTransfObj>(*Target), alloDist);
 
 				ActionMediator.AddAction((IEntityAction*)folAct);
 
@@ -153,7 +153,7 @@ void BaseAutoAggrModule::FindTarget(CallbackRecArgs_Upd& args) {
 				dist = Length(parTar->GetGlobalPosition() - pos);
 
 				if (dist < minDist) {		//Finds nearest target
-					TargetTransform = dynamic_cast<TransformableObj*>(parTar);
+					TargetTransform = dynamic_cast<WorldTransfObj*>(parTar);
 					if (TargetTransform == nullptr)
 						continue;
 
@@ -185,7 +185,7 @@ void BaseAutoAggrModule::FindTarget(CallbackRecArgs_Upd& args) {
 
 					float alloDist = Owner.GetBattleStats().GetAARadius();
 					auto aaAct_ = new EntityAction_AutoAttack(Owner, watch_ptr_handler_wr<IAttackableObj>(*Target));
-					auto folAct = new EntityAction_FollowObject(Owner, Owner, watch_ptr_handler_wr_c<TransformableObj>(*Target), alloDist);
+					auto folAct = new EntityAction_FollowObject(Owner, Owner, watch_ptr_handler_wr_c<WorldTransfObj>(*Target), alloDist);
 					ActionMediator.AddAction((IEntityAction*)aaAct_);
 					ActionMediator.AddAction((IEntityAction*)folAct);
 

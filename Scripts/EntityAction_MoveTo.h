@@ -3,7 +3,7 @@
 #include <IEntityAction.h>
 #include <OrdersExecutor.h>
 #include <SFML/System.hpp>
-#include <TransformableObj.h>
+#include <WorldTransfObj.h>
 
 using namespace sf;
 using namespace KrostganEngine::GameObjects;
@@ -11,12 +11,12 @@ using namespace KrostganEngine::GameObjects;
 namespace KrostganEngine::EntitiesControl {
 	class EntityAction_MoveTo:public IEntityAction {
 	public:
-		EntityAction_MoveTo(OrdersExecutor& Owner,TransformableObj& OwnerTransform);
+		EntityAction_MoveTo(OrdersExecutor& Owner,WorldTransfObj& OwnerTransform);
 
 	protected:
 		float DistToTarget;
 		OrdersExecutor& Owner;
-		TransformableObj& OwnerTransform;
+		WorldTransfObj& OwnerTransform;
 
 		bool GetCantMoveState() const{
 			if (CantMove) {

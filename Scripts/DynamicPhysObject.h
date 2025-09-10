@@ -3,12 +3,14 @@
 #include <vector>
 #include <IPhysicalObject.h>
 #include <ICallbackRec_LUpd.h>
+#include <IStepTracingObj.h>
 
 using namespace std;
 using namespace KrostganEngine::Core;
+using namespace KrostganEngine::GameObjects;
 
 namespace KrostganEngine::Physics {
-	class DynamicPhysObject :public IPhysicalObject, public virtual ICallbackRec_LUpd{
+	class DynamicPhysObject :public IPhysicalObject, public virtual ICallbackRec_LUpd, public virtual IStepTracingObj{
 	public:
 		virtual ~DynamicPhysObject();
 

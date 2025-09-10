@@ -1,6 +1,6 @@
 #pragma once
 
-#include <TransformableObj.h>
+#include <WorldTransfObj.h>
 #include <AutoAttackInfo.h>
 
 using namespace KrostganEngine::GameObjects;
@@ -14,10 +14,10 @@ namespace KrostganEngine::UI {
 		virtual void OnDealDmg(AutoAttackInfo attInfo) = 0;
 
 	protected:
-		AutoAttackAnimation(TransformableObj& Owner)
+		AutoAttackAnimation(WorldTransfObj& Owner)
 			:Owner(Owner)
 		{}
 
-		TransformableObj& Owner;
+		WorldTransfObj& Owner;
 	};
 }

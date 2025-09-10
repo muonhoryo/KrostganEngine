@@ -10,7 +10,7 @@ using namespace KrostganEngine::Physics;
 using namespace KrostganEngine::Visual;
 
 namespace KrostganEngine::GameObjects {
-	class GameObject :public TransformableObj, public DynamicPhysObject, public IColoredObject {
+	class GameObject :public WorldTransfObj, public DynamicPhysObject, public IColoredObject {
 	public:
 		virtual ~GameObject();
 
