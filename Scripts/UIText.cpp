@@ -34,8 +34,8 @@ UIText::UIText(
 			LocalPosition,
 			LocalScale,
 			Anchor,
-			ctor_GetUISize(textStr,characterSize),
-			RendLayer)
+			ctor_GetUISize(textStr,characterSize)),
+		ICallbackRec_GraphPostRen(RendLayer)
 {} 
 
 UIText::UIText(
@@ -68,8 +68,8 @@ UIText::UIText(
 			GlobalPosition,
 			GlobalScale,
 			Anchor,
-			ctor_GetUISize(textStr,characterSize),
-			RendLayer)
+			ctor_GetUISize(textStr,characterSize)),
+		ICallbackRec_GraphPostRen(RendLayer)
 {}
 
 UIText::UIText(

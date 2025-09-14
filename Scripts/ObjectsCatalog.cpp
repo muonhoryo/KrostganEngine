@@ -22,17 +22,28 @@ void ObjsCatalogDeserial::DeserializeCatalog(string serPath) {
 	ObjectsCatalog::Unload();
 
 	vector<string>& params = *new vector<string>();
+	pair<size_t, _ObjSubsPairType>* subinfo = nullptr;
 	if (st.is_open()) {
 		while (getline(st, line)) {
 
 			if (line.find(OBJECTS_SEP_LINE) != string::npos) {
 
-				ObjectsCatalog::Add(&ParseObjInfo(params));
+				if (params[0].find(SerializationParDefNames::OBJECT_TYPE) != string::npos) {
+
+					ObjectsCatalog::Add(&ParseObjInfo(params));
+				}
+				else if(params[0].find(SerializationParDefNames::CATALOG_SUB_INFO_ID)!=string::npos){
+					
+					subinfo = &ParseObjSubinfo(params);
+					ObjectsCatalog::AddSub(subinfo->first,subinfo->second.first,subinfo->second.second);
+					delete subinfo;
+				}
 				params.clear();
 			}
 			else {
 
-				params.push_back(line);
+				if(line.size()>1)
+					params.push_back(line);
 			}
 		}
 	}
@@ -41,214 +52,94 @@ void ObjsCatalogDeserial::DeserializeCatalog(string serPath) {
 	if (size > 1 ||
 		size == 1 && params[0].size() > 1) {
 
-		ObjectsCatalog::Add(&ParseObjInfo(params));
+		if (params[0].find(SerializationParDefNames::OBJECT_TYPE) != string::npos) {
+
+			ObjectsCatalog::Add(&ParseObjInfo(params));
+		}
+		else if (params[0].find(SerializationParDefNames::CATALOG_SUB_INFO_ID) != string::npos) {
+
+			subinfo = &ParseObjSubinfo(params);
+			ObjectsCatalog::AddSub(subinfo->first, subinfo->second.first, subinfo->second.second);
+			delete subinfo;
+		}
 	}
 	params.clear();
+	ObjectsCatalog::GetObjectInfo(0);
 	delete& params;
 }
 
-//GameObject* ObjsCatalogDeserial::DeserializeObj(vector<string>& params,LevelLoadingInfo& levelInfo, Vector2f position) {
-//
-//	return ParseObjInfo(params).InstanceObject(levelInfo,position);
-//}
+GameObjectLoadInfo& ObjsCatalogDeserial::ParseObjInfo(const vector<string>& params) {
 
-GameObjectLoadInfo& ObjsCatalogDeserial::ParseObjInfo(vector<string>& params) {
+	GameObjectLoadInfo* info = nullptr;
+	const pair<const string, const string>* parParam = nullptr;
+	parParam = &ParseParamLine(params[0]);
 
-	string* output = new string();
-	if (TryGetSerValueOfParam(params, SerializationParDefNames::OBJECT_TYPE, output))
+	if (parParam->first.find(SerializationParDefNames::OBJECT_TYPE) != string::npos)
 	{
-		if (output->find(SerializationObjectsTypes::OBJECT_TYPE_UNIT) != string::npos) {
+		if (parParam->second.find(SerializationObjectsTypes::OBJECT_TYPE_UNIT) != string::npos) {
 
-			return ParseUnitInfo(params);
+			info = new UnitLoadInfo();
 		}
-		else if (output->find(SerializationObjectsTypes::OBJECT_TYPE_HERO) != string::npos) {
+		else if (parParam->second.find(SerializationObjectsTypes::OBJECT_TYPE_HERO) != string::npos) {
 
-			return ParseHeroInfo(params);
+			info = new HeroLoadInfo();
 		}
-		else if (output->find(SerializationObjectsTypes::OBJECT_TYPE_WALL)!=string::npos) {
+		else if (parParam->second.find(SerializationObjectsTypes::OBJECT_TYPE_WALL) != string::npos) {
 
-			return ParseWallInfo(params);
+			info = new WallLoadInfo();
 		}
+		else
+			throw exception("Cant parse info: uknown type");
+
+		delete parParam;
+		auto beg = params.begin();
+		++beg;
+		auto end = params.cend();
+		for (;beg != end;++beg) {
+
+			parParam = &ParseParamLine(*beg);
+			info->WriteParam(*parParam);
+			delete parParam;
+		}
+		return *info;
 	}
-	throw exception("Cant parse info: missing type");
-}
-UnitLoadInfo& ObjsCatalogDeserial::ParseUnitInfo(vector<string>& params) {
-	if (params.size() == 0)
-		throw exception("Missing params of unit");
-	UnitLoadInfo& info = *new UnitLoadInfo();
-	string* buffer = new string();
-
-	if (!TryGetSerValueOfParam(params, SerializationParDefNames::OBJECT_NAME, buffer))
-		throw exception("Cannot get name of object");
-	info.Name = *buffer;
-
-	if (TryGetSerValueOfParam(params, SerializationParDefNames::OBJECT_CATALOG_ID, buffer)) {
-		info.CatalogID = stoi(*buffer);
-	}
-
-	if (!TryGetSerValueOfParam(params, SerializationParDefNames::OBJECT_SPRITE_SOURCE, buffer))
-		throw exception("Cannot get path of sprite");
-	FStreamExts::ClearPath(*buffer);
-	info.SpriteSource= *buffer;
-
-	if (TryGetSerValueOfParam(params, SerializationParDefNames::OBJECT_POSITION, buffer)) {
-
-		info.Position = ParseVec2f(*buffer);
-	}
-
-	if (!TryGetSerValueOfParam(params, SerializationParDefNames::OBJECT_SIZE, buffer))
-		throw exception("Cant get size of object");
-	info.Size = stof(*buffer);
-
-	if (!TryGetSerValueOfParam(params, SerializationParDefNames::ENTITY_FRACTION, buffer))
-		throw exception("Cannot get fraction of entity");
-	FStreamExts::ClearPath(*buffer);
-	if (FractionsSystem::FractionNames.find(*buffer) == FractionsSystem::FractionNames.end())
-		info.EntityFraction = Fraction::Neutral;
 	else
-		info.EntityFraction = FractionsSystem::FractionNames.at(*buffer);
-
-	if (!TryGetSerValueOfParam(params, SerializationParDefNames::ENTITY_HPBAR_SPRITE_SOURCE, buffer))
-		throw exception("Cant get hpbar sprite");
-	FStreamExts::ClearPath(*buffer);
-	info.HPBarSpriteSource = *buffer;
-
-	if (!TryGetSerValueOfParam(params, SerializationParDefNames::ENTITY_HPBAR_MASK, buffer))
-		throw exception("Cant get hpbar mask");
-	FStreamExts::ClearPath(*buffer);
-	info.HPBarMaskSource = *buffer;
-
-	if (!TryGetSerValueOfParam(params, SerializationParDefNames::ENTITY_SELECT_AREA_SOURCE, buffer))
-		throw exception("Cant get selection area");
-	FStreamExts::ClearPath(*buffer);
-	info.SelectionAreaSource = *buffer;
-
-	//Fill battle stats of unit
-	EntityBattleStats& bStats = GetBattleStats(params, buffer);
-
-	info.BattleStats = &bStats;
-
-	delete buffer;
-
-	cout << "Loaded unit:" << endl << "Name: " << info.Name << endl << "Sprite: " << info.SpriteSource<<
-		endl << "Size: " << info.Size << endl << "Fraction: " << (int)info.EntityFraction << endl;
-	return info;
+		throw exception("Cant parse info: missing type");
 }
-HeroLoadInfo& ObjsCatalogDeserial::ParseHeroInfo(vector<string>& params) {
+pair<size_t, _ObjSubsPairType>& ObjsCatalogDeserial::ParseObjSubinfo(const vector<string>& params) {
+	
+	if (params.size() < 2)
+		throw exception("Incorrect format of object's subinfo.");
 
-	UnitLoadInfo& info = ParseUnitInfo(params);
+	byte subID;
+	size_t objID;
+	AttrsCollectn& attrs = *new AttrsCollectn();
 
-	HeroLoadInfo& heInfo = *new HeroLoadInfo(*(HeroLoadInfo*)&info);
-	delete &info;
-	return  heInfo;
+	const pair<const string, const string>* parLine = &ParseParamLine(params[0]);
+	subID = (byte)stoi(parLine->second);
+	delete parLine;
+	parLine = &ParseParamLine(params[1]);
+	if (parLine->first.find(SerializationParDefNames::OBJECT_CATALOG_ID) == string::npos)
+		throw exception("Missing catalog ID.");
+
+	objID = stoll(parLine->second);
+	delete parLine;
+
+	auto beg = params.begin();
+	auto end = params.cend();
+	++beg; ++beg;
+	for (;beg != end;++beg) {
+		parLine = &ParseParamLine(*beg);
+		attrs.push_back(parLine);
+	}
+	return *new pair<size_t, _ObjSubsPairType>(objID, _ObjSubsPairType(subID, new LvlObjCatalogSubInfo(attrs)));
 }
-WallLoadInfo& ObjsCatalogDeserial::ParseWallInfo(vector<string>& params) {
+const pair<const string, const string>& ObjsCatalogDeserial::ParseParamLine(const string& line) {
 
-	if (params.size() == 0)
-		throw exception("Missing params of unit");
-	string* buffer = new string();
-	WallLoadInfo& info = *new WallLoadInfo();
-
-	if (TryGetSerValueOfParam(params, SerializationParDefNames::OBJECT_CATALOG_ID, buffer)) {
-		info.CatalogID = stoi(*buffer);
-	}
-
-	if (TryGetSerValueOfParam(params, SerializationParDefNames::OBJECT_POSITION, buffer)) {
-
-		info.Position = ParseVec2f(*buffer);
-	}
-
-	if (!TryGetSerValueOfParam(params, SerializationParDefNames::OBJECT_NAME, buffer))
-		throw exception("Cannot get name of object");
-	info.Name = *buffer;
-
-	if (!TryGetSerValueOfParam(params, SerializationParDefNames::OBJECT_SPRITE_SOURCE, buffer))
-		throw exception("Cannot get source of sprite");
-	FStreamExts::ClearPath(*buffer);
-	info.SpriteSource= *buffer;
-
-	if (!TryGetSerValueOfParam(params, SerializationParDefNames::OBJECT_SIZE, buffer))
-		throw exception("Cant get size of object");
-	info.Size = stof(*buffer);
-
-	delete buffer;
-
-	cout << "Loaded wall: " << endl << "Name: " << info.Name << endl << "Sprite path: " << info.SpriteSource<<
-		endl << "Size: " << info.Size << endl;
-	return info;
-}
-
-bool ObjsCatalogDeserial::TryGetSerValueOfParam(vector<string>& params, const string& paramName, string* output) {
-	(*output).clear();
-	for (auto& par : params) {
-		if (par.find(paramName) != string::npos) {
-			size_t index = par.find(PAR_DEF_NAME_END_SYM);
-			if (index == string::npos)
-				throw exception("Incorrect parameter format");
-			(*output).append(par.begin() + index + 1, par.end());
-			return true;
-		}
-	}
-	return false;
-}
-
-EntityBattleStats& ObjsCatalogDeserial::GetBattleStats(vector<string>& params, string* buffer) {
-	EntityBattleStats& bStats = *new EntityBattleStats();
-	float bStat_f;
-	size_t bStat_s_t;
-
-	//Moving speed
-	if (TryGetSerValueOfParam(params, SerializationParDefNames::UNIT_MOVINGSPEED, buffer)) {
-		bStat_f = stof(*buffer);
-		if (bStat_f >= 0)
-			bStats.SetMovingSpeed(bStat_f);
-	}
-
-	//MaxHP
-	if (TryGetSerValueOfParam(params, SerializationParDefNames::ENTITY_MAX_HP, buffer)) {
-		bStat_s_t = stoi(*buffer);
-		if (bStat_s_t > 0)
-			bStats.SetMaxHP(bStat_s_t);
-	}
-
-	//HPRegenAmount
-	if (TryGetSerValueOfParam(params, SerializationParDefNames::ENTITY_REGEN_HP_COUNT, buffer)) {
-		bStat_s_t = stoi(*buffer);
-		bStats.SetHPRegenAmount(bStat_s_t);
-	}
-
-	//HPRegenTick
-	if (TryGetSerValueOfParam(params, SerializationParDefNames::ENTITY_REGEN_HP_TICK, buffer)) {
-		bStat_f = stof(*buffer);
-		bStats.SetHPRegenTick(bStat_f);
-	}
-
-	//AADamage
-	if (TryGetSerValueOfParam(params, SerializationParDefNames::ENTITY_AA_DAMAGE, buffer)) {
-		bStat_s_t = stoi(*buffer);
-		bStats.SetAADamage(bStat_s_t);
-	}
-
-	//AASpeed
-	if (TryGetSerValueOfParam(params, SerializationParDefNames::ENTITY_AA_SPEED, buffer)) {
-		bStat_f = stof(*buffer);
-		if (bStat_f >= 0)
-			bStats.SetAASpeed(bStat_f);
-	}
-
-	//AARadius
-	if (TryGetSerValueOfParam(params, SerializationParDefNames::ENTITY_AA_RADIUS, buffer)) {
-		bStat_f = stof(*buffer);
-		if (bStat_f > 0)
-			bStats.SetAARadius(bStat_f);
-	}
-
-	//AutoAggrRadius
-	if (TryGetSerValueOfParam(params, SerializationParDefNames::ENTITY_AUTO_AGGR_RADIUS, buffer)) {
-		bStat_f = stof(*buffer);
-		if (bStat_f > 0)
-			bStats.SetAutoAggrRadius(bStat_f);
-	}
-
-	return bStats;
+	size_t index = line.find(PAR_DEF_NAME_END_SYM);
+	if (index == string::npos)
+		throw exception("Incorrect parameter format");
+	string p1 = line.substr(0, index);
+	string p2 = line.substr(index + 1, line.size() - index);
+	return *new pair<const string, const string>(line.substr(0, index), line.substr(index + 1, line.size() - index));
 }

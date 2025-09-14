@@ -16,12 +16,7 @@ using namespace KrostganEngine::EntitiesControl;
 using namespace KrostganEngine::Visual;
 
 Entity::Entity(EntityCtorParams& params)
-	:GameObject(
-		params.RenSprite->Tex,
-		params.GlobalPosition, 
-		params.LocalScale, 
-		GetSprColorFromFraction(params.EntityFraction),
-		params.RenSprite->RenShader),
+	:GameObject(params),
 	ISelectableEntity(), 
 	ICallbackRec_Upd(), 
 	IFractionMember(),
@@ -32,7 +27,7 @@ Entity::Entity(EntityCtorParams& params)
 
 	EntityFraction			(params.EntityFraction),
 	HPBar					(params.HPBarSprite),
-	SelectionSpriteSource	(params.SelectionSprite)
+	SelectionSpriteSource	(params.SelectionSpriteSource)
 
 {
 	params.Init_AAModule(*this);
@@ -75,7 +70,7 @@ void Entity::SelectionOn() {
 			SelectionSpriteSource->Tex,
 			*this,
 			SelectionSpriteSource->MaxSize,
-			GetGlobalPosition(),
+			Vector2f(0,0),
 			1,
 			GetColor(),
 			nullptr);
@@ -124,6 +119,6 @@ const ColliderShape& Entity::GetCollider() const {
 		return PhysicsEngine::EmptyCollInstance;
 }
 
-IHitPointModule& Entity::GetHPModule() {
+IHitPointModule& Entity::GetHPModule() const {
 	return *HPModule;
 }

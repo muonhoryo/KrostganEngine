@@ -6,6 +6,7 @@
 #include <Extensions.h>
 #include <Engine.h>
 #include <TransformableObj.h>
+#include <ObjectsCatalog.h>
 
 using namespace std;
 using namespace sf;
@@ -17,25 +18,25 @@ GameObject::~GameObject() {
 	delete& BodySprite;
 	delete Transf;
 }
-GameObject::GameObject(
-	const Texture&	RenTexture, 
-	Vector2f		GlobalPosition ,
-	float			LocalScale,
-	Color			SprColor,
-	Shader*			RenShader)
-		:DynamicPhysObject(),
-		WorldTransfObj(
-			ctor_InitOwner(),
-			GlobalPosition,
-			LocalScale),
-		BodySprite(*new SquareScaleSprite(
-			RenTexture,
-			*this,
-			Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution,
-			GlobalPosition,
-			LocalScale,
-			SprColor,
-			RenShader))
+GameObjectCtorParams::GameObjectCtorParams() 
+	:CatalogID(ObjectsCatalog::EMPTY_CATALOG_ID),
+	SubcatalogID(ObjectsCatalog::ABSENT_SUB_CATALOG_ID)
+{}
+GameObject::GameObject(const GameObjectCtorParams& params) 
+	:DynamicPhysObject(),
+	CatalogObject(params.CatalogID, params.SubcatalogID),
+	WorldTransfObj(
+		ctor_InitOwner(),
+		params.GlobalPosition,
+		params.GlobalScale),
+	BodySprite(*new SquareScaleSprite(
+		params.BodySpriteSource->Tex,
+		*this,
+		Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution,
+		Vector2f(0, 0),
+		1,
+		params.SprColor,
+		params.BodySpriteSource->RenShader))
 {}
 
 void GameObject::SetGlobalPosition(Vector2f position) {

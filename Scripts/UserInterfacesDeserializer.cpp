@@ -47,10 +47,10 @@ void UserInterfacesDeserializer::Clear() {
 const xml_document<>& UserInterfacesDeserializer::GetLayout(const string& name) const {
 
 	UserInterfacesDeserializer::XMLLayout* lay=nullptr;
-	lay = CollectionsExts::Get
+	lay = *CollectionsExts::Get_c
 		<vector<UserInterfacesDeserializer::XMLLayout*>,
 		UserInterfacesDeserializer::XMLLayout*>
-			(Layouts, GetLayoutCondition(name));
+			(Layouts,GetLayoutCondition(name));
 	if (lay == nullptr)
 		throw exception("Cannot find layout");
 	return *lay->Layout;

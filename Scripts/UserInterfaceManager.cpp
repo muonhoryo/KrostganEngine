@@ -9,8 +9,17 @@ void UserInterfaceManager::Initialize(){
 	Vector2f size = (Vector2f)Engine::GetScreenSize();
 	Vector2f pos = Vector2f(-size.x * 0.5, -size.y * 0.5);
 	UserInterface = new UIEmpty(pos, DEFAULT_SCALE,DEFAULT_ANCHOR ,size);
-	Engine::ResizeWindowEvent.Add(new UIMan_WinResizeEvSubs(*UserInterface));
+	Engine::ResizeWindowEvent.Add(*new UIMan_WinResizeEvSubs(*UserInterface));
 	new UIRootMover(*UserInterface);
+}
+void UserInterfaceManager::Unload() {
+	UserInterface->DestroyChildren();
+	for (auto depend : UIDependencies) {
+		delete depend;
+	}
+	UIDependencies.clear();
+	FirstSelEntityDepend = new FirstSelEntityDependsManager();
+	UIDependencies.push_back(FirstSelEntityDepend);
 }
 
 UserInterfaceManager::UIRootMover::UIRootMover(UIEmpty& Root)

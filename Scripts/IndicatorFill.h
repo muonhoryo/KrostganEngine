@@ -19,10 +19,10 @@ namespace KrostganEngine::Visual {
 		IndicatorFill(
 			const Texture&		RenTexture,
 			const Texture&		MaskTexture,
-			WorldTransfObj&	Parent,
+			WorldTransfObj&		Parent,
 			Shader&				RendShader,
 			float				maxSpriteSize,
-			Vector2f			GlobalPosition = Vector2f(0, 0),
+			Vector2f			LocalPosition = Vector2f(0, 0),
 			float				LocalScale = 1,
 			Color				SprColor = Color::White);
 

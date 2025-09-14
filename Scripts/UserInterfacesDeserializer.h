@@ -42,7 +42,7 @@ namespace KrostganEngine::Core {
 			string Name;
 			xml_document<>* Layout;
 		};
-		struct GetLayoutCondition : public CollectionsExts::GetFuncPredicate<XMLLayout* const&> {
+		struct GetLayoutCondition : public CollectionsExts::Predicate<XMLLayout* const&> {
 			GetLayoutCondition(const string& name)
 				:name(name){}
 

@@ -18,7 +18,7 @@ namespace KrostganEngine::Core {
 		BypassVertex(Vector2f Position)
 			:Position(Position) 
 		{
-			cout << "Generate bypass vertex: " << ToString(Position) << endl;
+			cout << "Generate bypass vertex: " << to_string(Position) << endl;
 		}
 
 		Vector2f GetPosition() const {

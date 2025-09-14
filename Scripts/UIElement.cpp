@@ -19,17 +19,13 @@ UIElement::UIElement(
 	Vector2f			LocalPosition,
 	Vector2f			LocalScale,
 	Vector2f			Anchor,
-	Vector2f			UISize,
-	char				RendLayer )
-		:ICallbackRec_GraphPostRen(RendLayer),
-		HierarchyTrObj(Owner, Parent == nullptr ? UserInterfaceManager::GetRoot() : *Parent),
+	Vector2f			UISize)
+		:HierarchyTrObj(Owner, Parent == nullptr ? UserInterfaceManager::GetRoot() : *Parent),
 			Anchor(Anchor)
 {
 	ctor_initialize(UISize);
 	//SetOrigin(Vector2f(0, 0));
-	AddOwnerAsChild();
-	SetLocalScale(LocalScale);
-	SetLocalPosition(LocalPosition);
+	ctor_initialize_par(LocalPosition, LocalScale);
 }
 
 UIElement::UIElement(
@@ -38,9 +34,8 @@ UIElement::UIElement(
 	Vector2f			LocalPosition,
 	float				LocalScale,
 	Vector2f			Anchor,
-	Vector2f			UISize,
-	char				RendLayer)
-		:UIElement(Owner,Parent, LocalPosition,Vector2f(LocalScale,LocalScale),Anchor,UISize,RendLayer)
+	Vector2f			UISize)
+		:UIElement(Owner,Parent, LocalPosition,Vector2f(LocalScale,LocalScale),Anchor,UISize)
 {}
 
 UIElement::UIElement(
@@ -48,16 +43,13 @@ UIElement::UIElement(
 	Vector2f			GlobalPosition,
 	Vector2f			GlobalScale,
 	Vector2f			Anchor,
-	Vector2f			UISize,
-	char				RendLayer)
-		:ICallbackRec_GraphPostRen(RendLayer),
-		HierarchyTrObj(Owner),
+	Vector2f			UISize)
+		:HierarchyTrObj(Owner),
 		Anchor(Anchor)
 {
 	ctor_initialize(UISize);
 	//SetOrigin(Vector2f(0, 0));
-	SetGlobalScale(GlobalScale);
-	SetGlobalPosition(GlobalPosition);
+	ctor_initialize_no_par(GlobalPosition, GlobalScale);
 }
 
 UIElement::UIElement(
@@ -65,9 +57,8 @@ UIElement::UIElement(
 	Vector2f			GlobalPosition,
 	float				GlobalScale,
 	Vector2f			Anchor,
-	Vector2f			UISize,
-	char				RendLayer)
-		:UIElement(Owner,GlobalPosition,Vector2f(GlobalScale,GlobalScale),Anchor,UISize,RendLayer)
+	Vector2f			UISize)
+		:UIElement(Owner,GlobalPosition,Vector2f(GlobalScale,GlobalScale),Anchor,UISize)
 {}
 
 //
@@ -209,6 +200,9 @@ bool		UIElement::GetInheritActivity() const {
 bool		UIElement::GetSelfActivity() const {
 	return IsActive;
 }
+bool		UIElement::GetResizingUIByInherit() const {
+	return ResizeUIByInherits;
+}
 
 //
 //
@@ -234,28 +228,42 @@ void UIElement::SetAnchor(Vector2f anchor) {
 
 void UIElement::SetLocalUISize(Vector2f localSize) {
 
+	Vector2f oldSize = Vector2f(Borders.width, Borders.height);
 	Vector2f glSc = GetGlobalScale();
 	Borders.width = localSize.x * glSc.x;
 	Borders.height = localSize.y * glSc.y;
-	SetChildren_UISize();
+	SetChildren_UISize(oldSize);
 }
 void UIElement::SetGlobalUISize(Vector2f globalSize) {
 
+	Vector2f oldSize = Vector2f(Borders.width,Borders.height);
 	Borders.width = globalSize.x;
 	Borders.height = globalSize.y;
-	SetChildren_UISize();
+	SetChildren_UISize(oldSize);
 }
-void UIElement::SetUISize_Inherit() {
+void UIElement::SetUISize_Inherit(Vector2f oldSize) {
 	SetLocalPosition(GetLocalPosition());
+	if (ResizeUIByInherits) {
+		Vector2f coef = dynamic_cast<UIElement*>(GetParent())->GetGlobalUISize();
+		coef.x /= oldSize.x;
+		coef.y /= oldSize.y;
+		Vector2f newSize = GetGlobalUISize();
+		newSize.x *= coef.x;
+		newSize.y *= coef.y;
+		SetGlobalUISize(newSize);
+	}
 }
-void UIElement::SetChildren_UISize() {
+void UIElement::SetChildren_UISize(Vector2f oldSize) {
 	
 	UIElement* ch = nullptr;
 	for (auto it = GetChildrenBegin();it != GetChildrenCEnd();++it) {
 		ch = dynamic_cast<UIElement*>(*it);
 		if (ch != nullptr)
-			ch->SetUISize_Inherit();
+			ch->SetUISize_Inherit(oldSize);
 	}
+}
+void UIElement::SetResizingUIByInherit(bool resizeByInherit) {
+	ResizeUIByInherits = resizeByInherit;
 }
 
 //

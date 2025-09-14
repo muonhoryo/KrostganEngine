@@ -50,6 +50,7 @@ namespace KrostganEngine::UI {
 		void SetGlobalUISize		(Vector2f globalSize);
 		void SetLocalScaleByUISize	(Vector2f uiSize);
 		void SetGlobalScaleByUISize	(Vector2f uiSize);
+		void SetResizingUIByInherit	(bool resizeByInherit);
 
 		Vector2f			GetAnchor() const;
 		Vector2f			GetLocalUISize() const;
@@ -71,6 +72,7 @@ namespace KrostganEngine::UI {
 		/// <returns></returns>
 		Vector2f			GetAnchoredGlobalPos(Vector2f anchor) const;
 		const Rect<float>&	GetBorders() const;
+		bool				GetResizingUIByInherit() const;
 
 		bool		GetInheritActivity() const;
 		bool		GetSelfActivity() const;
@@ -92,8 +94,7 @@ namespace KrostganEngine::UI {
 			Vector2f			LocalPosition = DEFAULT_POSITION,
 			Vector2f			LocalScale = DEFAULT_SCALE,
 			Vector2f			Anchor = DEFAULT_ANCHOR,
-			Vector2f			UISize = DEFAULT_SCALE,
-			char				RendLayer = 0);
+			Vector2f			UISize = DEFAULT_SCALE);
 
 		/// <summary>
 		/// Nullptr as the Parent means that parent of the element will be root of UI (UserInterfaceManager::GetRoot())
@@ -110,27 +111,24 @@ namespace KrostganEngine::UI {
 			Vector2f			LocalPosition = DEFAULT_POSITION,
 			float				LocalScale = 1,
 			Vector2f			Anchor = DEFAULT_ANCHOR,
-			Vector2f			UISize = DEFAULT_SCALE,
-			char				RendLayer = 0);
+			Vector2f			UISize = DEFAULT_SCALE);
 
 		UIElement(
 			Transformable&		Owner,
 			Vector2f			GlobalPosition = DEFAULT_POSITION,
 			Vector2f			GlobalScale = DEFAULT_SCALE,
 			Vector2f			Anchor = DEFAULT_ANCHOR,
-			Vector2f			UISize = DEFAULT_SCALE,
-			char				RendLayer = 0);
+			Vector2f			UISize = DEFAULT_SCALE);
 
 		UIElement(
 			Transformable&		Owner,
 			Vector2f			GlobalPosition = DEFAULT_POSITION,
 			float				GlobalScale = 1,
 			Vector2f			Anchor = DEFAULT_ANCHOR,
-			Vector2f			UISize = DEFAULT_SCALE,
-			char				RendLayer = 0);
+			Vector2f			UISize = DEFAULT_SCALE);
 
-		virtual	void SetUISize_Inherit();
-		virtual void SetChildren_UISize();
+		virtual	void SetUISize_Inherit(Vector2f oldSize);
+		virtual void SetChildren_UISize(Vector2f oldSize);
 
 		Vector2f		Anchor = Vector2f(0, 0);
 		Rect<float>		Borders;
@@ -164,6 +162,6 @@ namespace KrostganEngine::UI {
 		Vector2f	LocalPosition = DEFAULT_POSITION;
 		Vector2f	LocalScale = DEFAULT_SCALE;
 
-		//friend class UIElement;
+		bool ResizeUIByInherits = false;
 	};
 }

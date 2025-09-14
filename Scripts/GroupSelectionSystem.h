@@ -4,16 +4,53 @@
 #include <ISelectableEntity.h>
 #include <Events.h>
 #include <RelationsSystem.h>
+#include <CollectionsExts.h>
+#include <IAttackableObj.h>
 
 using namespace std;
 using namespace KrostganEngine;
+using namespace KrostganEngine::GameObjects;
 
 namespace KrostganEngine::EntitiesControl {
-	class GroupSelectionSystem {
+	class GroupSelectionSystem final {
+
+	private:
+		struct AddSelComparator : public CollectionsExts::CompareFunc<watch_ptr_handler_wr<ISelectableEntity>*> {
+
+			bool Compare
+				(watch_ptr_handler_wr<ISelectableEntity>* const& first,
+				watch_ptr_handler_wr<ISelectableEntity>* const& second) const override;
+		};
+		struct EqSelComparator : public CollectionsExts::EqualCompareFunc<watch_ptr_handler_wr<ISelectableEntity>*> {
+
+			bool Equal
+				(watch_ptr_handler_wr<ISelectableEntity>* const& first,
+				watch_ptr_handler_wr<ISelectableEntity>* const& second) const override;
+		};
+
+		static inline const AddSelComparator InstanceAddComparator;
+		static inline const EqSelComparator InstanceEqComparator;
+
+		struct DeathEventSubscr : public IEventSubscriber<GlObjectDeathEventArgs> {
+			void Execute(const GlObjectDeathEventArgs& args) override {
+				auto deadObj = dynamic_cast<ISelectableEntity*>(&args.Owner);
+				if (deadObj != nullptr) {
+					auto& ptr = deadObj->GetPtr();
+					auto& ptr_wr = *new watch_ptr_handler_wr<ISelectableEntity>(ptr);
+					delete &ptr;
+					if (CollectionsExts::Contains(Singleton->SelectedEntities, &ptr_wr,InstanceEqComparator)) {
+						Remove(deadObj);
+					}
+					delete& ptr_wr;
+				}
+			}
+		};
+
 	public:
-		static inline ExecutedEvent<ISelectableEntity*>& AddSelectableEvent=*new ExecutedEvent<ISelectableEntity*>();
-		static inline ExecutedEvent<ISelectableEntity*>& RemoveSelectableEvent= *new ExecutedEvent<ISelectableEntity*>();;
-		static inline NoArgsExecutedEvent& ClearSelectionEvent=*new NoArgsExecutedEvent();
+		static inline NoArgsExecutedEvent					ChangeSelectablesEvent	= NoArgsExecutedEvent();
+		static inline ExecutedEvent<ISelectableEntity*>		AddSelectableEvent		= ExecutedEvent<ISelectableEntity*>();
+		static inline ExecutedEvent<ISelectableEntity*>		RemoveSelectableEvent	= ExecutedEvent<ISelectableEntity*>();;
+		static inline NoArgsExecutedEvent					ClearSelectionEvent		= NoArgsExecutedEvent();
 		
 		~GroupSelectionSystem();
 
@@ -22,14 +59,23 @@ namespace KrostganEngine::EntitiesControl {
 		static void Remove(ISelectableEntity*& entity);
 		static void Clear();
 
-		static forward_list<watch_ptr_handler_wr<ISelectableEntity>>::iterator GetEntitiesBegIter() {
+		static forward_list<watch_ptr_handler_wr<ISelectableEntity>*>::iterator			GetEntitiesBegIter() {
 			return Singleton->SelectedEntities.begin();
 		}
-		static forward_list<watch_ptr_handler_wr<ISelectableEntity>>::const_iterator GetEntitiesEndIter() {
+		static forward_list<watch_ptr_handler_wr<ISelectableEntity>*>::const_iterator	GetEntitiesEndIter() {
 			return Singleton->SelectedEntities.cend();
 		}
-		static Relation GetToPlayertRelOfSelEntities() {
+		static Relation				GetToPlayertRelOfSelEntities() {
 			return Singleton->SelEntsRelationToPl;
+		}
+		static ISelectableEntity*	GetFirstSelectable() {
+			size_t size = CollectionsExts::Size<forward_list<watch_ptr_handler_wr<ISelectableEntity>*>>
+				(Singleton->SelectedEntities);
+			return size == 0 ? nullptr : Singleton->SelectedEntities.front()->GetPtr_t();
+		}
+		static size_t					GetSelectionCount() {
+			auto& coll = Singleton->SelectedEntities;
+			return distance(coll.begin(), coll.end());
 		}
 
 		template <typename TIterator,typename TCIterator>
@@ -39,17 +85,26 @@ namespace KrostganEngine::EntitiesControl {
 				++itStart;
 			}
 		}
+
 	private:
-		EventHandler<ISelectableEntity*> AddSelectableEventHandler = EventHandler<ISelectableEntity*>(AddSelectableEvent);
-		EventHandler<ISelectableEntity*> RemoveSelectableEventHandler = EventHandler<ISelectableEntity*>(RemoveSelectableEvent);
-		NoArgsEventHandler ClearSelectionEventHandler = NoArgsEventHandler(ClearSelectionEvent);
+		NoArgsEventHandler					ChangeSelectablesEventHandler = NoArgsEventHandler(ChangeSelectablesEvent);
+		EventHandler<ISelectableEntity*>	AddSelectableEventHandler = EventHandler<ISelectableEntity*>(AddSelectableEvent);
+		EventHandler<ISelectableEntity*>	RemoveSelectableEventHandler = EventHandler<ISelectableEntity*>(RemoveSelectableEvent);
+		NoArgsEventHandler					ClearSelectionEventHandler = NoArgsEventHandler(ClearSelectionEvent);
 
 		GroupSelectionSystem();
 
 		static GroupSelectionSystem* Singleton;
 
-		forward_list<watch_ptr_handler_wr<ISelectableEntity>>	SelectedEntities;
+		/// <summary>
+		/// Insert element by sorting order
+		/// </summary>
+		/// <param name="entity"></param>
+		static void Add_inter(watch_ptr_handler_wr<ISelectableEntity>* entity);
+
+		forward_list<watch_ptr_handler_wr<ISelectableEntity>*>	SelectedEntities;
 		Relation												SelEntsRelationToPl		= Relation::Neutral;
 		Fraction												SelEntsFraction			= Fraction::Neutral;
+		DeathEventSubscr*										DeathEvSubs;
 	};
 }

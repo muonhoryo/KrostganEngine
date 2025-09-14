@@ -85,7 +85,7 @@ bool ConsoleCommsInterpretator::InterpretateComm_CamMov(string& input) {
 	pos.x= stof((*syntax)[1].c_str());
 	pos.y= stof((*syntax)[2].c_str());
 
-	cout << "Set camera to position: " << ToString<float>(pos) << endl;
+	cout << "Set camera to position: " << to_string<float>(pos) << endl;
 	Engine::SetCameraPos(pos);
 	return true;
 

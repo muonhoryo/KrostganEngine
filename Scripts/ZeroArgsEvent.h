@@ -23,11 +23,11 @@ namespace KrostganEngine {
 			Subscribers(forward_list<INoArgsEventSubscriber*>()){
 
 		}
-		void Add(INoArgsEventSubscriber* subscriber) {
-			Subscribers.push_front(subscriber);
+		void Add(INoArgsEventSubscriber& subscriber) {
+			Subscribers.push_front(&subscriber);
 		}
-		void Remove(INoArgsEventSubscriber* subscriber) {
-			Subscribers.remove(subscriber);
+		void Remove(INoArgsEventSubscriber& subscriber) {
+			Subscribers.remove(&subscriber);
 		}
 
 		friend class NoArgsEventHandler;
@@ -43,24 +43,22 @@ namespace KrostganEngine {
 		NoArgsEventHandler(NoArgsExecutedEvent& Owner) :Owner(Owner) {
 		}
 		void Execute()  {
-			for (INoArgsEventSubscriber* sub : Owner.Subscribers)
+
+			typename forward_list< INoArgsEventSubscriber*>::iterator it = Owner.Subscribers.begin();
+			typename forward_list< INoArgsEventSubscriber*>::iterator end = Owner.Subscribers.end();
+			int size = distance(it, end);
+			vector<INoArgsEventSubscriber*> subscrs = vector<INoArgsEventSubscriber*>(size);
+
+			for (int i = 0;it != end;) {
+
+				subscrs[i] = *it;
+				++i;
+				++it;
+			}
+
+			for (INoArgsEventSubscriber* sub : subscrs)
 			{
-				typename forward_list< INoArgsEventSubscriber*>::iterator it = Owner.Subscribers.begin();
-				typename forward_list< INoArgsEventSubscriber*>::iterator end = Owner.Subscribers.end();
-				int size = distance(it, end);
-				vector<INoArgsEventSubscriber*> subscrs = vector<INoArgsEventSubscriber*>(size);
-
-				for (int i = 0;it != end;) {
-
-					subscrs[i] = *it;
-					++i;
-					++it;
-				}
-
-				for (INoArgsEventSubscriber* sub : subscrs)
-				{
-					sub->Execute();
-				}
+				sub->Execute();
 			}
 		}
 	};

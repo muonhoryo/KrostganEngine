@@ -41,6 +41,8 @@ namespace KrostganEngine::Core {
 			SetLocalPosition(nextPos);
 		}
 
+		static inline const Vector2i		NULL_POS = Vector2i(INT_MIN, INT_MIN);
+
 	protected:
 		ITransformableObj() {}
 	};

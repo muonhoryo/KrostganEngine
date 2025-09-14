@@ -17,11 +17,16 @@ using namespace KrostganEngine::GameObjects;
 using namespace KrostganEngine::UI;
 using namespace KrostganEngine::EntitiesControl;
 
+#include <VectExts.h>
+using namespace KrostganEngine;
+
 UnitObject::UnitObject(UnitObjectCtorParams& params)
 	:Entity(params),
-	Collider(*new CircleCollShape(params.GlobalPosition, params.LocalScale* Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution * 0.5f)),
+	Collider(*new CircleCollShape(params.GlobalPosition, params.GlobalScale* Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution * 0.5f)),
 	Layer(PhysicsLayer::Units)
-{}
+{
+	cout << "Instance Unit: " << GetCatalogID() << ":" << (int)GetSubcatalogID() << endl;
+}
 UnitObject::~UnitObject() {
 	delete &Collider;
 }

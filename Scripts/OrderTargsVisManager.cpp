@@ -45,14 +45,14 @@ OrderTargsVisManager::OrderTargsVisManager() {
 	AddSub = new AddEntitySubscriber(*this);
 	RemSub = new RemoveEntitySubscriber(*this);
 	ClearSub = new ClearListSubscriber(*this);
-	GroupSelectionSystem::AddSelectableEvent.Add(AddSub);
-	GroupSelectionSystem::RemoveSelectableEvent.Add(RemSub);
-	GroupSelectionSystem::ClearSelectionEvent.Add(ClearSub);
+	GroupSelectionSystem::AddSelectableEvent.Add(*AddSub);
+	GroupSelectionSystem::RemoveSelectableEvent.Add(*RemSub);
+	GroupSelectionSystem::ClearSelectionEvent.Add(*ClearSub);
 }
 OrderTargsVisManager::~OrderTargsVisManager() {
-	GroupSelectionSystem::AddSelectableEvent.Remove(AddSub);
-	GroupSelectionSystem::RemoveSelectableEvent.Remove(RemSub);
-	GroupSelectionSystem::ClearSelectionEvent.Remove(ClearSub);
+	GroupSelectionSystem::AddSelectableEvent.Remove(*AddSub);
+	GroupSelectionSystem::RemoveSelectableEvent.Remove(*RemSub);
+	GroupSelectionSystem::ClearSelectionEvent.Remove(*ClearSub);
 	Clear();
 	delete AddSub;
 	delete RemSub;
@@ -86,7 +86,7 @@ void OrderTargsVisManager::Initialize_EntitiesTargetViss() {
 	
 	ISelectableEntity* ent = nullptr;
 	for (;begIt != endIt;++begIt) {
-		ent = (*begIt).GetPtr_t();
+		ent = (*begIt)->GetPtr_t();
 		if(ent!=nullptr)
 			TryInsertEntity(ent);
 	}

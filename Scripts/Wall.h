@@ -9,13 +9,30 @@ using namespace std;
 using namespace KrostganEngine::Physics;
 
 namespace KrostganEngine::GameObjects {
+
+	class WallObject;
+
+	struct WallCtorParams : protected GameObjectCtorParams {
+		
+		WallCtorParams():GameObjectCtorParams(){}
+
+		using GameObjectCtorParams::BodySpriteSource;
+		using GameObjectCtorParams::GlobalPosition;
+		using GameObjectCtorParams::GlobalScale;
+
+		friend class WallObject;
+	};
+
 	class WallObject :public GameObject {
 
 	public:
-		WallObject(const Texture& RenTexture,Vector2f Position, float Size);
+		WallObject(const WallCtorParams& params);
 		virtual ~WallObject();
 
 		PhysicsLayer GetLayer() const override;
+
+		void SetGlobalPosition(Vector2f position) override;
+		void SetGlobalScale(Vector2f scale) override;
 
 	protected:
 		const ColliderShape& GetCollider() const override;
@@ -24,5 +41,7 @@ namespace KrostganEngine::GameObjects {
 
 	private:
 		AABBCollShape* Collider;
+
+		void RecreateCollider();
 	};
 }

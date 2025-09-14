@@ -8,65 +8,132 @@
 #include <RelationsSystem.h>
 #include <CoreGameObjects.h>
 #include <LevelCellMapDeser.h>
+#include <vector>
 
 using namespace std;
 using namespace sf;
 using namespace KrostganEngine::GameObjects;
 using namespace KrostganEngine::EntitiesControl;
 
+#define Attr		const pair<const string,const string>
+#define AttrsCollectn	vector<Attr*>
+
 namespace KrostganEngine::Core {
 	struct LevelLoadingInfo;
 	struct LoadedObjects;
 
+	struct LvlObjCatalogSubInfo {
+
+		LvlObjCatalogSubInfo(const AttrsCollectn& Attrs) 
+			:Attrs(Attrs){}
+		~LvlObjCatalogSubInfo() {
+			for (auto& attr : Attrs) {
+				delete attr;
+			}
+		}
+
+		AttrsCollectn Attrs;
+	};
+
 	struct GameObjectLoadInfo {
 
-		GameObjectLoadInfo(){}
+		virtual ~GameObjectLoadInfo(){}
 
 		string Name="";
 		string SpriteSource="";
-		Vector2f Position = Vector2f(0, 0);
-		size_t CatalogID = 0;
+		Vector2f Position = (Vector2f)ITransformableObj::NULL_POS;
+		size_t CatID = 0;
 		float Size = 1;
 
-		virtual GameObject* InstanceObject(LoadedObjects& levInfo,Vector2f position, vector<string>* additParams = nullptr) = 0;
-		GameObject* InstanceObject(LoadedObjects& levInfo, vector<string>* additParams = nullptr) {
-			return InstanceObject(levInfo, Position, additParams);
-		}
+		virtual GameObject* InstanceObject
+			(LoadedObjects&			levInfo,
+			vector<Attr*>*			additParams		= nullptr,
+			LvlObjCatalogSubInfo*	objSubInfo		= nullptr) = 0;
+
+		/// <summary>
+		/// Return true if param was wrotten.
+		/// </summary>
+		/// <param name="param"></param>
+		/// <returns></returns>
+		virtual bool WriteParam(Attr& param);
+
+	protected:
+		GameObjectLoadInfo() {}
+
+		GameObjectLoadInfo* Cache = nullptr;
+
+		virtual void ResetFromCache();
+		/// <summary>
+		/// Return true if names are equal
+		/// </summary>
+		/// <param name="param"></param>
+		/// <param name="paramName"></param>
+		/// <returns></returns>
+		static bool CheckParamName(Attr& param, const string& paramName);
 	};
 
 	struct EntityLoadInfo : public GameObjectLoadInfo{
 
-		string HPBarSpriteSource	= "";
-		string HPBarMaskSource		= "";
-		string SelectionAreaSource	= "";
+		string				HPBarSpriteSource		= "";
+		string				HPBarMaskSource			= "";
+		string				SelectionAreaSource		= "";
+		Fraction			EntityFraction			= Fraction::Neutral;
+		EntityBattleStats	BattleStats;
+
+		bool WriteParam(Attr& param) override;
 
 	protected:
 		EntityLoadInfo():GameObjectLoadInfo(){}
+
+		void ResetFromCache() override;
+
+		virtual EntityCtorParams& GetCtorParams() = 0;
 	};
 
 	struct UnitLoadInfo : public EntityLoadInfo{
 
 		UnitLoadInfo() : EntityLoadInfo(){}
 
-		EntityBattleStats*	BattleStats			=	nullptr ;
-		Fraction			EntityFraction		=	Fraction::Neutral;
 	
-		GameObject*	InstanceObject(LoadedObjects& levInfo, Vector2f position , vector<string>* additParams = nullptr) override;
+		GameObject*	InstanceObject
+			(LoadedObjects&			levInfo,
+			AttrsCollectn*			additParams = nullptr,
+			LvlObjCatalogSubInfo*	objSubInfo = nullptr) override;
+
+		//bool WriteParam(pair<const string&, const string&> param) override;
+
+	//protected:
+	//	UnitObjectCtorParams& GetUnitParams();
 
 	protected:
-		UnitObjectCtorParams& GetUnitParams();
+		EntityCtorParams& GetCtorParams() override;
 	};
 
 	struct HeroLoadInfo : public UnitLoadInfo {
+		
 		HeroLoadInfo():UnitLoadInfo(){}
 
-		GameObject* InstanceObject(LoadedObjects& levInfo, Vector2f position , vector<string>* additParams = nullptr) override;
+		GameObject* InstanceObject
+			(LoadedObjects&			levInfo,
+			AttrsCollectn*			additParams = nullptr,
+			LvlObjCatalogSubInfo*	objSubInfo = nullptr)override;
+
+		bool WriteParam(Attr& param) override;
+
+	protected:
+		EntityCtorParams& GetCtorParams() override;
 	};
 
 	struct WallLoadInfo :public GameObjectLoadInfo {
+
 		WallLoadInfo() : GameObjectLoadInfo() {};
 
-		GameObject* InstanceObject(LoadedObjects& levInfo, Vector2f position , vector<string>* additParams = nullptr) override;
+		GameObject* InstanceObject
+			(LoadedObjects&			levInfo,
+			AttrsCollectn*			additParams = nullptr,
+			LvlObjCatalogSubInfo*	objSubInfo	= nullptr) override;
+
+		bool WriteParam(const pair<const string, const string>& param) override;
 	};
 
 	struct LevelLoadingInfo final {
@@ -88,7 +155,7 @@ namespace KrostganEngine::Core {
 		}
 	};
 
-	struct LoadedObjects {
+	struct LoadedObjects final {
 		forward_list<HeroObject*> LoadedHeroes = forward_list<HeroObject*>();
 		forward_list<UnitObject*> LoadedUnits = forward_list<UnitObject*>();
 		forward_list <WallObject*> LoadedWalls = forward_list<WallObject*>();

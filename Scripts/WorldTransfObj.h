@@ -51,8 +51,8 @@ namespace KrostganEngine::GameObjects {
 	protected:
 		WorldTransfObj
 			(Transformable&		Owner, 
-			WorldTransfObj&	Parent, 
-			Vector2f			GlobalPosition	= DEFAULT_POSITION,
+			WorldTransfObj&		Parent, 
+			Vector2f			LocalPosition = DEFAULT_POSITION,
 			Vector2f			LocalScale		= DEFAULT_SCALE,
 			Vector2f			Origin			= DEFAULT_ORIGIN);
 		WorldTransfObj

@@ -85,18 +85,18 @@ OrderTargetsVisualizer::OrderTargetsVisualizer(Entity& Owner)
 	{
 		TryAddOrderInList(*itBeg);
 	}
-	Owner.GetOrderEvent.Add(AddSub);
-	Owner.ExecuteOrderEvent.Add(RemSub);
-	Owner.ResetOrderListEvent.Add(ClearSub);
+	Owner.GetOrderEvent.Add(*AddSub);
+	Owner.ExecuteOrderEvent.Add(*RemSub);
+	Owner.ResetOrderListEvent.Add(*ClearSub);
 }
 OrderTargetsVisualizer::~OrderTargetsVisualizer() {
 
 	Entity* ptr = Owner.GetPtr_t();
 	if (ptr != nullptr) {
 
-		ptr->GetOrderEvent.Remove(AddSub);
-		ptr->ExecuteOrderEvent.Remove(RemSub);
-		ptr->ResetOrderListEvent.Remove(ClearSub);
+		ptr->GetOrderEvent.Remove(*AddSub);
+		ptr->ExecuteOrderEvent.Remove(*RemSub);
+		ptr->ResetOrderListEvent.Remove(*ClearSub);
 	}
 	for (auto fl : DynPointsHandls) {
 		delete fl;

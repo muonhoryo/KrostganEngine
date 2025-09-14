@@ -4,17 +4,32 @@
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
 #include <Physics.h>
+#include <CatalogObject.h>
+#include <ExtGlResources.h>
 
 using namespace sf;
+using namespace KrostganEngine::Core;
 using namespace KrostganEngine::Physics;
 using namespace KrostganEngine::Visual;
 
 namespace KrostganEngine::GameObjects {
-	class GameObject :public WorldTransfObj, public DynamicPhysObject, public IColoredObject {
+
+	struct GameObjectCtorParams {
+
+		GameObjectCtorParams();
+
+		const ExtGlRes_Sprite*	BodySpriteSource;
+		Vector2f				GlobalPosition	= DEFAULT_POSITION;
+		float					GlobalScale		= 1;
+		Color					SprColor		= Color::White;
+		size_t					CatalogID;
+		byte					SubcatalogID;
+	};
+	class GameObject :public WorldTransfObj, public DynamicPhysObject, public IColoredObject, public CatalogObject{
 	public:
 		virtual ~GameObject();
 
-		static inline const PhysicsLayer SOLID_COLLISION_LAYER = (PhysicsLayer)
+		static inline const PhysicsLayer	SOLID_COLLISION_LAYER = (PhysicsLayer)
 			((size_t)PhysicsLayer::Environment |
 			(size_t)PhysicsLayer::Decorations |
 			(size_t)PhysicsLayer::Buildings |
@@ -39,12 +54,7 @@ namespace KrostganEngine::GameObjects {
 		void	SetColor(Color color) override;
 
 	protected:
-		GameObject(
-			const Texture&	RenTexture,
-			Vector2f		GlobalPosition	=	Vector2f(0, 0),
-			float			LocalScale		=	1,
-			Color			SprColor		=	Color::White,
-			Shader*			RenShader		=	nullptr);
+		GameObject(const GameObjectCtorParams& params);
 
 		virtual const ColliderShape& GetCollider() const = 0;
 

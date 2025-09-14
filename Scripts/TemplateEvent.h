@@ -25,11 +25,11 @@ namespace KrostganEngine {
 			Subscribers(forward_list<IEventSubscriber<TArguments>*>()){
 
 		}
-		void Add(IEventSubscriber<TArguments>* subscriber) {
-			Subscribers.push_front(subscriber);
+		void Add(IEventSubscriber<TArguments>& subscriber) {
+			Subscribers.push_front(&subscriber);
 		}
-		void Remove(IEventSubscriber<TArguments>* subscriber) {
-			Subscribers.remove(subscriber);
+		void Remove(IEventSubscriber<TArguments>& subscriber) {
+			Subscribers.remove(&subscriber);
 		}
 
 		template <typename TArgs>

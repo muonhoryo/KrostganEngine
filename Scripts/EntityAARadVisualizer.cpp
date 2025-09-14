@@ -8,7 +8,7 @@ using namespace KrostganEngine::Physics;
 EntityAARadVisualizer::EntityAARadVisualizer(Entity& Owner) : CircleVisPrimitive(Vector2f(0, 0), 1, Color::Red, 30),
 Owner(Owner) {
 
-	Owner.GetHPModule().DeathModule.DeathEvent.Add((IEventSubscriber<ObjectDeathEventArgs>*)new VisualOnDeathDestroyer_PostRen(*this, Owner));
+	Owner.GetHPModule().DeathModule.DeathEvent.Add(*(IEventSubscriber<ObjectDeathEventArgs>*)new VisualOnDeathDestroyer_PostRen(*this, Owner));
 }
 EntityAARadVisualizer::~EntityAARadVisualizer() {
 
@@ -16,7 +16,7 @@ EntityAARadVisualizer::~EntityAARadVisualizer() {
 
 void EntityAARadVisualizer::RenderGraphicAction(RenderWindow& window) {
 	SetCenter(Owner.GetGlobalPosition());
-	float size = Owner.GetBattleStats().GetAARadius();
+	float size = Owner.GetBattleStats().GetAARange();
 	if (abs(size - GetRadius()) > eps)
 		SetRadius(size);
 	CircleVisPrimitive::RenderGraphic(window);

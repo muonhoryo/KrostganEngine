@@ -17,7 +17,7 @@ namespace KrostganEngine::GameObjects {
 	public:
 		virtual ~IAttackableObj(){}
 
-		virtual IHitPointModule& GetHPModule()=0;
+		virtual IHitPointModule&	GetHPModule() const =0;
 		virtual Vector2f GetClosestPoint(Vector2f dmgDealerPos) const = 0;
 		
 	protected:
@@ -27,6 +27,8 @@ namespace KrostganEngine::GameObjects {
 
 	class IHitPointModule {
 	public:
+		NoArgsExecutedEvent ChangedHPEvent;
+
 		virtual ~IHitPointModule(){}
 
 		virtual void TakeDamage		(AttackInfo attInfo) = 0;
@@ -40,14 +42,27 @@ namespace KrostganEngine::GameObjects {
 
 	protected:
 		IHitPointModule(IDeathModule& DeathModule);
+
+		NoArgsEventHandler ChangedHPEvHandler=NoArgsEventHandler(ChangedHPEvent);
 	};
 
 
 	struct ObjectDeathEventArgs {
-		ObjectDeathEventArgs();
+		ObjectDeathEventArgs(){}
 	};
+
+	struct GlObjectDeathEventArgs {
+		GlObjectDeathEventArgs(ObjectDeathEventArgs& args,IAttackableObj& Owner)
+			:args(args),Owner(Owner)
+		{}
+
+		ObjectDeathEventArgs& args;
+		IAttackableObj& Owner;
+	};
+
 	class IDeathModule {
 	public:
+		static inline ExecutedEvent<GlObjectDeathEventArgs> DeathEvent_global=ExecutedEvent<GlObjectDeathEventArgs>();
 		ExecutedEvent<ObjectDeathEventArgs> DeathEvent;
 
 		bool GetIsDeadState() const { return IsDead; }
@@ -55,10 +70,19 @@ namespace KrostganEngine::GameObjects {
 		virtual void Death() = 0;
 
 	protected:
-		IDeathModule(IAttackableObj& Owner);
-		EventHandler<ObjectDeathEventArgs> DeathEvHandler;
+		IDeathModule(IAttackableObj& Owner)
+			:Owner(Owner){}
+
+		void DeathEvExecute(ObjectDeathEventArgs& args) {
+			DeathEvHandler.Execute(args);
+			DeathEventGlHandler.Execute(GlObjectDeathEventArgs(args, Owner));
+		}
 
 		bool IsDead = false;
 		IAttackableObj& Owner;
+
+	private:
+		EventHandler<ObjectDeathEventArgs> DeathEvHandler = EventHandler<ObjectDeathEventArgs>(DeathEvent);
+		static inline EventHandler<GlObjectDeathEventArgs> DeathEventGlHandler = EventHandler<GlObjectDeathEventArgs>(DeathEvent_global);
 	};
 }

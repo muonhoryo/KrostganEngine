@@ -14,7 +14,7 @@ AutoAggressionModule::AutoAggressionModule(ExecutorActionsMediator& ActionMediat
 {
 	IsActive = false;
 	IsFollowTargets = true;
-	StartExecOrderEvent.Add(&StartExecOrderSubscr);
+	StartExecOrderEvent.Add(StartExecOrderSubscr);
 }
 AutoAggressionModule::~AutoAggressionModule() {
 	delete &ActionMediator;

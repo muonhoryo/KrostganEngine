@@ -73,7 +73,7 @@ SpriteRenderer::SpriteRenderer(
 SpriteRenderer::SpriteRenderer(
 	const Texture&		RenTexture,
 	WorldTransfObj&	Parent,
-	Vector2f			GlobalPosition,
+	Vector2f			LocalPosition,
 	Vector2f			LocalScale,
 	Color				SprColor,
 	Shader*				RendShader)
@@ -82,7 +82,7 @@ SpriteRenderer::SpriteRenderer(
 		RenTexture,
 		Parent,
 		(float)max(RenTexture.getSize().x,RenTexture.getSize().y),
-		GlobalPosition,
+		LocalPosition,
 		LocalScale,
 		SprColor,
 		RendShader)
@@ -92,17 +92,17 @@ SpriteRenderer::SpriteRenderer(
 	const Texture& RenTexture,
 	WorldTransfObj& Parent,
 	float				maxSizeInPixels,
-	Vector2f			GlobalPosition,
+	Vector2f			LocalPosition,
 	Vector2f			LocalScale,
 	Color				SprColor,
 	Shader*				RendShader)
-		:WorldTransfObj(ctor_InitOwner(),Parent, GlobalPosition,LocalScale,ctor_GetOrigin(RenTexture)),
+		:WorldTransfObj(ctor_InitOwner(),Parent, LocalPosition,LocalScale,ctor_GetOrigin(RenTexture)),
 		RendShader(RendShader) {
 
 	ctor_Initialize(RenTexture, maxSizeInPixels);
 
 	SetLocalScale(LocalScale * TextureResizingCoef);
-	SetGlobalPosition(GlobalPosition);
+	SetLocalPosition(LocalPosition);
 	SetColor(SprColor);
 }
 

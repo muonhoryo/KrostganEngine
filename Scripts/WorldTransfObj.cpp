@@ -9,7 +9,7 @@ using namespace KrostganEngine;
 WorldTransfObj::WorldTransfObj
 	(Transformable&		Owner,
 	 WorldTransfObj&	Parent,
-	 Vector2f			GlobalPosition, 
+	 Vector2f			LocalPosition,
 	 Vector2f			LocalScale,
 	 Vector2f			Origin)
 		:LocalScale		(LocalScale),
@@ -18,9 +18,7 @@ WorldTransfObj::WorldTransfObj
 	Vector2f pos = GetGlobalPosition();
 
 	SetOrigin(Origin);
-	AddOwnerAsChild();
-	SetLocalScale(LocalScale);
-	SetGlobalPosition(GlobalPosition);
+	ctor_initialize_par(LocalPosition,LocalScale);
 }
 
 WorldTransfObj::WorldTransfObj
@@ -41,8 +39,7 @@ WorldTransfObj::WorldTransfObj
 		LocalScale	(GlobalScale){
 
 	SetOrigin(Origin);
-	SetGlobalScale(GlobalScale);
-	SetGlobalPosition(GlobalPosition);
+	ctor_initialize_no_par(GlobalPosition, GlobalScale);
 }
 
 WorldTransfObj::WorldTransfObj

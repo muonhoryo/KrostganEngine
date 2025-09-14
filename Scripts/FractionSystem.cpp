@@ -28,3 +28,6 @@ Color FractionsSystem::GetRelationColor(Relation rel) {
 		throw exception("Undefined relation: " + (int)rel);
 	}
 }
+Color FractionsSystem::GetRelationToPlayerColor(Fraction objFrac) {
+	return FractionsSystem::GetRelationColor(FractionsSystem::GetRelation(objFrac, Fraction::Player));
+}

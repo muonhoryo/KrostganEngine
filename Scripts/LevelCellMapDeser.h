@@ -8,9 +8,12 @@ using namespace std;
 namespace KrostganEngine::Core {
 	class LevelCellMapDeser {
 	public:
+
 		struct CellInfo {
-			size_t CatalogID;
-			vector<string> AdditionalParams;
+			CellInfo();
+			size_t	CatalogID;
+			byte	SubCatalogID;
+			vector<const pair<const string,const string>*> AdditionalParams;
 		};
 
 	public:
@@ -18,10 +21,8 @@ namespace KrostganEngine::Core {
 		static Vector2f GetCellGlobalPosition(Vector2u mapCellPos);
 
 		static inline const string DEF_LEVEL_CELL_MAP = "CellMap";
-		static inline const string LEVEL_CELL_MAP_START = "{";
-		static inline const string LEVEL_CELL_MAP_END = "}";
-
-		static inline const size_t EMPTY_CATALOG_ID = 0;
+		static inline const string LVL_CMAP_START = "{";
+		static inline const string LVL_CMAP_END = "}";
 
 	private:
 		LevelCellMapDeser() {}
@@ -29,9 +30,9 @@ namespace KrostganEngine::Core {
 		static vector<CellInfo*>* DeserializeRow(const string& row, bool* foundEnd);
 		static CellInfo* DeserializeCellInfo(const string& str);
 
-		static inline const string LEVEL_CELL_MAP_ELEM_SEPARATOR = ";;";
-		static inline const string LEVEL_CELL_MAP_ROW_SEPARATOR = "\n";
-		static inline const string LEVEL_CELL_MAP_ELEM_PARAMS_DEF = "&";
-		static inline const string LEVEL_CELL_MAP_ELEM_PARAMS_NAME_END = ":";
+		static inline const string LVL_CMAP_ELEM_SEPARATOR = ";;";
+		static inline const string LVL_CMAP_ROW_SEPARATOR = "\n";
+		static inline const string LVL_CMAP_ELEM_PARAMS_DEF = "&";
+		static inline const string LVL_CMAP_SUBINFO_SEPARATOR = ":";
 	};
 }

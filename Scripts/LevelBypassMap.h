@@ -32,7 +32,7 @@ namespace KrostganEngine::Core {
 			for (int i = 0;i < ObjectsCatalog::GetCatalogSize();++i) {			
 				wallinf = dynamic_cast<WallLoadInfo*>(ObjectsCatalog::GetObjectInfo(i));
 				if (wallinf != nullptr)
-					wallIndexes.push_back(wallinf->CatalogID);
+					wallIndexes.push_back(wallinf->CatID);
 			}
 
 			if (wallIndexes.size() ==0)

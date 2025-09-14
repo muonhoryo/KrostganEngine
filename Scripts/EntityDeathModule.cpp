@@ -21,7 +21,7 @@ void EntityDeathModule::Death() {
 	ParOwner.ProhibitOrdersExecution();
 
 	ObjectDeathEventArgs& args = *new ObjectDeathEventArgs();
-	DeathEvHandler.Execute(args);
+	DeathEvExecute(args);
 	delete& args;
 
 	new DelayedDeath(ParOwner);

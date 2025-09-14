@@ -19,30 +19,28 @@ EntityHPModule::EntityHPModule(
 
 	Subscriber = new StatChangedEvSubs(*this);
 	RestoreHealth();
-	BattleStats.StatChangedEvent.Add(Subscriber);
+	BattleStats.StatChangedEvent.Add(*Subscriber);
 }
 EntityHPModule::~EntityHPModule() {
 
 	if (RegenModule != nullptr)
 		delete RegenModule;
 
-	BattleStats.StatChangedEvent.Remove(Subscriber);
+	BattleStats.StatChangedEvent.Remove(*Subscriber);
 	delete Subscriber;
 }
 
 void EntityHPModule::TakeDamage		(AttackInfo attInfo) {
 	
-	if (CurrentHP<= attInfo.DealtDmg)
+	if (CurrentHP <= attInfo.DealtDmg) {
+		SetCurrentHP(0);
 		DeathModule.Death();
+	}
 	else {
 		SetCurrentHP(CurrentHP - attInfo.DealtDmg);
-		cout << "Take damage " << attInfo.DealtDmg << ": remained " << CurrentHP << " / " << BattleStats.GetMaxHP()<<" health" << endl;
 	}
 }
 void EntityHPModule::SetCurrentHP	(size_t hp) {
-
-	if (hp == 0)
-		throw exception("Hit points count must be more than zero");
 
 	size_t maxHP = GetMaxHP();
 
@@ -52,6 +50,7 @@ void EntityHPModule::SetCurrentHP	(size_t hp) {
 		CurrentHP = hp;
 
 	HPBar.SetFillness((float)CurrentHP / (float)maxHP);
+	ChangedHPEvHandler.Execute();
 }
 void EntityHPModule::RestoreHealth	() {
 

@@ -20,12 +20,12 @@ SquareScaleSprite::SquareScaleSprite(
 	const Texture& RenTexture,
 	WorldTransfObj& Parent,
 	float				maxSpriteSize,
-	Vector2f			GlobalPosition,
+	Vector2f			LocalPosition,
 	float				LocalScale,
 	Color				SprColor ,
 	Shader*				RendShader)
 
-	:SpriteRenderer(RenTexture,Parent, maxSpriteSize , GlobalPosition,Vector2f(LocalScale, LocalScale),SprColor,RendShader)
+	:SpriteRenderer(RenTexture,Parent, maxSpriteSize , LocalPosition,Vector2f(LocalScale, LocalScale),SprColor,RendShader)
 {}
 
 void SquareScaleSprite::SetGlobalScale(Vector2f scale) {

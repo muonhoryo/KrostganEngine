@@ -55,13 +55,15 @@ namespace KrostganEngine::Physics {
 		vector<IPhysicalObject*>Overlap_All(const TCollShape& shape, PhysicsLayer layer = PhysicsLayer::All) {
 			vector<IPhysicalObject*> objs = vector<IPhysicalObject*>();
 			size_t layerCast;
+			size_t objLayer;
 			
 			for (auto obj : Callbacks) {
 
 				if (obj == nullptr)
 					continue;
 
-				layerCast = (size_t)obj->GetLayer() & (size_t)layer;
+				objLayer = (size_t)obj->GetLayer();
+				layerCast = objLayer & (size_t)layer;
 				if (layerCast != 0 && obj->GetCollider().Intersect(shape))
 					objs.push_back(obj);
 			}

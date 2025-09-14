@@ -2,13 +2,14 @@
 
 #include <UIElement.h>
 #include <SFML/Graphics.hpp>
-#include <CoreVisual.h>
+#include <IColoredObject.h>
 
 #define DEFAULT_FONTSIZE 30u
 
 using namespace std;
 using namespace KrostganEngine::Core;
 using namespace sf;
+using namespace KrostganEngine::Visual;
 
 namespace KrostganEngine::UI {
 	class UIText :public UIElement, public virtual IColoredObject {

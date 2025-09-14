@@ -13,7 +13,7 @@ void UnitDeathModule::Death() {
 	auto dSpr = new SquareScaleSprite(
 		dSprRes->Tex,
 		Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution,
-		Owner.GetGlobalPosition(),
+		Vector2f(0,0),
 		1,
 		dynamic_cast<UnitObject*>(&Owner)->GetColor(),
 		dSprRes->RenShader);

@@ -15,7 +15,7 @@ using namespace KrostganEngine::Core;
 using namespace KrostganEngine::Physics;
 using namespace KrostganEngine::Visual;
 
-const std::string Engine::ENGINE_VERSION = "A0.2.11.2";
+const std::string Engine::ENGINE_VERSION = "A0.2.12.0";
 
 Engine::Engine()
 	:RenderModule(*new EngineRenderModule(RendWin)),
@@ -119,9 +119,18 @@ void Engine::SetFullScreen(bool isFull) {
 	if (isFull != IsFullScreenWindow()) {
 
 		auto& wind = GetRenderWindow();
-		Vector2u resol = Singleton->GetScreenSize();
-		wind.create(VideoMode(resol.x, resol.y), "Krostgan Engine " + Engine::ENGINE_VERSION,
-			isFull ? (sf::Style::Close | sf::Style::Fullscreen) : sf::Style::Close);
+		const VideoMode* mode;
+		Uint32 style;
+		if (isFull) {
+			mode = &VideoMode::getFullscreenModes()[0];
+			style = sf::Style::Close | sf::Style::Fullscreen;
+		}
+		else {
+			mode = new VideoMode(Singleton->EngineConfiguration->WindowResolution.x, Singleton->EngineConfiguration->WindowResolution.y);
+			style = sf::Style::Close;
+		}
+		Vector2u resol(mode->width,mode->height);
+		wind.create(*mode, "Krostgan Engine " + Engine::ENGINE_VERSION,style);
 		Singleton->IsFullscreen = isFull;
 		WindowResizeEvArgs resArgs(resol, Singleton->GetScreenSize());
 		Singleton->ResizeWindowEventHandler.Execute(resArgs);

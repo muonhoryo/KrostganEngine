@@ -49,7 +49,7 @@ bool EntityBaseAAModule::CheckTargetReach(const IAttackableObj& potentTarget) {
 	Vector2f pos = Owner.GetGlobalPosition();
 	Vector2f closPoint = potentTarget.GetClosestPoint(pos);
 	float dist = Length(closPoint - pos);
-	return dist - BattleStats.GetAARadius() <= eps;
+	return dist - BattleStats.GetAARange() <= eps;
 }
 bool EntityBaseAAModule::TryDealDamageToTarget() {
 	if (CheckTargetReach())

@@ -39,3 +39,6 @@ char* FStreamExts::ReadToEnd(const string& path) {
 	text[size] = '\0';
 	return text;
 }
+bool FStreamExts::ParseBool(const string& servalue) {
+	return servalue == "1";
+}

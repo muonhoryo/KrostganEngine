@@ -5,11 +5,9 @@
 #include <SFML/Graphics.hpp>
 #include <SquareScaleSprite.h>
 #include <ICallbackRec_Upd.h>
-#include <EntityBattleStats.h>
+#include <EntityHPModule.h>
 #include <vector>
-#include <CoreVisual_UI.h>
-#include <IAttackableObj.h>
-#include <AutoAttackModule.h>
+//#include <CoreVisual_UI.h>
 #include <ISelectableEntity.h>
 #include <Events.h>
 #include <RelationsSystem.h>
@@ -26,21 +24,31 @@ using namespace KrostganEngine::Core;
 namespace KrostganEngine::GameObjects {
 	class Entity;
 
-	struct EntityCtorParams {
+	struct EntityCtorParams : protected GameObjectCtorParams {
 
-		EntityBattleStats*		BattleStats		=	nullptr;
-		Fraction				EntityFraction	=	Fraction::Neutral;
-		const ExtGlRes_Sprite*	RenSprite		=	nullptr;
-		const ExtGlRes_Sprite*	SelectionSprite	=	nullptr;
-		Vector2f				GlobalPosition;
-		float					LocalScale		=	1;
-		IndicatorFill*			HPBarSprite		=	nullptr;
+		using GameObjectCtorParams::BodySpriteSource;
+		using GameObjectCtorParams::GlobalPosition;
+		using GameObjectCtorParams::GlobalScale;
+		//SprColor;
+		using GameObjectCtorParams::CatalogID;
+		using GameObjectCtorParams::SubcatalogID;
+
+		EntityBattleStats*		BattleStats				=	nullptr;
+		const ExtGlRes_Sprite*	SelectionSpriteSource	=	nullptr;
+		IndicatorFill*			HPBarSprite				=	nullptr;
 		
 		AutoAttackModule*		GetAAModule()			const { return AAModule; }
 		AutoAggressionModule*	GetAutoAggrModule()		const { return AutoAggrModule; }
 		EntityHPModule*			GetHPModule()			const { return HPModule; }
 		IDeathModule*			GetDeathModule()		const { return DeathModule; }
 		HPRegenModule*			GetHPRegenModule()		const { return RegenModule; }
+		Color					GetBodySpriteColor()	const { return SprColor; }
+		Fraction				GetFraction()			const { return EntityFraction; }
+
+		void	SetFraction(Fraction fraction) {
+			EntityFraction = fraction;
+			SprColor = FractionsSystem::GetRelationToPlayerColor(fraction);
+		}
 
 	protected:
 		virtual void Init_AAModule			(Entity& owner) = 0;
@@ -54,6 +62,7 @@ namespace KrostganEngine::GameObjects {
 		EntityHPModule*			HPModule		= nullptr;
 		IDeathModule*			DeathModule		= nullptr;
 		HPRegenModule*			RegenModule		= nullptr;
+		Fraction				EntityFraction = Fraction::Neutral;
 
 		friend class Entity;
 	};
@@ -78,7 +87,7 @@ namespace KrostganEngine::GameObjects {
 		virtual vector<IPhysicalObject*>	OverlapAll_Action() const = 0;
 		virtual const ColliderShape&		GetCollider_Action() const = 0;
 
-		IHitPointModule& GetHPModule() override;
+		IHitPointModule& GetHPModule() const override;
 
 	protected:
 		Entity(EntityCtorParams& params);
@@ -96,8 +105,6 @@ namespace KrostganEngine::GameObjects {
 
 	private:
 		Fraction EntityFraction;
-
-		Color GetSprColorFromFraction(Fraction frac);
 
 		static const inline string MASK_SHADER_PATH = "Scripts/Shaders/MaskableImage.frag";
 	};

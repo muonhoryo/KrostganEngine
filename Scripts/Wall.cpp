@@ -8,11 +8,15 @@ using namespace KrostganEngine;
 using namespace KrostganEngine::Physics;
 using namespace KrostganEngine::GameObjects;
 
-WallObject::WallObject(const Texture& RenTexture, Vector2f Position, float Size) 
-	:GameObject(RenTexture,Position,Size){
+void WallObject::RecreateCollider() {
+	float innerRad = GetGlobalScale_Sin()* Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution * 0.5f;
+	Vector2f pos = GetGlobalPosition();
+	Collider = new AABBCollShape(Vector2f(pos.x - innerRad, pos.y - innerRad), Vector2f(pos.x + innerRad, pos.y + innerRad));
+}
+WallObject::WallObject(const WallCtorParams& params)
+	:GameObject(params){
 
-	float innerRad = Size * Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution*0.5f;
-	Collider = new AABBCollShape(Vector2f(Position.x - innerRad, Position.y - innerRad), Vector2f(Position.x + innerRad, Position.y + innerRad));
+	RecreateCollider();
 }
 WallObject::~WallObject() {
 	delete Collider;
@@ -20,6 +24,15 @@ WallObject::~WallObject() {
 
 PhysicsLayer WallObject::GetLayer() const {
 	return PhysicsLayer::Decorations;
+}
+
+void WallObject::SetGlobalPosition(Vector2f position) {
+	GameObject::SetGlobalPosition(position);
+	RecreateCollider();
+}
+void WallObject::SetGlobalScale(Vector2f scale) {
+	GameObject::SetGlobalScale(scale);
+	RecreateCollider();
 }
 
 const ColliderShape& WallObject::GetCollider() const {

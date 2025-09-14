@@ -31,7 +31,7 @@ LevelLoadingInfo& LevelSerialization::DeserializeLevel(string serPath) {
 
 			if (isDeserObstrMap) {
 
-				if (line.find(LevelCellMapDeser::LEVEL_CELL_MAP_END) != string::npos) {
+				if (line.find(LevelCellMapDeser::LVL_CMAP_END) != string::npos) {
 
 					params.push_back(line);
 					map=&LevelCellMapDeser::Deserialize(params, &columnCount);

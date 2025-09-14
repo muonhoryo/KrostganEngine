@@ -40,8 +40,8 @@ UISprite::UISprite(
 			GlobalPosition, 
 			GlobalScale, 
 			Anchor,
-			(Vector2f)GetRenTexture().getSize(),
-			RendLayer),
+			(Vector2f)RenTexture.getSize()),
+		ICallbackRec_GraphPostRen(RendLayer),
 		RendShader(RendShader)
 {
 	ctor_Initialize(RenTexture);
@@ -84,8 +84,8 @@ UISprite::UISprite(
 			LocalPosition,
 			LocalScale, 
 			Anchor,
-			(Vector2f)GetRenTexture().getSize(),
-			RendLayer),
+			(Vector2f)RenTexture.getSize()),
+		ICallbackRec_GraphPostRen(RendLayer),
 		RendShader(RendShader)
 {
 	ctor_Initialize(RenTexture);

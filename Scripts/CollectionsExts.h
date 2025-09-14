@@ -7,6 +7,34 @@ using namespace std;
 
 namespace KrostganEngine {
 	struct CollectionsExts {
+
+		//
+		//
+		// Delegates
+		//
+		//
+
+		template<typename TInput>
+		struct Predicate {
+			virtual bool Condition(TInput input) const = 0;
+		};
+		template<typename TInput>
+		struct CompareFunc {
+			/// <summary>
+			/// Return true if first less than second
+			/// </summary>
+			/// <param name="first"></param>
+			/// <param name="second"></param>
+			/// <returns></returns>
+			virtual bool Compare(const TInput& first, const TInput& second) const = 0;
+		};
+		
+		//
+		//
+		// Functions
+		//
+		//
+
 		/// <summary>
 		/// Return string::npos if list hasn't value
 		/// </summary>
@@ -15,10 +43,10 @@ namespace KrostganEngine {
 		/// <param name="list"></param>
 		/// <param name="value"></param>
 		/// <returns></returns>
-		template <typename TCollectionsType,typename TElementsType>
-		static size_t IndexOf(const TCollectionsType& list,TElementsType const& value) {
+		template <typename TCollectionType,typename TElementsType>
+		static size_t IndexOf(const TCollectionType& collection,TElementsType const& value) {
 			size_t i = 0;
-			for (TElementsType el : list) {
+			for (TElementsType const& el : collection) {
 				if (el == value) {
 					return i;
 				}
@@ -26,11 +54,43 @@ namespace KrostganEngine {
 			}
 			return string::npos;
 		}
+		template <typename TCollectionType, typename TElementsType>
+		static size_t IndexOf(
+			const TCollectionType& collection, 
+			const Predicate<TElementsType const&>& predicate) {
 
-		template <typename TCollectionsType,typename TElementsType>
-		static bool Contains(const TCollectionsType& list, TElementsType const& element) {
-			for (TElementsType el: list) {
+			size_t i = 0;
+			for (TElementsType const& el : collection) {
+				if (predicate.Condition(el))
+					return i;
+				i += 1;
+			}
+			return string::npos;
+		}
+
+		template<typename TInput>
+		struct EqualCompareFunc {
+			/// <summary>
+			/// Return true if equal
+			/// </summary>
+			/// <param name="first"></param>
+			/// <param name="second"></param>
+			/// <returns></returns>
+			virtual bool Equal(const TInput& first, const TInput& second) const = 0;
+		};
+		template <typename TCollectionType,typename TElementsType>
+		static bool Contains(const TCollectionType& collection, TElementsType const& element) {
+			for (TElementsType const& el: collection) {
 				if (el == element) {
+					return true;
+				}
+			}
+			return false;
+		}
+		template <typename TCollectionType, typename TElementsType>
+		static bool Contains(const TCollectionType& collection, TElementsType const& element, const EqualCompareFunc<TElementsType>& comparator) {
+			for (TElementsType const& el : collection) {
+				if (comparator.Equal(el, element)) {
 					return true;
 				}
 			}
@@ -45,23 +105,24 @@ namespace KrostganEngine {
 		/// <param name="list"></param>
 		/// <param name="elementToRem"></param>
 		/// <returns></returns>
-		template <typename TCollectionsType, typename TElementsType>
-		static bool Remove(TCollectionsType& list, TElementsType const& elementToRem) {
-			auto it = list.begin();
-			auto end = list.end();
+		template <typename TCollectionType, typename TElementsType>
+		static bool Remove(TCollectionType& collection, TElementsType const& elementToRem) {
+			auto it = collection.begin();
+			auto end = collection.end();
 			for (;it != end;++it) {
 				if ((*it) == elementToRem) {
-					list.erase(it);
+					collection.erase(it);
 					return true;
 				}
 			}
 			return false;
 		}
 
-		template<typename TInput>
-		struct GetFuncPredicate {
-			virtual bool Condition(TInput input) const = 0;
-		};
+		template <typename TCollectionType>
+		static size_t Size(const TCollectionType& collection) {
+			return (size_t)distance(collection.begin(), collection.end());
+		}
+
 		/// <summary>
 		/// Return nullptr if collection doesn't contain element
 		/// </summary>
@@ -71,15 +132,67 @@ namespace KrostganEngine {
 		/// <param name="elementToFind"></param>
 		/// <returns></returns>
 		template<typename TCollectionType, typename TElementsType>
-		static TElementsType Get(
-			const TCollectionType&							collection, 
-			const GetFuncPredicate<TElementsType const&>&	cond) {
+		static TElementsType* Get(
+			TCollectionType&						collection, 
+			const Predicate<TElementsType const&>&	cond) {
 			
-			for (auto el : collection) {
+			for (auto& el : collection) {
 				if (cond.Condition(el))
-					return el;
+					return &el;
 			}
 			return nullptr;
+		}
+		template<typename TCollectionType, typename TElementsType>
+		static const TElementsType* Get_c(
+			const TCollectionType& collection,
+			const Predicate<TElementsType const&>& cond) {
+
+			for (auto& el : collection) {
+				if (cond.Condition(el))
+					return &el;
+			}
+			return nullptr;
+		}
+
+		template<typename TCollectionType, typename TElementsType>
+		static void InsertSorted(
+			TCollectionType&							collection,
+			const TElementsType&						element,
+			const CompareFunc<TElementsType>&	comparator) {
+
+			size_t size = Size<TCollectionType>(collection);
+			if (size == 0) {
+				collection.push_front(element);
+			}
+			else if (size == 1) {
+				auto beg = collection.begin();
+				if (comparator.Compare(element, (*beg)))
+					collection.push_front(element);
+				else
+					collection.insert_after(beg, element);
+			}
+			else {
+
+				auto it = collection.begin();
+				if (comparator.Compare(element, (*it))) {
+					collection.push_front(element);
+					return;
+				}
+				auto postIt = collection.begin();
+				auto end = collection.cend();
+				++postIt;
+				++postIt;
+				++it;
+				while (postIt != end) {
+					if (comparator.Compare(element, (*postIt))) {
+						collection.insert_after(it, element);
+						return;
+					}
+					++postIt;
+					++it;
+				}
+				collection.insert_after(it,element);
+			}
 		}
 	};
 }

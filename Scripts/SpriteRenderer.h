@@ -28,18 +28,18 @@ namespace KrostganEngine::Visual {
 			Shader* RendShader = nullptr);
 
 		SpriteRenderer(
-			const Texture& RenTexture,
-			WorldTransfObj& Parent,
-			Vector2f			GlobalPosition = Vector2f(0, 0),
+			const Texture&		RenTexture,
+			WorldTransfObj&		Parent,
+			Vector2f			LocalPosition = Vector2f(0, 0),
 			Vector2f			LocalScale = DEFAULT_SCALE,
 			Color				SprColor = Color::White,
 			Shader* RendShader = nullptr);
 
 		SpriteRenderer(
-			const Texture& RenTexture,
-			WorldTransfObj& Parent,
+			const Texture&		RenTexture,
+			WorldTransfObj&		Parent,
 			float				maxSizeInPixels,
-			Vector2f			GlobalPosition = Vector2f(0, 0),
+			Vector2f			LocalPosition = Vector2f(0, 0),
 			Vector2f			LocalScale = DEFAULT_SCALE,
 			Color				SprColor = Color::White,
 			Shader* RendShader = nullptr);

@@ -25,10 +25,10 @@ IndicatorFill::IndicatorFill(
 	WorldTransfObj &	Parent,
 	Shader &			RendShader,
 	float				maxSpriteSize,
-	Vector2f			GlobalPosition,
+	Vector2f			LocalPosition,
 	float				LocalScale,
 	Color				SprColor)
-	:SquareScaleSprite(RenTexture,maxSpriteSize,GlobalPosition,LocalScale,SprColor,&RendShader),
+	:SquareScaleSprite(RenTexture,maxSpriteSize, LocalPosition,LocalScale,SprColor,&RendShader),
 	MaskTexture(MaskTexture)
 {}
 
