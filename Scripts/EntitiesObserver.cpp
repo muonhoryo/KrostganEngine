@@ -19,5 +19,6 @@ forward_list<Entity*>::const_iterator EntitiesObserver::GetBeginIter() {
 forward_list<Entity*>::const_iterator EntitiesObserver::GetAfterEndIter() {
 	return EntitiesInGameLevel.cend();
 }
-
-forward_list<Entity*> EntitiesObserver::EntitiesInGameLevel = forward_list<Entity*>();
+void EntitiesObserver::Unload() {
+	EntitiesInGameLevel.clear();
+}

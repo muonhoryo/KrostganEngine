@@ -12,10 +12,11 @@ namespace KrostganEngine::Core {
 		static void RemoveEntity(Entity* entity);
 		static forward_list<Entity*>::const_iterator GetBeginIter();
 		static forward_list<Entity*>::const_iterator GetAfterEndIter();
+		static void Unload();
 
 	private:
 		EntitiesObserver();
 
-		static forward_list<Entity*> EntitiesInGameLevel;
+		static inline forward_list<Entity*> EntitiesInGameLevel = forward_list<Entity*>();
 	};
 }

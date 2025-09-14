@@ -2,6 +2,7 @@
 #include <EngineModes.h>
 #include <Engine.h>
 #include <EngineWorkCycleModule.h>
+#include <LevelBypassMap.h>
 
 using namespace KrostganEngine::Core;
 using namespace sf;
@@ -31,6 +32,11 @@ GameMode::~GameMode() {
     Engine::GetLateUpdModule().Unload();
     postRenMod.Unload();
     renMod.Unload();
+    Engine::GetPhysicsEngine().Unload();
+    LevelBypassMapManager::Unload();
+    ObjectsCatalog::Unload();
+    EntitiesObserver::Unload();
+
     UserInterfaceManager::Initialize();
 }
 void GameMode::ExecuteCycle() {
