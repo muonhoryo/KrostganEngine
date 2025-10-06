@@ -35,7 +35,6 @@ namespace KrostganEngine::UI {
 
 	public:
 		virtual ~CurrHPDepend_toTxt() {
-			ChangeDepTarget(nullptr);
 			delete HPChangeSubs;
 		}
 		CurrHPDepend_toTxt

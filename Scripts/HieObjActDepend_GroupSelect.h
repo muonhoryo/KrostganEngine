@@ -38,7 +38,6 @@ namespace KrostganEngine::UI {
 			Update();
 		}
 		virtual ~HieObjActDepend_GroupSelect() {
-			TargetEl.SetActivity(true);
 			GroupSelectionSystem::ChangeSelectablesEvent.Remove(*Subsc);
 			delete Subsc;
 		}

@@ -8,6 +8,8 @@ namespace KrostganEngine::UI {
 	class IEntityUIDependency {
 
 	public:
+		virtual ~IEntityUIDependency() {}
+
 		virtual void ChangeDepTarget(Entity* target) = 0;
 
 	protected:

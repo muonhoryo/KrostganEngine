@@ -56,7 +56,6 @@ namespace KrostganEngine::UI {
 	public:
 		virtual ~BattleStatDepend_toTxt() {
 
-			ChangeDepTarget(nullptr);
 			delete StatUpdateSubs;
 		}
 		BattleStatDepend_toTxt
