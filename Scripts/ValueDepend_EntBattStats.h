@@ -2,6 +2,7 @@
 
 #include <EntityBattleStats.h>
 #include <IEntityUIDependency.h>
+#include <MemoryExts.h>
 
 using namespace KrostganEngine;
 using namespace KrostganEngine::Core;
@@ -36,22 +37,6 @@ namespace KrostganEngine::UI {
 			}
 
 		};
-		TObjValue& GetObjectRefForNewTar(Entity& newTar) {
-			size_t objRef = (size_t)(this->Object);
-			size_t oldTarRef = (size_t)(&Target->GetPtr_t_c()->GetBattleStats());
-			size_t newTarRef = (size_t)(&newTar.GetBattleStats());
-			return *(TObjValue*)(objRef - oldTarRef + newTarRef);
-		}
-		/*TObjValue& ctor_GetObject(BattleStatDepend_toTxt& toCopy) {
-
-			if (!IsValueRefValid() || !toCopy.IsValueRefValid())
-				throw exception("Can't read memory to get object's reference");
-
-			size_t objRef = (size_t)(&toCopy.Object);
-			size_t oldTarRef = (size_t)(&toCopy.Target->GetPtr_t_c()->GetBattleStats());
-			size_t newTarRef = (size_t)(Target->GetPtr_t_c()->GetBattleStats());
-			return *(float*)(objRef - oldTarRef + newTarRef);
-		}*/
 
 	public:
 		virtual ~BattleStatDepend_toTxt() {
@@ -74,14 +59,6 @@ namespace KrostganEngine::UI {
 			else
 				ChangeDepTarget(nullptr);
 		}
-		/*/// <summary>
-		/// Copy another dependency with different owner.
-		/// </summary>
-		/// <param name="Owner"></param>
-		/// <param name="toCopy"></param>
-		BattleStatDepend_toTxt(watch_ptr_handler_wr_c<Entity>* Target, BattleStatDepend_toTxt& toCopy)
-			:BattleStatDepend_toTxt(Target, toCopy.SubjStat, toCopy.Subject, ctor_GetObject(toCopy))
-		{}*/
 
 		void ChangeDepTarget(Entity* target) override {
 			if (IsValueRefValid()) {
@@ -98,7 +75,7 @@ namespace KrostganEngine::UI {
 				if (this->Object == nullptr)
 					this->Object = reinterpret_cast<TObjValue const*>(target->GetBattleStats().GetFieldRef(SubjStat));
 				else
-					this->Object = &this->GetObjectRefForNewTar(*target);
+					this->Object = &GetSameFieldOfObj<TObjValue,EntityBattleStats>(*this->Object,Target->GetPtr_t_c()->GetBattleStats(), target->GetBattleStats());
 				delete Target;
 				Target = new watch_ptr_handler_wr<Entity>(ptr);
 				delete& ptr;

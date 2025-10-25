@@ -286,6 +286,7 @@
     <ClInclude Include="Scripts\GameValueDependencies.h" />
     <ClInclude Include="Scripts\GameVisual.h" />
     <ClInclude Include="Scripts\GameVisualEffects.h" />
+    <ClInclude Include="Scripts\MemoryExts.h" />
     <ClInclude Include="Scripts\ValueDepend_CurrHP.h" />
     <ClInclude Include="Scripts\HieObjActDepend_GroupSelect.h" />
     <ClInclude Include="Scripts\HighlightVisualEffect.h" />
