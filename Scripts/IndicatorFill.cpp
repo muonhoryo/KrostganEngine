@@ -40,8 +40,8 @@ float IndicatorFill::GetFillness() const{
 	return Fillness;
 }
 
-void IndicatorFill::RenderGraphic(RenderWindow& window) {
+void IndicatorFill::RenderGraphicAction(RenderWindow& window) {
 	GetShader()->setUniform(SHAD_PARAM_NAME_MASK, MaskTexture);
 	GetShader()->setUniform(SHAD_PARAM_NAME_FILLNESS, Fillness);
-	SpriteRenderer::RenderGraphic(window);
+	SpriteRenderer::RenderGraphicAction(window);
 }

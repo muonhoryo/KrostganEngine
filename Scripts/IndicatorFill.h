@@ -29,7 +29,7 @@ namespace KrostganEngine::Visual {
 		void	SetFillness(float fillness);
 		float	GetFillness() const;
 
-		void RenderGraphic(RenderWindow& window) override;
+		void RenderGraphicAction(RenderWindow& window) override;
 
 	private:
 		float Fillness = 1;

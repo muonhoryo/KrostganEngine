@@ -26,11 +26,9 @@ GameMode::~GameMode() {
     delete EntitiesCtrlHandler;
     delete GameInterface;
 
-    EngineCallbackHandler<ICallbackRec_GraphPostRen>& postRenMod = Engine::GetRenderModule();
     EngineCallbackHandler<ICallbackRec_GraphRen>& renMod = Engine::GetRenderModule();
     Engine::GetUpdateModule().Unload();
     Engine::GetLateUpdModule().Unload();
-    postRenMod.Unload();
     renMod.Unload();
     Engine::GetPhysicsEngine().Unload();
     LevelBypassMapManager::Unload();

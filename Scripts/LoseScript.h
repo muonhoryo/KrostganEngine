@@ -21,7 +21,7 @@ namespace KrostganEngine::GameTransitions {
 	public:
 		LoseScript();
 
-		void RenderGraphic(RenderWindow& window) override;
+		void RenderGraphicAction(RenderWindow& window) override;
 
 	private:
 		LoseMessageStage Stage = LoseMessageStage::Hide;

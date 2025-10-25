@@ -115,7 +115,7 @@ SpriteRenderer::~SpriteRenderer() {
 	delete RenSprite;
 }
 
-void SpriteRenderer::RenderGraphic(RenderWindow& window) {
+void SpriteRenderer::RenderGraphicAction(RenderWindow& window) {
 
 	window.draw(*RenSprite, RenderSt);
 	UpdateEffects();

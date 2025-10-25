@@ -14,13 +14,13 @@ WideLineVisual::WideLineVisual(
 	Vector2f	End,
 	float		Width,
 	Color		LineColor,
-	char		RendLayer) 
+	byte		RendLayer) 
 		:Start(Start),
 		End(End),
 		Width(Width),
 		LineColor(LineColor),
 		Vertexes(VertexArray(PrimitiveType::TriangleStrip,4)),
-		ICallbackRec_GraphPostRen(RendLayer){
+		ICallbackRec_GraphRen(RendLayer){
 
 	Rebuild();
 	SetColor(LineColor);

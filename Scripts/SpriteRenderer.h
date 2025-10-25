@@ -68,7 +68,7 @@ namespace KrostganEngine::Visual {
 		void	SetColor(Color color) override;
 		Color	GetColor() const override;
 
-		void	RenderGraphic(RenderWindow& window) override;
+		void	RenderGraphicAction(RenderWindow& window) override;
 
 	protected:
 		void		ctor_Initialize(const Texture& renTexture, float maxSizeInPixels);

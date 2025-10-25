@@ -12,7 +12,7 @@ UnitColliderVisualizer::UnitColliderVisualizer(UnitObject& Owner) : CircleVisPri
 	Owner(Owner){
 
 	UpdateRadius(Owner.GetGlobalScale_Sin());
-	Owner.GetHPModule().DeathModule.DeathEvent.Add(*(IEventSubscriber<ObjectDeathEventArgs>*)new VisualOnDeathDestroyer_PostRen(*this, Owner));
+	Owner.GetHPModule().DeathModule.DeathEvent.Add(*(IEventSubscriber<ObjectDeathEventArgs>*)new VisualOnDeathDestroyer(*this, Owner));
 }
 UnitColliderVisualizer::~UnitColliderVisualizer() {
 

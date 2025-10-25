@@ -19,7 +19,7 @@ namespace KrostganEngine::UI {
 
 		void OnDealDmg(AutoAttackInfo attInfo) override;
 
-		void RenderGraphic(RenderWindow& window) override;
+		void RenderGraphicAction(RenderWindow& window) override;
 
 	private:
 		WideLineVisual							LineRender;

@@ -32,7 +32,7 @@ WinScript::WinScript()
 	}
 }
 
-void WinScript::RenderGraphic(RenderWindow& window) {
+void WinScript::RenderGraphicAction(RenderWindow& window) {
 
 	float time = LostTimer.getElapsedTime().asSeconds();
 	switch (Stage)

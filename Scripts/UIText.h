@@ -21,7 +21,7 @@ namespace KrostganEngine::UI {
 			Vector2f		LocalPosition	= DEFAULT_POSITION,
 			Vector2f		LocalScale		= DEFAULT_SCALE,
 			Vector2f		Anchor			= DEFAULT_ANCHOR,
-			char			RendLayer		= 0);
+			byte			RendLayer		= DEFAULT_RENDLAYER_UI);
 
 		UIText(
 			UIElement*			Parent,
@@ -30,7 +30,7 @@ namespace KrostganEngine::UI {
 			Vector2f			LocalPosition	= DEFAULT_POSITION,
 			float				LocalScale		= 1,
 			Vector2f			Anchor			= DEFAULT_ANCHOR,
-			char				RendLayer		= 0);
+			byte				RendLayer		= DEFAULT_RENDLAYER_UI);
 
 		UIText(
 			const string		textStr			= "",
@@ -38,7 +38,7 @@ namespace KrostganEngine::UI {
 			Vector2f			GlobalPosition	= DEFAULT_POSITION,
 			Vector2f			GlobalScale		= DEFAULT_SCALE,
 			Vector2f			Anchor			= DEFAULT_ANCHOR,
-			char				RendLayer		= 0);
+			byte				RendLayer		= DEFAULT_RENDLAYER_UI);
 
 		UIText(
 			const string		textStr			= "",
@@ -46,7 +46,7 @@ namespace KrostganEngine::UI {
 			Vector2f			GlobalPosition	= DEFAULT_POSITION,
 			float				GlobalScale		= DEFAULT_SCALE_SNG,
 			Vector2f			Anchor			= DEFAULT_ANCHOR,
-			char				RendLayer		= 0);
+			byte				RendLayer		= DEFAULT_RENDLAYER_UI);
 
 		Color	GetColor() const override;
 		void	SetColor(Color color) override;

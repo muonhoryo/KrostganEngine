@@ -6,7 +6,7 @@
 using namespace std;
 using namespace KrostganEngine::Core;
 
-EngineRenderModule::EngineRenderModule(RenderWindow& Window): EngineCallbackHandler<ICallbackRec_GraphRen>(), EngineCallbackHandler<ICallbackRec_GraphPostRen>(),
+EngineRenderModule::EngineRenderModule(RenderWindow& Window): EngineCallbackHandler<ICallbackRec_GraphRen>(),
 	Window(Window)
 {
 }
@@ -15,9 +15,8 @@ void EngineRenderModule::Execute() {
 	if (!Window.isOpen())
 		return;
 	Window.clear();
-	EngineCallbackHandler<ICallbackRec_GraphRen>::IsIteratingCallbacks = true;
-	EngineCallbackHandler<ICallbackRec_GraphPostRen>::IsIteratingCallbacks = true;
-	for (auto rec : EngineCallbackHandler<ICallbackRec_GraphRen>::Callbacks) {
+	IsIteratingCallbacks = true;
+	for (auto rec : Callbacks) {
 
 		if (rec == nullptr)
 			continue;
@@ -25,21 +24,12 @@ void EngineRenderModule::Execute() {
 		rec->RenderGraphic(Window);
 	}
 	if (NeedToSort) {
-		//bool (*pred)(const ICallbackRec_GraphPostRen*&, const ICallbackRec_GraphPostRen*&) = PostRenCallbks_SortPred;
-		EngineCallbackHandler<ICallbackRec_GraphPostRen>::Callbacks.sort(PostRenCallbks_SortPred);
+
+		Callbacks.sort(RenCallbks_SortPred);
 		NeedToSort = false;
 	}
-	for (auto rec : EngineCallbackHandler<ICallbackRec_GraphPostRen>::Callbacks) {
-
-		if (rec == nullptr)
-			continue;
-
-		rec->RenderGraphic(Window);
-	}
-	EngineCallbackHandler<ICallbackRec_GraphRen>::IsIteratingCallbacks = false;
-	EngineCallbackHandler<ICallbackRec_GraphPostRen>::IsIteratingCallbacks = false;
-	EngineCallbackHandler<ICallbackRec_GraphRen>::DeleteDelayedCallbacks();
-	EngineCallbackHandler<ICallbackRec_GraphPostRen>::DeleteDelayedCallbacks();
+	IsIteratingCallbacks = false;
+	DeleteDelayedCallbacks();
 	Window.display();
 	SetFrameRenderTime(FrameRenderTime.getElapsedTime().asSeconds());
 }
@@ -51,7 +41,7 @@ void EngineRenderModule::SetNeedToSort() {
 	NeedToSort = true;
 }
 
-void EngineRenderModule::Add(ICallbackRec_GraphPostRen& callbck) {
-	EngineCallbackHandler<ICallbackRec_GraphPostRen>::Add(callbck);
+void EngineRenderModule::Add(ICallbackRec_GraphRen& callbck) {
+	EngineCallbackHandler<ICallbackRec_GraphRen>::Add(callbck);
 	NeedToSort = true;
 }

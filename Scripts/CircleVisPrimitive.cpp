@@ -15,8 +15,8 @@ CircleVisPrimitive::CircleVisPrimitive(
 	float		radius, 
 	Color		edgeColor,
 	size_t		pointsCount,
-	char		RendLayer)
-		:ICallbackRec_GraphPostRen(RendLayer)
+	byte		RendLayer)
+		:ICallbackRec_GraphRen(RendLayer)
 {
 	CirShape = CircleShape(radius, pointsCount);
 	CirShape.setOrigin(Vector2f(radius,radius));

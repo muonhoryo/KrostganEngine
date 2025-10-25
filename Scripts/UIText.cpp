@@ -27,7 +27,7 @@ UIText::UIText(
 	Vector2f		LocalPosition,
 	Vector2f		LocalScale,
 	Vector2f		Anchor,
-	char			RendLayer)
+	byte			RendLayer)
 		:UIElement(
 			ctor_InitOwner(textStr,characterSize),
 			Parent,
@@ -35,8 +35,8 @@ UIText::UIText(
 			LocalScale,
 			0,
 			Anchor,
-			ctor_GetUISize(textStr,characterSize)),
-		ICallbackRec_GraphPostRen(RendLayer)
+			ctor_GetUISize(textStr,characterSize),
+			RendLayer)
 {} 
 
 UIText::UIText(
@@ -46,7 +46,7 @@ UIText::UIText(
 	Vector2f			LocalPosition,
 	float				LocalScale,
 	Vector2f			Anchor,
-	char				RendLayer)
+	byte				RendLayer)
 		:UIText(
 			Parent,
 			textStr,
@@ -63,15 +63,15 @@ UIText::UIText(
 	Vector2f			GlobalPosition,
 	Vector2f			GlobalScale,
 	Vector2f			Anchor,
-	char				RendLayer)
+	byte				RendLayer)
 		:UIElement(
 			ctor_InitOwner(textStr,characterSize),
 			GlobalPosition,
 			GlobalScale,
 			0,
 			Anchor,
-			ctor_GetUISize(textStr,characterSize)),
-		ICallbackRec_GraphPostRen(RendLayer)
+			ctor_GetUISize(textStr,characterSize),
+			RendLayer)
 {}
 
 UIText::UIText(
@@ -80,7 +80,7 @@ UIText::UIText(
 	Vector2f			GlobalPosition,
 	float				GlobalScale,
 	Vector2f			Anchor,
-	char				RendLayer)
+	byte				RendLayer)
 		:UIText(
 			textStr,
 			characterSize,

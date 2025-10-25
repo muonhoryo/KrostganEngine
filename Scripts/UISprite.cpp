@@ -35,15 +35,15 @@ UISprite::UISprite(
 	Vector2f		Anchor,
 	Color			SprColor,
 	Shader*			RendShader,
-	char			RendLayer)
+	byte			RendLayer)
 		:UIElement(
 			ctor_InitOwner(), 
 			GlobalPosition, 
 			GlobalScale, 
 			GlobalRotation,
 			Anchor,
-			(Vector2f)RenTexture.getSize()),
-		ICallbackRec_GraphPostRen(RendLayer),
+			(Vector2f)RenTexture.getSize(),
+			RendLayer),
 		RendShader(RendShader)
 {
 	ctor_Initialize(RenTexture);
@@ -58,7 +58,7 @@ UISprite::UISprite(
 	Vector2f		Anchor,
 	Color			SprColor,
 	Shader*			RendShader,
-	char			RendLayer)
+	byte			RendLayer)
 		:UISprite(
 			RenTexture,
 			GlobalPosition,
@@ -79,7 +79,7 @@ UISprite::UISprite(
 	Vector2f			Anchor,
 	Color				SprColor,
 	Shader*				RendShader,
-	char				RendLayer)
+	byte				RendLayer)
 		:UIElement(
 			ctor_InitOwner(), 
 			Parent, 
@@ -87,8 +87,8 @@ UISprite::UISprite(
 			LocalScale, 
 			LocalRotation,
 			Anchor,
-			(Vector2f)RenTexture.getSize()),
-		ICallbackRec_GraphPostRen(RendLayer),
+			(Vector2f)RenTexture.getSize(),
+			RendLayer),
 		RendShader(RendShader)
 {
 	ctor_Initialize(RenTexture);
@@ -104,7 +104,7 @@ UISprite::UISprite(
 	Vector2f		Anchor,
 	Color			SprColor,
 	Shader*			RendShader,
-	char			RendLayer)
+	byte			RendLayer)
 		:UISprite(
 			RenTexture,
 			Parent,

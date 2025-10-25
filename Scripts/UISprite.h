@@ -1,7 +1,6 @@
 #pragma once
 
 #include <UIElement.h>
-#include <ICallbackRec_GraphPostRen.h>
 #include <VisualEffectsSystem.h>
 
 using namespace KrostganEngine::Visual;
@@ -17,7 +16,7 @@ namespace KrostganEngine::UI {
 			Vector2f		Anchor			= DEFAULT_ANCHOR,
 			Color			SprColor		= Color::White,
 			Shader*			RendShader		= nullptr,
-			char			RendLayer		= 0);
+			byte			RendLayer		= DEFAULT_RENDLAYER_UI);
 		
 		UISprite(
 			const Texture&	RenTexture,
@@ -27,7 +26,7 @@ namespace KrostganEngine::UI {
 			Vector2f		Anchor			= DEFAULT_ANCHOR,
 			Color			SprColor		= Color::White,
 			Shader*			RendShader		= nullptr,
-			char			RendLayer		= 0);
+			byte			RendLayer		= DEFAULT_RENDLAYER_UI);
 
 		UISprite(
 			const Texture&	RenTexture,
@@ -38,7 +37,7 @@ namespace KrostganEngine::UI {
 			Vector2f		Anchor			= DEFAULT_ANCHOR,
 			Color			SprColor		= Color::White,
 			Shader*			RendShader		= nullptr,
-			char			RendLayer		= 0);
+			byte			RendLayer		= DEFAULT_RENDLAYER_UI);
 		
 		UISprite(
 			const Texture&	RenTexture,
@@ -49,7 +48,7 @@ namespace KrostganEngine::UI {
 			Vector2f		Anchor			= DEFAULT_ANCHOR,
 			Color			SprColor		= Color::White,
 			Shader*			RendShader		= nullptr,
-			char			RendLayer		= 0);
+			byte			RendLayer		= DEFAULT_RENDLAYER_UI);
 		
 		virtual ~UISprite();
 

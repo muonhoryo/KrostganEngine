@@ -1,6 +1,6 @@
 #pragma once
 
-#include <ICallbackRec_GraphPostRen.h>
+#include <ICallbackRec_GraphRen.h>
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
 #include <vector>
@@ -12,7 +12,7 @@ using namespace KrostganEngine::Core;
 using namespace KrostganEngine::Visual;
 
 namespace KrostganEngine::UI {
-	class QuadVisPrimitive :public ICallbackRec_GraphPostRen {
+	class QuadVisPrimitive :public ICallbackRec_GraphRen {
 	public:
 		QuadVisPrimitive(
 			Vector2f lt, 
@@ -20,7 +20,7 @@ namespace KrostganEngine::UI {
 			Vector2f rb, 
 			Vector2f lb,
 			Color	edgeColor,
-			char	RendLayer = 0);
+			byte	RendLayer = DEFAULT_RENDLAYER_UI);
 
 		FloatRect GetBounds();
 		Color GetEdgeColor();
@@ -29,21 +29,24 @@ namespace KrostganEngine::UI {
 		void SetPointsBy2Corners(Vector2f corner1, Vector2f corner2);
 		void SetEdgeColor(Color edgeColor);
 
+
+		static QuadVisPrimitive& InstanceQuad(Vector2f corner1, Vector2f corner2, Color edgeColor,byte RendLayer = DEFAULT_RENDLAYER_UI);
+
+	protected:
 		void RenderGraphicAction(RenderWindow& window) override;
 
-		static QuadVisPrimitive& InstanceQuad(Vector2f corner1, Vector2f corner2, Color edgeColor,char RendLayer = 0);
 	private:
 		VertexArray Vertexes;
 	};
 
-	class CircleVisPrimitive : public ICallbackRec_GraphPostRen {
+	class CircleVisPrimitive : public ICallbackRec_GraphRen {
 	public:
 		CircleVisPrimitive(
 			Vector2f	center, 
 			float		radius,
 			Color		edgeColor,
 			size_t		pointsCount,
-			char		RendLayer = 0);
+			byte		RendLayer = DEFAULT_RENDLAYER_UI);
 
 		Vector2f GetCenter();
 		float GetRadius();
@@ -55,16 +58,17 @@ namespace KrostganEngine::UI {
 		void SetEdgeColor(Color color);
 		void SetPointsCount(size_t count);
 
+	protected:
 		void RenderGraphicAction(RenderWindow& window) override;
 
 	private:
 		CircleShape CirShape;
 	};
 
-	class LinesVisPrimitive :public ICallbackRec_GraphPostRen {
+	class LinesVisPrimitive :public ICallbackRec_GraphRen {
 	public:
-		LinesVisPrimitive(vector<Vector2f>& pointsCoord, Color edgesColor,char RendLayer=0);
-		LinesVisPrimitive(vector<Vector2f>& pointsCoord, vector<Color>& edgeColors, char RendLayer=0);
+		LinesVisPrimitive(vector<Vector2f>& pointsCoord, Color edgesColor, byte	RendLayer = DEFAULT_RENDLAYER_UI);
+		LinesVisPrimitive(vector<Vector2f>& pointsCoord, vector<Color>& edgeColors, byte RendLayer = DEFAULT_RENDLAYER_UI);
 		virtual ~LinesVisPrimitive() {};
 		
 		Color GetEdgeColor(size_t index) const;
@@ -77,20 +81,21 @@ namespace KrostganEngine::UI {
 		virtual void SetEdgeColor(Color color, size_t index);
 		virtual void SetPointPosition(Vector2f newPos, size_t pointIndex);
 
-		void RenderGraphicAction(RenderWindow& window) override;
 
 	protected:
 		VertexArray Vertexes;
+
+		void RenderGraphicAction(RenderWindow& window) override;
 	};
 
-	class WideLineVisual :public ICallbackRec_GraphPostRen, public IColoredObject{
+	class WideLineVisual :public ICallbackRec_GraphRen, public IColoredObject{
 	public:
 		WideLineVisual(
 			Vector2f	Start, 
 			Vector2f	End, 
 			float		Width, 
 			Color		LineColor,
-			char		RendLayer = 0);
+			byte		RendLayer = DEFAULT_RENDLAYER_UI);
 		virtual ~WideLineVisual(){}
 
 		Vector2f GetStart() const {

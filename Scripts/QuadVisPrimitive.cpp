@@ -12,8 +12,8 @@ QuadVisPrimitive::QuadVisPrimitive(
 	Vector2f	rb, 
 	Vector2f	lb,
 	Color		edgeColor,
-	char		RendLayer)
-		:ICallbackRec_GraphPostRen(RendLayer){
+	byte		RendLayer)
+		:ICallbackRec_GraphRen(RendLayer){
 
 	Vertexes = VertexArray(PrimitiveType::LineStrip, 5);
 	SetPoints(lt, rt, rb, lb);
@@ -65,7 +65,7 @@ void QuadVisPrimitive::RenderGraphicAction(RenderWindow& window) {
 	window.draw(Vertexes);
 }
 
-QuadVisPrimitive& QuadVisPrimitive::InstanceQuad(Vector2f corner1, Vector2f corner2,Color edgeColor,char RendLayer) {
+QuadVisPrimitive& QuadVisPrimitive::InstanceQuad(Vector2f corner1, Vector2f corner2,Color edgeColor,byte RendLayer) {
 	float minX, minY, maxX, maxY;
 	if (corner1.x < corner2.x) {
 		minX = corner1.x;

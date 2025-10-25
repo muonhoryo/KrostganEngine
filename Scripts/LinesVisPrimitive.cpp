@@ -10,8 +10,8 @@ using namespace KrostganEngine::UI;
 LinesVisPrimitive::LinesVisPrimitive(
 	vector<Vector2f>&	pointsCoord, 
 	Color				edgeColor,
-	char				RendLayer)
-		:ICallbackRec_GraphPostRen(RendLayer)
+	byte				RendLayer)
+		:ICallbackRec_GraphRen(RendLayer)
 {
 	size_t pointsCount = pointsCoord.size();
 	if (pointsCount== 0) {
@@ -26,8 +26,8 @@ LinesVisPrimitive::LinesVisPrimitive(
 LinesVisPrimitive::LinesVisPrimitive(
 	vector<Vector2f>&	pointsCoord, 
 	vector<Color>&		edgeColors,
-	char				RendLayer)
-		:ICallbackRec_GraphPostRen(RendLayer){
+	byte				RendLayer)
+		:ICallbackRec_GraphRen(RendLayer){
 
 	size_t pointsCount = pointsCoord.size();
 	if (pointsCount == 0) {

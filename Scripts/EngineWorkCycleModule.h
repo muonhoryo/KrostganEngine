@@ -8,7 +8,6 @@
 #include <ICallbackRec_GraphRen.h>
 #include <ICallbackRec_Upd.h>
 #include <ICallbackRec_LUpd.h>
-#include <ICallbackRec_GraphPostRen.h>
 
 using namespace sf;
 using namespace std;
@@ -16,7 +15,7 @@ using namespace KrostganEngine;
 
 namespace KrostganEngine::Core {
 
-	static bool PostRenCallbks_SortPred(ICallbackRec_GraphPostRen*const& first, ICallbackRec_GraphPostRen*const& second) {
+	static bool RenCallbks_SortPred(ICallbackRec_GraphRen*const& first, ICallbackRec_GraphRen*const& second) {
 		return first->GetRendLayer() < second->GetRendLayer();
 	}
 
@@ -171,14 +170,13 @@ namespace KrostganEngine::Core {
 		void SetFrameDeltaTime(float time);
 	};
 
-	class EngineRenderModule :public EngineCallbackHandler<ICallbackRec_GraphRen>, public EngineCallbackHandler<ICallbackRec_GraphPostRen>,
-		public EngineWorkCycleModule {
+	class EngineRenderModule :public EngineCallbackHandler<ICallbackRec_GraphRen>,public EngineWorkCycleModule {
 	public:
 		EngineRenderModule(RenderWindow& Window);
 
 		void Execute() override;
 
-		void Add(ICallbackRec_GraphPostRen& callbck) override;
+		void Add(ICallbackRec_GraphRen& callbck) override;
 
 	private:
 

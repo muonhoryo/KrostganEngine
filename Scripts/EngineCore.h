@@ -5,7 +5,6 @@
 #include <EngineStateHandler.h>
 
 #include <ICallbackRec_GraphRen.h>
-#include <ICallbackRec_GraphPostRen.h>
 #include <ICallbackRec_Upd.h>
 #include <ICallbackRec_LUpd.h>
 #include <IPhysicalObject.h>

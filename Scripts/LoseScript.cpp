@@ -19,7 +19,7 @@ LoseScript::LoseScript()
 	UserInterfaceLoader::UnloadCurrent();
 }
 
-void LoseScript::RenderGraphic(RenderWindow& window) {
+void LoseScript::RenderGraphicAction(RenderWindow& window) {
 
 	float time = LostTimer.getElapsedTime().asSeconds();
 	switch (Stage)

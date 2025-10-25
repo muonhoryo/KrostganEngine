@@ -21,7 +21,7 @@ namespace KrostganEngine::GameTransitions {
 	public:
 		WinScript();
 
-		void RenderGraphic(RenderWindow& window) override;
+		void RenderGraphicAction(RenderWindow& window) override;
 
 	private:
 		WinMessageStage  Stage = WinMessageStage::Hide;

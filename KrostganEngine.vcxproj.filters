@@ -534,9 +534,6 @@
     <ClCompile Include="Scripts\WideLineVisual.cpp">
       <Filter>Исходные файлы\CoreSystems\Visual\UI/UX\Primitives</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\ICallbackRec_GraphPostRen.cpp">
-      <Filter>Исходные файлы\CoreSystems\EngineCallbacks</Filter>
-    </ClCompile>
     <ClCompile Include="Scripts\IHitPointModule.cpp">
       <Filter>Исходные файлы\CoreSystems\GameObjects\FightingSystems\HitPointSystem\HPModules</Filter>
     </ClCompile>
@@ -922,9 +919,6 @@
     </ClInclude>
     <ClInclude Include="Scripts\LineAAAnimation.h">
       <Filter>Файлы заголовков\Visual\UI/UX\AutoAttackAnimation</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\ICallbackRec_GraphPostRen.h">
-      <Filter>Файлы заголовков\CoreSystems\EngineCallbacks</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\CallbackDelegates.h">
       <Filter>Файлы заголовков\CoreSystems\EngineCallbacks</Filter>

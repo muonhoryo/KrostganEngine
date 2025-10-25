@@ -18,8 +18,10 @@ UIElement::UIElement(
 	Vector2f			LocalScale,
 	float				LocalRotation,
 	Vector2f			Anchor,
-	Vector2f			UISize)
+	Vector2f			UISize,
+	byte				RendLayer)
 	:HierarchyTrObj(Owner, Parent == nullptr ? UserInterfaceManager::GetRoot() : *Parent),
+	ICallbackRec_GraphRen(RendLayer),
 	Anchor(Anchor)
 {
 	ctor_initialize(UISize);
@@ -27,14 +29,15 @@ UIElement::UIElement(
 }
 
 UIElement::UIElement(
-	Transformable& Owner,
-	UIElement* Parent,
+	Transformable&		Owner,
+	UIElement*			Parent,
 	Vector2f			LocalPosition,
 	float				LocalScale,
 	float				LocalRotation,
 	Vector2f			Anchor,
-	Vector2f			UISize)
-	:UIElement(Owner, Parent, LocalPosition, Vector2f(LocalScale, LocalScale), LocalRotation, Anchor, UISize)
+	Vector2f			UISize,
+	byte				RendLayer)
+	:UIElement(Owner, Parent, LocalPosition, Vector2f(LocalScale, LocalScale), LocalRotation, Anchor, UISize,RendLayer)
 {}
 
 UIElement::UIElement(
@@ -43,8 +46,10 @@ UIElement::UIElement(
 	Vector2f			GlobalScale,
 	float				GlobalRotation,
 	Vector2f			Anchor,
-	Vector2f			UISize)
+	Vector2f			UISize,
+	byte				RendLayer)
 	:HierarchyTrObj(Owner),
+	ICallbackRec_GraphRen(RendLayer),
 	Anchor(Anchor)
 {
 	ctor_initialize(UISize);
@@ -57,8 +62,9 @@ UIElement::UIElement(
 	float				GlobalScale,
 	float				GlobalRotation,
 	Vector2f			Anchor,
-	Vector2f			UISize)
-	:UIElement(Owner, GlobalPosition, Vector2f(GlobalScale, GlobalScale), GlobalRotation, Anchor, UISize)
+	Vector2f			UISize,
+	byte				RendLayer)
+	:UIElement(Owner, GlobalPosition, Vector2f(GlobalScale, GlobalScale), GlobalRotation, Anchor, UISize,RendLayer)
 {}
 
 //

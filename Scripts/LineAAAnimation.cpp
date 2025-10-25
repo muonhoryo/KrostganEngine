@@ -53,7 +53,7 @@ void LineAAAnimation::OnDealDmg(AutoAttackInfo attInfo) {
 	}
 	
 }
-void LineAAAnimation::RenderGraphic(RenderWindow& window) {
+void LineAAAnimation::RenderGraphicAction(RenderWindow& window) {
 
 	if (LineEffect.GetIsFadingState()) {
 

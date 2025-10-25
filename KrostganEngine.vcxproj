@@ -166,7 +166,6 @@
     <ClCompile Include="Scripts\HeroDeathModule.cpp" />
     <ClCompile Include="Scripts\HighlightVisualEffect.cpp" />
     <ClCompile Include="Scripts\HighlightVisualEff_MRes.cpp" />
-    <ClCompile Include="Scripts\ICallbackRec_GraphPostRen.cpp" />
     <ClCompile Include="Scripts\ICallbackRec_LUpd.cpp" />
     <ClCompile Include="Scripts\CatalogObject.cpp" />
     <ClCompile Include="Scripts\IHierarchyTrObj.cpp" />
@@ -292,7 +291,6 @@
     <ClInclude Include="Scripts\HighlightVisualEffect.h" />
     <ClInclude Include="Scripts\HighlightVisualEff_MRes.h" />
     <ClInclude Include="Scripts\HPRegenModules.h" />
-    <ClInclude Include="Scripts\ICallbackRec_GraphPostRen.h" />
     <ClInclude Include="Scripts\CatalogObject.h" />
     <ClInclude Include="Scripts\IColoredObject.h" />
     <ClInclude Include="Scripts\HierarchyTrObj.h" />

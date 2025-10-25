@@ -1,7 +1,7 @@
 #pragma once
 
 #include <HierarchyTrObj.h>
-#include <ICallbackRec_GraphPostRen.h>
+#include <ICallbackRec_GraphRen.h>
 
 using namespace KrostganEngine::Core;
 using namespace sf;
@@ -12,7 +12,7 @@ namespace KrostganEngine::UI {
 
 	class UIElement;
 
-	class UIElement : public HierarchyTrObj, public virtual ICallbackRec_GraphPostRen {
+	class UIElement : public HierarchyTrObj, public ICallbackRec_GraphRen {
 	public:
 		virtual ~UIElement(){}
 
@@ -95,7 +95,8 @@ namespace KrostganEngine::UI {
 			Vector2f			LocalScale = DEFAULT_SCALE,
 			float				LocalRotation = 0,
 			Vector2f			Anchor = DEFAULT_ANCHOR,
-			Vector2f			UISize = DEFAULT_SCALE);
+			Vector2f			UISize = DEFAULT_SCALE,
+			byte				RendLayer = DEFAULT_RENDLAYER_UI);
 
 		/// <summary>
 		/// Nullptr as the Parent means that parent of the element will be root of UI (UserInterfaceManager::GetRoot())
@@ -113,7 +114,8 @@ namespace KrostganEngine::UI {
 			float				LocalScale = DEFAULT_SCALE_SNG,
 			float				LocalRotation = 0,
 			Vector2f			Anchor = DEFAULT_ANCHOR,
-			Vector2f			UISize = DEFAULT_SCALE);
+			Vector2f			UISize = DEFAULT_SCALE,
+			byte				RendLayer = DEFAULT_RENDLAYER_UI);
 
 		UIElement(
 			Transformable& Owner,
@@ -121,7 +123,8 @@ namespace KrostganEngine::UI {
 			Vector2f			GlobalScale = DEFAULT_SCALE,
 			float				GlobalRotation = 0,
 			Vector2f			Anchor = DEFAULT_ANCHOR,
-			Vector2f			UISize = DEFAULT_SCALE);
+			Vector2f			UISize = DEFAULT_SCALE,
+			byte				RendLayer = DEFAULT_RENDLAYER_UI);
 
 		UIElement(
 			Transformable& Owner,
@@ -129,7 +132,8 @@ namespace KrostganEngine::UI {
 			float				GlobalScale = DEFAULT_SCALE_SNG,
 			float				GlobalRotation = 0,
 			Vector2f			Anchor = DEFAULT_ANCHOR,
-			Vector2f			UISize = DEFAULT_SCALE);
+			Vector2f			UISize = DEFAULT_SCALE,
+			byte				RendLayer = DEFAULT_RENDLAYER_UI);
 
 		virtual	void SetUISize_Inherit(Vector2f oldSize);
 		virtual void SetChildren_UISize(Vector2f oldSize);
