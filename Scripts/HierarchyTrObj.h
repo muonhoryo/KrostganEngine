@@ -45,21 +45,23 @@ namespace KrostganEngine::Core {
 		/// </summary>
 		/// <param name="localPos"></param>
 		/// <param name="localScale"></param>
-		void ctor_initialize_par(Vector2f localPos,Vector2f localScale) {
+		void ctor_initialize_par(Vector2f localPos,Vector2f localScale,float localRotation) {
 
 			AddOwnerAsChild();
 			SetLocalScale(localScale);
 			SetLocalPosition(localPos);
+			SetLocalRotation(localRotation);
 		}
 		/// <summary>
 		/// Default ctor initialization without parent
 		/// </summary>
 		/// <param name="globalPos"></param>
 		/// <param name="globalScale"></param>
-		void ctor_initialize_no_par(Vector2f globalPos, Vector2f globalScale) {
+		void ctor_initialize_no_par(Vector2f globalPos, Vector2f globalScale,float globalRotation) {
 
 			SetGlobalScale(globalScale);
 			SetGlobalPosition(globalPos);
+			SetGlobalRotation(globalRotation);
 		}
 
 		void SetParent_inter(IHierarchyTrObj* parent) override {

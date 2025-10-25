@@ -31,6 +31,7 @@ UISprite::UISprite(
 	const Texture& RenTexture,
 	Vector2f		GlobalPosition,
 	Vector2f		GlobalScale,
+	float			GlobalRotation,
 	Vector2f		Anchor,
 	Color			SprColor,
 	Shader*			RendShader,
@@ -39,15 +40,13 @@ UISprite::UISprite(
 			ctor_InitOwner(), 
 			GlobalPosition, 
 			GlobalScale, 
+			GlobalRotation,
 			Anchor,
 			(Vector2f)RenTexture.getSize()),
 		ICallbackRec_GraphPostRen(RendLayer),
 		RendShader(RendShader)
 {
 	ctor_Initialize(RenTexture);
-
-	//SetGlobalScale(GlobalScale );
-	//SetGlobalPosition(GlobalPosition);
 	SetColor(SprColor);
 }
 
@@ -55,6 +54,7 @@ UISprite::UISprite(
 	const Texture& RenTexture,
 	Vector2f		GlobalPosition,
 	float			GlobalScale,
+	float			GlobalRotation,
 	Vector2f		Anchor,
 	Color			SprColor,
 	Shader*			RendShader,
@@ -63,6 +63,7 @@ UISprite::UISprite(
 			RenTexture,
 			GlobalPosition,
 			Vector2f(GlobalScale,GlobalScale),
+			GlobalRotation,
 			Anchor,
 			SprColor,
 			RendShader,
@@ -74,6 +75,7 @@ UISprite::UISprite(
 	UIElement*			Parent,
 	Vector2f			LocalPosition,
 	Vector2f			LocalScale,
+	float				LocalRotation,
 	Vector2f			Anchor,
 	Color				SprColor,
 	Shader*				RendShader,
@@ -83,15 +85,13 @@ UISprite::UISprite(
 			Parent, 
 			LocalPosition,
 			LocalScale, 
+			LocalRotation,
 			Anchor,
 			(Vector2f)RenTexture.getSize()),
 		ICallbackRec_GraphPostRen(RendLayer),
 		RendShader(RendShader)
 {
 	ctor_Initialize(RenTexture);
-
-	//SetLocalScale(LocalScale );
-	//SetGlobalPosition(GlobalPosition);
 	SetColor(SprColor);
 }
 
@@ -100,6 +100,7 @@ UISprite::UISprite(
 	UIElement*		Parent,
 	Vector2f		LocalPosition,
 	float			LocalScale,
+	float			LocalRotation,
 	Vector2f		Anchor,
 	Color			SprColor,
 	Shader*			RendShader,
@@ -109,6 +110,7 @@ UISprite::UISprite(
 			Parent,
 			LocalPosition,
 			Vector2f(LocalScale,LocalScale),
+			LocalRotation,
 			Anchor,
 			SprColor,
 			RendShader,

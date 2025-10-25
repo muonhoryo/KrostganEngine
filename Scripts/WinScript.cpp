@@ -59,8 +59,8 @@ void WinScript::RenderGraphic(RenderWindow& window) {
 
 			Message->SetColor(Color(255U, 255U, 255U, 0U));
 			Message2->SetColor(Color(255U, 255U, 255U, 0U));
-			Message->SetLocalPosition(Vector2f(-Message->GetPixelSize().x * 0.5, -100));
-			Message2->SetLocalPosition(Vector2f(-Message2->GetPixelSize().x * 0.5, 0));
+			Message->SetLocalPosition(Vector2f(-Message->GetGlobalUISize().x * 0.5, -100));
+			Message2->SetLocalPosition(Vector2f(-Message2->GetGlobalUISize().x * 0.5, 0));
 
 			Stage = WinMessageStage::Appearing;
 		}

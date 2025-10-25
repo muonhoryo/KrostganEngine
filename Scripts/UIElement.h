@@ -24,11 +24,17 @@ namespace KrostganEngine::UI {
 
 		Vector2f			GetLocalPosition() const override;
 		Vector2f			GetLocalScale() const override;
+		float				GetLocalRotation() const override;
 
 		void SetGlobalPosition(Vector2f position) override;
 		void SetLocalPosition(Vector2f position) override;
+
 		void SetGlobalScale(Vector2f scale) override;
 		void SetLocalScale(Vector2f scale) override;
+
+		void SetGlobalRotation(float rotation) override;
+		void SetLocalRotation(float rotationn) override;
+
 		void SetOrigin(Vector2f origin) override;
 
 		//
@@ -54,12 +60,7 @@ namespace KrostganEngine::UI {
 
 		Vector2f			GetAnchor() const;
 		Vector2f			GetLocalUISize() const;
-		Vector2f			GetGlobalUISize() const;
-		/// <summary>
-		/// Return size of UI-element's borders  in pixels
-		/// </summary>
-		/// <returns></returns>
-		Vector2f			GetPixelSize() const;
+		const Vector2f&		GetGlobalUISize() const;
 		/// <summary>
 		/// Return offset from global position of element's parent to its anchor in pixels
 		/// </summary>
@@ -71,7 +72,6 @@ namespace KrostganEngine::UI {
 		/// </summary>
 		/// <returns></returns>
 		Vector2f			GetAnchoredGlobalPos(Vector2f anchor) const;
-		const Rect<float>&	GetBorders() const;
 		bool				GetResizingUIByInherit() const;
 
 		bool		GetInheritActivity() const;
@@ -80,19 +80,20 @@ namespace KrostganEngine::UI {
 
 	protected:
 		/// <summary>
-		/// Nullptr as the Parent means that parent of the element will be root of UI (UserInterfaceManager::GetRoot())
-		/// </summary>
-		/// <param name="Owner"></param>
-		/// <param name="Parent"></param>
-		/// <param name="GlobalPosition"></param>
-		/// <param name="LocalScale"></param>
-		/// <param name="Anchor"></param>
-		/// <param name="UISize"></param>
+	/// Nullptr as the Parent means that parent of the element will be root of UI (UserInterfaceManager::GetRoot())
+	/// </summary>
+	/// <param name="Owner"></param>
+	/// <param name="Parent"></param>
+	/// <param name="GlobalPosition"></param>
+	/// <param name="LocalScale"></param>
+	/// <param name="Anchor"></param>
+	/// <param name="UISize"></param>
 		UIElement(
-			Transformable&		Owner,
-			UIElement*			Parent,
+			Transformable& Owner,
+			UIElement* Parent,
 			Vector2f			LocalPosition = DEFAULT_POSITION,
 			Vector2f			LocalScale = DEFAULT_SCALE,
+			float				LocalRotation = 0,
 			Vector2f			Anchor = DEFAULT_ANCHOR,
 			Vector2f			UISize = DEFAULT_SCALE);
 
@@ -106,24 +107,27 @@ namespace KrostganEngine::UI {
 		/// <param name="Anchor"></param>
 		/// <param name="UISize"></param>
 		UIElement(
-			Transformable&		Owner,
-			UIElement*			Parent,
+			Transformable& Owner,
+			UIElement* Parent,
 			Vector2f			LocalPosition = DEFAULT_POSITION,
-			float				LocalScale = 1,
+			float				LocalScale = DEFAULT_SCALE_SNG,
+			float				LocalRotation = 0,
 			Vector2f			Anchor = DEFAULT_ANCHOR,
 			Vector2f			UISize = DEFAULT_SCALE);
 
 		UIElement(
-			Transformable&		Owner,
+			Transformable& Owner,
 			Vector2f			GlobalPosition = DEFAULT_POSITION,
 			Vector2f			GlobalScale = DEFAULT_SCALE,
+			float				GlobalRotation = 0,
 			Vector2f			Anchor = DEFAULT_ANCHOR,
 			Vector2f			UISize = DEFAULT_SCALE);
 
 		UIElement(
-			Transformable&		Owner,
+			Transformable& Owner,
 			Vector2f			GlobalPosition = DEFAULT_POSITION,
-			float				GlobalScale = 1,
+			float				GlobalScale = DEFAULT_SCALE_SNG,
+			float				GlobalRotation = 0,
 			Vector2f			Anchor = DEFAULT_ANCHOR,
 			Vector2f			UISize = DEFAULT_SCALE);
 
@@ -131,7 +135,12 @@ namespace KrostganEngine::UI {
 		virtual void SetChildren_UISize(Vector2f oldSize);
 
 		Vector2f		Anchor = Vector2f(0, 0);
-		Rect<float>		Borders;
+		Vector2f		UISize;
+
+	protected:
+		void SetPosition_Inherit() override;
+		void SetScale_Inherit() override;
+		void SetRotation_Inherit() override;
 
 	private:
 		void ctor_initialize(Vector2f UISize);
@@ -146,18 +155,9 @@ namespace KrostganEngine::UI {
 		/// Calculate local position of element from parent's transform
 		/// </summary>
 		/// <returns></returns>
-		Vector2f	GetLocalPositionFromParent();
-		Vector2f	GetLocalScaleFromParent();
-		Vector2f	TransformLocalPosToGlobal(Vector2f localPos);
-
-		/// <summary>
-		/// Scale object itself by scale-param
-		/// </summary>
-		/// <param name="scale"></param>
-		void	ScaleElement(Vector2f scale);
-
-		void SetPosition_Inherit();
-		void SetScale_Inherit();
+		Vector2f	GetLocalPositionFromParent() const;
+		Vector2f	GetLocalScaleFromParent() const;
+		Vector2f	TransformLocalPosToGlobal(Vector2f localPos) const;
 
 		Vector2f	LocalPosition = DEFAULT_POSITION;
 		Vector2f	LocalScale = DEFAULT_SCALE;

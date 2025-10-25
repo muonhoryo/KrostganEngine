@@ -33,6 +33,7 @@ UIText::UIText(
 			Parent,
 			LocalPosition,
 			LocalScale,
+			0,
 			Anchor,
 			ctor_GetUISize(textStr,characterSize)),
 		ICallbackRec_GraphPostRen(RendLayer)
@@ -67,6 +68,7 @@ UIText::UIText(
 			ctor_InitOwner(textStr,characterSize),
 			GlobalPosition,
 			GlobalScale,
+			0,
 			Anchor,
 			ctor_GetUISize(textStr,characterSize)),
 		ICallbackRec_GraphPostRen(RendLayer)
@@ -82,7 +84,7 @@ UIText::UIText(
 		:UIText(
 			textStr,
 			characterSize,
-			GlobalPosition,
+			GlobalPosition,	
 			Vector2f(GlobalScale,GlobalScale),
 			Anchor,
 			RendLayer)

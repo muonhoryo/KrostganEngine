@@ -40,7 +40,8 @@ Sprite& SpriteRenderer::ctor_InitOwner() {
 SpriteRenderer::SpriteRenderer(
 	const Texture&	RenTexture,
 	Vector2f		GlobalPosition,
-	Vector2f		GlobalScale,
+	float			GlobalScale,
+	float			GlobalRotation,
 	Color			SprColor,
 	Shader*			RendShader)
 		
@@ -49,6 +50,7 @@ SpriteRenderer::SpriteRenderer(
 		(float)max(RenTexture.getSize().x, RenTexture.getSize().y),
 		GlobalPosition,
 		GlobalScale,
+		GlobalRotation,
 		SprColor,
 		RendShader)
 {}
@@ -57,24 +59,25 @@ SpriteRenderer::SpriteRenderer(
 	const Texture&	RenTexture, 
 	float			maxSizeInPixels,
 	Vector2f		GlobalPosition,
-	Vector2f		GlobalScale,
+	float			GlobalScale,
+	float			GlobalRotation,
 	Color			SprColor,
 	Shader*			RendShader) 
-		:WorldTransfObj(ctor_InitOwner(), GlobalPosition, GlobalScale, ctor_GetOrigin(RenTexture)),
+		:WorldTransfObj(ctor_InitOwner(), GlobalPosition, GlobalScale, GlobalRotation,ctor_GetOrigin(RenTexture)),
 		RendShader	(RendShader){
 
 	ctor_Initialize(RenTexture,maxSizeInPixels);
 
-	SetGlobalScale(GlobalScale*TextureResizingCoef);
-	SetGlobalPosition(GlobalPosition);
+	ITransformableObj::SetGlobalScale(GlobalScale*TextureResizingCoef);
 	SetColor(SprColor);
 }
 
 SpriteRenderer::SpriteRenderer(
 	const Texture&		RenTexture,
-	WorldTransfObj&	Parent,
+	WorldTransfObj&		Parent,
 	Vector2f			LocalPosition,
-	Vector2f			LocalScale,
+	float				LocalScale,
+	float				LocalRotation,
 	Color				SprColor,
 	Shader*				RendShader)
 	
@@ -84,6 +87,7 @@ SpriteRenderer::SpriteRenderer(
 		(float)max(RenTexture.getSize().x,RenTexture.getSize().y),
 		LocalPosition,
 		LocalScale,
+		LocalRotation,
 		SprColor,
 		RendShader)
 {}
@@ -93,15 +97,16 @@ SpriteRenderer::SpriteRenderer(
 	WorldTransfObj& Parent,
 	float				maxSizeInPixels,
 	Vector2f			LocalPosition,
-	Vector2f			LocalScale,
+	float				LocalScale,
+	float				LocalRotation,
 	Color				SprColor,
 	Shader*				RendShader)
-		:WorldTransfObj(ctor_InitOwner(),Parent, LocalPosition,LocalScale,ctor_GetOrigin(RenTexture)),
+		:WorldTransfObj(ctor_InitOwner(),Parent, LocalPosition,LocalScale, LocalRotation,ctor_GetOrigin(RenTexture)),
 		RendShader(RendShader) {
 
 	ctor_Initialize(RenTexture, maxSizeInPixels);
 
-	SetLocalScale(LocalScale * TextureResizingCoef);
+	ITransformableObj::SetLocalScale(LocalScale * TextureResizingCoef);
 	SetLocalPosition(LocalPosition);
 	SetColor(SprColor);
 }

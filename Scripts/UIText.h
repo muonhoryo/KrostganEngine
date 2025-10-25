@@ -44,7 +44,7 @@ namespace KrostganEngine::UI {
 			const string		textStr			= "",
 			unsigned int		characterSize	= DEFAULT_FONTSIZE,
 			Vector2f			GlobalPosition	= DEFAULT_POSITION,
-			float				GlobalScale		= 1,
+			float				GlobalScale		= DEFAULT_SCALE_SNG,
 			Vector2f			Anchor			= DEFAULT_ANCHOR,
 			char				RendLayer		= 0);
 

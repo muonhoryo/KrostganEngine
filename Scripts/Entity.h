@@ -3,11 +3,9 @@
 #include <GameObject.h>
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
-#include <SquareScaleSprite.h>
 #include <ICallbackRec_Upd.h>
 #include <EntityHPModule.h>
 #include <vector>
-//#include <CoreVisual_UI.h>
 #include <ISelectableEntity.h>
 #include <Events.h>
 #include <RelationsSystem.h>
@@ -95,7 +93,7 @@ namespace KrostganEngine::GameObjects {
 	private:
 		bool					IsEntitySelected		=	false;
 		const ExtGlRes_Sprite*	SelectionSpriteSource	=	nullptr;
-		SquareScaleSprite*		SelectionSprite			=	nullptr;
+		SpriteRenderer*			SelectionSprite			=	nullptr;
 		IHitPointModule*		HPModule;
 		IndicatorFill*			HPBar;
 		

@@ -29,12 +29,13 @@ GameObject::GameObject(const GameObjectCtorParams& params)
 		ctor_InitOwner(),
 		params.GlobalPosition,
 		params.GlobalScale),
-	BodySprite(*new SquareScaleSprite(
+	BodySprite(*new SpriteRenderer(
 		params.BodySpriteSource->Tex,
 		*this,
 		Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution,
 		Vector2f(0, 0),
-		1,
+		DEFAULT_SCALE_SNG,
+		0,
 		params.SprColor,
 		params.BodySpriteSource->RenShader))
 {}

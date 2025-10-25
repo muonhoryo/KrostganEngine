@@ -57,6 +57,12 @@ void IHierarchyTrObj::SetChildrenScale() {
 		ch->SetScale_Inherit();
 	}
 }
+void IHierarchyTrObj::SetChildrenRotation() {
+
+	for (auto ch : ChildObjs) {
+		ch->SetRotation_Inherit();
+	}
+}
 
 const vector<IHierarchyTrObj*>&	IHierarchyTrObj::GetChildrenCopy() const {
 	return *new vector<IHierarchyTrObj*>(ChildObjs);

@@ -12,11 +12,12 @@ LineAAAnimation::LineAAAnimation(WorldTransfObj& Owner)
 	LineEffect(*new FadingVisualEff_MRes(LineRender)){
 
 	auto hitSpr = ExternalGlobalResources::GetRes_t<ExtGlRes_Sprite>(ExternalGlobalResources::CORE_RES_AA_HITSPRITE);
-	HitSprite = new SquareScaleSprite(
+	HitSprite = new SpriteRenderer(
 		hitSpr->Tex,
 		Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution,
 		Owner.GetGlobalPosition(),
-		1,
+		DEFAULT_SCALE_SNG,
+		0,
 		Color::Red,
 		hitSpr->RenShader);
 	HitSprite->SetDesWithParent(false);
@@ -47,6 +48,8 @@ void LineAAAnimation::OnDealDmg(AutoAttackInfo attInfo) {
 		LineRender.SetEnd(ptr->GetGlobalPosition());
 		HitSprite->SetParent(ptr);
 		HitSprite->SetGlobalPosition(ptr->GetGlobalPosition());
+		Vector2f glPos = HitSprite->GetGlobalPosition();
+		glPos = HitSprite->GetGlobalPosition();
 	}
 	
 }

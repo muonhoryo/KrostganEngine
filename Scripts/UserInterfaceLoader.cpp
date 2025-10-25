@@ -139,6 +139,7 @@ void UserInterfaceLoader::DeserializeNode(xml_node<>* node, UIElement& parent)
 				&parent,
 				pos,
 				scale,
+				0,
 				anchor,
 				color,
 				shad,
@@ -152,7 +153,7 @@ void UserInterfaceLoader::DeserializeNode(xml_node<>* node, UIElement& parent)
 				pos,
 				scale,
 				anchor,
-				parent.GetPixelSize());
+				parent.GetGlobalUISize());
 			el = empt;
 		}
 

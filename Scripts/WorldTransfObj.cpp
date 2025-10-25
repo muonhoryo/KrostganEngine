@@ -7,48 +7,42 @@ using namespace KrostganEngine::GameObjects;
 using namespace KrostganEngine;
 
 WorldTransfObj::WorldTransfObj
-	(Transformable&		Owner,
-	 WorldTransfObj&	Parent,
-	 Vector2f			LocalPosition,
-	 Vector2f			LocalScale,
-	 Vector2f			Origin)
-		:LocalScale		(LocalScale),
-		HierarchyTrObj(Owner,Parent){
-
-	Vector2f pos = GetGlobalPosition();
-
-	SetOrigin(Origin);
-	ctor_initialize_par(LocalPosition,LocalScale);
-}
-
-WorldTransfObj::WorldTransfObj
-	(Transformable&		Owner,
-	WorldTransfObj&	Parent,
+(Transformable& Owner,
+	WorldTransfObj& Parent,
 	Vector2f			GlobalPosition,
 	float				LocalScale,
+	float				LocalRotation,
 	Vector2f			Origin)
-		:WorldTransfObj(Owner,Parent, GlobalPosition,Vector2f(LocalScale,LocalScale),Origin)
-{}
-
-WorldTransfObj::WorldTransfObj
-	(Transformable& Owner, 
-	 Vector2f		GlobalPosition,
-	 Vector2f		GlobalScale,
-	 Vector2f		Origin)
-		:HierarchyTrObj(Owner),
-		LocalScale	(GlobalScale){
+	:HierarchyTrObj(Owner, Parent) {
 
 	SetOrigin(Origin);
-	ctor_initialize_no_par(GlobalPosition, GlobalScale);
+	ctor_initialize_par(LocalPosition, Vector2f(LocalScale, LocalScale), LocalRotation);
 }
 
 WorldTransfObj::WorldTransfObj
-	(Transformable&		Owner,
+(Transformable& Owner,
 	Vector2f			GlobalPosition,
 	float				GlobalScale,
+	float				GlobalRotation,
 	Vector2f			Origin)
-		:WorldTransfObj(Owner, GlobalPosition,Vector2f(GlobalScale, GlobalScale),Origin)
-{}
+	:HierarchyTrObj(Owner) {
+
+	SetOrigin(Origin);
+	ctor_initialize_no_par(GlobalPosition, Vector2f(GlobalScale, GlobalScale), GlobalRotation);
+}
+
+//
+//
+//	getters
+//
+//
+
+float WorldTransfObj::GetGlobalScale_Sng() const {
+	return GetGlobalScale().x;
+}
+float WorldTransfObj::GetLocalScale_Sng() const {
+	return GetLocalScale().x;
+}
 
 //
 //
@@ -60,7 +54,10 @@ Vector2f			WorldTransfObj::GetLocalPosition() const {
 	return LocalPosition;
 }
 Vector2f			WorldTransfObj::GetLocalScale() const {
-	return LocalScale;
+	return Vector2f(LocalScale, LocalScale);
+}
+float				WorldTransfObj::GetLocalRotation() const {
+	return LocalRotation;
 }
 Vector2f			WorldTransfObj::GetPrevMovStep() const {
 	return PrevMovStep;
@@ -102,20 +99,60 @@ void WorldTransfObj::SetLocalPosition		(Vector2f position) {
 	}
 }
 
-void WorldTransfObj::SetGlobalScale	(Vector2f scale) {
+void WorldTransfObj::SetGlobalRotation(float rotation) {
 
-	ScaleObject(scale);
+	rotation = ClampRotation(rotation);
+	GetOwner_inter().setRotation(rotation);
+	LocalRotation = rotation;
+	auto par = GetParent();
+	if (par != nullptr) {
+		LocalRotation = ClampRotation(LocalRotation - par->GetGlobalRotation());
+	}
+	SetChildrenRotation();
+}
+void WorldTransfObj::SetLocalRotation(float rotation) {
+
+	rotation = ClampRotation(rotation);
+	LocalRotation = rotation;
+	auto par = GetParent();
+	if (par == nullptr) {
+		SetGlobalRotation(rotation);
+	}
+	else {
+		GetOwner_inter().setRotation(par->GetGlobalRotation() + LocalRotation);
+		SetChildrenRotation();
+	}
+}
+
+void WorldTransfObj::SetGlobalScale(Vector2f fScale) {
+
+	fScale.x = fScale.y;
+	GetOwner_inter().setScale(fScale);
+	auto par = GetParent();
+	LocalScale = par == nullptr ? fScale.x : fScale.x /= par->GetGlobalScale().x;
+
 	SetChildrenScale();
 }
-void WorldTransfObj::SetLocalScale	(Vector2f scale) {
+void WorldTransfObj::SetLocalScale(Vector2f scale) {
 
-	LocalScale = scale;
-	SetScale_Inherit();
+	scale.y = scale.x;
+	LocalScale = scale.x;
+	auto par = GetParent();
+	if (par == nullptr) {
+		GetOwner_inter().setScale(scale);
+	}
+	else {
+		float gScaleValue = par->GetGlobalScale().x * LocalScale;
+		Vector2f gScale = Vector2f(gScaleValue, gScaleValue);
+		GetOwner_inter().setScale(gScale);
+	}
 	SetChildrenScale();
 }
+
 
 void WorldTransfObj::SetOrigin(Vector2f origin) {
 	GetOwner_inter().setOrigin(origin);
+	SetLocalPosition(GetLocalPosition());
 }
 
 //
@@ -126,8 +163,6 @@ void WorldTransfObj::SetOrigin(Vector2f origin) {
 
 void WorldTransfObj::SetParent(IHierarchyTrObj* parent) {
 
-	Vector2f pos = GetGlobalPosition();
-	Vector2f scale = GetGlobalScale();
 	if (GetParent() != nullptr) {
 
 		RemoveOwnerAsChild();
@@ -137,11 +172,13 @@ void WorldTransfObj::SetParent(IHierarchyTrObj* parent) {
 
 		SetParent_inter(parent);
 		LocalPosition = GetLocalPositionFromParent();
-		LocalScale = GetLocalScaleFromParent();
+		ITransformableObj::SetGlobalScale(LocalScale);
+		SetGlobalRotation(GetGlobalRotation());
 		AddOwnerAsChild();
 	}
 	else {
-		auto& owner = GetOwner_inter();
+		Vector2f pos = GetGlobalPosition();
+		Vector2f scale = GetGlobalScale();
 		SetGlobalPosition(pos);
 		SetGlobalScale(scale);
 	}
@@ -156,36 +193,15 @@ void WorldTransfObj::SetParent(IHierarchyTrObj* parent) {
 //
 //
 
-Vector2f WorldTransfObj::GetLocalPositionFromParent() {
+Vector2f WorldTransfObj::GetLocalPositionFromParent() const{
 
-	Vector2f origin = GetParent()->GetOrigin();
-	GetParent()->SetOrigin(DEFAULT_ORIGIN);
 	Vector2f result = GetParent()->GetInverseTransform().transformPoint(GetGlobalPosition());
-	GetParent()->SetOrigin(origin);
 	return result;
 }
-Vector2f WorldTransfObj::GetLocalScaleFromParent() {
+Vector2f WorldTransfObj::TransformLocalPosToGlobal(Vector2f localPos) const {
 
-	Vector2f parScale = GetParent()->GetGlobalScale();
-	Vector2f ownScale = GetGlobalScale();
-	ownScale = Vector2f(ownScale.x / parScale.x, ownScale.y / parScale.y);
-	return ownScale;
-}
-Vector2f WorldTransfObj::TransformLocalPosToGlobal(Vector2f localPos) {
-
-	Vector2f origin = GetParent()->GetOrigin();
-	GetParent()->SetOrigin(DEFAULT_ORIGIN);
 	Vector2f result = GetParent()->GetTransform().transformPoint(localPos);
-	GetParent()->SetOrigin(origin);
 	return result;
-}
-
-void WorldTransfObj::ScaleObject(Vector2f scale) {
-
-	Vector2f glScale = GetGlobalScale();
-	Vector2f coef(scale.x / glScale.x, scale.y / glScale.y);
-	GetOwner_inter().setScale(scale);
-	LocalScale = Vector2f(coef.x * LocalScale.x, coef.y * LocalScale.y);
 }
 
 void WorldTransfObj::SetPosition_Inherit() {
@@ -194,11 +210,10 @@ void WorldTransfObj::SetPosition_Inherit() {
 }
 void WorldTransfObj::SetScale_Inherit() {
 
-	if (GetParent() == nullptr)
-		GetOwner_inter().setScale(LocalScale);
-	else {
-
-		Vector2f parentGlScale = GetParent()->GetGlobalScale();
-		GetOwner_inter().setScale(LocalScale.x * parentGlScale.x, LocalScale.y * parentGlScale.y);
-	}
+	ITransformableObj::SetLocalScale(LocalScale);
+	SetLocalPosition(LocalPosition);
+}
+void WorldTransfObj::SetRotation_Inherit() {
+	SetLocalRotation(LocalRotation);
+	SetLocalPosition(LocalPosition);
 }

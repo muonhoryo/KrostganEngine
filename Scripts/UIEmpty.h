@@ -22,6 +22,7 @@ namespace KrostganEngine::UI {
 					Parent,
 					LocalPosition,
 					LocalScale,
+					0,
 					Anchor,
 					UISize)
 		{}
@@ -29,7 +30,7 @@ namespace KrostganEngine::UI {
 		UIEmpty(
 			UIElement*			Parent,
 			Vector2f			LocalPosition	= DEFAULT_POSITION,
-			float				LocalScale		= 1,
+			float				LocalScale		= DEFAULT_SCALE_SNG,
 			Vector2f			Anchor			= DEFAULT_ANCHOR,
 			Vector2f			UISize			= DEFAULT_SCALE)
 				:UIElement(
@@ -37,6 +38,7 @@ namespace KrostganEngine::UI {
 					Parent,
 					LocalPosition,
 					LocalScale,
+					0,
 					Anchor,
 					UISize)
 		{}
@@ -50,12 +52,26 @@ namespace KrostganEngine::UI {
 					ctor_InitOwner(),
 					GlobalPosition,
 					GlobalScale,
+					0,
 					Anchor,
 					UISize)
 		{}
+		UIEmpty(
+			Vector2f			GlobalPosition = DEFAULT_POSITION,
+			float				GlobalScale = DEFAULT_SCALE_SNG,
+			Vector2f			Anchor = DEFAULT_ANCHOR,
+			Vector2f			UISize = DEFAULT_SCALE)
+			:UIElement(
+				ctor_InitOwner(),
+				GlobalPosition,
+				GlobalScale,
+				0,
+				Anchor,
+				UISize)
+		{}
 
 	protected:
-		void RenderGraphicAction(RenderWindow& window){}
+		void RenderGraphicAction(RenderWindow& window) override{}
 
 	private:
 		Transformable& ctor_InitOwner() {

@@ -14,24 +14,27 @@ namespace KrostganEngine::Visual {
 	public:
 		SpriteRenderer(
 			const Texture& RenTexture,
-			Vector2f		GlobalPosition = Vector2f(0, 0),
-			Vector2f		GlobalScale = DEFAULT_SCALE,
+			Vector2f		GlobalPosition = DEFAULT_POSITION,
+			float			GlobalScale = DEFAULT_SCALE_SNG,
+			float			GlobalRotation = 0,
 			Color			SprColor = Color::White,
 			Shader* RendShader = nullptr);
 
 		SpriteRenderer(
 			const Texture& RenTexture,
 			float			maxSizeInPixels,
-			Vector2f		GlobalPosition = Vector2f(0, 0),
-			Vector2f		GlobalScale = DEFAULT_SCALE,
+			Vector2f		GlobalPosition = DEFAULT_POSITION,
+			float			GlobalScale = DEFAULT_SCALE_SNG,
+			float			GlobalRotation = 0,
 			Color			SprColor = Color::White,
 			Shader* RendShader = nullptr);
 
 		SpriteRenderer(
 			const Texture&		RenTexture,
 			WorldTransfObj&		Parent,
-			Vector2f			LocalPosition = Vector2f(0, 0),
-			Vector2f			LocalScale = DEFAULT_SCALE,
+			Vector2f			LocalPosition = DEFAULT_POSITION,
+			float				LocalScale = DEFAULT_SCALE_SNG,
+			float				LocalRotation = 0,
 			Color				SprColor = Color::White,
 			Shader* RendShader = nullptr);
 
@@ -39,8 +42,9 @@ namespace KrostganEngine::Visual {
 			const Texture&		RenTexture,
 			WorldTransfObj&		Parent,
 			float				maxSizeInPixels,
-			Vector2f			LocalPosition = Vector2f(0, 0),
-			Vector2f			LocalScale = DEFAULT_SCALE,
+			Vector2f			LocalPosition = DEFAULT_POSITION,
+			float				LocalScale = DEFAULT_SCALE_SNG,
+			float				LocalRotation = 0,
 			Color				SprColor = Color::White,
 			Shader* RendShader = nullptr);
 

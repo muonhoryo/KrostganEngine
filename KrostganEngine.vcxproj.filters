@@ -241,9 +241,6 @@
     <Filter Include="Исходные файлы\Visual\Effects\Fading">
       <UniqueIdentifier>{a58fa376-0df0-4ced-b634-5c6696476a6f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Файлы заголовков\CoreSystems\GameObjects\TransformableObjs">
-      <UniqueIdentifier>{7e7636fe-9271-4c1c-971d-8644205e5b1c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Файлы заголовков\CoreSystems\Visual\UI/UX">
       <UniqueIdentifier>{1b6b2ee0-f94a-44ba-af1d-af3b1517a850}</UniqueIdentifier>
     </Filter>
@@ -297,6 +294,9 @@
     </Filter>
     <Filter Include="Файлы заголовков\Visual\UI/UX\ValueDependencies">
       <UniqueIdentifier>{88af4f18-7766-41d3-979f-31adaaacd5ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems\GameObjects\HierarchySystem">
+      <UniqueIdentifier>{7e7636fe-9271-4c1c-971d-8644205e5b1c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -590,9 +590,6 @@
     </ClCompile>
     <ClCompile Include="Scripts\watch_ptr_handler_c.cpp">
       <Filter>Исходные файлы\Memory\WatchPointer</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\SquareScaleSprite.cpp">
-      <Filter>Исходные файлы\CoreSystems\Visual</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\SpriteRenderer.cpp">
       <Filter>Исходные файлы\CoreSystems\Visual</Filter>
@@ -935,9 +932,6 @@
     <ClInclude Include="Scripts\CoreVisual.h">
       <Filter>Файлы заголовков\CoreSystems\Visual</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\SquareScaleSprite.h">
-      <Filter>Файлы заголовков\CoreSystems\Visual</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\GameVisualEffects.h">
       <Filter>Файлы заголовков\Visual\Effects</Filter>
     </ClInclude>
@@ -1044,10 +1038,10 @@
       <Filter>Файлы заголовков\Visual\Effects\Fading</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\TransformableObj.h">
-      <Filter>Файлы заголовков\CoreSystems\GameObjects\TransformableObjs</Filter>
+      <Filter>Файлы заголовков\CoreSystems\GameObjects\HierarchySystem</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\WorldTransfObj.h">
-      <Filter>Файлы заголовков\CoreSystems\GameObjects\TransformableObjs</Filter>
+      <Filter>Файлы заголовков\CoreSystems\GameObjects\HierarchySystem</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\SpriteRenderer.h">
       <Filter>Файлы заголовков\CoreSystems\Visual</Filter>
@@ -1095,16 +1089,16 @@
       <Filter>Файлы заголовков\Visual\Effects\Fading</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\HierarchyTrObj.h">
-      <Filter>Файлы заголовков\CoreSystems\GameObjects\TransformableObjs</Filter>
+      <Filter>Файлы заголовков\CoreSystems\GameObjects\HierarchySystem</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\ITransformableObj.h">
-      <Filter>Файлы заголовков\CoreSystems\GameObjects\TransformableObjs</Filter>
+      <Filter>Файлы заголовков\CoreSystems\GameObjects\HierarchySystem</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\IHierarchyTrObj.h">
-      <Filter>Файлы заголовков\CoreSystems\GameObjects\TransformableObjs</Filter>
+      <Filter>Файлы заголовков\CoreSystems\GameObjects\HierarchySystem</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\IStepTracingObj.h">
-      <Filter>Файлы заголовков\CoreSystems\GameObjects\TransformableObjs</Filter>
+      <Filter>Файлы заголовков\CoreSystems\GameObjects\HierarchySystem</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\CatalogObject.h">
       <Filter>Файлы заголовков\CoreSystems\GameLevel\LevelLoading</Filter>

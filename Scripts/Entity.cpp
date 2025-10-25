@@ -66,12 +66,13 @@ void Entity::SelectionOn() {
 	if (!IsEntitySelected && !HPModule->DeathModule.GetIsDeadState()) {
 
 		IsEntitySelected = true;
-		SelectionSprite = new SquareScaleSprite(
+		SelectionSprite = new SpriteRenderer(
 			SelectionSpriteSource->Tex,
 			*this,
 			SelectionSpriteSource->MaxSize,
 			Vector2f(0,0),
-			1,
+			DEFAULT_SCALE_SNG,
+			0,
 			GetColor(),
 			nullptr);
 	}

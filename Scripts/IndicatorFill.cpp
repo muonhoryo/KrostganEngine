@@ -16,7 +16,7 @@ IndicatorFill::IndicatorFill(
 	float			GlobalScale,
 	Color			SprColor)
 
-	:SquareScaleSprite(RenTexture, maxSpriteSize, GlobalPosition, GlobalScale, SprColor, &RendShader),
+	:SpriteRenderer(RenTexture, maxSpriteSize, GlobalPosition, GlobalScale, 0,SprColor, &RendShader),
 	MaskTexture(MaskTexture)
 {}
 IndicatorFill::IndicatorFill(
@@ -28,7 +28,7 @@ IndicatorFill::IndicatorFill(
 	Vector2f			LocalPosition,
 	float				LocalScale,
 	Color				SprColor)
-	:SquareScaleSprite(RenTexture,maxSpriteSize, LocalPosition,LocalScale,SprColor,&RendShader),
+	:SpriteRenderer(RenTexture,maxSpriteSize, LocalPosition,LocalScale,0,SprColor,&RendShader),
 	MaskTexture(MaskTexture)
 {}
 
@@ -43,5 +43,5 @@ float IndicatorFill::GetFillness() const{
 void IndicatorFill::RenderGraphic(RenderWindow& window) {
 	GetShader()->setUniform(SHAD_PARAM_NAME_MASK, MaskTexture);
 	GetShader()->setUniform(SHAD_PARAM_NAME_FILLNESS, Fillness);
-	SquareScaleSprite::RenderGraphic(window);
+	SpriteRenderer::RenderGraphic(window);
 }

@@ -7,58 +7,58 @@ using namespace KrostganEngine::UI;
 void UIElement::ctor_initialize(Vector2f UISize) {
 
 	Vector2f glPos = GetGlobalPosition();
-	Borders.left = glPos.x;
-	Borders.top = glPos.y;
-	Borders.width = UISize.x;
-	Borders.height = UISize.y;
+	this->UISize.x = UISize.x;
+	this->UISize.y = UISize.y;
 }
 
 UIElement::UIElement(
-	Transformable&		Owner,
-	UIElement*			Parent,
+	Transformable& Owner,
+	UIElement* Parent,
 	Vector2f			LocalPosition,
 	Vector2f			LocalScale,
+	float				LocalRotation,
 	Vector2f			Anchor,
 	Vector2f			UISize)
-		:HierarchyTrObj(Owner, Parent == nullptr ? UserInterfaceManager::GetRoot() : *Parent),
-			Anchor(Anchor)
+	:HierarchyTrObj(Owner, Parent == nullptr ? UserInterfaceManager::GetRoot() : *Parent),
+	Anchor(Anchor)
 {
 	ctor_initialize(UISize);
-	//SetOrigin(Vector2f(0, 0));
-	ctor_initialize_par(LocalPosition, LocalScale);
+	ctor_initialize_par(LocalPosition, LocalScale, LocalRotation);
 }
 
 UIElement::UIElement(
-	Transformable&		Owner,
-	UIElement*			Parent,
+	Transformable& Owner,
+	UIElement* Parent,
 	Vector2f			LocalPosition,
 	float				LocalScale,
+	float				LocalRotation,
 	Vector2f			Anchor,
 	Vector2f			UISize)
-		:UIElement(Owner,Parent, LocalPosition,Vector2f(LocalScale,LocalScale),Anchor,UISize)
+	:UIElement(Owner, Parent, LocalPosition, Vector2f(LocalScale, LocalScale), LocalRotation, Anchor, UISize)
 {}
 
 UIElement::UIElement(
-	Transformable&		Owner,
+	Transformable& Owner,
 	Vector2f			GlobalPosition,
 	Vector2f			GlobalScale,
+	float				GlobalRotation,
 	Vector2f			Anchor,
 	Vector2f			UISize)
-		:HierarchyTrObj(Owner),
-		Anchor(Anchor)
+	:HierarchyTrObj(Owner),
+	Anchor(Anchor)
 {
 	ctor_initialize(UISize);
-	//SetOrigin(Vector2f(0, 0));
-	ctor_initialize_no_par(GlobalPosition, GlobalScale);
+	ctor_initialize_no_par(GlobalPosition, GlobalScale, GlobalRotation);
 }
 
 UIElement::UIElement(
-	Transformable&		Owner,
+	Transformable& Owner,
 	Vector2f			GlobalPosition,
 	float				GlobalScale,
+	float				GlobalRotation,
 	Vector2f			Anchor,
 	Vector2f			UISize)
-		:UIElement(Owner,GlobalPosition,Vector2f(GlobalScale,GlobalScale),Anchor,UISize)
+	:UIElement(Owner, GlobalPosition, Vector2f(GlobalScale, GlobalScale), GlobalRotation, Anchor, UISize)
 {}
 
 //
@@ -72,6 +72,9 @@ Vector2f			UIElement::GetLocalPosition() const {
 }
 Vector2f			UIElement::GetLocalScale() const {
 	return LocalScale;
+}
+float				UIElement::GetLocalRotation() const {
+	return GetGlobalRotation();
 }
 
 //
@@ -101,25 +104,57 @@ void UIElement::SetLocalPosition(Vector2f position) {
 	}
 	else {
 
-		Vector2f oldPos = GetGlobalPosition();
 		GetOwner_inter().setPosition(TransformLocalPosToGlobal(position));
 		LocalPosition = position;
 		SetChildrenPosition();
 	}
 }
+void UIElement::SetGlobalRotation(float rotation) {
+
+	rotation = ClampRotation(rotation);
+	GetOwner_inter().setRotation(rotation);
+	SetChildrenRotation();
+}
+void UIElement::SetLocalRotation(float rotation) {
+	SetGlobalRotation(rotation);
+}
 void UIElement::SetGlobalScale(Vector2f scale) {
 
-	ScaleElement(scale);
+	Vector2f newUISize = GetLocalUISize();
+	GetOwner_inter().setScale(scale);
+	LocalScale = GetGlobalScale();
+	auto par = GetParent();
+	if (par != nullptr) {
+		Vector2f parScale = par->GetGlobalScale();
+		LocalScale.x /= parScale.x;
+		LocalScale.y /= parScale.y;
+	}
+	SetGlobalUISize(Vector2f(newUISize.x * scale.x, newUISize.y * scale.y));	//UISize is scale with scale of object
 	SetChildrenScale();
 }
 void UIElement::SetLocalScale(Vector2f scale) {
 
-	LocalScale = scale;
-	SetScale_Inherit();
-	SetChildrenScale();
+	auto par = GetParent();
+	if (par == nullptr) {
+
+		SetGlobalScale(scale);
+	}
+	else {
+
+		Vector2f newUISize = GetLocalUISize();
+		LocalScale = scale;
+		Vector2f parScale = par->GetGlobalScale();
+		GetOwner_inter().setScale(Vector2f(LocalScale.x * parScale.x, LocalScale.y * parScale.y));
+		Vector2f glScale = GetGlobalScale();
+		newUISize.x *= glScale.x;
+		newUISize.y *= glScale.y;
+		SetGlobalUISize(newUISize);
+		SetChildrenScale();
+	}
 }
 void UIElement::SetOrigin(Vector2f origin) {
 	GetOwner_inter().setOrigin(origin);
+	SetLocalPosition(GetLocalPosition());
 }
 
 //
@@ -164,30 +199,26 @@ Vector2f UIElement::GetAnchor() const {
 }
 Vector2f UIElement::GetLocalUISize() const {
 	Vector2f glSc = GetGlobalScale();
-	return Vector2f(Borders.width / glSc.x, Borders.height / glSc.y);
+	return Vector2f(UISize.x / glSc.x, UISize.y / glSc.y);
 }
-Vector2f UIElement::GetGlobalUISize() const {
-	return Vector2f(Borders.width, Borders.height);
-}
-Vector2f UIElement::GetPixelSize() const {
-	Vector2f parScale = GetGlobalScale();
-	return Vector2f(Borders.width * parScale.x, Borders.height * parScale.y);
+const Vector2f& UIElement::GetGlobalUISize() const {
+	return UISize;
 }
 Vector2f UIElement::GetAnchoredOffset() const {
 	auto par = dynamic_cast<const UIElement*>(GetParent_c());
 	if (par == nullptr)
 		return DEFAULT_ANCHOR;
-	Vector2f pixAnch = par->GetPixelSize();
+	Vector2f pixAnch = par->GetGlobalUISize();
 	pixAnch = Vector2f(pixAnch.x * Anchor.x, pixAnch.y * Anchor.y);
 	return pixAnch;
 }
 Vector2f UIElement::GetAnchoredGlobalPos(Vector2f anchor) const {
-	Vector2f pixAnch = GetPixelSize();
+	Vector2f pixAnch = GetGlobalUISize();
 	pixAnch = Vector2f(pixAnch.x * anchor.x, pixAnch.y * anchor.y);
 	return pixAnch + GetGlobalPosition();
 }
-const Rect<float>& UIElement::GetBorders() const {
-	return Borders;
+bool		UIElement::GetResizingUIByInherit() const {
+	return ResizeUIByInherits;
 }
 
 bool		UIElement::GetActivity() const {
@@ -200,9 +231,6 @@ bool		UIElement::GetInheritActivity() const {
 bool		UIElement::GetSelfActivity() const {
 	return IsActive;
 }
-bool		UIElement::GetResizingUIByInherit() const {
-	return ResizeUIByInherits;
-}
 
 //
 //
@@ -210,15 +238,17 @@ bool		UIElement::GetResizingUIByInherit() const {
 //
 //
 
-void UIElement::SetLocalScaleByUISize(Vector2f uiSize) {
+void UIElement::SetLocalScaleByUISize(Vector2f localUISize) {
 
-	uiSize = Vector2f(uiSize.x / Borders.width, uiSize.y / Borders.height);
-	SetLocalScale(uiSize);
+	//Write in localUISize value of localScale
+	localUISize = Vector2f(localUISize.x / UISize.x, localUISize.y / UISize.y);
+	SetLocalScale(localUISize);
 }
-void UIElement::SetGlobalScaleByUISize(Vector2f uiSize) {
+void UIElement::SetGlobalScaleByUISize(Vector2f globalUISize) {
 
-	uiSize = Vector2f(uiSize.x / Borders.width, uiSize.y / Borders.height);
-	SetGlobalScale(uiSize);
+	//Write in globalUISize value of globalScale
+	globalUISize = Vector2f(globalUISize.x / UISize.x, globalUISize.y / UISize.y);
+	SetGlobalScale(globalUISize);
 }
 
 void UIElement::SetAnchor(Vector2f anchor) {
@@ -228,17 +258,17 @@ void UIElement::SetAnchor(Vector2f anchor) {
 
 void UIElement::SetLocalUISize(Vector2f localSize) {
 
-	Vector2f oldSize = Vector2f(Borders.width, Borders.height);
+	Vector2f oldSize = UISize;
 	Vector2f glSc = GetGlobalScale();
-	Borders.width = localSize.x * glSc.x;
-	Borders.height = localSize.y * glSc.y;
+	UISize.x = localSize.x * glSc.x;
+	UISize.y = localSize.y * glSc.y;
 	SetChildren_UISize(oldSize);
 }
 void UIElement::SetGlobalUISize(Vector2f globalSize) {
 
-	Vector2f oldSize = Vector2f(Borders.width,Borders.height);
-	Borders.width = globalSize.x;
-	Borders.height = globalSize.y;
+	Vector2f oldSize = UISize;
+	UISize.x = globalSize.x;
+	UISize.y = globalSize.y;
 	SetChildren_UISize(oldSize);
 }
 void UIElement::SetUISize_Inherit(Vector2f oldSize) {
@@ -275,41 +305,24 @@ void UIElement::SetResizingUIByInherit(bool resizeByInherit) {
 
 		//Binding transform's center of
 		//child element to anchor of parent (not to its origin)
-Vector2f	UIElement::GetLocalPositionFromParent() {
+Vector2f	UIElement::GetLocalPositionFromParent() const{
 
-	Vector2f origin = GetParent()->GetOrigin();
-	GetParent()->SetOrigin(DEFAULT_ORIGIN);
 	Vector2f result = GetParent()->GetInverseTransform().transformPoint(GetGlobalPosition());
 	result -= GetAnchoredOffset();
-	GetParent()->SetOrigin(origin);
 	return result;
 }
-Vector2f	UIElement::GetLocalScaleFromParent() {
+Vector2f	UIElement::GetLocalScaleFromParent() const{
 
 	Vector2f parScale = GetParent()->GetGlobalScale();
 	Vector2f ownScale = GetGlobalScale();
 	ownScale = Vector2f(ownScale.x / parScale.x, ownScale.y / parScale.y);
 	return ownScale;
 }
-Vector2f	UIElement::TransformLocalPosToGlobal(Vector2f localPos) {
+Vector2f	UIElement::TransformLocalPosToGlobal(Vector2f localPos) const{
 
-	Vector2f origin = GetParent()->GetOrigin();
-	GetParent()->SetOrigin(DEFAULT_ORIGIN);
 	Vector2f result = GetParent()->GetTransform().transformPoint(localPos);
 	result += GetAnchoredOffset();
-	GetParent()->SetOrigin(origin);
 	return result;
-}
-
-void		UIElement::ScaleElement(Vector2f scale) {
-
-	Vector2f oldLocScale = GetLocalScale();
-	Vector2f glScale = GetGlobalScale();
-	Vector2f coef(scale.x / glScale.x, scale.y / glScale.y);
-	GetOwner_inter().setScale(scale);
-	LocalScale = Vector2f(coef.x * LocalScale.x, coef.y * LocalScale.y);
-	SetGlobalUISize(Vector2f(Borders.width / oldLocScale.x * scale.x,
-					Borders.height / oldLocScale.y * scale.y));
 }
 
 void		UIElement::SetPosition_Inherit() {
@@ -318,18 +331,15 @@ void		UIElement::SetPosition_Inherit() {
 }
 void		UIElement::SetScale_Inherit() {
 
-	Vector2f oldLocScale = GetGlobalScale();
-	if (GetParent() == nullptr)
-		GetOwner_inter().setScale(LocalScale);
-	else {
+	if (ResizeUIByInherits) {
 
-		Vector2f parentGlScale = GetParent()->GetGlobalScale();
-		GetOwner_inter().setScale(LocalScale.x * parentGlScale.x, LocalScale.y * parentGlScale.y);
+		SetLocalScale(LocalScale);
+		SetLocalPosition(LocalPosition);
 	}
-	Vector2f coef = GetGlobalScale();
-	coef.x = coef.x / oldLocScale.x;
-	coef.y = coef.y / oldLocScale.y;
-	SetGlobalUISize(Vector2f(Borders.width * coef.x, Borders.height * coef.y));
+}
+void UIElement::SetRotation_Inherit() {
+	SetGlobalRotation(GetLocalRotation());
+	SetLocalPosition(LocalPosition);
 }
 
 

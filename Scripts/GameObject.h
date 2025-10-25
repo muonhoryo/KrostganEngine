@@ -1,11 +1,11 @@
 #pragma once
 
-#include <SquareScaleSprite.h>
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
 #include <Physics.h>
 #include <CatalogObject.h>
 #include <ExtGlResources.h>
+#include <SpriteRenderer.h>
 
 using namespace sf;
 using namespace KrostganEngine::Core;
@@ -20,7 +20,8 @@ namespace KrostganEngine::GameObjects {
 
 		const ExtGlRes_Sprite*	BodySpriteSource;
 		Vector2f				GlobalPosition	= DEFAULT_POSITION;
-		float					GlobalScale		= 1;
+		float					GlobalScale		= DEFAULT_SCALE_SNG;
+		float					GlobalRotation	= 0;
 		Color					SprColor		= Color::White;
 		size_t					CatalogID;
 		byte					SubcatalogID;
@@ -58,7 +59,7 @@ namespace KrostganEngine::GameObjects {
 
 		virtual const ColliderShape& GetCollider() const = 0;
 
-		SquareScaleSprite&	BodySprite;
+		SpriteRenderer&	BodySprite;
 		
 	private:
 		Transformable& ctor_InitOwner() {

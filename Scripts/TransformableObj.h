@@ -1,8 +1,13 @@
 #pragma once
 
+#define _USE_MATH_DEFINES
+
+#include <math.h>
+
 #include <ITransformableObj.h>
 
 using namespace sf;
+using namespace std;
 
 namespace KrostganEngine::Core {
 	class TransformableObj : public virtual ITransformableObj{
@@ -27,6 +32,9 @@ namespace KrostganEngine::Core {
 		}
 		const Transform&	GetInverseTransform() const override final {
 			return Owner.getInverseTransform();
+		}
+		float GetGlobalRotation() const override final {
+			return Owner.getRotation();
 		}
 
 	protected:

@@ -1,11 +1,11 @@
 #pragma once
 
-#include <SquareScaleSprite.h>
+#include <SpriteRenderer.h>
 
 using namespace sf;
 
 namespace KrostganEngine::Visual {
-	class IndicatorFill : public SquareScaleSprite {
+	class IndicatorFill : public SpriteRenderer {
 
 	public:
 		IndicatorFill(
@@ -13,8 +13,8 @@ namespace KrostganEngine::Visual {
 			const Texture&	MaskTexture,
 			Shader&			RendShader,
 			float			maxSpriteSize,
-			Vector2f		GlobalPosition = Vector2f(0, 0),
-			float			GlobalScale = 1,
+			Vector2f		GlobalPosition = DEFAULT_POSITION,
+			float			GlobalScale = DEFAULT_SCALE_SNG,
 			Color			SprColor = Color::White);
 		IndicatorFill(
 			const Texture&		RenTexture,
@@ -22,8 +22,8 @@ namespace KrostganEngine::Visual {
 			WorldTransfObj&		Parent,
 			Shader&				RendShader,
 			float				maxSpriteSize,
-			Vector2f			LocalPosition = Vector2f(0, 0),
-			float				LocalScale = 1,
+			Vector2f			LocalPosition = DEFAULT_POSITION,
+			float				LocalScale = DEFAULT_SCALE_SNG,
 			Color				SprColor = Color::White);
 
 		void	SetFillness(float fillness);

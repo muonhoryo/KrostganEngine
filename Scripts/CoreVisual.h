@@ -1,7 +1,6 @@
 #pragma once
 
 #include <SpriteRenderer.h>
-#include <SquareScaleSprite.h>
 #include <IndicatorFill.h>
 
 #include <CoreVisual_UI.h>

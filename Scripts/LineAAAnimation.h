@@ -22,10 +22,10 @@ namespace KrostganEngine::UI {
 		void RenderGraphic(RenderWindow& window) override;
 
 	private:
-		WideLineVisual LineRender;
-		SquareScaleSprite* HitSprite=nullptr;
-		FadingVisualEff_MRes& LineEffect;
-		FadingVisualEff_MRes* HitEffect = nullptr;
-		watch_ptr_handler_wr<WorldTransfObj>* Target = nullptr;
+		WideLineVisual							LineRender;
+		SpriteRenderer*							HitSprite=nullptr;
+		FadingVisualEff_MRes&					LineEffect;
+		FadingVisualEff_MRes*					HitEffect = nullptr;
+		watch_ptr_handler_wr<WorldTransfObj>*	Target = nullptr;
 	};
 }

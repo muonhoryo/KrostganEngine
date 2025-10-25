@@ -53,11 +53,13 @@ namespace KrostganEngine::Core {
 		void RemoveOwnerAsChild();
 		void SetChildrenPosition();
 		void SetChildrenScale();
+		void SetChildrenRotation();
 
 		const vector<IHierarchyTrObj*>&	GetChildrenCopy() const;
 
 		virtual void SetPosition_Inherit() = 0;
 		virtual void SetScale_Inherit() = 0;
+		virtual void SetRotation_Inherit() = 0;
 		/// <summary>
 		/// Directly set Parent field as the input value
 		/// </summary>
