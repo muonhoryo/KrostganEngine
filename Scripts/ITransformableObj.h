@@ -45,11 +45,11 @@ namespace KrostganEngine::Core {
 		virtual void SetGlobalRotation(float rotation) = 0;
 		virtual void SetLocalRotation(float rotation) = 0;
 
-		void Move_Global(Vector2f moveValue) {
+		virtual void Move_Global(Vector2f moveValue) final{
 			Vector2f nextPos = GetGlobalPosition() + moveValue;
 			SetGlobalPosition(nextPos);
 		}
-		void Move_Local(Vector2f moveValue) {
+		virtual void Move_Local(Vector2f moveValue) final{
 			Vector2f nextPos = GetLocalPosition() + moveValue;
 			SetLocalPosition(nextPos);
 		}
@@ -57,20 +57,20 @@ namespace KrostganEngine::Core {
 		/// Set uniform global scale
 		/// </summary>
 		/// <param name="scale"></param>
-		void SetGlobalScale(float scale) {
+		virtual void SetGlobalScale_Sng(float scale) final{
 			SetGlobalScale(Vector2f(scale, scale));
 		}
 		/// <summary>
 		/// Set uniform local scale
 		/// </summary>
 		/// <param name="scale"></param>
-		void SetLocalScale(float scale) {
+		virtual void SetLocalScale_Sng(float scale) final{
 			SetLocalScale(Vector2f(scale, scale));
 		}
-		void Rotate_Global(float rotation) {
+		virtual void Rotate_Global(float rotation) final{
 			SetGlobalRotation(GetGlobalRotation() + rotation);
 		}
-		void Rotate_Local(float rotation) {
+		virtual void Rotate_Local(float rotation) final{
 			SetLocalRotation(GetLocalRotation() + rotation);
 		}
 

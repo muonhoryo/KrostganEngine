@@ -6,29 +6,16 @@ using namespace KrostganEngine::Core;
 using namespace KrostganEngine::GameObjects;
 using namespace KrostganEngine;
 
-WorldTransfObj::WorldTransfObj
-(Transformable& Owner,
-	WorldTransfObj& Parent,
-	Vector2f			GlobalPosition,
-	float				LocalScale,
-	float				LocalRotation,
-	Vector2f			Origin)
+WorldTransfObj::WorldTransfObj(Transformable& Owner, WorldTransfObj& Parent)
 	:HierarchyTrObj(Owner, Parent) {
 
-	SetOrigin(Origin);
-	ctor_initialize_par(LocalPosition, Vector2f(LocalScale, LocalScale), LocalRotation);
+	ctor_initialize_par();
 }
 
-WorldTransfObj::WorldTransfObj
-(Transformable& Owner,
-	Vector2f			GlobalPosition,
-	float				GlobalScale,
-	float				GlobalRotation,
-	Vector2f			Origin)
+WorldTransfObj::WorldTransfObj(Transformable& Owner)
 	:HierarchyTrObj(Owner) {
 
-	SetOrigin(Origin);
-	ctor_initialize_no_par(GlobalPosition, Vector2f(GlobalScale, GlobalScale), GlobalRotation);
+	ctor_initialize_no_par();
 }
 
 //
@@ -172,7 +159,7 @@ void WorldTransfObj::SetParent(IHierarchyTrObj* parent) {
 
 		SetParent_inter(parent);
 		LocalPosition = GetLocalPositionFromParent();
-		ITransformableObj::SetGlobalScale(LocalScale);
+		SetGlobalScale_Sng(LocalScale);
 		SetGlobalRotation(GetGlobalRotation());
 		AddOwnerAsChild();
 	}
@@ -210,7 +197,7 @@ void WorldTransfObj::SetPosition_Inherit() {
 }
 void WorldTransfObj::SetScale_Inherit() {
 
-	ITransformableObj::SetLocalScale(LocalScale);
+	SetLocalScale_Sng(LocalScale);
 	SetLocalPosition(LocalPosition);
 }
 void WorldTransfObj::SetRotation_Inherit() {

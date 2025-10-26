@@ -70,11 +70,8 @@ void Entity::SelectionOn() {
 			SelectionSpriteSource->Tex,
 			*this,
 			SelectionSpriteSource->MaxSize,
-			Vector2f(0,0),
-			DEFAULT_SCALE_SNG,
-			0,
-			GetColor(),
 			nullptr);
+		SelectionSprite->SetColor(GetColor());
 	}
 }
 void Entity::SelectionOff() {

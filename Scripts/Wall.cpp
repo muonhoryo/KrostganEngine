@@ -9,7 +9,7 @@ using namespace KrostganEngine::Physics;
 using namespace KrostganEngine::GameObjects;
 
 void WallObject::RecreateCollider() {
-	float innerRad = GetGlobalScale_Sin()* Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution * 0.5f;
+	float innerRad = GetGlobalScale_Sng()* Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution * 0.5f;
 	Vector2f pos = GetGlobalPosition();
 	Collider = new AABBCollShape(Vector2f(pos.x - innerRad, pos.y - innerRad), Vector2f(pos.x + innerRad, pos.y + innerRad));
 }

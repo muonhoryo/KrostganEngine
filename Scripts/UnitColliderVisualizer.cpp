@@ -11,7 +11,7 @@ using namespace KrostganEngine::UI;
 UnitColliderVisualizer::UnitColliderVisualizer(UnitObject& Owner) : CircleVisPrimitive(Vector2f(0,0),1,Color::Green,30),
 	Owner(Owner){
 
-	UpdateRadius(Owner.GetGlobalScale_Sin());
+	UpdateRadius(Owner.GetGlobalScale_Sng());
 	Owner.GetHPModule().DeathModule.DeathEvent.Add(*(IEventSubscriber<ObjectDeathEventArgs>*)new VisualOnDeathDestroyer(*this, Owner));
 }
 UnitColliderVisualizer::~UnitColliderVisualizer() {
@@ -20,7 +20,7 @@ UnitColliderVisualizer::~UnitColliderVisualizer() {
 
 void UnitColliderVisualizer::RenderGraphicAction(RenderWindow& window) {
 	SetCenter(Owner.GetGlobalPosition());
-	float size = Owner.GetGlobalScale_Sin();
+	float size = Owner.GetGlobalScale_Sng();
 	if (fabs(size - GetRadius()) > eps)
 		UpdateRadius(size);
 	CircleVisPrimitive::RenderGraphic(window);

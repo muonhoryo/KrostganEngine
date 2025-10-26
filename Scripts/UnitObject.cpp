@@ -38,7 +38,7 @@ PhysicsLayer UnitObject::GetLayer() const {
 
 void UnitObject::SetGlobalScale(Vector2f  scale) {
 	Entity::SetGlobalScale(scale);
-	Collider.Radius= GetGlobalScale_Sin() * Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution * 0.5;
+	Collider.Radius= GetGlobalScale_Sng() * Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution * 0.5;
 }
 void UnitObject::SetGlobalPosition(Vector2f pos) {
 	Entity::SetGlobalPosition(pos);

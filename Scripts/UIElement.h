@@ -89,49 +89,13 @@ namespace KrostganEngine::UI {
 	/// <param name="Anchor"></param>
 	/// <param name="UISize"></param>
 		UIElement(
-			Transformable& Owner,
-			UIElement* Parent,
-			Vector2f			LocalPosition = DEFAULT_POSITION,
-			Vector2f			LocalScale = DEFAULT_SCALE,
-			float				LocalRotation = 0,
-			Vector2f			Anchor = DEFAULT_ANCHOR,
-			Vector2f			UISize = DEFAULT_SCALE,
-			byte				RendLayer = DEFAULT_RENDLAYER_UI);
-
-		/// <summary>
-		/// Nullptr as the Parent means that parent of the element will be root of UI (UserInterfaceManager::GetRoot())
-		/// </summary>
-		/// <param name="Owner"></param>
-		/// <param name="Parent"></param>
-		/// <param name="GlobalPosition"></param>
-		/// <param name="LocalScale"></param>
-		/// <param name="Anchor"></param>
-		/// <param name="UISize"></param>
-		UIElement(
-			Transformable& Owner,
-			UIElement* Parent,
-			Vector2f			LocalPosition = DEFAULT_POSITION,
-			float				LocalScale = DEFAULT_SCALE_SNG,
-			float				LocalRotation = 0,
-			Vector2f			Anchor = DEFAULT_ANCHOR,
+			Transformable&		Owner,
+			UIElement*			Parent,
 			Vector2f			UISize = DEFAULT_SCALE,
 			byte				RendLayer = DEFAULT_RENDLAYER_UI);
 
 		UIElement(
-			Transformable& Owner,
-			Vector2f			GlobalPosition = DEFAULT_POSITION,
-			Vector2f			GlobalScale = DEFAULT_SCALE,
-			float				GlobalRotation = 0,
-			Vector2f			Anchor = DEFAULT_ANCHOR,
-			Vector2f			UISize = DEFAULT_SCALE,
-			byte				RendLayer = DEFAULT_RENDLAYER_UI);
-
-		UIElement(
-			Transformable& Owner,
-			Vector2f			GlobalPosition = DEFAULT_POSITION,
-			float				GlobalScale = DEFAULT_SCALE_SNG,
-			float				GlobalRotation = 0,
-			Vector2f			Anchor = DEFAULT_ANCHOR,
+			Transformable&		Owner,
 			Vector2f			UISize = DEFAULT_SCALE,
 			byte				RendLayer = DEFAULT_RENDLAYER_UI);
 

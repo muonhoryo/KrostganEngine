@@ -45,7 +45,7 @@ namespace KrostganEngine::Core {
 		/// </summary>
 		/// <param name="localPos"></param>
 		/// <param name="localScale"></param>
-		void ctor_initialize_par(Vector2f localPos,Vector2f localScale,float localRotation) {
+		void ctor_initialize_par(Vector2f localPos=DEFAULT_POSITION,Vector2f localScale=DEFAULT_SCALE,float localRotation=0) {
 
 			AddOwnerAsChild();
 			SetLocalScale(localScale);
@@ -57,7 +57,7 @@ namespace KrostganEngine::Core {
 		/// </summary>
 		/// <param name="globalPos"></param>
 		/// <param name="globalScale"></param>
-		void ctor_initialize_no_par(Vector2f globalPos, Vector2f globalScale,float globalRotation) {
+		void ctor_initialize_no_par(Vector2f globalPos=DEFAULT_POSITION, Vector2f globalScale=DEFAULT_SCALE,float globalRotation=0) {
 
 			SetGlobalScale(globalScale);
 			SetGlobalPosition(globalPos);

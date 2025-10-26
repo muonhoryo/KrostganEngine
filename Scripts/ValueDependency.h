@@ -37,8 +37,8 @@ namespace KrostganEngine::UI {
 		virtual string	FormatStr			(string obj) const			{ return vformat(Format, make_format_args(obj));}
 		string			FormatStr			(TObject const& obj) const	{ return FormatStr(to_string(obj)); }
 		virtual string	GetDefault			() const					{ return FormatStr(""); }
-		void	SetDefault	() { Subject.text->setString(GetDefault()); }
-		void	SetByObject() { Subject.text->setString(FormatStr(*Object)); }
+		void	SetDefault	() { Subject.SetString(GetDefault()); }
+		void	SetByObject() { Subject.SetString(FormatStr(*Object)); }
 		void Update() override{
 			if (IsValueRefValid())
 				SetByObject();

@@ -12,19 +12,13 @@ namespace KrostganEngine::Visual {
 			const Texture&	RenTexture,
 			const Texture&	MaskTexture,
 			Shader&			RendShader,
-			float			maxSpriteSize,
-			Vector2f		GlobalPosition = DEFAULT_POSITION,
-			float			GlobalScale = DEFAULT_SCALE_SNG,
-			Color			SprColor = Color::White);
+			float			maxSpriteSize);
 		IndicatorFill(
 			const Texture&		RenTexture,
 			const Texture&		MaskTexture,
 			WorldTransfObj&		Parent,
 			Shader&				RendShader,
-			float				maxSpriteSize,
-			Vector2f			LocalPosition = DEFAULT_POSITION,
-			float				LocalScale = DEFAULT_SCALE_SNG,
-			Color				SprColor = Color::White);
+			float				maxSpriteSize);
 
 		void	SetFillness(float fillness);
 		float	GetFillness() const;

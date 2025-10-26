@@ -18,47 +18,22 @@ namespace KrostganEngine::UI {
 			UIElement*		Parent,
 			const string	textStr			= "",
 			unsigned int	characterSize	= DEFAULT_FONTSIZE,
-			Vector2f		LocalPosition	= DEFAULT_POSITION,
-			Vector2f		LocalScale		= DEFAULT_SCALE,
-			Vector2f		Anchor			= DEFAULT_ANCHOR,
 			Shader*			RendShader		= nullptr,
 			byte			RendLayer		= DEFAULT_RENDLAYER_UI);
 
 		UIText(
-			UIElement*			Parent,
 			const string		textStr			= "",
 			unsigned int		characterSize	= DEFAULT_FONTSIZE,
-			Vector2f			LocalPosition	= DEFAULT_POSITION,
-			float				LocalScale		= 1,
-			Vector2f			Anchor			= DEFAULT_ANCHOR,
-			Shader*				RendShader		= nullptr,
-			byte				RendLayer		= DEFAULT_RENDLAYER_UI);
-
-		UIText(
-			const string		textStr			= "",
-			unsigned int		characterSize	= DEFAULT_FONTSIZE,
-			Vector2f			GlobalPosition	= DEFAULT_POSITION,
-			Vector2f			GlobalScale		= DEFAULT_SCALE,
-			Vector2f			Anchor			= DEFAULT_ANCHOR,
-			Shader*				RendShader		= nullptr,
-			byte				RendLayer		= DEFAULT_RENDLAYER_UI);
-
-		UIText(
-			const string		textStr			= "",
-			unsigned int		characterSize	= DEFAULT_FONTSIZE,
-			Vector2f			GlobalPosition	= DEFAULT_POSITION,
-			float				GlobalScale		= DEFAULT_SCALE_SNG,
-			Vector2f			Anchor			= DEFAULT_ANCHOR,
 			Shader*				RendShader		= nullptr,
 			byte				RendLayer		= DEFAULT_RENDLAYER_UI);
 
 		Color	GetColor() const override;
 		void	SetColor(Color color) override;
 
-		void	SetFont(const Font& font);
+		const String& GetString() const;
 
-		Text* text;
-		Vector2f ScreenPosition = Vector2f(0, 0);
+		void	SetFont(const Font& font);
+		void	SetString(const string& str);
 
 	protected:
 
@@ -75,6 +50,7 @@ namespace KrostganEngine::UI {
 		void		ctor_Initialize();
 
 	private:
+		Text* text;
 		RenderStates	RenderSt;
 		Shader* RendShader;
 	};

@@ -27,95 +27,19 @@ Sprite& UISprite::ctor_InitOwner() {
 	return *RenSprite;
 }
 
-UISprite::UISprite(
-	const Texture& RenTexture,
-	Vector2f		GlobalPosition,
-	Vector2f		GlobalScale,
-	float			GlobalRotation,
-	Vector2f		Anchor,
-	Color			SprColor,
-	Shader*			RendShader,
-	byte			RendLayer)
-		:UIElement(
-			ctor_InitOwner(), 
-			GlobalPosition, 
-			GlobalScale, 
-			GlobalRotation,
-			Anchor,
-			(Vector2f)RenTexture.getSize(),
-			RendLayer),
+UISprite::UISprite(const Texture& RenTexture, Shader* RendShader, byte RendLayer)
+		:UIElement(ctor_InitOwner(), (Vector2f)RenTexture.getSize(), RendLayer),
 		RendShader(RendShader)
 {
 	ctor_Initialize(RenTexture);
-	SetColor(SprColor);
 }
 
-UISprite::UISprite(
-	const Texture& RenTexture,
-	Vector2f		GlobalPosition,
-	float			GlobalScale,
-	float			GlobalRotation,
-	Vector2f		Anchor,
-	Color			SprColor,
-	Shader*			RendShader,
-	byte			RendLayer)
-		:UISprite(
-			RenTexture,
-			GlobalPosition,
-			Vector2f(GlobalScale,GlobalScale),
-			GlobalRotation,
-			Anchor,
-			SprColor,
-			RendShader,
-			RendLayer)
-{}
-
-UISprite::UISprite(
-	const Texture&		RenTexture,
-	UIElement*			Parent,
-	Vector2f			LocalPosition,
-	Vector2f			LocalScale,
-	float				LocalRotation,
-	Vector2f			Anchor,
-	Color				SprColor,
-	Shader*				RendShader,
-	byte				RendLayer)
-		:UIElement(
-			ctor_InitOwner(), 
-			Parent, 
-			LocalPosition,
-			LocalScale, 
-			LocalRotation,
-			Anchor,
-			(Vector2f)RenTexture.getSize(),
-			RendLayer),
+UISprite::UISprite(const Texture& RenTexture, UIElement* Parent,Shader*	RendShader, byte RendLayer)
+		:UIElement(ctor_InitOwner(), Parent, (Vector2f)RenTexture.getSize(), RendLayer),
 		RendShader(RendShader)
 {
 	ctor_Initialize(RenTexture);
-	SetColor(SprColor);
 }
-
-UISprite::UISprite(
-	const Texture&	RenTexture,
-	UIElement*		Parent,
-	Vector2f		LocalPosition,
-	float			LocalScale,
-	float			LocalRotation,
-	Vector2f		Anchor,
-	Color			SprColor,
-	Shader*			RendShader,
-	byte			RendLayer)
-		:UISprite(
-			RenTexture,
-			Parent,
-			LocalPosition,
-			Vector2f(LocalScale,LocalScale),
-			LocalRotation,
-			Anchor,
-			SprColor,
-			RendShader,
-			RendLayer)
-{}
 
 UISprite::~UISprite() {
 	delete RenSprite;

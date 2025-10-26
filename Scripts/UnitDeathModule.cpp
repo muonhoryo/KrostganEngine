@@ -13,11 +13,8 @@ void UnitDeathModule::Death() {
 	auto dSpr = new SpriteRenderer(
 		dSprRes->Tex,
 		Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution,
-		Vector2f(0,0),
-		DEFAULT_SCALE_SNG,
-		0,
-		dynamic_cast<UnitObject*>(&Owner)->GetColor(),
 		dSprRes->RenShader);
+	dSpr->SetColor(dynamic_cast<UnitObject*>(&Owner)->GetColor());
 	dSpr->AddEffect(*new FadingVisualEff_Des(Engine::GetGlobalConsts().AverageLifeTime_DeathEffect, *dSpr));
 	EntityDeathModule::Death();
 }

@@ -71,19 +71,8 @@ namespace KrostganEngine::GameObjects {
 		Vector2f GetPrevMovStep() const override;
 
 	protected:
-		WorldTransfObj
-		(Transformable& Owner,
-			WorldTransfObj& Parent,
-			Vector2f			GlobalPosition = DEFAULT_POSITION,
-			float				LocalScale = DEFAULT_SCALE_SNG,
-			float				LocalRotation = 0,
-			Vector2f			Origin = DEFAULT_ORIGIN);
-		WorldTransfObj
-		(Transformable& Owner,
-			Vector2f			GlobalPosition = DEFAULT_POSITION,
-			float				GlobalScale = DEFAULT_SCALE_SNG,
-			float				GlobalRotation = 0,
-			Vector2f			Origin = DEFAULT_ORIGIN);
+		WorldTransfObj(Transformable& Owner, WorldTransfObj& Parent);
+		WorldTransfObj(Transformable& Owner);
 
 		void SetPosition_Inherit() override;
 		void SetScale_Inherit() override;

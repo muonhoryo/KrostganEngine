@@ -107,11 +107,12 @@ void UserInterfaceLoader::DeserializeNode(xml_node<>* node, UIElement& parent)
 				&parent,
 				text,
 				fontSize,
-				pos,
-				scale,
-				anchor,
 				shad,
 				layer);
+
+			textB->SetLocalPosition(pos);
+			textB->SetLocalScale(scale);
+			textB->SetAnchor(anchor);
 			textB->SetActivity(active);
 			textB->SetColor(color);
 			if (fontPath != "")
@@ -142,23 +143,20 @@ void UserInterfaceLoader::DeserializeNode(xml_node<>* node, UIElement& parent)
 			UISprite* spr = new UISprite(
 				*tex,
 				&parent,
-				pos,
-				scale,
-				0,
-				anchor,
-				color,
 				shad,
 				layer);
+			spr->SetLocalPosition(pos);
+			spr->SetLocalScale(scale);
+			spr->SetAnchor(anchor);
+			spr->SetColor(color);
 			el = spr;
 		}
 		else if (node->name() == UIEL_NAME_EMPTY) {
 
-			UIEmpty* empt = new UIEmpty(
-				&parent,
-				pos,
-				scale,
-				anchor,
-				parent.GetGlobalUISize());
+			UIEmpty* empt = new UIEmpty(&parent, parent.GetGlobalUISize());
+			empt->SetLocalPosition(pos);
+			empt->SetLocalScale(scale);
+			empt->SetAnchor(anchor);
 			el = empt;
 		}
 
@@ -200,7 +198,7 @@ void UserInterfaceLoader::DeserializeNode(xml_node<>* node, UIElement& parent)
 
 								IEntityUIDependency* depend=nullptr;
 								EntityBattleStats::StatType fieldType = EntityBattleStats::GetFieldType(statType);
-								string* fmt = new string(dynamic_cast<UIText*>(el)->text->getString());
+								string* fmt = new string(dynamic_cast<UIText*>(el)->GetString());
 								if (fmt->length() <= 1) {
 									delete fmt;
 									fmt = new string{ "{}" };
@@ -227,7 +225,7 @@ void UserInterfaceLoader::DeserializeNode(xml_node<>* node, UIElement& parent)
 					else {
 						if (isFirstSelEntityAttr) {		//Create dependency for UI-panel of first selected entity
 
-							string* fmt = new string(dynamic_cast<UIText*>(el)->text->getString());
+							string* fmt = new string(dynamic_cast<UIText*>(el)->GetString());
 							if (fmt->length() <= 1) {
 								delete fmt;
 								fmt = new string{ "{}" };

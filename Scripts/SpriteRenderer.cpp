@@ -30,7 +30,7 @@ void SpriteRenderer::ctor_Initialize(const Texture& renTexture,float maxSizeInPi
 		IsVertical = false;
 	}
 	TextureResizingCoef = maxSizeInPixels / max(size.x, size.y);
-
+	SetGlobalScale_Sng(TextureResizingCoef);
 }
 Sprite& SpriteRenderer::ctor_InitOwner() {
 	RenSprite = new Sprite();
@@ -39,76 +39,38 @@ Sprite& SpriteRenderer::ctor_InitOwner() {
 
 SpriteRenderer::SpriteRenderer(
 	const Texture&	RenTexture,
-	Vector2f		GlobalPosition,
-	float			GlobalScale,
-	float			GlobalRotation,
-	Color			SprColor,
 	Shader*			RendShader)
-		
-	:SpriteRenderer(
-		RenTexture,
-		(float)max(RenTexture.getSize().x, RenTexture.getSize().y),
-		GlobalPosition,
-		GlobalScale,
-		GlobalRotation,
-		SprColor,
-		RendShader)
+		:SpriteRenderer(RenTexture, (float)max(RenTexture.getSize().x, RenTexture.getSize().y), RendShader)
 {}
 
 SpriteRenderer::SpriteRenderer(
 	const Texture&	RenTexture, 
 	float			maxSizeInPixels,
-	Vector2f		GlobalPosition,
-	float			GlobalScale,
-	float			GlobalRotation,
-	Color			SprColor,
 	Shader*			RendShader) 
-		:WorldTransfObj(ctor_InitOwner(), GlobalPosition, GlobalScale, GlobalRotation,ctor_GetOrigin(RenTexture)),
+		:WorldTransfObj(ctor_InitOwner()),
 		RendShader	(RendShader){
 
 	ctor_Initialize(RenTexture,maxSizeInPixels);
-
-	ITransformableObj::SetGlobalScale(GlobalScale*TextureResizingCoef);
-	SetColor(SprColor);
+	SetOrigin(GetTextureCenter(RenTexture));
 }
 
 SpriteRenderer::SpriteRenderer(
 	const Texture&		RenTexture,
 	WorldTransfObj&		Parent,
-	Vector2f			LocalPosition,
-	float				LocalScale,
-	float				LocalRotation,
-	Color				SprColor,
 	Shader*				RendShader)
-	
-	:SpriteRenderer(
-		RenTexture,
-		Parent,
-		(float)max(RenTexture.getSize().x,RenTexture.getSize().y),
-		LocalPosition,
-		LocalScale,
-		LocalRotation,
-		SprColor,
-		RendShader)
+		:SpriteRenderer(RenTexture, Parent, (float)max(RenTexture.getSize().x,RenTexture.getSize().y), RendShader)
 {}
 
 SpriteRenderer::SpriteRenderer(
-	const Texture& RenTexture,
-	WorldTransfObj& Parent,
+	const Texture&		RenTexture,
+	WorldTransfObj&		Parent,
 	float				maxSizeInPixels,
-	Vector2f			LocalPosition,
-	float				LocalScale,
-	float				LocalRotation,
-	Color				SprColor,
 	Shader*				RendShader)
-		:WorldTransfObj(ctor_InitOwner(),Parent, LocalPosition,LocalScale, LocalRotation,ctor_GetOrigin(RenTexture)),
+		:WorldTransfObj(ctor_InitOwner(),Parent),
 		RendShader(RendShader) {
 
 	ctor_Initialize(RenTexture, maxSizeInPixels);
-
-	ITransformableObj::SetLocalScale(LocalScale * TextureResizingCoef);
-	SetLocalPosition(LocalPosition);
-	SetColor(SprColor);
+	SetOrigin(GetTextureCenter(RenTexture));
 }
 
 SpriteRenderer::~SpriteRenderer() {

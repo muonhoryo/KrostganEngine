@@ -45,18 +45,14 @@ void WinScript::RenderGraphicAction(RenderWindow& window) {
 			Message = new UIText(
 				nullptr,
 				"Victory. The enemy hero is eliminated.",
-				50u,
-				DEFAULT_POSITION,
-				1,
-				Vector2f(0.5, 0.5));
+				50u);
 			Message2 = new UIText(
 				nullptr,
 				"Level will be restarted in a few seconds",
-				50u,
-				DEFAULT_POSITION,
-				1,
-				Vector2f(0.5, 0.5));
+				50u);
 
+			Message->SetAnchor(Vector2f(0.5, 0.5));
+			Message2->SetAnchor(Vector2f(0.5, 0.5));
 			Message->SetColor(Color(255U, 255U, 255U, 0U));
 			Message2->SetColor(Color(255U, 255U, 255U, 0U));
 			Message->SetLocalPosition(Vector2f(-Message->GetGlobalUISize().x * 0.5, -100));

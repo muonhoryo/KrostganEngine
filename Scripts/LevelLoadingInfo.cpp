@@ -187,9 +187,9 @@ EntityCtorParams& UnitLoadInfo::GetCtorParams() {
 		hpbarSpr->Tex,
 		hpbarMask->Tex,
 		*hpbarSpr->RenShader,
-		hpbarSpr->MaxSize,
-		params.GlobalPosition,
-		params.GlobalScale);
+		hpbarSpr->MaxSize);
+	params.HPBarSprite->SetGlobalPosition(params.GlobalPosition);
+	params.HPBarSprite->SetGlobalScale_Sng(params.HPBarSprite->GetGlobalScale_Sng() * params.GlobalScale);
 	params.CatalogID = CatID;
 
 	return params;

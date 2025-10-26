@@ -11,12 +11,9 @@ IndicatorFill::IndicatorFill(
 	const Texture&	RenTexture,
 	const Texture&	MaskTexture,
 	Shader&			RendShader,
-	float			maxSpriteSize,
-	Vector2f		GlobalPosition,
-	float			GlobalScale,
-	Color			SprColor)
+	float			maxSpriteSize)
 
-	:SpriteRenderer(RenTexture, maxSpriteSize, GlobalPosition, GlobalScale, 0,SprColor, &RendShader),
+	:SpriteRenderer(RenTexture, maxSpriteSize, &RendShader),
 	MaskTexture(MaskTexture)
 {}
 IndicatorFill::IndicatorFill(
@@ -24,11 +21,8 @@ IndicatorFill::IndicatorFill(
 	const Texture &		MaskTexture,
 	WorldTransfObj &	Parent,
 	Shader &			RendShader,
-	float				maxSpriteSize,
-	Vector2f			LocalPosition,
-	float				LocalScale,
-	Color				SprColor)
-	:SpriteRenderer(RenTexture,maxSpriteSize, LocalPosition,LocalScale,0,SprColor,&RendShader),
+	float				maxSpriteSize)
+	:SpriteRenderer(RenTexture,maxSpriteSize, &RendShader),
 	MaskTexture(MaskTexture)
 {}
 

@@ -98,8 +98,8 @@ namespace KrostganEngine::UI {
 		string	GetDefault() const 
 			{ return FormatStr(""); }
 		void	SetDefault() 
-			{ Subject.text->setString(GetDefault()); }
+			{ Subject.SetString(GetDefault()); }
 		void	SetByObject() 
-			{ Subject.text->setString(FormatField()); }
+			{ Subject.SetString(FormatField()); }
 	};
 }

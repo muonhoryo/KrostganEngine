@@ -10,43 +10,12 @@ namespace KrostganEngine::UI {
 	public:
 		UISprite(
 			const Texture&	RenTexture,
-			Vector2f		GlobalPosition	= DEFAULT_POSITION,
-			Vector2f		GlobalScale		= DEFAULT_SCALE,
-			float			GlobalRotation	= 0,
-			Vector2f		Anchor			= DEFAULT_ANCHOR,
-			Color			SprColor		= Color::White,
-			Shader*			RendShader		= nullptr,
-			byte			RendLayer		= DEFAULT_RENDLAYER_UI);
-		
-		UISprite(
-			const Texture&	RenTexture,
-			Vector2f		GlobalPosition	= DEFAULT_POSITION,
-			float			GlobalScale		= DEFAULT_SCALE_SNG,
-			float			GlobalRotation	= 0,
-			Vector2f		Anchor			= DEFAULT_ANCHOR,
-			Color			SprColor		= Color::White,
-			Shader*			RendShader		= nullptr,
-			byte			RendLayer		= DEFAULT_RENDLAYER_UI);
-
-		UISprite(
-			const Texture&	RenTexture,
-			UIElement*		Parent,
-			Vector2f		LocalPosition	= DEFAULT_POSITION,
-			Vector2f		LocalScale		= DEFAULT_SCALE,
-			float			LocalRotation	= 0,
-			Vector2f		Anchor			= DEFAULT_ANCHOR,
-			Color			SprColor		= Color::White,
 			Shader*			RendShader		= nullptr,
 			byte			RendLayer		= DEFAULT_RENDLAYER_UI);
 		
 		UISprite(
 			const Texture&	RenTexture,
 			UIElement*		Parent,
-			Vector2f		LocalPosition	= DEFAULT_POSITION,
-			float			LocalScale		= DEFAULT_SCALE_SNG,
-			float			LocalRotation	= 0,
-			Vector2f		Anchor			= DEFAULT_ANCHOR,
-			Color			SprColor		= Color::White,
 			Shader*			RendShader		= nullptr,
 			byte			RendLayer		= DEFAULT_RENDLAYER_UI);
 		

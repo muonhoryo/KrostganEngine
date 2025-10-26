@@ -16,11 +16,9 @@ LineAAAnimation::LineAAAnimation(WorldTransfObj& Owner)
 	HitSprite = new SpriteRenderer(
 		hitSpr->Tex,
 		Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution,
-		Owner.GetGlobalPosition(),
-		DEFAULT_SCALE_SNG,
-		0,
-		Color::Red,
 		hitSpr->RenShader);
+	HitSprite->SetGlobalPosition(Owner.GetGlobalPosition());
+	HitSprite->SetColor(Color::Red);
 	HitSprite->SetDesWithParent(false);
 	HitEffect = new FadingVisualEff_MRes(*HitSprite);
 	LineRender.AddEffect(LineEffect);

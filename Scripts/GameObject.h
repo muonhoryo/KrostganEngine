@@ -42,13 +42,6 @@ namespace KrostganEngine::GameObjects {
 		void SetGlobalScale(Vector2f scale) override;
 		void SetLocalScale(Vector2f scale) override;
 
-		float GetGlobalScale_Sin() const {
-			return GetGlobalScale().x;
-		}
-		float GetLocalScale_Sin() const {
-			return GetLocalScale().x;
-		}
-
 		float GetScale_Inter(const Vector2f& scale) const;
 
 		Color	GetColor() const override;

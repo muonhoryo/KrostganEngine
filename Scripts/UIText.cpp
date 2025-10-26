@@ -29,78 +29,26 @@ UIText::UIText(
 	UIElement*		Parent,
 	const string	textStr,
 	unsigned int	characterSize,
-	Vector2f		LocalPosition,
-	Vector2f		LocalScale,
-	Vector2f		Anchor,
 	Shader*			RendShader,
 	byte			RendLayer)
 		:UIElement(
 			ctor_InitOwner(textStr,characterSize),
 			Parent,
-			LocalPosition,
-			LocalScale,
-			0,
-			Anchor,
 			ctor_GetUISize(textStr,characterSize),
 			RendLayer),
 		RendShader(RendShader)
-{} 
-
-UIText::UIText(
-	UIElement*			Parent,
-	const string		textStr,
-	unsigned int		characterSize,
-	Vector2f			LocalPosition,
-	float				LocalScale,
-	Vector2f			Anchor,
-	Shader*				RendShader,
-	byte				RendLayer)
-		:UIText(
-			Parent,
-			textStr,
-			characterSize,
-			LocalPosition,
-			Vector2f(LocalScale,LocalScale),
-			Anchor,
-			RendShader,
-			RendLayer)
 {}
 
 UIText::UIText(
 	const string		textStr,
 	unsigned int		characterSize,
-	Vector2f			GlobalPosition,
-	Vector2f			GlobalScale,
-	Vector2f			Anchor,
 	Shader*				RendShader,
 	byte				RendLayer)
 		:UIElement(
 			ctor_InitOwner(textStr,characterSize),
-			GlobalPosition,
-			GlobalScale,
-			0,
-			Anchor,
 			ctor_GetUISize(textStr,characterSize),
 			RendLayer),
 	RendShader(RendShader)
-{}
-
-UIText::UIText(
-	const string		textStr,
-	unsigned int		characterSize,
-	Vector2f			GlobalPosition,
-	float				GlobalScale,
-	Vector2f			Anchor,
-	Shader*				RendShader,
-	byte				RendLayer)
-		:UIText(
-			textStr,
-			characterSize,
-			GlobalPosition,	
-			Vector2f(GlobalScale,GlobalScale),
-			Anchor,
-			RendShader,
-			RendLayer)
 {}
 
 void UIText::RenderGraphicAction(RenderWindow& window) {
@@ -113,6 +61,14 @@ Color	UIText::GetColor() const {
 void	UIText::SetColor(Color color) {
 	text->setFillColor(color);
 }
+
+const String& UIText::GetString() const {
+	return text->getString();
+}
+
 void	UIText::SetFont(const Font& font) {
 	text->setFont(font);
+}
+void	UIText::SetString(const string& str) {
+	text->setString(str);
 }

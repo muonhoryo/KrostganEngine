@@ -25,20 +25,19 @@ GameObjectCtorParams::GameObjectCtorParams()
 GameObject::GameObject(const GameObjectCtorParams& params) 
 	:DynamicPhysObject(),
 	CatalogObject(params.CatalogID, params.SubcatalogID),
-	WorldTransfObj(
-		ctor_InitOwner(),
-		params.GlobalPosition,
-		params.GlobalScale),
+	WorldTransfObj(ctor_InitOwner()),
 	BodySprite(*new SpriteRenderer(
 		params.BodySpriteSource->Tex,
 		*this,
 		Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution,
-		Vector2f(0, 0),
-		DEFAULT_SCALE_SNG,
-		0,
-		params.SprColor,
 		params.BodySpriteSource->RenShader))
-{}
+{
+	SetGlobalPosition(params.GlobalPosition);
+	SetGlobalScale_Sng(params.GlobalScale);
+	SetGlobalRotation(params.GlobalRotation);
+	
+	BodySprite.SetColor(params.SprColor);
+}
 
 void GameObject::SetGlobalPosition(Vector2f position) {
 
@@ -51,6 +50,7 @@ void GameObject::SetLocalPosition(Vector2f position) {
 	HasMoved = true;
 }
 void GameObject::SetGlobalScale(Vector2f scale) {
+
 	float scl = GetScale_Inter(scale);
 	WorldTransfObj::SetGlobalScale(Vector2f(scl, scl));
 }
