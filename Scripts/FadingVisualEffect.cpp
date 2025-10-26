@@ -14,6 +14,7 @@ FadingVisualEffect::FadingVisualEffect(float FadeTime, IColoredObject& Owner)
 	DefaultAlpha	((float)Owner.GetColor().a/255){
 
 	HidingTimer.restart();
+	Fade();
 }
 
 bool FadingVisualEffect::Fade() {
