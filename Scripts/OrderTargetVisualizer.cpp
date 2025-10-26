@@ -2,6 +2,7 @@
 #include <OrderTargetsVisualizer.h>
 
 using namespace KrostganEngine::UI;
+using namespace KrostganEngine::Visual;
 
 //
 // 

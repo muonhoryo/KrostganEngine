@@ -10,7 +10,9 @@ using namespace std;
 using namespace KrostganEngine;
 using namespace KrostganEngine::GameObjects;
 
-namespace KrostganEngine::UI {
+using namespace KrostganEngine::UI;
+
+namespace KrostganEngine::Visual {
 	class OrderTargetsVisualizer {
 	private:
 		class FollOrdTarHandler:public ICallbackRec_Upd {

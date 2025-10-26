@@ -1,7 +1,8 @@
 
-#include <GameUI.h>
+#include <ExtVisualManager.h>
 
 using namespace std;
+using namespace KrostganEngine::Visual;
 using namespace KrostganEngine::UI;
 
 //

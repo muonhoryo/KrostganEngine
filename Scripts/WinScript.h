@@ -3,7 +3,6 @@
 #include <SFML/System.hpp>
 #include <ICallbackRec_GraphRen.h>
 #include <CoreVisual_UI.h>
-#include <UIUXVisual.h>
 
 using namespace sf;
 using namespace KrostganEngine::Core;

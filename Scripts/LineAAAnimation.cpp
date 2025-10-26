@@ -1,8 +1,9 @@
 
 #include <LineAAAnimation.h>
+#include <Engine.h>
 #include <EntityBattleStats.h>
 
-using namespace KrostganEngine::UI;
+using namespace KrostganEngine::Visual;
 using namespace KrostganEngine::GameObjects;
 
 

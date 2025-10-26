@@ -8,6 +8,7 @@ using namespace KrostganEngine::Core;
 using namespace sf;
 using namespace KrostganEngine::PlayerControl;
 using namespace KrostganEngine::EntitiesControl;
+using namespace KrostganEngine::Visual;
 
 
 GameMode::GameMode() :EngineMode() {
@@ -15,7 +16,7 @@ GameMode::GameMode() :EngineMode() {
     Window = &Engine::GetRenderWindow();
     BaseInputHandl = new BaseInputHandler();
     EntitiesCtrlHandler = new EntitiesCtrlInputHandler();
-    GameInterface = new GameUI();
+    GameInterface = new ExtVisualManager();
 
     Engine::SetCameraPos(Vector2f(0, 0));
 

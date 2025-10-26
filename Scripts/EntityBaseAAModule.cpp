@@ -7,7 +7,7 @@
 using namespace KrostganEngine;
 using namespace KrostganEngine::Core;
 using namespace KrostganEngine::GameObjects;
-using namespace KrostganEngine::UI;
+using namespace KrostganEngine::Visual;
 
 EntityBaseAAModule::EntityBaseAAModule(EntityBattleStats& BattleStats,WorldTransfObj& Owner)
 	:AutoAttackModule(*new LineAAAnimation(Owner)),

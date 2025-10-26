@@ -3,6 +3,7 @@
 #include <UserInterfaceLoader.h>
 #include <Extensions.h>
 #include <iostream>
+#include <ExtVisual_UI.h>
 
 using namespace KrostganEngine;
 using namespace KrostganEngine::Core;

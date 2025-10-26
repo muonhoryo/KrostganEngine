@@ -9,7 +9,7 @@ using namespace std;
 using namespace KrostganEngine;
 using namespace KrostganEngine::EntitiesControl;
 
-namespace KrostganEngine::UI {
+namespace KrostganEngine::Visual {
 	class OrderTargsVisManager {
 	private:
 		class AddEntitySubscriber :public IEventSubscriber<ISelectableEntity*> {
@@ -57,11 +57,11 @@ namespace KrostganEngine::UI {
 		void Initialize_EntitiesTargetViss();
 	};
 
-	class GameUI {
+	class ExtVisualManager {
 
 	public:
-		GameUI();
-		~GameUI();
+		ExtVisualManager();
+		~ExtVisualManager();
 
 	private:
 		OrderTargsVisManager OrderTargetsVisual;

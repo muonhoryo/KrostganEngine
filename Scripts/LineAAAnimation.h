@@ -2,15 +2,14 @@
 
 #include <AutoAttackAnimation.h>
 #include <CoreVisual_UI.h>
-#include <Engine.h>
 #include <GameVisualEffects.h>
 
 using namespace std;
 using namespace sf;
 using namespace KrostganEngine::GameObjects;
-using namespace KrostganEngine::Visual;
+using namespace KrostganEngine::UI;
 
-namespace KrostganEngine::UI {
+namespace KrostganEngine::Visual {
 	class LineAAAnimation :public AutoAttackAnimation ,public ICallbackRec_GraphRen{
 
 	public:

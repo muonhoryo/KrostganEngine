@@ -2,6 +2,7 @@
 #include <AutoAttackModule.h>
 
 using namespace KrostganEngine::GameObjects;
+using namespace KrostganEngine::Visual;
 
 AutoAttackModule::AutoAttackModule(AutoAttackAnimation& AAAnimation):ICallbackRec_Upd(),
 	AAAnimation(AAAnimation),

@@ -5,11 +5,12 @@
 #include <CoreEntitiesControl.h>
 #include <CorePlayerControl.h>
 #include <CoreVisual_UI.h>
-#include <UIUXVisual.h>
+#include <ExtVisual.h>
 
 using namespace sf;
 using namespace KrostganEngine::EntitiesControl;
 using namespace KrostganEngine::PlayerControl;
+using namespace KrostganEngine::Visual;
 using namespace KrostganEngine::UI;
 
 namespace KrostganEngine::Core {
@@ -34,7 +35,7 @@ namespace KrostganEngine::Core {
 		RenderWindow*				Window;
 		ICallbackRec_Upd*			BaseInputHandl;
 		EntitiesCtrlInputHandler*	EntitiesCtrlHandler;
-		GameUI*						GameInterface;
+		ExtVisualManager*						GameInterface;
 	};
 
 	class MainMenuMode :public EngineMode {

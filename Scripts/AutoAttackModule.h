@@ -5,7 +5,7 @@
 #include <AutoAttackAnimation.h>
 
 using namespace KrostganEngine::Core;
-using namespace KrostganEngine::UI;
+using namespace KrostganEngine::Visual;
 
 namespace KrostganEngine::GameObjects {
 	class AutoAttackModule: public ICallbackRec_Upd {

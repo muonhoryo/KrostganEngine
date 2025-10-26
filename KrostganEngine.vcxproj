@@ -208,7 +208,7 @@
     <ClCompile Include="Scripts\GameMode.cpp" />
     <ClCompile Include="Scripts\CallbackRecArgs_Upd.cpp" />
     <ClCompile Include="Scripts\EntitiesObserver.cpp" />
-    <ClCompile Include="Scripts\GameUI.cpp" />
+    <ClCompile Include="Scripts\ExtVisualManager.cpp" />
     <ClCompile Include="Scripts\GlobalConstsLoad.cpp" />
     <ClCompile Include="Scripts\GroupSelectionQuad.cpp" />
     <ClCompile Include="Scripts\GroupSelectionSystem.cpp" />
@@ -283,7 +283,7 @@
     <ClInclude Include="Scripts\GameLevel.h" />
     <ClInclude Include="Scripts\GameTransitions.h" />
     <ClInclude Include="Scripts\GameValueDependencies.h" />
-    <ClInclude Include="Scripts\GameVisual.h" />
+    <ClInclude Include="Scripts\ExtVisual.h" />
     <ClInclude Include="Scripts\GameVisualEffects.h" />
     <ClInclude Include="Scripts\MemoryExts.h" />
     <ClInclude Include="Scripts\ValueDepend_CurrHP.h" />
@@ -320,7 +320,7 @@
     <ClInclude Include="Scripts\UIMan_WinResizeEvSubs.h" />
     <ClInclude Include="Scripts\UISprite.h" />
     <ClInclude Include="Scripts\UIText.h" />
-    <ClInclude Include="Scripts\UIUXVisual.h" />
+    <ClInclude Include="Scripts\ExtVisual_UI.h" />
     <ClInclude Include="Scripts\UnitColliderVisualizer.h" />
     <ClInclude Include="Scripts\CursorManager.h" />
     <ClInclude Include="Scripts\EntitiesCtrlInputHandler.h" />
@@ -334,7 +334,7 @@
     <ClInclude Include="Scripts\EntityOrder_ObjectTarget.h" />
     <ClInclude Include="Scripts\EntitiesObserver.h" />
     <ClInclude Include="Scripts\GameObjsBaseFightSystem.h" />
-    <ClInclude Include="Scripts\GameUI.h" />
+    <ClInclude Include="Scripts\ExtVisualManager.h" />
     <ClInclude Include="Scripts\HPSystem.h" />
     <ClInclude Include="Scripts\AutoAttackModule.h" />
     <ClInclude Include="Scripts\BaseInputHandler.h" />
