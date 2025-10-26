@@ -38,6 +38,9 @@ void UserInterfaceLoader::DeserializeNode(xml_node<>* node, UIElement& parent)
 		bool active(true);
 		bool resizeUIInherit(false);
 
+		Shader* shad = nullptr;
+		Color color = Color::White;
+
 		//read attributes for ui-element
 		attr = node->first_attribute();
 		while (attr != nullptr) {
@@ -68,6 +71,12 @@ void UserInterfaceLoader::DeserializeNode(xml_node<>* node, UIElement& parent)
 			else if (attr->name() == ATTR_RESIZEINHERIT_UI) {
 				resizeUIInherit = FStreamExts::ParseBool(attr->value());
 			}
+			else if (attr->name() == ATTR_COLOR) {
+				color = Color(stoul(attr->value(), nullptr, 16));
+			}
+			else if (attr->name() == ATTR_SHADER) {
+				shad= &dynamic_cast<ExtGlRes_Shader*>(ExternalGlobalResources::GetRes(string(attr->value())))->Shader_;
+			}
 
 			attr = attr->next_attribute();
 		}
@@ -77,7 +86,6 @@ void UserInterfaceLoader::DeserializeNode(xml_node<>* node, UIElement& parent)
 			string text;
 			unsigned int fontSize(DEFAULT_FONTSIZE);
 			string fontPath("");
-			Color color;
 
 			//read attributes
 			attr = node->first_attribute();
@@ -91,9 +99,6 @@ void UserInterfaceLoader::DeserializeNode(xml_node<>* node, UIElement& parent)
 				else if (attr->name() == ATTR_TEXT_FONT) {
 					fontPath = string(attr->value());
 				}
-				else if (attr->name() == ATTR_COLOR) {
-					color = Color(stoul(attr->value(), nullptr, 16));
-				}
 
 				attr = attr->next_attribute();
 			}
@@ -105,6 +110,7 @@ void UserInterfaceLoader::DeserializeNode(xml_node<>* node, UIElement& parent)
 				pos,
 				scale,
 				anchor,
+				shad,
 				layer);
 			textB->SetActivity(active);
 			textB->SetColor(color);
@@ -115,10 +121,7 @@ void UserInterfaceLoader::DeserializeNode(xml_node<>* node, UIElement& parent)
 		else if (node->name() == UIEL_NAME_SPRITE) {
 
 			ExtGlRes_Sprite* sprSource = nullptr;
-			
-			Color color=Color::White;
 			const Texture* tex = nullptr;
-			Shader* shad = nullptr;
 
 			//read attributes
 			attr = node->first_attribute();
@@ -126,7 +129,8 @@ void UserInterfaceLoader::DeserializeNode(xml_node<>* node, UIElement& parent)
 				if (attr->name() == ATTR_SPRITE_SOURCE) {
 					sprSource=dynamic_cast<ExtGlRes_Sprite*>(ExternalGlobalResources::GetRes(string(attr->value())));
 					tex = &sprSource->Tex;
-					shad = sprSource->RenShader;
+					if(shad==nullptr)
+						shad = sprSource->RenShader;
 				}
 
 				attr = attr->next_attribute();

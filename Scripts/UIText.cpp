@@ -19,6 +19,11 @@ Vector2f UIText::ctor_GetUISize(const string& textStr, unsigned int characterSiz
 	auto bounds = txt.getGlobalBounds();
 	return Vector2f(bounds.width, bounds.height);
 }
+void		UIText::ctor_Initialize() {
+
+	if (RendShader != nullptr)
+		RenderSt.shader = RendShader;
+}
 
 UIText::UIText(
 	UIElement*		Parent,
@@ -27,6 +32,7 @@ UIText::UIText(
 	Vector2f		LocalPosition,
 	Vector2f		LocalScale,
 	Vector2f		Anchor,
+	Shader*			RendShader,
 	byte			RendLayer)
 		:UIElement(
 			ctor_InitOwner(textStr,characterSize),
@@ -36,7 +42,8 @@ UIText::UIText(
 			0,
 			Anchor,
 			ctor_GetUISize(textStr,characterSize),
-			RendLayer)
+			RendLayer),
+		RendShader(RendShader)
 {} 
 
 UIText::UIText(
@@ -46,6 +53,7 @@ UIText::UIText(
 	Vector2f			LocalPosition,
 	float				LocalScale,
 	Vector2f			Anchor,
+	Shader*				RendShader,
 	byte				RendLayer)
 		:UIText(
 			Parent,
@@ -54,6 +62,7 @@ UIText::UIText(
 			LocalPosition,
 			Vector2f(LocalScale,LocalScale),
 			Anchor,
+			RendShader,
 			RendLayer)
 {}
 
@@ -63,6 +72,7 @@ UIText::UIText(
 	Vector2f			GlobalPosition,
 	Vector2f			GlobalScale,
 	Vector2f			Anchor,
+	Shader*				RendShader,
 	byte				RendLayer)
 		:UIElement(
 			ctor_InitOwner(textStr,characterSize),
@@ -71,7 +81,8 @@ UIText::UIText(
 			0,
 			Anchor,
 			ctor_GetUISize(textStr,characterSize),
-			RendLayer)
+			RendLayer),
+	RendShader(RendShader)
 {}
 
 UIText::UIText(
@@ -80,6 +91,7 @@ UIText::UIText(
 	Vector2f			GlobalPosition,
 	float				GlobalScale,
 	Vector2f			Anchor,
+	Shader*				RendShader,
 	byte				RendLayer)
 		:UIText(
 			textStr,
@@ -87,11 +99,12 @@ UIText::UIText(
 			GlobalPosition,	
 			Vector2f(GlobalScale,GlobalScale),
 			Anchor,
+			RendShader,
 			RendLayer)
 {}
 
 void UIText::RenderGraphicAction(RenderWindow& window) {
-	window.draw(*text);
+	window.draw(*text,RenderSt);
 	UpdateEffects();
 }
 Color	UIText::GetColor() const {
