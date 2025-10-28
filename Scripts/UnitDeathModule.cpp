@@ -14,7 +14,12 @@ void UnitDeathModule::Death() {
 		dSprRes->Tex,
 		Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution,
 		dSprRes->RenShader);
-	dSpr->SetColor(dynamic_cast<UnitObject*>(&Owner)->GetColor());
-	dSpr->AddEffect(*new FadingVisualEff_Des(Engine::GetGlobalConsts().AverageLifeTime_DeathEffect, *dSpr));
+	auto unitOwner = dynamic_cast<UnitObject*>(&Owner);
+	auto color = unitOwner->GetColor();
+	dSpr->SetColor(color);
+	dSpr->SetGlobalScale_Sng(unitOwner->GetGlobalScale_Sng() * dSpr->GetGlobalScale_Sng());
+	dSpr->SetGlobalPosition(unitOwner->GetGlobalPosition());
+	auto& eff = *new FadingVisualEff_Des(Engine::GetGlobalConsts().AverageLifeTime_DeathEffect, *dSpr);
+	dSpr->AddEffect(eff);
 	EntityDeathModule::Death();
 }

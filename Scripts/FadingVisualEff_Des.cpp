@@ -13,7 +13,7 @@ void FadingVisualEff_Des::Update() {
 
 	if (Fade()) {
 
-		delete& Owner;
+		delete Owner->GetPtr_t();
 		delete this;
 	}
 }

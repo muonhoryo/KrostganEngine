@@ -12,6 +12,7 @@ namespace KrostganEngine::Visual {
 	class FadingVisualEff_Des final : public FadingVisualEffect{
 	public:
 		FadingVisualEff_Des(float LifeTime, IColoredObject& Owner);
+		virtual ~FadingVisualEff_Des(){}
 
 	protected:
 		void Update() override;

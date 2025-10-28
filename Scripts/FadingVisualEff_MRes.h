@@ -14,6 +14,7 @@ namespace KrostganEngine::Visual {
 	public:
 		FadingVisualEff_MRes(float FadeTime, IColoredObject& Owner);
 		FadingVisualEff_MRes(IColoredObject& Owner);
+		virtual ~FadingVisualEff_MRes(){}
 
 		void ResetFade();
 		void ResetFade(float FadeTime);

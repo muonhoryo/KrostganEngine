@@ -35,6 +35,9 @@ namespace KrostganEngine::UI {
 
 	public:
 		virtual ~CurrHPDepend_toTxt() {
+			auto ptr = Target->GetPtr_t();
+			if (ptr != nullptr)
+				ptr->GetHPModule().ChangedHPEvent.Remove((INoArgsEventSubscriber&)*HPChangeSubs);
 			delete HPChangeSubs;
 		}
 		CurrHPDepend_toTxt

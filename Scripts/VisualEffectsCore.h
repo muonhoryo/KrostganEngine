@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <CollectionsExts.h>
+#include <watch_ptr.h>
 
 using namespace sf;
 using namespace std;
@@ -24,7 +25,7 @@ namespace KrostganEngine::Visual {
 		friend class EffectObject;
 	};
 
-	class EffectObject {
+	class EffectObject : public virtual w_ptr_observable {
 	public:
 		virtual ~EffectObject(){}
 

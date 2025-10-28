@@ -23,13 +23,13 @@ void EngineRenderModule::Execute() {
 
 		rec->RenderGraphic(Window);
 	}
+	IsIteratingCallbacks = false;
+	DeleteDelayedCallbacks();
 	if (NeedToSort) {
 
 		Callbacks.sort(RenCallbks_SortPred);
 		NeedToSort = false;
 	}
-	IsIteratingCallbacks = false;
-	DeleteDelayedCallbacks();
 	Window.display();
 	SetFrameRenderTime(FrameRenderTime.getElapsedTime().asSeconds());
 }

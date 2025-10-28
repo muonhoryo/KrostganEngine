@@ -24,11 +24,16 @@ namespace KrostganEngine::Visual {
 		/// </summary>
 		void Reset();
 		void SetDefaultAlpha(float alpha);
+		/// <summary>
+		/// Return false and destroy the effect if owner doesn't exist
+		/// </summary>
+		/// <returns></returns>
+		bool CheckOwnerExistane();
 
-		Clock			HidingTimer;
-		float			FadeTime;
-		IColoredObject&	Owner;
-		float			DefaultAlpha;
+		Clock									HidingTimer;
+		float									FadeTime;
+		watch_ptr_handler_wr<IColoredObject>*	Owner;
+		float									DefaultAlpha;
 		
 		void SetOwnerColor(Uint8 alpha);
 	};
