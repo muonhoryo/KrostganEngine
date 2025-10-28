@@ -20,7 +20,7 @@ void UserInterfaceLoader::Load(const string& layoutName) {
 	Load(UserInterfacesDeserializer::GetInstance()->GetLayout(layoutName));
 }
 void UserInterfaceLoader::UnloadCurrent() {
-	UserInterfaceManager::GetRoot().DestroyChildren();
+	UserInterfaceManager::Unload();
 }
 void UserInterfaceLoader::DeserializeNode(xml_node<>* node, UIElement& parent)
 {

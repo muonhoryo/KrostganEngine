@@ -14,13 +14,13 @@ void UserInterfaceManager::Initialize(){
 	new UIRootMover(*UserInterface);
 }
 void UserInterfaceManager::Unload() {
-	UserInterface->DestroyChildren();
 	for (auto depend : UIDependencies) {
 		delete depend;
 	}
 	UIDependencies.clear();
 	FirstSelEntityDepend = new FirstSelEntityDependsManager();
 	UIDependencies.push_back(FirstSelEntityDepend);
+	UserInterface->DestroyChildren();
 }
 
 UserInterfaceManager::UIRootMover::UIRootMover(UIEmpty& Root)
