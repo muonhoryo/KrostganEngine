@@ -52,18 +52,18 @@ namespace KrostganEngine::GameObjects {
 	};
 
 	struct GlObjectDeathEventArgs {
-		GlObjectDeathEventArgs(ObjectDeathEventArgs& args,IAttackableObj& Owner)
+		GlObjectDeathEventArgs(const ObjectDeathEventArgs& args,IAttackableObj& Owner)
 			:args(args),Owner(Owner)
 		{}
 
-		ObjectDeathEventArgs& args;
+		const ObjectDeathEventArgs& args;
 		IAttackableObj& Owner;
 	};
 
 	class IDeathModule {
 	public:
-		static inline ExecutedEvent<GlObjectDeathEventArgs> DeathEvent_global=ExecutedEvent<GlObjectDeathEventArgs>();
-		ExecutedEvent<ObjectDeathEventArgs> DeathEvent;
+		static inline ExecutedEvent<const GlObjectDeathEventArgs> DeathEvent_global=ExecutedEvent<const GlObjectDeathEventArgs>();
+		ExecutedEvent<const ObjectDeathEventArgs> DeathEvent;
 
 		bool GetIsDeadState() const { return IsDead; }
 
@@ -73,7 +73,7 @@ namespace KrostganEngine::GameObjects {
 		IDeathModule(IAttackableObj& Owner)
 			:Owner(Owner){}
 
-		void DeathEvExecute(ObjectDeathEventArgs& args) {
+		void DeathEvExecute(const ObjectDeathEventArgs& args) {
 			DeathEvHandler.Execute(args);
 			DeathEventGlHandler.Execute(GlObjectDeathEventArgs(args, Owner));
 		}
@@ -82,7 +82,7 @@ namespace KrostganEngine::GameObjects {
 		IAttackableObj& Owner;
 
 	private:
-		EventHandler<ObjectDeathEventArgs> DeathEvHandler = EventHandler<ObjectDeathEventArgs>(DeathEvent);
-		static inline EventHandler<GlObjectDeathEventArgs> DeathEventGlHandler = EventHandler<GlObjectDeathEventArgs>(DeathEvent_global);
+		EventHandler<const ObjectDeathEventArgs> DeathEvHandler = EventHandler<const ObjectDeathEventArgs>(DeathEvent);
+		static inline EventHandler<const GlObjectDeathEventArgs> DeathEventGlHandler = EventHandler<const GlObjectDeathEventArgs>(DeathEvent_global);
 	};
 }

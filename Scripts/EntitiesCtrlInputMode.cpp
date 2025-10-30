@@ -4,7 +4,7 @@
 #include <GroupSelectionSystem.h>
 #include <Extensions.h>
 #include <FractionsSystem.h>
-#include <DivineCommander.h>
+#include <DBG_DivineCommander.h>
 
 using namespace KrostganEngine;
 using namespace KrostganEngine::Debug;

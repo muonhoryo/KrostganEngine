@@ -7,7 +7,7 @@ using namespace KrostganEngine::EntitiesControl;
 using namespace KrostganEngine::Core;
 using namespace KrostganEngine::GameObjects;
 
-AutoAggressionModule::AutoAggressionModule(ExecutorActionsMediator& ActionMediator, ExecutedEvent<const IEntityOrder*>& StartExecOrderEvent) : ICallbackRec_Upd(),
+AutoAggressionModule::AutoAggressionModule(ExecutorActionsMediator& ActionMediator, ExecutedEvent<const IEntityOrder>& StartExecOrderEvent) : ICallbackRec_Upd(),
 	ActionMediator(ActionMediator),
 	StartExecOrderEvent(StartExecOrderEvent),
 	StartExecOrderSubscr(*new OnStartOrderExecAction(*this))
@@ -79,7 +79,7 @@ AutoAggressionModule::OnStartOrderExecAction::OnStartOrderExecAction(AutoAggress
 	:Owner(Owner) {
 }
 
-void AutoAggressionModule::OnStartOrderExecAction::Execute(const IEntityOrder* const& ord) {
+void AutoAggressionModule::OnStartOrderExecAction::Execute(const IEntityOrder& ord) {
 
 	if (Owner.GetActivityState())
 		Owner.Restart();

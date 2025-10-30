@@ -12,6 +12,12 @@ namespace KrostganEngine::GameObjects {
 	struct EntityBattleStats {
 	public:
 		EntityBattleStats(){}
+		EntityBattleStats(const EntityBattleStats& copy) 
+			:EntityBattleStats(){
+
+			copy.CopyTo(*this);
+		}
+		virtual ~EntityBattleStats();
 
 		static inline const short STATTYPE_TYPEDEF_BITSCOUNT = 4;
 		/// <summary>
@@ -35,6 +41,7 @@ namespace KrostganEngine::GameObjects {
 			AARange			= t_float | (4 << STATTYPE_TYPEDEF_BITSCOUNT),
 			AutoAggrRadius	= t_float | (5 << STATTYPE_TYPEDEF_BITSCOUNT)
 		};
+
 	private:
 		static inline const array<pair<StatType,string>,8> StatTypeNames{
 			pair<StatType,string>(StatType::MaxHP,			"MaxHP"),
@@ -69,13 +76,204 @@ namespace KrostganEngine::GameObjects {
 			return "";
 		}
 		static StatType StrToStat(const string& str) {
-			
+
 			auto cond = new GetStatTypeCond(str);
-			auto type= CollectionsExts::Get_c(StatTypeNames, *cond);
+			auto type = CollectionsExts::Get_c(StatTypeNames, *cond);
 			delete cond;
-			return (type==nullptr)? (StatType)-1 : (type->first);
+			return (type == nullptr) ? (StatType)-1 : (type->first);
 		}
 
+//
+//
+// Parameter's modifiers
+//
+//
+
+	public:
+		template<typename TValueType>
+		struct Parameter final {
+		public:
+			explicit Parameter(TValueType Default)
+				:Default(Default),
+				Stat(Default)
+			{}
+
+			TValueType GetStat() const { return Stat; }
+			TValueType GetDefault() const { return Default; }
+
+			TValueType const& GetRef_Stat() const { return Stat; }
+			TValueType const& GetRef_Default() const { return Default; }
+
+			operator TValueType() const {
+				return Stat;
+			}
+
+		private:
+			TValueType Stat;
+			TValueType Default;
+
+			friend class EntityBattleStats;
+		};
+		
+		struct ParamModifier {
+
+			enum class ModOpType : char {
+				PreSum,
+				Mul,
+				PostSum
+			};
+
+			const ModOpType ModOp;
+			const EntityBattleStats::StatType FieldType;
+
+		protected:
+			ParamModifier(ModOpType ModOp, EntityBattleStats::StatType FieldType)
+				:ModOp(ModOp),
+				FieldType(FieldType)
+			{}
+		};
+		struct ParamModifier_Mul final : public ParamModifier{
+
+			ParamModifier_Mul(EntityBattleStats::StatType FieldType,float MulCoef)
+				:ParamModifier(ModOpType::Mul,FieldType),
+				MulCoef(MulCoef)
+			{}
+
+			float MulCoef;
+		};
+		template<typename TValueType>
+		struct ParamModifier_Sum final: public ParamModifier {
+
+			ParamModifier_Sum(EntityBattleStats::StatType FieldType, TValueType SumValue,bool isPostSum)
+				:ParamModifier(isPostSum?ModOpType::PostSum:ModOpType::PreSum, FieldType),
+				SumValue(SumValue)
+			{}
+
+			TValueType SumValue;
+		};
+
+	private:
+		struct ParamModifier_SortFunc final : CollectionsExts::CompareFunc<const ParamModifier*> {
+
+			bool Compare(const ParamModifier* const& first, const ParamModifier* const& second) const override {
+
+				int firstType = (int)first->FieldType;
+				int secondType = (int)second->FieldType;
+				if (firstType == secondType) {
+
+					int firstOp = (int)first->ModOp;
+					int secondOp = (int)second->ModOp;
+					return firstOp < secondOp;
+				}
+				else
+					return firstType < secondType;
+			}
+		};
+		static inline const ParamModifier_SortFunc ParamModsSortFuncInstance= ParamModifier_SortFunc();
+
+		vector<const ParamModifier*> ParamModifiers;
+
+		void RecalculateStat(StatType type);
+		template<typename TFieldType>
+		void RecalculateStat_t(StatType type, Parameter<TFieldType> const& param) {
+
+			TFieldType& field = *const_cast<TFieldType*>(&param.GetRef_Stat());
+			TFieldType const& defaultField = param.GetRef_Default();
+
+			field = defaultField;
+
+			auto it = ParamModifiers.begin();
+			auto itEnd = ParamModifiers.end();
+			const ParamModifier* mod = nullptr;
+
+			//Find stat's modifiers
+			while (it != itEnd) {
+				mod = *it;
+				if (mod->FieldType == type) {
+					break;
+				}
+				++it;
+			}
+
+			if (it == itEnd)
+				return;
+
+			//Pre sum
+			{
+				const ParamModifier_Sum<TFieldType>* modSum = nullptr;
+				while (it != itEnd) {
+					mod = *it;
+					if (mod->ModOp != ParamModifier::ModOpType::PreSum ||
+						mod->FieldType!=type) {
+						break;
+					}
+					else {
+						modSum = static_cast<const ParamModifier_Sum<TFieldType>*>(mod);
+						field += modSum->SumValue;
+						++it;
+					}
+				}
+			}
+
+			if (it == itEnd ||
+				(mod!=nullptr &&
+				mod->FieldType != type))
+				return;
+
+			//Multiply
+			{
+				const ParamModifier_Mul* modMul = nullptr;
+				float mulSumCoef = 1;
+				while (it != itEnd) {
+					mod = *it;
+					if (mod->ModOp != ParamModifier::ModOpType::Mul ||
+						mod->FieldType != type) {
+						break;
+					}
+					else {
+						modMul = static_cast<const ParamModifier_Mul*>(mod);
+						mulSumCoef *= modMul->MulCoef;
+						++it;
+					}
+				}
+				field *= mulSumCoef;
+			}
+
+			if (it == itEnd ||
+				(mod!=nullptr &&
+				mod->FieldType != type))
+				return;
+
+			//Post sum
+			const ParamModifier_Sum<TFieldType>* modPostSum = nullptr;
+			while (it != itEnd) {
+				mod = *it;
+				if (mod->FieldType != type) {
+					break;
+				}
+				else {
+					modPostSum = static_cast<const ParamModifier_Sum<TFieldType>*>(mod);
+					field += modPostSum->SumValue;
+					++it;
+				}
+			}
+		}
+
+	public:
+		void AddModifier(const ParamModifier& mod);
+		void RemoveModifier(const ParamModifier& mod);
+		
+//
+//
+// Parameter field's getting
+//
+//
+
+	public:
+		/// <summary>
+		/// Copy parameters of this stats to target stats
+		/// </summary>
+		/// <param name="tocopy"></param>
 		void CopyTo(EntityBattleStats& tocopy) const;
 		static StatType		GetFieldType(StatType type);
 		/// <summary>
@@ -83,37 +281,69 @@ namespace KrostganEngine::GameObjects {
 		/// </summary>
 		/// <param name="type"></param>
 		/// <returns></returns>
-		const size_t*	GetFieldRef_s_t(StatType type) const;
+		const size_t*	GetFieldRef_s_t(StatType type,bool isDefField=false) const;
 		/// <summary>
 		/// Return nullptr of field has another type or field don't exists
 		/// </summary>
 		/// <param name="type"></param>
 		/// <returns></returns>
-		const float*	GetFieldRef_f(StatType type) const;
-		const void*		GetFieldRef(StatType type) const;
+		const float*	GetFieldRef_f(StatType type, bool isDefField = false) const;
+		const void*		GetFieldRef(StatType type, bool isDefField = false) const;
 
-		ExecutedEvent<StatType> StatChangedEvent;
+		ExecutedEvent<const StatType> StatChangedEvent = ExecutedEvent<const StatType>();
+		ExecutedEvent<const StatType> DefaultStatChangedEvent = ExecutedEvent<const StatType>();
 
 	private:
-		EventHandler<StatType> StatChangedEventHan = EventHandler<StatType>(StatChangedEvent);
+		EventHandler<const StatType> StatChangedEventHan = EventHandler<const StatType>(StatChangedEvent);
+		EventHandler<const StatType> DefaultStatChangedEventHan = EventHandler<const StatType>(DefaultStatChangedEvent);
+
+		template<typename TFieldType>
+		static TFieldType const& GetFieldRefFromParameter(Parameter<TFieldType> const& param, bool isDefField = false) {
+			return isDefField ? param.GetRef_Default() : param.GetRef_Stat();
+		}
+		/// <summary>
+		/// Return nullptr if field has another type of field doesn't exist
+		/// </summary>
+		/// <param name="type"></param>
+		/// <returns></returns>
+		const Parameter<size_t>* GetParameterByType_s_t(StatType type) const;
+		/// <summary>
+		/// Return nullptr if field has another type of field doesn't exist
+		/// </summary>
+		/// <param name="type"></param>
+		/// <returns></returns>
+		const Parameter<float>* GetParameterByType_f(StatType type) const;
+//
+//
+// Parameter's definition
+//
+//
 
 	public:
 
-		static	float	GetAACooldown	(float AASpeed) { return (float)1 / AASpeed; }
+		static	float	GetAACooldown(float AASpeed) { return (float)1 / AASpeed; }
+		
 		//HitPoint
-		size_t	GetMaxHP()			const { return MaxHP; }
-
-		size_t	GetHPRegenCount()	const { return RegenHP_Amount; }
-		float	GetHPRegenTick()	const { return RegenHP_Tick; }
+		Parameter<size_t> const&	GetMaxHP()			const { return MaxHP; }
+		Parameter<size_t> const&	GetHPRegenCount()	const { return RegenHP_Amount; }
+		Parameter<float> const&		GetHPRegenTick()	const { return RegenHP_Tick; }
 		//Moving
-		float	GetMovingSpeed()	const { return MovingSpeed; }
+		Parameter<float> const&		GetMovingSpeed()	const { return MovingSpeed; }
 		//Attack
-		size_t	GetAADamage()		const { return AADamage; }
-		float	GetAASpeed()		const { return AASpeed; }
-		float	GetAACooldown()		const { return GetAACooldown(AASpeed); }
-		float	GetAARange()		const { return AARange; }
+		Parameter<size_t> const&	GetAADamage()		const { return AADamage; }
+		Parameter<float> const&		GetAASpeed()		const { return AASpeed; }
+		float const&				GetAACooldown()		const { return GetAACooldown(AASpeed.GetStat()); }
+		Parameter<float> const&		GetAARange()		const { return AARange; }
 		//View
-		float	GetAutoAggrRadius()	const { return AutoAggrRadius; }
+		Parameter<float> const&		GetAutoAggrRadius()	const { return AutoAggrRadius; }
+
+		template<typename TFieldType>
+		void SetDefaultStat(StatType type, Parameter<TFieldType>& param, TFieldType value) {
+
+			param.Default = value;
+			RecalculateStat_t<TFieldType>(type, param);
+			DefaultStatChangedEventHan.Execute(type);
+		}
 
 		//HitPoint
 		void SetMaxHP(size_t hp);
@@ -124,23 +354,23 @@ namespace KrostganEngine::GameObjects {
 		//Attack
 		void SetAADamage(size_t damage);
 		void SetAASpeed(float speed);
-		void SetAARadius(float radius);
+		void SetAARange(float range);
 		//View
 		void SetAutoAggrRadius(float radius);
 
 
 	private:
 		//HitPoint
-		size_t	MaxHP			=	1;
-		size_t	RegenHP_Amount	=	1;		//Amount of restored hp in 1 tick
-		float	RegenHP_Tick	=	1;		//Cooldown between hp's restoring by regeneration
+		Parameter<size_t>	MaxHP			= Parameter<size_t>(1);
+		Parameter<size_t>	RegenHP_Amount	= Parameter<size_t>(1);		//Amount of restored hp in 1 tick
+		Parameter<float>	RegenHP_Tick	= Parameter<float>(1);		//Cooldown between hp's restoring by regeneration
 		//Moving
-		float	MovingSpeed		=	1;
+		Parameter<float>	MovingSpeed		= Parameter<float>(1);
 		//Attack
-		size_t	AADamage		=	0;
-		float	AASpeed			=	0;		//Amount of dealt attack in 1 second
-		float	AARange			=	0;
+		Parameter<size_t>	AADamage		= Parameter<size_t>(0);
+		Parameter<float>	AASpeed			= Parameter<float>(0);		//Amount of dealt attack in 1 second
+		Parameter<float>	AARange			= Parameter<float>(0);
 		//View
-		float	AutoAggrRadius	=	0;
+		Parameter<float>	AutoAggrRadius	= Parameter<float>(0);
 	};
 }

@@ -8,7 +8,7 @@ using namespace KrostganEngine::GameObjects;
 
 namespace KrostganEngine::UI {
 
-	class VisualOnDeathDestroyer :IEventSubscriber<ObjectDeathEventArgs> {
+	class VisualOnDeathDestroyer :IEventSubscriber<const ObjectDeathEventArgs> {
 	public:
 		VisualOnDeathDestroyer(ICallbackRec_GraphRen& Target, IAttackableObj& Owner)
 			:Target(&Target),

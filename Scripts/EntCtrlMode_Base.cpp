@@ -2,7 +2,7 @@
 #include <EntitiesCtrlInputModes.h>
 #include <iostream>
 #include <GroupSelectionSystem.h>
-#include <DivineCommander.h>
+#include <DBG_DivineCommander.h>
 
 #include <Engine.h>
 
@@ -19,7 +19,7 @@ EntCtrlMode_Base::EntCtrlMode_Base(EntitiesCtrlInputHandler& Owner)
 }
 
 bool EntCtrlMode_Base::AbleToGiveOrders() {
-	return DivineCommander::GetActivity() ||
+	return DBG_DivineCommander::GetActivity() ||
 		GroupSelectionSystem::GetToPlayertRelOfSelEntities() == Relation::Ally;
 }
 

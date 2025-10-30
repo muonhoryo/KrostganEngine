@@ -34,25 +34,25 @@ void OrderTargetsVisualizer::FollOrdTarHandler::Update(CallbackRecArgs_Upd args)
 //
 //
 
-OrderTargetsVisualizer::AddOrderSubscriber::AddOrderSubscriber(OrderTargetsVisualizer& Owner) : IEventSubscriber<const IEntityOrder*>(),
+OrderTargetsVisualizer::AddOrderSubscriber::AddOrderSubscriber(OrderTargetsVisualizer& Owner) : IEventSubscriber<const IEntityOrder>(),
 	Owner(Owner){
 }
 
-void OrderTargetsVisualizer::AddOrderSubscriber::Execute(const IEntityOrder* const& args) {
-	Owner.TryAddOrderInList(args);
+void OrderTargetsVisualizer::AddOrderSubscriber::Execute(const IEntityOrder& args) {
+	Owner.TryAddOrderInList(&args);
 }
 
-OrderTargetsVisualizer::RemoveOrderSubscriber::RemoveOrderSubscriber (OrderTargetsVisualizer& Owner) : IEventSubscriber<const IEntityOrder*>(),
+OrderTargetsVisualizer::RemoveOrderSubscriber::RemoveOrderSubscriber (OrderTargetsVisualizer& Owner) : IEventSubscriber<const IEntityOrder>(),
 	Owner(Owner){
 }
 
-void OrderTargetsVisualizer::RemoveOrderSubscriber::Execute(const IEntityOrder* const& args) {
-	const EntityOrder_GlobalPosTarget* gPosOrd = dynamic_cast<const EntityOrder_GlobalPosTarget*>(args);
+void OrderTargetsVisualizer::RemoveOrderSubscriber::Execute(const IEntityOrder& args) {
+	const EntityOrder_GlobalPosTarget* gPosOrd = dynamic_cast<const EntityOrder_GlobalPosTarget*>(&args);
 	if (gPosOrd != nullptr) {
 		Owner.RemovePoint_Forward();
 		return;
 	}
-	const EntityOrder_ObjectTarget* tarOrd = dynamic_cast<const EntityOrder_ObjectTarget*>(args);
+	const EntityOrder_ObjectTarget* tarOrd = dynamic_cast<const EntityOrder_ObjectTarget*>(&args);
 	if (tarOrd != nullptr) {
 		Owner.RemovePoint_Forward();
 	}

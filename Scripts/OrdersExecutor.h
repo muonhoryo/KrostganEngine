@@ -21,9 +21,9 @@ namespace KrostganEngine::GameObjects {
 	public:
 		virtual ~OrdersExecutor();
 
-		ExecutedEvent<const IEntityOrder*> GetOrderEvent;
-		ExecutedEvent<const IEntityOrder*> StartExecOrderEvent;
-		ExecutedEvent<const IEntityOrder*> ExecuteOrderEvent;
+		ExecutedEvent<const IEntityOrder> GetOrderEvent;
+		ExecutedEvent<const IEntityOrder> StartExecOrderEvent;
+		ExecutedEvent<const IEntityOrder> ExecuteOrderEvent;
 		NoArgsExecutedEvent ResetOrderListEvent;
 
 		bool TryAddOrder(IEntityOrder* order, bool clearOrdQueue = false);
@@ -51,9 +51,9 @@ namespace KrostganEngine::GameObjects {
 		void SetAAModule(AutoAttackModule* aamodule);
 		void SetAutoAggrModule(AutoAggressionModule* autoAggmodule);
 	private:
-		EventHandler<const IEntityOrder*> GetOrderEventHandler = EventHandler<const IEntityOrder*>(GetOrderEvent);
-		EventHandler<const IEntityOrder*> StartExecOrderEventHandler = EventHandler<const IEntityOrder*>(StartExecOrderEvent);
-		EventHandler<const IEntityOrder*> ExecuteOrderEventHandler = EventHandler<const IEntityOrder*>(ExecuteOrderEvent);
+		EventHandler<const IEntityOrder> GetOrderEventHandler = EventHandler<const IEntityOrder>(GetOrderEvent);
+		EventHandler<const IEntityOrder> StartExecOrderEventHandler = EventHandler<const IEntityOrder>(StartExecOrderEvent);
+		EventHandler<const IEntityOrder> ExecuteOrderEventHandler = EventHandler<const IEntityOrder>(ExecuteOrderEvent);
 		NoArgsEventHandler ResetOrderListEventHandler = NoArgsEventHandler(ResetOrderListEvent);
 
 		list<IEntityOrder*> OrdersQueue;
@@ -119,11 +119,11 @@ namespace KrostganEngine::GameObjects {
 	class AutoAggressionModule :public ICallbackRec_Upd {
 
 	private:
-		class OnStartOrderExecAction : public IEventSubscriber<const IEntityOrder*> {
+		class OnStartOrderExecAction : public IEventSubscriber<const IEntityOrder> {
 		public:
 			OnStartOrderExecAction(AutoAggressionModule& Owner);
 
-			void Execute(const IEntityOrder* const& ord) override;
+			void Execute(const IEntityOrder& ord) override;
 
 		private:
 			AutoAggressionModule& Owner;
@@ -143,7 +143,7 @@ namespace KrostganEngine::GameObjects {
 		void Update(CallbackRecArgs_Upd args) override;
 
 	protected:
-		AutoAggressionModule(ExecutorActionsMediator& ActionMediator,ExecutedEvent<const IEntityOrder*>& StartExecOrderEvent);
+		AutoAggressionModule(ExecutorActionsMediator& ActionMediator,ExecutedEvent<const IEntityOrder>& StartExecOrderEvent);
 
 		virtual void TurnOnAction();
 		virtual void TurnOffAction();
@@ -152,7 +152,7 @@ namespace KrostganEngine::GameObjects {
 		virtual void UpdateAction(CallbackRecArgs_Upd& args) = 0;
 
 		ExecutorActionsMediator& ActionMediator;
-		ExecutedEvent<const IEntityOrder*>& StartExecOrderEvent;
+		ExecutedEvent<const IEntityOrder>& StartExecOrderEvent;
 		OnStartOrderExecAction& StartExecOrderSubscr;
 		bool IsActive;
 		bool IsFollowTargets;

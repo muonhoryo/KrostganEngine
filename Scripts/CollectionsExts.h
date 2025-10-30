@@ -2,6 +2,7 @@
 
 #include <forward_list>
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -154,7 +155,7 @@ namespace KrostganEngine {
 			return nullptr;
 		}
 
-		template<typename TCollectionType, typename TElementsType>
+		template<typename TElementsType, typename TCollectionType>
 		static void InsertSorted(
 			TCollectionType&							collection,
 			const TElementsType&						element,
@@ -192,6 +193,41 @@ namespace KrostganEngine {
 					++it;
 				}
 				collection.insert_after(it,element);
+			}
+		}
+
+		template<typename TElementsType>
+		static void InsertSorted(
+			vector<TElementsType>&				collection,
+			const TElementsType&				element,
+			const CompareFunc<TElementsType>&	comparator){
+
+			size_t size = collection.size();
+			if (size == 0) {
+				collection.push_back(element);
+			}
+			else if (size == 1) {
+				if (comparator.Compare(element, collection[0]))
+					collection.insert(collection.cbegin(), element);
+				else
+					collection.push_back(element);
+			}
+			else {
+				if (comparator.Compare(element, collection[0])) {
+					collection.insert(collection.cbegin(), element);
+					return;
+				}
+				auto it = collection.cbegin();
+				++it;
+				auto end = collection.cend();
+				while (it != end) {
+					if (comparator.Compare(element, (*it))) {
+						collection.insert(it, element);
+						return;
+					}
+					++it;
+				}
+				collection.push_back(element);
 			}
 		}
 	};

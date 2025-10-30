@@ -15,16 +15,16 @@ OrderTargsVisManager::AddEntitySubscriber::AddEntitySubscriber(OrderTargsVisMana
 	:Owner(Owner) {
 }
 
-void OrderTargsVisManager::AddEntitySubscriber::Execute(ISelectableEntity* const& args) {
-	Owner.TryInsertEntity(args);
+void OrderTargsVisManager::AddEntitySubscriber::Execute(ISelectableEntity& args) {
+	Owner.TryInsertEntity(&args);
 }
 
 OrderTargsVisManager::RemoveEntitySubscriber::RemoveEntitySubscriber(OrderTargsVisManager& Owner)
 	:Owner(Owner) {
 }
 
-void OrderTargsVisManager::RemoveEntitySubscriber::Execute(ISelectableEntity* const& args) {
-	Owner.TryRemoveEntity(args);
+void OrderTargsVisManager::RemoveEntitySubscriber::Execute(ISelectableEntity& args) {
+	Owner.TryRemoveEntity(&args);
 }
 
 OrderTargsVisManager::ClearListSubscriber::ClearListSubscriber(OrderTargsVisManager& Owner)
@@ -93,6 +93,6 @@ void OrderTargsVisManager::Initialize_EntitiesTargetViss() {
 	}
 }
 
-IEventSubscriber<Entity*>* AddSub;
-IEventSubscriber<Entity*>* RemSub;
-INoArgsEventSubscriber* ClearSub;
+//IEventSubscriber<Entity*>* AddSub;
+//IEventSubscriber<Entity*>* RemSub;
+//INoArgsEventSubscriber* ClearSub;

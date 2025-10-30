@@ -15,6 +15,9 @@ Relation FractionsSystem::GetRelation(Fraction objFrac, Fraction subjFrac) {
 			return Relation::Enemy;
 	}
 }
+Relation FractionsSystem::GetRelationToPlayer(Fraction objFrac) {
+	return GetRelation(objFrac, Fraction::Player);
+}
 Color FractionsSystem::GetRelationColor(Relation rel) {
 	switch (rel)
 	{
@@ -29,5 +32,5 @@ Color FractionsSystem::GetRelationColor(Relation rel) {
 	}
 }
 Color FractionsSystem::GetRelationToPlayerColor(Fraction objFrac) {
-	return FractionsSystem::GetRelationColor(FractionsSystem::GetRelation(objFrac, Fraction::Player));
+	return FractionsSystem::GetRelationColor(GetRelationToPlayer(objFrac));
 }

@@ -4,7 +4,7 @@
 #include <iostream>
 #include <Extensions.h>
 #include <SFML/System.hpp>
-#include <DivineCommander.h>
+#include <DBG_DivineCommander.h>
 #include <CoreVisual.h>
 
 using namespace std;
@@ -103,7 +103,7 @@ void Engine::SetCameraPos(Vector2f pos) {
 	const Rect<float>& borders = Singleton->EngineConfiguration->CameraMovingArea;
 	auto& view = InstanceNewView();
 
-	if (!DivineCommander::GetActivity()) {		//Limit camera moving if divine commander is off-line
+	if (!DBG_DivineCommander::GetActivity()) {		//Limit camera moving if divine commander is off-line
 
 		pos.x = clamp<float>(pos.x, borders.left, borders.left + borders.width);
 		pos.y = clamp<float>(pos.y, borders.top, borders.top + borders.height);

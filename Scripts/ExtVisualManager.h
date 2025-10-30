@@ -12,20 +12,20 @@ using namespace KrostganEngine::EntitiesControl;
 namespace KrostganEngine::Visual {
 	class OrderTargsVisManager {
 	private:
-		class AddEntitySubscriber :public IEventSubscriber<ISelectableEntity*> {
+		class AddEntitySubscriber :public IEventSubscriber<ISelectableEntity> {
 		public:
 			AddEntitySubscriber(OrderTargsVisManager& Owner);
 
-			void Execute(ISelectableEntity* const& args) override;
+			void Execute(ISelectableEntity& args) override;
 
 		private:
 			OrderTargsVisManager& Owner;
 		};
-		class RemoveEntitySubscriber :public IEventSubscriber<ISelectableEntity*> {
+		class RemoveEntitySubscriber :public IEventSubscriber<ISelectableEntity> {
 		public:
 			RemoveEntitySubscriber(OrderTargsVisManager& Owner);
 
-			void Execute(ISelectableEntity* const& args) override;
+			void Execute(ISelectableEntity& args) override;
 
 		private:
 			OrderTargsVisManager& Owner;
@@ -46,8 +46,8 @@ namespace KrostganEngine::Visual {
 
 	private:
 		map<Entity*, OrderTargetsVisualizer*> EntitiesTargetViss;
-		IEventSubscriber<ISelectableEntity*>* AddSub;
-		IEventSubscriber<ISelectableEntity*>* RemSub;
+		IEventSubscriber<ISelectableEntity>* AddSub;
+		IEventSubscriber<ISelectableEntity>* RemSub;
 		INoArgsEventSubscriber* ClearSub;
 
 		void TryInsertEntity(ISelectableEntity* ent);

@@ -23,7 +23,7 @@ namespace KrostganEngine::UI {
 		OnStatsUpdate<TObjValue>* StatUpdateSubs;
 
 		template<typename TObj>
-		struct OnStatsUpdate final : public IEventSubscriber<EntityBattleStats::StatType> {
+		struct OnStatsUpdate final : public IEventSubscriber<const EntityBattleStats::StatType> {
 
 			OnStatsUpdate(BattleStatDepend_toTxt<TObj>& Owner)
 				:Owner(Owner)
@@ -63,14 +63,16 @@ namespace KrostganEngine::UI {
 		void ChangeDepTarget(Entity* target) override {
 			if (IsValueRefValid()) {
 				auto tarRef = Target->GetPtr_t_c();
-				if (tarRef != nullptr)
-					tarRef->GetBattleStats().StatChangedEvent.Remove((IEventSubscriber<EntityBattleStats::StatType>&)*StatUpdateSubs);
+				if (tarRef != nullptr){
+					auto& stats = target->GetBattleStats();
+					stats.StatChangedEvent.Remove((IEventSubscriber<const EntityBattleStats::StatType>&) * StatUpdateSubs);
+				}
 			}
 			else {
 				this->Object = nullptr;
 			}
 			if (target != nullptr) {
-				target->GetBattleStats().StatChangedEvent.Add((IEventSubscriber<EntityBattleStats::StatType>&)*StatUpdateSubs);
+				target->GetBattleStats().StatChangedEvent.Add((IEventSubscriber<const EntityBattleStats::StatType>&)*StatUpdateSubs);
 				auto& ptr = target->GetPtr();
 				if (this->Object == nullptr)
 					this->Object = reinterpret_cast<TObjValue const*>(target->GetBattleStats().GetFieldRef(SubjStat));

@@ -5,7 +5,7 @@
 using namespace KrostganEngine::Core;
 
 namespace KrostganEngine::UI {
-	class UIMan_WinResizeEvSubs : public IEventSubscriber<Engine::WindowResizeEvArgs> {
+	class UIMan_WinResizeEvSubs : public IEventSubscriber<const Engine::WindowResizeEvArgs> {
 	public:
 		UIMan_WinResizeEvSubs(UIElement& userInterface) 
 			:userInterface(userInterface){

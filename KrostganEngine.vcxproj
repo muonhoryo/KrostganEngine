@@ -145,6 +145,7 @@
     <ClCompile Include="Scripts\CircleVisPrimitive.cpp" />
     <ClCompile Include="Scripts\ColliderShapes.cpp" />
     <ClCompile Include="Scripts\CommonHPRegenModule.cpp" />
+    <ClCompile Include="Scripts\DBG_ImmortalArmy.cpp" />
     <ClCompile Include="Scripts\DivineCommander.cpp" />
     <ClCompile Include="Scripts\EngineLateUpdateModule.cpp" />
     <ClCompile Include="Scripts\Engine_ModeSelection.cpp" />
@@ -259,7 +260,8 @@
     <ClInclude Include="Scripts\CallbackDelegates.h" />
     <ClInclude Include="Scripts\CommonHPRegenModule.h" />
     <ClInclude Include="Scripts\CoreVisual.h" />
-    <ClInclude Include="Scripts\DivineCommander.h" />
+    <ClInclude Include="Scripts\DBG_ImmortalArmy.h" />
+    <ClInclude Include="Scripts\DBG_DivineCommander.h" />
     <ClInclude Include="Scripts\EffectObjects.h" />
     <ClInclude Include="Scripts\EntityOrder_AttackArea.h" />
     <ClInclude Include="Scripts\EntityOrder_Cancel.h" />

@@ -12,7 +12,7 @@ namespace KrostganEngine {
 	template <typename TArguments>
 	class IEventSubscriber {
 	public:
-		virtual void Execute(const TArguments& args)=0;
+		virtual void Execute(TArguments& args)=0;
 
 	protected:
 		IEventSubscriber() {};
@@ -33,7 +33,7 @@ namespace KrostganEngine {
 		}
 
 		template <typename TArgs>
-		friend void EventHandler<TArgs>::Execute(const TArgs& args);
+		friend void EventHandler<TArgs>::Execute(TArgs& args);
 
 	private:
 		forward_list<IEventSubscriber<TArguments>*> Subscribers;
@@ -41,15 +41,16 @@ namespace KrostganEngine {
 
 	template <typename TArguments=void>
 	class EventHandler final {
-	private:
+	//private:
+	public:
 		ExecutedEvent<TArguments>& Owner;
 	public:
 		EventHandler(ExecutedEvent<TArguments>& Owner):Owner(Owner) {
 		}
-		void Execute(const TArguments& args) {
+		void Execute(TArguments& args) {
 
-			typename forward_list< IEventSubscriber<TArguments>*>::iterator it = Owner.Subscribers.begin();
-			typename forward_list< IEventSubscriber<TArguments>*>::iterator end = Owner.Subscribers.end();
+			auto it = Owner.Subscribers.cbegin();
+			auto end = Owner.Subscribers.cend();
 			int size = distance(it,end);
 			vector<IEventSubscriber<TArguments>*> subscrs = vector<IEventSubscriber<TArguments>*>(size);
 

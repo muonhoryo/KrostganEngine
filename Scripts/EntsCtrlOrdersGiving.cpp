@@ -5,7 +5,7 @@
 #include <GroupSelectionSystem.h>
 #include <Extensions.h>
 #include <FractionsSystem.h>
-#include <DivineCommander.h>
+#include <DBG_DivineCommander.h>
 
 using namespace KrostganEngine;
 using namespace KrostganEngine::Debug;
@@ -16,7 +16,7 @@ using namespace KrostganEngine::Physics;
 
 bool EntitiesCtrlInputMode::GivingOrderCondition() {
 	return GroupSelectionSystem::GetToPlayertRelOfSelEntities() == Relation::Ally ||
-		DivineCommander::GetActivity();
+		DBG_DivineCommander::GetActivity();
 }
 
 void EntitiesCtrlInputMode::GiveOrderToSelected_MoveToPoint(Vector2f targetGlobalPos, bool isGrouped) {

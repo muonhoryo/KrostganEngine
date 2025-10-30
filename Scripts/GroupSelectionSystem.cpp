@@ -4,7 +4,7 @@
 #include <iostream>
 #include <GameObject.h>
 #include <Extensions.h>
-#include <DivineCommander.h>
+#include <DBG_DivineCommander.h>
 
 using namespace std;
 using namespace KrostganEngine::Debug;
@@ -29,9 +29,9 @@ GroupSelectionSystem& GroupSelectionSystem::GetInstance() {
 	return *GroupSelectionSystem::Singleton;
 }
 
-void GroupSelectionSystem::Add(ISelectableEntity*& entity) {
+void GroupSelectionSystem::Add(ISelectableEntity& entity) {
 
-	auto& ptr = entity->GetPtr();
+	auto& ptr = entity.GetPtr();
 	auto& ptr_wr = *new watch_ptr_handler_wr<ISelectableEntity>(ptr);
 	delete &ptr;
 	if (CollectionsExts::Contains(Singleton->SelectedEntities, &ptr_wr,InstanceEqComparator)) {
@@ -41,7 +41,7 @@ void GroupSelectionSystem::Add(ISelectableEntity*& entity) {
 
 	// Check relation of entity to player for not allowing selection more than one of not ally entity
 	ptrdiff_t size = CollectionsExts::Size(Singleton->SelectedEntities);
-	IFractionMember* fracEnt = dynamic_cast<IFractionMember*>(entity);
+	IFractionMember* fracEnt = dynamic_cast<IFractionMember*>(&entity);
 	Fraction frac = fracEnt == nullptr ? FractionsSystem::DefaultFrac : fracEnt->GetFraction();
 	Relation rel = FractionsSystem::GetRelation(frac, Fraction::Player);
 	if (size == 0) {
@@ -52,7 +52,7 @@ void GroupSelectionSystem::Add(ISelectableEntity*& entity) {
 
 		bool isEntAlly = rel == Relation::Ally;
 
-		bool canBeNotSingl = isEntAlly || DivineCommander::GetActivity();	//Select more than one entity only if entity is ally or divine commander is active
+		bool canBeNotSingl = isEntAlly || DBG_DivineCommander::GetActivity();	//Select more than one entity only if entity is ally or divine commander is active
 		if (!canBeNotSingl) {
 
 			delete &ptr_wr;
@@ -81,11 +81,11 @@ void GroupSelectionSystem::Add(ISelectableEntity*& entity) {
 	}
 
 	Add_inter(&ptr_wr);
-	entity->SelectionOn();
+	entity.SelectionOn();
 	Singleton->AddSelectableEventHandler.Execute(entity);
 	Singleton->ChangeSelectablesEventHandler.Execute();
 
-	GameObject* ref = dynamic_cast<GameObject*>(entity);
+	GameObject* ref = dynamic_cast<GameObject*>(&entity);
 	if (ref != nullptr) {
 		cout <<to_string(ref->GetGlobalPosition()) << endl;
 	}
@@ -96,16 +96,16 @@ void GroupSelectionSystem::Add(ISelectableEntity*& entity) {
 void GroupSelectionSystem::Add_inter(watch_ptr_handler_wr<ISelectableEntity>* entity) {
 
 	CollectionsExts::InsertSorted
-		< forward_list<watch_ptr_handler_wr<ISelectableEntity>*>, watch_ptr_handler_wr<ISelectableEntity>* >
+		<watch_ptr_handler_wr<ISelectableEntity>*, forward_list<watch_ptr_handler_wr<ISelectableEntity>*> >
 		(Singleton->SelectedEntities, entity, InstanceAddComparator);
 }
 
-void GroupSelectionSystem::Remove(ISelectableEntity*& entity) {
+void GroupSelectionSystem::Remove(ISelectableEntity& entity) {
 	auto itToD = Singleton->SelectedEntities.before_begin();
 	auto it = Singleton->SelectedEntities.begin();
 	bool isFound = false;
 	for (;it != Singleton->SelectedEntities.cend();++it) {
-		if ((*it)->GetPtr_t() == entity) {
+		if ((*it)->GetPtr_t() == &entity) {
 			isFound = true;
 			break;
 		}
@@ -114,7 +114,7 @@ void GroupSelectionSystem::Remove(ISelectableEntity*& entity) {
 	if (isFound) {
 		delete (*it);
 		Singleton->SelectedEntities.erase_after(itToD);
-		entity->SelectionOff();
+		entity.SelectionOff();
 		Singleton->RemoveSelectableEventHandler.Execute(entity);
 		Singleton->ChangeSelectablesEventHandler.Execute();
 	}

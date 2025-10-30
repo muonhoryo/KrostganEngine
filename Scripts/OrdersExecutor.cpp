@@ -67,7 +67,7 @@ bool OrdersExecutor::TryAddOrder(IEntityOrder* order, bool clearOrdQueue) {
 			ResetOrdersQueue();
 		}
 		OrdersQueue.push_back(order);
-		GetOrderEventHandler.Execute(order);
+		GetOrderEventHandler.Execute(*order);
 		return true;
 	}
 	delete order;
@@ -159,14 +159,14 @@ void OrdersExecutor::FirstOrderExecution() {
 		CurrentOrder = OrdersQueue.front();
 		if (CurrentOrder->CheckExecCondition()) {
 			OrdersQueue.pop_front();
-			ExecuteOrderEventHandler.Execute(CurrentOrder);
+			ExecuteOrderEventHandler.Execute(*CurrentOrder);
 			delete CurrentOrder;
 		}
 		else {
 			UnloadActionsToDo();
 			CurrentOrder->OnStartExecution();
 			UpdateActionsToDoFromOrder();
-			StartExecOrderEventHandler.Execute(CurrentOrder);
+			StartExecOrderEventHandler.Execute(*CurrentOrder);
 			return;
 		}
 	}
@@ -181,7 +181,7 @@ void OrdersExecutor::UnloadCurrentOrder() {
 
 	OrdersQueue.pop_front();
 	CurrentOrder->OnEndExecution();
-	ExecuteOrderEventHandler.Execute(CurrentOrder);
+	ExecuteOrderEventHandler.Execute(*CurrentOrder);
 	delete CurrentOrder;
 	CurrentOrder = nullptr;
 }

@@ -28,20 +28,20 @@ namespace KrostganEngine::Visual {
 			watch_ptr_handler_wr_c<ITransformableObj>	Target;
 		};
 
-		class AddOrderSubscriber :public IEventSubscriber<const IEntityOrder*> {
+		class AddOrderSubscriber :public IEventSubscriber<const IEntityOrder> {
 		public:
 			AddOrderSubscriber(OrderTargetsVisualizer& Owner);
 
-			void Execute(const IEntityOrder* const& args) override;
+			void Execute(const IEntityOrder& args) override;
 
 		private:
 			OrderTargetsVisualizer& Owner;
 		};
-		class RemoveOrderSubscriber :public IEventSubscriber<const IEntityOrder*> {
+		class RemoveOrderSubscriber :public IEventSubscriber<const IEntityOrder> {
 		public:
 			RemoveOrderSubscriber(OrderTargetsVisualizer& Owner);
 
-			void Execute(const IEntityOrder* const& args) override;
+			void Execute(const IEntityOrder& args) override;
 		private:
 			OrderTargetsVisualizer& Owner;
 		};
@@ -60,8 +60,8 @@ namespace KrostganEngine::Visual {
 
 	private:
 		watch_ptr_handler_wr<Entity> Owner;
-		IEventSubscriber<const IEntityOrder*>* AddSub;
-		IEventSubscriber<const IEntityOrder*>* RemSub;
+		IEventSubscriber<const IEntityOrder>* AddSub;
+		IEventSubscriber<const IEntityOrder>* RemSub;
 		INoArgsEventSubscriber* ClearSub;
 
 		list<FollOrdTarHandler*> DynPointsHandls;

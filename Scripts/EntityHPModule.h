@@ -41,7 +41,7 @@ namespace KrostganEngine::GameObjects {
 		IndicatorFill&		HPBar;
 		size_t				CurrentHP	= 1;
 
-		class StatChangedEvSubs : public IEventSubscriber<EntityBattleStats::StatType> {
+		class StatChangedEvSubs : public IEventSubscriber<const EntityBattleStats::StatType> {
 		public:
 			StatChangedEvSubs(EntityHPModule& Owner)
 				:Owner(Owner){}

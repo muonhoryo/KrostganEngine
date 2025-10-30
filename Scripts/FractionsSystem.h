@@ -22,9 +22,10 @@ namespace KrostganEngine::EntitiesControl {
 	
 	class FractionsSystem {
 	public:
-		static Relation GetRelation(Fraction objFrac,Fraction subjFrac);
-		static Color GetRelationColor(Relation rel);
-		static Color GetRelationToPlayerColor(Fraction objFrac);
+		static Relation		GetRelation					(Fraction objFrac,Fraction subjFrac);
+		static Relation		GetRelationToPlayer			(Fraction objFrac);
+		static Color		GetRelationColor			(Relation rel);
+		static Color		GetRelationToPlayerColor	(Fraction objFrac);
 
 		static inline const map<string, Fraction>& FractionNames = *new map<string, Fraction>
 		{

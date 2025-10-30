@@ -50,7 +50,7 @@ void EntityAction_MoveTo::MoveTo(Vector2f targetCoord) {
 	}
 	else {
 		movDirection = Normalize(movDirection);
-		Vector2f nextPos = OwnerTransform.GetGlobalPosition() + (movDirection * Owner.GetBattleStats().GetMovingSpeed());
+		Vector2f nextPos = OwnerTransform.GetGlobalPosition() + (movDirection * Owner.GetBattleStats().GetMovingSpeed().GetRef_Stat());
 		OwnerTransform.SetGlobalPosition(nextPos);
 	}
 }

@@ -35,11 +35,11 @@ namespace KrostganEngine::Core {
 				 Vector2u NewSize;
 			 };
 
-			 static inline ExecutedEvent<WindowResizeEvArgs> ResizeWindowEvent;
+			 static inline ExecutedEvent<const WindowResizeEvArgs> ResizeWindowEvent;
 
 		 private:
-			 static inline EventHandler<WindowResizeEvArgs> ResizeWindowEventHandler = 
-				 EventHandler<WindowResizeEvArgs>(ResizeWindowEvent);
+			 static inline EventHandler<const WindowResizeEvArgs> ResizeWindowEventHandler = 
+				 EventHandler<const WindowResizeEvArgs>(ResizeWindowEvent);
 			 
 		//
 		//

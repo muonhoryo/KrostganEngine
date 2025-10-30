@@ -31,7 +31,7 @@ namespace KrostganEngine::EntitiesControl {
 		static inline const AddSelComparator InstanceAddComparator;
 		static inline const EqSelComparator InstanceEqComparator;
 
-		struct DeathEventSubscr : public IEventSubscriber<GlObjectDeathEventArgs> {
+		struct DeathEventSubscr : public IEventSubscriber<const GlObjectDeathEventArgs> {
 			void Execute(const GlObjectDeathEventArgs& args) override {
 				auto deadObj = dynamic_cast<ISelectableEntity*>(&args.Owner);
 				if (deadObj != nullptr) {
@@ -39,7 +39,7 @@ namespace KrostganEngine::EntitiesControl {
 					auto& ptr_wr = *new watch_ptr_handler_wr<ISelectableEntity>(ptr);
 					delete &ptr;
 					if (CollectionsExts::Contains(Singleton->SelectedEntities, &ptr_wr,InstanceEqComparator)) {
-						Remove(deadObj);
+						Remove(*deadObj);
 					}
 					delete& ptr_wr;
 				}
@@ -48,15 +48,15 @@ namespace KrostganEngine::EntitiesControl {
 
 	public:
 		static inline NoArgsExecutedEvent					ChangeSelectablesEvent	= NoArgsExecutedEvent();
-		static inline ExecutedEvent<ISelectableEntity*>		AddSelectableEvent		= ExecutedEvent<ISelectableEntity*>();
-		static inline ExecutedEvent<ISelectableEntity*>		RemoveSelectableEvent	= ExecutedEvent<ISelectableEntity*>();;
+		static inline ExecutedEvent<ISelectableEntity>		AddSelectableEvent		= ExecutedEvent<ISelectableEntity>();
+		static inline ExecutedEvent<ISelectableEntity>		RemoveSelectableEvent	= ExecutedEvent<ISelectableEntity>();;
 		static inline NoArgsExecutedEvent					ClearSelectionEvent		= NoArgsExecutedEvent();
 		
 		~GroupSelectionSystem();
 
 		static GroupSelectionSystem& GetInstance();
-		static void Add(ISelectableEntity*& entity);
-		static void Remove(ISelectableEntity*& entity);
+		static void Add(ISelectableEntity& entity);
+		static void Remove(ISelectableEntity& entity);
 		static void Clear();
 
 		static forward_list<watch_ptr_handler_wr<ISelectableEntity>*>::iterator			GetEntitiesBegIter() {
@@ -81,15 +81,15 @@ namespace KrostganEngine::EntitiesControl {
 		template <typename TIterator,typename TCIterator>
 		static void AddRange(TIterator itStart, TCIterator itEnd) {
 			while (itStart != itEnd) {
-				Add(*itStart);
+				Add(**itStart);
 				++itStart;
 			}
 		}
 
 	private:
 		NoArgsEventHandler					ChangeSelectablesEventHandler = NoArgsEventHandler(ChangeSelectablesEvent);
-		EventHandler<ISelectableEntity*>	AddSelectableEventHandler = EventHandler<ISelectableEntity*>(AddSelectableEvent);
-		EventHandler<ISelectableEntity*>	RemoveSelectableEventHandler = EventHandler<ISelectableEntity*>(RemoveSelectableEvent);
+		EventHandler<ISelectableEntity>		AddSelectableEventHandler = EventHandler<ISelectableEntity>(AddSelectableEvent);
+		EventHandler<ISelectableEntity>		RemoveSelectableEventHandler = EventHandler<ISelectableEntity>(RemoveSelectableEvent);
 		NoArgsEventHandler					ClearSelectionEventHandler = NoArgsEventHandler(ClearSelectionEvent);
 
 		GroupSelectionSystem();

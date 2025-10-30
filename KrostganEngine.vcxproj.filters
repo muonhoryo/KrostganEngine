@@ -447,9 +447,6 @@
     <ClCompile Include="Scripts\OrderTargetVisualizer.cpp">
       <Filter>Исходные файлы\Visual\UI/UX</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\GameUI.cpp">
-      <Filter>Исходные файлы\Visual\UI/UX</Filter>
-    </ClCompile>
     <ClCompile Include="Scripts\OrderTargsVisManager.cpp">
       <Filter>Исходные файлы\Visual\UI/UX</Filter>
     </ClCompile>
@@ -638,6 +635,12 @@
     </ClCompile>
     <ClCompile Include="Scripts\GroupSelectionSystem_Comparators.cpp">
       <Filter>Исходные файлы\CoreSystems\EntitiesControl</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\ExtVisualManager.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\DBG_ImmortalArmy.cpp">
+      <Filter>Исходные файлы\Debug</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -830,9 +833,6 @@
     <ClInclude Include="Scripts\ZeroArgsEvent.h">
       <Filter>Файлы заголовков\Events</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\GameUI.h">
-      <Filter>Файлы заголовков\Visual\UI/UX</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\FractionsSystem.h">
       <Filter>Файлы заголовков\CoreSystems\EntitiesControl\RelationsSystem</Filter>
     </ClInclude>
@@ -869,7 +869,7 @@
     <ClInclude Include="Scripts\EntityOrder_HoldPosition.h">
       <Filter>Файлы заголовков\CoreSystems\EntitiesControl\Orders\BaseOrders</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\DivineCommander.h">
+    <ClInclude Include="Scripts\DBG_DivineCommander.h">
       <Filter>Файлы заголовков\Debug</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\EntityOrder_FollowTarget.h">
@@ -895,9 +895,6 @@
     </ClInclude>
     <ClInclude Include="Scripts\Wall.h">
       <Filter>Файлы заголовков\CoreSystems\GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\UIUXVisual.h">
-      <Filter>Файлы заголовков\Visual\UI/UX</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\AutoAttackAnimation.h">
       <Filter>Файлы заголовков\Visual\UI/UX\AutoAttackAnimation</Filter>
@@ -928,9 +925,6 @@
     </ClInclude>
     <ClInclude Include="Scripts\GameVisualEffects.h">
       <Filter>Файлы заголовков\Visual\Effects</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\GameVisual.h">
-      <Filter>Файлы заголовков\Visual</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\LoseScript.h">
       <Filter>Файлы заголовков\GameTransitionScripts</Filter>
@@ -1120,6 +1114,18 @@
     </ClInclude>
     <ClInclude Include="Scripts\MemoryExts.h">
       <Filter>Файлы заголовков\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\ExtVisual.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\ExtVisual_UI.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\ExtVisualManager.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\DBG_ImmortalArmy.h">
+      <Filter>Файлы заголовков\Debug</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

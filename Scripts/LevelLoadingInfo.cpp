@@ -104,7 +104,7 @@ bool EntityLoadInfo::WriteParam(Attr& param) {
 	}
 	else if (CheckParamName(param, SerializationParDefNames::ENTITY_AA_RANGE)) {
 		float s = stof(param.second);
-		BattleStats.SetAARadius(s);
+		BattleStats.SetAARange(s);
 	}
 	else if (CheckParamName(param, SerializationParDefNames::ENTITY_AUTO_AGGR_RADIUS)) {
 		float s = stof(param.second);

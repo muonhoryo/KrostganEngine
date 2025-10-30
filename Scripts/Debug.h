@@ -6,3 +6,6 @@
 #include <EntityAARadVisualizer.h>
 #include <EntityAutoAggrRadVisualizer.h>
 #include <VisualOnDeathDestroyer.h>
+
+#include <DBG_DivineCommander.h>
+#include <DBG_ImmortalArmy.h>
