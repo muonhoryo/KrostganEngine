@@ -17,6 +17,13 @@ namespace KrostganEngine::Core {
 	private:
 		UserInterfaceLoader(){}
 
+		enum class DependStatsWrapperType {
+
+			ABSENT,
+			Base,
+			AutoAttack
+		};
+
 		template<typename TInput>
 		struct Predicate {
 			virtual bool Condition(TInput input) const = 0;
@@ -73,8 +80,11 @@ namespace KrostganEngine::Core {
 		static inline const string ATTR_DEPEND_HIEACT_GRS_GREAT		= "HieAct_GroupSelDepend_IsGreaterToAct";
 		static inline const string ATTR_DEPEND_HIEACT_GRS_EQUAL		= "HieAct_GroupSelDepend_IsEqualToAct";
 
-		static inline const string ATTR_DEPEND_TXT_BATSTAT			= "TextDepend_BatStats";
-		static inline const string ATTR_TAG_DEPEND_TXT_CURRHP		= "TextDepend_CurrentHP";
+		static inline const string ATTR_DEPEND_TXT_BATSTAT_FIELDTYPE	= "TextDepend_BatStats_FieldType";
+		static inline const string ATTR_TAG_DEPEND_TXT_CURRHP			= "TextDepend_CurrentHP";
+
+		static inline const string ATTR_DEPEND_STATS_CONTAINER_BASE		= "Base";
+		static inline const string ATTR_DEPEND_STATS_CONTAINER_AA		= "AutoAttack";
 	public:
 		static void Load_MainMenu() {
 			Load(UI_LAYOUT_MAINMENU);

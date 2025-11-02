@@ -34,9 +34,9 @@ LineAAAnimation::~LineAAAnimation() {
 	delete &LineEffect;
 }
 
-void LineAAAnimation::OnDealDmg(AutoAttackInfo attInfo) {
+void LineAAAnimation::OnDealDmg(const AutoAttackHitInfo& attInfo) {
 
-	float cdown = EntityBattleStats::GetAACooldown(attInfo.AASpeed);
+	float cdown = attInfo.AAStats.GetAACooldown();
 	LineEffect.ResetFade(cdown);
 	HitEffect->ResetFade(cdown);
 	Target = new watch_ptr_handler_wr<WorldTransfObj>(attInfo.Target);

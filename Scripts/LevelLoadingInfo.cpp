@@ -96,19 +96,23 @@ bool EntityLoadInfo::WriteParam(Attr& param) {
 	}
 	else if (CheckParamName(param, SerializationParDefNames::ENTITY_AA_DAMAGE)) {
 		size_t s = stol(param.second);
-		BattleStats.SetAADamage(s);
+		BattleStats.GetAAStats()->SetAADamage(s);
 	}
 	else if (CheckParamName(param, SerializationParDefNames::ENTITY_AA_SPEED)) {
 		float s = stof(param.second);
-		BattleStats.SetAASpeed(s);
+		BattleStats.GetAAStats()->SetAASpeed(s);
 	}
 	else if (CheckParamName(param, SerializationParDefNames::ENTITY_AA_RANGE)) {
 		float s = stof(param.second);
-		BattleStats.SetAARange(s);
+		BattleStats.GetAAStats()->SetAARange(s);
 	}
 	else if (CheckParamName(param, SerializationParDefNames::ENTITY_AUTO_AGGR_RADIUS)) {
 		float s = stof(param.second);
 		BattleStats.SetAutoAggrRadius(s);
+	}
+	else if (CheckParamName(param, SerializationParDefNames::ENTITY_ISRANGE)) {
+		bool isRange = FStreamExts::ParseBool(param.second);
+		BattleStats.GetAAStats()->SetIsRange(isRange);
 	}
 	else {
 		return false;

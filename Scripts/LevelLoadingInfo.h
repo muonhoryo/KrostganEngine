@@ -78,7 +78,7 @@ namespace KrostganEngine::Core {
 		string				HPBarMaskSource			= "";
 		string				SelectionAreaSource		= "";
 		Fraction			EntityFraction			= Fraction::Neutral;
-		EntityBattleStats	BattleStats;
+		EntityBattleStats	BattleStats				= EntityBattleStats(new AutoAttackStats());
 
 		bool WriteParam(Attr& param) override;
 

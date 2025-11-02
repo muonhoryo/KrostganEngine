@@ -29,7 +29,7 @@ namespace KrostganEngine {
 			/// <returns></returns>
 			virtual bool Compare(const TInput& first, const TInput& second) const = 0;
 		};
-		
+
 		//
 		//
 		// Functions
@@ -44,8 +44,8 @@ namespace KrostganEngine {
 		/// <param name="list"></param>
 		/// <param name="value"></param>
 		/// <returns></returns>
-		template <typename TCollectionType,typename TElementsType>
-		static size_t IndexOf(const TCollectionType& collection,TElementsType const& value) {
+		template <typename TCollectionType, typename TElementsType>
+		static size_t IndexOf(const TCollectionType& collection, TElementsType const& value) {
 			size_t i = 0;
 			for (TElementsType const& el : collection) {
 				if (el == value) {
@@ -57,7 +57,7 @@ namespace KrostganEngine {
 		}
 		template <typename TCollectionType, typename TElementsType>
 		static size_t IndexOf(
-			const TCollectionType& collection, 
+			const TCollectionType& collection,
 			const Predicate<TElementsType const&>& predicate) {
 
 			size_t i = 0;
@@ -79,9 +79,9 @@ namespace KrostganEngine {
 			/// <returns></returns>
 			virtual bool Equal(const TInput& first, const TInput& second) const = 0;
 		};
-		template <typename TCollectionType,typename TElementsType>
+		template <typename TCollectionType, typename TElementsType>
 		static bool Contains(const TCollectionType& collection, TElementsType const& element) {
-			for (TElementsType const& el: collection) {
+			for (TElementsType const& el : collection) {
 				if (el == element) {
 					return true;
 				}
@@ -112,6 +112,18 @@ namespace KrostganEngine {
 			auto end = collection.end();
 			for (;it != end;++it) {
 				if ((*it) == elementToRem) {
+					collection.erase(it);
+					return true;
+				}
+			}
+			return false;
+		}
+		template <typename TColectionType, typename TElementsType>
+		static bool RemoveByPred(TColectionType& collection, const Predicate<TElementsType const&>& pred) {
+			auto it = collection.begin();
+			auto end = collection.end();
+			for (;it != end;++it) {
+				if (pred.Condition(*it)) {
 					collection.erase(it);
 					return true;
 				}

@@ -19,7 +19,7 @@ void CommonHPRegenModule::Regen(CallbackRecArgs_Upd& args) {
 
 		float time = CooldownTimer.getElapsedTime().asSeconds();
 		float tick = stats.GetHPRegenTick();
-		size_t regCount = stats.GetHPRegenCount();
+		size_t regCount = stats.GetHPRegenAmount();
 		if (time>= tick) {
 
 			CooldownTimer.restart();

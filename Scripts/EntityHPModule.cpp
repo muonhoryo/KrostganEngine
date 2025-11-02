@@ -30,7 +30,7 @@ EntityHPModule::~EntityHPModule() {
 	delete Subscriber;
 }
 
-void EntityHPModule::TakeDamage		(AttackInfo attInfo) {
+void EntityHPModule::TakeDamage		(const AttackHitInfo& attInfo) {
 	
 	if (CurrentHP <= attInfo.DealtDmg) {
 		SetCurrentHP(0);

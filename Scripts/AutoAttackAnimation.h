@@ -1,7 +1,7 @@
 #pragma once
 
 #include <WorldTransfObj.h>
-#include <AutoAttackInfo.h>
+#include <AutoAttackHitInfo.h>
 
 using namespace KrostganEngine::GameObjects;
 
@@ -11,7 +11,7 @@ namespace KrostganEngine::Visual {
 	public:
 		virtual ~AutoAttackAnimation(){}
 
-		virtual void OnDealDmg(AutoAttackInfo attInfo) = 0;
+		virtual void OnDealDmg(const AutoAttackHitInfo& attInfo) = 0;
 
 	protected:
 		AutoAttackAnimation(WorldTransfObj& Owner)

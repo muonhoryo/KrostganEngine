@@ -170,6 +170,7 @@ namespace KrostganEngine::Core {
 		static inline const string ENTITY_SELECT_AREA_SOURCE	= "SelectionAreaSource";
 		static inline const string ENTITY_HPBAR_SPRITE_SOURCE	= "HPBarSprite";
 		static inline const string ENTITY_HPBAR_MASK			= "HPBarMask";
+		static inline const string ENTITY_ISRANGE				= "IsRange";
 
 		static inline const string UNIT_MOVINGSPEED		= "MovingSpeed";
 	};

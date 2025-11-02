@@ -1,6 +1,12 @@
 #pragma once
 
-#include <AttackInfo.h>
-#include <AutoAttackInfo.h>
+#include <GameObjStatParameter.h>
+#include <IModifiableStatsWrapper.h>
+#include <ModifiableStatsWrapper.h>
+
+#include <AttackHitInfo.h>
+#include <AutoAttackHitInfo.h>
+
+#include <AutoAttackStats.h>
 
 #include <EntityBattleStats.h>

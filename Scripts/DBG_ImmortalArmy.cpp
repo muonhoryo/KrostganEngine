@@ -5,21 +5,36 @@
 using namespace KrostganEngine::Debug;
 using namespace KrostganEngine::Core;
 
+DBG_ImmortalArmy::Immortality::Immortality(Entity& BuffsOwner)
+	:BuffsOwner(BuffsOwner) {
+
+	auto stats = &BuffsOwner.GetBattleStats();
+	auto aaStats = stats->GetAAStats();
+	if (aaStats != nullptr) {
+		DmgBuff = new AAStatsParamModif_Mul(AAStatType::AADamage, 10);
+
+		aaStats->AddModifier(*DmgBuff);
+	}
+}
+DBG_ImmortalArmy::Immortality::~Immortality() {
+
+	auto stats = &BuffsOwner.GetBattleStats();
+	auto aaStats = stats->GetAAStats();
+	if (aaStats != nullptr) {
+
+		aaStats->RemoveModifier(*DmgBuff);
+
+		delete DmgBuff;
+	}
+}
+DBG_ImmortalArmy::Immortality::Immortality(Entity& BuffsOwner, const AAStatsParamModif_Mul* DmgBuff) 
+	:BuffsOwner(BuffsOwner),
+	DmgBuff(DmgBuff){
+
+}
+
 bool DBG_ImmortalArmy::CheckImmDealCondition(Entity& entity) {
 	return FractionsSystem::GetRelationToPlayer(entity.GetFraction()) == Relation::Ally;
-}
-void DBG_ImmortalArmy::SetImmortality(Entity& entity) {
-
-	EntityBattleStats::ParamModifier_Mul* dmgBuff = new EntityBattleStats::ParamModifier_Mul(EntityBattleStats::StatType::AADamage, 10);
-	EntityBattleStats* stats = &entity.GetBattleStats();
-	stats->AddModifier(*dmgBuff);
-	Buffs.push_back(Immortality(*dmgBuff, entity));
-}
-void DBG_ImmortalArmy::RemoveImmortality(Immortality& immort, bool remFromlist) {
-	EntityBattleStats* stats = &immort.BuffsOwner.GetBattleStats();
-	stats->RemoveModifier(immort.DmgBuff);
-	if (remFromlist)
-		CollectionsExts::Remove(Buffs, immort);
 }
 
 void DBG_ImmortalArmy::TurnOn() {
@@ -33,7 +48,7 @@ void DBG_ImmortalArmy::TurnOn() {
 	for (;it != end;++it) {
 		ent = *it;
 		if (CheckImmDealCondition(*ent)) {
-			SetImmortality(*ent);
+			Buffs.push_back(new Immortality(*ent));
 		}
 	}
 	EntitiesObserver::AddEntityEvent.Add(AddAction);
@@ -47,10 +62,8 @@ void DBG_ImmortalArmy::TurnOff() {
 	if (!IsActive)
 		return;
 
-	EntityBattleStats* stats = nullptr;
-	for (auto& imm : Buffs) {
-		RemoveImmortality(imm);
-	}
+	for (auto imm : Buffs)
+		delete imm;
 	Buffs.clear();
 	EntitiesObserver::AddEntityEvent.Remove(AddAction);
 	EntitiesObserver::RemoveEntityEvent.Remove(RemAction);
@@ -61,18 +74,19 @@ void DBG_ImmortalArmy::TurnOff() {
 void DBG_ImmortalArmy::OnAddEntityAction::Execute(Entity& args){
 
 	if (CheckImmDealCondition(args)) {
-		SetImmortality(args);
+		Buffs.push_back(new Immortality(args));
 	}
 }
 void DBG_ImmortalArmy::OnRemoveEntityAction::Execute(Entity& args) {
 	if (CheckImmDealCondition(args)) {
 		FindImmByEntPredicate predicate(args);
-		RemoveImmortality(*CollectionsExts::Get(Buffs, predicate), true);
+		auto imm = CollectionsExts::Get(Buffs, predicate);
+		delete imm;
+		CollectionsExts::RemoveByPred(Buffs, predicate);
 	}
 }
 void DBG_ImmortalArmy::OnUnloadEntitiesAction::Execute() {
-	for (auto& imm : Buffs) {
-		RemoveImmortality(imm);
-	}
+	for (auto imm : Buffs)
+		delete imm;
 	Buffs.clear();
 }

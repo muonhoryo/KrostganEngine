@@ -73,7 +73,7 @@ void BaseAutoAggrModule::CheckCurrTarget(CallbackRecArgs_Upd& args) {
 			//Follow the target and start attacking it
 			IsAttack = false;
 			ActionMediator.ResetCurrActions();
-			float alloDist = Owner.GetBattleStats().GetAARange();
+			float alloDist = Owner.GetBattleStats().GetAAStats()->GetAARange();
 			ActionMediator.AddAction((IEntityAction*)new EntityAction_AutoAttack(Owner, watch_ptr_handler_wr<IAttackableObj>(*Target)));
 
 			if (IsFollowTargets) {
@@ -183,7 +183,7 @@ void BaseAutoAggrModule::FindTarget(CallbackRecArgs_Upd& args) {
 
 				if (IsFollowTargets) {
 
-					float alloDist = Owner.GetBattleStats().GetAARange();
+					float alloDist = Owner.GetBattleStats().GetAAStats()->GetAARange();
 					auto aaAct_ = new EntityAction_AutoAttack(Owner, watch_ptr_handler_wr<IAttackableObj>(*Target));
 					auto folAct = new EntityAction_FollowObject(Owner, Owner, watch_ptr_handler_wr_c<WorldTransfObj>(*Target), alloDist);
 					ActionMediator.AddAction((IEntityAction*)aaAct_);

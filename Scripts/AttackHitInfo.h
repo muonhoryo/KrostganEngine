@@ -1,9 +1,9 @@
 #pragma once
 
 namespace KrostganEngine::GameObjects {
-	struct AttackInfo {
+	struct AttackHitInfo {
 
-		AttackInfo(size_t DealtDmg)
+		AttackHitInfo(size_t DealtDmg)
 			:DealtDmg(DealtDmg)
 		{}
 

@@ -16,7 +16,7 @@ namespace KrostganEngine::Visual {
 		LineAAAnimation(WorldTransfObj& Owner);
 		~LineAAAnimation();
 
-		void OnDealDmg(AutoAttackInfo attInfo) override;
+		void OnDealDmg(const AutoAttackHitInfo& attInfo) override;
 
 		void RenderGraphicAction(RenderWindow& window) override;
 

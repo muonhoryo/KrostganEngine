@@ -3,7 +3,7 @@
 #include <SFML/System.hpp>
 #include <ITransformableObj.h>
 #include <Events.h>
-#include <AttackInfo.h>
+#include <AttackHitInfo.h>
 
 using namespace sf;
 using namespace KrostganEngine::Core;
@@ -31,7 +31,7 @@ namespace KrostganEngine::GameObjects {
 
 		virtual ~IHitPointModule(){}
 
-		virtual void TakeDamage		(AttackInfo attInfo) = 0;
+		virtual void TakeDamage		(const AttackHitInfo& attInfo) = 0;
 		virtual void SetCurrentHP	(size_t hp) = 0;
 		virtual void RestoreHealth	() = 0;
 

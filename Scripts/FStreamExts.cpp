@@ -40,5 +40,7 @@ char* FStreamExts::ReadToEnd(const string& path) {
 	return text;
 }
 bool FStreamExts::ParseBool(const string& servalue) {
-	return servalue == "1";
+	string value = string(servalue);
+	ClearPath(value);
+	return value == "1";
 }

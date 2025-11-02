@@ -13,7 +13,9 @@ EntityBaseAAModule::EntityBaseAAModule(EntityBattleStats& BattleStats,WorldTrans
 	:AutoAttackModule(*new LineAAAnimation(Owner)),
 	BattleStats(BattleStats),
 	Owner(Owner){
-	if (BattleStats.GetAASpeed() <= eps)
+
+	auto stats = BattleStats.GetAAStats();
+	if (stats == nullptr || stats->GetAASpeed() <= eps)
 		RemReloadTime = FLT_MAX;
 }
 
@@ -46,26 +48,38 @@ bool EntityBaseAAModule::CheckTargetReach() {
 	return CheckTargetReach(*ptr);
 }
 bool EntityBaseAAModule::CheckTargetReach(const IAttackableObj& potentTarget) {
+	
+	auto stats = BattleStats.GetAAStats();
+	if (stats == nullptr)
+		return false;
+
 	Vector2f pos = Owner.GetGlobalPosition();
 	Vector2f closPoint = potentTarget.GetClosestPoint(pos);
 	float dist = Length(closPoint - pos);
-	return dist - BattleStats.GetAARange() <= eps;
+	return dist - stats->GetAARange() <= eps;
 }
 bool EntityBaseAAModule::TryDealDamageToTarget() {
 	if (CheckTargetReach())
 	{
 		if (RemReloadTime <= 0) {
-			size_t dealedDmg = BattleStats.GetAADamage();
-			float aaSpeed = BattleStats.GetAASpeed();
-			AutoAttackInfo attInfo = AutoAttackInfo(dealedDmg,watch_ptr_handler_wr<IAttackableObj>(*Target), aaSpeed);
+
+			auto stats = BattleStats.GetAAStats();
+			if (stats == nullptr)
+			{
+				RemReloadTime = FLT_MAX;
+				return true;
+			}
+
+			size_t dealedDmg = stats->GetAADamage();
+			AutoAttackHitInfo attInfo = AutoAttackHitInfo(dealedDmg,watch_ptr_handler_wr<IAttackableObj>(*Target), *stats);
 			Target->GetPtr_t()->GetHPModule().TakeDamage(attInfo);
-			if (BattleStats.GetAASpeed() == 0) {
+			if (stats->GetAASpeed() <= eps) {
 
 				RemReloadTime = FLT_MAX;
 			}
 			else {
 
-				RemReloadTime = BattleStats.GetAACooldown();
+				RemReloadTime = stats->GetAACooldown();
 				AAAnimation.OnDealDmg(attInfo);
 			}
 			return true;

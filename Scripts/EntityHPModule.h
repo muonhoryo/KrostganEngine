@@ -22,7 +22,7 @@ namespace KrostganEngine::GameObjects {
 
 		virtual ~EntityHPModule();
 
-		void TakeDamage		(AttackInfo attInfo) override;
+		void TakeDamage		(const AttackHitInfo& attInfo) override;
 		void SetCurrentHP	(size_t hp) override;
 		void RestoreHealth	() override;
 		void SetRegenModule	(HPRegenModule* Module);
@@ -41,14 +41,14 @@ namespace KrostganEngine::GameObjects {
 		IndicatorFill&		HPBar;
 		size_t				CurrentHP	= 1;
 
-		class StatChangedEvSubs : public IEventSubscriber<const EntityBattleStats::StatType> {
+		class StatChangedEvSubs : public IEventSubscriber<int> {
 		public:
 			StatChangedEvSubs(EntityHPModule& Owner)
 				:Owner(Owner){}
 
-			void Execute(const EntityBattleStats::StatType& args) override {
+			void Execute(int& args) override {
 
-				if (args == EntityBattleStats::StatType::MaxHP) {
+				if ((EntityBattleStatType)args == EntityBattleStatType::MaxHP) {
 					size_t hp = Owner.GetCurrentHP();
 					float rel = (float)hp/ (float)Owner.GetMaxHP();
 					Owner.SetCurrentHP(hp * rel);

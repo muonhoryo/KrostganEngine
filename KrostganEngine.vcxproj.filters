@@ -139,9 +139,6 @@
     <Filter Include="Исходные файлы\CoreSystems\GameObjects\FightingSystems\HitPointSystem">
       <UniqueIdentifier>{d4d4163c-7af6-4534-b49f-948bb3b847fb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Исходные файлы\CoreSystems\GameObjects\FightingSystems\EntityBattleStats">
-      <UniqueIdentifier>{791f15e4-3d76-4545-a025-275c70345a6f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Исходные файлы\CoreSystems\GameObjects\FightingSystems\GameObjsBaseFightSystem">
       <UniqueIdentifier>{2f9e9f53-962e-4987-996b-d998bdc40a4d}</UniqueIdentifier>
     </Filter>
@@ -298,6 +295,15 @@
     <Filter Include="Файлы заголовков\CoreSystems\GameObjects\HierarchySystem">
       <UniqueIdentifier>{7e7636fe-9271-4c1c-971d-8644205e5b1c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Исходные файлы\CoreSystems\GameObjects\FightingSystems\BattleInfo">
+      <UniqueIdentifier>{c5a4639d-ea5b-467c-90de-6de48d41b149}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Visual\UI/UX\ValueDependencies\EntityUIDependencies">
+      <UniqueIdentifier>{2125d38c-334f-405e-b8aa-7fe5c6ff6644}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Visual\UI/UX\ValueDependencies\GeneralUIDependencies">
+      <UniqueIdentifier>{72a22b55-7618-48c1-a978-942d33076a87}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\main.cpp">
@@ -398,9 +404,6 @@
     </ClCompile>
     <ClCompile Include="Scripts\EntityAction_MoveToPoint.cpp">
       <Filter>Исходные файлы\CoreSystems\EntitiesControl\Orders\EntityActions</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\EntityBattleStats.cpp">
-      <Filter>Исходные файлы\CoreSystems\GameObjects\FightingSystems\EntityBattleStats</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\EntityOrder_MoveToPoint.cpp">
       <Filter>Исходные файлы\CoreSystems\EntitiesControl\Orders\BaseOrders</Filter>
@@ -641,6 +644,12 @@
     </ClCompile>
     <ClCompile Include="Scripts\DBG_ImmortalArmy.cpp">
       <Filter>Исходные файлы\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\EntityBattleStats.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameObjects\FightingSystems\BattleInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\AutoAttackStats.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameObjects\FightingSystems\BattleInfo</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -899,16 +908,10 @@
     <ClInclude Include="Scripts\AutoAttackAnimation.h">
       <Filter>Файлы заголовков\Visual\UI/UX\AutoAttackAnimation</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\AttackInfo.h">
-      <Filter>Файлы заголовков\CoreSystems\GameObjects\FightingSystems\BattleInfo</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\FightingSystems.h">
       <Filter>Файлы заголовков\CoreSystems\GameObjects\FightingSystems</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\BattleInfo.h">
-      <Filter>Файлы заголовков\CoreSystems\GameObjects\FightingSystems\BattleInfo</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\AutoAttackInfo.h">
       <Filter>Файлы заголовков\CoreSystems\GameObjects\FightingSystems\BattleInfo</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\EntityHPModule.h">
@@ -1094,9 +1097,6 @@
     <ClInclude Include="Scripts\ValueDependency.h">
       <Filter>Файлы заголовков\CoreSystems\Visual\UI/UX</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\ValueDepend_EntBattStats.h">
-      <Filter>Файлы заголовков\Visual\UI/UX\ValueDependencies</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\GameValueDependencies.h">
       <Filter>Файлы заголовков\Visual\UI/UX\ValueDependencies</Filter>
     </ClInclude>
@@ -1104,12 +1104,6 @@
       <Filter>Файлы заголовков\Visual\UI/UX\ValueDependencies</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\FirstSelEntityDependsManager.h">
-      <Filter>Файлы заголовков\Visual\UI/UX\ValueDependencies</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\IEntityUIDependency.h">
-      <Filter>Файлы заголовков\Visual\UI/UX\ValueDependencies</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\ValueDepend_CurrHP.h">
       <Filter>Файлы заголовков\Visual\UI/UX\ValueDependencies</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\MemoryExts.h">
@@ -1126,6 +1120,45 @@
     </ClInclude>
     <ClInclude Include="Scripts\DBG_ImmortalArmy.h">
       <Filter>Файлы заголовков\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\AttackHitInfo.h">
+      <Filter>Файлы заголовков\CoreSystems\GameObjects\FightingSystems\BattleInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\AutoAttackHitInfo.h">
+      <Filter>Файлы заголовков\CoreSystems\GameObjects\FightingSystems\BattleInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\AutoAttackStats.h">
+      <Filter>Файлы заголовков\CoreSystems\GameObjects\FightingSystems\BattleInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\GameObjStatParameter.h">
+      <Filter>Файлы заголовков\CoreSystems\GameObjects\FightingSystems\BattleInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\ModifiableStatsWrapper.h">
+      <Filter>Файлы заголовков\CoreSystems\GameObjects\FightingSystems\BattleInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\IModifiableStatsWrapper.h">
+      <Filter>Файлы заголовков\CoreSystems\GameObjects\FightingSystems\BattleInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\IEntityUIDependency.h">
+      <Filter>Файлы заголовков\Visual\UI/UX\ValueDependencies\EntityUIDependencies</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\ValueDepend_EntBattStats.h">
+      <Filter>Файлы заголовков\Visual\UI/UX\ValueDependencies\EntityUIDependencies</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\EntityUIDependencies.h">
+      <Filter>Файлы заголовков\Visual\UI/UX\ValueDependencies\EntityUIDependencies</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\GeneralUIDependencies.h">
+      <Filter>Файлы заголовков\Visual\UI/UX\ValueDependencies\GeneralUIDependencies</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\StatsWrapperDepend_toTxt.h">
+      <Filter>Файлы заголовков\Visual\UI/UX\ValueDependencies\GeneralUIDependencies</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\ValueDepend_CurrHP.h">
+      <Filter>Файлы заголовков\Visual\UI/UX\ValueDependencies\GeneralUIDependencies</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\EntityStatsWrGettingFuncs.h">
+      <Filter>Файлы заголовков\Visual\UI/UX\ValueDependencies\EntityUIDependencies</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -167,6 +167,7 @@ void UserInterfaceLoader::DeserializeNode(xml_node<>* node, UIElement& parent)
 			char* name = nullptr;
 			attr = node->first_attribute();
 			bool isFirstSelEntityAttr = false;
+			DependStatsWrapperType wrType = DependStatsWrapperType::ABSENT;
 			while (attr != nullptr)
 			{
 				if (attr->name() == ATTR_TAG_DEPEND_HIEACT_GRS) {
@@ -187,17 +188,40 @@ void UserInterfaceLoader::DeserializeNode(xml_node<>* node, UIElement& parent)
 				//Text only dependencies
 				else if (attr->name() == ATTR_TAG_DEPEND_FIRST_SEL_ENTITY) {
 					isFirstSelEntityAttr = true;
+					if (attr->value() == ATTR_DEPEND_STATS_CONTAINER_BASE) {
+						wrType = DependStatsWrapperType::Base;
+					}
+					else if (attr->value() == ATTR_DEPEND_STATS_CONTAINER_AA) {
+						wrType = DependStatsWrapperType::AutoAttack;
+					}
 				}
-				else if (attr->name() == ATTR_DEPEND_TXT_BATSTAT) {
+				else if (attr->name() == ATTR_DEPEND_TXT_BATSTAT_FIELDTYPE) {
 					if (node->name() != UIEL_NAME_TEXT)
 						cout << "WARNING!!!: attribute is used only for TextBlock" << endl;
 					else{
-						EntityBattleStats::StatType statType = EntityBattleStats::StrToStat(attr->value());
+
+						int statType = -1;
+						const GetEntStatsWrapperFunc* gStWrFunc = nullptr;
+
+						switch (wrType)
+						{
+						case KrostganEngine::Core::UserInterfaceLoader::DependStatsWrapperType::Base:
+							gStWrFunc = &EntityStatsWrGettingFuncs::GetBaseStatsFunc;
+							statType = (int)EntityBattleStats::StrToStat(attr->value());
+							break;
+						case KrostganEngine::Core::UserInterfaceLoader::DependStatsWrapperType::AutoAttack:
+							gStWrFunc = &EntityStatsWrGettingFuncs::GetAutoAttackStatsFunc;
+							statType = (int)AutoAttackStats::StrToStat(attr->value());
+							break;
+						default:
+							throw exception("Invalid type of stat wrapper's type.");
+						}
+
 						if ((int)statType != -1) {			//Check if parsing was succesfull
 							if (isFirstSelEntityAttr) {			//Create dependency for UI-panel of first selected entity
 
 								IEntityUIDependency* depend=nullptr;
-								EntityBattleStats::StatType fieldType = EntityBattleStats::GetFieldType(statType);
+								ModStatsWrapper_Consts::StatType fieldType = IModifiableStatsWrapper::GetFieldType((int)statType);
 								string* fmt = new string(dynamic_cast<UIText*>(el)->GetString());
 								if (fmt->length() <= 1) {
 									delete fmt;
@@ -205,11 +229,11 @@ void UserInterfaceLoader::DeserializeNode(xml_node<>* node, UIElement& parent)
 								}
 								switch (fieldType)
 								{
-								case KrostganEngine::GameObjects::EntityBattleStats::StatType::t_size_t:
-									depend = new BattleStatDepend_toTxt_s_t(nullptr, statType, *dynamic_cast<UIText*>(el), nullptr,*fmt);
+								case KrostganEngine::GameObjects::ModStatsWrapper_Consts::StatType::t_size_t:
+									depend = new BattleStatDepend_toTxt_s_t(nullptr, *gStWrFunc, (int)statType, *dynamic_cast<UIText*>(el), nullptr,*fmt);
 									break;
-								case KrostganEngine::GameObjects::EntityBattleStats::StatType::t_float:
-									depend = new BattleStatDepend_toTxt_f(nullptr, statType, *dynamic_cast<UIText*>(el), nullptr,*fmt);
+								case KrostganEngine::GameObjects::ModStatsWrapper_Consts::StatType::t_float:
+									depend = new BattleStatDepend_toTxt_f(nullptr, *gStWrFunc, (int)statType, *dynamic_cast<UIText*>(el), nullptr, *fmt);
 									break;
 								}
 

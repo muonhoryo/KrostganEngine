@@ -1,6 +1,6 @@
 #pragma once
 
-#include <EntityBattleStats.h>
+#include <StatsWrapperDepend_toTxt.h>
 #include <IEntityUIDependency.h>
 #include <MemoryExts.h>
 
@@ -10,90 +10,46 @@ using namespace KrostganEngine::GameObjects;
 
 namespace KrostganEngine::UI {
 
+	class GetEntStatsWrapperFunc {
+
+	public:
+		virtual IModifiableStatsWrapper* GetStatsWrapper(Entity* entity) const = 0;
+
+	protected:
+		GetEntStatsWrapperFunc() {}
+	};
+
 	template<typename TObjValue>
-	class BattleStatDepend_toTxt final : public ValueDependency_toTxt<TObjValue>, public IEntityUIDependency {
-
-		template <typename TObjValue>
-		class OnStatsUpdate;
+	class BattleStatDepend_toTxt final : protected StatsWrapperDepend_toTxt<TObjValue>, public IEntityUIDependency {
 
 	public:
-		const EntityBattleStats::StatType SubjStat;
+		using StatsWrapperDepend_toTxt<TObjValue>::SubjStatType;
+
 	private:
-		watch_ptr_handler_wr<Entity>* Target = nullptr;
-		OnStatsUpdate<TObjValue>* StatUpdateSubs;
-
-		template<typename TObj>
-		struct OnStatsUpdate final : public IEventSubscriber<const EntityBattleStats::StatType> {
-
-			OnStatsUpdate(BattleStatDepend_toTxt<TObj>& Owner)
-				:Owner(Owner)
-			{}
-
-			BattleStatDepend_toTxt<TObj>& Owner;
-
-			void Execute(const EntityBattleStats::StatType& args) override {
-				if (args == Owner.SubjStat)
-					Owner.Update();
-			}
-
-		};
+		const GetEntStatsWrapperFunc& GetStatsFunc;
 
 	public:
-		virtual ~BattleStatDepend_toTxt() {
-
-			delete StatUpdateSubs;
-		}
+		virtual ~BattleStatDepend_toTxt(){}
 		BattleStatDepend_toTxt
-			(watch_ptr_handler_wr<Entity>* Target, 
-			EntityBattleStats::StatType SubjStat, 
-			UIText& Subject, 
+			(Entity* entity,
+			const GetEntStatsWrapperFunc& GetStatsFunc,
+			int SubjStatType,
+			UIText& Subject,
 			TObjValue const* Object,
-			const string& Format="{}")
-				:ValueDependency_toTxt<TObjValue>(Subject, Object,Format),
-				Target(Target),
-				SubjStat(SubjStat) {
+			const string& Format = "{}")
+				:GetStatsFunc(GetStatsFunc),
+				StatsWrapperDepend_toTxt<TObjValue>
+					(entity==nullptr? nullptr : &entity->GetPtr_c(),
+					GetStatsFunc.GetStatsWrapper(entity),
+					SubjStatType,
+					Subject,
+					Object,
+					Format){}
 
-			StatUpdateSubs = new OnStatsUpdate<TObjValue>(*this);
-			if (Target != nullptr)
-				ChangeDepTarget(Target->GetPtr_t());
-			else
-				ChangeDepTarget(nullptr);
-		}
-
-		void ChangeDepTarget(Entity* target) override {
-			if (IsValueRefValid()) {
-				auto tarRef = Target->GetPtr_t_c();
-				if (tarRef != nullptr){
-					auto& stats = target->GetBattleStats();
-					stats.StatChangedEvent.Remove((IEventSubscriber<const EntityBattleStats::StatType>&) * StatUpdateSubs);
-				}
-			}
-			else {
-				this->Object = nullptr;
-			}
-			if (target != nullptr) {
-				target->GetBattleStats().StatChangedEvent.Add((IEventSubscriber<const EntityBattleStats::StatType>&)*StatUpdateSubs);
-				auto& ptr = target->GetPtr();
-				if (this->Object == nullptr)
-					this->Object = reinterpret_cast<TObjValue const*>(target->GetBattleStats().GetFieldRef(SubjStat));
-				else
-					this->Object = &GetSameFieldOfObj<TObjValue,EntityBattleStats>(*this->Object,Target->GetPtr_t_c()->GetBattleStats(), target->GetBattleStats());
-				delete Target;
-				Target = new watch_ptr_handler_wr<Entity>(ptr);
-				delete& ptr;
-				this->SetByObject();
-			}
-			else {
-				delete Target;
-				Target = nullptr;
-				this->SetDefault();
-			}
+		void ChangeDepTarget(Entity* entity) override {
+			StatsWrapperDepend_toTxt<TObjValue>::ChangeDepTarget(&entity->GetPtr_c(), GetStatsFunc.GetStatsWrapper(entity));
 		}
 		
-	protected:
-		bool IsValueRefValid() const override {
-			return Target != nullptr && Target->GetPtr_t_c() != nullptr;
-		}
 	};
 
 	typedef BattleStatDepend_toTxt<float> BattleStatDepend_toTxt_f;

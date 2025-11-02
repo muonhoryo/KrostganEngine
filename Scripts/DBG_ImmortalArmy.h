@@ -40,10 +40,8 @@ namespace KrostganEngine::Debug {
 
 		struct Immortality final {
 
-			Immortality(const EntityBattleStats::ParamModifier_Mul& DmgBuff, Entity& BuffsOwner)
-				:DmgBuff(DmgBuff),
-				BuffsOwner(BuffsOwner)
-			{}
+			Immortality(Entity& BuffsOwner);
+			~Immortality();
 
 			bool operator == (Immortality& a) const {
 				return &a.BuffsOwner == &BuffsOwner;
@@ -52,26 +50,29 @@ namespace KrostganEngine::Debug {
 				return &a.BuffsOwner == &BuffsOwner;
 			}
 			Immortality& operator = (const Immortality& a) const {
-				return *new Immortality(DmgBuff, BuffsOwner);
+				return *new Immortality(BuffsOwner,DmgBuff);
 			}
 
-			const EntityBattleStats::ParamModifier_Mul& DmgBuff;
+			const AAStatsParamModif_Mul* DmgBuff=nullptr;
 			Entity& BuffsOwner;
+
+		private:
+			Immortality(Entity& BuffsOwner, const AAStatsParamModif_Mul* DmgBuff);
 		};
-		struct FindImmByEntPredicate final : public CollectionsExts::Predicate<const Immortality&> {
+		struct FindImmByEntPredicate final : public CollectionsExts::Predicate<Immortality* const&> {
 			
 			FindImmByEntPredicate(const Entity& ImmOwner) 
 				:ImmOwner(ImmOwner)
 			{}
 			
-			bool Condition(const Immortality& input) const {
-				return &input.BuffsOwner == &ImmOwner;
+			bool Condition(Immortality* const& input) const {
+				return &input->BuffsOwner == &ImmOwner;
 			}
 
 			const Entity& ImmOwner;
 		};
 
-		static inline vector<Immortality> Buffs = vector<Immortality>();
+		static inline vector<Immortality*> Buffs = vector<Immortality*>();
 
 		static inline bool IsActive = false;
 		static inline OnAddEntityAction& AddAction = *new OnAddEntityAction();
@@ -84,7 +85,5 @@ namespace KrostganEngine::Debug {
 		/// <param name="entity"></param>
 		/// <returns></returns>
 		static bool CheckImmDealCondition(Entity& entity);
-		static void SetImmortality(Entity& entity);
-		static void RemoveImmortality(Immortality& immort, bool remFromlist = false);
 	};
 }
