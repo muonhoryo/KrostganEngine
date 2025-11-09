@@ -4,3 +4,4 @@
 #include <FStreamExts.h>
 #include <VectExts.h>
 #include <MemoryExts.h>
+#include <MathExts.h>

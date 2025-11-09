@@ -19,5 +19,5 @@
 #include <EntitiesObserver.h>
 
 #include <EntityBattleStats.h>
-#include <GameObjsBaseFightSystem.h>
+#include <AutoAttackSystem.h>
 #include <HPSystem.h>

@@ -18,14 +18,15 @@ namespace KrostganEngine::GameObjects {
 		EntityHPModule(
 			IDeathModule&		DeathModule, 
 			EntityBattleStats&	BattleStats,
-			IndicatorFill&		HPBar);
+			IndicatorFill&		HPBar,
+			TakeDamageAnimation& TakeDmgAnim);
 
 		virtual ~EntityHPModule();
 
-		void TakeDamage		(const AttackHitInfo& attInfo) override;
-		void SetCurrentHP	(size_t hp) override;
-		void RestoreHealth	() override;
-		void SetRegenModule	(HPRegenModule* Module);
+		size_t	TakeDamage_Action	(const AttackHitInfo& attInfo) override;
+		void	SetCurrentHP		(size_t hp) override;
+		void	RestoreHealth		() override;
+		void	SetRegenModule		(HPRegenModule* Module);
 
 		size_t			GetCurrentHP	()	const { return CurrentHP; }
 		size_t			GetMaxHP		()	const { return BattleStats.GetMaxHP(); }

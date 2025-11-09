@@ -8,7 +8,7 @@
 using namespace sf;
 using namespace std;
 
-#define _ObjSubsPairType		pair<byte,LvlObjCatalogSubInfo*>
+#define _ObjSubsPairType		pair<byte,LvlObjAdditParams*>
 #define _ObjSubsCollection		vector<_ObjSubsPairType>
 
 namespace KrostganEngine::Core {
@@ -33,15 +33,15 @@ namespace KrostganEngine::Core {
 
 	public:
 
-		static void					Add(GameObjectLoadInfo* obj) {
+		static void					Add(WorldObjectLoadInfo* obj) {
 			if (obj->CatID== EMPTY_CATALOG_ID)
 				return;
 
 			if (Catalog.find(obj->CatID) == Catalog.end()) {
-				Catalog.insert(pair<size_t, GameObjectLoadInfo*>(obj->CatID, obj));
+				Catalog.insert(pair<size_t, WorldObjectLoadInfo*>(obj->CatID, obj));
 			}
 		}
-		static void					Remove(GameObjectLoadInfo* obj) {
+		static void					Remove(WorldObjectLoadInfo* obj) {
 			Remove(obj->CatID);
 		}
 		static void					Remove(size_t id) {
@@ -54,14 +54,14 @@ namespace KrostganEngine::Core {
 			}
 			SubCatalog.erase(subs);
 		}
-		static GameObjectLoadInfo*	GetObjectInfo(size_t id) {
-			return Catalog[id];
-		}
-		static size_t				GetCatalogSize(){
+		static size_t				GetCatalogSize() {
 			return Catalog.size();
 		}
+		static WorldObjectLoadInfo*	GetObjectInfo(size_t id) {
+			return Catalog[id];
+		}
 
-		static void						AddSub(size_t objID,byte subID,LvlObjCatalogSubInfo* subObjInfo) {
+		static void						AddSub(size_t objID,byte subID, LvlObjAdditParams& subObjInfo) {
 
 			if (Catalog.find(objID) != Catalog.end()) {
 				
@@ -79,7 +79,7 @@ namespace KrostganEngine::Core {
 					if (el != nullptr)
 						throw exception("Sub info is already defined.");
 				}
-				(*subs).second.push_back(_ObjSubsPairType(subID, subObjInfo));
+				(*subs).second.push_back(_ObjSubsPairType(subID, &subObjInfo));
 			}
 		}
 		static void						RemoveSub(size_t objID, byte subID) {
@@ -93,7 +93,7 @@ namespace KrostganEngine::Core {
 				(*sub).second.erase(it);
 			}
 		}
-		static LvlObjCatalogSubInfo*	GetSubObjInfo(size_t id, byte subID) {
+		static LvlObjAdditParams*			GetSubObjInfo(size_t id, byte subID) {
 			
 			auto subs = SubCatalog.find(id);
 			if (subs != SubCatalog.end()) {
@@ -122,7 +122,7 @@ namespace KrostganEngine::Core {
 	private:
 		ObjectsCatalog(){}
 
-		static inline map<size_t, GameObjectLoadInfo*>	Catalog;
+		static inline map<size_t, WorldObjectLoadInfo*>	Catalog;
 		static inline map<size_t, _ObjSubsCollection >	SubCatalog;
 	};
 
@@ -130,8 +130,7 @@ namespace KrostganEngine::Core {
 		
 	public:
 		static void DeserializeCatalog(string serPath);
-		//static GameObject* DeserializeObj(vector<string>& params,LevelLoadingInfo& levelInfo, Vector2f position=Vector2f(0,0));
-		static GameObjectLoadInfo&				ParseObjInfo	(const vector<string>& params);
+		static WorldObjectLoadInfo&				ParseObjInfo	(const vector<string>& params);
 		static pair<size_t,_ObjSubsPairType>&	ParseObjSubinfo	(const vector<string>& params);
 		static const pair<const string, const string>& ParseParamLine(const string& line);
 
@@ -148,16 +147,21 @@ namespace KrostganEngine::Core {
 		static inline const string OBJECT_TYPE_UNIT = "Unit";
 		static inline const string OBJECT_TYPE_WALL = "Wall";
 		static inline const string OBJECT_TYPE_HERO = "Hero";
+		static inline const string OBJECT_TYPE_SPRITE = "Sprite";
+		static inline const string OBJECT_TYPE_AA_PROJECTILE = "Projectile";
 	};
 	struct SerializationParDefNames {
 		static inline const string CATALOG_SUB_INFO_ID	= "Subcatalog";
 
 		static inline const string OBJECT_NAME			= "Name";
-		static inline const string OBJECT_SPRITE_SOURCE	= "SpritesSource";
 		static inline const string OBJECT_POSITION		= "Position";
+		static inline const string OBJECT_ROTATION		= "Rotation";
 		static inline const string OBJECT_SIZE			= "Size";
 		static inline const string OBJECT_TYPE			= "Type";
 		static inline const string OBJECT_CATALOG_ID	= "CatalogID";
+		static inline const string OBJECT_CHILDREN		= "Children";
+
+		static inline const string IMAGEUSR_SPRITE_SOURCE = "SpritesSource";
 
 		static inline const string ENTITY_MAX_HP				= "MaxHP";
 		static inline const string ENTITY_REGEN_HP_COUNT		= "HPRegenCount";
@@ -169,8 +173,12 @@ namespace KrostganEngine::Core {
 		static inline const string ENTITY_AUTO_AGGR_RADIUS		= "AutoAggrRadius";
 		static inline const string ENTITY_SELECT_AREA_SOURCE	= "SelectionAreaSource";
 		static inline const string ENTITY_HPBAR_SPRITE_SOURCE	= "HPBarSprite";
+		static inline const string ENTITY_HITEFF_SPRITE_SOURCE	= "HitEffectSprite";
 		static inline const string ENTITY_HPBAR_MASK			= "HPBarMask";
 		static inline const string ENTITY_ISRANGE				= "IsRange";
+		static inline const string ENTITY_AA_PROJECTILE			= "AAProjectile";
+		static inline const string ENTITY_AA_PROJECTILE_SPEED	= "AAProjSpeed";
+		static inline const string ENTITY_AA_PROJ_LOCK_ROTATION = "AAProjLockRotation";
 
 		static inline const string UNIT_MOVINGSPEED		= "MovingSpeed";
 	};

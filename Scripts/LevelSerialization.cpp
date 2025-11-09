@@ -16,15 +16,15 @@ using namespace KrostganEngine::EntitiesControl;
 
 LevelLoadingInfo& LevelSerialization::DeserializeLevel(string serPath) {
 
-	vector<vector<LevelCellMapDeser::CellInfo*>*>* map = nullptr;
-	forward_list<GameObjectLoadInfo*>& uniqueObjects = *new forward_list<GameObjectLoadInfo*>();
+	vector<vector<LvlObjInstantiationInfo*>*>* map = nullptr;
+	forward_list<WorldObjectLoadInfo*>& uniqueObjects = *new forward_list<WorldObjectLoadInfo*>();
 	bool isDeserObstrMap = false;
 	bool mapDeserialized = false;
 
 	string line;
 	ifstream st(serPath);
 	vector<string>& params = *new vector<string>();
-	GameObjectLoadInfo* uniqObj = nullptr;
+	WorldObjectLoadInfo* uniqObj = nullptr;
 	size_t columnCount = 0;
 	if (st.is_open()) {
 		while (getline(st, line)) {
@@ -70,7 +70,7 @@ LevelLoadingInfo& LevelSerialization::DeserializeLevel(string serPath) {
 	}
 
 	if (map == nullptr)
-		map = new vector<vector<LevelCellMapDeser::CellInfo*>*>();
+		map = new vector<vector<LvlObjInstantiationInfo*>*>();
 
 	return *new LevelLoadingInfo(*map,uniqueObjects, columnCount);
 }

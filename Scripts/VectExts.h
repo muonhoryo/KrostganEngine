@@ -3,6 +3,7 @@
 #include <SFML/System.hpp>
 #include <string>
 #include <Engine.h>
+#include <MathExts.h>
 
 using namespace sf;
 using namespace std;
@@ -73,5 +74,15 @@ namespace KrostganEngine {
 	static Vector2u ParseVec2u(const string& serVect) {
 		unsigned int (*func)(const string&) = [](const string& buff) {return (unsigned int)abs(stoi(buff));};
 		return ParseVec2<unsigned int>(serVect, func);
+	}
+	static float DirectionToAngle(const Vector2f& dir) {
+		
+		if (dir.x<eps && dir.x>-eps)	//when tg is undefined
+			return dir.y > 0 ? 90 : 270;
+
+		float angle = Rad2Deg(atan2(dir.y, dir.x));
+		if (dir.x < 0)
+			angle += 180;
+		return angle;
 	}
 }

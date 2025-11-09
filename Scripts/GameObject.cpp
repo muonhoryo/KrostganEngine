@@ -16,7 +16,6 @@ using namespace KrostganEngine::GameObjects;
 
 GameObject::~GameObject() {
 	delete& BodySprite;
-	delete Transf;
 }
 GameObjectCtorParams::GameObjectCtorParams() 
 	:CatalogID(ObjectsCatalog::EMPTY_CATALOG_ID),
@@ -25,7 +24,7 @@ GameObjectCtorParams::GameObjectCtorParams()
 GameObject::GameObject(const GameObjectCtorParams& params) 
 	:DynamicPhysObject(),
 	CatalogObject(params.CatalogID, params.SubcatalogID),
-	WorldTransfObj(ctor_InitOwner()),
+	WorldTransfObj(*new Transformable()),
 	BodySprite(*new SpriteRenderer(
 		params.BodySpriteSource->Tex,
 		*this,

@@ -42,7 +42,7 @@ UISprite::UISprite(const Texture& RenTexture, UIElement* Parent,Shader*	RendShad
 }
 
 UISprite::~UISprite() {
-	delete RenSprite;
+
 }
 
 void UISprite::RenderGraphicAction(RenderWindow& window) {

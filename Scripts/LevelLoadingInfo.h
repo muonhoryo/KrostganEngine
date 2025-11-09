@@ -3,52 +3,42 @@
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
 #include <forward_list>
-#include <string>
 #include <EntityBattleStats.h>
 #include <RelationsSystem.h>
 #include <CoreGameObjects.h>
-#include <LevelCellMapDeser.h>
-#include <vector>
+#include <AutoAttackModule.h>
+#include <LvlLoadingStructs.h>
 
 using namespace std;
 using namespace sf;
 using namespace KrostganEngine::GameObjects;
 using namespace KrostganEngine::EntitiesControl;
 
-#define Attr		const pair<const string,const string>
-#define AttrsCollectn	vector<Attr*>
-
 namespace KrostganEngine::Core {
 	struct LevelLoadingInfo;
 	struct LoadedObjects;
 
-	struct LvlObjCatalogSubInfo {
 
-		LvlObjCatalogSubInfo(const AttrsCollectn& Attrs) 
-			:Attrs(Attrs){}
-		~LvlObjCatalogSubInfo() {
-			for (auto& attr : Attrs) {
-				delete attr;
-			}
-		}
+//
+//
+// LoadInfo
+//
+//
 
-		AttrsCollectn Attrs;
-	};
+	struct WorldObjectLoadInfo {
 
-	struct GameObjectLoadInfo {
+		virtual ~WorldObjectLoadInfo() {}
 
-		virtual ~GameObjectLoadInfo(){}
-
-		string Name="";
-		string SpriteSource="";
+		string Name = "";
 		Vector2f Position = (Vector2f)ITransformableObj::NULL_POS;
-		size_t CatID = 0;
 		float Size = 1;
+		float Rotation = 0;
+		size_t CatID = 0;
+		vector<LvlObjInstantiationInfo> ChildObjs;
 
-		virtual GameObject* InstanceObject
-			(LoadedObjects&			levInfo,
-			vector<Attr*>*			additParams		= nullptr,
-			LvlObjCatalogSubInfo*	objSubInfo		= nullptr) = 0;
+		WorldTransfObj* InstantiateObject
+				(LvlObjAdditParams*			objSubInfo = nullptr,
+				LvlObjAdditParams*			additParams	= nullptr) const;
 
 		/// <summary>
 		/// Return true if param was wrotten.
@@ -58,11 +48,13 @@ namespace KrostganEngine::Core {
 		virtual bool WriteParam(Attr& param);
 
 	protected:
-		GameObjectLoadInfo() {}
+		WorldObjectLoadInfo() { }
+		WorldObjectLoadInfo(const WorldObjectLoadInfo& copy);
 
-		GameObjectLoadInfo* Cache = nullptr;
+		mutable WorldObjectLoadInfo* Cache = nullptr;
 
-		virtual void ResetFromCache();
+		virtual WorldTransfObj* InstantiateObject_Action(const WorldObjectLoadInfo& usedInfo) const = 0;
+		virtual WorldObjectLoadInfo* CreateCacheInfo() const = 0;
 		/// <summary>
 		/// Return true if names are equal
 		/// </summary>
@@ -70,12 +62,45 @@ namespace KrostganEngine::Core {
 		/// <param name="paramName"></param>
 		/// <returns></returns>
 		static bool CheckParamName(Attr& param, const string& paramName);
+
+//
+//
+// Check child instantiating recursion
+// 	On instantiating children RecursionCount is inreasing and decreasing on children instantiating done
+//	If RecursionCount would increased to its max exception will be thrown
+//
+//
+	private:
+		void InstantiateChildren(WorldTransfObj& parent) const;
+
+		static inline unsigned int RecursionCount = 0;
+	};
+
+	struct GameObjectLoadInfo : public WorldObjectLoadInfo {
+
+		virtual ~GameObjectLoadInfo(){}
+
+		string SpriteSource="";
+
+		/// <summary>
+		/// Return true if param was wrotten.
+		/// </summary>
+		/// <param name="param"></param>
+		/// <returns></returns>
+		bool WriteParam(Attr& param) override;
+
+	protected:
+		GameObjectLoadInfo() {}
+		GameObjectLoadInfo(const GameObjectLoadInfo& copy);
 	};
 
 	struct EntityLoadInfo : public GameObjectLoadInfo{
 
+		virtual ~EntityLoadInfo(){}
+
 		string				HPBarSpriteSource		= "";
 		string				HPBarMaskSource			= "";
+		string				HitEffectSprite			= "";
 		string				SelectionAreaSource		= "";
 		Fraction			EntityFraction			= Fraction::Neutral;
 		EntityBattleStats	BattleStats				= EntityBattleStats(new AutoAttackStats());
@@ -84,65 +109,112 @@ namespace KrostganEngine::Core {
 
 	protected:
 		EntityLoadInfo():GameObjectLoadInfo(){}
+		EntityLoadInfo(const EntityLoadInfo& copy);
 
-		void ResetFromCache() override;
-
-		virtual EntityCtorParams& GetCtorParams() = 0;
+		virtual EntityCtorParams& GetCtorParams(const WorldObjectLoadInfo& usedInfo) const = 0;
 	};
 
 	struct UnitLoadInfo : public EntityLoadInfo{
 
+		virtual ~UnitLoadInfo(){}
+
 		UnitLoadInfo() : EntityLoadInfo(){}
-
-	
-		GameObject*	InstanceObject
-			(LoadedObjects&			levInfo,
-			AttrsCollectn*			additParams = nullptr,
-			LvlObjCatalogSubInfo*	objSubInfo = nullptr) override;
-
-		//bool WriteParam(pair<const string&, const string&> param) override;
-
-	//protected:
-	//	UnitObjectCtorParams& GetUnitParams();
+		UnitLoadInfo(const UnitLoadInfo& copy) : EntityLoadInfo(copy) {}
 
 	protected:
-		EntityCtorParams& GetCtorParams() override;
+		WorldTransfObj*	InstantiateObject_Action(const WorldObjectLoadInfo& usedInfo) const override;
+		WorldObjectLoadInfo* CreateCacheInfo() const override;
+
+	protected:
+		EntityCtorParams& GetCtorParams(const WorldObjectLoadInfo& usedInfo) const override;
 	};
 
 	struct HeroLoadInfo : public UnitLoadInfo {
 		
-		HeroLoadInfo():UnitLoadInfo(){}
+		virtual ~HeroLoadInfo(){}
 
-		GameObject* InstanceObject
-			(LoadedObjects&			levInfo,
-			AttrsCollectn*			additParams = nullptr,
-			LvlObjCatalogSubInfo*	objSubInfo = nullptr)override;
+		HeroLoadInfo():UnitLoadInfo(){}
+		HeroLoadInfo(const HeroLoadInfo& copy) : UnitLoadInfo(copy) {}
 
 		bool WriteParam(Attr& param) override;
 
 	protected:
-		EntityCtorParams& GetCtorParams() override;
+		WorldTransfObj* InstantiateObject_Action(const WorldObjectLoadInfo& usedInfo) const override;
+		WorldObjectLoadInfo* CreateCacheInfo() const override;
+
+		EntityCtorParams& GetCtorParams(const WorldObjectLoadInfo& usedInfo) const override;
 	};
 
 	struct WallLoadInfo :public GameObjectLoadInfo {
 
+		virtual ~WallLoadInfo(){}
+
 		WallLoadInfo() : GameObjectLoadInfo() {};
+		WallLoadInfo(const WallLoadInfo& copy) : GameObjectLoadInfo(copy) {}
 
-		GameObject* InstanceObject
-			(LoadedObjects&			levInfo,
-			AttrsCollectn*			additParams = nullptr,
-			LvlObjCatalogSubInfo*	objSubInfo	= nullptr) override;
+		bool WriteParam(Attr& param) override;
 
-		bool WriteParam(const pair<const string, const string>& param) override;
+	protected:
+		WorldTransfObj* InstantiateObject_Action(const WorldObjectLoadInfo& usedInfo) const override;
+		WorldObjectLoadInfo* CreateCacheInfo() const override;
+
 	};
+
+	struct SpriteRendLoadInfo : public WorldObjectLoadInfo{
+
+		virtual ~SpriteRendLoadInfo(){}
+
+		SpriteRendLoadInfo() : WorldObjectLoadInfo(){}
+		SpriteRendLoadInfo(const SpriteRendLoadInfo& copy);
+
+		string SpriteSource = "";
+		float MaxSpriteSize = 0;
+
+		bool WriteParam(Attr& param) override;
+
+	protected:
+		WorldTransfObj* InstantiateObject_Action(const WorldObjectLoadInfo& usedInfo) const override;
+		WorldObjectLoadInfo* CreateCacheInfo() const override;
+	};
+
+	/// <summary>
+	/// InstantiateObject() doesn't work directly, cause projectile needs an owner and a target.
+	/// Use InstantiateProjectile() to instantiate projectile.
+	/// </summary>
+	struct AAProjectileLoadInfo : public WorldObjectLoadInfo {
+
+		virtual ~AAProjectileLoadInfo(){}
+
+		AAProjectileLoadInfo() : WorldObjectLoadInfo(){}
+		AAProjectileLoadInfo(const AAProjectileLoadInfo& copy);
+
+		AutoAttackProjectile& InstantiateProjectile
+			(AutoAttackModule& Owner,
+			IAttackableObj& Target,
+			LvlObjAdditParams* objSubInfo = nullptr,
+			LvlObjAdditParams* additParams = nullptr) const;
+
+	protected:
+		WorldTransfObj* InstantiateObject_Action(const WorldObjectLoadInfo& usedInfo) const override;
+		WorldObjectLoadInfo* CreateCacheInfo() const override;
+
+		mutable AutoAttackModule* Owner=nullptr;
+		mutable IAttackableObj* Target=nullptr;
+	};
+
+//
+//
+// LevelLoadingInfo
+//
+//
 
 	struct LevelLoadingInfo final {
 
-		vector<vector<LevelCellMapDeser::CellInfo*>*>& LevelMap;
-		forward_list<GameObjectLoadInfo*>& UniqueObjects;
+		vector<vector<LvlObjInstantiationInfo*>*>& LevelMap;
+		forward_list<WorldObjectLoadInfo*>& UniqueObjects;
 		size_t MapRowsCount;
 
-		LevelLoadingInfo(vector<vector<LevelCellMapDeser::CellInfo*>*>& LevelMap, forward_list<GameObjectLoadInfo*>& UniqueObjects,
+		LevelLoadingInfo(vector<vector<LvlObjInstantiationInfo*>*>& LevelMap, forward_list<WorldObjectLoadInfo*>& UniqueObjects,
 			size_t MapRowsCount)
 			:LevelMap(LevelMap),
 			UniqueObjects(UniqueObjects),
@@ -153,13 +225,6 @@ namespace KrostganEngine::Core {
 				delete obj;
 			}
 		}
-	};
-
-	struct LoadedObjects final {
-		forward_list<HeroObject*> LoadedHeroes = forward_list<HeroObject*>();
-		forward_list<UnitObject*> LoadedUnits = forward_list<UnitObject*>();
-		forward_list <WallObject*> LoadedWalls = forward_list<WallObject*>();
-		forward_list <ICallbackRec_GraphRen*> LoadedGraphics = forward_list<ICallbackRec_GraphRen*>();
 	};
 }
 

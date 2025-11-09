@@ -8,6 +8,8 @@ using namespace KrostganEngine::GameObjects;
 EntityBattleStats::EntityBattleStats(AutoAttackStats* AAStats) 
 	:AAStats(AAStats){
 
+	this->AAStats = AAStats;
+
 	//size_t
 	InitializeField_s_t(EntityBattleStatType::MaxHP, 1);
 	InitializeField_s_t(EntityBattleStatType::RegenHP_Amount, 0);
@@ -18,19 +20,40 @@ EntityBattleStats::EntityBattleStats(AutoAttackStats* AAStats)
 	InitializeField_f(EntityBattleStatType::AutoAggrRadius, 0);
 }
 EntityBattleStats::EntityBattleStats(const EntityBattleStats& copy)
-	:ModifiableStatsWrapper(copy) {
+	:AAStats(nullptr),
+	ModifiableStatsWrapper(copy) {
 
-	if (copy.AAStats == nullptr)
-		AAStats = nullptr;
-	else
-		AAStats = new AutoAttackStats(*copy.AAStats);
+	copy.CopyTo_Internal(*this);
 }
 EntityBattleStats::~EntityBattleStats() {
 
 	if (AAStats != nullptr)
 		delete AAStats;
 }
+void EntityBattleStats::CopyTo(ModifiableStatsWrapper
+	<EntBatStats_Consts::StatType,
+	EntBatStats_Consts::FIELDS_COUNT,
+	EntBatStats_Consts::StatTypeNames,
+	EntBatStats_Consts::FIELDS_COUNT_F,
+	EntBatStats_Consts::FIELDS_COUNT_S_T,
+	EntBatStats_Consts::FIELDS_COUNT_BOOL>& toCopy) const{
 
+	ModifiableStatsWrapper::CopyTo(toCopy);
+	EntityBattleStats* parCopy = dynamic_cast<EntityBattleStats*>(&toCopy);
+	CopyTo_Internal(*parCopy);
+}
+void EntityBattleStats::CopyTo_Internal(EntityBattleStats& toCopy) const {
+
+	if (AAStats != nullptr) {
+
+		if (toCopy.AAStats == nullptr) {
+			toCopy.AAStats = new AutoAttackStats(*AAStats);
+		}
+		else {
+			AAStats->CopyTo(*toCopy.AAStats);
+		}
+	}
+}
 //
 // 
 //HitPoint

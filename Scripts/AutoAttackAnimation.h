@@ -11,7 +11,7 @@ namespace KrostganEngine::Visual {
 	public:
 		virtual ~AutoAttackAnimation(){}
 
-		virtual void OnDealDmg(const AutoAttackHitInfo& attInfo) = 0;
+		virtual void OnTakeDmg(const AutoAttackHitInfo& attInfo) = 0;
 
 	protected:
 		AutoAttackAnimation(WorldTransfObj& Owner)

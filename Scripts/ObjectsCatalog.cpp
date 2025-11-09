@@ -35,7 +35,7 @@ void ObjsCatalogDeserial::DeserializeCatalog(string serPath) {
 				else if(params[0].find(SerializationParDefNames::CATALOG_SUB_INFO_ID)!=string::npos){
 					
 					subinfo = &ParseObjSubinfo(params);
-					ObjectsCatalog::AddSub(subinfo->first,subinfo->second.first,subinfo->second.second);
+					ObjectsCatalog::AddSub(subinfo->first,subinfo->second.first,*subinfo->second.second);
 					delete subinfo;
 				}
 				params.clear();
@@ -59,7 +59,7 @@ void ObjsCatalogDeserial::DeserializeCatalog(string serPath) {
 		else if (params[0].find(SerializationParDefNames::CATALOG_SUB_INFO_ID) != string::npos) {
 
 			subinfo = &ParseObjSubinfo(params);
-			ObjectsCatalog::AddSub(subinfo->first, subinfo->second.first, subinfo->second.second);
+			ObjectsCatalog::AddSub(subinfo->first, subinfo->second.first, *subinfo->second.second);
 			delete subinfo;
 		}
 	}
@@ -68,9 +68,9 @@ void ObjsCatalogDeserial::DeserializeCatalog(string serPath) {
 	delete& params;
 }
 
-GameObjectLoadInfo& ObjsCatalogDeserial::ParseObjInfo(const vector<string>& params) {
+WorldObjectLoadInfo& ObjsCatalogDeserial::ParseObjInfo(const vector<string>& params) {
 
-	GameObjectLoadInfo* info = nullptr;
+	WorldObjectLoadInfo* info = nullptr;
 	const pair<const string, const string>* parParam = nullptr;
 	parParam = &ParseParamLine(params[0]);
 
@@ -87,6 +87,12 @@ GameObjectLoadInfo& ObjsCatalogDeserial::ParseObjInfo(const vector<string>& para
 		else if (parParam->second.find(SerializationObjectsTypes::OBJECT_TYPE_WALL) != string::npos) {
 
 			info = new WallLoadInfo();
+		}
+		else if (parParam->second.find(SerializationObjectsTypes::OBJECT_TYPE_SPRITE) != string::npos) {
+			info = new SpriteRendLoadInfo();
+		}
+		else if (parParam->second.find(SerializationObjectsTypes::OBJECT_TYPE_AA_PROJECTILE) != string::npos) {
+			info = new AAProjectileLoadInfo();
 		}
 		else
 			throw exception("Cant parse info: uknown type");
@@ -106,6 +112,7 @@ GameObjectLoadInfo& ObjsCatalogDeserial::ParseObjInfo(const vector<string>& para
 	else
 		throw exception("Cant parse info: missing type");
 }
+
 pair<size_t, _ObjSubsPairType>& ObjsCatalogDeserial::ParseObjSubinfo(const vector<string>& params) {
 	
 	if (params.size() < 2)
@@ -132,7 +139,7 @@ pair<size_t, _ObjSubsPairType>& ObjsCatalogDeserial::ParseObjSubinfo(const vecto
 		parLine = &ParseParamLine(*beg);
 		attrs.push_back(parLine);
 	}
-	return *new pair<size_t, _ObjSubsPairType>(objID, _ObjSubsPairType(subID, new LvlObjCatalogSubInfo(attrs)));
+	return *new pair<size_t, _ObjSubsPairType>(objID, _ObjSubsPairType(subID, new LvlObjAdditParams(attrs)));
 }
 const pair<const string, const string>& ObjsCatalogDeserial::ParseParamLine(const string& line) {
 

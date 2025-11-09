@@ -18,6 +18,9 @@ namespace KrostganEngine::Core {
 		static void RemoveEntity(Entity* entity);
 		static forward_list<Entity*>::const_iterator GetBeginIter();
 		static forward_list<Entity*>::const_iterator GetAfterEndIter();
+		/// <summary>
+		/// Clear data of instantiated entities. Don't destroy any entity from list.
+		/// </summary>
 		static void Unload();
 
 	private:

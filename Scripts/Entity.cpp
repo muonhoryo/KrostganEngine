@@ -27,12 +27,14 @@ Entity::Entity(EntityCtorParams& params)
 
 	EntityFraction			(params.EntityFraction),
 	HPBar					(params.HPBarSprite),
+	HitEffectSprite			(params.HitEffectSprite),
 	SelectionSpriteSource	(params.SelectionSpriteSource)
 
 {
-	params.Init_AAModule(*this);
-	params.Init_AutoAggrModule(*this,GetActionsMediator());
-	params.Init_DeathModule(*this);
+	params.Owner = this;
+	params.Init_AAModule();
+	params.Init_AutoAggrModule(GetActionsMediator());
+	params.Init_DeathModule();
 	params.Init_HPModule();
 	params.Init_HPRegenModule();
 	SetAAModule(params.GetAAModule());
@@ -41,6 +43,10 @@ Entity::Entity(EntityCtorParams& params)
 
 	HPBar->SetGlobalPosition(GetGlobalPosition());
 	HPBar->SetParent(this);
+
+	HitEffectSprite->SetGlobalPosition(GetGlobalPosition());
+	HitEffectSprite->SetParent(this);
+
 	SetColor(GetColor());
 
 	EntitiesObserver::AddEntity(this);
@@ -55,10 +61,17 @@ Entity::~Entity() {
 
 void Entity::SetColor(Color color) {
 
-	BodySprite.SetColor(color);
-	if (SelectionSprite != nullptr)
-		SelectionSprite->SetColor(color);
-	HPBar->SetColor(color);
+	Color totalColor = color;
+	color.a = BodySprite.GetColor().a;
+	BodySprite.SetColor(totalColor);
+	if (SelectionSprite != nullptr) {
+		totalColor.a = SelectionSprite->GetColor().a;
+		SelectionSprite->SetColor(totalColor);
+	}
+	totalColor.a = HitEffectSprite->GetColor().a;
+	HitEffectSprite->SetColor(totalColor);
+	totalColor.a = HPBar->GetColor().a;
+	HPBar->SetColor(totalColor);
 }
 
 void Entity::SelectionOn() {

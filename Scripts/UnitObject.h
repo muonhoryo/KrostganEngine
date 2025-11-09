@@ -8,10 +8,10 @@
 #include <EntityOrders.h>
 #include <vector>
 #include <EntityOrderType.h>
-#include <EntityBaseAAModule.h>
 #include <BaseAutoAggrModule.h>
 #include <EntityHPModule.h>
 #include <HPRegenModules.h>
+#include <BattleAnimationsExt.h>
 
 #include <CoreVisual_UI.h>
 
@@ -34,17 +34,19 @@ namespace KrostganEngine {
 		};
 
 		struct UnitObjectCtorParams : public EntityCtorParams {
-			void Init_AAModule(Entity& owner) override {
-				AAModule = new EntityBaseAAModule(*BattleStats, owner);
+			void Init_AAModule() override {
+				auto& hitAnim = *new LineAAAnimation(*Owner);
+				AAModule = new AutoAttackModule(hitAnim, *Owner->GetBattleStats().GetAAStats(), *Owner);
 			}
-			void Init_AutoAggrModule(Entity& owner,ExecutorActionsMediator& mediator) override {
-				AutoAggrModule= new BaseAutoAggrModule(owner, mediator);
+			void Init_AutoAggrModule(ExecutorActionsMediator& mediator) override {
+				AutoAggrModule= new BaseAutoAggrModule(*Owner, mediator);
 			}
-			void Init_DeathModule(Entity& owner) override {
-				DeathModule = new UnitDeathModule(owner);
+			void Init_DeathModule() override {
+				DeathModule = new UnitDeathModule(*Owner);
 			}
 			void Init_HPModule() override {
-				HPModule = new EntityHPModule(*GetDeathModule(), *BattleStats,*HPBarSprite);
+				TakeDamageAnim_SprFade& dmgAnim = *new TakeDamageAnim_SprFade(*HitEffectSprite);
+				HPModule = new EntityHPModule(*GetDeathModule(), *BattleStats,*HPBarSprite,dmgAnim);
 			}
 			void Init_HPRegenModule() override {
 				RegenModule = new CommonHPRegenModule(*HPModule);

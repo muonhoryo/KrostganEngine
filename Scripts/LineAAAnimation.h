@@ -14,17 +14,17 @@ namespace KrostganEngine::Visual {
 
 	public:
 		LineAAAnimation(WorldTransfObj& Owner);
-		~LineAAAnimation();
+		virtual ~LineAAAnimation();
 
-		void OnDealDmg(const AutoAttackHitInfo& attInfo) override;
+		void OnTakeDmg(const AutoAttackHitInfo& attInfo) override;
 
 		void RenderGraphicAction(RenderWindow& window) override;
 
 	private:
 		WideLineVisual							LineRender;
-		SpriteRenderer*							HitSprite=nullptr;
+		//SpriteRenderer*							HitSprite=nullptr;
 		FadingVisualEff_MRes&					LineEffect;
-		FadingVisualEff_MRes*					HitEffect = nullptr;
+		//FadingVisualEff_MRes*					HitEffect = nullptr;
 		watch_ptr_handler_wr<WorldTransfObj>*	Target = nullptr;
 	};
 }

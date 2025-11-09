@@ -53,7 +53,17 @@ namespace KrostganEngine::GameObjects {
 		EntityBattleStats(const EntityBattleStats& copy);
 		virtual ~EntityBattleStats();
 
+		void CopyTo(ModifiableStatsWrapper
+			<EntBatStats_Consts::StatType,
+			EntBatStats_Consts::FIELDS_COUNT,
+			EntBatStats_Consts::StatTypeNames,
+			EntBatStats_Consts::FIELDS_COUNT_F,
+			EntBatStats_Consts::FIELDS_COUNT_S_T,
+			EntBatStats_Consts::FIELDS_COUNT_BOOL>& toCopy) const override;
+
 	private:
+		void CopyTo_Internal(EntityBattleStats& toCopy) const;
+
 		AutoAttackStats* AAStats;
 
 //

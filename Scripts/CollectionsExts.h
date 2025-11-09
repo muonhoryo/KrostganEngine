@@ -106,7 +106,7 @@ namespace KrostganEngine {
 		/// <param name="list"></param>
 		/// <param name="elementToRem"></param>
 		/// <returns></returns>
-		template <typename TCollectionType, typename TElementsType>
+		template <typename TElementsType, typename TCollectionType>
 		static bool Remove(TCollectionType& collection, TElementsType const& elementToRem) {
 			auto it = collection.begin();
 			auto end = collection.end();
@@ -118,6 +118,29 @@ namespace KrostganEngine {
 			}
 			return false;
 		}
+		/// <summary>
+		/// Return true if element was removed
+		/// </summary>
+		/// <typeparam name="TCollectionsType"></typeparam>
+		/// <typeparam name="TElementsType"></typeparam>
+		/// <param name="list"></param>
+		/// <param name="elementToRem"></param>
+		/// <returns></returns>
+		template <typename TElementsType, typename TCollectionType = forward_list<TElementsType>>
+		static bool Remove(forward_list<TElementsType>& collection, TElementsType const& elementToRem) {
+			auto it = collection.begin();
+			auto preIt = collection.before_begin();
+			auto end = collection.end();
+			for (;it != end;++it) {
+				if ((*it) == elementToRem) {
+					collection.erase_after(preIt);
+					return true;
+				}
+				++preIt;
+			}
+			return false;
+		}
+
 		template <typename TColectionType, typename TElementsType>
 		static bool RemoveByPred(TColectionType& collection, const Predicate<TElementsType const&>& pred) {
 			auto it = collection.begin();

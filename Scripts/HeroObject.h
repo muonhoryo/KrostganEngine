@@ -26,8 +26,8 @@ namespace KrostganEngine::GameObjects {
 		HeroObjectCtorParams(const UnitObjectCtorParams& params):HeroObjectCtorParams(reinterpret_cast<const HeroObjectCtorParams&>(params))
 		{}
 
-		void Init_DeathModule(Entity& owner) override {
-			DeathModule = new HeroDeathModule(owner);
+		void Init_DeathModule() override {
+			DeathModule = new HeroDeathModule(*Owner);
 		}
 	};
 	class HeroObject:public UnitObject {

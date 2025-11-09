@@ -11,9 +11,10 @@ using namespace KrostganEngine::GameObjects;
 EntityHPModule::EntityHPModule(
 	IDeathModule&		DeathModule, 
 	EntityBattleStats&	BattleStats,
-	IndicatorFill&		HPBar)
+	IndicatorFill&		HPBar,
+	TakeDamageAnimation& TakeDmgAnim)
 
-	:IHitPointModule(DeathModule),
+	:IHitPointModule(DeathModule,TakeDmgAnim),
 		BattleStats(BattleStats),
 		HPBar(HPBar){
 
@@ -30,15 +31,20 @@ EntityHPModule::~EntityHPModule() {
 	delete Subscriber;
 }
 
-void EntityHPModule::TakeDamage		(const AttackHitInfo& attInfo) {
+size_t EntityHPModule::TakeDamage_Action(const AttackHitInfo& attInfo) {
 	
+	size_t totalDmg;
 	if (CurrentHP <= attInfo.DealtDmg) {
+		
+		totalDmg = CurrentHP;
 		SetCurrentHP(0);
 		DeathModule.Death();
 	}
 	else {
+		totalDmg = attInfo.DealtDmg;
 		SetCurrentHP(CurrentHP - attInfo.DealtDmg);
 	}
+	return totalDmg;
 }
 void EntityHPModule::SetCurrentHP	(size_t hp) {
 

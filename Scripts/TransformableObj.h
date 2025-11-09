@@ -16,7 +16,9 @@ namespace KrostganEngine::Core {
 		Transformable& Owner;
 
 	public:
-		virtual ~TransformableObj(){}
+		virtual ~TransformableObj(){
+			delete& Owner;
+		}
 
 		Vector2f			GetGlobalPosition() const override final {
 			return Owner.getPosition();

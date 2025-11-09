@@ -1,18 +1,22 @@
 #pragma once
 
 #include <ModifiableStatsWrapper.h>
+#include <LvlLoadingStructs.h>
+//#include <ObjectsCatalog.h>
 
 using namespace KrostganEngine;
+using namespace KrostganEngine::Core;
 
 #define AAStatType AutoAttackStats_Consts::StatType
+#define AAStatsConsts AutoAttackStats_Consts
 
 namespace KrostganEngine::GameObjects {
 
 	struct AutoAttackStats_Consts {
 
-		static inline const size_t FIELDS_COUNT_F		= 2;
+		static inline const size_t FIELDS_COUNT_F		= 3;
 		static inline const size_t FIELDS_COUNT_S_T		= 1;
-		static inline const size_t FIELDS_COUNT_BOOL	= 1;
+		static inline const size_t FIELDS_COUNT_BOOL	= 2;
 		static inline const size_t FIELDS_COUNT = FIELDS_COUNT_S_T + FIELDS_COUNT_F + FIELDS_COUNT_BOOL;
 
 		enum class StatType : int {
@@ -26,13 +30,17 @@ namespace KrostganEngine::GameObjects {
 			//float
 			AASpeed = t_float | (1 << ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT),
 			AARange = t_float | (2 << ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT),
+			AAProjSpeed = t_float | (3<< ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT),
 			//bool
-			IsRange = t_bool | (1 << ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT)
+			IsRange = t_bool | (1 << ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT),
+			Proj_LockRotation = t_bool | (2 << ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT)
 		};
 		static inline const array<pair<StatType, string>, FIELDS_COUNT> StatTypeNames{
-				pair<StatType,string>(StatType::AADamage,		"AADamage"),
-				pair<StatType,string>(StatType::AASpeed,		"AASpeed"),
-				pair<StatType,string>(StatType::AARange,		"AARange")
+				pair<StatType,string>(StatType::AADamage,			"AADamage"),
+				pair<StatType,string>(StatType::AASpeed,			"AASpeed"),
+				pair<StatType,string>(StatType::AARange,			"AARange"),
+				pair<StatType,string>(StatType::AAProjSpeed,		"AAProjSpeed"),
+				pair<StatType,string>(StatType::Proj_LockRotation,	"Proj_LockRotation")
 		};
 
 	private:
@@ -42,15 +50,27 @@ namespace KrostganEngine::GameObjects {
 
 
 	struct AutoAttackStats 
-		: public ModifiableStatsWrapper<AutoAttackStats_Consts::StatType, AutoAttackStats_Consts::FIELDS_COUNT, AutoAttackStats_Consts::StatTypeNames,
-				AutoAttackStats_Consts::FIELDS_COUNT_F, AutoAttackStats_Consts::FIELDS_COUNT_S_T, AutoAttackStats_Consts::FIELDS_COUNT_BOOL>{
+		: public ModifiableStatsWrapper<AAStatsConsts::StatType, AAStatsConsts::FIELDS_COUNT, AAStatsConsts::StatTypeNames,
+				AAStatsConsts::FIELDS_COUNT_F, AAStatsConsts::FIELDS_COUNT_S_T, AAStatsConsts::FIELDS_COUNT_BOOL>{
 	
 	public:
-		AutoAttackStats();
+		AutoAttackStats(const LvlObjInstantiationInfo* ProjectileInfo=nullptr);
+
 		AutoAttackStats(const AutoAttackStats& copy)
-			:ModifiableStatsWrapper(copy) {}
+			:ModifiableStatsWrapper(copy),
+			ProjectileInfo(copy.ProjectileInfo){}
 		virtual ~AutoAttackStats(){}
 
+		void CopyTo(ModifiableStatsWrapper
+			<AutoAttackStats_Consts::StatType,
+			AutoAttackStats_Consts::FIELDS_COUNT,
+			AutoAttackStats_Consts::StatTypeNames,
+			AutoAttackStats_Consts::FIELDS_COUNT_F,
+			AutoAttackStats_Consts::FIELDS_COUNT_S_T,
+			AutoAttackStats_Consts::FIELDS_COUNT_BOOL>& toCopy) const override;
+
+	private:
+		void CopyTo_Internal(AutoAttackStats& toCopy) const;
 //
 //
 // Parameter's definition
@@ -73,7 +93,11 @@ namespace KrostganEngine::GameObjects {
 		float					GetAACooldown()		const { return GetAACooldown(GetAASpeed().Stat); }
 		Parameter<float> const& GetAARange()		const { return *GetParameterByType_f(AAStatType::AARange); }
 
+		Parameter<float> const& GetAAProjSpeed()	const {return *GetParameterByType_f(AAStatType::AAProjSpeed);}
+
 		const bool&				GetState_IsRange()	const {return *GetFieldRef_bool(AAStatType::IsRange); }
+
+		const bool&				GetState_Proj_LockRotation() const {return *GetFieldRef_bool(AAStatType::Proj_LockRotation); }
 
 //
 //
@@ -84,7 +108,22 @@ namespace KrostganEngine::GameObjects {
 		void SetAADamage(size_t damage);
 		void SetAASpeed(float speed);
 		void SetAARange(float range);
+		void SetAAProjSpeed(float speed);
 		void SetIsRange(bool isRange);
+		void SetProjLockRotation(bool lockRotation);
+
+//
+//
+// Additional parameters
+//
+//
+
+		const LvlObjInstantiationInfo& GetProjectileInfo() const { return ProjectileInfo; }
+		
+		void SetProjectileInfo(const LvlObjInstantiationInfo& projInfo);
+
+	private:
+		LvlObjInstantiationInfo ProjectileInfo;
 
 	};
 

@@ -54,13 +54,5 @@ namespace KrostganEngine::GameObjects {
 
 		SpriteRenderer&	BodySprite;
 		
-	private:
-		Transformable& ctor_InitOwner() {
-			Transf = new Transformable();
-			return *Transf;
-		}
-
-		Transformable* Transf;
-
 	};
 }

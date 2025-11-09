@@ -73,10 +73,6 @@ SpriteRenderer::SpriteRenderer(
 	SetOrigin(GetTextureCenter(RenTexture));
 }
 
-SpriteRenderer::~SpriteRenderer() {
-	delete RenSprite;
-}
-
 void SpriteRenderer::RenderGraphicAction(RenderWindow& window) {
 
 	window.draw(*RenSprite, RenderSt);

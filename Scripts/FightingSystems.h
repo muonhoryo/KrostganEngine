@@ -1,5 +1,5 @@
 #pragma once
 
 #include <BattleInfo.h>
-#include <GameObjsBaseFightSystem.h>
+#include <AutoAttackSystem.h>
 #include <HPSystem.h>

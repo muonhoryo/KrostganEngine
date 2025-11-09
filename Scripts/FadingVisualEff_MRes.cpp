@@ -19,9 +19,10 @@ void FadingVisualEff_MRes::ResetFade(float FadeTime) {
 	InternalResetFade();
 }
 void FadingVisualEff_MRes::ResetFade() {
-	if (!IsFading) {
+	/*if (!IsFading) {
 		InternalResetFade();
-	}
+	}*/
+	InternalResetFade();
 }
 void FadingVisualEff_MRes::InternalResetFade() {
 

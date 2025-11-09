@@ -21,7 +21,7 @@ namespace KrostganEngine::Core {
 				delete vrt;
 			BypassMap.clear();
 		}
-		static void LoadFromLevelMap(const vector<vector<LevelCellMapDeser::CellInfo*>*>& map) {
+		static void LoadFromLevelMap(const vector<vector<LvlObjInstantiationInfo*>*>& map) {
 
 			Unload();
 
@@ -314,7 +314,7 @@ namespace KrostganEngine::Core {
 		}
 
 	private:
-		static bool IsWall(const vector<size_t>& Indexes, LevelCellMapDeser::CellInfo* cell) {
+		static bool IsWall(const vector<size_t>& Indexes, LvlObjInstantiationInfo* cell) {
 			
 			for (int i = 0;i < Indexes.size();++i)
 				if (Indexes[i] == cell->CatalogID)
@@ -329,7 +329,7 @@ namespace KrostganEngine::Core {
 			}
 			return false;
 		}
-		static void GenerateBypassWays(const vector<vector<LevelCellMapDeser::CellInfo*>*>& map) {
+		static void GenerateBypassWays(const vector<vector<LvlObjInstantiationInfo*>*>& map) {
 
 			Segment segm(Vector2f(0,0),Vector2f(0,0));
 

@@ -138,6 +138,7 @@
     <ClCompile Include="Scripts\AABBCollShape.cpp" />
     <ClCompile Include="Scripts\AutoAggressionModule.cpp" />
     <ClCompile Include="Scripts\AutoAttackModule.cpp" />
+    <ClCompile Include="Scripts\AutoAttackProjectile.cpp" />
     <ClCompile Include="Scripts\AutoAttackStats.cpp" />
     <ClCompile Include="Scripts\BaseAutoAggrModule.cpp" />
     <ClCompile Include="Scripts\BaseInputHandler.cpp" />
@@ -179,6 +180,7 @@
     <ClCompile Include="Scripts\OutlineLineVisual.cpp" />
     <ClCompile Include="Scripts\PlayerInputManager.cpp" />
     <ClCompile Include="Scripts\StartMessageMode.cpp" />
+    <ClCompile Include="Scripts\TakeDamageAnim_SprFade.cpp" />
     <ClCompile Include="Scripts\UIElement.cpp" />
     <ClCompile Include="Scripts\UISprite.cpp" />
     <ClCompile Include="Scripts\UIText.cpp" />
@@ -197,7 +199,6 @@
     <ClCompile Include="Scripts\EntityAction_FollowObject.cpp" />
     <ClCompile Include="Scripts\EntityAction_MoveTo.cpp" />
     <ClCompile Include="Scripts\EntityAction_MoveToPoint.cpp" />
-    <ClCompile Include="Scripts\EntityBaseAAModule.cpp" />
     <ClCompile Include="Scripts\EntityBattleStats.cpp" />
     <ClCompile Include="Scripts\EntityHPModule.cpp" />
     <ClCompile Include="Scripts\EntityOrder_AttackTarget.cpp" />
@@ -252,14 +253,20 @@
     <ClCompile Include="Scripts\WinScript.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Scripts\AnimationsCore.h" />
+    <ClInclude Include="Scripts\AnimationsExtend.h" />
+    <ClInclude Include="Scripts\AttackInfo.h" />
     <ClInclude Include="Scripts\AutoAttackAnimation.h" />
     <ClInclude Include="Scripts\AutoAttackHitInfo.h" />
     <ClInclude Include="Scripts\AutoAttackStats.h" />
     <ClInclude Include="Scripts\BaseAutoAggrModule.h" />
+    <ClInclude Include="Scripts\BattleAnimations.h" />
+    <ClInclude Include="Scripts\BattleAnimationsExt.h" />
     <ClInclude Include="Scripts\BattleInfo.h" />
-    <ClInclude Include="Scripts\AttackHitInfo.h" />
+    <ClInclude Include="Scripts\BattleStats.h" />
     <ClInclude Include="Scripts\BypassVertex.h" />
     <ClInclude Include="Scripts\CallbackDelegates.h" />
+    <ClInclude Include="Scripts\CachedBattleStats.h" />
     <ClInclude Include="Scripts\CommonHPRegenModule.h" />
     <ClInclude Include="Scripts\CoreVisual.h" />
     <ClInclude Include="Scripts\DBG_ImmortalArmy.h" />
@@ -294,9 +301,14 @@
     <ClInclude Include="Scripts\GameVisualEffects.h" />
     <ClInclude Include="Scripts\GeneralUIDependencies.h" />
     <ClInclude Include="Scripts\IModifiableStatsWrapper.h" />
+    <ClInclude Include="Scripts\LevelObjectsManager.h" />
+    <ClInclude Include="Scripts\LvlLoadingStructs.h" />
+    <ClInclude Include="Scripts\MathExts.h" />
     <ClInclude Include="Scripts\MemoryExts.h" />
     <ClInclude Include="Scripts\ModifiableStatsWrapper.h" />
+    <ClInclude Include="Scripts\ProjAAHitInfo.h" />
     <ClInclude Include="Scripts\StatsWrapperDepend_toTxt.h" />
+    <ClInclude Include="Scripts\TakeDamageAnim_SprFade.h" />
     <ClInclude Include="Scripts\ValueDepend_CurrHP.h" />
     <ClInclude Include="Scripts\HieObjActDepend_GroupSelect.h" />
     <ClInclude Include="Scripts\HighlightVisualEffect.h" />
@@ -339,12 +351,11 @@
     <ClInclude Include="Scripts\EntityAction_AutoAttack.h" />
     <ClInclude Include="Scripts\EntityAction_FollowObject.h" />
     <ClInclude Include="Scripts\EntityAction_MoveTo.h" />
-    <ClInclude Include="Scripts\EntityBaseAAModule.h" />
     <ClInclude Include="Scripts\FractionsSystem.h" />
     <ClInclude Include="Scripts\EntityOrder_AttackTarget.h" />
     <ClInclude Include="Scripts\EntityOrder_ObjectTarget.h" />
     <ClInclude Include="Scripts\EntitiesObserver.h" />
-    <ClInclude Include="Scripts\GameObjsBaseFightSystem.h" />
+    <ClInclude Include="Scripts\AutoAttackSystem.h" />
     <ClInclude Include="Scripts\ExtVisualManager.h" />
     <ClInclude Include="Scripts\HPSystem.h" />
     <ClInclude Include="Scripts\AutoAttackModule.h" />

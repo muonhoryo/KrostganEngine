@@ -11,7 +11,8 @@ void IHierarchyTrObj::AddChild(IHierarchyTrObj& child) {
 void IHierarchyTrObj::RemoveChild(IHierarchyTrObj& child) {
 
 	if (CollectionsExts::Contains<vector<IHierarchyTrObj*>, IHierarchyTrObj*>(ChildObjs, &child))
-		CollectionsExts::Remove<vector<IHierarchyTrObj*>, IHierarchyTrObj*>(ChildObjs, &child);
+		//CollectionsExts::Remove<vector<IHierarchyTrObj*>, IHierarchyTrObj*>(ChildObjs, &child);
+		CollectionsExts::Remove(ChildObjs, &child);
 }
 vector<IHierarchyTrObj*>::const_iterator	IHierarchyTrObj::GetChildrenBegin() const {
 	return ChildObjs.begin();

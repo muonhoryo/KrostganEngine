@@ -5,3 +5,4 @@
 
 #include <CoreVisual_UI.h>
 #include <VisualEffectsSystem.h>
+#include <AnimationsCore.h>

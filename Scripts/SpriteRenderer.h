@@ -20,7 +20,7 @@ namespace KrostganEngine::Visual {
 
 		SpriteRenderer(const Texture& RenTexture, WorldTransfObj& Parent, float maxSizeInPixels, Shader* RendShader = nullptr);
 
-		virtual ~SpriteRenderer();
+		virtual ~SpriteRenderer(){}
 
 		const Texture&	GetRenTexture() const;
 		float			GetSpriteMinMaxRatio() const;

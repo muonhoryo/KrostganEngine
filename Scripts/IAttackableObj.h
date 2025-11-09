@@ -3,15 +3,42 @@
 #include <SFML/System.hpp>
 #include <ITransformableObj.h>
 #include <Events.h>
-#include <AttackHitInfo.h>
+#include <FractionsSystem.h>
 
 using namespace sf;
 using namespace KrostganEngine::Core;
+using namespace KrostganEngine::EntitiesControl;
 
 namespace KrostganEngine::GameObjects {
 	class IHitPointModule;
 	class IDeathModule;
+	class IAttackableObj;
 
+
+	struct AttackHitInfo {
+
+		AttackHitInfo(size_t DealtDmg, watch_ptr_handler_wr<IAttackableObj> Target, 
+			Fraction DmgDealerFrac)
+			:DealtDmg(DealtDmg),
+			Target(Target),
+			DmgDealerFrac(DmgDealerFrac)
+		{}
+
+		const size_t DealtDmg;
+		watch_ptr_handler_wr<IAttackableObj> Target;
+		Fraction DmgDealerFrac;
+	};
+
+	class TakeDamageAnimation {
+
+	public:
+		virtual ~TakeDamageAnimation() {}
+
+		virtual void OnTakeDmg(const AttackHitInfo& attInfo, size_t totalDmg) = 0;
+
+	protected:
+		TakeDamageAnimation() {}
+	};
 
 	class IAttackableObj : public virtual ITransformableObj {
 	public:
@@ -31,7 +58,8 @@ namespace KrostganEngine::GameObjects {
 
 		virtual ~IHitPointModule(){}
 
-		virtual void TakeDamage		(const AttackHitInfo& attInfo) = 0;
+		void TakeDamage		(const AttackHitInfo& attInfo);
+
 		virtual void SetCurrentHP	(size_t hp) = 0;
 		virtual void RestoreHealth	() = 0;
 
@@ -41,9 +69,14 @@ namespace KrostganEngine::GameObjects {
 		IDeathModule& DeathModule;
 
 	protected:
-		IHitPointModule(IDeathModule& DeathModule);
+		IHitPointModule(IDeathModule& DeathModule, TakeDamageAnimation& TakeDmgAnim);
 
 		NoArgsEventHandler ChangedHPEvHandler=NoArgsEventHandler(ChangedHPEvent);
+
+		virtual size_t TakeDamage_Action(const AttackHitInfo& attInfo) = 0;
+
+	private:
+		TakeDamageAnimation& TakeDmgAnim;
 	};
 
 

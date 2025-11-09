@@ -32,8 +32,9 @@ namespace KrostganEngine::GameObjects {
 		using GameObjectCtorParams::SubcatalogID;
 
 		EntityBattleStats*		BattleStats				=	nullptr;
-		const ExtGlRes_Sprite*	SelectionSpriteSource	=	nullptr;
+		const ExtGlRes_Sprite*	SelectionSpriteSource			=	nullptr;
 		IndicatorFill*			HPBarSprite				=	nullptr;
+		SpriteRenderer*			HitEffectSprite			=	nullptr;
 		
 		AutoAttackModule*		GetAAModule()			const { return AAModule; }
 		AutoAggressionModule*	GetAutoAggrModule()		const { return AutoAggrModule; }
@@ -49,9 +50,9 @@ namespace KrostganEngine::GameObjects {
 		}
 
 	protected:
-		virtual void Init_AAModule			(Entity& owner) = 0;
-		virtual void Init_AutoAggrModule	(Entity& owner, ExecutorActionsMediator& mediator) = 0;
-		virtual void Init_DeathModule		(Entity& owner) = 0;
+		virtual void Init_AAModule			() = 0;
+		virtual void Init_AutoAggrModule	(ExecutorActionsMediator& mediator) = 0;
+		virtual void Init_DeathModule		() = 0;
 		virtual void Init_HPModule			() = 0;
 		virtual void Init_HPRegenModule		() = 0;
 
@@ -61,6 +62,8 @@ namespace KrostganEngine::GameObjects {
 		IDeathModule*			DeathModule		= nullptr;
 		HPRegenModule*			RegenModule		= nullptr;
 		Fraction				EntityFraction = Fraction::Neutral;
+
+		Entity* Owner=nullptr;
 
 		friend class Entity;
 	};
@@ -96,6 +99,7 @@ namespace KrostganEngine::GameObjects {
 		SpriteRenderer*			SelectionSprite			=	nullptr;
 		IHitPointModule*		HPModule;
 		IndicatorFill*			HPBar;
+		SpriteRenderer*			HitEffectSprite;
 		
 		friend class AutoAggressionModule;
 	public:

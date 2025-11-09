@@ -21,7 +21,7 @@ namespace KrostganEngine::GameObjects {
 		ModifiableStatsWrapper(const ModifiableStatsWrapper
 			<TStatEnum, STATNAMES_COUNT, STATTYPE_NAMES, FIELDSCOUNT_F, FIELDSCOUNT_S_T, FIELDSCOUNT_BOOL> & copy) {
 
-			copy.CopyTo(*this);
+			copy.CopyTo_Internal(*this);
 		}
 		virtual ~ModifiableStatsWrapper(){
 
@@ -29,8 +29,6 @@ namespace KrostganEngine::GameObjects {
 				delete mod;
 			}
 		}
-
-	private:
 //
 //
 // Parameter's getting
@@ -55,16 +53,6 @@ namespace KrostganEngine::GameObjects {
 		array<Parameter<float>, FIELDSCOUNT_F>		Parameters_f;
 		array<Parameter<size_t>, FIELDSCOUNT_S_T>	Parameters_s_t;
 		array<bool, FIELDSCOUNT_BOOL>				Parameter_bool;
-
-		const array<Parameter<float>, FIELDSCOUNT_F>&		GetParamsArray_f() const {
-			return Parameters_f;
-		}
-		const array<Parameter<size_t>, FIELDSCOUNT_S_T>&	GetParamsArray_s_t() const {
-			return Parameters_s_t;
-		}
-		const array<bool, FIELDSCOUNT_BOOL>&				GetParamsArray_bool() const {
-			return Parameter_bool;
-		}
 
 		const size_t*			_GetFieldRef_s_t(int type, bool isDefField = false) const override{
 
@@ -170,9 +158,13 @@ namespace KrostganEngine::GameObjects {
 		/// Copy parameters of this stats to target stats
 		/// </summary>
 		/// <param name="tocopy"></param>
-		void CopyTo(ModifiableStatsWrapper<TStatEnum, STATNAMES_COUNT, STATTYPE_NAMES, FIELDSCOUNT_F, FIELDSCOUNT_S_T, FIELDSCOUNT_BOOL>& toCopy) const {
-			
-			size_t it=0;
+		virtual void CopyTo(ModifiableStatsWrapper<TStatEnum, STATNAMES_COUNT, STATTYPE_NAMES, FIELDSCOUNT_F, FIELDSCOUNT_S_T, FIELDSCOUNT_BOOL>& toCopy) const {
+			CopyTo_Internal(toCopy);
+		}
+	private:
+		void CopyTo_Internal(ModifiableStatsWrapper<TStatEnum, STATNAMES_COUNT, STATTYPE_NAMES, FIELDSCOUNT_F, FIELDSCOUNT_S_T, FIELDSCOUNT_BOOL>& toCopy) const {
+
+			size_t it = 0;
 
 			for (it = 0;it < FIELDSCOUNT_F;++it) {
 				toCopy.Parameters_f[it] = Parameter<float>(Parameters_f[it]);
@@ -183,6 +175,18 @@ namespace KrostganEngine::GameObjects {
 			for (it = 0;it < FIELDSCOUNT_BOOL;++it) {
 				toCopy.Parameter_bool[it] = Parameter_bool[it];
 			}
+		}
+		
+	public:
+
+		const array<Parameter<float>, FIELDSCOUNT_F>& GetParamsArray_f() const {
+			return Parameters_f;
+		}
+		const array<Parameter<size_t>, FIELDSCOUNT_S_T>& GetParamsArray_s_t() const {
+			return Parameters_s_t;
+		}
+		const array<bool, FIELDSCOUNT_BOOL>& GetParamsArray_bool() const {
+			return Parameter_bool;
 		}
 
 		/// <summary>
@@ -243,6 +247,14 @@ namespace KrostganEngine::GameObjects {
 			return _GetParameterByType((int)type);
 		}
 
+		template<typename TFieldType>
+		static TFieldType const& GetFieldRefFromParameter(Parameter<TFieldType> const& param, bool isDefField = false) {
+			return isDefField ? param.GetRef_Default() : param.GetRef_Stat();
+		}
+		static int GetArrayIndexOfField(int type) {
+			return ((type & (int)ModStatsWrapper_Consts::StatType::r_type_mask) >> ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT) - 1;
+		}
+
 	protected:
 		Parameter<size_t>*	Internal_GetParamByType_s_t(TStatEnum type) {
 
@@ -285,14 +297,6 @@ namespace KrostganEngine::GameObjects {
 			*Internal_GetParamByType_bool(type) = value;
 		}
 
-	private:
-		template<typename TFieldType>
-		static TFieldType const& GetFieldRefFromParameter(Parameter<TFieldType> const& param, bool isDefField = false) {
-			return isDefField ? param.GetRef_Default() : param.GetRef_Stat();
-		}
-		static int GetArrayIndexOfField(int type) {
-			return ((type & (int)ModStatsWrapper_Consts::StatType::r_type_mask) >> ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT)-1;
-		}
 
 
 //
