@@ -161,25 +161,15 @@ namespace KrostganEngine::Core {
 		static inline const string OBJECT_CATALOG_ID	= "CatalogID";
 		static inline const string OBJECT_CHILDREN		= "Children";
 
-		static inline const string IMAGEUSR_SPRITE_SOURCE = "SpritesSource";
+		static inline const string IMAGEUSR_SPRITE_SOURCE	= "SpriteSource";
+		static inline const string IMAGEUSR_SPRITE_LAYER	= "Layer";
 
-		static inline const string ENTITY_MAX_HP				= "MaxHP";
-		static inline const string ENTITY_REGEN_HP_COUNT		= "HPRegenCount";
-		static inline const string ENTITY_REGEN_HP_TICK			= "HPRegenTick";
-		static inline const string ENTITY_AA_DAMAGE				= "AADamage";
-		static inline const string ENTITY_AA_SPEED				= "AASpeed";
-		static inline const string ENTITY_AA_RANGE				= "AARange";
 		static inline const string ENTITY_FRACTION				= "Fraction";
-		static inline const string ENTITY_AUTO_AGGR_RADIUS		= "AutoAggrRadius";
 		static inline const string ENTITY_SELECT_AREA_SOURCE	= "SelectionAreaSource";
 		static inline const string ENTITY_HPBAR_SPRITE_SOURCE	= "HPBarSprite";
 		static inline const string ENTITY_HITEFF_SPRITE_SOURCE	= "HitEffectSprite";
 		static inline const string ENTITY_HPBAR_MASK			= "HPBarMask";
-		static inline const string ENTITY_ISRANGE				= "IsRange";
 		static inline const string ENTITY_AA_PROJECTILE			= "AAProjectile";
-		static inline const string ENTITY_AA_PROJECTILE_SPEED	= "AAProjSpeed";
-		static inline const string ENTITY_AA_PROJ_LOCK_ROTATION = "AAProjLockRotation";
-
-		static inline const string UNIT_MOVINGSPEED		= "MovingSpeed";
+		static inline const string ENTITY_AA_SIEGE_HITEFF		= "AASiegeHitEffect";
 	};
 }

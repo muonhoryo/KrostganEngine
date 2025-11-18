@@ -11,7 +11,7 @@ DBG_ImmortalArmy::Immortality::Immortality(Entity& BuffsOwner)
 	auto stats = &BuffsOwner.GetBattleStats();
 	auto aaStats = stats->GetAAStats();
 	if (aaStats != nullptr) {
-		DmgBuff = new AAStatsParamModif_Mul(AAStatType::AADamage, 10);
+		DmgBuff = new AAStatsParamModif_Mul(AAStatType::Damage, 10);
 
 		aaStats->AddModifier(*DmgBuff);
 	}

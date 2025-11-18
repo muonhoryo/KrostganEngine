@@ -60,7 +60,7 @@ list<IEntityAction*>* EntityOrder_AttackTarget::GetActions() {
 				}
 			}
 		}
-		float alloDist = Owner.GetBattleStats().GetAAStats()->GetAARange();
+		float alloDist = Owner.GetBattleStats().GetAAStats()->GetRange();
 		EntityAction_FollowObject* folAct = new EntityAction_FollowObject(Owner, OwnerTransform, 
 			*new watch_ptr_handler_wr_c<WorldTransfObj>(Target),
 			alloDist);

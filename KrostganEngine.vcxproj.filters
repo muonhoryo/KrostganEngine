@@ -1220,6 +1220,15 @@
     <ClInclude Include="Scripts\LvlLoadingStructs.h">
       <Filter>Файлы заголовков\CoreSystems\GameLevel\LevelLoading</Filter>
     </ClInclude>
+    <ClInclude Include="Scripts\AAProj_TarDir.h">
+      <Filter>Файлы заголовков\CoreSystems\GameObjects\FightingSystems\AutoAttackSystem\Projectiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\AutoAttackProjectiles.h">
+      <Filter>Файлы заголовков\CoreSystems\GameObjects\FightingSystems\AutoAttackSystem\Projectiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\AAProj_NoTar.h">
+      <Filter>Файлы заголовков\CoreSystems\GameObjects\FightingSystems\AutoAttackSystem\Projectiles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Config.txt">

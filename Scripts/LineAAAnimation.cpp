@@ -37,7 +37,7 @@ LineAAAnimation::~LineAAAnimation() {
 void LineAAAnimation::OnTakeDmg(const AutoAttackHitInfo& attInfo) {
 
 	return;
-	float cdown = attInfo.AAStats.GetAACooldown();
+	float cdown = attInfo.AAStats.GetCooldown();
 	LineEffect.ResetFade(cdown);
 	//HitEffect->ResetFade(cdown);
 	Target = new watch_ptr_handler_wr<WorldTransfObj>(attInfo.Target);

@@ -37,6 +37,9 @@ namespace KrostganEngine::Visual {
 		bool			IsSpriteVertical() const;
 		Shader*			GetShader() const;
 
+		void SetScaleByPixelSize_Global(float pixSize);
+		void SetScaleByPixelSize_Local(float pixSize);
+
 		void	SetColor(Color color) override;
 		Color	GetColor() const override;
 

@@ -2,7 +2,6 @@
 
 #include <ModifiableStatsWrapper.h>
 #include <LvlLoadingStructs.h>
-//#include <ObjectsCatalog.h>
 
 using namespace KrostganEngine;
 using namespace KrostganEngine::Core;
@@ -14,9 +13,9 @@ namespace KrostganEngine::GameObjects {
 
 	struct AutoAttackStats_Consts {
 
-		static inline const size_t FIELDS_COUNT_F		= 3;
+		static inline const size_t FIELDS_COUNT_F		= 4;
 		static inline const size_t FIELDS_COUNT_S_T		= 1;
-		static inline const size_t FIELDS_COUNT_BOOL	= 2;
+		static inline const size_t FIELDS_COUNT_BOOL	= 4;
 		static inline const size_t FIELDS_COUNT = FIELDS_COUNT_S_T + FIELDS_COUNT_F + FIELDS_COUNT_BOOL;
 
 		enum class StatType : int {
@@ -26,21 +25,28 @@ namespace KrostganEngine::GameObjects {
 			t_bool		= 2,
 			type_mask	= 15,
 			//size_t
-			AADamage = t_size_t | (1 << ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT),
+			Damage = t_size_t | (1 << ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT),
 			//float
-			AASpeed = t_float | (1 << ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT),
-			AARange = t_float | (2 << ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT),
-			AAProjSpeed = t_float | (3<< ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT),
+			Speed = t_float | (1 << ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT),
+			Range = t_float | (2 << ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT),
+			ProjSpeed = t_float | (3<< ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT),
+			SiegeRange= t_float | (4 << ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT),
 			//bool
 			IsRange = t_bool | (1 << ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT),
-			Proj_LockRotation = t_bool | (2 << ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT)
+			IsSiege = t_bool | (2 << ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT),
+			Proj_LockRotation = t_bool | (3 << ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT),
+			Proj_IsSelfHoming = t_bool | (4 << ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT)
 		};
 		static inline const array<pair<StatType, string>, FIELDS_COUNT> StatTypeNames{
-				pair<StatType,string>(StatType::AADamage,			"AADamage"),
-				pair<StatType,string>(StatType::AASpeed,			"AASpeed"),
-				pair<StatType,string>(StatType::AARange,			"AARange"),
-				pair<StatType,string>(StatType::AAProjSpeed,		"AAProjSpeed"),
-				pair<StatType,string>(StatType::Proj_LockRotation,	"Proj_LockRotation")
+				pair<StatType,string>(StatType::Damage,				"AADamage"),
+				pair<StatType,string>(StatType::Speed,				"AASpeed"),
+				pair<StatType,string>(StatType::Range,				"AARange"),
+				pair<StatType,string>(StatType::ProjSpeed,			"Proj_Speed"),
+				pair<StatType,string>(StatType::SiegeRange,			"AASiegeRange"),
+				pair<StatType,string>(StatType::IsRange,			"IsRange"),
+				pair<StatType,string>(StatType::IsSiege,			"IsSiege"),
+				pair<StatType,string>(StatType::Proj_LockRotation,	"Proj_LockRotation"),
+				pair<StatType,string>(StatType::Proj_IsSelfHoming,	"Proj_IsSelfHoming")
 		};
 
 	private:
@@ -54,11 +60,14 @@ namespace KrostganEngine::GameObjects {
 				AAStatsConsts::FIELDS_COUNT_F, AAStatsConsts::FIELDS_COUNT_S_T, AAStatsConsts::FIELDS_COUNT_BOOL>{
 	
 	public:
-		AutoAttackStats(const LvlObjInstantiationInfo* ProjectileInfo=nullptr);
+		AutoAttackStats
+			(const LvlObjInstantiationInfo* ProjectileInfo=nullptr,
+			const LvlObjInstantiationInfo* SiegeHitEffInfo =nullptr);
 
 		AutoAttackStats(const AutoAttackStats& copy)
 			:ModifiableStatsWrapper(copy),
-			ProjectileInfo(copy.ProjectileInfo){}
+			ProjectileInfo(copy.ProjectileInfo),
+			SiegeHitEffInfo(copy.SiegeHitEffInfo){}
 		virtual ~AutoAttackStats(){}
 
 		void CopyTo(ModifiableStatsWrapper
@@ -77,7 +86,7 @@ namespace KrostganEngine::GameObjects {
 //
 //
 	public:
-		static	float	GetAACooldown(float AASpeed) { return (float)1 / AASpeed; }
+		static	float	GetCooldown(float Speed) { return (float)1 / Speed; }
 
 //
 //
@@ -85,19 +94,25 @@ namespace KrostganEngine::GameObjects {
 //
 //
 // 
-		Parameter<size_t> const& GetAADamage()		const { return *GetParameterByType_s_t(AAStatType::AADamage); }
+		Parameter<size_t> const& GetDamage()		const { return *GetParameterByType_s_t(AAStatType::Damage); }
 
 		//Amount of dealt attack in 1 second
-		Parameter<float> const& GetAASpeed()		const { return *GetParameterByType_f(AAStatType::AASpeed); }
+		Parameter<float> const& GetSpeed()		const { return *GetParameterByType_f(AAStatType::Speed); }
 
-		float					GetAACooldown()		const { return GetAACooldown(GetAASpeed().Stat); }
-		Parameter<float> const& GetAARange()		const { return *GetParameterByType_f(AAStatType::AARange); }
+		float					GetCooldown()		const { return GetCooldown(GetSpeed().Stat); }
+		Parameter<float> const& GetRange()		const { return *GetParameterByType_f(AAStatType::Range); }
 
-		Parameter<float> const& GetAAProjSpeed()	const {return *GetParameterByType_f(AAStatType::AAProjSpeed);}
+		Parameter<float> const& GetProjSpeed()	const {return *GetParameterByType_f(AAStatType::ProjSpeed);}
+
+		Parameter<float> const& GetSiegeRange()	const { return *GetParameterByType_f(AAStatType::SiegeRange); }
 
 		const bool&				GetState_IsRange()	const {return *GetFieldRef_bool(AAStatType::IsRange); }
 
-		const bool&				GetState_Proj_LockRotation() const {return *GetFieldRef_bool(AAStatType::Proj_LockRotation); }
+		const bool&				GetState_IsSiege()	const {return *GetFieldRef_bool(AAStatType::IsSiege); }
+
+		const bool&				GetState_Proj_LockRotation() const { return *GetFieldRef_bool(AAStatType::Proj_LockRotation); }
+
+		const bool&				GetState_Proj_IsSelfHoming() const { return *GetFieldRef_bool(AAStatType::Proj_IsSelfHoming); }
 
 //
 //
@@ -105,12 +120,15 @@ namespace KrostganEngine::GameObjects {
 //
 //
 
-		void SetAADamage(size_t damage);
-		void SetAASpeed(float speed);
-		void SetAARange(float range);
-		void SetAAProjSpeed(float speed);
+		void SetDamage(size_t damage);
+		void SetSpeed(float speed);
+		void SetRange(float range);
+		void SetProjSpeed(float speed);
+		void SetSiegeRange(float range);
 		void SetIsRange(bool isRange);
-		void SetProjLockRotation(bool lockRotation);
+		void SetIsSiege(bool isSiege);
+		void SetProj_LockRotation(bool lockRotation);
+		void SetProj_IsSelfHoming(bool isSelfHoming);
 
 //
 //
@@ -119,11 +137,14 @@ namespace KrostganEngine::GameObjects {
 //
 
 		const LvlObjInstantiationInfo& GetProjectileInfo() const { return ProjectileInfo; }
+		const LvlObjInstantiationInfo& GetSiegeHitEffInfo() const { return SiegeHitEffInfo; }
 		
 		void SetProjectileInfo(const LvlObjInstantiationInfo& projInfo);
+		void SetSiegeHitEffInfo(const LvlObjInstantiationInfo& siegeEffInho);
 
 	private:
 		LvlObjInstantiationInfo ProjectileInfo;
+		LvlObjInstantiationInfo SiegeHitEffInfo;
 
 	};
 

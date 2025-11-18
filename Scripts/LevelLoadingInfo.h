@@ -169,6 +169,7 @@ namespace KrostganEngine::Core {
 
 		string SpriteSource = "";
 		float MaxSpriteSize = 0;
+		byte RendLayer = DEFAULT_RENDLAYER;
 
 		bool WriteParam(Attr& param) override;
 

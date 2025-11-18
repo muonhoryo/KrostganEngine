@@ -2,11 +2,13 @@
 
 #include <string>
 #include <vector>
+#include <WorldTransfObj.h>
 
 #define Attr		const pair<const string,const string>
 #define AttrsCollectn	vector<Attr*>
 
 using namespace std;
+using namespace KrostganEngine::GameObjects;
 
 namespace KrostganEngine::Core {
 
@@ -42,6 +44,7 @@ namespace KrostganEngine::Core {
 		LvlObjAdditParams* AdditParams = nullptr;
 
 		void Deserialize(const string& serInfo);
+		WorldTransfObj* InstantiateObj() const;
 
 		static vector<LvlObjInstantiationInfo*>* DeserializeRow(const string& row);
 

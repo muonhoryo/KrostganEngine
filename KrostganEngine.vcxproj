@@ -253,11 +253,14 @@
     <ClCompile Include="Scripts\WinScript.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Scripts\AAProj_NoTar.h" />
+    <ClInclude Include="Scripts\AAProj_TarDir.h" />
     <ClInclude Include="Scripts\AnimationsCore.h" />
     <ClInclude Include="Scripts\AnimationsExtend.h" />
     <ClInclude Include="Scripts\AttackInfo.h" />
     <ClInclude Include="Scripts\AutoAttackAnimation.h" />
     <ClInclude Include="Scripts\AutoAttackHitInfo.h" />
+    <ClInclude Include="Scripts\AutoAttackProjectiles.h" />
     <ClInclude Include="Scripts\AutoAttackStats.h" />
     <ClInclude Include="Scripts\BaseAutoAggrModule.h" />
     <ClInclude Include="Scripts\BattleAnimations.h" />

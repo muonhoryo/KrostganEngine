@@ -120,6 +120,17 @@ Shader*		SpriteRenderer::GetShader() const {
 	return RendShader;
 }
 
+void SpriteRenderer::SetScaleByPixelSize_Global(float pixSize) {
+	auto size= RenSprite->getTexture()->getSize();
+	auto maxS = max(size.x, size.y);
+	SetGlobalScale_Sng(pixSize / maxS);
+}
+void SpriteRenderer::SetScaleByPixelSize_Local(float pixSize) {
+	auto size = RenSprite->getTexture()->getSize();
+	auto maxS = max(size.x, size.y);
+	SetLocalScale_Sng(pixSize / maxS);
+}
+
 //
 //
 //override methods

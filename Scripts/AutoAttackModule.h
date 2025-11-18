@@ -8,20 +8,21 @@
 #include <forward_list>
 #include <CatalogObject.h>
 #include <CachedBattleStats.h>
+#include <PhysicsLayer.h>
 
 using namespace std;
 using namespace KrostganEngine::Core;
 using namespace KrostganEngine::Visual;
+using namespace KrostganEngine::Physics;
 
 namespace KrostganEngine::GameObjects {
 	class AutoAttackModule;
 
 	struct AAProjectileCtorParams {
 
-		AAProjectileCtorParams(AutoAttackModule& Owner, watch_ptr_handler_wr<IAttackableObj> Target);
+		AAProjectileCtorParams(AutoAttackModule& Owner);
 
 		AutoAttackModule& Owner;
-		watch_ptr_handler_wr<IAttackableObj>	Target;
 		float									Speed = 1;
 		bool									LockRotation = true;
 		Vector2f								GlobalPosition = DEFAULT_POSITION;
@@ -45,20 +46,26 @@ namespace KrostganEngine::GameObjects {
 
 	protected:
 		AutoAttackModule& Owner;
-		watch_ptr_handler_wr<IAttackableObj> Target;
-		watch_ptr_handler_wr_c<CachedBattleStats
+		shared_ptr<CachedBattleStats
 			<AutoAttackStats_Consts::FIELDS_COUNT_S_T,
 			AutoAttackStats_Consts::FIELDS_COUNT_F,
-			AutoAttackStats_Consts::FIELDS_COUNT_BOOL>>*CachedAAStats = nullptr;
+			AutoAttackStats_Consts::FIELDS_COUNT_BOOL,
+			LvlObjInstantiationInfo>>					CachedAAStats = nullptr;
 
 		/// <summary>
 		/// Return false if projectile should be destroyed immidietly cause target is unreachable.
 		/// </summary>
 		/// <returns></returns>
-		virtual bool CheckTargetReachability() const;
-		virtual void CollideWithTarget();
-		virtual const AttackHitInfo& GetAttInfo_FromOwn() const;
-		virtual const AttackHitInfo& GetAttInfo_FromCache() const;
+		virtual bool CheckTargetReachability() const = 0;
+		virtual Vector2f GetTargetPosition() const = 0;
+		virtual void CollideWithTarget() = 0;
+		virtual const AttackHitInfo& GetAttInfo_FromOwn(IAttackableObj& target) const;
+		virtual const AttackHitInfo& GetAttInfo_FromCache(IAttackableObj& target) const;
+
+		const AttackHitInfo& GetAttInfo(IAttackableObj& target) const;
+		bool GetState_IsValidOwnerRef() const;
+		void DealDmgToSingleTarget(IAttackableObj& target) const;
+		void DealDmgByAOE(Vector2f center) const;
 
 	private:
 		bool IsValidOwnerRef = true;
@@ -66,6 +73,12 @@ namespace KrostganEngine::GameObjects {
 		void OnDestroy();
 
 		friend class AutoAttackModule;
+
+	public:
+		static inline const PhysicsLayer AA_PROJS_COLLISION_LAYER = (PhysicsLayer)
+				((size_t)PhysicsLayer::Decorations |
+				(size_t)PhysicsLayer::Buildings |
+				(size_t)PhysicsLayer::Units);
 	};
 
 	class AutoAttackModule final: public ICallbackRec_Upd {

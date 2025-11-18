@@ -4,6 +4,7 @@
 #include <Extensions.h>
 #include <RelationsSystem.h>
 #include <LevelObjectsManager.h>
+#include <AutoAttackProjectiles.h>
 
 using namespace sf;
 using namespace std;
@@ -74,6 +75,12 @@ void LvlObjInstantiationInfo::Deserialize(const string& serInfo) {
 		else
 			delete& attrs;
 	}
+}
+WorldTransfObj* LvlObjInstantiationInfo::InstantiateObj() const {
+
+	auto objInfo = ObjectsCatalog::GetObjectInfo(CatalogID);
+	auto subInfo = ObjectsCatalog::GetSubObjInfo(CatalogID, CatalogSubID);
+	return objInfo->InstantiateObject(subInfo, AdditParams);
 }
 
 vector<LvlObjInstantiationInfo*>* LvlObjInstantiationInfo::DeserializeRow(const string& row) {
@@ -209,12 +216,9 @@ void WorldObjectLoadInfo::InstantiateChildren(WorldTransfObj& parent) const {
 		++RecursionCount;
 
 		WorldTransfObj* obj = nullptr;
-		WorldObjectLoadInfo* objInfo = nullptr;
-		LvlObjAdditParams* subInfo = nullptr;
 		for (auto& ch : ChildObjs) {
-			objInfo = ObjectsCatalog::GetObjectInfo(ch.CatalogID);
-			subInfo = ObjectsCatalog::GetSubObjInfo(ch.CatalogID, ch.CatalogSubID);
-			obj = objInfo->InstantiateObject( subInfo, ch.AdditParams);
+
+			obj = ch.InstantiateObj();
 			obj->SetParent(&parent);
 			obj->SetLocalPosition(DEFAULT_POSITION);
 			obj->SetLocalScale_Sng(DEFAULT_SCALE_SNG);
@@ -279,43 +283,63 @@ bool EntityLoadInfo::WriteParam(Attr& param) {
 		FStreamExts::ClearPath(SelectionAreaSource);
 	}
 	//Fill battle stats
-	else if (CheckParamName(param,SerializationParDefNames::UNIT_MOVINGSPEED)) {
-		float s = stof(param.second);
-		if (s >= 0)
-			BattleStats.SetMovingSpeed(s);
-	}
-	else if (CheckParamName(param, SerializationParDefNames::ENTITY_MAX_HP)) {
+	else if (CheckParamName(param, EntityBattleStats::StatToStr(EntityBattleStatType::MaxHP))) {
 		size_t s = stol(param.second);
 		if (s > 0)
 			BattleStats.SetMaxHP(s);
 	}
-	else if (CheckParamName(param, SerializationParDefNames::ENTITY_REGEN_HP_COUNT)) {
+	else if (CheckParamName(param, EntityBattleStats::StatToStr(EntityBattleStatType::RegenHP_Amount))) {
 		size_t s = stol(param.second);
 		BattleStats.SetHPRegenAmount(s);
 	}
-	else if (CheckParamName(param, SerializationParDefNames::ENTITY_REGEN_HP_TICK)) {
+	else if (CheckParamName(param, EntityBattleStats::StatToStr(EntityBattleStatType::MovingSpeed))) {
+		float s = stof(param.second);
+		BattleStats.SetMovingSpeed(s);
+	}
+	else if (CheckParamName(param, EntityBattleStats::StatToStr(EntityBattleStatType::RegenHP_Tick))) {
 		float s = stof(param.second);
 		BattleStats.SetHPRegenTick(s);
 	}
-	else if (CheckParamName(param, SerializationParDefNames::ENTITY_AA_DAMAGE)) {
-		size_t s = stol(param.second);
-		BattleStats.GetAAStats()->SetAADamage(s);
-	}
-	else if (CheckParamName(param, SerializationParDefNames::ENTITY_AA_SPEED)) {
-		float s = stof(param.second);
-		BattleStats.GetAAStats()->SetAASpeed(s);
-	}
-	else if (CheckParamName(param, SerializationParDefNames::ENTITY_AA_RANGE)) {
-		float s = stof(param.second);
-		BattleStats.GetAAStats()->SetAARange(s);
-	}
-	else if (CheckParamName(param, SerializationParDefNames::ENTITY_AUTO_AGGR_RADIUS)) {
+	else if (CheckParamName(param, EntityBattleStats::StatToStr(EntityBattleStatType::AutoAggrRadius))) {
 		float s = stof(param.second);
 		BattleStats.SetAutoAggrRadius(s);
 	}
-	else if (CheckParamName(param, SerializationParDefNames::ENTITY_ISRANGE)) {
+	//Fill AA-stats
+	else if (CheckParamName(param, AutoAttackStats::StatToStr(AAStatType::Damage))) {
+		size_t s = stol(param.second);
+		BattleStats.GetAAStats()->SetDamage(s);
+	}
+	else if (CheckParamName(param, AutoAttackStats::StatToStr(AAStatType::Speed))) {
+		float s = stof(param.second);
+		BattleStats.GetAAStats()->SetSpeed(s);
+	}
+	else if (CheckParamName(param, AutoAttackStats::StatToStr(AAStatType::Range))) {
+		float s = stof(param.second);
+		BattleStats.GetAAStats()->SetRange(s);
+	}
+	else if (CheckParamName(param, AutoAttackStats::StatToStr(AAStatType::ProjSpeed))) {
+		float s = stof(param.second);
+		BattleStats.GetAAStats()->SetProjSpeed(s);
+	}
+	else if (CheckParamName(param, AutoAttackStats::StatToStr(AAStatType::SiegeRange))) {
+		float s = stof(param.second);
+		BattleStats.GetAAStats()->SetSiegeRange(s);
+	}
+	else if (CheckParamName(param, AutoAttackStats::StatToStr(AAStatType::IsRange))) {
 		bool isRange = FStreamExts::ParseBool(param.second);
 		BattleStats.GetAAStats()->SetIsRange(isRange);
+	}
+	else if (CheckParamName(param, AutoAttackStats::StatToStr(AAStatType::Proj_LockRotation))) {
+		bool lockRot = FStreamExts::ParseBool(param.second);
+		BattleStats.GetAAStats()->SetProj_LockRotation(lockRot);
+	}
+	else if (CheckParamName(param, AutoAttackStats::StatToStr(AAStatType::IsSiege))) {
+		bool isSiege = FStreamExts::ParseBool(param.second);
+		BattleStats.GetAAStats()->SetIsSiege(isSiege);
+	}
+	else if (CheckParamName(param, AutoAttackStats::StatToStr(AAStatType::Proj_IsSelfHoming))) {
+		bool isSelfHoming= FStreamExts::ParseBool(param.second);
+		BattleStats.GetAAStats()->SetProj_IsSelfHoming(isSelfHoming);
 	}
 	else if (CheckParamName(param, SerializationParDefNames::ENTITY_AA_PROJECTILE)) {
 		LvlObjInstantiationInfo& projInfo = *new LvlObjInstantiationInfo();
@@ -323,13 +347,11 @@ bool EntityLoadInfo::WriteParam(Attr& param) {
 		BattleStats.GetAAStats()->SetProjectileInfo(projInfo);
 		delete &projInfo;
 	}
-	else if (CheckParamName(param, SerializationParDefNames::ENTITY_AA_PROJECTILE_SPEED)) {
-		float s = stof(param.second);
-		BattleStats.GetAAStats()->SetAAProjSpeed(s);
-	}
-	else if (CheckParamName(param, SerializationParDefNames::ENTITY_AA_PROJ_LOCK_ROTATION)) {
-		bool lockRot = FStreamExts::ParseBool(param.second);
-		BattleStats.GetAAStats()->SetProjLockRotation(lockRot);
+	else if (CheckParamName(param, SerializationParDefNames::ENTITY_AA_SIEGE_HITEFF)) {
+		LvlObjInstantiationInfo& projInfo = *new LvlObjInstantiationInfo();
+		projInfo.Deserialize(param.second);
+		BattleStats.GetAAStats()->SetSiegeHitEffInfo(projInfo);
+		delete& projInfo;
 	}
 	else {
 		return false;
@@ -459,18 +481,7 @@ SpriteRendLoadInfo::SpriteRendLoadInfo(const SpriteRendLoadInfo& copy)
 
 	SpriteSource = copy.SpriteSource;
 	MaxSpriteSize = copy.MaxSpriteSize;
-}
-WorldTransfObj* SpriteRendLoadInfo::InstantiateObject_Action(const WorldObjectLoadInfo& usedInfo) const {
-
-	auto& parInfo = *dynamic_cast<const SpriteRendLoadInfo*>(&usedInfo);
-
-	auto src = ExternalGlobalResources::GetRes_t<ExtGlRes_Sprite>(parInfo.SpriteSource);
-	auto sprt = new SpriteRenderer(src->Tex, parInfo.MaxSpriteSize < eps ? src->MaxSize : parInfo.MaxSpriteSize, src->RenShader);
-	sprt->SetGlobalPosition(parInfo.Position);
-	sprt->SetGlobalRotation(parInfo.Rotation);
-	sprt->SetGlobalScale_Sng(parInfo.Size);
-
-	return sprt;
+	RendLayer = copy.RendLayer;
 }
 bool SpriteRendLoadInfo::WriteParam(Attr& param) {
 
@@ -481,10 +492,27 @@ bool SpriteRendLoadInfo::WriteParam(Attr& param) {
 		SpriteSource = *new string(param.second);
 		FStreamExts::ClearPath(SpriteSource);
 	}
+	else if (CheckParamName(param, SerializationParDefNames::IMAGEUSR_SPRITE_LAYER)) {
+		byte layer = (byte)stof(param.second);
+		RendLayer = layer;
+	}
 	else
 		return false;
 
 	return true;
+}
+WorldTransfObj* SpriteRendLoadInfo::InstantiateObject_Action(const WorldObjectLoadInfo& usedInfo) const {
+
+	auto& parInfo = *dynamic_cast<const SpriteRendLoadInfo*>(&usedInfo);
+
+	auto src = ExternalGlobalResources::GetRes_t<ExtGlRes_Sprite>(parInfo.SpriteSource);
+	auto sprt = new SpriteRenderer(src->Tex, parInfo.MaxSpriteSize < eps ? src->MaxSize : parInfo.MaxSpriteSize, src->RenShader);
+	sprt->SetGlobalPosition(parInfo.Position);
+	sprt->SetGlobalRotation(parInfo.Rotation);
+	sprt->SetGlobalScale_Sng(parInfo.Size);
+	sprt->SetRendLayer(RendLayer);
+
+	return sprt;
 }
 WorldObjectLoadInfo* SpriteRendLoadInfo::CreateCacheInfo() const {
 	return new SpriteRendLoadInfo(*this);
@@ -513,13 +541,26 @@ AutoAttackProjectile& AAProjectileLoadInfo::InstantiateProjectile
 }
 WorldTransfObj* AAProjectileLoadInfo::InstantiateObject_Action(const WorldObjectLoadInfo& usedInfo) const {
 
-	auto& ptr = Target->GetPtr();
-	AAProjectileCtorParams params = AAProjectileCtorParams(*Owner, ptr);
-	params.CatalogID = CatID;
-	params.GlobalPosition = Position;
-	params.GlobalScale = Size;
-	delete &ptr;
-	return new AutoAttackProjectile(params);
+	AutoAttackProjectile* proj = nullptr;
+	auto aastats = Owner->GetAAStats();
+	if (aastats->GetState_IsSiege() && !aastats->GetState_Proj_IsSelfHoming()) {
+
+		AAProjectileCtorParams_NoTar params = AAProjectileCtorParams_NoTar(*Owner, Target->GetGlobalPosition());
+		params.CatalogID = CatID;
+		params.GlobalPosition = Position;
+		params.GlobalScale = Size;
+		proj = new AAProj_NoTar(params);
+	}
+	else {
+		auto& ptr = Target->GetPtr();
+		AAProjectileCtorParams_TarDir params = AAProjectileCtorParams_TarDir(*Owner, ptr);
+		params.CatalogID = CatID;
+		params.GlobalPosition = Position;
+		params.GlobalScale = Size;
+		proj = new AAProj_TarDir(params);
+		delete& ptr;
+	}
+	return proj;
 }
 WorldObjectLoadInfo* AAProjectileLoadInfo::CreateCacheInfo() const {
 	return new AAProjectileLoadInfo(*this);

@@ -30,17 +30,16 @@ AutoAttackModule::~AutoAttackModule() {
 		auto stats = new CachedBattleStats
 			(OwnerAAStats->GetParamsArray_s_t(),
 			OwnerAAStats->GetParamsArray_f(),
-			OwnerAAStats->GetParamsArray_bool());
-		watch_ptr_handler_c* ptr = nullptr;
+			OwnerAAStats->GetParamsArray_bool(),
+			OwnerAAStats->GetSiegeHitEffInfo());
+		auto ptr = shared_ptr<CachedBattleStats
+			<AAStatsConsts::FIELDS_COUNT_S_T,
+			AAStatsConsts::FIELDS_COUNT_F,
+			AAStatsConsts::FIELDS_COUNT_BOOL,
+			LvlObjInstantiationInfo>>(stats);
 		for (auto proj : CreatedProjectiles) {
 			proj->IsValidOwnerRef = false;
-			ptr = &stats->GetPtr_c();
-			proj->CachedAAStats = new watch_ptr_handler_wr_c
-				<CachedBattleStats
-					<AAStatsConsts::FIELDS_COUNT_S_T,
-					AAStatsConsts::FIELDS_COUNT_F, 
-					AAStatsConsts::FIELDS_COUNT_BOOL>>(*ptr);
-			delete ptr;
+			proj->CachedAAStats = ptr;
 		}
 	}
 }
@@ -80,7 +79,7 @@ bool AutoAttackModule::CheckTargetReach(const IAttackableObj& potentTarget) cons
 	Vector2f pos = Owner.GetGlobalPosition();
 	Vector2f closPoint = potentTarget.GetClosestPoint(pos);
 	float dist = Length(closPoint - pos);
-	return dist - OwnerAAStats->GetAARange() <= eps;
+	return dist - OwnerAAStats->GetRange() <= eps;
 }
 
 bool AutoAttackModule::TryDealDamageToTarget() {
@@ -91,7 +90,7 @@ bool AutoAttackModule::TryDealDamageToTarget() {
 			UpdateByAASpeed();
 		else if (RemReloadTime <= 0) {
 
-			size_t dealedDmg = OwnerAAStats->GetAADamage();
+			size_t dealedDmg = OwnerAAStats->GetDamage();
 			if (OwnerAAStats->GetState_IsRange() &&	
 				OwnerAAStats->GetProjectileInfo().CatalogID!=ObjectsCatalog::EMPTY_CATALOG_ID) {
 
@@ -109,7 +108,7 @@ bool AutoAttackModule::TryDealDamageToTarget() {
 			if (!UpdateByAASpeed())
 				return true;
 
-			RemReloadTime = OwnerAAStats->GetAACooldown();
+			RemReloadTime = OwnerAAStats->GetCooldown();
 			return true;
 		}
 	}
@@ -127,7 +126,7 @@ void AutoAttackModule::Update(CallbackRecArgs_Upd args) {
 
 bool AutoAttackModule::UpdateByAASpeed() {
 	
-	if (OwnerAAStats == nullptr || OwnerAAStats->GetAASpeed() < eps) {
+	if (OwnerAAStats == nullptr || OwnerAAStats->GetSpeed() < eps) {
 
 		RemReloadTime = FLT_MAX;
 		ZeroSpeed = true;
@@ -135,7 +134,7 @@ bool AutoAttackModule::UpdateByAASpeed() {
 	}
 	else {
 
-		RemReloadTime = OwnerAAStats->GetAACooldown();
+		RemReloadTime = OwnerAAStats->GetCooldown();
 		ZeroSpeed = false;
 		return true;
 	}
