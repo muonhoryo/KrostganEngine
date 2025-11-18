@@ -16,6 +16,9 @@ EntityDeathModule::EntityDeathModule(Entity& Owner) : IDeathModule((IAttackableO
 
 void EntityDeathModule::Death() {
 
+	if (IsDead)
+		return;
+
 	IsDead = true;
 	ParOwner.SelectionOff();
 	ParOwner.ProhibitOrdersExecution();

@@ -81,8 +81,6 @@ namespace KrostganEngine {
 			return dir.y > 0 ? 90 : 270;
 
 		float angle = Rad2Deg(atan2(dir.y, dir.x));
-		if (dir.x < 0)
-			angle += 180;
 		return angle;
 	}
 }
