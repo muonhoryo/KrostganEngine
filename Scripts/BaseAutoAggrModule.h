@@ -29,6 +29,12 @@ namespace KrostganEngine::GameObjects {
 		void FindTarget(CallbackRecArgs_Upd& args);
 		void TurnFindTargetState();
 
+		/// <summary>
+		/// Return false if target cannot be reached
+		/// </summary>
+		/// <returns></returns>
+		bool CheckTargetReachability() const;
+
 		watch_ptr_handler_wr<IAttackableObj>* Target;
 		WorldTransfObj* TargetTransform;
 		Entity& Owner;

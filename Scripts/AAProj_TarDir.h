@@ -29,7 +29,13 @@ namespace KrostganEngine::GameObjects {
 
 	protected:
 		bool CheckTargetReachability() const override {
-			return Target.GetPtr_t_c() != nullptr;
+			auto ptr = Target.GetPtr_t_c();
+			if (ptr == nullptr ||
+				!ptr->IsTargetableForAA() ||
+				ptr->GetHPModule().DeathModule.GetIsDeadState())
+					return false;
+			else
+				return true;
 		}
 		Vector2f GetTargetPosition() const override {
 			return Target.GetPtr_t_c()->GetGlobalPosition();

@@ -18,6 +18,9 @@ EntityBattleStats::EntityBattleStats(AutoAttackStats* AAStats)
 	InitializeField_f(EntityBattleStatType::RegenHP_Tick, 1);
 	InitializeField_f(EntityBattleStatType::MovingSpeed, 1);
 	InitializeField_f(EntityBattleStatType::AutoAggrRadius, 0);
+
+	//bool
+	InitializeField_bool(EntityBattleStatType::IsTargetableForAA, true);
 }
 EntityBattleStats::EntityBattleStats(const EntityBattleStats& copy)
 	:AAStats(nullptr),
@@ -54,11 +57,8 @@ void EntityBattleStats::CopyTo_Internal(EntityBattleStats& toCopy) const {
 		}
 	}
 }
-//
-// 
-//HitPoint
-//
-//
+
+//size_t
 void EntityBattleStats::SetMaxHP(size_t hp) {
 	if (hp == 0)
 		throw exception("Hit points count must be more than zero");
@@ -69,6 +69,8 @@ void EntityBattleStats::SetHPRegenAmount(size_t amount) {
 
 	SetDefaultStat(EntityBattleStatType::RegenHP_Amount, amount);
 }
+
+//float
 void EntityBattleStats::SetHPRegenTick(float tick) {
 	if (tick <= 0) {
 		return;
@@ -76,25 +78,21 @@ void EntityBattleStats::SetHPRegenTick(float tick) {
 
 	SetDefaultStat(EntityBattleStatType::RegenHP_Tick, tick);
 }
-//
-//
-//Moving
-//
-//
 void EntityBattleStats::SetMovingSpeed(float speed) {
 	if (speed < 0)
 		throw exception("Moving spedd cannot be less than zero.");
 
 	SetDefaultStat(EntityBattleStatType::MovingSpeed, speed);
 }
-//
-// 
-// View
-// 
-//
 void EntityBattleStats::SetAutoAggrRadius(float radius) {
 	if (radius < 0)
 		throw exception("AutoAggression radius cannot be less than zero");
 
 	SetDefaultStat(EntityBattleStatType::AutoAggrRadius, radius);
+}
+
+//bool
+void EntityBattleStats::SetTargetableForAA(bool isTargetable) {
+
+	SetDefaultStat(EntityBattleStatType::IsTargetableForAA, isTargetable);
 }

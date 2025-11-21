@@ -30,7 +30,7 @@ void EntitiesCtrlInputMode::GiveOrderToSelected_MoveToPoint(Vector2f targetGloba
 
 		parEl = dynamic_cast<Entity*>((*begIt)->GetPtr_t());
 		if (parEl != nullptr) {
-			parEl->TryAddOrder(new EntityOrder_MoveToPoint(*parEl, *parEl, targetGlobalPos,parEl->GetCollider().GetBoundedCircle().Radius), !isGrouped);
+			parEl->TryAddOrder(*new EntityOrder_MoveToPoint(*parEl, *parEl, targetGlobalPos,parEl->GetCollider().GetBoundedCircle().Radius), !isGrouped);
 		}
 		++begIt;
 	}
@@ -57,7 +57,7 @@ void EntitiesCtrlInputMode::GiveOrderToSelected_FollowObject(ITransformableObj& 
 				throw exception("Cant observe object with watch_ptr");
 
 			ord = new EntityOrder_FollowTarget(*parEl, *parEl, watch_ptr_handler_wr_c<WorldTransfObj>(*wtch_ptr));
-			parEl->TryAddOrder(ord, !isGrouped);
+			parEl->TryAddOrder(*ord, !isGrouped);
 			delete wtch_ptr;
 		}
 		++begIt;
@@ -85,7 +85,7 @@ void EntitiesCtrlInputMode::GiveOrderToSelected_AttackTarget(IAttackableObj& tar
 				throw exception("Cant observe object with watch_ptr");
 
 			ord = new EntityOrder_AttackTarget(*parEl, *parEl, watch_ptr_handler_wr<IAttackableObj>(*wtch_ptr));
-			parEl->TryAddOrder(ord, !isGrouped);
+			parEl->TryAddOrder(*ord, !isGrouped);
 			delete wtch_ptr;
 		}
 		++begIt;
@@ -103,7 +103,7 @@ void EntitiesCtrlInputMode::GiveOrderToSelected_Idle(bool isGrouped) {
 	for (;begIt != endIt;) {
 		parEl = dynamic_cast<Entity*>((*begIt)->GetPtr_t());
 		if (parEl != nullptr) {
-			parEl->TryAddOrder(new EntityOrder_Idle(*parEl), !isGrouped);
+			parEl->TryAddOrder(*new EntityOrder_Idle(*parEl), !isGrouped);
 		}
 		++begIt;
 	}
@@ -120,7 +120,7 @@ void EntitiesCtrlInputMode::GiveOrderToSelected_Cancel() {
 	for (;begIt != endIt;) {
 		parEl = dynamic_cast<Entity*>((*begIt)->GetPtr_t());
 		if (parEl != nullptr) {
-			parEl->TryAddOrder(new EntityOrder_Cancel(*parEl), true);
+			parEl->TryAddOrder(*new EntityOrder_Cancel(*parEl), true);
 		}
 		++begIt;
 	}
@@ -137,7 +137,7 @@ void EntitiesCtrlInputMode::GiveOrderToSelected_HoldPosition(bool isGrouped) {
 	for (;begIt != endIt;) {
 		parEl = dynamic_cast<Entity*>((*begIt)->GetPtr_t());
 		if (parEl != nullptr) {
-			parEl->TryAddOrder(new EntityOrder_HoldPosition(*parEl), !isGrouped);
+			parEl->TryAddOrder(*new EntityOrder_HoldPosition(*parEl), !isGrouped);
 		}
 		++begIt;
 	}
@@ -153,7 +153,7 @@ void EntitiesCtrlInputMode::GiveOrderToSelected_AttackArea(Vector2f targetGlobal
 	for (;begIt != endIt;) {
 		parEl = dynamic_cast<Entity*>((*begIt)->GetPtr_t());
 		if (parEl != nullptr) {
-			parEl->TryAddOrder(new EntityOrder_AttackArea(*parEl, *parEl, targetGlobalPos), !isGrouped);
+			parEl->TryAddOrder(*new EntityOrder_AttackArea(*parEl, *parEl, targetGlobalPos), !isGrouped);
 		}
 		++begIt;
 	}

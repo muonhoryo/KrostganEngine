@@ -4,6 +4,7 @@
 #include <Extensions.h>
 #include <list>
 #include <PathFinding_Diijkstra.h>
+#include <IAttackableObj.h>
 
 using namespace std;
 using namespace KrostganEngine;
@@ -51,6 +52,16 @@ void BaseAutoAggrModule::UpdateAction(CallbackRecArgs_Upd& args) {
 	}
 }
 
+bool BaseAutoAggrModule::CheckTargetReachability() const {
+	
+	auto t_ptr = Target->GetPtr_t();
+	if (t_ptr == nullptr || 
+		!t_ptr->CheckAttackReachability(IAttackableObj::AtkParam::IsAA)) {
+
+		return false;
+	}
+}
+
 void BaseAutoAggrModule::CheckCurrTarget(CallbackRecArgs_Upd& args) {
 
 	if (Target == nullptr)
@@ -60,8 +71,7 @@ void BaseAutoAggrModule::CheckCurrTarget(CallbackRecArgs_Upd& args) {
 	}
 
 	auto t_ptr = Target->GetPtr_t();
-	if (t_ptr == nullptr ||
-		t_ptr->GetHPModule().DeathModule.GetIsDeadState())
+	if (!CheckTargetReachability())
 	{
 		TurnFindTargetState();
 		return;
@@ -145,7 +155,9 @@ void BaseAutoAggrModule::FindTarget(CallbackRecArgs_Upd& args) {
 				continue;
 			memParTar = dynamic_cast<IFractionMember*>(obj);
 			parTar = dynamic_cast<IAttackableObj*>(obj);
-			if (parTar != nullptr && memParTar!=nullptr) {		//Check that object is can be attacked enemy
+			if (parTar != nullptr && 
+				memParTar!=nullptr &&
+				parTar->CheckAttackReachability(IAttackableObj::AtkParam::IsAA)) {		//Check that object is can be attacked enemy
 
 				relat = FractionsSystem::GetRelation(Owner.GetFraction(), memParTar->GetFraction());
 				if (relat != Relation::Enemy)

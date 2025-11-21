@@ -6,6 +6,7 @@
 #include <FractionsSystem.h>
 
 using namespace sf;
+using namespace std;
 using namespace KrostganEngine::Core;
 using namespace KrostganEngine::EntitiesControl;
 
@@ -40,13 +41,30 @@ namespace KrostganEngine::GameObjects {
 		TakeDamageAnimation() {}
 	};
 
+
 	class IAttackableObj : public virtual ITransformableObj {
 	public:
+		enum class AtkParam : short {
+			None = 0,
+			IsAA = 1
+		};
+
 		virtual ~IAttackableObj(){}
 
 		virtual IHitPointModule&	GetHPModule() const =0;
 		virtual Vector2f GetClosestPoint(Vector2f dmgDealerPos) const = 0;
 		
+		virtual bool IsTargetableForAA() const = 0;
+		
+		virtual void SetTargetableForAA(bool isTargetable) = 0;
+
+		/// <summary>
+		/// Return true if object can be attacked with given properties of attack
+		/// </summary>
+		/// <param name="isAA"></param>
+		/// <returns></returns>
+		bool CheckAttackReachability(AtkParam atkParam) const;
+
 	protected:
 		IAttackableObj(){}
 	};

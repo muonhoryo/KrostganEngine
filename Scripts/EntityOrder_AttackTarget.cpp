@@ -27,7 +27,7 @@ EntityOrder_AttackTarget::~EntityOrder_AttackTarget() {
 bool EntityOrder_AttackTarget::CheckExecCondition() {
 	
 	IAttackableObj* ptr = Target.GetPtr_t();
-	return ptr==nullptr || ptr->GetHPModule().DeathModule.GetIsDeadState();
+	return ptr==nullptr || !ptr->CheckAttackReachability(IAttackableObj::AtkParam::IsAA);
 }
 list<IEntityAction*>* EntityOrder_AttackTarget::GetActions() {
 

@@ -26,7 +26,7 @@ namespace KrostganEngine::GameObjects {
 		ExecutedEvent<const IEntityOrder> ExecuteOrderEvent;
 		NoArgsExecutedEvent ResetOrderListEvent;
 
-		bool TryAddOrder(IEntityOrder* order, bool clearOrdQueue = false);
+		bool TryAddOrder(IEntityOrder& order, bool clearOrdQueue = false);
 		void ResetOrdersQueue();
 
 		bool GetAbilityToDoOrders() const;

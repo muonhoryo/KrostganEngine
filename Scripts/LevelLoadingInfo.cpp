@@ -304,6 +304,10 @@ bool EntityLoadInfo::WriteParam(Attr& param) {
 		float s = stof(param.second);
 		BattleStats.SetAutoAggrRadius(s);
 	}
+	else if (CheckParamName(param, EntityBattleStats::StatToStr(EntityBattleStatType::IsTargetableForAA))) {
+		bool isTargetable= FStreamExts::ParseBool(param.second);
+		BattleStats.SetTargetableForAA(isTargetable);
+	}
 	//Fill AA-stats
 	else if (CheckParamName(param, AutoAttackStats::StatToStr(AAStatType::Damage))) {
 		size_t s = stol(param.second);

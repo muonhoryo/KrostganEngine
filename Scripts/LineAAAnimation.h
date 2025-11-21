@@ -22,9 +22,7 @@ namespace KrostganEngine::Visual {
 
 	private:
 		WideLineVisual							LineRender;
-		//SpriteRenderer*							HitSprite=nullptr;
 		FadingVisualEff_MRes&					LineEffect;
-		//FadingVisualEff_MRes*					HitEffect = nullptr;
 		watch_ptr_handler_wr<WorldTransfObj>*	Target = nullptr;
 	};
 }

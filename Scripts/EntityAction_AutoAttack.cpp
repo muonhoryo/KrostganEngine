@@ -14,14 +14,14 @@ EntityAction_AutoAttack::EntityAction_AutoAttack(OrdersExecutor& Owner, watch_pt
 	:IEntityAction(),
 	Owner(Owner),
 	Target(Target),
-	TargetHPModule(Target.GetPtr_t()->GetHPModule()),
+	//TargetHPModule(Target.GetPtr_t()->GetHPModule()),
 	AAModule(Owner.GetAAModule())
 {}
 
 bool EntityAction_AutoAttack::CheckExecCondition() {
 
 	IAttackableObj* ptr = Target.GetPtr_t();
-	if (ptr == nullptr || TargetHPModule.DeathModule.GetIsDeadState())
+	if (ptr == nullptr || !ptr->CheckAttackReachability(IAttackableObj::AtkParam::IsAA))
 		return true;
 	return !AAModule.CheckTargetReach();
 }

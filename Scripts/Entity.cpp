@@ -133,3 +133,10 @@ const ColliderShape& Entity::GetCollider() const {
 IHitPointModule& Entity::GetHPModule() const {
 	return *HPModule;
 }
+bool Entity::IsTargetableForAA() const {
+	return GetBattleStats().GetState_IsTargetableForAA();
+}
+
+void Entity::SetTargetableForAA(bool isTargetable) {
+	GetBattleStats().SetTargetableForAA(isTargetable);
+}

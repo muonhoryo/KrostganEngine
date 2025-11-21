@@ -126,8 +126,6 @@ namespace KrostganEngine::GameObjects {
 				return _GetParameterByType_s_t(type);
 			case ModStatsWrapper_Consts::StatType::t_float:
 				return _GetParameterByType_f(type);
-			case ModStatsWrapper_Consts::StatType::t_bool:
-				return _GetFieldRef_bool(type);
 			default:
 				return nullptr;
 			}
@@ -264,7 +262,7 @@ namespace KrostganEngine::GameObjects {
 
 			return const_cast<Parameter<float>*>(GetParameterByType_f(type));
 		}
-		bool*				Internal_GetParamByType_bool(TStatEnum type){
+		bool*				Internal_GetFieldByType_bool(TStatEnum type){
 			return const_cast<bool*>(GetFieldRef_bool(type));
 		}
 		void* Internal_GetParamByType(TStatEnum type) {
@@ -277,9 +275,15 @@ namespace KrostganEngine::GameObjects {
 			auto param = static_cast<Parameter<TFieldType>*>(Internal_GetParamByType(type));
 			param->Default = value;
 			RecalculateStat_t<TFieldType>(type, *param);
-			int& args = *new int((int)type);
+			int args = (int)type;
 			DefaultStatChangedEventHan.Execute(args);
-			delete &args;
+		}
+		template<>
+		void SetDefaultStat<bool>(TStatEnum type, bool value) {
+			auto param = Internal_GetFieldByType_bool(type);
+			*param = value;
+			int args = (int)type;
+			DefaultStatChangedEventHan.Execute(args);
 		}
 
 		void InitializeField_s_t(TStatEnum type, size_t value) {
@@ -294,7 +298,7 @@ namespace KrostganEngine::GameObjects {
 			param->Stat = value;
 		}
 		void InitializeField_bool(TStatEnum type, bool value) {
-			*Internal_GetParamByType_bool(type) = value;
+			*Internal_GetFieldByType_bool(type) = value;
 		}
 
 

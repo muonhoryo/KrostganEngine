@@ -45,11 +45,12 @@ void OrdersExecutor::ProhibitOrdersExecution() {
 	}
 }
 
-bool OrdersExecutor::TryAddOrder(IEntityOrder* order, bool clearOrdQueue) {
-	if (AbleToDoOrders && 
-		CollectionsExts::IndexOf(GetAllowedOrdersCatalog(), order->GetOrderType()) != string::npos) { //Order's type is allowed
+bool OrdersExecutor::TryAddOrder(IEntityOrder& order, bool clearOrdQueue) {
 
-		EntityOrder_ObjectTarget* parOrd = dynamic_cast<EntityOrder_ObjectTarget*>(order);
+	if (AbleToDoOrders && 
+		CollectionsExts::IndexOf(GetAllowedOrdersCatalog(), order.GetOrderType()) != string::npos) { //Order's type is allowed
+
+		EntityOrder_ObjectTarget* parOrd = dynamic_cast<EntityOrder_ObjectTarget*>(&order);
 		if (parOrd != nullptr &&
 			!parOrd->CanTargetItself()) {			//Order's target is object, but it cannot be executor
 
@@ -57,20 +58,20 @@ bool OrdersExecutor::TryAddOrder(IEntityOrder* order, bool clearOrdQueue) {
 			const OrdersExecutor* ordTar =dynamic_cast<const OrdersExecutor*>(tar);
 			if (ordTar == this) {		//Order's target is executor
 
-				delete order;
+				delete &order;
 				return false;
 			}
 		}
 
-		if ((clearOrdQueue || order->IsCancelNextOrders()) && OrdersQueue.size() != 0)
+		if ((clearOrdQueue || order.IsCancelNextOrders()) && OrdersQueue.size() != 0)
 		{
 			ResetOrdersQueue();
 		}
-		OrdersQueue.push_back(order);
-		GetOrderEventHandler.Execute(*order);
+		OrdersQueue.push_back(&order);
+		GetOrderEventHandler.Execute(order);
 		return true;
 	}
-	delete order;
+	delete &order;
 	return false;
 }
 void OrdersExecutor::ResetOrdersQueue() {

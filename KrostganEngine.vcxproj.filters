@@ -657,9 +657,6 @@
     <ClCompile Include="Scripts\GroupSelectionSystem_Comparators.cpp">
       <Filter>Исходные файлы\CoreSystems\EntitiesControl</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\ExtVisualManager.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="Scripts\DBG_ImmortalArmy.cpp">
       <Filter>Исходные файлы\Debug</Filter>
     </ClCompile>
@@ -680,6 +677,12 @@
     </ClCompile>
     <ClCompile Include="Scripts\AutoAttackModule.cpp">
       <Filter>Исходные файлы\CoreSystems\GameObjects\FightingSystems\AutoAttackSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\ExtVisualManager.cpp">
+      <Filter>Исходные файлы\Visual</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\IAttackableObj.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameObjects\FightingSystems\HitPointSystem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

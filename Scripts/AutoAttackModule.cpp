@@ -69,12 +69,15 @@ bool AutoAttackModule::CheckTargetReach() const {
 	if (Target == nullptr)
 		return false;
 	auto ptr = Target->GetPtr_t();
-	if (ptr == nullptr || ptr->GetHPModule().DeathModule.GetIsDeadState())
+	if (ptr == nullptr)
 		return false;
 	return CheckTargetReach(*ptr);
 }
 
 bool AutoAttackModule::CheckTargetReach(const IAttackableObj& potentTarget) const {
+
+	if (!potentTarget.CheckAttackReachability(IAttackableObj::AtkParam::IsAA))
+		return false;
 
 	Vector2f pos = Owner.GetGlobalPosition();
 	Vector2f closPoint = potentTarget.GetClosestPoint(pos);

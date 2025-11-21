@@ -13,7 +13,7 @@ namespace KrostganEngine::GameObjects {
 
 		static inline const size_t FIELDS_COUNT_F	= 3;
 		static inline const size_t FIELDS_COUNT_S_T = 2;
-		static inline const size_t FIELDS_COUNT_BOOL = 0;
+		static inline const size_t FIELDS_COUNT_BOOL = 1;
 		static inline const size_t FIELDS_COUNT		= FIELDS_COUNT_S_T + FIELDS_COUNT_F + FIELDS_COUNT_BOOL;
 
 		enum class StatType : int {
@@ -28,14 +28,17 @@ namespace KrostganEngine::GameObjects {
 			//float
 			RegenHP_Tick	= t_float | (1 << ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT),
 			MovingSpeed		= t_float | (2 << ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT),
-			AutoAggrRadius	= t_float | (3 << ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT)
+			AutoAggrRadius	= t_float | (3 << ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT),
+			//bool
+			IsTargetableForAA	= t_bool | (1 << ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT)
 		};
 		static inline const array<pair<StatType, string>, FIELDS_COUNT> StatTypeNames{
-				pair<StatType,string>(StatType::MaxHP,			"MaxHP"),
-				pair<StatType,string>(StatType::RegenHP_Amount,	"RegenHP_Amount"),
-				pair<StatType,string>(StatType::RegenHP_Tick,	"RegenHP_Tick"),
-				pair<StatType,string>(StatType::MovingSpeed,	"MovingSpeed"),
-				pair<StatType,string>(StatType::AutoAggrRadius,	"AutoAggrRadius")
+				pair<StatType,string>(StatType::MaxHP,				"MaxHP"),
+				pair<StatType,string>(StatType::RegenHP_Amount,		"RegenHP_Amount"),
+				pair<StatType,string>(StatType::RegenHP_Tick,		"RegenHP_Tick"),
+				pair<StatType,string>(StatType::MovingSpeed,		"MovingSpeed"),
+				pair<StatType,string>(StatType::AutoAggrRadius,		"AutoAggrRadius"),
+				pair<StatType,string>(StatType::IsTargetableForAA,	"IsTargetableForAA")
 		};
 	};
 
@@ -83,20 +86,22 @@ namespace KrostganEngine::GameObjects {
 	//Attack
 		AutoAttackStats* GetAAStats() { return AAStats; }
 
-	//Defense
+	//size_t
 		Parameter<size_t> const&	GetMaxHP()			const { return *GetParameterByType_s_t(EntityBattleStatType::MaxHP); }
 
 		//Amount of restored hp in 1 tick
 		Parameter<size_t> const&	GetHPRegenAmount()	const { return *GetParameterByType_s_t(EntityBattleStatType::RegenHP_Amount); }
 
+	//float
 		//Cooldown between hp's restoring by regeneration
 		Parameter<float> const&		GetHPRegenTick()	const { return *GetParameterByType_f(EntityBattleStatType::RegenHP_Tick); }
 
-	//Moving
 		Parameter<float> const&		GetMovingSpeed()	const { return *GetParameterByType_f(EntityBattleStatType::MovingSpeed); }
 
-	//View
 		Parameter<float> const&		GetAutoAggrRadius()	const { return *GetParameterByType_f(EntityBattleStatType::AutoAggrRadius); }
+
+	//bool
+		const bool&		GetState_IsTargetableForAA() const { return *GetFieldRef_bool(EntityBattleStatType::IsTargetableForAA); }
 
 //
 //
@@ -104,14 +109,14 @@ namespace KrostganEngine::GameObjects {
 //
 //
 
-	//Defense
 		void SetMaxHP(size_t hp);
 		void SetHPRegenAmount(size_t amount);
+
 		void SetHPRegenTick(float tick);
-	//Moving
 		void SetMovingSpeed(float speed);
-	//View
 		void SetAutoAggrRadius(float radius);
+
+		void SetTargetableForAA(bool isTargetable);
 
 	};
 

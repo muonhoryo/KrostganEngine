@@ -20,7 +20,7 @@ namespace KrostganEngine::EntitiesControl {
 		watch_ptr_handler_wr<IAttackableObj> Target;
 		
 		//Cashed
-		IHitPointModule& TargetHPModule;
+		//IHitPointModule& TargetHPModule;
 		AutoAttackModule& AAModule;
 	};
 }

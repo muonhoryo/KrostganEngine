@@ -72,14 +72,30 @@ namespace KrostganEngine::GameObjects {
 	public:
 		virtual ~Entity();
 
+	//
+	// ISelectableEntity
+	//
+
 		void SelectionOn() override;
 		void SelectionOff() override;
 		bool IsSelected() override;
 
+	//
+	// WorldTransfObj (GameObject)
+	//
+
 		void SetGlobalPosition	(Vector2f position) override;
 		void SetGlobalScale		(Vector2f scale) override;
 
+	//
+	// IColoredObject (GameObject)
+	//
+
 		void SetColor(Color color) override;
+
+	//
+	// DynamicPhysObject (GameObject)
+	//
 
 		void						Update			(CallbackRecArgs_LUpd args) override;
 		vector<IPhysicalObject*>	OverlapAll		() const override final;
@@ -88,7 +104,20 @@ namespace KrostganEngine::GameObjects {
 		virtual vector<IPhysicalObject*>	OverlapAll_Action() const = 0;
 		virtual const ColliderShape&		GetCollider_Action() const = 0;
 
+	//
+	// IAttackableObj
+	//
+
 		IHitPointModule& GetHPModule() const override;
+		bool IsTargetableForAA() const override;
+
+		void SetTargetableForAA(bool isTargetable) override;
+
+	//
+	// IFractionMember
+	//
+
+		Fraction GetFraction() const override;
 
 	protected:
 		Entity(EntityCtorParams& params);
@@ -102,8 +131,6 @@ namespace KrostganEngine::GameObjects {
 		SpriteRenderer*			HitEffectSprite;
 		
 		friend class AutoAggressionModule;
-	public:
-		Fraction GetFraction() const override;
 
 	private:
 		Fraction EntityFraction;
