@@ -12,7 +12,11 @@ using namespace KrostganEngine::GameObjects;
 namespace KrostganEngine::EntitiesControl {
 	class EntityOrder_AttackArea :public IEntityOrder, public EntityOrder_GlobalPosTarget {
 	public:
-		EntityOrder_AttackArea(OrdersExecutor& Owner, WorldTransfObj& OwnerTransform, Vector2f TargetGlobalCoord);
+		EntityOrder_AttackArea(
+			OrdersExecutor&		Owner, 
+			WorldTransfObj&		OwnerTransform, 
+			Vector2f			TargetGlobalCoord,
+			float				ToTargetMinDistance = 0);
 
 		bool CheckExecCondition() override;
 		list<IEntityAction*>* GetActions() override;
@@ -22,5 +26,6 @@ namespace KrostganEngine::EntitiesControl {
 
 		OrdersExecutor& Owner;
 		WorldTransfObj& OwnerTransform;
+		float ToTargetMinDistance_Sqr;
 	};
 }

@@ -74,6 +74,36 @@ bool OrdersExecutor::TryAddOrder(IEntityOrder& order, bool clearOrdQueue) {
 	delete &order;
 	return false;
 }
+bool OrdersExecutor::TryInsertOrder(IEntityOrder& order, size_t insertPos, bool clearOrdQueue) {
+
+	if (AbleToDoOrders &&
+		CollectionsExts::IndexOf(GetAllowedOrdersCatalog(), order.GetOrderType()) != string::npos) { //Order's type is allowed
+
+		EntityOrder_ObjectTarget* parOrd = dynamic_cast<EntityOrder_ObjectTarget*>(&order);
+		if (parOrd != nullptr &&
+			!parOrd->CanTargetItself()) {			//Order's target is object, but it cannot be executor
+
+			const ITransformableObj* tar = parOrd->GetTarget();
+			const OrdersExecutor* ordTar = dynamic_cast<const OrdersExecutor*>(tar);
+			if (ordTar == this) {		//Order's target is executor
+
+				delete& order;
+				return false;
+			}
+		}
+
+		if ((clearOrdQueue || order.IsCancelNextOrders()) && OrdersQueue.size() != 0)
+		{
+			ResetOrdersQueue();
+		}
+
+		CollectionsExts::Insert(OrdersQueue, &order, insertPos);
+		GetOrderEventHandler.Execute(order);
+		return true;
+	}
+	delete& order;
+	return false;
+}
 void OrdersExecutor::ResetOrdersQueue() {
 	if (!IsFirstOrderExecution()) {
 		UnloadCurrentOrder();

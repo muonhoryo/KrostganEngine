@@ -21,10 +21,26 @@ namespace KrostganEngine::GameObjects {
 		void TurnOffAction() override;
 
 		void UpdateAction(CallbackRecArgs_Upd& args) override;
+		bool GetActivityState() const override;
 
 		IAttackableObj* GetCurrTarget() const;
 
 	private:
+		class OnAAStatsChanged : public IEventSubscriber<const int> {
+
+		public:
+			OnAAStatsChanged(BaseAutoAggrModule& Owner)
+				:Owner(Owner) {}
+
+			void Execute( const int& args) override {
+				if (args == -1)
+					Owner.TurnFindTargetState();
+			}
+
+		private:
+			BaseAutoAggrModule& Owner;
+		};
+
 		void CheckCurrTarget(CallbackRecArgs_Upd& args);
 		void FindTarget(CallbackRecArgs_Upd& args);
 		void TurnFindTargetState();
@@ -43,6 +59,8 @@ namespace KrostganEngine::GameObjects {
 		bool IsAttack;
 
 		vector<IPhysicalObject*> TargsBuffer;
+
+		OnAAStatsChanged OnStatsChangedAct;
 
 		static inline const PhysicsLayer TARGETS_MASK = (PhysicsLayer)((int)PhysicsLayer::Buildings | (int)PhysicsLayer::Units);
 	};

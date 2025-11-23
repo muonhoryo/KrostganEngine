@@ -310,51 +310,62 @@ bool EntityLoadInfo::WriteParam(Attr& param) {
 	}
 	//Fill AA-stats
 	else if (CheckParamName(param, AutoAttackStats::StatToStr(AAStatType::Damage))) {
+		VerifyAAStatsExisting();
 		size_t s = stol(param.second);
-		BattleStats.GetAAStats()->SetDamage(s);
+		BattleStats.GetCurrAAStats()->SetDamage(s);
 	}
 	else if (CheckParamName(param, AutoAttackStats::StatToStr(AAStatType::Speed))) {
+		VerifyAAStatsExisting();
 		float s = stof(param.second);
-		BattleStats.GetAAStats()->SetSpeed(s);
+		BattleStats.GetCurrAAStats()->SetSpeed(s);
 	}
 	else if (CheckParamName(param, AutoAttackStats::StatToStr(AAStatType::Range))) {
+		VerifyAAStatsExisting();
 		float s = stof(param.second);
-		BattleStats.GetAAStats()->SetRange(s);
+		BattleStats.GetCurrAAStats()->SetRange(s);
 	}
 	else if (CheckParamName(param, AutoAttackStats::StatToStr(AAStatType::ProjSpeed))) {
+		VerifyAAStatsExisting();
 		float s = stof(param.second);
-		BattleStats.GetAAStats()->SetProjSpeed(s);
+		BattleStats.GetCurrAAStats()->SetProjSpeed(s);
 	}
 	else if (CheckParamName(param, AutoAttackStats::StatToStr(AAStatType::SiegeRange))) {
+		VerifyAAStatsExisting();
 		float s = stof(param.second);
-		BattleStats.GetAAStats()->SetSiegeRange(s);
+		BattleStats.GetCurrAAStats()->SetSiegeRange(s);
 	}
 	else if (CheckParamName(param, AutoAttackStats::StatToStr(AAStatType::IsRange))) {
+		VerifyAAStatsExisting();
 		bool isRange = FStreamExts::ParseBool(param.second);
-		BattleStats.GetAAStats()->SetIsRange(isRange);
+		BattleStats.GetCurrAAStats()->SetIsRange(isRange);
 	}
 	else if (CheckParamName(param, AutoAttackStats::StatToStr(AAStatType::Proj_LockRotation))) {
+		VerifyAAStatsExisting();
 		bool lockRot = FStreamExts::ParseBool(param.second);
-		BattleStats.GetAAStats()->SetProj_LockRotation(lockRot);
+		BattleStats.GetCurrAAStats()->SetProj_LockRotation(lockRot);
 	}
 	else if (CheckParamName(param, AutoAttackStats::StatToStr(AAStatType::IsSiege))) {
+		VerifyAAStatsExisting();
 		bool isSiege = FStreamExts::ParseBool(param.second);
-		BattleStats.GetAAStats()->SetIsSiege(isSiege);
+		BattleStats.GetCurrAAStats()->SetIsSiege(isSiege);
 	}
 	else if (CheckParamName(param, AutoAttackStats::StatToStr(AAStatType::Proj_IsSelfHoming))) {
+		VerifyAAStatsExisting();
 		bool isSelfHoming= FStreamExts::ParseBool(param.second);
-		BattleStats.GetAAStats()->SetProj_IsSelfHoming(isSelfHoming);
+		BattleStats.GetCurrAAStats()->SetProj_IsSelfHoming(isSelfHoming);
 	}
 	else if (CheckParamName(param, SerializationParDefNames::ENTITY_AA_PROJECTILE)) {
+		VerifyAAStatsExisting();
 		LvlObjInstantiationInfo& projInfo = *new LvlObjInstantiationInfo();
 		projInfo.Deserialize(param.second);
-		BattleStats.GetAAStats()->SetProjectileInfo(projInfo);
+		BattleStats.GetCurrAAStats()->SetProjectileInfo(projInfo);
 		delete &projInfo;
 	}
 	else if (CheckParamName(param, SerializationParDefNames::ENTITY_AA_SIEGE_HITEFF)) {
+		VerifyAAStatsExisting();
 		LvlObjInstantiationInfo& projInfo = *new LvlObjInstantiationInfo();
 		projInfo.Deserialize(param.second);
-		BattleStats.GetAAStats()->SetSiegeHitEffInfo(projInfo);
+		BattleStats.GetCurrAAStats()->SetSiegeHitEffInfo(projInfo);
 		delete& projInfo;
 	}
 	else {
@@ -371,6 +382,14 @@ EntityLoadInfo::EntityLoadInfo(const EntityLoadInfo& copy)
 	SelectionAreaSource = copy.SelectionAreaSource;
 	EntityFraction = copy.EntityFraction;
 	copy.BattleStats.CopyTo(BattleStats);
+}
+void EntityLoadInfo::VerifyAAStatsExisting() {
+	
+	if (BattleStats.GetCurrAAStats() == nullptr) {
+
+		auto index= BattleStats.AddAAStats(*new AutoAttackStats());
+		BattleStats.SetAAStats(index);
+	}
 }
 
 //Unit
@@ -401,17 +420,12 @@ EntityCtorParams& UnitLoadInfo::GetCtorParams(const WorldObjectLoadInfo& usedInf
 	params.SetFraction(parUsedInfo.EntityFraction);
 	params.BodySpriteSource = spr;
 	params.SelectionSpriteSource = selSpr;
-	//params.SelectionSprite = new SpriteRenderer
-	//		(selSpr->Tex,
-	//		selSpr->MaxSize<eps?Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution:selSpr->MaxSize,
-	//		selSpr->RenShader);
 	params.HitEffectSprite = new SpriteRenderer
 		(hitEffSpr->Tex,
 		hitEffSpr->MaxSize < eps ? Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution : hitEffSpr->MaxSize,
 		hitEffSpr->RenShader);
 	params.GlobalPosition = parUsedInfo.Position;
 	params.GlobalScale = parUsedInfo.Size;
-	//params.GlobalRotation = parUsedInfo.Rotation;
 	params.HPBarSprite = new IndicatorFill(
 		hpbarSpr->Tex,
 		hpbarMask->Tex,
@@ -546,7 +560,7 @@ AutoAttackProjectile& AAProjectileLoadInfo::InstantiateProjectile
 WorldTransfObj* AAProjectileLoadInfo::InstantiateObject_Action(const WorldObjectLoadInfo& usedInfo) const {
 
 	AutoAttackProjectile* proj = nullptr;
-	auto aastats = Owner->GetAAStats();
+	auto aastats = Owner->GetCurrAAStats();
 	if (aastats->GetState_IsSiege() && !aastats->GetState_Proj_IsSelfHoming()) {
 
 		AAProjectileCtorParams_NoTar params = AAProjectileCtorParams_NoTar(*Owner, Target->GetGlobalPosition());

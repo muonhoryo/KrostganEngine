@@ -18,7 +18,6 @@ AutoAggressionModule::AutoAggressionModule(ExecutorActionsMediator& ActionMediat
 }
 AutoAggressionModule::~AutoAggressionModule() {
 	delete &ActionMediator;
-	//StartExecOrderEvent.Remove(&StartExecOrderSubscr);
 	delete &StartExecOrderSubscr;
 }
 
@@ -57,7 +56,7 @@ bool AutoAggressionModule::GetIsFollTarState()const {
 }
 
 void AutoAggressionModule::Update(CallbackRecArgs_Upd args) {
-	if (IsActive) {
+	if (GetActivityState()) {
 		UpdateAction(args);
 	}
 }

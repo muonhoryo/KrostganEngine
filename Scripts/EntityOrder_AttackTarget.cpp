@@ -26,8 +26,11 @@ EntityOrder_AttackTarget::~EntityOrder_AttackTarget() {
 
 bool EntityOrder_AttackTarget::CheckExecCondition() {
 	
+	if (Owner.GetAAModule().GetCurrAAStats() == nullptr)		//Owner cannot auto-attack now
+		return true;
+
 	IAttackableObj* ptr = Target.GetPtr_t();
-	return ptr==nullptr || !ptr->CheckAttackReachability(IAttackableObj::AtkParam::IsAA);
+	return ptr==nullptr || !ptr->CheckAttackReachability(IAttackableObj::AtkParam::IsAA);	//Target is untargetable for AA or disappeared
 }
 list<IEntityAction*>* EntityOrder_AttackTarget::GetActions() {
 
@@ -60,7 +63,7 @@ list<IEntityAction*>* EntityOrder_AttackTarget::GetActions() {
 				}
 			}
 		}
-		float alloDist = Owner.GetBattleStats().GetAAStats()->GetRange();
+		float alloDist = Owner.GetBattleStats().GetCurrAAStats()->GetRange();
 		EntityAction_FollowObject* folAct = new EntityAction_FollowObject(Owner, OwnerTransform, 
 			*new watch_ptr_handler_wr_c<WorldTransfObj>(Target),
 			alloDist);

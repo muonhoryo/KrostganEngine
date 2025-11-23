@@ -9,7 +9,7 @@ DBG_ImmortalArmy::Immortality::Immortality(Entity& BuffsOwner)
 	:BuffsOwner(BuffsOwner) {
 
 	auto stats = &BuffsOwner.GetBattleStats();
-	auto aaStats = stats->GetAAStats();
+	auto aaStats = stats->GetCurrAAStats();
 	if (aaStats != nullptr) {
 		DmgBuff = new AAStatsParamModif_Mul(AAStatType::Damage, 10);
 
@@ -19,7 +19,7 @@ DBG_ImmortalArmy::Immortality::Immortality(Entity& BuffsOwner)
 DBG_ImmortalArmy::Immortality::~Immortality() {
 
 	auto stats = &BuffsOwner.GetBattleStats();
-	auto aaStats = stats->GetAAStats();
+	auto aaStats = stats->GetCurrAAStats();
 	if (aaStats != nullptr) {
 
 		aaStats->RemoveModifier(*DmgBuff);

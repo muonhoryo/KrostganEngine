@@ -19,13 +19,17 @@ BaseAutoAggrModule::BaseAutoAggrModule(Entity& Owner,ExecutorActionsMediator& Ac
 	TargetTransform(nullptr),
 	Owner(Owner),
 	HasTarget(false),
-	IsAttack(false){
+	IsAttack(false),
+	OnStatsChangedAct(OnAAStatsChanged(*this)){
 
+	Owner.GetBattleStats().ChangeCurrAAStatsEvent.Add(OnStatsChangedAct);
 }
 BaseAutoAggrModule::~BaseAutoAggrModule() {
 
 	if (Target != nullptr)
 		delete Target;
+
+	Owner.GetBattleStats().ChangeCurrAAStatsEvent.Remove(OnStatsChangedAct);
 }
 
 IAttackableObj* BaseAutoAggrModule::GetCurrTarget() const {
@@ -50,6 +54,10 @@ void BaseAutoAggrModule::UpdateAction(CallbackRecArgs_Upd& args) {
 	else {
 		FindTarget(args);
 	}
+}
+bool BaseAutoAggrModule::GetActivityState() const {
+	return AutoAggressionModule::GetActivityState() && 
+			Owner.GetBattleStats().GetCurrAAStats() != nullptr;
 }
 
 bool BaseAutoAggrModule::CheckTargetReachability() const {
@@ -83,7 +91,7 @@ void BaseAutoAggrModule::CheckCurrTarget(CallbackRecArgs_Upd& args) {
 			//Follow the target and start attacking it
 			IsAttack = false;
 			ActionMediator.ResetCurrActions();
-			float alloDist = Owner.GetBattleStats().GetAAStats()->GetRange();
+			float alloDist = Owner.GetBattleStats().GetCurrAAStats()->GetRange();
 			ActionMediator.AddAction((IEntityAction*)new EntityAction_AutoAttack(Owner, watch_ptr_handler_wr<IAttackableObj>(*Target)));
 
 			if (IsFollowTargets) {
@@ -195,7 +203,7 @@ void BaseAutoAggrModule::FindTarget(CallbackRecArgs_Upd& args) {
 
 				if (IsFollowTargets) {
 
-					float alloDist = Owner.GetBattleStats().GetAAStats()->GetRange();
+					float alloDist = Owner.GetBattleStats().GetCurrAAStats()->GetRange();
 					auto aaAct_ = new EntityAction_AutoAttack(Owner, watch_ptr_handler_wr<IAttackableObj>(*Target));
 					auto folAct = new EntityAction_FollowObject(Owner, Owner, watch_ptr_handler_wr_c<WorldTransfObj>(*Target), alloDist);
 					ActionMediator.AddAction((IEntityAction*)aaAct_);

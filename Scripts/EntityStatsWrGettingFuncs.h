@@ -26,7 +26,7 @@ namespace KrostganEngine::GameObjects {
 			IModifiableStatsWrapper* GetStatsWrapper(Entity* entity) const override {
 				if (entity == nullptr)
 					return nullptr;
-				return entity->GetBattleStats().GetAAStats();
+				return entity->GetBattleStats().GetCurrAAStats();
 			}
 		};
 

@@ -47,7 +47,16 @@ namespace KrostganEngine::UI {
 					Format){}
 
 		void ChangeDepTarget(Entity* entity) override {
-			StatsWrapperDepend_toTxt<TObjValue>::ChangeDepTarget(&entity->GetPtr_c(), GetStatsFunc.GetStatsWrapper(entity));
+
+			if (entity == nullptr) {
+				StatsWrapperDepend_toTxt<TObjValue>::ChangeDepTarget(nullptr, nullptr);
+			}
+			else {
+
+				StatsWrapperDepend_toTxt<TObjValue>::ChangeDepTarget(&entity->GetPtr_c(),
+					GetStatsFunc.GetStatsWrapper(entity));
+			}
+
 		}
 		
 	};

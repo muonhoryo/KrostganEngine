@@ -14,8 +14,8 @@ using namespace KrostganEngine::Visual;
 AAProjectileCtorParams::AAProjectileCtorParams(AutoAttackModule& Owner)
 	:Owner(Owner){
 
-	Speed = Owner.GetAAStats()->GetProjSpeed();
-	LockRotation = Owner.GetAAStats()->GetState_Proj_LockRotation();
+	Speed = Owner.GetCurrAAStats()->GetProjSpeed();
+	LockRotation = Owner.GetCurrAAStats()->GetState_Proj_LockRotation();
 }
 
 //
@@ -73,7 +73,7 @@ const AttackHitInfo& AutoAttackProjectile::GetAttInfo(IAttackableObj& target) co
 
 const AttackHitInfo& AutoAttackProjectile::GetAttInfo_FromOwn(IAttackableObj& target) const {
 
-	auto stats = Owner.GetAAStats();
+	auto stats = Owner.GetCurrAAStats();
 	IFractionMember* parOwner = dynamic_cast<IFractionMember*>(&Owner);
 	Fraction frac = parOwner == nullptr ? Fraction::Neutral : parOwner->GetFraction();
 	return *new AutoAttackHitInfo(stats->GetDamage(), target.GetPtr(), *stats, frac);
@@ -105,8 +105,8 @@ void AutoAttackProjectile::DealDmgByAOE(Vector2f center) const {
 	bool isValidOwner = GetState_IsValidOwnerRef();
 	if (isValidOwner) {
 
-		range = Owner.GetAAStats()->GetSiegeRange().Stat;
-		hitEff = &Owner.GetAAStats()->GetSiegeHitEffInfo();
+		range = Owner.GetCurrAAStats()->GetSiegeRange().Stat;
+		hitEff = &Owner.GetCurrAAStats()->GetSiegeHitEffInfo();
 	}
 	else {
 		size_t index = AutoAttackStats::GetArrayIndexOfField((int)AAStatType::SiegeRange);

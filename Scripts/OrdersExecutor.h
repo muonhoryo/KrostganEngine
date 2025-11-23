@@ -27,6 +27,7 @@ namespace KrostganEngine::GameObjects {
 		NoArgsExecutedEvent ResetOrderListEvent;
 
 		bool TryAddOrder(IEntityOrder& order, bool clearOrdQueue = false);
+		bool TryInsertOrder(IEntityOrder& order, size_t insertPos, bool clearOrdQueue = false);
 		void ResetOrdersQueue();
 
 		bool GetAbilityToDoOrders() const;
@@ -130,14 +131,14 @@ namespace KrostganEngine::GameObjects {
 		};
 
 	public:
-		~AutoAggressionModule();
+		virtual ~AutoAggressionModule();
 		void TurnOn();
 		void TurnOff();
 		void TurnTargetFollowingOn();
 		void TurnTargetFollowingOff();
 		void Restart();
 
-		bool GetActivityState()const ;
+		virtual bool GetActivityState() const;
 		bool GetIsFollTarState()const;
 
 		void Update(CallbackRecArgs_Upd args) override;

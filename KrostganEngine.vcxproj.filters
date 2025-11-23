@@ -1232,6 +1232,9 @@
     <ClInclude Include="Scripts\AAProj_NoTar.h">
       <Filter>Файлы заголовков\CoreSystems\GameObjects\FightingSystems\AutoAttackSystem\Projectiles</Filter>
     </ClInclude>
+    <ClInclude Include="Scripts\EntityAutoAttackModule.h">
+      <Filter>Файлы заголовков\CoreSystems\GameObjects\FightingSystems\AutoAttackSystem</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Config.txt">

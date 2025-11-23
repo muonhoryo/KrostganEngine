@@ -44,14 +44,14 @@ namespace KrostganEngine::UI {
 			delete StatUpdateSubs;
 		}
 		StatsWrapperDepend_toTxt
-			(watch_ptr_handler_c* NullValidationObj,
-			IModifiableStatsWrapper* StatsWrapper,
+			(watch_ptr_handler_c*		NullValidationObj,
+			IModifiableStatsWrapper*	StatsWrapper,
 			int							SubjStatType,
-			UIText& Subject,
-			TObjValue const* Object,
-			const string& Format = "{}")
-			:ValueDependency_toTxt<TObjValue>(Subject, Object, Format),
-			SubjStatType((int)SubjStatType) {
+			UIText&						Subject,
+			TObjValue const*			Object,
+			const string&				Format = "{}")
+				:ValueDependency_toTxt<TObjValue>(Subject, Object, Format),
+				SubjStatType((int)SubjStatType) {
 
 			StatUpdateSubs = new OnStatsUpdate<TObjValue>(*this);
 			if (NullValidationObj != nullptr) {
@@ -67,13 +67,13 @@ namespace KrostganEngine::UI {
 			bool isOldTarValid = IsValueRefValid();
 
 			if (isOldTarValid) {
-				statsWrap->StatChangedEvent.Remove((IEventSubscriber<int>&) * StatUpdateSubs);
+				StatsWrapper->StatChangedEvent.Remove((IEventSubscriber<int>&) * StatUpdateSubs);
 			}
 			else {
 				this->Object = nullptr;
 			}
 
-			if (validObj != nullptr) {
+			if (validObj != nullptr && statsWrap!=nullptr) {
 				statsWrap->StatChangedEvent.Add((IEventSubscriber<int>&) * StatUpdateSubs);
 				if (this->Object == nullptr)
 					this->Object = reinterpret_cast<TObjValue const*>(statsWrap->GetFieldRef(SubjStatType));

@@ -16,7 +16,7 @@ EntityAARadVisualizer::~EntityAARadVisualizer() {
 
 void EntityAARadVisualizer::RenderGraphicAction(RenderWindow& window) {
 	SetCenter(Owner.GetGlobalPosition());
-	float size = Owner.GetBattleStats().GetAAStats()->GetRange();
+	float size = Owner.GetBattleStats().GetCurrAAStats()->GetRange();
 	if (abs(size - GetRadius()) > eps)
 		SetRadius(size);
 	CircleVisPrimitive::RenderGraphic(window);

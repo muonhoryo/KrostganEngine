@@ -12,6 +12,7 @@
 #include <EntityHPModule.h>
 #include <HPRegenModules.h>
 #include <BattleAnimationsExt.h>
+#include <EntityAutoAttackModule.h>
 
 #include <CoreVisual_UI.h>
 
@@ -36,7 +37,7 @@ namespace KrostganEngine {
 		struct UnitObjectCtorParams : public EntityCtorParams {
 			void Init_AAModule() override {
 				auto& hitAnim = *new LineAAAnimation(*Owner);
-				AAModule = new AutoAttackModule(hitAnim, *Owner->GetBattleStats().GetAAStats(), *Owner);
+				AAModule = new EntityAutoAttackModule(hitAnim, *Owner);
 			}
 			void Init_AutoAggrModule(ExecutorActionsMediator& mediator) override {
 				AutoAggrModule= new BaseAutoAggrModule(*Owner, mediator);

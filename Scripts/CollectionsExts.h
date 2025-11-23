@@ -265,5 +265,22 @@ namespace KrostganEngine {
 				collection.push_back(element);
 			}
 		}
+
+		template<typename TElementsType, typename TCollectionType>
+		static void Insert(
+			TCollectionType&		collection,
+			const TElementsType&	element,
+			size_t					insertPos){
+			
+			size_t size = collection.size();
+			if (size > insertPos)
+				throw exception("Insert position is out of range");
+
+			auto it = collection.begin();
+			for (size_t i = 0;i < insertPos;++i) {
+				++it;
+			}
+			collection.insert(it, element);
+		}
 	};
 }

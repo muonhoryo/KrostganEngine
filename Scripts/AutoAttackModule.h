@@ -81,7 +81,7 @@ namespace KrostganEngine::GameObjects {
 				(size_t)PhysicsLayer::Units);
 	};
 
-	class AutoAttackModule final: public ICallbackRec_Upd {
+	class AutoAttackModule: public ICallbackRec_Upd {
 	public:
 		virtual ~AutoAttackModule();
 		AutoAttackModule(AutoAttackAnimation& AAAnimation, AutoAttackStats& OwnerAAStats, ITransformableObj& Owner);
@@ -91,6 +91,8 @@ namespace KrostganEngine::GameObjects {
 		/// </summary>
 		/// <param name="target"></param>
 		void				SetAsTarget(watch_ptr_handler_wr<IAttackableObj>* target);
+		void				SetAAStats(AutoAttackStats& stats);
+
 		/// <summary>
 		/// Return true if attacked target is in attack range.
 		/// </summary>
@@ -102,13 +104,15 @@ namespace KrostganEngine::GameObjects {
 		/// <returns></returns>
 		bool				CheckTargetReach(const IAttackableObj& potentTarget) const;
 		bool				TryDealDamageToTarget();
-		AutoAttackStats*	GetAAStats() { return OwnerAAStats; }
+		AutoAttackStats*	GetCurrAAStats() const { return OwnerAAStats; }
 
 		IAttackableObj* GetCurrentTarget();
 
 		float GetRemReloadTime() const;
 
 		void Update(CallbackRecArgs_Upd args) override;
+
+		ExecutedEvent<AutoAttackStats*> ChangeAutoAttackStatsEvent = ExecutedEvent<AutoAttackStats*>();
 
 	private:
 
@@ -121,6 +125,8 @@ namespace KrostganEngine::GameObjects {
 		/// </summary>
 		bool UpdateByAASpeed();
 
+		EventHandler<AutoAttackStats*> ChangedAAStatsEventHan = EventHandler<AutoAttackStats*>(ChangeAutoAttackStatsEvent);
+
 		watch_ptr_handler_wr<IAttackableObj>* Target;
 		AutoAttackStats* OwnerAAStats;
 		ITransformableObj& Owner;
@@ -132,7 +138,6 @@ namespace KrostganEngine::GameObjects {
 		AutoAttackAnimation& AAAnimation;
 		forward_list<AutoAttackProjectile*> CreatedProjectiles;
 
-	private:
 		void OnDestroyProjectile(AutoAttackProjectile& proj);
 
 		friend void AutoAttackProjectile::OnDestroy();

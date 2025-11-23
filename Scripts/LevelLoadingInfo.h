@@ -103,13 +103,15 @@ namespace KrostganEngine::Core {
 		string				HitEffectSprite			= "";
 		string				SelectionAreaSource		= "";
 		Fraction			EntityFraction			= Fraction::Neutral;
-		EntityBattleStats	BattleStats				= EntityBattleStats(new AutoAttackStats());
+		EntityBattleStats	BattleStats				= EntityBattleStats();
 
 		bool WriteParam(Attr& param) override;
 
 	protected:
 		EntityLoadInfo():GameObjectLoadInfo(){}
 		EntityLoadInfo(const EntityLoadInfo& copy);
+
+		void VerifyAAStatsExisting();
 
 		virtual EntityCtorParams& GetCtorParams(const WorldObjectLoadInfo& usedInfo) const = 0;
 	};

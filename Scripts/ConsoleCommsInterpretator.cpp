@@ -36,6 +36,10 @@ void ConsoleCommsInterpretator::ExecuteCommand(const string& input) {
 		if (InterpretateComm_ImmArmy(input))
 			return;
 	}
+	else if (input.find(DISARM_COMMAND) != string::npos) {
+		if (InterpretateComm_Disarm(input))
+			return;
+	}
 	PrintInterpetatorMessage("Unknown command: " + input);
 };
 
@@ -113,6 +117,52 @@ bool ConsoleCommsInterpretator::InterpretateComm_ImmArmy(const string& input) {
 		DBG_ImmortalArmy::TurnOn();
 		PrintInterpetatorMessage("Immortal army is online");
 	}
+	return true;
+}
+bool ConsoleCommsInterpretator::InterpretateComm_Disarm(const string& input) {
+	auto& syntax = SplitCommandSyntax(input);
+	if (syntax.size() != 1 ||
+		syntax.at(0) != DISARM_COMMAND) {
+		
+		return false;
+	}
+
+	bool hasChanged = false;
+	bool disarm = true;
+	Entity* parObj = nullptr;
+	auto it = GroupSelectionSystem::GetEntitiesBegIter();
+	auto end = GroupSelectionSystem::GetEntitiesEndIter();
+	while (it != end) {		///define disarm- or arm-mode
+		parObj = dynamic_cast<Entity*>((*it)->GetPtr_t());
+		if (parObj != nullptr) {
+			if (parObj->GetBattleStats().GetSavedAAStatsCount() != 0) {
+				hasChanged = true;
+				disarm = parObj->GetBattleStats().GetCurrAAStats() != nullptr;
+				break;
+			}
+		}
+		++it;
+	}
+	while (it != end) {
+		parObj = dynamic_cast<Entity*>((*it)->GetPtr_t());
+		if (parObj != nullptr) {
+			if (parObj->GetBattleStats().GetSavedAAStatsCount() != 0 ||
+				parObj->GetBattleStats().GetCurrAAStats()==nullptr != disarm)	//Check that we cannot override the same state of AAStats
+			{
+				parObj->GetBattleStats().SetAAStats(disarm ? -1 : 0);
+			}
+		}
+		++it;
+	}
+	if (hasChanged) {
+		if (disarm) {
+			PrintInterpetatorMessage("Disarm entities");
+		}
+		else {
+			PrintInterpetatorMessage("Arm entities");
+		}
+	}
+
 	return true;
 }
 

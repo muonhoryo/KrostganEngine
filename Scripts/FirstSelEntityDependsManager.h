@@ -28,25 +28,56 @@ namespace KrostganEngine::UI {
 			FirstSelEntityDependsManager& Owner;
 		};
 
+		struct TargetAAStatsChangedEvSubsc : public IEventSubscriber<const int> {
+
+			TargetAAStatsChangedEvSubsc(FirstSelEntityDependsManager& Owner)
+				:Owner(Owner)
+			{}
+
+			void Execute(const int&) override {
+				Owner.UpdateByAAStats();
+			}
+
+		private:
+			FirstSelEntityDependsManager& Owner;
+		};
+
 	public:
-		FirstSelEntityDependsManager(){
-			Subsc = new FirstSelChangedEvSubsc(*this);
-			GroupSelectionSystem::ChangeSelectablesEvent.Add(*Subsc);
+		FirstSelEntityDependsManager()
+			:Subsc_ChangeTar(FirstSelChangedEvSubsc(*this)),
+			Subsc_ChangeAAStats(TargetAAStatsChangedEvSubsc(*this)){
+
+			GroupSelectionSystem::ChangeSelectablesEvent.Add(Subsc_ChangeTar);
 		}
 		~FirstSelEntityDependsManager() {
 			for (auto depend : Dependencies)
 				delete depend;
 
-			GroupSelectionSystem::ChangeSelectablesEvent.Remove(*Subsc);
-			delete Subsc;
+			GroupSelectionSystem::ChangeSelectablesEvent.Remove(Subsc_ChangeTar);
 		}
 
 		void Update() override {
 			Entity* newTar = dynamic_cast<Entity*>(GroupSelectionSystem::GetFirstSelectable());
 			if (Target != newTar) {
+
+				if (Target != nullptr) {
+					Target->GetBattleStats().ChangeCurrAAStatsEvent.Remove(Subsc_ChangeAAStats);
+				}
+
 				for (auto depend : Dependencies) {
 					depend->ChangeDepTarget(newTar);
 				}
+
+				Target = newTar;
+				if (Target != nullptr) {
+					Target->GetBattleStats().ChangeCurrAAStatsEvent.Add(Subsc_ChangeAAStats);
+				}
+			}
+		}
+		void UpdateByAAStats() {
+
+			for (auto depend : Dependencies) {
+				depend->ChangeDepTarget(Target);
 			}
 		}
 		void AddDependency(IEntityUIDependency& dependency) {
@@ -58,7 +89,8 @@ namespace KrostganEngine::UI {
 
 	private:
 		vector<IEntityUIDependency*> Dependencies;
-		FirstSelChangedEvSubsc* Subsc;
+		FirstSelChangedEvSubsc Subsc_ChangeTar;
+		TargetAAStatsChangedEvSubsc Subsc_ChangeAAStats;
 
 		Entity* Target=nullptr;
 	};

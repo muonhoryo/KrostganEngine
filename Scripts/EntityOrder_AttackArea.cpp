@@ -2,7 +2,7 @@
 #include <EntityOrder_AttackArea.h>
 #include <EntityAction_MoveToPoint.h>
 #include <Extensions.h>
-#include <Engine.h>
+//#include <Engine.h>
 #include <PathFinding_Diijkstra.h>
 
 using namespace sf;
@@ -10,14 +10,28 @@ using namespace KrostganEngine;
 using namespace KrostganEngine::GameObjects;
 using namespace KrostganEngine::EntitiesControl;
 
-EntityOrder_AttackArea::EntityOrder_AttackArea(OrdersExecutor& Owner, WorldTransfObj& OwnerTransform, Vector2f TargetGlobalCoord) : EntityOrder_GlobalPosTarget(TargetGlobalCoord),
-Owner(Owner),
-OwnerTransform(OwnerTransform) {
+EntityOrder_AttackArea::EntityOrder_AttackArea(
+	OrdersExecutor&		Owner, 
+	WorldTransfObj&		OwnerTransform, 
+	Vector2f			TargetGlobalCoord,
+	float				ToTargetMinDistance) : EntityOrder_GlobalPosTarget(TargetGlobalCoord),
+		Owner(Owner),
+		OwnerTransform(OwnerTransform),
+		ToTargetMinDistance_Sqr(ToTargetMinDistance * ToTargetMinDistance){
 }
 
 bool EntityOrder_AttackArea::CheckExecCondition() {
-	float dist = Length(TargetGlobalPos - OwnerTransform.GetGlobalPosition());
-	return dist <= eps;
+
+	if (Owner.GetAAModule().GetCurrAAStats() == nullptr) {	
+		
+		//Replace AttackArea-order with MoveToPoint-order
+		auto newOrder = new EntityOrder_MoveToPoint(Owner, OwnerTransform, TargetGlobalPos, sqrtf(ToTargetMinDistance_Sqr));
+		Owner.TryInsertOrder(*newOrder, 1);
+		return true;
+	}		//Owner cannot auto-attack for now
+
+	float dist = SquareLength(TargetGlobalPos - OwnerTransform.GetGlobalPosition());
+	return dist <= ToTargetMinDistance_Sqr;
 }
 list <IEntityAction*>* EntityOrder_AttackArea::GetActions() {
 

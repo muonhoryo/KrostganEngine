@@ -44,7 +44,7 @@ namespace KrostganEngine::GameObjects {
 
 	
 
-	struct EntityBattleStats : 
+	struct EntityBattleStats final : 
 		public ModifiableStatsWrapper< EntBatStats_Consts::StatType, EntBatStats_Consts::FIELDS_COUNT, EntBatStats_Consts::StatTypeNames,
 				EntBatStats_Consts::FIELDS_COUNT_F, EntBatStats_Consts::FIELDS_COUNT_S_T, EntBatStats_Consts::FIELDS_COUNT_BOOL>{
 
@@ -53,6 +53,11 @@ namespace KrostganEngine::GameObjects {
 		/// Initialize stats with its default values
 		/// </summary>
 		EntityBattleStats(AutoAttackStats* AAStats = nullptr);
+		/// <summary>
+		/// Initialize stats with its default values.
+		/// </summary>
+		/// <param name="AAStats"></param>
+		EntityBattleStats(const vector<AutoAttackStats*>& AAStats);
 		EntityBattleStats(const EntityBattleStats& copy);
 		virtual ~EntityBattleStats();
 
@@ -66,8 +71,39 @@ namespace KrostganEngine::GameObjects {
 
 	private:
 		void CopyTo_Internal(EntityBattleStats& toCopy) const;
+		void InitializeDefaultStats();
 
-		AutoAttackStats* AAStats;
+//
+//
+// AutoAttackStats
+//
+//
+	public:
+		AutoAttackStats* GetCurrAAStats() const;
+		size_t GetSavedAAStatsCount() const;
+
+		void SetAAStats(int index);
+		void SetAAStats(const AutoAttackStats* stats);
+		/// <summary>
+		/// Return index of input stats in SavedAAStats
+		/// </summary>
+		/// <param name="stats"></param>
+		/// <returns></returns>
+		int AddAAStats(AutoAttackStats& stats);
+		void RemoveAAStats(const AutoAttackStats& stats);
+		void RemoveAAStats(size_t index);
+
+		ExecutedEvent<const int> ChangeCurrAAStatsEvent = ExecutedEvent<const int>();
+
+	private:
+		/// <summary>
+		/// Index of current used AutoAttackStats in vector of saved AutoAttackStats's. 
+		/// -1 is define absent or turned-off auto-attack func.
+		/// </summary>
+		int CurrAAStats = -1;
+		vector<AutoAttackStats*> SavedAAStats;
+
+		EventHandler<const int> ChangeCurrAAStatsEventHan = EventHandler<const int>(ChangeCurrAAStatsEvent);
 
 //
 //
@@ -75,17 +111,14 @@ namespace KrostganEngine::GameObjects {
 //
 //
 
-	public:
 
 //
 //
 // Getters
 //
 //
-		
-	//Attack
-		AutoAttackStats* GetAAStats() { return AAStats; }
 
+	public:
 	//size_t
 		Parameter<size_t> const&	GetMaxHP()			const { return *GetParameterByType_s_t(EntityBattleStatType::MaxHP); }
 

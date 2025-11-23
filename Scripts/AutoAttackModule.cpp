@@ -63,9 +63,18 @@ void AutoAttackModule::SetAsTarget(watch_ptr_handler_wr<IAttackableObj>* target)
 		Target = nullptr;
 	}
 }
+void AutoAttackModule::SetAAStats(AutoAttackStats& stats) {
+	
+	if (&stats == OwnerAAStats)
+		return;
+	
+	OwnerAAStats = &stats;
+	ChangedAAStatsEventHan.Execute(OwnerAAStats);
+}
 
 bool AutoAttackModule::CheckTargetReach() const {
 
+	//Check if target has been deleted
 	if (Target == nullptr)
 		return false;
 	auto ptr = Target->GetPtr_t();
@@ -75,6 +84,9 @@ bool AutoAttackModule::CheckTargetReach() const {
 }
 
 bool AutoAttackModule::CheckTargetReach(const IAttackableObj& potentTarget) const {
+
+	if (OwnerAAStats == nullptr)
+		return false;
 
 	if (!potentTarget.CheckAttackReachability(IAttackableObj::AtkParam::IsAA))
 		return false;

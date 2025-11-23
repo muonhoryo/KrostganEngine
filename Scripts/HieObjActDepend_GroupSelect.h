@@ -33,13 +33,13 @@ namespace KrostganEngine::UI {
 			GreaterToActivate(GreaterToActivate),
 			EqualToActivate(EqualToActivate)
 		{
-			Subsc = new ChangeFirstSelSubsc(*this);
-			GroupSelectionSystem::ChangeSelectablesEvent.Add(*Subsc);
+			Subsc_ChangeTar = new ChangeFirstSelSubsc(*this);
+			GroupSelectionSystem::ChangeSelectablesEvent.Add(*Subsc_ChangeTar);
 			Update();
 		}
 		virtual ~HieObjActDepend_GroupSelect() {
-			GroupSelectionSystem::ChangeSelectablesEvent.Remove(*Subsc);
-			delete Subsc;
+			GroupSelectionSystem::ChangeSelectablesEvent.Remove(*Subsc_ChangeTar);
+			delete Subsc_ChangeTar;
 		}
 
 		int GetSelectionThreshold() const { return SelectionThreshold; }
@@ -73,7 +73,7 @@ namespace KrostganEngine::UI {
 		int			SelectionThreshold;
 		bool		GreaterToActivate;
 		bool		EqualToActivate;
-		ChangeFirstSelSubsc* Subsc;
+		ChangeFirstSelSubsc* Subsc_ChangeTar;
 
 		friend class ChangeFirstSelSubsc;
 	};
