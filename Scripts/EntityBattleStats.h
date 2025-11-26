@@ -81,6 +81,7 @@ namespace KrostganEngine::GameObjects {
 	public:
 		AutoAttackStats* GetCurrAAStats() const;
 		size_t GetSavedAAStatsCount() const;
+		int GetCurrAAStatsIndex() const;
 
 		void SetAAStats(int index);
 		void SetAAStats(const AutoAttackStats* stats);

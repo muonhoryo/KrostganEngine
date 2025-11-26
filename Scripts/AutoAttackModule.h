@@ -46,6 +46,8 @@ namespace KrostganEngine::GameObjects {
 
 	protected:
 		AutoAttackModule& Owner;
+		AutoAttackStats& AAStats;
+
 		shared_ptr<CachedBattleStats
 			<AutoAttackStats_Consts::FIELDS_COUNT_S_T,
 			AutoAttackStats_Consts::FIELDS_COUNT_F,
@@ -63,12 +65,12 @@ namespace KrostganEngine::GameObjects {
 		virtual const AttackHitInfo& GetAttInfo_FromCache(IAttackableObj& target) const;
 
 		const AttackHitInfo& GetAttInfo(IAttackableObj& target) const;
-		bool GetState_IsValidOwnerRef() const;
+		bool GetState_IsValidAAStatsRef() const;
 		void DealDmgToSingleTarget(IAttackableObj& target) const;
 		void DealDmgByAOE(Vector2f center) const;
 
 	private:
-		bool IsValidOwnerRef = true;
+		bool IsValidAAStatsRef = true;
 
 		void OnDestroy();
 
@@ -124,6 +126,7 @@ namespace KrostganEngine::GameObjects {
 		/// Return true if RemReloadTime isn't equal infinity.
 		/// </summary>
 		bool UpdateByAASpeed();
+		void CacheAAStats();
 
 		EventHandler<AutoAttackStats*> ChangedAAStatsEventHan = EventHandler<AutoAttackStats*>(ChangeAutoAttackStatsEvent);
 

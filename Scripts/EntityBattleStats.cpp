@@ -94,6 +94,9 @@ void EntityBattleStats::SetAAStats(int index) {
 size_t EntityBattleStats::GetSavedAAStatsCount() const {
 	return SavedAAStats.size();
 }
+int EntityBattleStats::GetCurrAAStatsIndex() const {
+	return CurrAAStats;
+}
 
 void EntityBattleStats::SetAAStats(const AutoAttackStats* stats) {
 

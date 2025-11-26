@@ -38,16 +38,19 @@ namespace KrostganEngine::GameObjects {
 			Proj_IsSelfHoming = t_bool | (4 << ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT)
 		};
 		static inline const array<pair<StatType, string>, FIELDS_COUNT> StatTypeNames{
-				pair<StatType,string>(StatType::Damage,				"AADamage"),
-				pair<StatType,string>(StatType::Speed,				"AASpeed"),
-				pair<StatType,string>(StatType::Range,				"AARange"),
+				pair<StatType,string>(StatType::Damage,				"Damage"),
+				pair<StatType,string>(StatType::Speed,				"Speed"),
+				pair<StatType,string>(StatType::Range,				"Range"),
 				pair<StatType,string>(StatType::ProjSpeed,			"Proj_Speed"),
-				pair<StatType,string>(StatType::SiegeRange,			"AASiegeRange"),
+				pair<StatType,string>(StatType::SiegeRange,			"SiegeRange"),
 				pair<StatType,string>(StatType::IsRange,			"IsRange"),
 				pair<StatType,string>(StatType::IsSiege,			"IsSiege"),
 				pair<StatType,string>(StatType::Proj_LockRotation,	"Proj_LockRotation"),
 				pair<StatType,string>(StatType::Proj_IsSelfHoming,	"Proj_IsSelfHoming")
 		};
+
+		static inline const string SERNAME_PROJECTILE	= "Projectile";
+		static inline const string SERNAME_SIEGE_HITEFF = "SiegeHitEff";
 
 	private:
 		AutoAttackStats_Consts(){}
@@ -77,6 +80,8 @@ namespace KrostganEngine::GameObjects {
 			AutoAttackStats_Consts::FIELDS_COUNT_F,
 			AutoAttackStats_Consts::FIELDS_COUNT_S_T,
 			AutoAttackStats_Consts::FIELDS_COUNT_BOOL>& toCopy) const override;
+		
+		bool WriteParam(Attr& param) override;
 
 	private:
 		void CopyTo_Internal(AutoAttackStats& toCopy) const;

@@ -43,6 +43,30 @@ void AutoAttackStats::CopyTo_Internal(AutoAttackStats& toCopy) const {
 	toCopy.SetProjectileInfo(ProjectileInfo);
 	toCopy.SetSiegeHitEffInfo(SiegeHitEffInfo);
 }
+bool AutoAttackStats::WriteParam(Attr& param) {
+
+	if (ModifiableStatsWrapper::WriteParam(param))
+		return true;
+
+	if (param.first == AAStatsConsts::SERNAME_PROJECTILE) {
+
+		ProjectileInfo.Deserialize(param.second);
+	}
+	else if (param.first == AAStatsConsts::SERNAME_SIEGE_HITEFF) {
+
+		SiegeHitEffInfo.Deserialize(param.second);
+	}
+	else
+		return false;
+
+	return true;
+}
+
+//
+//
+// Parameters
+//
+//
 
 void AutoAttackStats::SetDamage(size_t damage) {
 	SetDefaultStat(AAStatType::Damage, damage);

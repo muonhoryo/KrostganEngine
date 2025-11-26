@@ -148,5 +148,7 @@ const pair<const string, const string>& ObjsCatalogDeserial::ParseParamLine(cons
 		throw exception("Incorrect parameter format");
 	string p1 = line.substr(0, index);
 	string p2 = line.substr(index + 1, line.size() - index);
-	return *new pair<const string, const string>(line.substr(0, index), line.substr(index + 1, line.size() - index));
+	FStreamExts::ClearPath(p1);
+	FStreamExts::ClearPath(p2);
+	return *new pair<const string, const string>(p1, p2);
 }

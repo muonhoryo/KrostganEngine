@@ -42,7 +42,7 @@ namespace KrostganEngine::GameObjects {
 		}
 		void CollideWithTarget() override {
 			bool isSiege;
-			if (GetState_IsValidOwnerRef())
+			if (GetState_IsValidAAStatsRef())
 				isSiege = Owner.GetCurrAAStats()->GetState_IsSiege();
 			else {
 				size_t index = AutoAttackStats::GetArrayIndexOfField((int)AAStatType::IsSiege);

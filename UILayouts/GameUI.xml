@@ -37,7 +37,7 @@
 					AnchorX="1.4" 
 					AnchorY="0.3"
 					FirstSelEnt_Depend="AutoAttack"
-					TextDepend_BatStats_FieldType="AADamage"
+					TextDepend_BatStats_FieldType="Damage"
 					Color="FFFFFFFF"
 					FontSize="30"
 					Layer="12"/>
@@ -48,7 +48,7 @@
 					AnchorX="1.2" 
 					AnchorY="0.3"
 					FirstSelEnt_Depend="AutoAttack"
-					TextDepend_BatStats_FieldType="AARange"
+					TextDepend_BatStats_FieldType="Range"
 					Color="FFFFFFFF"
 					FontSize="30"
 					Layer="12"/>
@@ -59,7 +59,7 @@
 					AnchorX="1.2" 
 					AnchorY="0.3"
 					FirstSelEnt_Depend="AutoAttack"
-					TextDepend_BatStats_FieldType="AASpeed"
+					TextDepend_BatStats_FieldType="Speed"
 					Color="FFFFFFFF"
 					FontSize="30"
 					Layer="12"/>

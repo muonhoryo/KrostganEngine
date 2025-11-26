@@ -112,8 +112,11 @@ namespace KrostganEngine::Core {
 		EntityLoadInfo(const EntityLoadInfo& copy);
 
 		void VerifyAAStatsExisting();
+		void WriteBattleStatsParams(const string& input, IModifiableStatsWrapper& stats);
 
 		virtual EntityCtorParams& GetCtorParams(const WorldObjectLoadInfo& usedInfo) const = 0;
+
+		static inline const string ENTITY_BSTATS_PARAMS_SEP = ";;";
 	};
 
 	struct UnitLoadInfo : public EntityLoadInfo{

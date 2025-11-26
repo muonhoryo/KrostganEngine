@@ -25,23 +25,7 @@ AutoAttackModule::~AutoAttackModule() {
 	if (Target != nullptr)
 		delete Target;
 
-	if (CreatedProjectiles.begin() != CreatedProjectiles.end()) {
-
-		auto stats = new CachedBattleStats
-			(OwnerAAStats->GetParamsArray_s_t(),
-			OwnerAAStats->GetParamsArray_f(),
-			OwnerAAStats->GetParamsArray_bool(),
-			OwnerAAStats->GetSiegeHitEffInfo());
-		auto ptr = shared_ptr<CachedBattleStats
-			<AAStatsConsts::FIELDS_COUNT_S_T,
-			AAStatsConsts::FIELDS_COUNT_F,
-			AAStatsConsts::FIELDS_COUNT_BOOL,
-			LvlObjInstantiationInfo>>(stats);
-		for (auto proj : CreatedProjectiles) {
-			proj->IsValidOwnerRef = false;
-			proj->CachedAAStats = ptr;
-		}
-	}
+	CacheAAStats();
 }
 
 IAttackableObj* AutoAttackModule::GetCurrentTarget() {
@@ -68,6 +52,7 @@ void AutoAttackModule::SetAAStats(AutoAttackStats& stats) {
 	if (&stats == OwnerAAStats)
 		return;
 	
+	CacheAAStats();
 	OwnerAAStats = &stats;
 	ChangedAAStatsEventHan.Execute(OwnerAAStats);
 }
@@ -152,6 +137,28 @@ bool AutoAttackModule::UpdateByAASpeed() {
 		RemReloadTime = OwnerAAStats->GetCooldown();
 		ZeroSpeed = false;
 		return true;
+	}
+}
+
+void AutoAttackModule::CacheAAStats() {
+
+	if (CreatedProjectiles.begin() != CreatedProjectiles.end()) {
+
+		auto stats = new CachedBattleStats
+		(OwnerAAStats->GetParamsArray_s_t(),
+			OwnerAAStats->GetParamsArray_f(),
+			OwnerAAStats->GetParamsArray_bool(),
+			OwnerAAStats->GetSiegeHitEffInfo());
+		auto ptr = shared_ptr<CachedBattleStats
+			<AAStatsConsts::FIELDS_COUNT_S_T,
+			AAStatsConsts::FIELDS_COUNT_F,
+			AAStatsConsts::FIELDS_COUNT_BOOL,
+			LvlObjInstantiationInfo>>(stats);
+		for (auto proj : CreatedProjectiles) {
+			proj->IsValidAAStatsRef = false;
+			proj->CachedAAStats = ptr;
+		}
+		CreatedProjectiles.clear();
 	}
 }
 

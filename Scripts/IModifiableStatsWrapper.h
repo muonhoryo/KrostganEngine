@@ -2,8 +2,10 @@
 
 #include <GameObjStatParameter.h>
 #include <Events.h>
+#include <LvlLoadingStructs.h>
 
 using namespace KrostganEngine;
+using namespace KrostganEngine::Core;
 
 namespace KrostganEngine::GameObjects {
 	struct ModStatsWrapper_Consts final {
@@ -71,6 +73,8 @@ namespace KrostganEngine::GameObjects {
 		/// <param name="type"></param>
 		/// <returns></returns>
 		const void*		GetFieldRef(int type, bool isDefField = false) const {return _GetFieldRef(type,isDefField); }
+
+		virtual bool WriteParam(Attr& param)=0;
 
 		/// <summary>
 		/// Return nullptr if field has another type of field doesn't exist

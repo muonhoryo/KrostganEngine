@@ -28,6 +28,7 @@ AutoAttackProjectile::AutoAttackProjectile(const AAProjectileCtorParams& Params)
 	:WorldTransfObj(*new Transformable()),
 	CatalogObject(Params.CatalogID,Params.SubcatalogID),
 	Owner(Params.Owner),
+	AAStats(*Owner.GetCurrAAStats()),
 	Speed(Params.Speed),
 	LockRotation(Params.LockRotation)
 {
@@ -37,7 +38,7 @@ AutoAttackProjectile::AutoAttackProjectile(const AAProjectileCtorParams& Params)
 
 AutoAttackProjectile::~AutoAttackProjectile() {
 
-	if (IsValidOwnerRef)
+	if (IsValidAAStatsRef)
 		OnDestroy();
 }
 
@@ -68,15 +69,14 @@ void AutoAttackProjectile::Update(CallbackRecArgs_LUpd args) {
 }
 const AttackHitInfo& AutoAttackProjectile::GetAttInfo(IAttackableObj& target) const {
 
-	return GetState_IsValidOwnerRef() ? GetAttInfo_FromOwn(target) : GetAttInfo_FromCache(target);
+	return GetState_IsValidAAStatsRef() ? GetAttInfo_FromOwn(target) : GetAttInfo_FromCache(target);
 }
 
 const AttackHitInfo& AutoAttackProjectile::GetAttInfo_FromOwn(IAttackableObj& target) const {
 
-	auto stats = Owner.GetCurrAAStats();
 	IFractionMember* parOwner = dynamic_cast<IFractionMember*>(&Owner);
 	Fraction frac = parOwner == nullptr ? Fraction::Neutral : parOwner->GetFraction();
-	return *new AutoAttackHitInfo(stats->GetDamage(), target.GetPtr(), *stats, frac);
+	return *new AutoAttackHitInfo(AAStats.GetDamage(), target.GetPtr(), AAStats, frac);
 }
 const AttackHitInfo& AutoAttackProjectile::GetAttInfo_FromCache(IAttackableObj& target) const {
 
@@ -87,11 +87,11 @@ const AttackHitInfo& AutoAttackProjectile::GetAttInfo_FromCache(IAttackableObj& 
 }
 
 void AutoAttackProjectile::OnDestroy() {
-	if (IsValidOwnerRef)
+	if (IsValidAAStatsRef)
 		Owner.OnDestroyProjectile(*this);
 }
-bool AutoAttackProjectile::GetState_IsValidOwnerRef() const {
-	return IsValidOwnerRef;
+bool AutoAttackProjectile::GetState_IsValidAAStatsRef() const {
+	return IsValidAAStatsRef;
 }
 void AutoAttackProjectile::DealDmgToSingleTarget(IAttackableObj& target) const {
 
@@ -102,7 +102,7 @@ void AutoAttackProjectile::DealDmgToSingleTarget(IAttackableObj& target) const {
 void AutoAttackProjectile::DealDmgByAOE(Vector2f center) const {
 	float range;
 	const LvlObjInstantiationInfo* hitEff = nullptr;
-	bool isValidOwner = GetState_IsValidOwnerRef();
+	bool isValidOwner = GetState_IsValidAAStatsRef();
 	if (isValidOwner) {
 
 		range = Owner.GetCurrAAStats()->GetSiegeRange().Stat;

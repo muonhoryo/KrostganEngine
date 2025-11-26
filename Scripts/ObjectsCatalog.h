@@ -169,7 +169,8 @@ namespace KrostganEngine::Core {
 		static inline const string ENTITY_HPBAR_SPRITE_SOURCE	= "HPBarSprite";
 		static inline const string ENTITY_HITEFF_SPRITE_SOURCE	= "HitEffectSprite";
 		static inline const string ENTITY_HPBAR_MASK			= "HPBarMask";
-		static inline const string ENTITY_AA_PROJECTILE			= "AAProjectile";
-		static inline const string ENTITY_AA_SIEGE_HITEFF		= "AASiegeHitEffect";
+
+		static inline const string ENTITY_BATTLE_STATS			= "BattleStats";
+		static inline const string ENTITY_AA_STATS				= "AAStats";
 	};
 }

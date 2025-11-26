@@ -4,6 +4,7 @@
 #include <string>
 #include <iostream>
 #include <IModifiableStatsWrapper.h>
+#include <FStreamExts.h>
 
 using namespace std;
 using namespace KrostganEngine;
@@ -43,7 +44,7 @@ namespace KrostganEngine::GameObjects {
 			{}
 
 			virtual bool Condition(const pair<TStatEnum, string>& input) const override {
-				return name.find(input.second) != string::npos;
+				return name == input.second;
 			}
 		private:
 			const string& name;
@@ -142,9 +143,8 @@ namespace KrostganEngine::GameObjects {
 		}
 		static TStatEnum StrToStat(const string& str) {
 
-			auto cond = new GetStatTypeCond(str);
-			auto type = CollectionsExts::Get_c<const array<pair<TStatEnum, string>, STATNAMES_COUNT>, pair<TStatEnum, string>>(STATTYPE_NAMES, *cond);
-			delete cond;
+			auto cond = GetStatTypeCond(str);
+			auto type = CollectionsExts::Get_c<const array<pair<TStatEnum, string>, STATNAMES_COUNT>, pair<TStatEnum, string>>(STATTYPE_NAMES, cond);
 			return (type == nullptr) ? (TStatEnum)-1 : (type->first);
 		}
 
@@ -152,6 +152,37 @@ namespace KrostganEngine::GameObjects {
 			return IModifiableStatsWrapper::GetFieldType((int)type);
 		}
 
+		bool WriteParam(Attr& param) override {
+			TStatEnum paramType = StrToStat(param.first);
+			if ((int)paramType == -1)
+				return false;
+
+			ModStatsWrapper_Consts::StatType paramValueType = GetFieldType(paramType);
+			switch (paramValueType)
+			{
+			case KrostganEngine::GameObjects::ModStatsWrapper_Consts::StatType::t_size_t: {
+
+				auto paramPtr_s_t = Internal_GetParamByType_s_t(paramType);
+				paramPtr_s_t->Default = stol(param.second);
+				RecalculateStat_t<size_t>(paramType, *paramPtr_s_t);
+				return true;
+			}
+			case KrostganEngine::GameObjects::ModStatsWrapper_Consts::StatType::t_float: {
+
+				auto paramPtr_f = Internal_GetParamByType_f(paramType);
+				paramPtr_f->Default = stof(param.second);
+				RecalculateStat_t<float>(paramType, *paramPtr_f);
+				return true;
+			}
+			case KrostganEngine::GameObjects::ModStatsWrapper_Consts::StatType::t_bool: {
+
+				*Internal_GetFieldByType_bool(paramType) = FStreamExts::ParseBool(param.second);
+				return true;
+			}
+			default:
+				return false;
+			}
+		}
 		/// <summary>
 		/// Copy parameters of this stats to target stats
 		/// </summary>

@@ -40,6 +40,10 @@ void ConsoleCommsInterpretator::ExecuteCommand(const string& input) {
 		if (InterpretateComm_Disarm(input))
 			return;
 	}
+	else if (input.find(REARM_COMMAND) != string::npos) {
+		if (InterpretateComm_Rearm(input))
+			return;
+	}
 	PrintInterpetatorMessage("Unknown command: " + input);
 };
 
@@ -161,6 +165,41 @@ bool ConsoleCommsInterpretator::InterpretateComm_Disarm(const string& input) {
 		else {
 			PrintInterpetatorMessage("Arm entities");
 		}
+	}
+
+	return true;
+}
+
+bool ConsoleCommsInterpretator::InterpretateComm_Rearm(const string& input) {
+	auto& syntax = SplitCommandSyntax(input);
+	if (syntax.size() != 2 ||
+		syntax.at(0) != REARM_COMMAND) {
+
+		return false;
+	}
+
+	int index = stoi(syntax[1]);
+	if (index < -1) {
+		PrintInterpetatorMessage("Invalid index of AAStats: " + index);
+		return false;
+	}
+	bool hasChanged = false;
+	Entity* parObj = nullptr;
+	auto it = GroupSelectionSystem::GetEntitiesBegIter();
+	auto end = GroupSelectionSystem::GetEntitiesEndIter();
+	while (it != end) {
+		parObj = dynamic_cast<Entity*>((*it)->GetPtr_t());
+		if (parObj != nullptr &&
+			(int)parObj->GetBattleStats().GetSavedAAStatsCount() > index &&
+			(int)parObj->GetBattleStats().GetCurrAAStatsIndex() != index) {
+			
+			hasChanged = true;
+			parObj->GetBattleStats().SetAAStats(index);
+		}
+		++it;
+	}
+	if (hasChanged) {
+		PrintInterpetatorMessage("Rearm entities to AAStats with index: " + std::to_string(index));
 	}
 
 	return true;

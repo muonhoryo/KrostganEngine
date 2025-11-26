@@ -92,7 +92,6 @@ vector<LvlObjInstantiationInfo*>* LvlObjInstantiationInfo::DeserializeRow(const 
 	size_t end = 0;
 	LvlObjInstantiationInfo* celInf = nullptr;
 	string elStr;
-	//size_t mapEnd = row.find(LVL_CMAP_END);
 	while (true) {
 		end = row.find(LVLSER_ELEM_ROW_SEPARATOR, start);
 		if (end ==string::npos) {
@@ -106,10 +105,6 @@ vector<LvlObjInstantiationInfo*>* LvlObjInstantiationInfo::DeserializeRow(const 
 			deserRow.push_back(celInf);
 		start = end + LVLSER_ELEM_ROW_SEPARATOR.length();
 	}
-	/*if (mapEnd != string::npos) {
-
-		*foundEnd = true;
-	}*/
 	elStr = row.substr(start, row.length() - start);
 	celInf = new LvlObjInstantiationInfo();
 	celInf->Deserialize(elStr);
@@ -282,92 +277,89 @@ bool EntityLoadInfo::WriteParam(Attr& param) {
 		SelectionAreaSource = param.second;
 		FStreamExts::ClearPath(SelectionAreaSource);
 	}
-	//Fill battle stats
-	else if (CheckParamName(param, EntityBattleStats::StatToStr(EntityBattleStatType::MaxHP))) {
-		size_t s = stol(param.second);
-		if (s > 0)
-			BattleStats.SetMaxHP(s);
+	else if (CheckParamName(param, SerializationParDefNames::ENTITY_BATTLE_STATS)) {
+		WriteBattleStatsParams(param.second, BattleStats);
 	}
-	else if (CheckParamName(param, EntityBattleStats::StatToStr(EntityBattleStatType::RegenHP_Amount))) {
-		size_t s = stol(param.second);
-		BattleStats.SetHPRegenAmount(s);
+	else if (CheckParamName(param, SerializationParDefNames::ENTITY_AA_STATS)) {
+
+		auto index = BattleStats.AddAAStats(*new AutoAttackStats());
+		BattleStats.SetAAStats(index);
+		auto stats = BattleStats.GetCurrAAStats();
+		WriteBattleStatsParams(param.second, *stats);
+		BattleStats.SetAAStats(0);
 	}
-	else if (CheckParamName(param, EntityBattleStats::StatToStr(EntityBattleStatType::MovingSpeed))) {
-		float s = stof(param.second);
-		BattleStats.SetMovingSpeed(s);
-	}
-	else if (CheckParamName(param, EntityBattleStats::StatToStr(EntityBattleStatType::RegenHP_Tick))) {
-		float s = stof(param.second);
-		BattleStats.SetHPRegenTick(s);
-	}
-	else if (CheckParamName(param, EntityBattleStats::StatToStr(EntityBattleStatType::AutoAggrRadius))) {
-		float s = stof(param.second);
-		BattleStats.SetAutoAggrRadius(s);
-	}
-	else if (CheckParamName(param, EntityBattleStats::StatToStr(EntityBattleStatType::IsTargetableForAA))) {
-		bool isTargetable= FStreamExts::ParseBool(param.second);
-		BattleStats.SetTargetableForAA(isTargetable);
-	}
-	//Fill AA-stats
-	else if (CheckParamName(param, AutoAttackStats::StatToStr(AAStatType::Damage))) {
-		VerifyAAStatsExisting();
-		size_t s = stol(param.second);
-		BattleStats.GetCurrAAStats()->SetDamage(s);
-	}
-	else if (CheckParamName(param, AutoAttackStats::StatToStr(AAStatType::Speed))) {
-		VerifyAAStatsExisting();
-		float s = stof(param.second);
-		BattleStats.GetCurrAAStats()->SetSpeed(s);
-	}
-	else if (CheckParamName(param, AutoAttackStats::StatToStr(AAStatType::Range))) {
-		VerifyAAStatsExisting();
-		float s = stof(param.second);
-		BattleStats.GetCurrAAStats()->SetRange(s);
-	}
-	else if (CheckParamName(param, AutoAttackStats::StatToStr(AAStatType::ProjSpeed))) {
-		VerifyAAStatsExisting();
-		float s = stof(param.second);
-		BattleStats.GetCurrAAStats()->SetProjSpeed(s);
-	}
-	else if (CheckParamName(param, AutoAttackStats::StatToStr(AAStatType::SiegeRange))) {
-		VerifyAAStatsExisting();
-		float s = stof(param.second);
-		BattleStats.GetCurrAAStats()->SetSiegeRange(s);
-	}
-	else if (CheckParamName(param, AutoAttackStats::StatToStr(AAStatType::IsRange))) {
-		VerifyAAStatsExisting();
-		bool isRange = FStreamExts::ParseBool(param.second);
-		BattleStats.GetCurrAAStats()->SetIsRange(isRange);
-	}
-	else if (CheckParamName(param, AutoAttackStats::StatToStr(AAStatType::Proj_LockRotation))) {
-		VerifyAAStatsExisting();
-		bool lockRot = FStreamExts::ParseBool(param.second);
-		BattleStats.GetCurrAAStats()->SetProj_LockRotation(lockRot);
-	}
-	else if (CheckParamName(param, AutoAttackStats::StatToStr(AAStatType::IsSiege))) {
-		VerifyAAStatsExisting();
-		bool isSiege = FStreamExts::ParseBool(param.second);
-		BattleStats.GetCurrAAStats()->SetIsSiege(isSiege);
-	}
-	else if (CheckParamName(param, AutoAttackStats::StatToStr(AAStatType::Proj_IsSelfHoming))) {
-		VerifyAAStatsExisting();
-		bool isSelfHoming= FStreamExts::ParseBool(param.second);
-		BattleStats.GetCurrAAStats()->SetProj_IsSelfHoming(isSelfHoming);
-	}
-	else if (CheckParamName(param, SerializationParDefNames::ENTITY_AA_PROJECTILE)) {
-		VerifyAAStatsExisting();
-		LvlObjInstantiationInfo& projInfo = *new LvlObjInstantiationInfo();
-		projInfo.Deserialize(param.second);
-		BattleStats.GetCurrAAStats()->SetProjectileInfo(projInfo);
-		delete &projInfo;
-	}
-	else if (CheckParamName(param, SerializationParDefNames::ENTITY_AA_SIEGE_HITEFF)) {
-		VerifyAAStatsExisting();
-		LvlObjInstantiationInfo& projInfo = *new LvlObjInstantiationInfo();
-		projInfo.Deserialize(param.second);
-		BattleStats.GetCurrAAStats()->SetSiegeHitEffInfo(projInfo);
-		delete& projInfo;
-	}
+	////Fill battle stats
+	//else if (CheckParamName(param, EntityBattleStats::StatToStr(EntityBattleStatType::MaxHP))) {
+	//	size_t s = stol(param.second);
+	//	if (s > 0)
+	//		BattleStats.SetMaxHP(s);
+	//}
+	//else if (CheckParamName(param, EntityBattleStats::StatToStr(EntityBattleStatType::RegenHP_Amount))) {
+	//	size_t s = stol(param.second);
+	//	BattleStats.SetHPRegenAmount(s);
+	//}
+	//else if (CheckParamName(param, EntityBattleStats::StatToStr(EntityBattleStatType::MovingSpeed))) {
+	//	float s = stof(param.second);
+	//	BattleStats.SetMovingSpeed(s);
+	//}
+	//else if (CheckParamName(param, EntityBattleStats::StatToStr(EntityBattleStatType::RegenHP_Tick))) {
+	//	float s = stof(param.second);
+	//	BattleStats.SetHPRegenTick(s);
+	//}
+	//else if (CheckParamName(param, EntityBattleStats::StatToStr(EntityBattleStatType::AutoAggrRadius))) {
+	//	float s = stof(param.second);
+	//	BattleStats.SetAutoAggrRadius(s);
+	//}
+	//else if (CheckParamName(param, EntityBattleStats::StatToStr(EntityBattleStatType::IsTargetableForAA))) {
+	//	bool isTargetable= FStreamExts::ParseBool(param.second);
+	//	BattleStats.SetTargetableForAA(isTargetable);
+	//}
+	////Fill AA-stats
+	//else if (CheckParamName(param, AutoAttackStats::StatToStr(AAStatType::Damage))) {
+	//	VerifyAAStatsExisting();
+	//	size_t s = stol(param.second);
+	//	BattleStats.GetCurrAAStats()->SetDamage(s);
+	//}
+	//else if (CheckParamName(param, AutoAttackStats::StatToStr(AAStatType::Speed))) {
+	//	VerifyAAStatsExisting();
+	//	float s = stof(param.second);
+	//	BattleStats.GetCurrAAStats()->SetSpeed(s);
+	//}
+	//else if (CheckParamName(param, AutoAttackStats::StatToStr(AAStatType::Range))) {
+	//	VerifyAAStatsExisting();
+	//	float s = stof(param.second);
+	//	BattleStats.GetCurrAAStats()->SetRange(s);
+	//}
+	//else if (CheckParamName(param, AutoAttackStats::StatToStr(AAStatType::ProjSpeed))) {
+	//	VerifyAAStatsExisting();
+	//	float s = stof(param.second);
+	//	BattleStats.GetCurrAAStats()->SetProjSpeed(s);
+	//}
+	//else if (CheckParamName(param, AutoAttackStats::StatToStr(AAStatType::SiegeRange))) {
+	//	VerifyAAStatsExisting();
+	//	float s = stof(param.second);
+	//	BattleStats.GetCurrAAStats()->SetSiegeRange(s);
+	//}
+	//else if (CheckParamName(param, AutoAttackStats::StatToStr(AAStatType::IsRange))) {
+	//	VerifyAAStatsExisting();
+	//	bool isRange = FStreamExts::ParseBool(param.second);
+	//	BattleStats.GetCurrAAStats()->SetIsRange(isRange);
+	//}
+	//else if (CheckParamName(param, AutoAttackStats::StatToStr(AAStatType::Proj_LockRotation))) {
+	//	VerifyAAStatsExisting();
+	//	bool lockRot = FStreamExts::ParseBool(param.second);
+	//	BattleStats.GetCurrAAStats()->SetProj_LockRotation(lockRot);
+	//}
+	//else if (CheckParamName(param, AutoAttackStats::StatToStr(AAStatType::IsSiege))) {
+	//	VerifyAAStatsExisting();
+	//	bool isSiege = FStreamExts::ParseBool(param.second);
+	//	BattleStats.GetCurrAAStats()->SetIsSiege(isSiege);
+	//}
+	//else if (CheckParamName(param, AutoAttackStats::StatToStr(AAStatType::Proj_IsSelfHoming))) {
+	//	VerifyAAStatsExisting();
+	//	bool isSelfHoming= FStreamExts::ParseBool(param.second);
+	//	BattleStats.GetCurrAAStats()->SetProj_IsSelfHoming(isSelfHoming);
+	//}
 	else {
 		return false;
 	}
@@ -391,7 +383,25 @@ void EntityLoadInfo::VerifyAAStatsExisting() {
 		BattleStats.SetAAStats(index);
 	}
 }
+void EntityLoadInfo::WriteBattleStatsParams(const string& input, IModifiableStatsWrapper& stats){
 
+	size_t start = 0;
+	size_t end = 0;
+	Attr* param = nullptr;
+	while (true) {
+		end = input.find(ENTITY_BSTATS_PARAMS_SEP, start);
+		if (end == string::npos) {
+			param = &ObjsCatalogDeserial::ParseParamLine(input.substr(start, input.length() - start ));
+			stats.WriteParam(*param);
+			break;
+		}
+		else {
+			param = &ObjsCatalogDeserial::ParseParamLine(input.substr(start, end - start - 1));
+			stats.WriteParam(*param);
+			start = end + ENTITY_BSTATS_PARAMS_SEP.length();
+		}
+	}
+}
 //Unit
 
 WorldTransfObj* UnitLoadInfo::InstantiateObject_Action(const WorldObjectLoadInfo& usedInfo) const {
