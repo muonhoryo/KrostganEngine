@@ -27,25 +27,29 @@ void		UIText::ctor_Initialize() {
 
 UIText::UIText(
 	UIElement*		Parent,
-	const string	textStr,
+	const string&	textStr,
+	const string*	Name,
 	unsigned int	characterSize,
 	Shader*			RendShader,
 	byte			RendLayer)
 		:UIElement(
 			ctor_InitOwner(textStr,characterSize),
 			Parent,
+			Name,
 			ctor_GetUISize(textStr,characterSize),
 			RendLayer),
 		RendShader(RendShader)
 {}
 
 UIText::UIText(
-	const string		textStr,
+	const string&		textStr,
+	const string*		Name,
 	unsigned int		characterSize,
 	Shader*				RendShader,
 	byte				RendLayer)
 		:UIElement(
 			ctor_InitOwner(textStr,characterSize),
+			Name,
 			ctor_GetUISize(textStr,characterSize),
 			RendLayer),
 	RendShader(RendShader)

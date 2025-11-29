@@ -1,6 +1,6 @@
 #pragma once
 
-#include <ICallbackRec_Upd.h>
+#include <PlayerInputManager.h>
 #include <Physics.h>
 #include <HPSystem.h>
 #include <SFML/System.hpp>
@@ -49,27 +49,11 @@ namespace KrostganEngine::PlayerControl {
 		static void GiveOrderToSelected_HoldPosition(bool isGrouped);
 	};
 
-	class EntitiesCtrlInputHandler :public ICallbackRec_Upd {
+	class EntitiesCtrlInputHandler :public IBaseInputHandler {
 	public:
 		EntitiesCtrlInputHandler();
-		EntitiesCtrlInputHandler(EntitiesCtrlInputMode* CurrMode)
-			:CurrMode(CurrMode) {
-
-			if (Instance != nullptr)
-				delete Instance;
-
-			Instance = this;
-		}
-		~EntitiesCtrlInputHandler()
-		{
-			Instance = nullptr;
-			delete CurrMode;
-		}
-
-		static EntitiesCtrlInputHandler* GetInstance() {
-			return Instance;
-		}
-
+		EntitiesCtrlInputHandler(EntitiesCtrlInputMode* CurrMode);
+		virtual ~EntitiesCtrlInputHandler();
 		void SetNewMode(EntitiesCtrlInputMode& newMode);
 		void TurnOn();
 		void TurnOff();
@@ -83,10 +67,9 @@ namespace KrostganEngine::PlayerControl {
 		/// <returns></returns>
 		bool HandleShiftInput(const Event& ev);
 
-		void Update(CallbackRecArgs_Upd args) override;
+		void Update(const CallbackRecArgs_Upd& args) override;
 
 	private:
-		static inline EntitiesCtrlInputHandler* Instance = nullptr;
 		EntitiesCtrlInputMode* CurrMode;
 
 		bool IsShiftPressed = false;

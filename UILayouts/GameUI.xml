@@ -1,83 +1,100 @@
 <root>
-	<Empty HieAct_GroupSelDepend="" ResizeInherit_UI="1"> 
-	<Empty 
-		AnchorX="0.01"
-		AnchorY="0.85">
+
+	<Empty Name="DbgConsole" Layer="10" Active="0" AnchorX="0">
 		<Sprite Source="Spr_GUI_HPPanel_BG" Layer="10">
-			<Sprite Source="Spr_GUI_StatIcon_HP" AnchorX="0.1" AnchorY="0.2" Layer="11">
-				<TextBlock 
-					Text="" 
-					AnchorX="1.4" 
+			<TextBlock
+					Name="DbgConsoleField"
+					Text=""
+					AnchorX="0.2"
 					AnchorY="0.2"
-					FirstSelEnt_Depend=""  
+					FirstSelEnt_Depend=""
 					TextDepend_CurrentHP=""
 					Color="FFFFFFFF"
 					FontSize="26"
 					Layer="12"/>
-				<TextBlock 
-					Text="" 
-					AnchorX="2.4" 
-					AnchorY="0.6"
-					FirstSelEnt_Depend="Base"
-					TextDepend_BatStats_FieldType="MaxHP"
-					Color="FFFFFFFF"
-					FontSize="26"
-					Layer="12"/>
-			</Sprite>
 		</Sprite>
-		<Sprite Source="Spr_GUI_HPPanel_Frame" Layer="12"/>	
-	</Empty>		
-	<Empty
-		AnchorX="0.4"
-		AnchorY="0.88">
-		<Sprite Source="Spr_GUI_StatsPanel_BG" Layer="10">
-			<Sprite Source="Spr_GUI_StatIcon_AADmg" AnchorX="0.04" AnchorY="0.2" Layer="11">
-				<TextBlock 
-					Text="" 
-					AnchorX="1.4" 
-					AnchorY="0.3"
-					FirstSelEnt_Depend="AutoAttack"
-					TextDepend_BatStats_FieldType="Damage"
-					Color="FFFFFFFF"
-					FontSize="30"
-					Layer="12"/>
-			</Sprite>
-			<Sprite Source="Spr_GUI_StatIcon_AARange" AnchorX="0.27" AnchorY="0.2" Layer="11">
-				<TextBlock 
-					Text="{:.5}" 
-					AnchorX="1.2" 
-					AnchorY="0.3"
-					FirstSelEnt_Depend="AutoAttack"
-					TextDepend_BatStats_FieldType="Range"
-					Color="FFFFFFFF"
-					FontSize="30"
-					Layer="12"/>
-			</Sprite>
-			<Sprite Source="Spr_GUI_StatIcon_AASpeed" AnchorX="0.52" AnchorY="0.2" Layer="11">
-				<TextBlock 
-					Text="{:.5}" 
-					AnchorX="1.2" 
-					AnchorY="0.3"
-					FirstSelEnt_Depend="AutoAttack"
-					TextDepend_BatStats_FieldType="Speed"
-					Color="FFFFFFFF"
-					FontSize="30"
-					Layer="12"/>
-			</Sprite>
-			<Sprite Source="Spr_GUI_StatIcon_MoveSpeed" AnchorX="0.77" AnchorY="0.2" Layer="11">
-				<TextBlock 
-					Text="{:.5}" 
-					AnchorX="0.9" 
-					AnchorY="0.3"
-					FirstSelEnt_Depend="Base"
-					TextDepend_BatStats_FieldType="MovingSpeed"
-					Color="FFFFFFFF"
-					FontSize="30"
-					Layer="12"/>
-			</Sprite>
-		</Sprite>
-		<Sprite Source="Spr_GUI_StatsPanel_Frame" Layer="13"/>
+		<Sprite Source="Spr_GUI_HPPanel_Frame" Layer="12"/>
 	</Empty>
+	
+	<Empty HieAct_GroupSelDepend="" ResizeInherit_UI="1"> 
+		<Empty 
+			AnchorX="0.01"
+			AnchorY="0.85">
+			<Sprite Source="Spr_GUI_HPPanel_BG" Layer="10">
+				<Sprite Source="Spr_GUI_StatIcon_HP" AnchorX="0.1" AnchorY="0.2" Layer="11">
+					<TextBlock 
+						Text="" 
+						AnchorX="1.4" 
+						AnchorY="0.2"
+						FirstSelEnt_Depend=""  
+						TextDepend_CurrentHP=""
+						Color="FFFFFFFF"
+						FontSize="26"
+						Layer="12"/>
+					<TextBlock 
+						Text="" 
+						AnchorX="2.4" 
+						AnchorY="0.6"
+						FirstSelEnt_Depend="Base"
+						TextDepend_BatStats_FieldType="MaxHP"
+						Color="FFFFFFFF"
+						FontSize="26"
+						Layer="12"/>
+				</Sprite>
+			</Sprite>
+			<Sprite Source="Spr_GUI_HPPanel_Frame" Layer="12"/>	
+		</Empty>		
+		<Empty
+			AnchorX="0.4"
+			AnchorY="0.88">
+			<Sprite Source="Spr_GUI_StatsPanel_BG" Layer="10">
+				<Sprite Source="Spr_GUI_StatIcon_AADmg" AnchorX="0.04" AnchorY="0.2" Layer="11">
+					<TextBlock 
+						Text="" 
+						AnchorX="1.4" 
+						AnchorY="0.3"
+						FirstSelEnt_Depend="AutoAttack"
+						TextDepend_BatStats_FieldType="Damage"
+						Color="FFFFFFFF"
+						FontSize="30"
+						Layer="12"/>
+				</Sprite>
+				<Sprite Source="Spr_GUI_StatIcon_AARange" AnchorX="0.27" AnchorY="0.2" Layer="11">
+					<TextBlock 
+						Text="{:.5}" 
+						AnchorX="1.2" 
+						AnchorY="0.3"
+						FirstSelEnt_Depend="AutoAttack"
+						TextDepend_BatStats_FieldType="Range"
+						Color="FFFFFFFF"
+						FontSize="30"
+						Layer="12"/>
+				</Sprite>
+				<Sprite Source="Spr_GUI_StatIcon_AASpeed" AnchorX="0.52" AnchorY="0.2" Layer="11">
+					<TextBlock 
+						Text="{:.5}" 
+						AnchorX="1.2" 
+						AnchorY="0.3"
+						FirstSelEnt_Depend="AutoAttack"
+						TextDepend_BatStats_FieldType="Speed"
+						Color="FFFFFFFF"
+						FontSize="30"
+						Layer="12"/>
+				</Sprite>
+				<Sprite Source="Spr_GUI_StatIcon_MoveSpeed" AnchorX="0.77" AnchorY="0.2" Layer="11">
+					<TextBlock 
+						Text="{:.5}" 
+						AnchorX="0.9" 
+						AnchorY="0.3"
+						FirstSelEnt_Depend="Base"
+						TextDepend_BatStats_FieldType="MovingSpeed"
+						Color="FFFFFFFF"
+						FontSize="30"
+						Layer="12"/>
+				</Sprite>
+			</Sprite>
+			<Sprite Source="Spr_GUI_StatsPanel_Frame" Layer="13"/>
+		</Empty>
 
 	</Empty>
 </root>

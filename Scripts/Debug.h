@@ -9,3 +9,5 @@
 
 #include <DBG_DivineCommander.h>
 #include <DBG_ImmortalArmy.h>
+
+#include <DbgConsoleInputHandler.h>

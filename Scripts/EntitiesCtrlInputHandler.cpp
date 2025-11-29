@@ -10,6 +10,12 @@ using namespace KrostganEngine::PlayerControl;
 using namespace KrostganEngine::EntitiesControl;
 
 EntitiesCtrlInputHandler::EntitiesCtrlInputHandler():EntitiesCtrlInputHandler(new EntCtrlMode_Base(*this)) {}
+EntitiesCtrlInputHandler::EntitiesCtrlInputHandler(EntitiesCtrlInputMode* mode)
+	:CurrMode(mode)
+{}
+EntitiesCtrlInputHandler::~EntitiesCtrlInputHandler(){
+
+}
 
 void EntitiesCtrlInputHandler::SetNewMode(EntitiesCtrlInputMode& newMode) {
 	if (&newMode!=nullptr) {
@@ -55,9 +61,10 @@ bool EntitiesCtrlInputHandler::HandleShiftInput(const Event& ev) {
 	return false;
 }
 
-void EntitiesCtrlInputHandler::Update(CallbackRecArgs_Upd args) {
+void EntitiesCtrlInputHandler::Update(const CallbackRecArgs_Upd& args) {
 
 	if (IsActive) {
-		CurrMode->HandleInput(args);
+		CallbackRecArgs_Upd argCp = args;
+		CurrMode->HandleInput(argCp);
 	}
 }

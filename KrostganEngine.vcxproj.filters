@@ -88,9 +88,6 @@
     <Filter Include="Исходные файлы\CoreSystems\EntitiesControl\Orders\BaseOrders">
       <UniqueIdentifier>{66928b83-3043-4d09-9bbe-5dad90722650}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Исходные файлы\CoreSystems\PlayerControl\EntitiesCtrlModes">
-      <UniqueIdentifier>{e417bccc-fef5-419b-a656-d87dd324665f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Файлы заголовков\CoreSystems\EntitiesControl\Orders\BaseOrders\OrderComponents">
       <UniqueIdentifier>{008e50a3-f08d-45aa-ab41-df008f0b5e9a}</UniqueIdentifier>
     </Filter>
@@ -331,6 +328,36 @@
     <Filter Include="Исходные файлы\Visual\Animations\BattleAnimations">
       <UniqueIdentifier>{6e27c885-86f6-4579-8a5a-354e849cc2ba}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems\PlayerControl\InputHandlers">
+      <UniqueIdentifier>{72b95023-e690-4e24-9356-daded708ea82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems\PlayerControl\InputHandlers\Base">
+      <UniqueIdentifier>{d49dd455-3c17-4814-a5e9-25b86f8d38ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\CoreSystems\PlayerControl\InputHandlers">
+      <UniqueIdentifier>{8ee5f10d-e067-4b41-b71e-982222a129c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\CoreSystems\PlayerControl\InputHandlers\Base">
+      <UniqueIdentifier>{27d84a3d-25c0-48d5-a0fc-a57ceba2d344}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\CoreSystems\PlayerControl\EntitiesCtrlModes">
+      <UniqueIdentifier>{e417bccc-fef5-419b-a656-d87dd324665f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems\PlayerControl\InputHandlers\Window">
+      <UniqueIdentifier>{eb50038a-b388-4809-b747-12154a1f41c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\CoreSystems\PlayerControl\InputHandlers\Window">
+      <UniqueIdentifier>{4c520199-391e-47ae-9da6-2ba76d32e65b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems\PlayerControl\InputHandlers\Priority">
+      <UniqueIdentifier>{468448a7-a45d-411e-aad7-9868f4c6818e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Debug\InputHandlers">
+      <UniqueIdentifier>{6b8252ef-9361-48e0-b550-03e1e252c769}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Debug\InputHandlers">
+      <UniqueIdentifier>{df8ee8f6-7abe-42a2-9706-46a23a6b9a81}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\main.cpp">
@@ -380,9 +407,6 @@
     </ClCompile>
     <ClCompile Include="Scripts\ValuesListDeserializer.cpp">
       <Filter>Исходные файлы\CoreSystems</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\BaseInputHandler.cpp">
-      <Filter>Исходные файлы\CoreSystems\PlayerControl</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\ColliderShapes.cpp">
       <Filter>Исходные файлы\CoreSystems\Physics\CollisionShapes</Filter>
@@ -684,6 +708,18 @@
     <ClCompile Include="Scripts\IAttackableObj.cpp">
       <Filter>Исходные файлы\CoreSystems\GameObjects\FightingSystems\HitPointSystem</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\CameraControlInputHandler.cpp">
+      <Filter>Исходные файлы\CoreSystems\PlayerControl\InputHandlers\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\BaseAppInputHandler.cpp">
+      <Filter>Исходные файлы\CoreSystems\PlayerControl\InputHandlers\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\MainMenuTransitionHandler.cpp">
+      <Filter>Исходные файлы\CoreSystems\PlayerControl\InputHandlers\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\DbgConsoleInputHandler.cpp">
+      <Filter>Исходные файлы\Debug\InputHandlers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\CoreGameObjects.h">
@@ -745,9 +781,6 @@
     </ClInclude>
     <ClInclude Include="Scripts\Physics.h">
       <Filter>Файлы заголовков\CoreSystems\Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\BaseInputHandler.h">
-      <Filter>Файлы заголовков\CoreSystems\PlayerControl</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\ColliderShapes.h">
       <Filter>Файлы заголовков\CoreSystems\Physics</Filter>
@@ -1234,6 +1267,24 @@
     </ClInclude>
     <ClInclude Include="Scripts\EntityAutoAttackModule.h">
       <Filter>Файлы заголовков\CoreSystems\GameObjects\FightingSystems\AutoAttackSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\CameraControlInputHan.h">
+      <Filter>Файлы заголовков\CoreSystems\PlayerControl\InputHandlers\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\InputHandlers.h">
+      <Filter>Файлы заголовков\CoreSystems\PlayerControl\InputHandlers</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\BaseAppInputHandler.h">
+      <Filter>Файлы заголовков\CoreSystems\PlayerControl\InputHandlers\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\DummyLockerHandler.h">
+      <Filter>Файлы заголовков\CoreSystems\PlayerControl\InputHandlers\Priority</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\MainMenuTransitionHandler.h">
+      <Filter>Файлы заголовков\CoreSystems\PlayerControl\InputHandlers\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\DbgConsoleInputHandler.h">
+      <Filter>Файлы заголовков\Debug\InputHandlers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

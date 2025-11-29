@@ -66,6 +66,7 @@ namespace KrostganEngine::Core {
 		static inline const string ATTR_COLOR				= "Color";
 		static inline const string ATTR_RESIZEINHERIT_UI	= "ResizeInherit_UI";
 		static inline const string ATTR_SHADER				= "Shader";
+		static inline const string ATTR_NAME				= "Name";
 
 		static inline const string ATTR_SPRITE_SOURCE		= "Source";
 

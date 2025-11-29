@@ -27,15 +27,15 @@ Sprite& UISprite::ctor_InitOwner() {
 	return *RenSprite;
 }
 
-UISprite::UISprite(const Texture& RenTexture, Shader* RendShader, byte RendLayer)
-		:UIElement(ctor_InitOwner(), (Vector2f)RenTexture.getSize(), RendLayer),
+UISprite::UISprite(const Texture& RenTexture, const string* Name, Shader* RendShader, byte RendLayer)
+		:UIElement(ctor_InitOwner(), Name, (Vector2f)RenTexture.getSize(), RendLayer),
 		RendShader(RendShader)
 {
 	ctor_Initialize(RenTexture);
 }
 
-UISprite::UISprite(const Texture& RenTexture, UIElement* Parent,Shader*	RendShader, byte RendLayer)
-		:UIElement(ctor_InitOwner(), Parent, (Vector2f)RenTexture.getSize(), RendLayer),
+UISprite::UISprite(const Texture& RenTexture, UIElement* Parent, const string* Name, Shader*	RendShader, byte RendLayer)
+		:UIElement(ctor_InitOwner(), Parent, Name, (Vector2f)RenTexture.getSize(), RendLayer),
 		RendShader(RendShader)
 {
 	ctor_Initialize(RenTexture);

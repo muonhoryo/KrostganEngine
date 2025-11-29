@@ -27,38 +27,19 @@ namespace KrostganEngine::Core {
 
 	public:
 		GameMode();
-		~GameMode();
+		virtual ~GameMode();
 
 		void ExecuteCycle() override;
 
 	private:
-		RenderWindow*				Window;
-		ICallbackRec_Upd*			BaseInputHandl;
-		EntitiesCtrlInputHandler*	EntitiesCtrlHandler;
-		ExtVisualManager*						GameInterface;
+		ExtVisualManager*			GameInterface;
 	};
 
 	class MainMenuMode :public EngineMode {
 
-	private:
-		class MainMenuInputHandler :public ICallbackRec_Upd {
-
-		public:
-			MainMenuInputHandler() {
-
-			}
-			~MainMenuInputHandler() {
-			}
-
-			void Update(CallbackRecArgs_Upd args) override;
-
-			bool		HasPressed = false;
-		};
-
-		MainMenuInputHandler InputHandler;
-
 	public:
 		MainMenuMode();
+		virtual ~MainMenuMode();
 
 		void ExecuteCycle() override;
 	};
@@ -68,6 +49,7 @@ namespace KrostganEngine::Core {
 
 	public:
 		LevelDeserializationMode() : EngineMode() {};
+		virtual ~LevelDeserializationMode(){}
 	};
 
 	/*class StartMessageMode :public EngineMode {

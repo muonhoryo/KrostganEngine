@@ -10,12 +10,14 @@ namespace KrostganEngine::UI {
 	public:
 		UISprite(
 			const Texture&	RenTexture,
+			const string*	Name			= nullptr,
 			Shader*			RendShader		= nullptr,
 			byte			RendLayer		= DEFAULT_RENDLAYER_UI);
 		
 		UISprite(
 			const Texture&	RenTexture,
 			UIElement*		Parent,
+			const string*	Name			= nullptr,
 			Shader*			RendShader		= nullptr,
 			byte			RendLayer		= DEFAULT_RENDLAYER_UI);
 		

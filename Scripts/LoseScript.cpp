@@ -2,6 +2,7 @@
 #include <LoseScript.h>
 #include <Engine.h>
 #include <GameVisualEffects.h>
+#include <InputHandlers.h>
 
 using namespace KrostganEngine::GameTransitions;
 using namespace KrostganEngine::UI;
@@ -14,7 +15,8 @@ LoseScript::LoseScript()
 	MessageShowingTime(Engine::GetGlobalConsts().LoseMsg_ShowingTime),
 	MessageAppearingDeltaTime(MessageShowingTime - MessageAppearingTime) {
 
-	EntitiesCtrlInputHandler::GetInstance()->TurnOff();
+	auto locker=new DummyLockerHandler();
+	locker->StartHandling();
 	LostTimer.restart();
 	UserInterfaceLoader::UnloadCurrent();
 }

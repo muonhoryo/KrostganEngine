@@ -1,6 +1,9 @@
 #pragma once
 
-#include <BaseInputHandler.h>
+#include <PlayerInputManager.h>
+
+#include <InputHandlers.h>
+
 #include <EntitiesCtrlInputHandler.h>
 #include <EntitiesCtrlInputModes.h>
 #include <PlayerInputManager.h>

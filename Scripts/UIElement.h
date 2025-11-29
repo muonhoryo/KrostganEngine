@@ -73,6 +73,13 @@ namespace KrostganEngine::UI {
 		/// <returns></returns>
 		Vector2f			GetAnchoredGlobalPos(Vector2f anchor) const;
 		bool				GetResizingUIByInherit() const;
+		const string&		GetName() const;
+		/// <summary>
+		/// Return first child UIElement with input name or nullptr if hasn't child with the name.
+		/// </summary>
+		/// <param name="name"></param>
+		/// <returns></returns>
+		UIElement*			GetUIElementByName(const string& name) const;
 
 		bool		GetInheritActivity() const;
 		bool		GetSelfActivity() const;
@@ -91,13 +98,15 @@ namespace KrostganEngine::UI {
 		UIElement(
 			Transformable&		Owner,
 			UIElement*			Parent,
-			Vector2f			UISize = DEFAULT_SCALE,
-			byte				RendLayer = DEFAULT_RENDLAYER_UI);
+			const string*		Name		=nullptr,
+			Vector2f			UISize		= DEFAULT_SCALE,
+			byte				RendLayer	= DEFAULT_RENDLAYER_UI);
 
 		UIElement(
 			Transformable&		Owner,
-			Vector2f			UISize = DEFAULT_SCALE,
-			byte				RendLayer = DEFAULT_RENDLAYER_UI);
+			const string*		Name		= nullptr,
+			Vector2f			UISize		= DEFAULT_SCALE,
+			byte				RendLayer	= DEFAULT_RENDLAYER_UI);
 
 		virtual	void SetUISize_Inherit(Vector2f oldSize);
 		virtual void SetChildren_UISize(Vector2f oldSize);
@@ -105,7 +114,6 @@ namespace KrostganEngine::UI {
 		Vector2f		Anchor = Vector2f(0, 0);
 		Vector2f		UISize;
 
-	protected:
 		void SetPosition_Inherit() override;
 		void SetScale_Inherit() override;
 		void SetRotation_Inherit() override;
@@ -126,6 +134,8 @@ namespace KrostganEngine::UI {
 		Vector2f	GetLocalPositionFromParent() const;
 		Vector2f	GetLocalScaleFromParent() const;
 		Vector2f	TransformLocalPosToGlobal(Vector2f localPos) const;
+
+		string		Name = "";
 
 		Vector2f	LocalPosition = DEFAULT_POSITION;
 		Vector2f	LocalScale = DEFAULT_SCALE;

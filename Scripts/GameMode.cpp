@@ -13,9 +13,10 @@ using namespace KrostganEngine::Visual;
 
 GameMode::GameMode() :EngineMode() {
 
-    Window = &Engine::GetRenderWindow();
-    BaseInputHandl = new BaseInputHandler();
-    EntitiesCtrlHandler = new EntitiesCtrlInputHandler();
+    new CameraControlInputHan();
+    new BaseAppInputHandler();
+    new EntitiesCtrlInputHandler();
+    
     GameInterface = new ExtVisualManager();
 
     Engine::SetCameraPos(Vector2f(0, 0));
@@ -23,8 +24,6 @@ GameMode::GameMode() :EngineMode() {
     UserInterfaceLoader::Load_GameUI();
 }
 GameMode::~GameMode() {
-	delete BaseInputHandl;
-    delete EntitiesCtrlHandler;
     delete GameInterface;
 
     EngineCallbackHandler<ICallbackRec_GraphRen>& renMod = Engine::GetRenderModule();
@@ -37,6 +36,7 @@ GameMode::~GameMode() {
     EntitiesObserver::Unload();
 
     UserInterfaceManager::Initialize();
+    PlayerInputManager::Clear();
 }
 void GameMode::ExecuteCycle() {
 

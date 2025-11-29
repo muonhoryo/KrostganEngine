@@ -11,17 +11,19 @@ namespace KrostganEngine::UI {
 	class UIEmpty final : public UIElement {
 
 	public:
-		UIEmpty(UIElement* Parent, Vector2f UISize = DEFAULT_SCALE)
+		UIEmpty(UIElement* Parent, const string* Name = nullptr, Vector2f UISize = DEFAULT_SCALE)
 				:UIElement(
 					ctor_InitOwner(),
 					Parent,
+					Name,
 					UISize,
 					DEFAULT_RENDLAYER)
 		{}
 
-		UIEmpty(Vector2f UISize = DEFAULT_SCALE)
+		UIEmpty(const string* Name = nullptr, Vector2f UISize = DEFAULT_SCALE)
 				:UIElement(
 					ctor_InitOwner(),
+					Name,
 					UISize,
 					DEFAULT_RENDLAYER)
 		{}

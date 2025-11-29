@@ -37,6 +37,7 @@ void UserInterfaceLoader::DeserializeNode(xml_node<>* node, UIElement& parent)
 		byte layer(DEFAULT_RENDLAYER_UI);
 		bool active(true);
 		bool resizeUIInherit(false);
+		string name = "";
 
 		Shader* shad = nullptr;
 		Color color = Color::White;
@@ -77,6 +78,9 @@ void UserInterfaceLoader::DeserializeNode(xml_node<>* node, UIElement& parent)
 			else if (attr->name() == ATTR_SHADER) {
 				shad= &dynamic_cast<ExtGlRes_Shader*>(ExternalGlobalResources::GetRes(string(attr->value())))->Shader_;
 			}
+			else if (attr->name() == ATTR_NAME) {
+				name = attr->value();
+			}
 
 			attr = attr->next_attribute();
 		}
@@ -105,7 +109,8 @@ void UserInterfaceLoader::DeserializeNode(xml_node<>* node, UIElement& parent)
 
 			UIText* textB = new UIText(
 				&parent,
-				text,
+				text, 
+				&name,
 				fontSize,
 				shad,
 				layer);
@@ -113,7 +118,6 @@ void UserInterfaceLoader::DeserializeNode(xml_node<>* node, UIElement& parent)
 			textB->SetLocalPosition(pos);
 			textB->SetLocalScale(scale);
 			textB->SetAnchor(anchor);
-			textB->SetActivity(active);
 			textB->SetColor(color);
 			if (fontPath != "")
 				textB->SetFont(ExternalGlobalResources::GetRes_t<ExtGlRes_Font>(fontPath)->Font_);
@@ -143,6 +147,7 @@ void UserInterfaceLoader::DeserializeNode(xml_node<>* node, UIElement& parent)
 			UISprite* spr = new UISprite(
 				*tex,
 				&parent,
+				&name,
 				shad,
 				layer);
 			spr->SetLocalPosition(pos);
@@ -153,7 +158,7 @@ void UserInterfaceLoader::DeserializeNode(xml_node<>* node, UIElement& parent)
 		}
 		else if (node->name() == UIEL_NAME_EMPTY) {
 
-			UIEmpty* empt = new UIEmpty(&parent, parent.GetGlobalUISize());
+			UIEmpty* empt = new UIEmpty(&parent, &name, parent.GetGlobalUISize());
 			empt->SetLocalPosition(pos);
 			empt->SetLocalScale(scale);
 			empt->SetAnchor(anchor);
@@ -163,6 +168,7 @@ void UserInterfaceLoader::DeserializeNode(xml_node<>* node, UIElement& parent)
 		if (el != nullptr) {
 
 			el->SetResizingUIByInherit(resizeUIInherit);
+			el->SetActivity(active);
 			//Read dependencies
 			char* name = nullptr;
 			attr = node->first_attribute();

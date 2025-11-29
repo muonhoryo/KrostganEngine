@@ -5,6 +5,7 @@
 
 using namespace KrostganEngine;
 using namespace std;
+using namespace sf;
 
 void FStreamExts::ClearPath(string& path) {
 	long long index = -1;
@@ -43,4 +44,18 @@ bool FStreamExts::ParseBool(const string& servalue) {
 	string value = string(servalue);
 	ClearPath(value);
 	return value == "1";
+}
+char FStreamExts::SFKeyToChar(Keyboard::Key key) {
+	if (key >= Keyboard::Key::A && key <= Keyboard::Key::Z)
+		return (char)key + 97;
+	else if (key >= Keyboard::Key::Num0 && key <= Keyboard::Key::Num9)
+		return (char)key + 22;
+	else if (key == Keyboard::Key::Space)
+		return ' ';
+	else if (key == Keyboard::Key::Add || key == Keyboard::Key::Equal)
+		return '+';
+	else if (key == Keyboard::Key::Subtract || key == Keyboard::Key::Hyphen)
+		return '-';
+	else
+		return (char)key;
 }

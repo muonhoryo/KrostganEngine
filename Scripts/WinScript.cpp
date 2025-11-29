@@ -3,10 +3,12 @@
 #include <Engine.h>
 #include <EntitiesObserver.h>
 #include <CoreGameObjects.h>
+#include <InputHandlers.h>
 
 using namespace KrostganEngine::GameTransitions;
 using namespace KrostganEngine::UI;
 using namespace KrostganEngine::GameObjects;
+using namespace KrostganEngine::PlayerControl;
 using namespace KrostganEngine;
 
 WinScript::WinScript()
@@ -15,7 +17,8 @@ WinScript::WinScript()
 	MessageShowingTime(Engine::GetGlobalConsts().LoseMsg_ShowingTime),
 	MessageAppearingDeltaTime(MessageShowingTime - MessageAppearingTime) {
 
-	EntitiesCtrlInputHandler::GetInstance()->TurnOff();
+	auto locker=new DummyLockerHandler();
+	locker->StartHandling();
 	LostTimer.restart();
 	auto beg=EntitiesObserver::GetBeginIter();
 	auto end = EntitiesObserver::GetAfterEndIter();
@@ -45,10 +48,12 @@ void WinScript::RenderGraphicAction(RenderWindow& window) {
 			Message = new UIText(
 				nullptr,
 				"Victory. The enemy hero is eliminated.",
+				nullptr,
 				50u);
 			Message2 = new UIText(
 				nullptr,
 				"Level will be restarted in a few seconds",
+				nullptr,
 				50u);
 
 			Message->SetAnchor(Vector2f(0.5, 0.5));

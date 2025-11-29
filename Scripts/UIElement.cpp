@@ -14,11 +14,13 @@ void UIElement::ctor_initialize(Vector2f UISize) {
 UIElement::UIElement(
 	Transformable&		Owner,
 	UIElement*			Parent,
+	const string*		Name,
 	Vector2f			UISize,
 	byte				RendLayer)
 		:HierarchyTrObj(Owner, Parent == nullptr ? UserInterfaceManager::GetRoot() : *Parent),
 		ICallbackRec_GraphRen(RendLayer),
-		Anchor(Anchor)
+		Anchor(Anchor),
+		Name(Name==nullptr? "" : *Name)
 {
 	ctor_initialize(UISize);
 	ctor_initialize_par();
@@ -26,11 +28,13 @@ UIElement::UIElement(
 
 UIElement::UIElement(
 	Transformable&		Owner,
+	const string*		Name,
 	Vector2f			UISize,
 	byte				RendLayer)
 		:HierarchyTrObj(Owner),
 		ICallbackRec_GraphRen(RendLayer),
-		Anchor(Anchor)
+		Anchor(Anchor),
+		Name(Name==nullptr? "" : *Name)
 {
 	ctor_initialize(UISize);
 	ctor_initialize_no_par();
@@ -194,6 +198,28 @@ Vector2f UIElement::GetAnchoredGlobalPos(Vector2f anchor) const {
 }
 bool		UIElement::GetResizingUIByInherit() const {
 	return ResizeUIByInherits;
+}
+const string& UIElement::GetName() const {
+	return Name;
+}
+UIElement* UIElement::GetUIElementByName(const string& name) const {
+	
+	auto it = GetChildrenBegin();
+	auto end = GetChildrenCEnd();
+	UIElement* el = nullptr;
+	for (;it != end;++it) {
+		el = dynamic_cast<UIElement*>(*it);
+		if (el->GetName() == name)
+			return el;
+	}
+	it = GetChildrenBegin();
+	for (;it != end;++it) {
+		el = dynamic_cast<UIElement*>(*it);
+		el = el->GetUIElementByName(name);
+		if (el != nullptr)
+			return el;
+	}
+	return nullptr;
 }
 
 bool		UIElement::GetActivity() const {

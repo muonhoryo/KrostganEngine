@@ -15,7 +15,7 @@ using namespace KrostganEngine::Core;
 using namespace KrostganEngine::Physics;
 using namespace KrostganEngine::Visual;
 
-const std::string Engine::ENGINE_VERSION = "A0.3.6.0";
+const std::string Engine::ENGINE_VERSION = "A0.3.8.0";
 
 Engine::Engine()
 	:RenderModule(*new EngineRenderModule(RendWin)),
@@ -47,17 +47,17 @@ Engine::Engine()
 	RendWin.setFramerateLimit(EngineConfiguration->FrameRateLimit);
 	WindowResizeEvArgs resArgs(Vector2u(0, 0), (Vector2u)resol);
 	ResizeWindowEventHandler.Execute(resArgs);
-	UserInterfaceManager::Initialize();
 	CurrMode = nullptr;
 	EngStateHandler = EngineStateHandler();
-
-	GroupSelectionSystem::GetInstance();
 
 	InitializeSystems();
 
 	ReqToSetStartMode();
 }
 void Engine::InitializeSystems() {
+	UserInterfaceManager::Initialize();
+	GroupSelectionSystem::GetInstance();
+	new PlayerInputManager();
 	InitializeCursorManager();
 }
 void Engine::InitializeCursorManager() {

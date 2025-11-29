@@ -140,13 +140,15 @@
     <ClCompile Include="Scripts\AutoAttackModule.cpp" />
     <ClCompile Include="Scripts\AutoAttackProjectile.cpp" />
     <ClCompile Include="Scripts\AutoAttackStats.cpp" />
+    <ClCompile Include="Scripts\BaseAppInputHandler.cpp" />
     <ClCompile Include="Scripts\BaseAutoAggrModule.cpp" />
-    <ClCompile Include="Scripts\BaseInputHandler.cpp" />
     <ClCompile Include="Scripts\BypassVertex.cpp" />
+    <ClCompile Include="Scripts\CameraControlInputHandler.cpp" />
     <ClCompile Include="Scripts\CircleCollShape.cpp" />
     <ClCompile Include="Scripts\CircleVisPrimitive.cpp" />
     <ClCompile Include="Scripts\ColliderShapes.cpp" />
     <ClCompile Include="Scripts\CommonHPRegenModule.cpp" />
+    <ClCompile Include="Scripts\DbgConsoleInputHandler.cpp" />
     <ClCompile Include="Scripts\DBG_ImmortalArmy.cpp" />
     <ClCompile Include="Scripts\DivineCommander.cpp" />
     <ClCompile Include="Scripts\EngineLateUpdateModule.cpp" />
@@ -176,6 +178,7 @@
     <ClCompile Include="Scripts\IndicatorFill.cpp" />
     <ClCompile Include="Scripts\LineAAAnimation.cpp" />
     <ClCompile Include="Scripts\LoseScript.cpp" />
+    <ClCompile Include="Scripts\MainMenuTransitionHandler.cpp" />
     <ClCompile Include="Scripts\ObjectsCatalog.cpp" />
     <ClCompile Include="Scripts\LevelCellMapDeser.cpp" />
     <ClCompile Include="Scripts\OutlineLineVisual.cpp" />
@@ -263,6 +266,7 @@
     <ClInclude Include="Scripts\AutoAttackHitInfo.h" />
     <ClInclude Include="Scripts\AutoAttackProjectiles.h" />
     <ClInclude Include="Scripts\AutoAttackStats.h" />
+    <ClInclude Include="Scripts\BaseAppInputHandler.h" />
     <ClInclude Include="Scripts\BaseAutoAggrModule.h" />
     <ClInclude Include="Scripts\BattleAnimations.h" />
     <ClInclude Include="Scripts\BattleAnimationsExt.h" />
@@ -271,10 +275,13 @@
     <ClInclude Include="Scripts\BypassVertex.h" />
     <ClInclude Include="Scripts\CallbackDelegates.h" />
     <ClInclude Include="Scripts\CachedBattleStats.h" />
+    <ClInclude Include="Scripts\CameraControlInputHan.h" />
     <ClInclude Include="Scripts\CommonHPRegenModule.h" />
     <ClInclude Include="Scripts\CoreVisual.h" />
     <ClInclude Include="Scripts\DBG_ImmortalArmy.h" />
     <ClInclude Include="Scripts\DBG_DivineCommander.h" />
+    <ClInclude Include="Scripts\DbgConsoleInputHandler.h" />
+    <ClInclude Include="Scripts\DummyLockerHandler.h" />
     <ClInclude Include="Scripts\EffectObjects.h" />
     <ClInclude Include="Scripts\EntityAutoAttackModule.h" />
     <ClInclude Include="Scripts\EntityOrder_AttackArea.h" />
@@ -306,8 +313,10 @@
     <ClInclude Include="Scripts\GameVisualEffects.h" />
     <ClInclude Include="Scripts\GeneralUIDependencies.h" />
     <ClInclude Include="Scripts\IModifiableStatsWrapper.h" />
+    <ClInclude Include="Scripts\InputHandlers.h" />
     <ClInclude Include="Scripts\LevelObjectsManager.h" />
     <ClInclude Include="Scripts\LvlLoadingStructs.h" />
+    <ClInclude Include="Scripts\MainMenuTransitionHandler.h" />
     <ClInclude Include="Scripts\MathExts.h" />
     <ClInclude Include="Scripts\MemoryExts.h" />
     <ClInclude Include="Scripts\ModifiableStatsWrapper.h" />
@@ -364,7 +373,6 @@
     <ClInclude Include="Scripts\ExtVisualManager.h" />
     <ClInclude Include="Scripts\HPSystem.h" />
     <ClInclude Include="Scripts\AutoAttackModule.h" />
-    <ClInclude Include="Scripts\BaseInputHandler.h" />
     <ClInclude Include="Scripts\BaseOrdersAndActions.h" />
     <ClInclude Include="Scripts\CollectionsExts.h" />
     <ClInclude Include="Scripts\ColliderShapes.h" />

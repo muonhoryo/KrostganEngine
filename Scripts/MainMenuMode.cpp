@@ -4,6 +4,7 @@
 #include <Engine.h>
 #include <ExternalData.h>
 #include <VectExts.h>
+#include <InputHandlers.h>
 
 using namespace KrostganEngine;
 using namespace KrostganEngine::Core;
@@ -13,32 +14,15 @@ using namespace sf;
 MainMenuMode::MainMenuMode() : EngineMode(){
 
 	UserInterfaceLoader::Load_MainMenu();
+	new MainMenuTransitionHandler();
+}
+MainMenuMode::~MainMenuMode() {
+
+	PlayerInputManager::Clear();
 }
 
 void MainMenuMode::ExecuteCycle() {
 
 	Engine::GetUpdateModule().Execute();
 	Engine::GetRenderModule().Execute();
-}
-
-void MainMenuMode::MainMenuInputHandler::Update(CallbackRecArgs_Upd args) {
-
-	if (HasPressed) {
-
-		Engine::ReqToSetMode_LevelDeser();
-	}
-	else {
-		for (auto& input : args.PlayerInput) {
-
-			if (input.type == Event::KeyPressed &&
-				input.key.code == Keyboard::Enter) {
-
-				UserInterfaceLoader::Load_LevelDeserialization();
-
-				HasPressed = true;
-
-				break;
-			}
-		}
-	}
 }
