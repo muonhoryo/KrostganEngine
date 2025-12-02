@@ -3,6 +3,7 @@
 #include <Engine.h>
 #include <EngineWorkCycleModule.h>
 #include <LevelBypassMap.h>
+#include <GameLevel.h>
 
 using namespace KrostganEngine::Core;
 using namespace sf;
@@ -34,8 +35,8 @@ GameMode::~GameMode() {
     LevelBypassMapManager::Unload();
     ObjectsCatalog::Unload();
     EntitiesObserver::Unload();
+    LevelManager::UnassignLevelInfo();
 
-    UserInterfaceManager::Initialize();
     PlayerInputManager::Clear();
 }
 void GameMode::ExecuteCycle() {

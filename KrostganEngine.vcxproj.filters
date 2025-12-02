@@ -726,6 +726,9 @@
     <ClCompile Include="Scripts\EntityOrder_ImmobilityChecking.cpp">
       <Filter>Исходные файлы\CoreSystems\EntitiesControl\Orders\BaseOrders\OrdersComponents</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\LevelManager.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameLevel</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\CoreGameObjects.h">
@@ -1232,7 +1235,7 @@
     <ClInclude Include="Scripts\MathExts.h">
       <Filter>Файлы заголовков\Extensions</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\LevelObjectsManager.h">
+    <ClInclude Include="Scripts\LevelManager.h">
       <Filter>Файлы заголовков\CoreSystems\GameLevel</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\AnimationsCore.h">

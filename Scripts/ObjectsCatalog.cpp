@@ -72,7 +72,7 @@ WorldObjectLoadInfo& ObjsCatalogDeserial::ParseObjInfo(const vector<string>& par
 
 	WorldObjectLoadInfo* info = nullptr;
 	const pair<const string, const string>* parParam = nullptr;
-	parParam = &ParseParamLine(params[0]);
+	parParam = ParseParamLine(params[0]);
 
 	if (parParam->first.find(SerializationParDefNames::OBJECT_TYPE) != string::npos)
 	{
@@ -103,7 +103,7 @@ WorldObjectLoadInfo& ObjsCatalogDeserial::ParseObjInfo(const vector<string>& par
 		auto end = params.cend();
 		for (;beg != end;++beg) {
 
-			parParam = &ParseParamLine(*beg);
+			parParam = ParseParamLine(*beg);
 			info->WriteParam(*parParam);
 			delete parParam;
 		}
@@ -122,10 +122,10 @@ pair<size_t, _ObjSubsPairType>& ObjsCatalogDeserial::ParseObjSubinfo(const vecto
 	size_t objID;
 	AttrsCollectn& attrs = *new AttrsCollectn();
 
-	const pair<const string, const string>* parLine = &ParseParamLine(params[0]);
+	const pair<const string, const string>* parLine = ParseParamLine(params[0]);
 	subID = (byte)stoi(parLine->second);
 	delete parLine;
-	parLine = &ParseParamLine(params[1]);
+	parLine = ParseParamLine(params[1]);
 	if (parLine->first.find(SerializationParDefNames::OBJECT_CATALOG_ID) == string::npos)
 		throw exception("Missing catalog ID.");
 
@@ -136,19 +136,24 @@ pair<size_t, _ObjSubsPairType>& ObjsCatalogDeserial::ParseObjSubinfo(const vecto
 	auto end = params.cend();
 	++beg; ++beg;
 	for (;beg != end;++beg) {
-		parLine = &ParseParamLine(*beg);
+		parLine = ParseParamLine(*beg);
 		attrs.push_back(parLine);
 	}
 	return *new pair<size_t, _ObjSubsPairType>(objID, _ObjSubsPairType(subID, new LvlObjAdditParams(attrs)));
 }
-const pair<const string, const string>& ObjsCatalogDeserial::ParseParamLine(const string& line) {
+/// <summary>
+/// Return nullptr if cannot parse line
+/// </summary>
+/// <param name="line"></param>
+/// <returns></returns>
+const pair<const string, const string>* ObjsCatalogDeserial::ParseParamLine(const string& line) {
 
 	size_t index = line.find(PAR_DEF_NAME_END_SYM);
 	if (index == string::npos)
-		throw exception("Incorrect parameter format");
+		return nullptr;
 	string p1 = line.substr(0, index);
 	string p2 = line.substr(index + 1, line.size() - index);
 	FStreamExts::ClearPath(p1);
 	FStreamExts::ClearPath(p2);
-	return *new pair<const string, const string>(p1, p2);
+	return new pair<const string, const string>(p1, p2);
 }

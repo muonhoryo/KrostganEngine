@@ -177,6 +177,7 @@
     <ClCompile Include="Scripts\CatalogObject.cpp" />
     <ClCompile Include="Scripts\IHierarchyTrObj.cpp" />
     <ClCompile Include="Scripts\IndicatorFill.cpp" />
+    <ClCompile Include="Scripts\LevelManager.cpp" />
     <ClCompile Include="Scripts\LineAAAnimation.cpp" />
     <ClCompile Include="Scripts\LoseScript.cpp" />
     <ClCompile Include="Scripts\MainMenuTransitionHandler.cpp" />
@@ -316,7 +317,7 @@
     <ClInclude Include="Scripts\GeneralUIDependencies.h" />
     <ClInclude Include="Scripts\IModifiableStatsWrapper.h" />
     <ClInclude Include="Scripts\InputHandlers.h" />
-    <ClInclude Include="Scripts\LevelObjectsManager.h" />
+    <ClInclude Include="Scripts\LevelManager.h" />
     <ClInclude Include="Scripts\LvlLoadingStructs.h" />
     <ClInclude Include="Scripts\MainMenuTransitionHandler.h" />
     <ClInclude Include="Scripts\MathExts.h" />

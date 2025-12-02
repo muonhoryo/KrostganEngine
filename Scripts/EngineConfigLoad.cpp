@@ -35,17 +35,6 @@ const EngineConfig& EngineConfigLoad::LoadEngineConfig() {
 	LoadedConfig.CursorHotspot_Attack	= DeserValueByDef_Vec2u	(EngineConfig::DEF_CURSOR_ATTACK_HOTSPOT, buffer);
 	LoadedConfig.Camera_MovSpeed		= DeserValueByDef_float	(EngineConfig::DEF_CAMERA_MOVING_SPEED, buffer);
 
-	//Camera moving borders
-
-	{
-		float right		= DeserValueByDef_float(EngineConfig::DEF_CAMERA_MOV_AREA_RIGHT, buffer);
-		float left		= DeserValueByDef_float(EngineConfig::DEF_CAMERA_MOV_AREA_LEFT, buffer);
-		float top		= DeserValueByDef_float(EngineConfig::DEF_CAMERA_MOV_AREA_TOP, buffer);
-		float bottom	= DeserValueByDef_float(EngineConfig::DEF_CAMERA_MOV_AREA_BOTTOM, buffer);
-
-		LoadedConfig.CameraMovingArea = Rect<float>(left, top, right-left, bottom-top);
-	}
-
 	//
 
 	StrValuesArr.clear();

@@ -130,9 +130,9 @@ namespace KrostganEngine::Core {
 		
 	public:
 		static void DeserializeCatalog(string serPath);
-		static WorldObjectLoadInfo&				ParseObjInfo	(const vector<string>& params);
-		static pair<size_t,_ObjSubsPairType>&	ParseObjSubinfo	(const vector<string>& params);
-		static const pair<const string, const string>& ParseParamLine(const string& line);
+		static WorldObjectLoadInfo&						ParseObjInfo	(const vector<string>& params);
+		static pair<size_t,_ObjSubsPairType>&			ParseObjSubinfo	(const vector<string>& params);
+		static const pair<const string, const string>*	ParseParamLine(const string& line);
 
 		static inline const string PAR_DEF_NAME_END_SYM = ":";
 		static inline const string OBJECTS_SEP_LINE = "endl;";

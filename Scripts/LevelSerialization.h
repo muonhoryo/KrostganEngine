@@ -15,6 +15,11 @@ namespace KrostganEngine::Core {
 		static LevelLoadingInfo& DeserializeLevel(string serPath);
 		static void SerializeLevel(string serPath, LevelLoadingInfo levelInfo);
 
+		static inline const string DEF_CAMERA_BORDERS_AREA_LEFT = "Camera_Borders_Left";
+		static inline const string DEF_CAMERA_BORDERS_AREA_RIGHT = "Camera_Borders_Right";
+		static inline const string DEF_CAMERA_BORDERS_AREA_TOP = "Camera_Borders_Top";
+		static inline const string DEF_CAMERA_BORDERS_AREA_BOTTOM = "Camera_Borders_Bottom";
+
 	private:
 		LevelSerialization() {}
 	};

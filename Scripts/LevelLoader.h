@@ -55,8 +55,6 @@ namespace KrostganEngine::Core {
 		static inline ExecutedEvent<WallsLoadEventArgs> WallsLoadEvent=ExecutedEvent<WallsLoadEventArgs>();
 		static inline ExecutedEvent<GraphicsLoadEventArgs> GraphicsLoadEvent = ExecutedEvent<GraphicsLoadEventArgs>();
 
-		static inline LoadedObjects* LoadedLevel = nullptr;
-
 		static void LoadLevel(const LevelLoadingInfo& levelInfo);
 
 	private:

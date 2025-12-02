@@ -16,6 +16,7 @@ using namespace KrostganEngine::EntitiesControl;
 
 LevelLoadingInfo& LevelSerialization::DeserializeLevel(string serPath) {
 
+	LevelLoadingInfo* info = nullptr;
 	vector<vector<LvlObjInstantiationInfo*>*>* map = nullptr;
 	forward_list<WorldObjectLoadInfo*>& uniqueObjects = *new forward_list<WorldObjectLoadInfo*>();
 	bool isDeserObstrMap = false;
@@ -38,6 +39,7 @@ LevelLoadingInfo& LevelSerialization::DeserializeLevel(string serPath) {
 					isDeserObstrMap = false;
 					mapDeserialized = true;
 					params.clear();
+					break;
 				}
 				else {
 
@@ -67,10 +69,43 @@ LevelLoadingInfo& LevelSerialization::DeserializeLevel(string serPath) {
 				}
 			}
 		}
+
+		if (map == nullptr)
+			map = new vector<vector<LvlObjInstantiationInfo*>*>();
+
+		info = new LevelLoadingInfo(*map, uniqueObjects);
+
+		info->MapRowsCount = columnCount;
+
+		const pair<const string, const string>* pr=nullptr;
+		float left=0;
+		float right=0;
+		float top = 0;
+		float bottom = 0;
+		while (getline(st, line)) {
+
+			pr = ObjsCatalogDeserial::ParseParamLine(line);
+			if (pr == nullptr)
+				continue;
+
+			if (pr->first == DEF_CAMERA_BORDERS_AREA_LEFT) {
+				left = stof(pr->second);
+			}
+			else if (pr->first == DEF_CAMERA_BORDERS_AREA_RIGHT) {
+				right = stof(pr->second);
+			}
+			else if (pr->first == DEF_CAMERA_BORDERS_AREA_TOP) {
+				top = stof(pr->second);
+			}
+			else if (pr->first == DEF_CAMERA_BORDERS_AREA_BOTTOM) {
+				bottom = stof(pr->second);
+			}
+		}
+		info->CameraBorders = Rect<float>(left, top, right - left, bottom - top);
 	}
 
-	if (map == nullptr)
-		map = new vector<vector<LvlObjInstantiationInfo*>*>();
+	if (info == nullptr)
+		throw exception("Cant read file");
 
-	return *new LevelLoadingInfo(*map,uniqueObjects, columnCount);
+	return *info;
 }

@@ -14,9 +14,6 @@ using namespace KrostganEngine::GameObjects;
 
 void LevelLoader::LoadLevel(const LevelLoadingInfo& levelInfo) {
 
-	if (LoadedLevel != nullptr)
-		delete LoadedLevel;
-
 	LvlObjInstantiationInfo* cell = nullptr;
 	WorldTransfObj* obj = nullptr;
 	WorldObjectLoadInfo* objInfo = nullptr;
@@ -49,4 +46,6 @@ void LevelLoader::LoadLevel(const LevelLoadingInfo& levelInfo) {
 	}
 
 	LevelBypassMapManager::LoadFromLevelMap(levelInfo.LevelMap);
+
+	LevelManager::AssignLevelInfo(levelInfo);
 }

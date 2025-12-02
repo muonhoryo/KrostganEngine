@@ -3,7 +3,7 @@
 #include <ObjectsCatalog.h>
 #include <Extensions.h>
 #include <RelationsSystem.h>
-#include <LevelObjectsManager.h>
+#include <LevelManager.h>
 #include <AutoAttackProjectiles.h>
 
 using namespace sf;
@@ -163,7 +163,7 @@ WorldTransfObj* WorldObjectLoadInfo::InstantiateObject
 	{
 		delete Cache;
 	}
-	LevelObjectsManager::InstantiateObjEvHandler.Execute(obj);
+	LevelManager::InstantiateObjEvHandler.Execute(obj);
 	return obj;
 }
 
@@ -391,12 +391,12 @@ void EntityLoadInfo::WriteBattleStatsParams(const string& input, IModifiableStat
 	while (true) {
 		end = input.find(ENTITY_BSTATS_PARAMS_SEP, start);
 		if (end == string::npos) {
-			param = &ObjsCatalogDeserial::ParseParamLine(input.substr(start, input.length() - start ));
+			param = ObjsCatalogDeserial::ParseParamLine(input.substr(start, input.length() - start ));
 			stats.WriteParam(*param);
 			break;
 		}
 		else {
-			param = &ObjsCatalogDeserial::ParseParamLine(input.substr(start, end - start - 1));
+			param = ObjsCatalogDeserial::ParseParamLine(input.substr(start, end - start - 1));
 			stats.WriteParam(*param);
 			start = end + ENTITY_BSTATS_PARAMS_SEP.length();
 		}

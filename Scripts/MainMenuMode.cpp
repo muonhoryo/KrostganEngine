@@ -25,5 +25,6 @@ MainMenuMode::~MainMenuMode() {
 void MainMenuMode::ExecuteCycle() {
 
 	Engine::GetUpdateModule().Execute();
+	Engine::GetLateUpdModule().Execute();
 	Engine::GetRenderModule().Execute();
 }

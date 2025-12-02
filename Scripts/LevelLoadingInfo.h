@@ -16,7 +16,6 @@ using namespace KrostganEngine::EntitiesControl;
 
 namespace KrostganEngine::Core {
 	struct LevelLoadingInfo;
-	struct LoadedObjects;
 
 
 //
@@ -218,18 +217,29 @@ namespace KrostganEngine::Core {
 
 		vector<vector<LvlObjInstantiationInfo*>*>& LevelMap;
 		forward_list<WorldObjectLoadInfo*>& UniqueObjects;
-		size_t MapRowsCount;
+		size_t MapRowsCount = 0;
 
-		LevelLoadingInfo(vector<vector<LvlObjInstantiationInfo*>*>& LevelMap, forward_list<WorldObjectLoadInfo*>& UniqueObjects,
-			size_t MapRowsCount)
+		Rect<float> CameraBorders;
+
+		LevelLoadingInfo(vector<vector<LvlObjInstantiationInfo*>*>& LevelMap, forward_list<WorldObjectLoadInfo*>& UniqueObjects)
 			:LevelMap(LevelMap),
-			UniqueObjects(UniqueObjects),
-			MapRowsCount(MapRowsCount)
+			UniqueObjects(UniqueObjects)
 		{}
 		~LevelLoadingInfo() {
+
+			for (auto row : LevelMap) {
+				for (auto obj : *row) {
+					delete obj;
+				}
+				delete row;
+			}
+
 			for (auto obj : UniqueObjects) {
 				delete obj;
 			}
+			
+			delete &LevelMap;
+			delete &UniqueObjects;
 		}
 	};
 }

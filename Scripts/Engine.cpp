@@ -15,7 +15,7 @@ using namespace KrostganEngine::Core;
 using namespace KrostganEngine::Physics;
 using namespace KrostganEngine::Visual;
 
-const std::string Engine::ENGINE_VERSION = "A0.4.1.0";
+const std::string Engine::ENGINE_VERSION = "A0.4.2.1";
 
 Engine::Engine()
 	:RenderModule(*new EngineRenderModule(RendWin)),
@@ -100,11 +100,12 @@ void Engine::SetZoom(float zoom) {
 	}
 }
 void Engine::SetCameraPos(Vector2f pos) {
-	const Rect<float>& borders = Singleton->EngineConfiguration->CameraMovingArea;
 	auto& view = InstanceNewView();
+	auto lvlInfo = LevelManager::GetLevelInfo();
 
-	if (!DBG_DivineCommander::GetActivity()) {		//Limit camera moving if divine commander is off-line
+	if (lvlInfo!=nullptr && !DBG_DivineCommander::GetActivity()) {		//Limit camera moving if divine commander is off-line
 
+		const Rect<float>& borders = lvlInfo->CameraBorders;
 		pos.x = clamp<float>(pos.x, borders.left, borders.left + borders.width);
 		pos.y = clamp<float>(pos.y, borders.top, borders.top + borders.height);
 	}
@@ -121,6 +122,7 @@ void Engine::SetFullScreen(bool isFull) {
 		auto& wind = GetRenderWindow();
 		const VideoMode* mode;
 		Uint32 style;
+		Vector2f camPos = GetCameraPos();
 		if (isFull) {
 			mode = &VideoMode::getFullscreenModes()[0];
 			style = sf::Style::Close | sf::Style::Fullscreen;
@@ -133,6 +135,7 @@ void Engine::SetFullScreen(bool isFull) {
 		wind.create(*mode, "Krostgan Engine " + Engine::ENGINE_VERSION,style);
 		Singleton->IsFullscreen = isFull;
 		WindowResizeEvArgs resArgs(resol, Singleton->GetScreenSize());
+		SetCameraPos(camPos);
 		Singleton->ResizeWindowEventHandler.Execute(resArgs);
 	}
 }
