@@ -11,7 +11,7 @@ namespace KrostganEngine::GameObjects {
 
 	struct EntBatStats_Consts{
 
-		static inline const size_t FIELDS_COUNT_F	= 3;
+		static inline const size_t FIELDS_COUNT_F	= 4;
 		static inline const size_t FIELDS_COUNT_S_T = 2;
 		static inline const size_t FIELDS_COUNT_BOOL = 1;
 		static inline const size_t FIELDS_COUNT		= FIELDS_COUNT_S_T + FIELDS_COUNT_F + FIELDS_COUNT_BOOL;
@@ -28,7 +28,8 @@ namespace KrostganEngine::GameObjects {
 			//float
 			RegenHP_Tick	= t_float | (1 << ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT),
 			MovingSpeed		= t_float | (2 << ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT),
-			AutoAggrRadius	= t_float | (3 << ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT),
+			AutoAggrRange	= t_float | (3 << ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT),
+			ObservingRange	= t_float | (4 << ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT),
 			//bool
 			IsTargetableForAA	= t_bool | (1 << ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT)
 		};
@@ -37,7 +38,8 @@ namespace KrostganEngine::GameObjects {
 				pair<StatType,string>(StatType::RegenHP_Amount,		"RegenHP_Amount"),
 				pair<StatType,string>(StatType::RegenHP_Tick,		"RegenHP_Tick"),
 				pair<StatType,string>(StatType::MovingSpeed,		"MovingSpeed"),
-				pair<StatType,string>(StatType::AutoAggrRadius,		"AutoAggrRadius"),
+				pair<StatType,string>(StatType::AutoAggrRange,		"AutoAggrRange"),
+				pair<StatType,string>(StatType::ObservingRange,		"ObservingRange"),
 				pair<StatType,string>(StatType::IsTargetableForAA,	"IsTargetableForAA")
 		};
 	};
@@ -132,7 +134,9 @@ namespace KrostganEngine::GameObjects {
 
 		Parameter<float> const&		GetMovingSpeed()	const { return *GetParameterByType_f(EntityBattleStatType::MovingSpeed); }
 
-		Parameter<float> const&		GetAutoAggrRadius()	const { return *GetParameterByType_f(EntityBattleStatType::AutoAggrRadius); }
+		Parameter<float> const&		GetAutoAggrRange()	const { return *GetParameterByType_f(EntityBattleStatType::AutoAggrRange); }
+
+		Parameter<float> const&		GetObservingRange()	const {return *GetParameterByType_f(EntityBattleStatType::ObservingRange); }
 
 	//bool
 		const bool&		GetState_IsTargetableForAA() const { return *GetFieldRef_bool(EntityBattleStatType::IsTargetableForAA); }
@@ -148,7 +152,8 @@ namespace KrostganEngine::GameObjects {
 
 		void SetHPRegenTick(float tick);
 		void SetMovingSpeed(float speed);
-		void SetAutoAggrRadius(float radius);
+		void SetAutoAggrRange(float range);
+		void SetObservingRange(float range);
 
 		void SetTargetableForAA(bool isTargetable);
 

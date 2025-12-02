@@ -134,7 +134,7 @@ void BaseAutoAggrModule::CheckCurrTarget(CallbackRecArgs_Upd& args) {
 		else {
 			Vector2f pos=Owner.GetGlobalPosition();
 			float dist = Length(pos- t_ptr->GetClosestPoint(pos));
-			float alloDist = Owner.GetBattleStats().GetAutoAggrRadius();
+			float alloDist = Owner.GetBattleStats().GetAutoAggrRange();
 			if (dist-alloDist> eps) {
 				TurnFindTargetState();
 			}
@@ -143,7 +143,7 @@ void BaseAutoAggrModule::CheckCurrTarget(CallbackRecArgs_Upd& args) {
 }
 void BaseAutoAggrModule::FindTarget(CallbackRecArgs_Upd& args) {
 
-	float radius = Owner.GetBattleStats().GetAutoAggrRadius();
+	float radius = Owner.GetBattleStats().GetAutoAggrRange();
 	Vector2f pos = Owner.GetGlobalPosition();
 	TargsBuffer=Engine::GetPhysicsEngine().OverlapCircle_All(pos, radius, TARGETS_MASK);
 	if (TargsBuffer.size() != 0) {		//Has potential targets in auto-aggr radius

@@ -41,7 +41,8 @@ void EntityBattleStats::InitializeDefaultStats() {
 	//float
 	InitializeField_f(EntityBattleStatType::RegenHP_Tick, 1);
 	InitializeField_f(EntityBattleStatType::MovingSpeed, 1);
-	InitializeField_f(EntityBattleStatType::AutoAggrRadius, 0);
+	InitializeField_f(EntityBattleStatType::AutoAggrRange, 0);
+	InitializeField_f(EntityBattleStatType::ObservingRange, 0);
 
 	//bool
 	InitializeField_bool(EntityBattleStatType::IsTargetableForAA, true);
@@ -170,11 +171,17 @@ void EntityBattleStats::SetMovingSpeed(float speed) {
 
 	SetDefaultStat(EntityBattleStatType::MovingSpeed, speed);
 }
-void EntityBattleStats::SetAutoAggrRadius(float radius) {
-	if (radius < 0)
-		throw exception("AutoAggression radius cannot be less than zero");
+void EntityBattleStats::SetAutoAggrRange(float range) {
+	if (range < 0)
+		throw exception("AutoAggressionRange cannot be less than zero");
 
-	SetDefaultStat(EntityBattleStatType::AutoAggrRadius, radius);
+	SetDefaultStat(EntityBattleStatType::AutoAggrRange, range);
+}
+void EntityBattleStats::SetObservingRange(float range) {
+	if (range < 0)
+		throw exception("ObservingRange cannot be less than zero");
+
+	SetDefaultStat(EntityBattleStatType::ObservingRange, range);
 }
 
 //bool

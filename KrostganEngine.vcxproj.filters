@@ -358,6 +358,9 @@
     <Filter Include="Исходные файлы\Debug\InputHandlers">
       <UniqueIdentifier>{df8ee8f6-7abe-42a2-9706-46a23a6b9a81}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Исходные файлы\CoreSystems\EntitiesControl\Orders\BaseOrders\OrdersComponents">
+      <UniqueIdentifier>{3c2cee6b-8a77-4c64-b1c8-546676827b0c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\main.cpp">
@@ -719,6 +722,9 @@
     </ClCompile>
     <ClCompile Include="Scripts\DbgConsoleInputHandler.cpp">
       <Filter>Исходные файлы\Debug\InputHandlers</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\EntityOrder_ImmobilityChecking.cpp">
+      <Filter>Исходные файлы\CoreSystems\EntitiesControl\Orders\BaseOrders\OrdersComponents</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1285,6 +1291,9 @@
     </ClInclude>
     <ClInclude Include="Scripts\DbgConsoleInputHandler.h">
       <Filter>Файлы заголовков\Debug\InputHandlers</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\EntityOrder_ImmobilityChecking.h">
+      <Filter>Файлы заголовков\CoreSystems\EntitiesControl\Orders\BaseOrders\OrderComponents</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
