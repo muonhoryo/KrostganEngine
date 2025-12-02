@@ -15,6 +15,7 @@ MainMenuMode::MainMenuMode() : EngineMode(){
 
 	UserInterfaceLoader::Load_MainMenu();
 	new MainMenuTransitionHandler();
+	new BaseAppInputHandler();
 }
 MainMenuMode::~MainMenuMode() {
 

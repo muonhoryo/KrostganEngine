@@ -367,5 +367,6 @@ FodyWeavers.xsd
 *.png
 *.ttf
 *.otf
+*.jpg
 
 !Scripts/rapidxml/license.txt

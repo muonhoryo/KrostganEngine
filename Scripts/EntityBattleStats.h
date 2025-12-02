@@ -11,7 +11,7 @@ namespace KrostganEngine::GameObjects {
 
 	struct EntBatStats_Consts{
 
-		static inline const size_t FIELDS_COUNT_F	= 4;
+		static inline const size_t FIELDS_COUNT_F	= 5;
 		static inline const size_t FIELDS_COUNT_S_T = 2;
 		static inline const size_t FIELDS_COUNT_BOOL = 1;
 		static inline const size_t FIELDS_COUNT		= FIELDS_COUNT_S_T + FIELDS_COUNT_F + FIELDS_COUNT_BOOL;
@@ -30,6 +30,7 @@ namespace KrostganEngine::GameObjects {
 			MovingSpeed		= t_float | (2 << ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT),
 			AutoAggrRange	= t_float | (3 << ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT),
 			ObservingRange	= t_float | (4 << ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT),
+			Stealth			= t_float | (5 << ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT),
 			//bool
 			IsTargetableForAA	= t_bool | (1 << ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT)
 		};
@@ -40,6 +41,7 @@ namespace KrostganEngine::GameObjects {
 				pair<StatType,string>(StatType::MovingSpeed,		"MovingSpeed"),
 				pair<StatType,string>(StatType::AutoAggrRange,		"AutoAggrRange"),
 				pair<StatType,string>(StatType::ObservingRange,		"ObservingRange"),
+				pair<StatType,string>(StatType::Stealth,			"Stealth"),
 				pair<StatType,string>(StatType::IsTargetableForAA,	"IsTargetableForAA")
 		};
 	};
@@ -138,6 +140,8 @@ namespace KrostganEngine::GameObjects {
 
 		Parameter<float> const&		GetObservingRange()	const {return *GetParameterByType_f(EntityBattleStatType::ObservingRange); }
 
+		Parameter<float> const&		GetStealth()		const {return *GetParameterByType_f(EntityBattleStatType::Stealth); }
+
 	//bool
 		const bool&		GetState_IsTargetableForAA() const { return *GetFieldRef_bool(EntityBattleStatType::IsTargetableForAA); }
 
@@ -154,6 +158,7 @@ namespace KrostganEngine::GameObjects {
 		void SetMovingSpeed(float speed);
 		void SetAutoAggrRange(float range);
 		void SetObservingRange(float range);
+		void SetStealth(float stealth);
 
 		void SetTargetableForAA(bool isTargetable);
 

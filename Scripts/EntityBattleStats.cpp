@@ -43,6 +43,7 @@ void EntityBattleStats::InitializeDefaultStats() {
 	InitializeField_f(EntityBattleStatType::MovingSpeed, 1);
 	InitializeField_f(EntityBattleStatType::AutoAggrRange, 0);
 	InitializeField_f(EntityBattleStatType::ObservingRange, 0);
+	InitializeField_f(EntityBattleStatType::Stealth, 0);
 
 	//bool
 	InitializeField_bool(EntityBattleStatType::IsTargetableForAA, true);
@@ -182,6 +183,12 @@ void EntityBattleStats::SetObservingRange(float range) {
 		throw exception("ObservingRange cannot be less than zero");
 
 	SetDefaultStat(EntityBattleStatType::ObservingRange, range);
+}
+void EntityBattleStats::SetStealth(float stealth) {
+	if (stealth < 0)
+		throw exception("Stealth cannot be less than zero");
+
+	SetDefaultStat(EntityBattleStatType::Stealth, stealth);
 }
 
 //bool
