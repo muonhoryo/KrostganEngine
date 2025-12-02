@@ -2,7 +2,6 @@
 #include <EntityOrder_AttackArea.h>
 #include <EntityAction_MoveToPoint.h>
 #include <Extensions.h>
-//#include <Engine.h>
 #include <PathFinding_Diijkstra.h>
 
 using namespace sf;
@@ -14,9 +13,10 @@ EntityOrder_AttackArea::EntityOrder_AttackArea(
 	OrdersExecutor&		Owner, 
 	WorldTransfObj&		OwnerTransform, 
 	Vector2f			TargetGlobalCoord,
-	float				ToTargetMinDistance) : EntityOrder_GlobalPosTarget(TargetGlobalCoord),
+	float				ToTargetMinDistance) 
+	:EntityOrder_GlobalPosTarget(TargetGlobalCoord),
+	EntityOrder_ImmobilityChecking(OwnerTransform),
 		Owner(Owner),
-		OwnerTransform(OwnerTransform),
 		ToTargetMinDistance_Sqr(ToTargetMinDistance * ToTargetMinDistance){
 }
 
@@ -31,7 +31,7 @@ bool EntityOrder_AttackArea::CheckExecCondition() {
 	}		//Owner cannot auto-attack for now
 
 	float dist = SquareLength(TargetGlobalPos - OwnerTransform.GetGlobalPosition());
-	return dist <= ToTargetMinDistance_Sqr;
+	return dist <= ToTargetMinDistance_Sqr || CheckImmobility(dist);
 }
 list <IEntityAction*>* EntityOrder_AttackArea::GetActions() {
 

@@ -58,21 +58,21 @@ namespace KrostganEngine::PlayerControl {
 		void TurnOn();
 		void TurnOff();
 
-		bool GetShiftPresState();
+		//bool GetShiftPresState();
 
-		/// <summary>
-		/// Return true if state of order's grouping was changed
-		/// </summary>
-		/// <param name="ev"></param>
-		/// <returns></returns>
-		bool HandleShiftInput(const Event& ev);
+		///// <summary>
+		///// Return true if state of order's grouping was changed
+		///// </summary>
+		///// <param name="ev"></param>
+		///// <returns></returns>
+		//bool HandleShiftInput(const Event& ev);
 
 		void Update(const CallbackRecArgs_Upd& args) override;
 
 	private:
 		EntitiesCtrlInputMode* CurrMode;
 
-		bool IsShiftPressed = false;
+		//bool IsShiftPressed = false;
 		bool IsActive = true;
 	};
 }

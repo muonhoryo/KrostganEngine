@@ -35,7 +35,8 @@ void EntityAction_MoveTo::MoveTo(Vector2f targetCoord) {
 
 			MovingAbilityChecker.restart();
 			float immobilityValue = Engine::GetGlobalConsts().Units_ImmobilityCheckValue;
-			if (SquareLength(OwnerTransform.GetGlobalPosition() - PrevPos) < immobilityValue) {
+			float prevStep = SquareLength(OwnerTransform.GetGlobalPosition() - PrevPos);
+			if (prevStep < immobilityValue) {
 				CantMove = true;
 			}
 			PrevPos = OwnerTransform.GetGlobalPosition();

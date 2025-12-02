@@ -26,8 +26,8 @@ bool EntCtrlMode_Base::AbleToGiveOrders() {
 void EntCtrlMode_Base::HandleInput(CallbackRecArgs_Upd& args) {
 
 	for (auto& input : args.PlayerInput) {
-		if (Owner.HandleShiftInput(input))
-			continue;
+		/*if (Owner.HandleShiftInput(input))
+			continue;*/
 
 		if (input.type == Event::MouseButtonPressed) {
 
@@ -43,12 +43,12 @@ void EntCtrlMode_Base::HandleInput(CallbackRecArgs_Upd& args) {
 					IFractionMember* fracMember = dynamic_cast<IFractionMember*>(target);
 					Relation rel = fracMember != nullptr ? FractionsSystem::GetRelation(Fraction::Player, fracMember->GetFraction()) : Relation::Neutral;
 					if (rel == Relation::Enemy)
-						GiveOrderToSelected_AttackTarget(*target,Owner.GetShiftPresState());
+						GiveOrderToSelected_AttackTarget(*target,PlayerInputManager::GetBtnState_Shift());
 					else
-						GiveOrderToSelected_FollowObject(*target, Owner.GetShiftPresState());
+						GiveOrderToSelected_FollowObject(*target, PlayerInputManager::GetBtnState_Shift());
 				}
 				else {
-					GiveOrderToSelected_MoveToPoint(pos, Owner.GetShiftPresState());
+					GiveOrderToSelected_MoveToPoint(pos, PlayerInputManager::GetBtnState_Shift());
 				}
 			}
 			
@@ -77,7 +77,7 @@ void EntCtrlMode_Base::HandleInput(CallbackRecArgs_Upd& args) {
 				}
 				case Keyboard::I:
 				{
-					GiveOrderToSelected_Idle(Owner.GetShiftPresState());
+					GiveOrderToSelected_Idle(PlayerInputManager::GetBtnState_Shift());
 					break;
 				}
 				case Keyboard::C:
@@ -87,7 +87,7 @@ void EntCtrlMode_Base::HandleInput(CallbackRecArgs_Upd& args) {
 				}
 				case Keyboard::H:
 				{
-					GiveOrderToSelected_HoldPosition(Owner.GetShiftPresState());
+					GiveOrderToSelected_HoldPosition(PlayerInputManager::GetBtnState_Shift());
 					break;
 				}
 				default:

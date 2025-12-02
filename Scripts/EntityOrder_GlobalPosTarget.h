@@ -1,6 +1,5 @@
 #pragma once
 
-#include <IEntityOrder.h>
 #include <SFML/System.hpp>
 
 using namespace sf;
@@ -8,6 +7,8 @@ using namespace sf;
 namespace KrostganEngine::EntitiesControl {
 	class EntityOrder_GlobalPosTarget {
 	public:
+		virtual ~EntityOrder_GlobalPosTarget(){}
+
 		const Vector2f TargetGlobalPos;
 
 	protected:

@@ -2,7 +2,6 @@
 #include <EntityOrder_MoveToPoint.h>
 #include <EntityAction_MoveToPoint.h>
 #include <Extensions.h>
-//#include <Engine.h>
 #include <PathFinding_Diijkstra.h>
 
 using namespace sf;
@@ -16,15 +15,15 @@ EntityOrder_MoveToPoint::EntityOrder_MoveToPoint
 		Vector2f TargetGlobalCoord,
 		float ToTargetMinDistance)
 	:EntityOrder_GlobalPosTarget(TargetGlobalCoord),
-	Owner					(Owner),
-	OwnerTransform			(OwnerTransform),
-	ToTargetMinDistance_Sqr	(ToTargetMinDistance * ToTargetMinDistance){
+	EntityOrder_ImmobilityChecking(OwnerTransform),
+		Owner					(Owner),
+		ToTargetMinDistance_Sqr	(ToTargetMinDistance * ToTargetMinDistance){
 
 }
 
 bool EntityOrder_MoveToPoint::CheckExecCondition() {
 	float dist = SquareLength(TargetGlobalPos - OwnerTransform.GetGlobalPosition());
-	return dist <= ToTargetMinDistance_Sqr;
+	return dist <= ToTargetMinDistance_Sqr || CheckImmobility(dist);
 }
 list <IEntityAction*>* EntityOrder_MoveToPoint::GetActions() {
 

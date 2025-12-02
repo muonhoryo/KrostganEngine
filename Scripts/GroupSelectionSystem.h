@@ -78,10 +78,18 @@ namespace KrostganEngine::EntitiesControl {
 			return distance(coll.begin(), coll.end());
 		}
 
-		template <typename TIterator,typename TCIterator>
-		static void AddRange(TIterator itStart, TCIterator itEnd) {
+		template <typename TCIterator>
+		static void AddRange(TCIterator itStart, TCIterator itEnd) {
 			while (itStart != itEnd) {
 				Add(**itStart);
+				++itStart;
+			}
+		}
+
+		template <typename TCIterator>
+		static void RemoveRange(TCIterator itStart, TCIterator itEnd) {
+			while (itStart != itEnd) {
+				Remove(**itStart);
 				++itStart;
 			}
 		}

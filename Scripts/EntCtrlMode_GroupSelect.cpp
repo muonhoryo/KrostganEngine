@@ -9,6 +9,7 @@ using namespace KrostganEngine::PlayerControl;
 EntCtrlMode_GroupSelect::EntCtrlMode_GroupSelect(EntitiesCtrlInputHandler& Owner,Vector2f startMousePos)
 	:EntitiesCtrlInputMode(Owner),
 	SelectionUIQuad(nullptr){
+
 	SelectionStart = Engine::ScreenPosToGlobalCoord(startMousePos);
 	SelectionUIQuad = new GroupSelectionQuad(SelectionStart, SelectionStart);
 	cout << "Turn input handling mode to Group selection" << endl;
@@ -53,9 +54,17 @@ void EntCtrlMode_GroupSelect::HandleInput(CallbackRecArgs_Upd& args) {
 				}
 			}
 			if (units.size() > 0) {
-				if(!Owner.GetShiftPresState())
-					GroupSelectionSystem::Clear();
-				GroupSelectionSystem::AddRange(selecUnits.begin(), selecUnits.cend());
+
+				if (PlayerInputManager::GetBtnState_Ctrl()) {
+
+					GroupSelectionSystem::RemoveRange(selecUnits.cbegin(), selecUnits.cend());
+				}
+				else {
+
+					if (!PlayerInputManager::GetBtnState_Shift())
+						GroupSelectionSystem::Clear();
+					GroupSelectionSystem::AddRange(selecUnits.cbegin(), selecUnits.cend());
+				}
 			}
 
 			cout << "Selected objects count: " << units.size() << endl;

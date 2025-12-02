@@ -2,6 +2,8 @@
 
 //Order's bases
 #include <EntityOrder_GlobalPosTarget.h>
+#include <EntityOrder_ObjectTarget.h>
+#include <EntityOrder_ImmobilityChecking.h>
 //Compiled orders
 #include <EntityOrder_MoveToPoint.h>
 #include <EntityOrder_FollowTarget.h>

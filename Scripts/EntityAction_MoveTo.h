@@ -19,12 +19,6 @@ namespace KrostganEngine::EntitiesControl {
 		WorldTransfObj& OwnerTransform;
 
 		bool GetCantMoveState() const{
-			if (CantMove) {
-				return true;
-			}
-			else {
-				return false;
-			}
 			return CantMove;
 		}
 

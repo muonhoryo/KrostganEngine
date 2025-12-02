@@ -17,15 +17,16 @@ EntityOrder_FollowTarget::EntityOrder_FollowTarget
 	WorldTransfObj&							OwnerTransform, 
 	watch_ptr_handler_wr_c<TransformableObj>		Target)
 	:IEntityOrder(),
-	Owner			(Owner),
-	OwnerTransform	(OwnerTransform),
-	Target			(Target)
+	EntityOrder_ImmobilityChecking(OwnerTransform),
+		Owner			(Owner),
+		Target			(Target)
 {}
 EntityOrder_FollowTarget::~EntityOrder_FollowTarget() {
 }
 
 bool EntityOrder_FollowTarget::CheckExecCondition() {
-	return Target.GetPtr_t() == nullptr;
+	auto ptr = Target.GetPtr_t();
+	return ptr == nullptr || CheckImmobility(ptr->GetGlobalPosition());
 }
 list<IEntityAction*>* EntityOrder_FollowTarget::GetActions() {
 

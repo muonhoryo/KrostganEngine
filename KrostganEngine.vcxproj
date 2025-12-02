@@ -161,6 +161,7 @@
     <ClCompile Include="Scripts\EntityOrder_FollowTarget.cpp" />
     <ClCompile Include="Scripts\EntityOrder_HoldPosition.cpp" />
     <ClCompile Include="Scripts\EntityOrder_Idle.cpp" />
+    <ClCompile Include="Scripts\EntityOrder_ImmobilityChecking.cpp" />
     <ClCompile Include="Scripts\EntsCtrlOrdersGiving.cpp" />
     <ClCompile Include="Scripts\DynamicPhysObject.cpp" />
     <ClCompile Include="Scripts\ExternalGlobalResources.cpp" />
@@ -291,6 +292,7 @@
     <ClInclude Include="Scripts\EntityOrder_Idle.h" />
     <ClInclude Include="Scripts\EntityAARadVisualizer.h" />
     <ClInclude Include="Scripts\EntityAutoAggrRadVisualizer.h" />
+    <ClInclude Include="Scripts\EntityOrder_ImmobilityChecking.h" />
     <ClInclude Include="Scripts\EntityStatsWrGettingFuncs.h" />
     <ClInclude Include="Scripts\EntityUIDependencies.h" />
     <ClInclude Include="Scripts\ExternalData.h" />

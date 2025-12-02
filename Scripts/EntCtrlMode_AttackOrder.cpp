@@ -27,10 +27,10 @@ void EntCtrlMode_AttackOrder::HandleInput(CallbackRecArgs_Upd& args) {
 				Vector2f pos = GetPosByCursor();
 				if (TryGetTargetByTypeAtPos(pos, target)) {
 
-					GiveOrderToSelected_AttackTarget(*target, Owner.GetShiftPresState());
+					GiveOrderToSelected_AttackTarget(*target, PlayerInputManager::GetBtnState_Shift());
 				}
 				else {
-					GiveOrderToSelected_AttackArea(pos, Owner.GetShiftPresState());
+					GiveOrderToSelected_AttackArea(pos, PlayerInputManager::GetBtnState_Shift());
 				}
 			}
 			Owner.SetNewMode(*new EntCtrlMode_Base(Owner));

@@ -109,11 +109,18 @@ namespace KrostganEngine::PlayerControl {
 		static bool GetBtnState_Escape();
 		static void SetBtnState_Escape(bool newState);
 
+		static bool GetBtnState_Shift();
+		static bool GetBtnState_Alt();
+		static bool GetBtnState_Ctrl();
+
 	private:
 		static inline PlayerInputManager* Instance = nullptr;
 
 		static inline bool	IsReservedBtn_Escape = false;
 		static inline bool	FreeBtn_Escape = false;
+		static inline bool	IsPressed_Shift = false;
+		static inline bool	IsPressed_Alt = false;
+		static inline bool	IsPressed_Ctrl = false;
 		static inline Clock ReservBtnDelay_Escape;
 	};
 }

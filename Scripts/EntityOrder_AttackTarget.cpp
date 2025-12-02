@@ -15,10 +15,10 @@ using namespace KrostganEngine::Core;
 EntityOrder_AttackTarget::EntityOrder_AttackTarget(OrdersExecutor& Owner,WorldTransfObj& OwnerTransform, 
 	watch_ptr_handler_wr<IAttackableObj> Target)
 	:IEntityOrder(),
-	Owner(Owner),
-	OwnerTransform(OwnerTransform),
-	Target(Target),
-	AAModule(Owner.GetAAModule())
+	EntityOrder_ImmobilityChecking(OwnerTransform),
+		Owner(Owner),
+		Target(Target),
+		AAModule(Owner.GetAAModule())
 {}
 EntityOrder_AttackTarget::~EntityOrder_AttackTarget() {
 
@@ -30,7 +30,8 @@ bool EntityOrder_AttackTarget::CheckExecCondition() {
 		return true;
 
 	IAttackableObj* ptr = Target.GetPtr_t();
-	return ptr==nullptr || !ptr->CheckAttackReachability(IAttackableObj::AtkParam::IsAA);	//Target is untargetable for AA or disappeared
+	return ptr==nullptr || !ptr->CheckAttackReachability(IAttackableObj::AtkParam::IsAA) ||		//Target is untargetable for AA or disappeared
+		CheckImmobility(ptr->GetGlobalPosition());	
 }
 list<IEntityAction*>* EntityOrder_AttackTarget::GetActions() {
 

@@ -5,6 +5,7 @@
 
 using namespace KrostganEngine::PlayerControl;
 using namespace KrostganEngine;
+using namespace sf;
 
 IBaseInputHandler::IBaseInputHandler()
 	:IPlayerInputHandler(){
@@ -91,6 +92,39 @@ void PlayerInputManager::RemoveWindInputHandler(IWindowInputHandler& handler) {
 
 void PlayerInputManager::Update(CallbackRecArgs_Upd args) {
 
+	for (auto& inp : args.PlayerInput) {
+		if (inp.type == Event::KeyPressed) {
+
+			if (inp.key.shift/*inp.key.code == Keyboard::Key::LShift || inp.key.code == Keyboard::Key::RShift*/) {
+
+				IsPressed_Shift = true;
+			}
+			if (inp.key.alt/*inp.key.code == Keyboard::Key::LAlt || inp.key.code == Keyboard::Key::RAlt*/) {
+
+				IsPressed_Alt = true;
+			}
+			if (inp.key.control/*inp.key.code == Keyboard::Key::LControl || inp.key.code == Keyboard::Key::RControl*/) {
+
+				IsPressed_Ctrl = true;
+			}
+		}
+		else if (inp.type == Event::KeyReleased) {
+
+			if (!inp.key.shift/*inp.key.code == Keyboard::Key::LShift || inp.key.code == Keyboard::Key::RShift*/) {
+
+				IsPressed_Shift = false;
+			}
+			if (!inp.key.alt/*inp.key.code == Keyboard::Key::LAlt || inp.key.code == Keyboard::Key::RAlt*/) {
+
+				IsPressed_Alt = false;
+			}
+			if (!inp.key.control/*inp.key.code == Keyboard::Key::LControl || inp.key.code == Keyboard::Key::RControl*/){
+
+				IsPressed_Ctrl = false;
+			}
+		}
+	}
+
 	if (PriorityInputHan == nullptr) {
 
 		for (auto han : InputHandlers) {
@@ -158,4 +192,26 @@ void PlayerInputManager::SetBtnState_Escape(bool newState) {
 			IsReservedBtn_Escape = true;
 		}
 	}
+}
+
+/// <summary>
+/// Return true if shift-button is pressed
+/// </summary>
+/// <returns></returns>
+bool PlayerInputManager::GetBtnState_Shift() {
+	return IsPressed_Shift;
+}
+/// <summary>
+/// Return true if alt-button is pressed
+/// </summary>
+/// <returns></returns>
+bool PlayerInputManager::GetBtnState_Alt() {
+	return IsPressed_Alt;
+}
+/// <summary>
+/// Return true if ctrl-button is pressed
+/// </summary>
+/// <returns></returns>
+bool PlayerInputManager::GetBtnState_Ctrl() {
+	return IsPressed_Ctrl;
 }
