@@ -32,6 +32,7 @@ GameMode::~GameMode() {
     ObjectsCatalog::Unload();
     EntitiesObserver::Unload();
     LevelManager::UnassignLevelInfo();
+    GroupSelectionSystem::Clear();
     PlayerInputManager::Clear();
 }
 void GameMode::ExecuteCycle() {

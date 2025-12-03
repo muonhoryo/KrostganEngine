@@ -129,7 +129,7 @@ namespace KrostganEngine::Core {
 	class ObjsCatalogDeserial {
 		
 	public:
-		static void DeserializeCatalog(string serPath);
+		static void										DeserializeCatalog(string serPath);
 		static WorldObjectLoadInfo&						ParseObjInfo	(const vector<string>& params);
 		static pair<size_t,_ObjSubsPairType>&			ParseObjSubinfo	(const vector<string>& params);
 		static const pair<const string, const string>*	ParseParamLine(const string& line);

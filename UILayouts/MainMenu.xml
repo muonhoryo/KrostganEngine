@@ -12,4 +12,13 @@ Good luck!"
 		AnchorY="0.25"
 		Color="FFFFFFFF">
 	</TextBlock>
+	<TextBlock
+		Name ="LoadTxt"
+		Text="Loading..."
+		FontSize="30"
+		AnchorX="0.9"
+		AnchorY="0.9"
+		Color="00FF00FF"
+		Active="0">
+	</TextBlock>
 </root>

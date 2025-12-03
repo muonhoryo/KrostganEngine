@@ -7,18 +7,18 @@ using namespace KrostganEngine::Core;
 
 void MainMenuTransitionHandler::Update(const CallbackRecArgs_Upd& args) {
 
-	if (HasPressed) {
+	if (!HasPressed) {
 
-		Engine::ReqToSetMode_LevelDeser();
-		HasPressed = false;
-	}
-	else {
 		for (auto& input : args.PlayerInput) {
 
 			if (input.type == Event::KeyPressed &&
 				input.key.code == Keyboard::Enter) {
 
-				UserInterfaceLoader::Load_LevelDeserialization();
+				auto loadTxt = UserInterfaceManager::GetRoot().GetUIElementByName("LoadTxt");
+				if (loadTxt != nullptr) {
+					loadTxt->SetActivity(true);
+				}
+				Engine::ReqToSetMode_LevelDeser();
 
 				HasPressed = true;
 
