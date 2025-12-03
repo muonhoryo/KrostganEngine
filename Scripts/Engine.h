@@ -93,6 +93,7 @@ namespace KrostganEngine::Core {
 			static void SetCameraPos(Vector2f pos);
 			static void MoveCamera(Vector2f movVal);
 			static void SetFullScreen(bool isFull);
+			static void UnloadCallbacksModules();
 
 			static RenderWindow& GetRenderWindow();
 			static float GetFrameDeltaTime();

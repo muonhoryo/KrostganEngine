@@ -13,7 +13,7 @@ using namespace std;
 void UserInterfaceLoader::Load(const xml_document<>& layout) {
 
 	UserInterfaceManager::Unload();
-	UIEmpty& root = UserInterfaceManager::GetRoot();
+	UIRoot& root = UserInterfaceManager::GetRoot();
 	DeserializeNode(layout.first_node()->first_node(), root);
 }
 void UserInterfaceLoader::Load(const string& layoutName) {

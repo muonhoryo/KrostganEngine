@@ -16,7 +16,17 @@ namespace KrostganEngine::EntitiesControl {
 		EntityOrder_ImmobilityChecking(WorldTransfObj& OwnerTransform)
 			:OwnerTransform(OwnerTransform){}
 
+		/// <summary>
+		/// Return true if owner is staying in a single point
+		/// </summary>
+		/// <param name="toTargetDist_sqr"></param>
+		/// <returns></returns>
 		bool CheckImmobility(Vector2f target) const;
+		/// <summary>
+		/// Return true if owner is staying in a single point
+		/// </summary>
+		/// <param name="toTargetDist_sqr"></param>
+		/// <returns></returns>
 		bool CheckImmobility(float toTargetDist_sqr) const;
 
 	private:

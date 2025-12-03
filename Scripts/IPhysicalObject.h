@@ -5,14 +5,14 @@
 #include <ITransformableObj.h>
 #include <vector>
 #include <watch_ptr.h>
+#include <ICallbackRec.h>
 
 using namespace std;
 using namespace KrostganEngine::Core;
 using namespace KrostganEngine;
 
 namespace KrostganEngine::Physics {
-	class IPhysicalObject: public virtual ITransformableObj
-	{
+	class IPhysicalObject : public virtual ITransformableObj, public virtual ICallbackRec{
 	public:
 
 		virtual PhysicsLayer GetLayer() const = 0;

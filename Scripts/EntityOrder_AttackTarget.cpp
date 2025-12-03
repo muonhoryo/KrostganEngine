@@ -30,8 +30,17 @@ bool EntityOrder_AttackTarget::CheckExecCondition() {
 		return true;
 
 	IAttackableObj* ptr = Target.GetPtr_t();
-	return ptr==nullptr || !ptr->CheckAttackReachability(IAttackableObj::AtkParam::IsAA) ||		//Target is untargetable for AA or disappeared
-		CheckImmobility(ptr->GetGlobalPosition());	
+
+	if (ptr == nullptr)
+		return true;
+
+	if (!ptr->CheckAttackReachability(IAttackableObj::AtkParam::IsAA))
+		return true;
+
+	if (CheckImmobility(ptr->GetGlobalPosition()) && Owner.GetAAModule().GetCurrentTarget() == nullptr)
+		return true;
+
+	return false;
 }
 list<IEntityAction*>* EntityOrder_AttackTarget::GetActions() {
 

@@ -56,6 +56,7 @@ PlayerInputManager::PlayerInputManager()
 	if (Instance != nullptr)
 		throw exception("PlayerInputManager is already instantiated");
 
+	DestroyOnUnload = false;
 	Instance = this;
 }
 PlayerInputManager::~PlayerInputManager() {

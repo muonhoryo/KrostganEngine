@@ -38,19 +38,29 @@ namespace KrostganEngine::Core {
 				DeleteDelayedCallbacks();
 
 			if (Callbacks.size() > 0) {
-				auto it = Callbacks.end();
-				auto end = Callbacks.begin();
-				--it;
-				for (;it != end;--it) {
+
+				list<TCallback*> savedRecs = list<TCallback*>();
+
+				auto it = Callbacks.rbegin();
+				auto end = Callbacks.rend();
+				for (;it != end;++it) {
 					if (*it != nullptr) {
 
-						delete* it;
-						*it = nullptr;
+						if ((*it)->IsDestroyedOnUnload()) {
+							delete* it;
+							*it = nullptr;
+						}
+						else {
+							savedRecs.push_back(*it);
+						}
 					}
 				}
-				delete* it;
-				*it = nullptr;
 				Callbacks.clear();
+
+				for (auto rec : savedRecs) {
+					Callbacks.push_front(rec);
+				}
+				savedRecs.clear();
 
 				DelayedDelCallbksCount = 0;
 				DelayedDelCallbks.clear();
@@ -134,10 +144,6 @@ namespace KrostganEngine::Core {
 
 	protected:
 		EngineCallbackHandler() {};
-
-		//void Sort(int (*PR)(TCallback*,TCallback*)) {
-		//	Callbacks.sort(PR);
-		//}
 
 		list<TCallback*> Callbacks = list<TCallback*>();
 

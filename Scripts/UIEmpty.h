@@ -8,7 +8,7 @@ namespace KrostganEngine::UI {
 	/// <summary>
 	/// Empty UI-element. Can be used for grouping other UI-elements.
 	/// </summary>
-	class UIEmpty final : public UIElement {
+	class UIEmpty : public UIElement {
 
 	public:
 		UIEmpty(UIElement* Parent, const string* Name = nullptr, Vector2f UISize = DEFAULT_SCALE)

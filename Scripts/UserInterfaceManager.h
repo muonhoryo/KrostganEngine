@@ -5,6 +5,7 @@
 #include <vector>
 #include <ValueDependency.h>
 #include <FirstSelEntityDependsManager.h>
+#include <UIRoot.h>
 
 using namespace std;
 using namespace KrostganEngine;
@@ -19,17 +20,17 @@ namespace KrostganEngine::UI {
 		/// </summary>
 		class UIRootMover final : public ICallbackRec_LUpd {
 		public:
-			UIRootMover(UIEmpty& Root);
+			UIRootMover(UIRoot& Root);
 
 			void Update(CallbackRecArgs_LUpd args) override;
 
 		private:
-			UIEmpty& Root;
+			UIRoot& Root;
 		};
 
 		UserInterfaceManager() {}
 
-		static inline UIEmpty*						UserInterface = nullptr;
+		static inline UIRoot*						UserInterface = nullptr;
 		static inline FirstSelEntityDependsManager* FirstSelEntityDepend = new FirstSelEntityDependsManager();
 		static inline vector<IUIDependency*>	UIDependencies{
 			FirstSelEntityDepend
@@ -38,7 +39,7 @@ namespace KrostganEngine::UI {
 	public:
 		static void Initialize();
 		static void Unload();
-		static UIEmpty& GetRoot() {
+		static UIRoot& GetRoot() {
 			return *UserInterface;
 		}
 		static FirstSelEntityDependsManager& GetFirstSelEntityDepend() {

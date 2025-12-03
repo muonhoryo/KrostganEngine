@@ -1,5 +1,4 @@
 
-#include <EngineModes.h>
 #include <SFML/System.hpp>
 #include <Engine.h>
 #include <ExternalData.h>
@@ -19,6 +18,7 @@ MainMenuMode::MainMenuMode() : EngineMode(){
 }
 MainMenuMode::~MainMenuMode() {
 
+	Engine::UnloadCallbacksModules();
 	PlayerInputManager::Clear();
 }
 

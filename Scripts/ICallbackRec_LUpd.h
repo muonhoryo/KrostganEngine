@@ -1,7 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include <watch_ptr.h>
+#include <ICallbackRec.h>
 
 using namespace sf;
 using namespace KrostganEngine;
@@ -10,7 +10,7 @@ namespace KrostganEngine::Core {
 	struct CallbackRecArgs_LUpd {
 	};
 
-	class ICallbackRec_LUpd : public virtual w_ptr_observable{
+	class ICallbackRec_LUpd : public virtual ICallbackRec {
 	
 	public:
 		virtual ~ICallbackRec_LUpd();

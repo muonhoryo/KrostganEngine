@@ -8,7 +8,7 @@ using namespace KrostganEngine::UI;
 void UserInterfaceManager::Initialize(){
 	Vector2f size = (Vector2f)Engine::GetScreenSize();
 	Vector2f pos = Vector2f(-size.x * 0.5, -size.y * 0.5);
-	UserInterface = new UIEmpty(nullptr, size);
+	UserInterface = new UIRoot(size);
 	UserInterface->SetGlobalPosition(pos);
 	Engine::ResizeWindowEvent.Add(*new UIMan_WinResizeEvSubs(*UserInterface));
 	new UIRootMover(*UserInterface);
@@ -23,9 +23,10 @@ void UserInterfaceManager::Unload() {
 	UserInterface->DestroyChildren();
 }
 
-UserInterfaceManager::UIRootMover::UIRootMover(UIEmpty& Root)
+UserInterfaceManager::UIRootMover::UIRootMover(UIRoot& Root)
 	:Root(Root){
 
+	DestroyOnUnload = false;
 }
 
 void UserInterfaceManager::UIRootMover::Update(CallbackRecArgs_LUpd args) {

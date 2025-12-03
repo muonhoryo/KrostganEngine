@@ -27,16 +27,11 @@ GameMode::GameMode() :EngineMode() {
 GameMode::~GameMode() {
     delete GameInterface;
 
-    EngineCallbackHandler<ICallbackRec_GraphRen>& renMod = Engine::GetRenderModule();
-    Engine::GetUpdateModule().Unload();
-    Engine::GetLateUpdModule().Unload();
-    renMod.Unload();
-    Engine::GetPhysicsEngine().Unload();
+    Engine::UnloadCallbacksModules();
     LevelBypassMapManager::Unload();
     ObjectsCatalog::Unload();
     EntitiesObserver::Unload();
     LevelManager::UnassignLevelInfo();
-
     PlayerInputManager::Clear();
 }
 void GameMode::ExecuteCycle() {

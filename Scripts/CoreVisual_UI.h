@@ -4,6 +4,7 @@
 #include <UISprite.h>
 #include <UIText.h>
 #include <UIEmpty.h>
+#include <UIRoot.h>
 
 #include <GroupSelectionQuad.h>
 #include <PrimitiveVisualShapes.h>

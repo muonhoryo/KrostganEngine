@@ -10,6 +10,7 @@ void MainMenuTransitionHandler::Update(const CallbackRecArgs_Upd& args) {
 	if (HasPressed) {
 
 		Engine::ReqToSetMode_LevelDeser();
+		HasPressed = false;
 	}
 	else {
 		for (auto& input : args.PlayerInput) {

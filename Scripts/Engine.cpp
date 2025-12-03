@@ -15,7 +15,7 @@ using namespace KrostganEngine::Core;
 using namespace KrostganEngine::Physics;
 using namespace KrostganEngine::Visual;
 
-const std::string Engine::ENGINE_VERSION = "A0.4.2.1";
+const std::string Engine::ENGINE_VERSION = "A0.4.2.2";
 
 Engine::Engine()
 	:RenderModule(*new EngineRenderModule(RendWin)),
@@ -55,9 +55,9 @@ Engine::Engine()
 	ReqToSetStartMode();
 }
 void Engine::InitializeSystems() {
+	new PlayerInputManager();
 	UserInterfaceManager::Initialize();
 	GroupSelectionSystem::GetInstance();
-	new PlayerInputManager();
 	InitializeCursorManager();
 }
 void Engine::InitializeCursorManager() {
@@ -138,6 +138,13 @@ void Engine::SetFullScreen(bool isFull) {
 		SetCameraPos(camPos);
 		Singleton->ResizeWindowEventHandler.Execute(resArgs);
 	}
+}
+void Engine::UnloadCallbacksModules() {
+
+	GetUpdateModule().Unload();
+	GetLateUpdModule().Unload();
+	GetRenderModule().Unload();
+	GetPhysicsEngine().Unload();
 }
 
 View& Engine::InstanceNewView() {
