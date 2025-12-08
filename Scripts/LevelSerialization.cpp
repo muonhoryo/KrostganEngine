@@ -35,7 +35,7 @@ LevelLoadingInfo& LevelSerialization::DeserializeLevel(string serPath) {
 				if (line.find(LevelCellMapDeser::LVL_CMAP_END) != string::npos) {
 
 					params.push_back(line);
-					map=&LevelCellMapDeser::Deserialize(params, &columnCount);
+					map=&LevelCellMapDeser::Deserialize(params, columnCount);
 					isDeserObstrMap = false;
 					mapDeserialized = true;
 					params.clear();
@@ -75,7 +75,8 @@ LevelLoadingInfo& LevelSerialization::DeserializeLevel(string serPath) {
 
 		info = new LevelLoadingInfo(*map, uniqueObjects);
 
-		info->MapRowsCount = columnCount;
+		info->MapRowsCount = map->size();
+		info->MapColumnsCount = columnCount;
 
 		const pair<const string, const string>* pr=nullptr;
 		float left=0;
@@ -88,6 +89,7 @@ LevelLoadingInfo& LevelSerialization::DeserializeLevel(string serPath) {
 			if (pr == nullptr)
 				continue;
 
+			//Rect
 			if (pr->first == DEF_CAMERA_BORDERS_AREA_LEFT) {
 				left = stof(pr->second);
 			}
@@ -99,6 +101,14 @@ LevelLoadingInfo& LevelSerialization::DeserializeLevel(string serPath) {
 			}
 			else if (pr->first == DEF_CAMERA_BORDERS_AREA_BOTTOM) {
 				bottom = stof(pr->second);
+			}
+			//float
+			else if (pr->first == DEF_WARFOG_OFFSET) {
+				info->WarFogOffset = stof(pr->second);
+			}
+			//string
+			else if (pr->first == DEF_WARFOG_SHADER_PATH) {
+				info->WarFogShaderPath = pr->second;
 			}
 		}
 		info->CameraBorders = Rect<float>(left, top, right - left, bottom - top);

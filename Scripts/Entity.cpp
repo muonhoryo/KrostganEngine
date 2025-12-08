@@ -9,6 +9,8 @@
 #include <EntityHPModule.h>
 #include <EntitiesObserver.h>
 
+#include <ObservingArea.h>
+
 using namespace sf;
 using namespace KrostganEngine;
 using namespace KrostganEngine::GameObjects;
@@ -24,6 +26,7 @@ Entity::Entity(EntityCtorParams& params)
 		*params.BattleStats, 
 		nullptr, 
 		nullptr),
+	IWarFogObserver(FractionsSystem::GetRelationToPlayer(params.EntityFraction)==Relation::Ally),	//Entity observs war fog only when it is ally to player
 
 	EntityFraction			(params.EntityFraction),
 	HPBar					(params.HPBarSprite),
@@ -50,10 +53,13 @@ Entity::Entity(EntityCtorParams& params)
 	SetColor(GetColor());
 
 	EntitiesObserver::AddEntity(this);
+
+	BodySprite.Set_IsHidenByWarFog(true);
+	HPBar->Set_IsHidenByWarFog(true);
+	HitEffectSprite->Set_IsHidenByWarFog(true);
 }
 
 Entity::~Entity() {
-	SelectionOff();
 	delete HPModule;
 
 	EntitiesObserver::RemoveEntity(this);
@@ -139,4 +145,8 @@ bool Entity::IsTargetableForAA() const {
 
 void Entity::SetTargetableForAA(bool isTargetable) {
 	GetBattleStats().SetTargetableForAA(isTargetable);
+}
+
+float Entity::GetObservingRange() const {
+	return GetBattleStats().GetObservingRange().Stat;
 }

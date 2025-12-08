@@ -5,6 +5,7 @@
 #include <PrimitiveVisualShapes.h>
 
 using namespace sf;
+using namespace Visual;
 
 namespace KrostganEngine::UI {
 	class GroupSelectionQuad  {

@@ -8,9 +8,11 @@
 #include <ICallbackRec_Upd.h>
 #include <ICallbackRec_LUpd.h>
 #include <IPhysicalObject.h>
+#include <IWarFogObserver.h>
 #include <CallbackDelegates.h>
 
-#include <EngineWorkCycleModule.h>
+#include <EngineWorkModules.h>
+#include <WarFogStencilGen.h>
 #include <CoreEntitiesControl.h>
 #include <ExternalData.h>
 #include <GameLevel.h>

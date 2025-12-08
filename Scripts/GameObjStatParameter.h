@@ -8,15 +8,15 @@ namespace KrostganEngine::GameObjects {
 	template<typename TValueType>
 	struct Parameter final {
 
-		Parameter(){}
+		Parameter()
+			:Default(TValueType()),
+			Stat(TValueType())
+		{}
+
 		Parameter(TValueType Default)
 			:Default(Default),
 			Stat(Default)
 		{}
-		/*explicit Parameter(const Parameter<TValueType>& toCopy)
-			:Default(toCopy.Default),
-			Stat(toCopy.Stat)
-		{}*/
 
 		TValueType const& GetRef_Stat() const { return Stat; }
 		TValueType const& GetRef_Default() const { return Default; }

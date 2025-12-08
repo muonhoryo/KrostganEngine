@@ -9,6 +9,7 @@ using namespace sf;
 namespace KrostganEngine::Physics {
 	struct AABBCollShape;
 	struct CircleCollShape;
+	struct EmptyShape;
 
 	struct ColliderShape {
 	public:

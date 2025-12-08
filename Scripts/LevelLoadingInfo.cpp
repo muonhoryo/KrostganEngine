@@ -30,7 +30,7 @@ void LvlObjInstantiationInfo::Deserialize(const string& serInfo) {
 		if (subInfoIndex != string::npos) {
 			subInfoIndex += LVLSER_SUBINFO_SEPARATOR.length();
 			string subs = serInfo.substr(subInfoIndex, serInfo.length() - subInfoIndex);
-			CatalogSubID = (byte)stoi(subs);
+			CatalogSubID = (std::byte)stoi(subs);
 			end = subInfoIndex - LVLSER_SUBINFO_SEPARATOR.length()-1;
 		}
 		else
@@ -43,7 +43,7 @@ void LvlObjInstantiationInfo::Deserialize(const string& serInfo) {
 		if (subInfoIndex != string::npos) {
 			subInfoIndex += LVLSER_SUBINFO_SEPARATOR.length();
 			string subs = serInfo.substr(subInfoIndex, end - subInfoIndex - 2);
-			CatalogSubID = (byte)stoi(subs);
+			CatalogSubID = (std::byte)stoi(subs);
 			end = subInfoIndex - LVLSER_SUBINFO_SEPARATOR.length() - 1;
 		}
 		else
@@ -391,12 +391,12 @@ void EntityLoadInfo::WriteBattleStatsParams(const string& input, IModifiableStat
 	while (true) {
 		end = input.find(ENTITY_BSTATS_PARAMS_SEP, start);
 		if (end == string::npos) {
-			param = ObjsCatalogDeserial::ParseParamLine(input.substr(start, input.length() - start ));
+			param = ObjsCatalogDeserial::ParseParamLine(input.substr(start, input.length() - start));
 			stats.WriteParam(*param);
 			break;
 		}
 		else {
-			param = ObjsCatalogDeserial::ParseParamLine(input.substr(start, end - start - 1));
+			param = ObjsCatalogDeserial::ParseParamLine(input.substr(start, end - start));
 			stats.WriteParam(*param);
 			start = end + ENTITY_BSTATS_PARAMS_SEP.length();
 		}
@@ -521,7 +521,7 @@ bool SpriteRendLoadInfo::WriteParam(Attr& param) {
 		FStreamExts::ClearPath(SpriteSource);
 	}
 	else if (CheckParamName(param, SerializationParDefNames::IMAGEUSR_SPRITE_LAYER)) {
-		byte layer = (byte)stof(param.second);
+		std::byte layer = (std::byte)stof(param.second);
 		RendLayer = layer;
 	}
 	else

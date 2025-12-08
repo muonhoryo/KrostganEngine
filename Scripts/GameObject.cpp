@@ -15,7 +15,6 @@ using namespace KrostganEngine::Core;
 using namespace KrostganEngine::GameObjects;
 
 GameObject::~GameObject() {
-	delete& BodySprite;
 }
 GameObjectCtorParams::GameObjectCtorParams() 
 	:CatalogID(ObjectsCatalog::EMPTY_CATALOG_ID),

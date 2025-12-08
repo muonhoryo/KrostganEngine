@@ -127,8 +127,6 @@ void GroupSelectionSystem::Clear() {
 		if(ptr!=nullptr)
 			ptr->SelectionOff();
 		delete en;
-		/*Singleton->RemoveSelectableEventHandler.Execute(ptr);
-		Singleton->ChangeSelectablesEventHandler.Execute();*/
 	}
 	Singleton->SelectedEntities.clear();
 	Singleton->ClearSelectionEventHandler.Execute();

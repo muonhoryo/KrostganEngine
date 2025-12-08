@@ -8,7 +8,7 @@ using namespace KrostganEngine::UI;
 GroupSelectionQuad::GroupSelectionQuad(const Vector2f& StartCorner,const Vector2f& EndCorner) {
 	this->StartCorner = StartCorner;
 	this->EndCorner = EndCorner;
-	RendQuad = &QuadVisPrimitive::InstanceQuad(StartCorner, EndCorner, Color::Green);
+	RendQuad = &QuadVisPrimitive::InstantiateQuad(StartCorner, EndCorner, Color::Green);
 }
 GroupSelectionQuad::~GroupSelectionQuad() {
 	delete RendQuad;

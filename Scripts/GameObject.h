@@ -24,7 +24,7 @@ namespace KrostganEngine::GameObjects {
 		float					GlobalRotation	= 0;
 		Color					SprColor		= Color::White;
 		size_t					CatalogID;
-		byte					SubcatalogID;
+		std::byte				SubcatalogID;
 	};
 	class GameObject :public WorldTransfObj, public DynamicPhysObject, public IColoredObject, public CatalogObject{
 	public:

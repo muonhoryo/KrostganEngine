@@ -31,7 +31,7 @@ UIText::UIText(
 	const string*	Name,
 	unsigned int	characterSize,
 	Shader*			RendShader,
-	byte			RendLayer)
+	std::byte		RendLayer)
 		:UIElement(
 			ctor_InitOwner(textStr,characterSize),
 			Parent,
@@ -46,7 +46,7 @@ UIText::UIText(
 	const string*		Name,
 	unsigned int		characterSize,
 	Shader*				RendShader,
-	byte				RendLayer)
+	std::byte			RendLayer)
 		:UIElement(
 			ctor_InitOwner(textStr,characterSize),
 			Name,

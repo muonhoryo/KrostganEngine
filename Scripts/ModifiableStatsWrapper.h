@@ -139,7 +139,7 @@ namespace KrostganEngine::GameObjects {
 				if (pr.first == type)
 					return pr.second;
 			}
-			return "";
+			return *new string("");
 		}
 		static TStatEnum StrToStat(const string& str) {
 

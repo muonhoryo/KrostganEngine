@@ -2,6 +2,7 @@
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
 #include <EngineCore.h>
+#include <EngineUpdateModule.h>
 
 using namespace KrostganEngine::Core;
 using namespace sf;

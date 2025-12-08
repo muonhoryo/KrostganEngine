@@ -28,7 +28,7 @@ namespace KrostganEngine::GameObjects {
 		Vector2f								GlobalPosition = DEFAULT_POSITION;
 		float									GlobalScale = DEFAULT_SCALE_SNG;
 		size_t									CatalogID = 0;
-		byte									SubcatalogID = (byte)0;
+		std::byte								SubcatalogID = (std::byte)0;
 	};
 
 	class AutoAttackProjectile : public WorldTransfObj, public CatalogObject, public ICallbackRec_LUpd {

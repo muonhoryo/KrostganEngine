@@ -118,12 +118,12 @@ pair<size_t, _ObjSubsPairType>& ObjsCatalogDeserial::ParseObjSubinfo(const vecto
 	if (params.size() < 2)
 		throw exception("Incorrect format of object's subinfo.");
 
-	byte subID;
+	std::byte subID;
 	size_t objID;
 	AttrsCollectn& attrs = *new AttrsCollectn();
 
 	const pair<const string, const string>* parLine = ParseParamLine(params[0]);
-	subID = (byte)stoi(parLine->second);
+	subID = (std::byte)stoi(parLine->second);
 	delete parLine;
 	parLine = ParseParamLine(params[1]);
 	if (parLine->first.find(SerializationParDefNames::OBJECT_CATALOG_ID) == string::npos)

@@ -31,7 +31,7 @@ bool FadingVisualEffect::Fade() {
 	if (time < FadeTime) {
 
 		float transparency = (FadeTime- time) / FadeTime;
-		SetOwnerColor(transparency * 255 * DefaultAlpha);
+		SetOwnerColor((Uint8)(transparency * 255 * DefaultAlpha));
 		return false;
 	}
 	else {

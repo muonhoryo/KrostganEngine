@@ -16,7 +16,7 @@ UIElement::UIElement(
 	UIElement*			Parent,
 	const string*		Name,
 	Vector2f			UISize,
-	byte				RendLayer)
+	std::byte			RendLayer)
 		:HierarchyTrObj(Owner, Parent == nullptr ? UserInterfaceManager::GetRoot() : *Parent),
 		ICallbackRec_GraphRen(RendLayer),
 		Anchor(Anchor),
@@ -30,7 +30,7 @@ UIElement::UIElement(
 	Transformable&		Owner,
 	const string*		Name,
 	Vector2f			UISize,
-	byte				RendLayer)
+	std::byte			RendLayer)
 		:HierarchyTrObj(Owner),
 		ICallbackRec_GraphRen(RendLayer),
 		Anchor(Anchor),

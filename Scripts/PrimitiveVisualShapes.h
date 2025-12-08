@@ -9,18 +9,26 @@
 using namespace sf;
 using namespace std;
 using namespace KrostganEngine::Core;
-using namespace KrostganEngine::Visual;
 
-namespace KrostganEngine::UI {
+namespace KrostganEngine::Visual {
 	class QuadVisPrimitive :public ICallbackRec_GraphRen {
 	public:
 		QuadVisPrimitive(
-			Vector2f lt, 
-			Vector2f rt, 
-			Vector2f rb, 
-			Vector2f lb,
-			Color	edgeColor,
-			byte	RendLayer = DEFAULT_RENDLAYER_UI);
+			Vector2f		lt, 
+			Vector2f		rt, 
+			Vector2f		rb, 
+			Vector2f		lb,
+			Color			edgeColor,
+			std::byte		RendLayer = DEFAULT_RENDLAYER_UI,
+			PrimitiveType	quadType = PrimitiveType::LinesStrip,
+			sf::Shader*		RenShader = nullptr);
+		QuadVisPrimitive(
+			Vector2f		minCorner,
+			Vector2f		maxCorner,
+			Color			edgeColor,
+			std::byte		RendLayer = DEFAULT_RENDLAYER_UI,
+			PrimitiveType	quadType = PrimitiveType::LinesStrip,
+			sf::Shader*		RenShader = nullptr);
 
 		FloatRect GetBounds();
 		Color GetEdgeColor();
@@ -29,14 +37,25 @@ namespace KrostganEngine::UI {
 		void SetPointsBy2Corners(Vector2f corner1, Vector2f corner2);
 		void SetEdgeColor(Color edgeColor);
 
-
-		static QuadVisPrimitive& InstanceQuad(Vector2f corner1, Vector2f corner2, Color edgeColor,byte RendLayer = DEFAULT_RENDLAYER_UI);
+		/// <summary>
+		/// Instantiate QuadVisPrimitive, based on two of its opposite corners.
+		/// </summary>
+		/// <param name="corner1"></param>
+		/// <param name="corner2"></param>
+		/// <param name="edgeColor"></param>
+		/// <param name="RendLayer"></param>
+		/// <returns></returns>
+		static QuadVisPrimitive& InstantiateQuad(Vector2f corner1, Vector2f corner2, Color edgeColor, std::byte RendLayer = DEFAULT_RENDLAYER_UI);
 
 	protected:
+
 		void RenderGraphicAction(RenderWindow& window) override;
 
 	private:
 		VertexArray Vertexes;
+
+		RenderStates RenStates;
+		Shader* Shader;
 	};
 
 	class CircleVisPrimitive : public ICallbackRec_GraphRen {
@@ -46,7 +65,7 @@ namespace KrostganEngine::UI {
 			float		radius,
 			Color		edgeColor,
 			size_t		pointsCount,
-			byte		RendLayer = DEFAULT_RENDLAYER_UI);
+			std::byte		RendLayer = DEFAULT_RENDLAYER_UI);
 
 		Vector2f GetCenter();
 		float GetRadius();
@@ -67,8 +86,8 @@ namespace KrostganEngine::UI {
 
 	class LinesVisPrimitive :public ICallbackRec_GraphRen {
 	public:
-		LinesVisPrimitive(vector<Vector2f>& pointsCoord, Color edgesColor, byte	RendLayer = DEFAULT_RENDLAYER_UI);
-		LinesVisPrimitive(vector<Vector2f>& pointsCoord, vector<Color>& edgeColors, byte RendLayer = DEFAULT_RENDLAYER_UI);
+		LinesVisPrimitive(vector<Vector2f>& pointsCoord, Color edgesColor, std::byte	RendLayer = DEFAULT_RENDLAYER_UI);
+		LinesVisPrimitive(vector<Vector2f>& pointsCoord, vector<Color>& edgeColors, std::byte RendLayer = DEFAULT_RENDLAYER_UI);
 		virtual ~LinesVisPrimitive() {};
 		
 		Color GetEdgeColor(size_t index) const;
@@ -95,7 +114,7 @@ namespace KrostganEngine::UI {
 			Vector2f	End, 
 			float		Width, 
 			Color		LineColor,
-			byte		RendLayer = DEFAULT_RENDLAYER_UI);
+			std::byte		RendLayer = DEFAULT_RENDLAYER_UI);
 		virtual ~WideLineVisual(){}
 
 		Vector2f GetStart() const {

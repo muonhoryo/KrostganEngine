@@ -196,8 +196,8 @@ void OrdersExecutor::FirstOrderExecution() {
 		else {
 			UnloadActionsToDo();
 			CurrentOrder->OnStartExecution();
-			UpdateActionsToDoFromOrder();
 			StartExecOrderEventHandler.Execute(*CurrentOrder);
+			UpdateActionsToDoFromOrder();
 			return;
 		}
 	}

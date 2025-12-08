@@ -4,21 +4,35 @@
 #include <PrimitiveVisualShapes.h>
 
 using namespace sf;
-using namespace KrostganEngine::UI;
+using namespace KrostganEngine::Visual;
 
 QuadVisPrimitive::QuadVisPrimitive(
-	Vector2f	lt,
-	Vector2f	rt, 
-	Vector2f	rb, 
-	Vector2f	lb,
-	Color		edgeColor,
-	byte		RendLayer)
-		:ICallbackRec_GraphRen(RendLayer){
+	Vector2f		lt,
+	Vector2f		rt, 
+	Vector2f		rb, 
+	Vector2f		lb,
+	Color			edgeColor,
+	std::byte		RendLayer,
+	PrimitiveType	quadType,
+	sf::Shader*		RenShader)
+		:ICallbackRec_GraphRen(RendLayer),
+		Shader(RenShader){
 
-	Vertexes = VertexArray(PrimitiveType::LineStrip, 5);
+	RenStates.shader = Shader;
+	Vertexes = VertexArray(quadType, 5);
 	SetPoints(lt, rt, rb, lb);
 	SetEdgeColor(edgeColor);
 }
+QuadVisPrimitive::QuadVisPrimitive(
+	Vector2f		minCorner,
+	Vector2f		maxCorner,
+	Color			edgeColor,
+	std::byte		RendLayer,
+	PrimitiveType	quadType,
+	sf::Shader*		RenShader)
+		:QuadVisPrimitive(minCorner,Vector2f(maxCorner.x,minCorner.y),maxCorner,Vector2f(minCorner.x,maxCorner.y),
+			edgeColor,RendLayer,quadType,RenShader)
+{}
 FloatRect QuadVisPrimitive::GetBounds() {
 	return Vertexes.getBounds();
 }
@@ -62,10 +76,10 @@ void QuadVisPrimitive::SetEdgeColor(Color edgeColor) {
 }
 
 void QuadVisPrimitive::RenderGraphicAction(RenderWindow& window) {
-	window.draw(Vertexes);
+	window.draw(Vertexes,RenStates);
 }
 
-QuadVisPrimitive& QuadVisPrimitive::InstanceQuad(Vector2f corner1, Vector2f corner2,Color edgeColor,byte RendLayer) {
+QuadVisPrimitive& QuadVisPrimitive::InstantiateQuad(Vector2f corner1, Vector2f corner2,Color edgeColor, std::byte RendLayer) {
 	float minX, minY, maxX, maxY;
 	if (corner1.x < corner2.x) {
 		minX = corner1.x;

@@ -23,7 +23,7 @@ void UnitColliderVisualizer::RenderGraphicAction(RenderWindow& window) {
 	float size = Owner.GetGlobalScale_Sng();
 	if (fabs(size - GetRadius()) > eps)
 		UpdateRadius(size);
-	CircleVisPrimitive::RenderGraphic(window);
+	CircleVisPrimitive::RenderGraphicAction(window);
 }
 
 void UnitColliderVisualizer::UpdateRadius(float size) {

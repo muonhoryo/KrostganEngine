@@ -12,14 +12,14 @@ namespace KrostganEngine::UI {
 			const Texture&	RenTexture,
 			const string*	Name			= nullptr,
 			Shader*			RendShader		= nullptr,
-			byte			RendLayer		= DEFAULT_RENDLAYER_UI);
+			std::byte		RendLayer		= DEFAULT_RENDLAYER_UI);
 		
 		UISprite(
 			const Texture&	RenTexture,
 			UIElement*		Parent,
 			const string*	Name			= nullptr,
 			Shader*			RendShader		= nullptr,
-			byte			RendLayer		= DEFAULT_RENDLAYER_UI);
+			std::byte		RendLayer		= DEFAULT_RENDLAYER_UI);
 		
 		virtual ~UISprite();
 

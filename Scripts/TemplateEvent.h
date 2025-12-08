@@ -51,7 +51,7 @@ namespace KrostganEngine {
 
 			auto it = Owner.Subscribers.cbegin();
 			auto end = Owner.Subscribers.cend();
-			int size = distance(it,end);
+			size_t size = distance(it,end);
 			vector<IEventSubscriber<TArguments>*> subscrs = vector<IEventSubscriber<TArguments>*>(size);
 
 			for (int i = 0;it != end;) {

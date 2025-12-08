@@ -173,7 +173,7 @@ namespace KrostganEngine::Core {
 
 		string SpriteSource = "";
 		float MaxSpriteSize = 0;
-		byte RendLayer = DEFAULT_RENDLAYER;
+		std::byte RendLayer = DEFAULT_RENDLAYER;
 
 		bool WriteParam(Attr& param) override;
 
@@ -218,8 +218,15 @@ namespace KrostganEngine::Core {
 		vector<vector<LvlObjInstantiationInfo*>*>& LevelMap;
 		forward_list<WorldObjectLoadInfo*>& UniqueObjects;
 		size_t MapRowsCount = 0;
+		size_t MapColumnsCount = 0;
 
-		Rect<float> CameraBorders;
+		//Consts
+
+		Rect<float>	CameraBorders;
+
+		float WarFogOffset = 0;
+
+		string WarFogShaderPath;
 
 		LevelLoadingInfo(vector<vector<LvlObjInstantiationInfo*>*>& LevelMap, forward_list<WorldObjectLoadInfo*>& UniqueObjects)
 			:LevelMap(LevelMap),

@@ -8,7 +8,7 @@
 using namespace sf;
 using namespace std;
 
-#define _ObjSubsPairType		pair<byte,LvlObjAdditParams*>
+#define _ObjSubsPairType		pair<std::byte,LvlObjAdditParams*>
 #define _ObjSubsCollection		vector<_ObjSubsPairType>
 
 namespace KrostganEngine::Core {
@@ -16,19 +16,19 @@ namespace KrostganEngine::Core {
 
 	public:
 		static inline const size_t	EMPTY_CATALOG_ID		= 0;
-		static inline const byte	ABSENT_SUB_CATALOG_ID	= (byte)0;
+		static inline const std::byte	ABSENT_SUB_CATALOG_ID	= (std::byte)0;
 
 	private:
 		struct GetSubInfoFunc : public CollectionsExts::Predicate<const _ObjSubsPairType &> {
 			
-			GetSubInfoFunc(byte ID)
+			GetSubInfoFunc(std::byte ID)
 				:ID(ID){}
 
 			bool Condition(const _ObjSubsPairType& input) const override {
 				return input.first == ID;
 			}
 
-			const byte ID;
+			const std::byte ID;
 		};
 
 	public:
@@ -61,7 +61,7 @@ namespace KrostganEngine::Core {
 			return Catalog[id];
 		}
 
-		static void						AddSub(size_t objID,byte subID, LvlObjAdditParams& subObjInfo) {
+		static void						AddSub(size_t objID, std::byte subID, LvlObjAdditParams& subObjInfo) {
 
 			if (Catalog.find(objID) != Catalog.end()) {
 				
@@ -82,7 +82,7 @@ namespace KrostganEngine::Core {
 				(*subs).second.push_back(_ObjSubsPairType(subID, &subObjInfo));
 			}
 		}
-		static void						RemoveSub(size_t objID, byte subID) {
+		static void						RemoveSub(size_t objID, std::byte subID) {
 			auto sub = SubCatalog.find(objID);
 			if (sub != SubCatalog.end()) {
 				
@@ -93,7 +93,7 @@ namespace KrostganEngine::Core {
 				(*sub).second.erase(it);
 			}
 		}
-		static LvlObjAdditParams*			GetSubObjInfo(size_t id, byte subID) {
+		static LvlObjAdditParams*			GetSubObjInfo(size_t id, std::byte subID) {
 			
 			auto subs = SubCatalog.find(id);
 			if (subs != SubCatalog.end()) {

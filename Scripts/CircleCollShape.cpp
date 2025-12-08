@@ -8,9 +8,6 @@ using namespace KrostganEngine::Physics;
 
 CircleCollShape::CircleCollShape(Vector2f Center, float Radius)
 {
-	if (Radius<=0)
-		throw exception("Radius of circle cannot be less than zero");
-
 	this->Center= Center;
 	this->Radius= Radius;
 }
@@ -31,7 +28,7 @@ bool CircleCollShape::Intersect(const ColliderShape* coll[], size_t count)const 
 }
 
 Vector2f CircleCollShape::GetCollisionResolvPoint(const CircleCollShape& subjShape, Vector2f subjMovDir, bool isSlideColl) const {
-	
+
 	if (isSlideColl) {
 
 		float diff;
@@ -93,6 +90,10 @@ bool CircleCollShape::IsPointInCollider(Vector2f point) const {
 	return diff >= eps;
 }
 Vector2f CircleCollShape::GetClosestPoint(Vector2f point)const {
+
+	if (Radius < eps)
+		return point;
+
 	Vector2f diff = point - Center;
 	diff = Normalize(diff);
 	diff = diff * Radius;

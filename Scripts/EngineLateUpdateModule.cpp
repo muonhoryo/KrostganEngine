@@ -2,13 +2,13 @@
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
 #include <EngineCore.h>
+#include <EngineLateUpdateModule.h>
 
 using namespace KrostganEngine::Core;
 using namespace sf;
 
 EngineLateUpdateModule::EngineLateUpdateModule() :EngineCallbackHandler<ICallbackRec_LUpd>()
-{
-}
+{}
 void EngineLateUpdateModule::Execute() {
 
 	CallbackRecArgs_LUpd args = CallbackRecArgs_LUpd();

@@ -34,7 +34,7 @@ void UserInterfaceLoader::DeserializeNode(xml_node<>* node, UIElement& parent)
 		Vector2f pos=DEFAULT_POSITION;
 		Vector2f scale = DEFAULT_SCALE;
 		Vector2f anchor= DEFAULT_ANCHOR;
-		byte layer(DEFAULT_RENDLAYER_UI);
+		std::byte layer(DEFAULT_RENDLAYER_UI);
 		bool active(true);
 		bool resizeUIInherit(false);
 		string name = "";
@@ -64,7 +64,7 @@ void UserInterfaceLoader::DeserializeNode(xml_node<>* node, UIElement& parent)
 				anchor.y = stof(attr->value());
 			}
 			else if (attr->name() == ATTR_LAYER) {
-				layer = (byte)stoi(attr->value());
+				layer = (std::byte)stoi(attr->value());
 			}
 			else if (attr->name() == ATTR_ACTIVE) {
 				active = FStreamExts::ParseBool(attr->value());

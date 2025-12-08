@@ -26,7 +26,7 @@ const EngineConfig& EngineConfigLoad::LoadEngineConfig() {
 		unsigned int XRes = DeserValueByDef_uint(EngineConfig::DEF_X_WINDOW_RESOLUTION, buffer);
 		unsigned int YRes = DeserValueByDef_uint(EngineConfig::DEF_Y_WINDOW_RESOLUTION, buffer);
 
-		LoadedConfig.WindowResolution = Vector2f(XRes, YRes);
+		LoadedConfig.WindowResolution = Vector2u(XRes, YRes);
 	}
 
 	//
@@ -34,6 +34,10 @@ const EngineConfig& EngineConfigLoad::LoadEngineConfig() {
 	LoadedConfig.FrameRateLimit			= DeserValueByDef_int	(EngineConfig::DEF_FRAMERATE_LIMIT, buffer);
 	LoadedConfig.CursorHotspot_Attack	= DeserValueByDef_Vec2u	(EngineConfig::DEF_CURSOR_ATTACK_HOTSPOT, buffer);
 	LoadedConfig.Camera_MovSpeed		= DeserValueByDef_float	(EngineConfig::DEF_CAMERA_MOVING_SPEED, buffer);
+
+	GetValueByDef(EngineConfig::DEF_WARFOG_STENCIL_SHADER_PATH, buffer);
+	FStreamExts::ClearPath(buffer);
+	LoadedConfig.WarForStencilShaderPath = buffer;
 
 	//
 

@@ -20,14 +20,14 @@ namespace KrostganEngine::UI {
 			const string*	Name			= nullptr,
 			unsigned int	characterSize	= DEFAULT_FONTSIZE,
 			Shader*			RendShader		= nullptr,
-			byte			RendLayer		= DEFAULT_RENDLAYER_UI);
+			std::byte		RendLayer		= DEFAULT_RENDLAYER_UI);
 
 		UIText(
 			const string&		textStr,
 			const string*		Name			= nullptr,
 			unsigned int		characterSize	= DEFAULT_FONTSIZE,
 			Shader*				RendShader		= nullptr,
-			byte				RendLayer		= DEFAULT_RENDLAYER_UI);
+			std::byte			RendLayer		= DEFAULT_RENDLAYER_UI);
 
 		Color	GetColor() const override;
 		void	SetColor(Color color) override;

@@ -6,6 +6,7 @@
 #include <SFML/System.hpp>
 #include <DBG_DivineCommander.h>
 #include <CoreVisual.h>
+#include <WarFogStencilGen.h>
 
 using namespace std;
 using namespace sf;
@@ -15,7 +16,7 @@ using namespace KrostganEngine::Core;
 using namespace KrostganEngine::Physics;
 using namespace KrostganEngine::Visual;
 
-const std::string Engine::ENGINE_VERSION = "A0.4.2.3";
+const std::string Engine::ENGINE_VERSION = "A0.4.3.0";
 
 Engine::Engine()
 	:RenderModule(*new EngineRenderModule(RendWin)),
@@ -35,9 +36,12 @@ Engine::Engine()
 	auto uiDeser=new UserInterfacesDeserializer();
 	uiDeser->Deserialize();
 
+	ContextSettings windSetts;
+	windSetts.stencilBits = 8;
 	string header = "Krostgan Engine " + Engine::ENGINE_VERSION;
-	Vector2f resol = EngineConfiguration->WindowResolution;
-	RendWin.create(VideoMode(resol.x,resol.y), header,Style::Close);
+	Vector2u resol = EngineConfiguration->WindowResolution;
+	RendWin.create(VideoMode(resol.x,resol.y), header,Style::Close, windSetts);
+	glewInit();
 	IsFullscreen = false;
 	View view;
 	view.setCenter(0, 0);
@@ -145,6 +149,9 @@ void Engine::UnloadCallbacksModules() {
 	GetLateUpdModule().Unload();
 	GetRenderModule().Unload();
 	GetPhysicsEngine().Unload();
+	auto warfog=WarFogStencilGen::GetInstance();
+	if (warfog != nullptr)
+		warfog->Unload();
 }
 
 View& Engine::InstanceNewView() {
@@ -203,8 +210,21 @@ Vector2f Engine::ScreenPosToGlobalCoord(const Vector2f& screenPos) {
 	screenSize.x *= 0.5;
 	screenSize.y *= 0.5;
 	globalCoord -= screenSize;
-	globalCoord *= GetZoom();
+	globalCoord.x *= GetZoom();
+	globalCoord.y *= GetZoom();
 	return globalCoord;
+}
+Vector2f Engine::GlobalCoordToScreenPos(const Vector2f& globalCoord) {
+	Vector2f screenPos = Vector2f(globalCoord);
+	auto& view = Singleton->RendWin.getView();
+	Vector2f screenSize = (Vector2f)GetScreenSize();
+	Vector2f center = view.getCenter();
+	screenPos -= center;
+	screenPos *= GetZoom();
+	screenSize.x *= 0.5f;
+	screenSize.y *= 0.5f;
+	screenPos += screenSize;
+	return screenPos;
 }
 Vector2u Engine::GetScreenSize() {
 	return Singleton->RendWin.getSize();

@@ -52,7 +52,7 @@ namespace KrostganEngine::GameObjects {
 				if ((EntityBattleStatType)args == EntityBattleStatType::MaxHP) {
 					size_t hp = Owner.GetCurrentHP();
 					float rel = (float)hp/ (float)Owner.GetMaxHP();
-					Owner.SetCurrentHP(hp * rel);
+					Owner.SetCurrentHP((double)hp * rel);
 				}
 			}
 

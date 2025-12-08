@@ -24,13 +24,11 @@ AutoAggressionModule::~AutoAggressionModule() {
 void AutoAggressionModule::TurnOn() {
 	if (!IsActive){
 		TurnOnAction();
-		cout << "Turn auto aggresion on"<<endl;
 	}
 }
 void AutoAggressionModule::TurnOff() {
 	if (IsActive) {
 		TurnOffAction();
-		cout << "Turn auto aggression off"<<endl;
 	}
 }
 void AutoAggressionModule::TurnTargetFollowingOn() {

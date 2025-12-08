@@ -15,7 +15,6 @@ using namespace KrostganEngine::Debug;
 
 EntCtrlMode_Base::EntCtrlMode_Base(EntitiesCtrlInputHandler& Owner)
 	:EntitiesCtrlInputMode(Owner){
-	cout << "Turn input handling mode to Base"<<endl;
 }
 
 bool EntCtrlMode_Base::AbleToGiveOrders() {
@@ -72,7 +71,6 @@ void EntCtrlMode_Base::HandleInput(CallbackRecArgs_Upd& args) {
 				case Keyboard::A:
 				{
 					Owner.SetNewMode(*new EntCtrlMode_AttackOrder(Owner));
-					cout << "Handle target of attack order" << endl;
 					return;
 				}
 				case Keyboard::I:

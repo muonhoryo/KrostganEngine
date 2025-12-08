@@ -12,8 +12,6 @@ EntCtrlMode_GroupSelect::EntCtrlMode_GroupSelect(EntitiesCtrlInputHandler& Owner
 
 	SelectionStart = Engine::ScreenPosToGlobalCoord(startMousePos);
 	SelectionUIQuad = new GroupSelectionQuad(SelectionStart, SelectionStart);
-	cout << "Turn input handling mode to Group selection" << endl;
-	cout << "Start group selection: " + to_string(SelectionStart) << endl;
 }
 EntCtrlMode_GroupSelect::~EntCtrlMode_GroupSelect(){
 	delete SelectionUIQuad;
@@ -43,7 +41,6 @@ void EntCtrlMode_GroupSelect::HandleInput(CallbackRecArgs_Upd& args) {
 				minPos.y = SelectionEnd.y;
 				maxPos.y = SelectionStart.y;
 			}
-			cout << "End group selection: " + to_string(SelectionEnd) << endl;
 			auto units = Engine::GetPhysicsEngine().OverlapAABB_All(minPos, maxPos, SELECTION_LAYER);
 			forward_list<ISelectableEntity*> selecUnits = forward_list<ISelectableEntity*>();
 			ISelectableEntity* ref = nullptr;
@@ -66,19 +63,6 @@ void EntCtrlMode_GroupSelect::HandleInput(CallbackRecArgs_Upd& args) {
 					GroupSelectionSystem::AddRange(selecUnits.cbegin(), selecUnits.cend());
 				}
 			}
-
-			cout << "Selected objects count: " << units.size() << endl;
-			auto beg = GroupSelectionSystem::GetEntitiesBegIter();
-			auto end = GroupSelectionSystem::GetEntitiesEndIter();
-			const CatalogObject* parObj = nullptr;
-			for (;beg != end;++beg) {
-				parObj = dynamic_cast<const CatalogObject*>((*beg)->GetPtr_t_c());
-				if (parObj == nullptr)
-					cout << "0:0\t";
-				else
-					cout << parObj->GetCatalogID() << ":" << (int)parObj->GetSubcatalogID()<<"\t";
-			}
-			cout << endl;
 
 			Owner.SetNewMode(*new EntCtrlMode_Base(Owner));
 			return;

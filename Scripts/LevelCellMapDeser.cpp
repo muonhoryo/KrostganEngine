@@ -10,8 +10,9 @@ using namespace KrostganEngine;
 using namespace KrostganEngine::Core;
 using namespace KrostganEngine::GameObjects;
 
-vector<vector<LvlObjInstantiationInfo*>*>& LevelCellMapDeser::Deserialize(vector<string>& serObstrMap, size_t* rowsCount) {
+vector<vector<LvlObjInstantiationInfo*>*>& LevelCellMapDeser::Deserialize(vector<string>& serObstrMap, size_t& columnsCount) {
 
+	columnsCount = 0;
 	vector<vector<LvlObjInstantiationInfo*>*>& map=*new vector<vector<LvlObjInstantiationInfo*>*>();
 	bool startDeser = true;
 	vector<LvlObjInstantiationInfo*>* newRow = nullptr;
@@ -46,8 +47,11 @@ vector<vector<LvlObjInstantiationInfo*>*>& LevelCellMapDeser::Deserialize(vector
 				newRow = LvlObjInstantiationInfo::DeserializeRow(line);
 			}
 		}
-		if (newRow != nullptr)
+		if (newRow != nullptr) {
 			map.push_back(newRow);
+			if (newRow->size() > columnsCount)
+				columnsCount = newRow->size();
+		}
 		if (foundEnd)
 			break;
 	}

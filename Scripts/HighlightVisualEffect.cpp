@@ -24,7 +24,7 @@ bool HighlightVisualEffect::Highlight() {
 	if (time < HighlightTime) {
 
 		float value =   time/ HighlightTime;
-		SetOwnerColor( lerp(DefaultAlpha,1,value) * 255);
+		SetOwnerColor( (Uint8)(lerp(DefaultAlpha,1,value) * (double)255));
 		return false;
 	}
 	else {

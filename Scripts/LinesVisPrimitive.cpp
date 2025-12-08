@@ -3,14 +3,12 @@
 
 using namespace std;
 using namespace sf;
-using namespace KrostganEngine::UI;
-
-
+using namespace KrostganEngine::Visual;
 
 LinesVisPrimitive::LinesVisPrimitive(
-	vector<Vector2f>&	pointsCoord, 
-	Color				edgeColor,
-	byte				RendLayer)
+	vector<Vector2f>&		pointsCoord, 
+	Color					edgeColor,
+	std::byte				RendLayer)
 		:ICallbackRec_GraphRen(RendLayer)
 {
 	size_t pointsCount = pointsCoord.size();
@@ -24,9 +22,9 @@ LinesVisPrimitive::LinesVisPrimitive(
 	}
 }
 LinesVisPrimitive::LinesVisPrimitive(
-	vector<Vector2f>&	pointsCoord, 
-	vector<Color>&		edgeColors,
-	byte				RendLayer)
+	vector<Vector2f>&		pointsCoord, 
+	vector<Color>&			edgeColors,
+	std::byte				RendLayer)
 		:ICallbackRec_GraphRen(RendLayer){
 
 	size_t pointsCount = pointsCoord.size();

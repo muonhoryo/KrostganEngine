@@ -12,6 +12,7 @@
 #include <OrdersExecutor.h>
 #include <CallbackDelegates.h>
 #include <ExtGlResources.h>
+#include <IWarFogObserver.h>
 
 using namespace sf;
 using namespace std;
@@ -68,7 +69,7 @@ namespace KrostganEngine::GameObjects {
 		friend class Entity;
 	};
 
-	class Entity :public GameObject,public ISelectableEntity,public IAttackableObj, public IFractionMember,public OrdersExecutor {
+	class Entity :public GameObject,public ISelectableEntity,public IAttackableObj, public IFractionMember,public OrdersExecutor, public IWarFogObserver{
 	public:
 		virtual ~Entity();
 
@@ -118,6 +119,12 @@ namespace KrostganEngine::GameObjects {
 	//
 
 		Fraction GetFraction() const override;
+
+	//
+	// IWarFogObserver
+	//
+
+		float GetObservingRange() const override;
 
 	protected:
 		Entity(EntityCtorParams& params);

@@ -46,7 +46,7 @@ namespace KrostganEngine {
 
 			typename forward_list< INoArgsEventSubscriber*>::iterator it = Owner.Subscribers.begin();
 			typename forward_list< INoArgsEventSubscriber*>::iterator end = Owner.Subscribers.end();
-			int size = distance(it, end);
+			size_t size = distance(it, end);
 			vector<INoArgsEventSubscriber*> subscrs = vector<INoArgsEventSubscriber*>(size);
 
 			for (int i = 0;it != end;) {

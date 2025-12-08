@@ -20,8 +20,17 @@ void FStreamExts::ClearPath(string& path) {
 		else
 			break;
 	}
+	nextIndex = count;
+	while (nextIndex > index) {
+		--nextIndex;
+		sym = path[nextIndex];
+		if (sym == ' ')
+			--count;
+		else 
+			break;
+	}
 	if (index >= 0) {
-		path.erase(0, index + 1);
+		path = path.substr(index + 1, count - index - 1);
 	}
 }
 char* FStreamExts::ReadToEnd(const string& path) {

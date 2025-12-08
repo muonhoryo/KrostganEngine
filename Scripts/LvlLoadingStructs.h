@@ -40,7 +40,7 @@ namespace KrostganEngine::Core {
 		}
 
 		size_t				CatalogID;
-		byte				CatalogSubID;
+		std::byte				CatalogSubID;
 		LvlObjAdditParams* AdditParams = nullptr;
 
 		void Deserialize(const string& serInfo);

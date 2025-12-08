@@ -6,6 +6,8 @@
 #include <string>
 #include <Events.h>
 #include <SFML/System.hpp>
+#include <WarFogStencilGen.h>
+#include <WarFog.h>
 
 using namespace sf;
 using namespace KrostganEngine::Core;
@@ -13,6 +15,25 @@ using namespace KrostganEngine;
 using namespace KrostganEngine::GameObjects;
 
 void LevelLoader::LoadLevel(const LevelLoadingInfo& levelInfo) {
+
+
+	auto& consts = Engine::GetGlobalConsts();
+
+	Vector2f mapSize = Vector2f(
+
+		levelInfo.MapColumnsCount * consts.GameObjs_OneSizeSpriteResolution,
+		levelInfo.MapRowsCount * consts.GameObjs_OneSizeSpriteResolution
+	);
+
+	//Instantiate war fog
+	float warFogOffset = levelInfo.WarFogOffset;
+	Vector2f warFogMin = Vector2f(-warFogOffset, -warFogOffset);
+	Vector2f warFogMax = Vector2f(mapSize.x + warFogOffset, mapSize.y + warFogOffset);
+	new WarFogStencilGen(warFogMin, warFogMax, Engine::GetEngineConfig().WarForStencilShaderPath);
+	auto warFogShad = new Shader();
+	warFogShad->loadFromFile(levelInfo.WarFogShaderPath, Shader::Fragment);
+	new WarFog(warFogMin, warFogMax, DEFAULT_RENDLAYER, warFogShad);
+	//
 
 	LvlObjInstantiationInfo* cell = nullptr;
 	WorldTransfObj* obj = nullptr;

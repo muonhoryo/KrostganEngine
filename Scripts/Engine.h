@@ -3,7 +3,9 @@
 #include <SFML/Graphics.hpp>
 #include <EngineModes.h>
 #include <EngineStateHandler.h>
-#include <EngineWorkCycleModule.h>
+#include <EngineUpdateModule.h>
+#include <EngineRenderModule.h>
+#include <EngineLateUpdateModule.h>
 #include <ExternalData.h>
 #include <Physics.h>
 #include <CursorManager.h>
@@ -111,6 +113,7 @@ namespace KrostganEngine::Core {
 			static float GetZoom();
 			static Vector2f GetCameraPos();
 			static Vector2f ScreenPosToGlobalCoord(const Vector2f& screenPos);
+			static Vector2f GlobalCoordToScreenPos(const Vector2f& globalCoord);
 			static Vector2u GetScreenSize();
 			static Vector2f GetCursorClampedPos();
 			static bool IsMouseOnScreen();

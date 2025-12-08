@@ -15,6 +15,64 @@ namespace KrostganEngine {
 	static const char VECTOR_VALUES_SEP_SYM = ';';
 	static const Vector2i VECTOR2_INT_ZERO = Vector2i(0, 0);
 
+	//Structs
+
+	template<typename T>
+	struct Vector4 final{
+
+		Vector4()
+			:x(T()), y(T()), z(T()), w(T())
+		{}
+		Vector4(T x, T y, T z, T w)
+			:x(x), y(y), z(z), w(w)
+		{}
+		Vector4(const Vector4& copy)
+			:x(copy.x), y(copy.y), z(copy.z), w(copy.w)
+		{}
+
+		T x;
+		T y;
+		T z;
+		T w;
+
+		/*Vector4<T> operator -(const Vector4<T>& right) {
+			return Vector4<T>(x - right.x, y - right.y, z - right.z, w - right.w);
+		}
+
+		Vector4<T>& operator +=(const Vector4<T>& left, const Vector4<T>& right) {
+			return Vector4<T>(x + right.x, y + right.y, z + right.z, w + right.w);
+		}
+
+		Vector4<T>& operator -=(const Vector4<T>& left, const Vector4<T>& right) {
+			return left - right;
+		}
+
+		Vector4<T> operator +(const Vector4<T>& left, const Vector4<T>& right) {
+			return left + right;
+		}
+
+		Vector4 <T> operator -(const Vector4<T>& left, const Vector4<T>& right) {
+			return left - right;
+		}
+
+		Vector4<T> operator *(const Vector4<T>& left, T right);
+
+		Vector4<T> operator *(T left, const Vector4<T>& right);
+
+		Vector4<T>& operator *=(Vector4<T>& left, T right);
+
+		Vector4<T> operator /(const Vector4<T>& left, T right);
+
+		Vector4<T>& operator /=(Vector4<T>& left, T right);
+
+		bool operator ==(const Vector4<T>& left, const Vector4<T>& right);
+
+		bool operator !=(const Vector4<T>& left, const Vector4<T>& right);*/
+	};
+
+	typedef Vector4<float> Vector4f;
+	typedef Vector4<int> Vector4i;
+
 	//Templates methods
 
 	template <typename T>
@@ -75,12 +133,12 @@ namespace KrostganEngine {
 		unsigned int (*func)(const string&) = [](const string& buff) {return (unsigned int)abs(stoi(buff));};
 		return ParseVec2<unsigned int>(serVect, func);
 	}
-	static float DirectionToAngle(const Vector2f& dir) {
+	static double DirectionToAngle(const Vector2f& dir) {
 		
 		if (dir.x<eps && dir.x>-eps)	//when tg is undefined
 			return dir.y > 0 ? 90 : 270;
 
-		float angle = Rad2Deg(atan2(dir.y, dir.x));
+		double angle = Rad2Deg(atan2(dir.y, dir.x));
 		return angle;
 	}
 }

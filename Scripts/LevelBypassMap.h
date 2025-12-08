@@ -200,7 +200,7 @@ namespace KrostganEngine::Core {
 						!IsWall(wallIndexes, (*map[i])[rowSize - 2]) &&		//left
 						!IsWall(wallIndexes, (*map[i + 1])[rowSize-1]))			//bottom
 					{
-						pnt = Vector2u(i + 1, rowSize - 2);
+						pnt = Vector2u((unsigned int)i + 1, (unsigned int)rowSize - 2);
 						if (!Contains(pnt, addedPnts)) {
 
 							addedPnts.push_front(pnt);
@@ -251,7 +251,7 @@ namespace KrostganEngine::Core {
 						!IsWall(wallIndexes, (*map[columnCount - 2])[i]) &&		//top
 						!IsWall(wallIndexes, (*map[columnCount - 1])[i + 1]))			//right
 					{
-						pnt = Vector2u((unsigned int)columnCount - 2, i + 1);
+						pnt = Vector2u((unsigned int)columnCount - 2, (unsigned int)i + 1);
 						if (!Contains(pnt, addedPnts)) {
 
 							addedPnts.push_front(pnt);

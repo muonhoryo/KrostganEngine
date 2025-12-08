@@ -232,9 +232,6 @@
     <Filter Include="Файлы заголовков\CoreSystems\Visual\UI/UX">
       <UniqueIdentifier>{1b6b2ee0-f94a-44ba-af1d-af3b1517a850}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Файлы заголовков\CoreSystems\Visual\UI/UX\Primitives">
-      <UniqueIdentifier>{37c69a07-d98f-4e52-9180-cc5f4fc21a17}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Файлы заголовков\CoreSystems\ExternalData">
       <UniqueIdentifier>{86b65db4-36fa-4d83-801d-8e9025f9a7b6}</UniqueIdentifier>
     </Filter>
@@ -360,6 +357,9 @@
     </Filter>
     <Filter Include="Исходные файлы\CoreSystems\EntitiesControl\Orders\BaseOrders\OrdersComponents">
       <UniqueIdentifier>{3c2cee6b-8a77-4c64-b1c8-546676827b0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems\Visual\Primitives">
+      <UniqueIdentifier>{37c69a07-d98f-4e52-9180-cc5f4fc21a17}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -729,6 +729,18 @@
     <ClCompile Include="Scripts\LevelManager.cpp">
       <Filter>Исходные файлы\CoreSystems\GameLevel</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\IWarFogObserver.cpp">
+      <Filter>Исходные файлы\CoreSystems\EngineCallbacks</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\WarFogStencilGen.cpp">
+      <Filter>Исходные файлы\CoreSystems\Engine\EngineWorkCycles</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\IWarFogObserver_ObsrArea.cpp">
+      <Filter>Исходные файлы\CoreSystems\EngineCallbacks</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\ObservingArea.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\CoreGameObjects.h">
@@ -816,7 +828,7 @@
       <Filter>Файлы заголовков\CoreSystems\Visual\UI/UX</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\PrimitiveVisualShapes.h">
-      <Filter>Файлы заголовков\CoreSystems\Visual\UI/UX\Primitives</Filter>
+      <Filter>Файлы заголовков\CoreSystems\Visual\Primitives</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\IPhysicalObject.h">
       <Filter>Файлы заголовков\CoreSystems\EngineCallbacks</Filter>
@@ -1298,6 +1310,36 @@
     <ClInclude Include="Scripts\EntityOrder_ImmobilityChecking.h">
       <Filter>Файлы заголовков\CoreSystems\EntitiesControl\Orders\BaseOrders\OrderComponents</Filter>
     </ClInclude>
+    <ClInclude Include="Scripts\WarFogStencilGen.h">
+      <Filter>Файлы заголовков\CoreSystems\EngineWorkCycles</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\UIRoot.h">
+      <Filter>Файлы заголовков\CoreSystems\Visual\UI/UX\UIElements</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\ICallbackRec.h">
+      <Filter>Файлы заголовков\CoreSystems\EngineCallbacks</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\IWarFogObserver.h">
+      <Filter>Файлы заголовков\CoreSystems\EngineCallbacks</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\WarFog.h">
+      <Filter>Файлы заголовков\CoreSystems\Visual</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\EngineUpdateModule.h">
+      <Filter>Файлы заголовков\CoreSystems\EngineWorkCycles</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\EngineWorkModules.h">
+      <Filter>Файлы заголовков\CoreSystems\EngineWorkCycles</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\EngineRenderModule.h">
+      <Filter>Файлы заголовков\CoreSystems\EngineWorkCycles</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\EngineLateUpdateModule.h">
+      <Filter>Файлы заголовков\CoreSystems\EngineWorkCycles</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\ObservingArea.h">
+      <Filter>Файлы заголовков\CoreSystems\GameObjects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Config.txt">
@@ -1314,6 +1356,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Shaders\MaskableImage.frag">
+      <Filter>Shaders\Fragments</Filter>
+    </None>
+    <None Include="Scripts\Shaders\WarFog.frag">
+      <Filter>Shaders\Fragments</Filter>
+    </None>
+    <None Include="Scripts\Shaders\WarFogStencil.frag">
       <Filter>Shaders\Fragments</Filter>
     </None>
   </ItemGroup>

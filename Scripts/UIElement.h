@@ -100,13 +100,13 @@ namespace KrostganEngine::UI {
 			UIElement*			Parent,
 			const string*		Name		=nullptr,
 			Vector2f			UISize		= DEFAULT_SCALE,
-			byte				RendLayer	= DEFAULT_RENDLAYER_UI);
+			std::byte			RendLayer	= DEFAULT_RENDLAYER_UI);
 
 		UIElement(
 			Transformable&		Owner,
 			const string*		Name		= nullptr,
 			Vector2f			UISize		= DEFAULT_SCALE,
-			byte				RendLayer	= DEFAULT_RENDLAYER_UI);
+			std::byte			RendLayer	= DEFAULT_RENDLAYER_UI);
 
 		virtual	void SetUISize_Inherit(Vector2f oldSize);
 		virtual void SetChildren_UISize(Vector2f oldSize);

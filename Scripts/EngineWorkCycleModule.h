@@ -2,22 +2,10 @@
 
 #include <forward_list>
 #include <list>
-#include <vector>
-#include <SFML/System.hpp>
-#include <SFML/Graphics.hpp>
-#include <ICallbackRec_GraphRen.h>
-#include <ICallbackRec_Upd.h>
-#include <ICallbackRec_LUpd.h>
 
-using namespace sf;
 using namespace std;
-using namespace KrostganEngine;
 
 namespace KrostganEngine::Core {
-
-	static bool RenCallbks_SortPred(ICallbackRec_GraphRen*const& first, ICallbackRec_GraphRen*const& second) {
-		return first->GetRendLayer() < second->GetRendLayer();
-	}
 
 	class EngineWorkCycleModule {
 	public:
@@ -30,7 +18,7 @@ namespace KrostganEngine::Core {
 	template<typename TCallback>
 	class EngineCallbackHandler {
 	public:
-		virtual void Unload() {
+		void Unload() {
 			
 			IsIteratingCallbacks = true;
 
@@ -67,8 +55,9 @@ namespace KrostganEngine::Core {
 			}
 
 			IsIteratingCallbacks = false;
+			OnUnload();
 		}
-		virtual void Remove(TCallback& callbckToDel) {
+		void Remove(TCallback& callbckToDel) {
 
 			TCallback* elRef = Callbacks.front();
 			bool isFound = false;
@@ -104,15 +93,17 @@ namespace KrostganEngine::Core {
 						DeleteDelayedCallbacks();
 
 					Callbacks.erase(itToD);
+					OnRemoveCallback();
 				}
 			}
+			OnTryRemoveCallback();
 		};
 		/// <summary>
 		/// Return reference to watch_ptr_wr with added pointer of callbck
 		/// </summary>
 		/// <param name="callbck"></param>
 		/// <returns></returns>
-		virtual void Add(TCallback& callbck) {
+		void Add(TCallback& callbck) {
 
 			Callbacks.push_front(&callbck);
 			if (DelayedDelCallbksCount > 0) {
@@ -122,6 +113,7 @@ namespace KrostganEngine::Core {
 					++it;
 				}
 			}
+			OnAddCallback(callbck);
 		};
 
 		void DeleteDelayedCallbacks() {
@@ -136,18 +128,32 @@ namespace KrostganEngine::Core {
 						++it;
 					}
 					Callbacks.erase(it);
+					OnRemoveCallback();
 					DelayedDelCallbks.pop_front();
 					--DelayedDelCallbksCount;
 				}
 			}
 		}
 
+		bool Get_IsIteratingCallbacks() const {
+			return IsIteratingCallbacks;
+		}
+		size_t GetCallbacksCount() const {
+			return Callbacks.size();
+		}
+
 	protected:
 		EngineCallbackHandler() {};
 
 		list<TCallback*> Callbacks = list<TCallback*>();
-
 		bool IsIteratingCallbacks = false;
+
+		virtual void OnAddCallback(TCallback& callbck) {}
+
+		virtual void OnRemoveCallback(){}
+		virtual void OnTryRemoveCallback(){}
+
+		virtual void OnUnload(){}
 
 	private:
 		/// <summary>
@@ -158,50 +164,5 @@ namespace KrostganEngine::Core {
 
 		friend class EngineRenderModule;
 		friend class EngineWorkCycleModule;
-	};
-
-	class EngineUpdateModule : public EngineWorkCycleModule, public EngineCallbackHandler<ICallbackRec_Upd> {
-	public:
-		EngineUpdateModule(RenderWindow& Window);
-
-		void Execute() override;
-
-	private:
-		RenderWindow& Window;
-		Event& UpdateEvent;
-		vector<Event> PlayerInput;
-		Clock FrameDeltaTimer;
-
-	public:
-		void SetFrameDeltaTime(float time);
-	};
-
-	class EngineRenderModule :public EngineCallbackHandler<ICallbackRec_GraphRen>,public EngineWorkCycleModule {
-	public:
-		EngineRenderModule(RenderWindow& Window);
-
-		void Execute() override;
-
-		void Add(ICallbackRec_GraphRen& callbck) override;
-
-	private:
-
-		RenderWindow& Window;
-		Clock FrameRenderTime;
-		bool NeedToSort = true;
-
-	public:
-
-		void SetFrameRenderTime(float time);
-		void SetNeedToSort();
-	};
-
-	class EngineLateUpdateModule :public EngineCallbackHandler<ICallbackRec_LUpd>,
-		public EngineWorkCycleModule {
-
-	public:
-		EngineLateUpdateModule();
-
-		void Execute() override;
 	};
 }

@@ -15,6 +15,7 @@
 #include <UnitObject.h>
 #include <HeroObject.h>
 #include <Wall.h>
+#include <ObservingArea.h>
 
 #include <EntitiesObserver.h>
 

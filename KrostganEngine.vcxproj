@@ -104,14 +104,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>SFML_STATIC;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\SFML-2.5.1\include;D:\create\c++\KrostganEngine;D:\create\c++\KrostganEngine\Scripts;D:\create\c++\KrostganEngine\Scripts\rapidxml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\glm-0.9.8.4;C:\glew-2.1.0-win32\include;C:\SFML-2.5.1\include;D:\create\c++\KrostganEngine;D:\create\c++\KrostganEngine\Scripts;D:\create\c++\KrostganEngine\Scripts\rapidxml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\SFML-2.5.1\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;vorbis.lib;ogg.lib;sfml-graphics-s-d.lib;sfml-window-s-d.lib;sfml-system-s-d.lib;sfml-audio-s-d.lib;kernel32.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\glew-2.1.0-win32\lib\Release\x64;C:\SFML-2.5.1\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32s.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;vorbis.lib;ogg.lib;sfml-graphics-s-d.lib;sfml-window-s-d.lib;sfml-system-s-d.lib;sfml-audio-s-d.lib;kernel32.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -177,12 +177,15 @@
     <ClCompile Include="Scripts\CatalogObject.cpp" />
     <ClCompile Include="Scripts\IHierarchyTrObj.cpp" />
     <ClCompile Include="Scripts\IndicatorFill.cpp" />
+    <ClCompile Include="Scripts\IWarFogObserver.cpp" />
+    <ClCompile Include="Scripts\IWarFogObserver_ObsrArea.cpp" />
     <ClCompile Include="Scripts\LevelManager.cpp" />
     <ClCompile Include="Scripts\LineAAAnimation.cpp" />
     <ClCompile Include="Scripts\LoseScript.cpp" />
     <ClCompile Include="Scripts\MainMenuTransitionHandler.cpp" />
     <ClCompile Include="Scripts\ObjectsCatalog.cpp" />
     <ClCompile Include="Scripts\LevelCellMapDeser.cpp" />
+    <ClCompile Include="Scripts\ObservingArea.cpp" />
     <ClCompile Include="Scripts\OutlineLineVisual.cpp" />
     <ClCompile Include="Scripts\PlayerInputManager.cpp" />
     <ClCompile Include="Scripts\StartMessageMode.cpp" />
@@ -243,6 +246,7 @@
     <ClCompile Include="Scripts\EngineConfigLoad.cpp" />
     <ClCompile Include="Scripts\GameObject.cpp" />
     <ClCompile Include="Scripts\main.cpp" />
+    <ClCompile Include="Scripts\WarFogStencilGen.cpp" />
     <ClCompile Include="Scripts\WorldTransfObj.cpp" />
     <ClCompile Include="Scripts\UnitDeathModule.cpp" />
     <ClCompile Include="Scripts\UnitObject.cpp" />
@@ -285,6 +289,10 @@
     <ClInclude Include="Scripts\DbgConsoleInputHandler.h" />
     <ClInclude Include="Scripts\DummyLockerHandler.h" />
     <ClInclude Include="Scripts\EffectObjects.h" />
+    <ClInclude Include="Scripts\EngineLateUpdateModule.h" />
+    <ClInclude Include="Scripts\EngineRenderModule.h" />
+    <ClInclude Include="Scripts\EngineUpdateModule.h" />
+    <ClInclude Include="Scripts\EngineWorkModules.h" />
     <ClInclude Include="Scripts\EntityAutoAttackModule.h" />
     <ClInclude Include="Scripts\EntityOrder_AttackArea.h" />
     <ClInclude Include="Scripts\EntityOrder_Cancel.h" />
@@ -318,12 +326,14 @@
     <ClInclude Include="Scripts\ICallbackRec.h" />
     <ClInclude Include="Scripts\IModifiableStatsWrapper.h" />
     <ClInclude Include="Scripts\InputHandlers.h" />
+    <ClInclude Include="Scripts\IWarFogObserver.h" />
     <ClInclude Include="Scripts\LevelManager.h" />
     <ClInclude Include="Scripts\LvlLoadingStructs.h" />
     <ClInclude Include="Scripts\MainMenuTransitionHandler.h" />
     <ClInclude Include="Scripts\MathExts.h" />
     <ClInclude Include="Scripts\MemoryExts.h" />
     <ClInclude Include="Scripts\ModifiableStatsWrapper.h" />
+    <ClInclude Include="Scripts\ObservingArea.h" />
     <ClInclude Include="Scripts\ProjAAHitInfo.h" />
     <ClInclude Include="Scripts\StatsWrapperDepend_toTxt.h" />
     <ClInclude Include="Scripts\TakeDamageAnim_SprFade.h" />
@@ -436,6 +446,8 @@
     <ClInclude Include="Scripts\CoreVisual_UI.h" />
     <ClInclude Include="Scripts\ValueDependency.h" />
     <ClInclude Include="Scripts\ValueDepend_EntBattStats.h" />
+    <ClInclude Include="Scripts\WarFog.h" />
+    <ClInclude Include="Scripts\WarFogStencilGen.h" />
     <ClInclude Include="Scripts\WorldTransfObj.h" />
     <ClInclude Include="Scripts\UnitObject.h" />
     <ClInclude Include="Scripts\UserInterfaceLoader.h" />
@@ -460,6 +472,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Shaders\MaskableImage.frag" />
+    <None Include="Scripts\Shaders\WarFog.frag" />
+    <None Include="Scripts\Shaders\WarFogStencil.frag" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="UILayouts\GameUI.xml" />

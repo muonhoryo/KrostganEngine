@@ -153,7 +153,7 @@ void EntitiesCtrlInputMode::GiveOrderToSelected_AttackArea(Vector2f targetGlobal
 	for (;begIt != endIt;) {
 		parEl = dynamic_cast<Entity*>((*begIt)->GetPtr_t());
 		if (parEl != nullptr) {
-			parEl->TryAddOrder(*new EntityOrder_AttackArea(*parEl, *parEl, targetGlobalPos), !isGrouped);
+			parEl->TryAddOrder(*new EntityOrder_AttackArea(*parEl, *parEl, targetGlobalPos, parEl->GetCollider().GetBoundedCircle().Radius), !isGrouped);
 		}
 		++begIt;
 	}

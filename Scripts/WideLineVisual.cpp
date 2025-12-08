@@ -14,7 +14,7 @@ WideLineVisual::WideLineVisual(
 	Vector2f	End,
 	float		Width,
 	Color		LineColor,
-	byte		RendLayer) 
+	std::byte	RendLayer)
 		:Start(Start),
 		End(End),
 		Width(Width),
