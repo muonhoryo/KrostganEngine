@@ -16,13 +16,14 @@ using namespace KrostganEngine::Core;
 using namespace KrostganEngine::Physics;
 using namespace KrostganEngine::Visual;
 
-const std::string Engine::ENGINE_VERSION = "A0.4.3.0";
+const std::string Engine::ENGINE_VERSION = "A0.4.3.1";
 
 Engine::Engine()
 	:RenderModule(*new EngineRenderModule(RendWin)),
 	UpdateModule(*new EngineUpdateModule(RendWin)),
 	LateUpdateModule(*new EngineLateUpdateModule()),
-	PhysicsEng(*new PhysicsEngine()){
+	PhysicsEng(*new PhysicsEngine()),
+	IsFullscreen(false){
 
 	Singleton = this;
 
@@ -36,27 +37,41 @@ Engine::Engine()
 	auto uiDeser=new UserInterfacesDeserializer();
 	uiDeser->Deserialize();
 
-	ContextSettings windSetts;
-	windSetts.stencilBits = 8;
-	string header = "Krostgan Engine " + Engine::ENGINE_VERSION;
-	Vector2u resol = EngineConfiguration->WindowResolution;
-	RendWin.create(VideoMode(resol.x,resol.y), header,Style::Close, windSetts);
-	glewInit();
-	IsFullscreen = false;
-	View view;
-	view.setCenter(0, 0);
-	view.setSize(resol.x, resol.y);
-	view.zoom(Zoom);
-	RendWin.setView(view);
-	RendWin.setFramerateLimit(EngineConfiguration->FrameRateLimit);
-	WindowResizeEvArgs resArgs(Vector2u(0, 0), (Vector2u)resol);
-	ResizeWindowEventHandler.Execute(resArgs);
+	CreateGameWindow();
+	SetCameraPos(Vector2f(0, 0));
+
 	CurrMode = nullptr;
 	EngStateHandler = EngineStateHandler();
 
 	InitializeSystems();
 
 	ReqToSetStartMode();
+}
+void Engine::CreateGameWindow(bool isFullScreen) {
+
+	ContextSettings windSetts;
+	windSetts.stencilBits = 8;
+	string header = "Krostgan Engine " + Engine::ENGINE_VERSION;
+	const VideoMode* mode = nullptr;
+	Vector2u oldResol = GetScreenSize();
+	Uint32 style;
+	if (isFullScreen) {
+		mode = &VideoMode::getFullscreenModes()[0];
+		style = sf::Style::Close | sf::Style::Fullscreen;
+	}
+	else {
+		mode = new VideoMode(Singleton->EngineConfiguration->WindowResolution.x, Singleton->EngineConfiguration->WindowResolution.y);
+		style = sf::Style::Close;
+	}
+	RendWin.create(*mode, header, style, windSetts);
+	glewInit();
+	SetZoom(Zoom);
+	RendWin.setFramerateLimit(EngineConfiguration->FrameRateLimit);
+	auto warFogGen = WarFogStencilGen::GetInstance();
+	if (warFogGen != nullptr)
+		warFogGen->ReinitializeBuffer();
+	WindowResizeEvArgs resArgs(oldResol,GetScreenSize());
+	ResizeWindowEventHandler.Execute(resArgs);
 }
 void Engine::InitializeSystems() {
 	new PlayerInputManager();
@@ -123,24 +138,11 @@ void Engine::SetFullScreen(bool isFull) {
 
 	if (isFull != IsFullScreenWindow()) {
 
-		auto& wind = GetRenderWindow();
-		const VideoMode* mode;
-		Uint32 style;
 		Vector2f camPos = GetCameraPos();
-		if (isFull) {
-			mode = &VideoMode::getFullscreenModes()[0];
-			style = sf::Style::Close | sf::Style::Fullscreen;
-		}
-		else {
-			mode = new VideoMode(Singleton->EngineConfiguration->WindowResolution.x, Singleton->EngineConfiguration->WindowResolution.y);
-			style = sf::Style::Close;
-		}
-		Vector2u resol(mode->width,mode->height);
-		wind.create(*mode, "Krostgan Engine " + Engine::ENGINE_VERSION,style);
+		Singleton->CreateGameWindow(isFull);
 		Singleton->IsFullscreen = isFull;
-		WindowResizeEvArgs resArgs(resol, Singleton->GetScreenSize());
+
 		SetCameraPos(camPos);
-		Singleton->ResizeWindowEventHandler.Execute(resArgs);
 	}
 }
 void Engine::UnloadCallbacksModules() {

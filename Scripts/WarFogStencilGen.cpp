@@ -35,6 +35,8 @@ void WarFogStencilGen::Execute() {
 
 	auto& window = Engine::GetRenderWindow();
 
+	IsIteratingCallbacks = true;
+
 	if (NeedReinitializeBuffer)
 		InitializeBuffer();
 
@@ -49,6 +51,8 @@ void WarFogStencilGen::Execute() {
 	window.draw(StencilMask, StencilCalculatingRenState);
 
 	glStencilMask(0x00);
+
+	IsIteratingCallbacks = false;
 }
 
 void WarFogStencilGen::OnAddCallback(const IWarFogObserver& observer) {
@@ -68,6 +72,11 @@ void WarFogStencilGen::OnRemoveCallback() {
 	WarFogObserversInfo = new Vector4f[obsrCount];
 
 	NeedReinitializeBuffer = true;
+}
+void WarFogStencilGen::ReinitializeBuffer() {
+
+	if (!IsIteratingCallbacks)
+		InitializeBuffer();
 }
 
 void WarFogStencilGen::InitializeBuffer() {

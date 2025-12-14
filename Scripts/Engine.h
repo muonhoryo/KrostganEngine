@@ -123,6 +123,11 @@ namespace KrostganEngine::Core {
 			static const std::string ENGINE_VERSION;
 		 private:
 			Engine();
+			/// <summary>
+			/// Can be used to recreating window, for example: change screen mode from or to full
+			/// </summary>
+			/// <param name="isFullScreen"></param>
+			void CreateGameWindow(bool isFullScreen=false);
 			void InitializeSystems();
 			void InitializeCursorManager();
 			static inline Engine* Singleton=nullptr;

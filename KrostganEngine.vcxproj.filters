@@ -1364,22 +1364,20 @@
     <None Include="Scripts\Shaders\WarFogStencil.frag">
       <Filter>Shaders\Fragments</Filter>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Xml Include="UILayouts\GameUI.xml">
+    <None Include="UILayouts\GameUI.xml">
       <Filter>UILayouts</Filter>
-    </Xml>
-    <Xml Include="UILayouts\LevelDeserialization.xml">
+    </None>
+    <None Include="UILayouts\LevelDeserialization.xml">
       <Filter>UILayouts</Filter>
-    </Xml>
-    <Xml Include="UILayouts\LoseMsg.xml">
+    </None>
+    <None Include="UILayouts\LoseMsg.xml">
       <Filter>UILayouts</Filter>
-    </Xml>
-    <Xml Include="UILayouts\MainMenu.xml">
+    </None>
+    <None Include="UILayouts\MainMenu.xml">
       <Filter>UILayouts</Filter>
-    </Xml>
-    <Xml Include="UILayouts\WinMsg.xml">
+    </None>
+    <None Include="UILayouts\WinMsg.xml">
       <Filter>UILayouts</Filter>
-    </Xml>
+    </None>
   </ItemGroup>
 </Project>

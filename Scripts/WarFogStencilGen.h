@@ -34,8 +34,7 @@ namespace KrostganEngine::Core {
 		/// </summary>
 		void Execute() override;
 
-		void OnAddCallback(const IWarFogObserver& observer) override;
-		void OnRemoveCallback() override;
+		void ReinitializeBuffer();
 
 		static inline const unsigned int WARFOG_STENCIL_MASK = 1;
 
@@ -47,6 +46,9 @@ namespace KrostganEngine::Core {
 		void InitializeBuffer();
 		void UpdateBuffer();
 		void UpdateObserversInfo();
+
+		void OnAddCallback(const IWarFogObserver& observer) override;
+		void OnRemoveCallback() override;
 
 		VertexArray		StencilMask = VertexArray(PrimitiveType::Quads,5);
 		GLuint			StencilBufferIndex = 0;

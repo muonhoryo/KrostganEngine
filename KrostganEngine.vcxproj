@@ -476,11 +476,11 @@
     <None Include="Scripts\Shaders\WarFogStencil.frag" />
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="UILayouts\GameUI.xml" />
-    <Xml Include="UILayouts\LevelDeserialization.xml" />
-    <Xml Include="UILayouts\LoseMsg.xml" />
-    <Xml Include="UILayouts\MainMenu.xml" />
-    <Xml Include="UILayouts\WinMsg.xml" />
+    <None Include="UILayouts\GameUI.xml" />
+    <None Include="UILayouts\LevelDeserialization.xml" />
+    <None Include="UILayouts\LoseMsg.xml" />
+    <None Include="UILayouts\MainMenu.xml" />
+    <None Include="UILayouts\WinMsg.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
