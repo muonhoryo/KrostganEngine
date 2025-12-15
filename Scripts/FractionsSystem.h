@@ -9,8 +9,8 @@ using namespace sf;
 
 namespace KrostganEngine::EntitiesControl {
 	enum class Fraction {
-		Player,
 		Neutral,
+		Player,
 		Enemy
 	};
 

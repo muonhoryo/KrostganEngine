@@ -8,7 +8,7 @@
 #include <ICallbackRec_Upd.h>
 #include <ICallbackRec_LUpd.h>
 #include <IPhysicalObject.h>
-#include <IWarFogObserver.h>
+#include <WarFogObserver.h>
 #include <CallbackDelegates.h>
 
 #include <EngineWorkModules.h>

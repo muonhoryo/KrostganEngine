@@ -729,7 +729,7 @@
     <ClCompile Include="Scripts\LevelManager.cpp">
       <Filter>Исходные файлы\CoreSystems\GameLevel</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\IWarFogObserver.cpp">
+    <ClCompile Include="Scripts\WarFogObserver.cpp">
       <Filter>Исходные файлы\CoreSystems\EngineCallbacks</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\WarFogStencilGen.cpp">
@@ -740,6 +740,9 @@
     </ClCompile>
     <ClCompile Include="Scripts\ObservingArea.cpp">
       <Filter>Исходные файлы\CoreSystems\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\WarFogObserversManager.cpp">
+      <Filter>Исходные файлы\CoreSystems\Engine\EngineWorkCycles</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1319,7 +1322,7 @@
     <ClInclude Include="Scripts\ICallbackRec.h">
       <Filter>Файлы заголовков\CoreSystems\EngineCallbacks</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\IWarFogObserver.h">
+    <ClInclude Include="Scripts\WarFogObserver.h">
       <Filter>Файлы заголовков\CoreSystems\EngineCallbacks</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\WarFog.h">
@@ -1339,6 +1342,9 @@
     </ClInclude>
     <ClInclude Include="Scripts\ObservingArea.h">
       <Filter>Файлы заголовков\CoreSystems\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\WarFogObserversManager.h">
+      <Filter>Файлы заголовков\CoreSystems\EngineWorkCycles</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

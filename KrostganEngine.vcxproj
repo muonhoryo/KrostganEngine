@@ -177,7 +177,7 @@
     <ClCompile Include="Scripts\CatalogObject.cpp" />
     <ClCompile Include="Scripts\IHierarchyTrObj.cpp" />
     <ClCompile Include="Scripts\IndicatorFill.cpp" />
-    <ClCompile Include="Scripts\IWarFogObserver.cpp" />
+    <ClCompile Include="Scripts\WarFogObserver.cpp" />
     <ClCompile Include="Scripts\IWarFogObserver_ObsrArea.cpp" />
     <ClCompile Include="Scripts\LevelManager.cpp" />
     <ClCompile Include="Scripts\LineAAAnimation.cpp" />
@@ -246,6 +246,7 @@
     <ClCompile Include="Scripts\EngineConfigLoad.cpp" />
     <ClCompile Include="Scripts\GameObject.cpp" />
     <ClCompile Include="Scripts\main.cpp" />
+    <ClCompile Include="Scripts\WarFogObserversManager.cpp" />
     <ClCompile Include="Scripts\WarFogStencilGen.cpp" />
     <ClCompile Include="Scripts\WorldTransfObj.cpp" />
     <ClCompile Include="Scripts\UnitDeathModule.cpp" />
@@ -326,7 +327,7 @@
     <ClInclude Include="Scripts\ICallbackRec.h" />
     <ClInclude Include="Scripts\IModifiableStatsWrapper.h" />
     <ClInclude Include="Scripts\InputHandlers.h" />
-    <ClInclude Include="Scripts\IWarFogObserver.h" />
+    <ClInclude Include="Scripts\WarFogObserver.h" />
     <ClInclude Include="Scripts\LevelManager.h" />
     <ClInclude Include="Scripts\LvlLoadingStructs.h" />
     <ClInclude Include="Scripts\MainMenuTransitionHandler.h" />
@@ -447,6 +448,7 @@
     <ClInclude Include="Scripts\ValueDependency.h" />
     <ClInclude Include="Scripts\ValueDepend_EntBattStats.h" />
     <ClInclude Include="Scripts\WarFog.h" />
+    <ClInclude Include="Scripts\WarFogObserversManager.h" />
     <ClInclude Include="Scripts\WarFogStencilGen.h" />
     <ClInclude Include="Scripts\WorldTransfObj.h" />
     <ClInclude Include="Scripts\UnitObject.h" />

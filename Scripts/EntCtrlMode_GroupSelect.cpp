@@ -2,9 +2,12 @@
 #include <EntitiesCtrlInputModes.h>
 #include <Engine.h>
 #include <Extensions.h>
+#include <WarFogObserversManager.h>
+#include <WarFogStencilGen.h>
 
 using namespace KrostganEngine;
 using namespace KrostganEngine::PlayerControl;
+using namespace KrostganEngine::Core;
 
 EntCtrlMode_GroupSelect::EntCtrlMode_GroupSelect(EntitiesCtrlInputHandler& Owner,Vector2f startMousePos)
 	:EntitiesCtrlInputMode(Owner),
@@ -43,14 +46,24 @@ void EntCtrlMode_GroupSelect::HandleInput(CallbackRecArgs_Upd& args) {
 			}
 			auto units = Engine::GetPhysicsEngine().OverlapAABB_All(minPos, maxPos, SELECTION_LAYER);
 			forward_list<ISelectableEntity*> selecUnits = forward_list<ISelectableEntity*>();
+			int selEntsCount = 0;
 			ISelectableEntity* ref = nullptr;
+			ITransformableObj* parRef_trObj = nullptr;
 			for (auto un : units) {
 				ref = dynamic_cast<ISelectableEntity*>(un);
-				if (ref != nullptr) {
-					selecUnits.push_front(ref);
+				if (ref != nullptr ) {
+
+					parRef_trObj = dynamic_cast<ITransformableObj*>(ref);
+					if (parRef_trObj == nullptr ||
+						!WarFogStencilGen::GetActivity() ||
+						WarFogObserversManager::GetInstance()->Intersect(parRef_trObj->GetGlobalPosition(), Fraction::Player)) {
+
+						selecUnits.push_front(ref);
+						++selEntsCount;
+					}
 				}
 			}
-			if (units.size() > 0) {
+			if (selEntsCount > 0) {
 
 				if (PlayerInputManager::GetBtnState_Ctrl()) {
 

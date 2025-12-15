@@ -62,7 +62,7 @@ void WarFogStencilGen::Execute() {
 	IsIteratingCallbacks = false;
 }
 
-void WarFogStencilGen::OnAddCallback(const IWarFogObserver& observer) {
+void WarFogStencilGen::OnAddCallback(const WarFogObserver& observer) {
 
 	size_t sz = GetCallbacksCount();
 

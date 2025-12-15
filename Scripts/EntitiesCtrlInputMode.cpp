@@ -5,6 +5,8 @@
 #include <Extensions.h>
 #include <FractionsSystem.h>
 #include <DBG_DivineCommander.h>
+#include <WarFogObserversManager.h>
+#include <WarFogStencilGen.h>
 
 using namespace KrostganEngine;
 using namespace KrostganEngine::Debug;
@@ -23,6 +25,13 @@ Vector2f EntitiesCtrlInputMode::GetPosByCursor() {
 	return pos;
 }
 bool EntitiesCtrlInputMode::TryGetTargetAtPos(Vector2f pos, IPhysicalObject*& target) {
+
+	if (WarFogStencilGen::GetActivity() &&
+		!WarFogObserversManager::GetInstance()->Intersect(pos, Fraction::Player)) {
+
+		return false;
+	}
+
 	PhysicsLayer castLayer = (PhysicsLayer)((size_t)PhysicsLayer::Buildings | (size_t)PhysicsLayer::Units);
 	target = Engine::GetPhysicsEngine().PointCast(pos, castLayer);
 	if (target == nullptr)

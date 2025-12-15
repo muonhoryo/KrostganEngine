@@ -7,6 +7,7 @@
 #include <DBG_DivineCommander.h>
 #include <CoreVisual.h>
 #include <WarFogStencilGen.h>
+#include <WarFogObserversManager.h>
 
 using namespace std;
 using namespace sf;
@@ -78,6 +79,7 @@ void Engine::InitializeSystems() {
 	UserInterfaceManager::Initialize();
 	GroupSelectionSystem::GetInstance();
 	InitializeCursorManager();
+	new WarFogObserversManager();
 }
 void Engine::InitializeCursorManager() {
 	Cursor& def = *new Cursor();

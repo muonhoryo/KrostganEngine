@@ -1,10 +1,10 @@
 #pragma once
 
-#include <IWarFogObserver.h>
+#include <WarFogObserver.h>
 #include <WorldTransfObj.h>
 
 namespace KrostganEngine::GameObjects{
-	class ObservingArea final : public WorldTransfObj, public IWarFogObserver {
+	class ObservingArea final : public WorldTransfObj, public WarFogObserver {
 
 	public:
 		ObservingArea(float ObservingRange, WorldTransfObj& Parent);
@@ -12,6 +12,8 @@ namespace KrostganEngine::GameObjects{
 		virtual ~ObservingArea();
 
 		float GetObservingRange() const override;
+
+		Fraction GetFraction()const override;
 
 	private:
 		float ObservingRange;

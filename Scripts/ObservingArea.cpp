@@ -18,3 +18,6 @@ ObservingArea::~ObservingArea() {
 float ObservingArea::GetObservingRange() const {
 	return ObservingRange;
 }
+Fraction ObservingArea::GetFraction()const {
+	return Fraction::Neutral;
+}

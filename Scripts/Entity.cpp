@@ -21,12 +21,11 @@ Entity::Entity(EntityCtorParams& params)
 	:GameObject(params),
 	ISelectableEntity(), 
 	ICallbackRec_Upd(), 
-	IFractionMember(),
 	OrdersExecutor(
 		*params.BattleStats, 
 		nullptr, 
 		nullptr),
-	IWarFogObserver(FractionsSystem::GetRelationToPlayer(params.EntityFraction)==Relation::Ally),	//Entity observs war fog only when it is ally to player
+	WarFogObserver(FractionsSystem::GetRelationToPlayer(params.EntityFraction)==Relation::Ally),	//Entity observs war fog only when it is ally to player
 
 	EntityFraction			(params.EntityFraction),
 	HPBar					(params.HPBarSprite),

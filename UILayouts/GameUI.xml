@@ -59,7 +59,7 @@
 						AnchorX="0.7"
 						AnchorY="0.3"
 						FirstSelEnt_Depend="AutoAttack"
-						TextDepend_BatStats_FieldType="Range"
+						TextDepend_BatStats_FieldType="Speed"
 						Color="000000FF"
 						FontSize="30"
 						Layer="120"/>
@@ -75,7 +75,7 @@
 					AnchorX="0.3"
 					AnchorY="0.3"
 					FirstSelEnt_Depend="AutoAttack"
-					TextDepend_BatStats_FieldType="Speed"
+					TextDepend_BatStats_FieldType="Range"
 					Color="000000FF"
 					FontSize="30"
 					Layer="120"/>

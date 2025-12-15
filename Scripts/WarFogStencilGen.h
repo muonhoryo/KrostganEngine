@@ -10,7 +10,7 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include <VectExts.h>
-#include <IWarFogObserver.h>
+#include <WarFogObserver.h>
 #include <EngineWorkCycleModule.h>
 
 using namespace sf;
@@ -18,14 +18,14 @@ using namespace std;
 using namespace KrostganEngine;
 
 namespace KrostganEngine::Core {
-	class WarFogStencilGen final : public EngineWorkCycleModule, public EngineCallbackHandler<const IWarFogObserver> {
+	class WarFogStencilGen final : public EngineWorkCycleModule, public EngineCallbackHandler<const WarFogObserver> {
 		
 	public:
 		WarFogStencilGen
 			(Vector2f		leftUp, 
 			Vector2f		rightDown,
 			const string&	stencShaderPath);
-		~WarFogStencilGen() {
+		virtual ~WarFogStencilGen() {
 			Singleton = nullptr;
 		}
 
@@ -57,7 +57,7 @@ namespace KrostganEngine::Core {
 		void UpdateBuffer();
 		void UpdateObserversInfo();
 
-		void OnAddCallback(const IWarFogObserver& observer) override;
+		void OnAddCallback(const WarFogObserver& observer) override;
 		void OnRemoveCallback() override;
 
 		VertexArray		StencilMask = VertexArray(PrimitiveType::Quads,5);

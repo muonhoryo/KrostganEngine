@@ -12,7 +12,7 @@
 #include <OrdersExecutor.h>
 #include <CallbackDelegates.h>
 #include <ExtGlResources.h>
-#include <IWarFogObserver.h>
+#include <WarFogObserver.h>
 
 using namespace sf;
 using namespace std;
@@ -69,7 +69,7 @@ namespace KrostganEngine::GameObjects {
 		friend class Entity;
 	};
 
-	class Entity :public GameObject,public ISelectableEntity,public IAttackableObj, public IFractionMember,public OrdersExecutor, public IWarFogObserver{
+	class Entity :public GameObject,public ISelectableEntity,public IAttackableObj,public OrdersExecutor, public WarFogObserver{
 	public:
 		virtual ~Entity();
 

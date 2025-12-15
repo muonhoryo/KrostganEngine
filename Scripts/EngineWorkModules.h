@@ -6,3 +6,4 @@
 #include <EngineRenderModule.h>
 #include <EngineLateUpdateModule.h>
 #include <WarFogStencilGen.h>
+#include <WarFogObserversManager.h>
