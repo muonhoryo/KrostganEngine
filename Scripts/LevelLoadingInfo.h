@@ -33,6 +33,9 @@ namespace KrostganEngine::Core {
 		float Size = 1;
 		float Rotation = 0;
 		size_t CatID = 0;
+
+		bool WarFog_IsHiden = false;
+		bool WarFog_IsShowed = false;
 		vector<LvlObjInstantiationInfo> ChildObjs;
 
 		WorldTransfObj* InstantiateObject

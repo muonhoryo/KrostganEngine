@@ -11,7 +11,7 @@
 					TextDepend_CurrentHP=""
 					Color="FFFFFFFF"
 					FontSize="26"
-					Layer="12"/>
+					Layer="119"/>
 		</Sprite>
 		<Sprite Source="DBG_Console_Frame" Layer="120"/>
 	</Empty>

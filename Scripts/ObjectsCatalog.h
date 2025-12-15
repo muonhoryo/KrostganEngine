@@ -15,7 +15,7 @@ namespace KrostganEngine::Core {
 	class ObjectsCatalog {
 
 	public:
-		static inline const size_t	EMPTY_CATALOG_ID		= 0;
+		static inline const size_t		EMPTY_CATALOG_ID		= 0;
 		static inline const std::byte	ABSENT_SUB_CATALOG_ID	= (std::byte)0;
 
 	private:
@@ -93,8 +93,17 @@ namespace KrostganEngine::Core {
 				(*sub).second.erase(it);
 			}
 		}
+		/// <summary>
+		/// Return nullptr if catalog doesn't contain input subID
+		/// </summary>
+		/// <param name="id"></param>
+		/// <param name="subID"></param>
+		/// <returns></returns>
 		static LvlObjAdditParams*			GetSubObjInfo(size_t id, std::byte subID) {
 			
+			if (subID == ABSENT_SUB_CATALOG_ID)
+				return nullptr;
+
 			auto subs = SubCatalog.find(id);
 			if (subs != SubCatalog.end()) {
 
@@ -160,6 +169,9 @@ namespace KrostganEngine::Core {
 		static inline const string OBJECT_TYPE			= "Type";
 		static inline const string OBJECT_CATALOG_ID	= "CatalogID";
 		static inline const string OBJECT_CHILDREN		= "Children";
+
+		static inline const string OBJECT_REND_WARFOG_ISHIDEN	= "WarFog_IsHiden";
+		static inline const string OJBECT_REND_WARFOG_ISSHOWED	= "WarFog_IsShowed";
 
 		static inline const string IMAGEUSR_SPRITE_SOURCE	= "SpriteSource";
 		static inline const string IMAGEUSR_SPRITE_LAYER	= "Layer";

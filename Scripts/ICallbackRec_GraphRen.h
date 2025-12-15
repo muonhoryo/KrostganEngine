@@ -3,8 +3,8 @@
 #include <SFML/Graphics.hpp>
 #include <ICallbackRec.h>
 
-#define DEFAULT_RENDLAYER (std::byte)0
-#define DEFAULT_RENDLAYER_UI (std::byte)25
+#define DEFAULT_RENDLAYER (std::byte)20
+#define DEFAULT_RENDLAYER_UI (std::byte)128
 
 using namespace sf;
 using namespace KrostganEngine;

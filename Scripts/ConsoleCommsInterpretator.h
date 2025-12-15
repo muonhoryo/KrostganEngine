@@ -41,18 +41,25 @@ namespace KrostganEngine {
 			static bool InterpretateComm_ImmArmy(const string& input);
 
 			/// <summary>
-			/// Return true if is Immortality army command
+			/// Return true if Disarm entities command
 			/// </summary>
 			/// <param name="input"></param>
 			/// <returns></returns>
 			static bool InterpretateComm_Disarm(const string& input);
 
 			/// <summary>
-			/// Return true if is Immortality army command
+			/// Return true if is Rearm entities command
 			/// </summary>
 			/// <param name="input"></param>
 			/// <returns></returns>
 			static bool InterpretateComm_Rearm(const string& input);
+
+			/// <summary>
+			/// Return true if is WarFog command
+			/// </summary>
+			/// <param name="input"></param>
+			/// <returns></returns>
+			static bool InterpretateCom_WarFog(const string& input);
 		private:
 			static vector<string>& SplitCommandSyntax(const string& input);
 			static void PrintInterpetatorMessage(const string& message);
@@ -63,6 +70,7 @@ namespace KrostganEngine {
 			static inline const string IMMORTAL_ARMY_COMMAND		= "immarmy";
 			static inline const string DISARM_COMMAND				= "disarm";
 			static inline const string REARM_COMMAND				= "rearm";
+			static inline const string WARFOG_COMMAND				= "warfog";
 
 			static inline const char& SPLIT_COMM_DELIMS = {' '};
 		};

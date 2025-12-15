@@ -41,6 +41,16 @@ namespace KrostganEngine::Core {
 		static WarFogStencilGen* GetInstance() {
 			return Singleton;
 		}
+		static bool GetActivity() {
+			if (Singleton != nullptr)
+				return Singleton->IsActive;
+			else
+				return false;
+		}
+
+		static void SetActivity(bool isActive) {
+			Singleton->IsActive=isActive;
+		}
 
 	private:
 		void InitializeBuffer();
@@ -61,6 +71,7 @@ namespace KrostganEngine::Core {
 		Vector4f*						WarFogObserversInfo		= new Vector4f[0];
 
 		bool NeedReinitializeBuffer = false;
+		bool IsActive = true;
 
 		static inline WarFogStencilGen* Singleton = nullptr;
 	};

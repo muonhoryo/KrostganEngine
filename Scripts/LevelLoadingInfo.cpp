@@ -141,7 +141,8 @@ WorldTransfObj* WorldObjectLoadInfo::InstantiateObject
 
 	bool isSub = objSubInfo != nullptr;
 	bool isAddParm = additParams != nullptr;
-	if (isSub || isAddParm)
+	bool fromCache = isSub || isAddParm;
+	if (fromCache)
 		Cache = CreateCacheInfo();
 
 	if (isSub) {
@@ -155,11 +156,14 @@ WorldTransfObj* WorldObjectLoadInfo::InstantiateObject
 		}
 	}
 
-	auto obj = InstantiateObject_Action((isSub || isAddParm)? *Cache: *this);
+	auto obj = InstantiateObject_Action(fromCache ? *Cache: *this);
 
-	InstantiateChildren(*obj);
+	if (fromCache)
+		Cache->InstantiateChildren(*obj);
+	else
+		InstantiateChildren(*obj);
 
-	if (isSub || isAddParm)
+	if (fromCache)
 	{
 		delete Cache;
 	}
@@ -186,10 +190,17 @@ bool WorldObjectLoadInfo::WriteParam(Attr& param) {
 	}
 	else if (CheckParamName(param, SerializationParDefNames::OBJECT_CHILDREN)) {
 
+		ChildObjs.clear();
 		auto info = LvlObjInstantiationInfo::DeserializeRow(param.second);
 		for (auto in : *info) {
 			ChildObjs.push_back(LvlObjInstantiationInfo(*in));
 		}
+	}
+	else if (CheckParamName(param, SerializationParDefNames::OBJECT_REND_WARFOG_ISHIDEN)){
+		WarFog_IsHiden = FStreamExts::ParseBool(param.second);
+	}
+	else if (CheckParamName(param, SerializationParDefNames::OJBECT_REND_WARFOG_ISSHOWED)) {
+		WarFog_IsShowed = FStreamExts::ParseBool(param.second);
 	}
 	else {
 		return false;
@@ -216,8 +227,8 @@ void WorldObjectLoadInfo::InstantiateChildren(WorldTransfObj& parent) const {
 			obj = ch.InstantiateObj();
 			obj->SetParent(&parent);
 			obj->SetLocalPosition(DEFAULT_POSITION);
-			obj->SetLocalScale_Sng(DEFAULT_SCALE_SNG);
-			obj->SetLocalRotation(0);
+			obj->SetGlobalScale_Sng(parent.GetGlobalScale_Sng()*obj->GetLocalScale_Sng());
+			obj->SetLocalRotation(parent.GetGlobalRotation()+obj->GetLocalRotation());
 		}
 		--RecursionCount;
 	}
@@ -288,78 +299,6 @@ bool EntityLoadInfo::WriteParam(Attr& param) {
 		WriteBattleStatsParams(param.second, *stats);
 		BattleStats.SetAAStats(0);
 	}
-	////Fill battle stats
-	//else if (CheckParamName(param, EntityBattleStats::StatToStr(EntityBattleStatType::MaxHP))) {
-	//	size_t s = stol(param.second);
-	//	if (s > 0)
-	//		BattleStats.SetMaxHP(s);
-	//}
-	//else if (CheckParamName(param, EntityBattleStats::StatToStr(EntityBattleStatType::RegenHP_Amount))) {
-	//	size_t s = stol(param.second);
-	//	BattleStats.SetHPRegenAmount(s);
-	//}
-	//else if (CheckParamName(param, EntityBattleStats::StatToStr(EntityBattleStatType::MovingSpeed))) {
-	//	float s = stof(param.second);
-	//	BattleStats.SetMovingSpeed(s);
-	//}
-	//else if (CheckParamName(param, EntityBattleStats::StatToStr(EntityBattleStatType::RegenHP_Tick))) {
-	//	float s = stof(param.second);
-	//	BattleStats.SetHPRegenTick(s);
-	//}
-	//else if (CheckParamName(param, EntityBattleStats::StatToStr(EntityBattleStatType::AutoAggrRadius))) {
-	//	float s = stof(param.second);
-	//	BattleStats.SetAutoAggrRadius(s);
-	//}
-	//else if (CheckParamName(param, EntityBattleStats::StatToStr(EntityBattleStatType::IsTargetableForAA))) {
-	//	bool isTargetable= FStreamExts::ParseBool(param.second);
-	//	BattleStats.SetTargetableForAA(isTargetable);
-	//}
-	////Fill AA-stats
-	//else if (CheckParamName(param, AutoAttackStats::StatToStr(AAStatType::Damage))) {
-	//	VerifyAAStatsExisting();
-	//	size_t s = stol(param.second);
-	//	BattleStats.GetCurrAAStats()->SetDamage(s);
-	//}
-	//else if (CheckParamName(param, AutoAttackStats::StatToStr(AAStatType::Speed))) {
-	//	VerifyAAStatsExisting();
-	//	float s = stof(param.second);
-	//	BattleStats.GetCurrAAStats()->SetSpeed(s);
-	//}
-	//else if (CheckParamName(param, AutoAttackStats::StatToStr(AAStatType::Range))) {
-	//	VerifyAAStatsExisting();
-	//	float s = stof(param.second);
-	//	BattleStats.GetCurrAAStats()->SetRange(s);
-	//}
-	//else if (CheckParamName(param, AutoAttackStats::StatToStr(AAStatType::ProjSpeed))) {
-	//	VerifyAAStatsExisting();
-	//	float s = stof(param.second);
-	//	BattleStats.GetCurrAAStats()->SetProjSpeed(s);
-	//}
-	//else if (CheckParamName(param, AutoAttackStats::StatToStr(AAStatType::SiegeRange))) {
-	//	VerifyAAStatsExisting();
-	//	float s = stof(param.second);
-	//	BattleStats.GetCurrAAStats()->SetSiegeRange(s);
-	//}
-	//else if (CheckParamName(param, AutoAttackStats::StatToStr(AAStatType::IsRange))) {
-	//	VerifyAAStatsExisting();
-	//	bool isRange = FStreamExts::ParseBool(param.second);
-	//	BattleStats.GetCurrAAStats()->SetIsRange(isRange);
-	//}
-	//else if (CheckParamName(param, AutoAttackStats::StatToStr(AAStatType::Proj_LockRotation))) {
-	//	VerifyAAStatsExisting();
-	//	bool lockRot = FStreamExts::ParseBool(param.second);
-	//	BattleStats.GetCurrAAStats()->SetProj_LockRotation(lockRot);
-	//}
-	//else if (CheckParamName(param, AutoAttackStats::StatToStr(AAStatType::IsSiege))) {
-	//	VerifyAAStatsExisting();
-	//	bool isSiege = FStreamExts::ParseBool(param.second);
-	//	BattleStats.GetCurrAAStats()->SetIsSiege(isSiege);
-	//}
-	//else if (CheckParamName(param, AutoAttackStats::StatToStr(AAStatType::Proj_IsSelfHoming))) {
-	//	VerifyAAStatsExisting();
-	//	bool isSelfHoming= FStreamExts::ParseBool(param.second);
-	//	BattleStats.GetCurrAAStats()->SetProj_IsSelfHoming(isSelfHoming);
-	//}
 	else {
 		return false;
 	}
@@ -537,8 +476,10 @@ WorldTransfObj* SpriteRendLoadInfo::InstantiateObject_Action(const WorldObjectLo
 	auto sprt = new SpriteRenderer(src->Tex, parInfo.MaxSpriteSize < eps ? src->MaxSize : parInfo.MaxSpriteSize, src->RenShader);
 	sprt->SetGlobalPosition(parInfo.Position);
 	sprt->SetGlobalRotation(parInfo.Rotation);
-	sprt->SetGlobalScale_Sng(parInfo.Size);
+	sprt->SetGlobalScale_Sng(parInfo.Size * sprt->GetGlobalScale_Sng());
 	sprt->SetRendLayer(RendLayer);
+	sprt->Set_IsHidenByWarFog(WarFog_IsHiden);
+	sprt->Set_IsShownByWarFog(WarFog_IsShowed);
 
 	return sprt;
 }

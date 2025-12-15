@@ -40,16 +40,23 @@ void WarFogStencilGen::Execute() {
 	if (NeedReinitializeBuffer)
 		InitializeBuffer();
 
-	UpdateBuffer();
+	if (IsActive) {
+
+		UpdateBuffer();
 
 
-	glStencilMask(0xFF);
-	glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
-	glClear(GL_STENCIL_BUFFER_BIT);
-	glStencilFunc(GL_ALWAYS, WARFOG_STENCIL_MASK, 0xFF);
+		glStencilMask(0xFF);
+		glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+		glClear(GL_STENCIL_BUFFER_BIT);
+		glStencilFunc(GL_ALWAYS, WARFOG_STENCIL_MASK, 0xFF);
 
-	window.draw(StencilMask, StencilCalculatingRenState);
+		window.draw(StencilMask, StencilCalculatingRenState);
 
+	}
+	else {
+		glStencilMask(0xFF);
+		glClear(GL_STENCIL_BUFFER_BIT);
+	}
 	glStencilMask(0x00);
 
 	IsIteratingCallbacks = false;
@@ -77,6 +84,8 @@ void WarFogStencilGen::ReinitializeBuffer() {
 
 	if (!IsIteratingCallbacks)
 		InitializeBuffer();
+	else
+		NeedReinitializeBuffer = true;
 }
 
 void WarFogStencilGen::InitializeBuffer() {

@@ -91,6 +91,7 @@ void Entity::SelectionOn() {
 			SelectionSpriteSource->MaxSize,
 			nullptr);
 		SelectionSprite->SetColor(GetColor());
+		SelectionSprite->Set_IsHidenByWarFog(true);
 	}
 }
 void Entity::SelectionOff() {

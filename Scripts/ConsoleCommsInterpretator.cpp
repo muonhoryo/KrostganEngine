@@ -44,6 +44,10 @@ void ConsoleCommsInterpretator::ExecuteCommand(const string& input) {
 		if (InterpretateComm_Rearm(input))
 			return;
 	}
+	else if (input.find(WARFOG_COMMAND) != string::npos) {
+		if (InterpretateCom_WarFog(input))
+			return;
+	}
 	PrintInterpetatorMessage("Unknown command: " + input);
 };
 
@@ -201,6 +205,23 @@ bool ConsoleCommsInterpretator::InterpretateComm_Rearm(const string& input) {
 	if (hasChanged) {
 		PrintInterpetatorMessage("Rearm entities to AAStats with index: " + std::to_string(index));
 	}
+
+	return true;
+}
+
+bool ConsoleCommsInterpretator::InterpretateCom_WarFog(const string& input) {
+	auto& syntax = SplitCommandSyntax(input);
+	if (syntax.size() != 1 ||
+		syntax.at(0) != WARFOG_COMMAND) {
+
+		return false;
+	}
+
+	WarFogStencilGen::SetActivity(!WarFogStencilGen::GetActivity());
+
+	PrintInterpetatorMessage(WarFogStencilGen::GetActivity() ?
+		"Set WarFog active" :
+		"Set WarFog inactive");
 
 	return true;
 }
