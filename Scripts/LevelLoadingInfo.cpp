@@ -373,6 +373,7 @@ EntityCtorParams& UnitLoadInfo::GetCtorParams(const WorldObjectLoadInfo& usedInf
 		(hitEffSpr->Tex,
 		hitEffSpr->MaxSize < eps ? Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution : hitEffSpr->MaxSize,
 		hitEffSpr->RenShader);
+	params.HitEffectSprite->SetRendLayer((std::byte)40);
 	params.GlobalPosition = parUsedInfo.Position;
 	params.GlobalScale = parUsedInfo.Size;
 	params.HPBarSprite = new IndicatorFill(
