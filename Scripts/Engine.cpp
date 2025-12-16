@@ -17,7 +17,7 @@ using namespace KrostganEngine::Core;
 using namespace KrostganEngine::Physics;
 using namespace KrostganEngine::Visual;
 
-const std::string Engine::ENGINE_VERSION = "A0.4.3.3";
+const std::string Engine::ENGINE_VERSION = "A0.4.4.1";
 
 Engine::Engine()
 	:RenderModule(*new EngineRenderModule(RendWin)),
