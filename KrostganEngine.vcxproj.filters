@@ -1346,6 +1346,9 @@
     <ClInclude Include="Scripts\WarFogObserversManager.h">
       <Filter>Файлы заголовков\CoreSystems\EngineWorkCycles</Filter>
     </ClInclude>
+    <ClInclude Include="Scripts\UIMan_ZoomChangedEvSubs.h">
+      <Filter>Файлы заголовков\CoreSystems\Visual\UI/UX</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Config.txt">

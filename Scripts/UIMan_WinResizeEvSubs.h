@@ -13,7 +13,7 @@ namespace KrostganEngine::UI {
 		}
 
 		void Execute(const Engine::WindowResizeEvArgs& args) override {
-			userInterface.SetGlobalUISize((Vector2f)args.NewSize);
+			userInterface.SetGlobalUISize((Vector2f)args.NewSize * Engine::GetZoom());
 		}
 
 	private:

@@ -1,19 +1,17 @@
 <root>
 
 	<Empty Name="DbgConsole" Layer="10" Active="0" AnchorX="0">
-		<Sprite Source="DBG_Console_BG" Layer="100">
+		<Sprite Source="DBG_Console_BG" Layer="128">
 			<TextBlock
 					Name="DbgConsoleField"
 					Text=""
 					AnchorX="0.2"
 					AnchorY="0.2"
-					FirstSelEnt_Depend=""
-					TextDepend_CurrentHP=""
 					Color="FFFFFFFF"
 					FontSize="26"
-					Layer="119"/>
+					Layer="129"/>
 		</Sprite>
-		<Sprite Source="DBG_Console_Frame" Layer="120"/>
+		<Sprite Source="DBG_Console_Frame" Layer="130"/>
 	</Empty>
 	
 	<Empty HieAct_GroupSelDepend="" ResizeInherit_UI="1"> 

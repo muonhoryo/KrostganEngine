@@ -327,6 +327,7 @@
     <ClInclude Include="Scripts\ICallbackRec.h" />
     <ClInclude Include="Scripts\IModifiableStatsWrapper.h" />
     <ClInclude Include="Scripts\InputHandlers.h" />
+    <ClInclude Include="Scripts\UIMan_ZoomChangedEvSubs.h" />
     <ClInclude Include="Scripts\WarFogObserver.h" />
     <ClInclude Include="Scripts\LevelManager.h" />
     <ClInclude Include="Scripts\LvlLoadingStructs.h" />

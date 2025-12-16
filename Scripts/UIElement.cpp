@@ -332,11 +332,14 @@ void		UIElement::SetPosition_Inherit() {
 }
 void		UIElement::SetScale_Inherit() {
 
-	if (ResizeUIByInherits) {
+	/*if (ResizeUIByInherits) {
 
 		SetLocalScale(LocalScale);
 		SetLocalPosition(LocalPosition);
-	}
+	}*/
+
+	SetLocalScale(LocalScale);
+	SetLocalPosition(LocalPosition);
 }
 void UIElement::SetRotation_Inherit() {
 	SetGlobalRotation(GetLocalRotation());

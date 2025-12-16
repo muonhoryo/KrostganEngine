@@ -24,7 +24,7 @@ void main()
         diff.x=obsrPos.x-pixCoord.x;
         diff.y=obsrPos.y-pixCoord.y;   
         squareLen = diff.x * diff.x + diff.y * diff.y;
-        if(squareLen <= observersInfo[offset].z * zoom){
+        if(squareLen <= (observersInfo[offset].z / zoom)){
             discard;
             return;
         }

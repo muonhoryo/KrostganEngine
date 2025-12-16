@@ -36,12 +36,24 @@ namespace KrostganEngine::Core {
 				 Vector2u OldSize;
 				 Vector2u NewSize;
 			 };
+			 struct ViewZoomChangedEvArgs {
+				 
+				 ViewZoomChangedEvArgs(float OldZoom, float NewZoom)
+					 :OldZoom(OldZoom), NewZoom(NewZoom)
+				 {}
 
-			 static inline ExecutedEvent<const WindowResizeEvArgs> ResizeWindowEvent;
+				 float OldZoom;
+				 float NewZoom;
+			 };
+
+			 static inline ExecutedEvent<const WindowResizeEvArgs>		ResizeWindowEvent;
+			 static inline ExecutedEvent<const ViewZoomChangedEvArgs>	ViewZoomChangedEvent;
 
 		 private:
 			 static inline EventHandler<const WindowResizeEvArgs> ResizeWindowEventHandler = 
 				 EventHandler<const WindowResizeEvArgs>(ResizeWindowEvent);
+			 static inline EventHandler<const ViewZoomChangedEvArgs> ViewZoomChangedEventHandler =
+				 EventHandler<const ViewZoomChangedEvArgs>(ViewZoomChangedEvent);
 			 
 		//
 		//

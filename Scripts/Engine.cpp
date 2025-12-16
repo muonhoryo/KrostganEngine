@@ -17,7 +17,7 @@ using namespace KrostganEngine::Core;
 using namespace KrostganEngine::Physics;
 using namespace KrostganEngine::Visual;
 
-const std::string Engine::ENGINE_VERSION = "A0.4.4.1";
+const std::string Engine::ENGINE_VERSION = "A0.4.4.2";
 
 Engine::Engine()
 	:RenderModule(*new EngineRenderModule(RendWin)),
@@ -114,10 +114,12 @@ void Engine::SetZoom(float zoom) {
 	if (zoom <= 0)
 		throw exception("Zoom cannot be less or equal 0");
 	else {
+		auto args = ViewZoomChangedEvArgs(Singleton->Zoom, zoom);
 		auto& view = InstanceNewView();
 		view.zoom(zoom / Singleton->Zoom);
 		Singleton->RendWin.setView(view);
 		Singleton->Zoom = zoom;
+		ViewZoomChangedEventHandler.Execute(args);
 	}
 }
 void Engine::SetCameraPos(Vector2f pos) {
@@ -208,26 +210,25 @@ Vector2f Engine::GetCameraPos() {
 
 Vector2f Engine::ScreenPosToGlobalCoord(const Vector2f& screenPos) {
 	Vector2f globalCoord = Vector2f(screenPos);
+	globalCoord *= GetZoom();
 	auto& view = Singleton->RendWin.getView();
 	globalCoord +=view.getCenter();
 	Vector2f screenSize = (Vector2f)GetScreenSize();
-	screenSize.x *= 0.5;
-	screenSize.y *= 0.5;
+	screenSize *= 0.5f;
+	screenSize *= GetZoom();
 	globalCoord -= screenSize;
-	globalCoord.x *= GetZoom();
-	globalCoord.y *= GetZoom();
 	return globalCoord;
 }
 Vector2f Engine::GlobalCoordToScreenPos(const Vector2f& globalCoord) {
 	Vector2f screenPos = Vector2f(globalCoord);
 	auto& view = Singleton->RendWin.getView();
 	Vector2f screenSize = (Vector2f)GetScreenSize();
+	screenSize *= 0.5f;
+	screenSize *= GetZoom();
 	Vector2f center = view.getCenter();
 	screenPos -= center;
-	screenPos *= GetZoom();
-	screenSize.x *= 0.5f;
-	screenSize.y *= 0.5f;
 	screenPos += screenSize;
+	screenPos /= GetZoom();
 	return screenPos;
 }
 Vector2u Engine::GetScreenSize() {
