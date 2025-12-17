@@ -11,6 +11,7 @@ namespace KrostganEngine::Core {
 		size_t Physics_MaxCollsResolvCount;
 
 		int	Instantiation_MaxDepthLvl;
+		int WarFogObserversManager_CacheSize;
 
 		float GameObjs_OneSizeSpriteResolution;
 		float EPS;
@@ -26,13 +27,19 @@ namespace KrostganEngine::Core {
 		float Units_ImmobilityCheckValue;
 		float EscapeBtn_PressDelay;
 		float TakeDmg_FadeTime;
+		float AutoAggrModule_CheckTick;
+		float WarFogObserversManager_PosHashCellSize;
+
+		static inline const string DEF_PHYSICS_MAX_COLLISION_RESOLVE_COUNT = "Physics_MaxCollsResolvCount";
+
+		static inline const string DEF_INSTANTIATION_MAXDEPTHLVL		= "Instantiation_MaxDepthLvl";
+		static inline const string DEF_WARFOG_OBSRMANAGER_CACHE_SIZE	= "WarFogObsrManager_CacheSize";
 
 		static inline const string DEF_GAMEOBJS_ONESIZE_SPRITERESOL			= "GameObjs_OneSizeSpriteResol";
 		static inline const string DEF_EPS									= "EPS";
 		static inline const string DEF_ORDERS_CANCELTIME					= "Order_CancelTime";		//In seconds
 		static inline const string DEF_ENTITY_ACTION_REPEAT_COOLDOWN		= "EntityAct_RepCoolDown";		//In seconds
 		static inline const string DEF_CAMERA_MOVING_TRIGGER_AREA			= "CameraMovTriggerArea";
-		static inline const string DEF_PHYSICS_MAX_COLLISION_RESOLVE_COUNT	= "Physics_MaxCollsResolvCount";
 		static inline const string DEF_AA_ANIM_LINE_WIDTH					= "AAAnim_LineWidth";
 		static inline const string DEF_AVERGAE_LIFETIME_DEATHEFFECT			= "AverageLifeTime_DeathEffect";	//In seconds
 		static inline const string DEF_LOSEMESSAG_APPEARING_TIME			= "LoseMsg_AppearingTime";		//In seconds
@@ -41,7 +48,8 @@ namespace KrostganEngine::Core {
 		static inline const string DEF_UNITS_MOVING_ABILITY_CHECK_TICK		= "Units_MovingAbilityCheckTick";		//In seconds
 		static inline const string DEF_UNITS_IMMOBILITY_CHECK_VALUE			= "Units_ImmobilityCheckValue";		//In seconds
 		static inline const string DEF_ESCAPE_BTN_PRESS_DELAY				= "EscapeBtn_PressDelay";		//In seconds
-		static inline const string DEF_INSTANTIATION_MAXDEPTHLVL			= "Instantiation_MaxDepthLvl";
 		static inline const string DEF_TAKEDMG_FADETIME						= "TakeDmg_FadeTime";		//In seconds
+		static inline const string DEF_AUTOAGGR_CHECKTICK					= "AutoAggrModule_CheckTick";		//In seconds
+		static inline const string DEF_WARFOG_OBSRMANAGER_POSHASHCELLSIZE	= "WarFogObsrManager_PosHashCellSize";
 	};
 }

@@ -29,5 +29,8 @@ namespace KrostganEngine::EntitiesControl {
 		//Cashed
 		AutoAttackModule& AAModule;
 		watch_ptr_handler_wr<IAttackableObj> Target;
+
+	protected:
+		bool IsTargetObserving() const;
 	};
 }

@@ -5,6 +5,7 @@
 #include <EntityAction_AutoAttack.h>
 #include <EntityAction_FollowObject.h>
 #include <PathFinding_Diijkstra.h>
+#include <WarFogObserversManager.h>
 
 using namespace sf;
 using namespace KrostganEngine;
@@ -35,6 +36,9 @@ bool EntityOrder_AttackTarget::CheckExecCondition() {
 		return true;
 
 	if (!ptr->CheckAttackReachability(IAttackableObj::AtkParam::IsAA))
+		return true;
+
+	if (!IsTargetObserving())
 		return true;
 
 	if (CheckImmobility(ptr->GetGlobalPosition()) && Owner.GetAAModule().GetCurrentTarget() == nullptr)
@@ -100,4 +104,8 @@ EntityOrderType EntityOrder_AttackTarget::GetOrderType() {
 
 const ITransformableObj* EntityOrder_AttackTarget::GetTarget() const {
 	return Target.GetPtr_t_c();
+}
+
+bool EntityOrder_AttackTarget::IsTargetObserving() const {
+	return WarFogObserversManager::GetInstance()->Intersect(Target.GetPtr_t_c()->GetGlobalPosition(), Owner.GetFraction());
 }

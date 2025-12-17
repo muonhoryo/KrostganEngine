@@ -5,7 +5,7 @@
 #include <ITransformableObj.h>
 
 using namespace sf;
-using namespace KrostganEngine::GameObjects;
+using namespace KrostganEngine::Core;
 
 namespace KrostganEngine::EntitiesControl {
 	class EntityOrder_ObjectTarget {

@@ -5,6 +5,8 @@
 #include <list>
 #include <PathFinding_Diijkstra.h>
 #include <IAttackableObj.h>
+#include <WarFogObserversManager.h>
+#include <WarFogStencilGen.h>
 
 using namespace std;
 using namespace KrostganEngine;
@@ -23,6 +25,7 @@ BaseAutoAggrModule::BaseAutoAggrModule(Entity& Owner,ExecutorActionsMediator& Ac
 	OnStatsChangedAct(OnAAStatsChanged(*this)){
 
 	Owner.GetBattleStats().ChangeCurrAAStatsEvent.Add(OnStatsChangedAct);
+	TargetCheckDelay.restart();
 }
 BaseAutoAggrModule::~BaseAutoAggrModule() {
 
@@ -48,11 +51,16 @@ void BaseAutoAggrModule::TurnOffAction() {
 }
 
 void BaseAutoAggrModule::UpdateAction(CallbackRecArgs_Upd& args) {
-	if (HasTarget) {
-		CheckCurrTarget(args);
-	}
-	else {
-		FindTarget(args);
+
+	if (TargetCheckDelay.getElapsedTime().asSeconds() >= Engine::GetGlobalConsts().AutoAggrModule_CheckTick) {
+
+		if (HasTarget) {
+			CheckCurrTarget(args);
+		}
+		else {
+			FindTarget(args);
+		}
+		TargetCheckDelay.restart();
 	}
 }
 bool BaseAutoAggrModule::GetActivityState() const {
@@ -87,7 +95,9 @@ void BaseAutoAggrModule::CheckCurrTarget(CallbackRecArgs_Upd& args) {
 
 	if (IsAttack) {		//Is there target in owner's attack range
 
-		if (!Owner.GetAAModule().CheckTargetReach()) {	//Target left the range of AA
+		if (!Owner.GetAAModule().CheckTargetReach() ||		//Target left out the range of AA
+			!WarFogObserversManager::GetInstance()->Intersect(Target->GetPtr_t()->GetGlobalPosition(), Owner.GetFraction())) {		//Target left out the range of observing
+
 			//Follow the target and start attacking it
 			IsAttack = false;
 			ActionMediator.ResetCurrActions();
@@ -159,7 +169,8 @@ void BaseAutoAggrModule::FindTarget(CallbackRecArgs_Upd& args) {
 		Relation relat=Relation::Neutral;
 		for (auto obj : TargsBuffer) {
 
-			if (obj == &Owner)
+			if (obj == nullptr ||
+				obj == &Owner)
 				continue;
 			memParTar = dynamic_cast<IFractionMember*>(obj);
 			parTar = dynamic_cast<IAttackableObj*>(obj);
@@ -175,6 +186,9 @@ void BaseAutoAggrModule::FindTarget(CallbackRecArgs_Upd& args) {
 				if (dist < minDist) {		//Finds nearest target
 					TargetTransform = dynamic_cast<WorldTransfObj*>(parTar);
 					if (TargetTransform == nullptr)
+						continue;
+
+					if (!WarFogObserversManager::GetInstance()->Intersect(obj->GetGlobalPosition(), Owner.GetFraction()))
 						continue;
 
 					auto& t_ptr = parTar->GetPtr();

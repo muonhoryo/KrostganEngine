@@ -20,6 +20,7 @@ const GlobalConsts& GlobalConstsLoad::LoadGlobalConsts() {
 	LoadedGlobalConsts.Instantiation_MaxDepthLvl = DeserValueByDef_int(GlobalConsts::DEF_INSTANTIATION_MAXDEPTHLVL, line);
 
 	LoadedGlobalConsts.Physics_MaxCollsResolvCount = DeserValueByDef_size_t(GlobalConsts::DEF_PHYSICS_MAX_COLLISION_RESOLVE_COUNT, line);
+	LoadedGlobalConsts.WarFogObserversManager_CacheSize = DeserValueByDef_size_t(GlobalConsts::DEF_WARFOG_OBSRMANAGER_CACHE_SIZE, line);
 
 	LoadedGlobalConsts.GameObjs_OneSizeSpriteResolution = DeserValueByDef_float(GlobalConsts::DEF_GAMEOBJS_ONESIZE_SPRITERESOL, line);
 	LoadedGlobalConsts.EPS = DeserValueByDef_float(GlobalConsts::DEF_EPS, line);
@@ -35,6 +36,8 @@ const GlobalConsts& GlobalConstsLoad::LoadGlobalConsts() {
 	LoadedGlobalConsts.Units_MovingAbilityCheckTick = DeserValueByDef_float(GlobalConsts::DEF_UNITS_MOVING_ABILITY_CHECK_TICK, line);
 	LoadedGlobalConsts.EscapeBtn_PressDelay = DeserValueByDef_float(GlobalConsts::DEF_ESCAPE_BTN_PRESS_DELAY, line);
 	LoadedGlobalConsts.TakeDmg_FadeTime = DeserValueByDef_float(GlobalConsts::DEF_TAKEDMG_FADETIME, line);
+	LoadedGlobalConsts.AutoAggrModule_CheckTick = DeserValueByDef_float(GlobalConsts::DEF_AUTOAGGR_CHECKTICK, line);
+	LoadedGlobalConsts.WarFogObserversManager_PosHashCellSize = DeserValueByDef_float(GlobalConsts::DEF_WARFOG_OBSRMANAGER_POSHASHCELLSIZE, line);
 
 	StrValuesArr.clear();
 	return LoadedGlobalConsts;

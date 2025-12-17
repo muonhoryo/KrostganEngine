@@ -30,5 +30,8 @@ namespace KrostganEngine::EntitiesControl {
 		watch_ptr_handler_wr_c<TransformableObj> Target;
 		Clock FollRepeatTimer;
 		bool FirstExec = true;
+
+	protected:
+		bool IsTargetObserving() const;
 	};
 }

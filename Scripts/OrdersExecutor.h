@@ -7,6 +7,7 @@
 #include <EntityBattleStats.h>
 #include <AutoAttackModule.h>
 #include <list>
+#include <IFractionMember.h>
 
 using namespace std;
 using namespace KrostganEngine;
@@ -17,7 +18,7 @@ namespace KrostganEngine::GameObjects {
 	class AutoAggressionModule;
 	class ExecutorActionsMediator;
 
-	class OrdersExecutor : public virtual ICallbackRec_Upd{
+	class OrdersExecutor : public virtual ICallbackRec_Upd, public virtual IFractionMember{
 	public:
 		virtual ~OrdersExecutor();
 

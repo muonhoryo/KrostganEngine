@@ -59,6 +59,7 @@ namespace KrostganEngine::GameObjects {
 		bool IsAttack;
 
 		vector<IPhysicalObject*> TargsBuffer;
+		Clock TargetCheckDelay;
 
 		OnAAStatsChanged OnStatsChangedAct;
 

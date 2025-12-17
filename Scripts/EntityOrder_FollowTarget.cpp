@@ -6,6 +6,7 @@
 #include <EntityAction_AutoAttack.h>
 #include <EntityAction_FollowObject.h>
 #include <PathFinding_Diijkstra.h>
+#include <WarFogObserversManager.h>
 
 using namespace sf;
 using namespace KrostganEngine;
@@ -26,7 +27,7 @@ EntityOrder_FollowTarget::~EntityOrder_FollowTarget() {
 
 bool EntityOrder_FollowTarget::CheckExecCondition() {
 	auto ptr = Target.GetPtr_t();
-	return ptr == nullptr || CheckImmobility(ptr->GetGlobalPosition());
+	return ptr == nullptr || CheckImmobility(ptr->GetGlobalPosition()) || !IsTargetObserving();
 }
 list<IEntityAction*>* EntityOrder_FollowTarget::GetActions() {
 
@@ -89,4 +90,8 @@ EntityOrderType EntityOrder_FollowTarget::GetOrderType() {
 
 const TransformableObj* EntityOrder_FollowTarget::GetTarget() const {
 	return Target.GetPtr_t();
+}
+
+bool EntityOrder_FollowTarget::IsTargetObserving() const {
+	return WarFogObserversManager::GetInstance()->Intersect(Target.GetPtr_t_c()->GetGlobalPosition(), Owner.GetFraction());
 }

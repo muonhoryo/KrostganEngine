@@ -79,6 +79,8 @@ namespace KrostganEngine {
 		watch_ptr_handler(const watch_ptr_handler& Copy);
 		virtual ~watch_ptr_handler();
 
+		//watch_ptr_handler operator =(const watch_ptr_handler& copy) const;
+
 	protected:
 		watch_ptr& Owner;
 
@@ -114,9 +116,9 @@ namespace KrostganEngine {
 		watch_ptr_handler_c(watch_ptr& Owner);
 		watch_ptr_handler_c(const watch_ptr_handler& Copy);
 		watch_ptr_handler_c(const watch_ptr_handler_c& Copy);
-
 		virtual ~watch_ptr_handler_c(){}
 
+		//watch_ptr_handler_c operator =(const watch_ptr_handler_c& copy) const;
 
 		template <typename T>
 		T const* GetPtr() const {
@@ -164,6 +166,10 @@ namespace KrostganEngine {
 
 		virtual ~watch_ptr_handler_wr(){}
 
+		/*watch_ptr_handler_wr operator =(const watch_ptr_handler_wr& copy) const {
+			return 
+		}*/
+
 		T* GetPtr_t()  const {
 			return Owner.GetPtr_t<T>();
 		}
@@ -184,6 +190,10 @@ namespace KrostganEngine {
 		{}
 
 		virtual ~watch_ptr_handler_wr_c(){}
+
+		/*watch_ptr_handler_wr_c operator =(const watch_ptr_handler_wr_c& copy) const {
+			return
+		}*/
 
 		T const* GetPtr_t() const {
 			return watch_ptr_handler_wr<T>::GetPtr_t();
