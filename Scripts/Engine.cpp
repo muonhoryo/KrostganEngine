@@ -17,7 +17,7 @@ using namespace KrostganEngine::Core;
 using namespace KrostganEngine::Physics;
 using namespace KrostganEngine::Visual;
 
-const std::string Engine::ENGINE_VERSION = "A0.4.4.3";
+const std::string Engine::ENGINE_VERSION = "A0.4.4.4";
 
 Engine::Engine()
 	:RenderModule(*new EngineRenderModule(RendWin)),
@@ -119,6 +119,7 @@ void Engine::SetZoom(float zoom) {
 		view.zoom(zoom / Singleton->Zoom);
 		Singleton->RendWin.setView(view);
 		Singleton->Zoom = zoom;
+		SetCameraPos(GetCameraPos());
 		ViewZoomChangedEventHandler.Execute(args);
 	}
 }
@@ -129,8 +130,24 @@ void Engine::SetCameraPos(Vector2f pos) {
 	if (lvlInfo!=nullptr && !DBG_DivineCommander::GetActivity()) {		//Limit camera moving if divine commander is off-line
 
 		const Rect<float>& borders = lvlInfo->CameraBorders;
-		pos.x = clamp<float>(pos.x, borders.left, borders.left + borders.width);
-		pos.y = clamp<float>(pos.y, borders.top, borders.top + borders.height);
+		Vector2f windSize = (Vector2f)GetScreenSize();
+		windSize *= GetZoom();
+		windSize *= 0.5f;
+
+		float left = borders.left + windSize.x;
+		float top = borders.top + windSize.y;
+		float right = borders.left + borders.width - windSize.x;
+		float bottom = borders.top + borders.height - windSize.y;
+
+		if (left >= right)
+			pos.x = borders.left+borders.width*0.5f;
+		else
+			pos.x = clamp<float>(pos.x, left, right);
+
+		if (top >= bottom)
+			pos.y = borders.top + borders.height* 0.5f;
+		else
+			pos.y = clamp<float>(pos.y,top ,bottom );
 	}
 	view.setCenter(pos);
 	Singleton->RendWin.setView(view);
