@@ -65,6 +65,8 @@ char FStreamExts::SFKeyToChar(Keyboard::Key key) {
 		return '+';
 	else if (key == Keyboard::Key::Subtract || key == Keyboard::Key::Hyphen)
 		return '-';
+	else if (key == Keyboard::Key::Period)
+		return '.';
 	else
 		return (char)key;
 }

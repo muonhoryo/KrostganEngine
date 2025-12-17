@@ -24,7 +24,8 @@ void DbgConsoleInputHandler::Update(const CallbackRecArgs_Upd& args) {
 				input.key.code==Keyboard::Key::Add ||
 				input.key.code == Keyboard::Key::Subtract ||
 				input.key.code == Keyboard::Key::Hyphen||
-				input.key.code == Keyboard::Key::Equal) {
+				input.key.code == Keyboard::Key::Equal ||
+				input.key.code == Keyboard::Key::Period) {
 
 				Input.push_back(FStreamExts::SFKeyToChar(input.key.code));
 				DebugConsoleTextField->SetString(Input);
