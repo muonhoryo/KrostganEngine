@@ -15,9 +15,13 @@ void Entity::SetFraction(Fraction fraction) {
 		return;
 	}
 
+	ChangeFractionEvArgs evArgs = ChangeFractionEvArgs(*this, GetFraction(), fraction);
 	EntityFraction = fraction;
 	SetObservingActive(FractionsSystem::GetRelationToPlayer(fraction) == Relation::Ally);
 	WarFogObserversManager::GetInstance()->Set_NeedToSort();
 	SetColor(FractionsSystem::GetRelationToPlayerColor(fraction));
 	GroupSelectionSystem::Remove(*this);
+	GetAutoAggrModule().Restart();
+	ResetOrdersQueue();
+	MemberHasChangedFracEvHandler.Execute(evArgs);
 }

@@ -30,6 +30,7 @@ namespace KrostganEngine::GameObjects {
 		bool TryAddOrder(IEntityOrder& order, bool clearOrdQueue = false);
 		bool TryInsertOrder(IEntityOrder& order, size_t insertPos, bool clearOrdQueue = false);
 		void ResetOrdersQueue();
+		void CancelOrder(size_t orderIndex);
 
 		bool GetAbilityToDoOrders() const;
 		void AllowOrdersExecution();

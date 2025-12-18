@@ -17,28 +17,31 @@ using namespace KrostganEngine::Physics;
 
 BaseAutoAggrModule::BaseAutoAggrModule(Entity& Owner,ExecutorActionsMediator& ActionMediator) 
 	: AutoAggressionModule(ActionMediator,Owner.StartExecOrderEvent),
-	Target(nullptr),
-	TargetTransform(nullptr),
+	TarInfo(nullptr),
 	Owner(Owner),
 	HasTarget(false),
 	IsAttack(false),
-	OnStatsChangedAct(OnAAStatsChanged(*this)){
+	OnStatsChangedAct(OnAAStatsChanged(*this)),
+	OnFracChangedSub(*this){
 
 	Owner.GetBattleStats().ChangeCurrAAStatsEvent.Add(OnStatsChangedAct);
 	TargetCheckDelay.restart();
 }
 BaseAutoAggrModule::~BaseAutoAggrModule() {
 
-	if (Target != nullptr)
-		delete Target;
+	if (TarInfo != nullptr) {
+
+		delete TarInfo;
+		IFractionMember::MemberHasChangedFracEvent.Remove(OnFracChangedSub);
+	}
 
 	Owner.GetBattleStats().ChangeCurrAAStatsEvent.Remove(OnStatsChangedAct);
 }
 
 IAttackableObj* BaseAutoAggrModule::GetCurrTarget() const {
-	if (Target == nullptr)
+	if (TarInfo == nullptr)
 		return nullptr;
-	return Target->GetPtr_t();
+	return TarInfo->Target.GetPtr_t();
 }
 
 void BaseAutoAggrModule::TurnOnAction() {
@@ -70,7 +73,7 @@ bool BaseAutoAggrModule::GetActivityState() const {
 
 bool BaseAutoAggrModule::CheckTargetReachability() const {
 	
-	auto t_ptr = Target->GetPtr_t();
+	auto t_ptr = TarInfo->Target.GetPtr_t();
 	if (t_ptr == nullptr || 
 		!t_ptr->CheckAttackReachability(IAttackableObj::AtkParam::IsAA)) {
 
@@ -80,15 +83,22 @@ bool BaseAutoAggrModule::CheckTargetReachability() const {
 
 void BaseAutoAggrModule::CheckCurrTarget(CallbackRecArgs_Upd& args) {
 
-	if (Target == nullptr)
+	if (TarInfo == nullptr) {
+
+		TurnFindTargetState();
+		return;
+	}
+
+	auto t_ptr = TarInfo->Target.GetPtr_t();
+
+	if (t_ptr == nullptr)
 	{
 		TurnFindTargetState();
 		return;
 	}
 
-	auto t_ptr = Target->GetPtr_t();
 	if (!CheckTargetReachability() ||
-		!WarFogObserversManager::GetInstance()->Intersect(Target->GetPtr_t()->GetGlobalPosition(), Owner.GetFraction())) //Target left out the range of observing
+		!WarFogObserversManager::GetInstance()->Intersect(t_ptr->GetGlobalPosition(), Owner.GetFraction())) //Target left out the range of observing
 	{
 		TurnFindTargetState();
 		return;
@@ -103,11 +113,11 @@ void BaseAutoAggrModule::CheckCurrTarget(CallbackRecArgs_Upd& args) {
 			IsAttack = false;
 			ActionMediator.ResetCurrActions();
 			float alloDist = Owner.GetBattleStats().GetCurrAAStats()->GetRange();
-			ActionMediator.AddAction((IEntityAction*)new EntityAction_AutoAttack(Owner, watch_ptr_handler_wr<IAttackableObj>(*Target)));
+			ActionMediator.AddAction((IEntityAction*)new EntityAction_AutoAttack(Owner, watch_ptr_handler_wr<IAttackableObj>(TarInfo->Target)));
 
 			if (IsFollowTargets) {
 
-				auto folAct = new EntityAction_FollowObject(Owner, Owner,watch_ptr_handler_wr_c<WorldTransfObj>(*Target), alloDist);
+				auto folAct = new EntityAction_FollowObject(Owner, Owner,watch_ptr_handler_wr_c<WorldTransfObj>(TarInfo->Target), alloDist);
 
 				ActionMediator.AddAction((IEntityAction*)folAct);
 
@@ -137,7 +147,7 @@ void BaseAutoAggrModule::CheckCurrTarget(CallbackRecArgs_Upd& args) {
 
 			if (ActionMediator.GetActionsCount() == 0) {
 
-				auto aaAct = new EntityAction_AutoAttack(Owner, watch_ptr_handler_wr<IAttackableObj>(*Target));
+				auto aaAct = new EntityAction_AutoAttack(Owner, watch_ptr_handler_wr<IAttackableObj>(TarInfo->Target));
 				ActionMediator.AddAction((IEntityAction*)aaAct);
 			}
 			IsAttack = true;
@@ -159,10 +169,10 @@ void BaseAutoAggrModule::FindTarget(CallbackRecArgs_Upd& args) {
 	TargsBuffer=Engine::GetPhysicsEngine().OverlapCircle_All(pos, radius, TARGETS_MASK);
 	if (TargsBuffer.size() != 0) {		//Has potential targets in auto-aggr radius
 
-		if (Target != nullptr)
-			delete Target;
+		if (TarInfo != nullptr)
+			delete TarInfo;
 
-		Target = nullptr;
+		TarInfo = nullptr;
 		float minDist = FLT_MAX;
 		IAttackableObj* parTar = nullptr;
 		IFractionMember* memParTar = nullptr;
@@ -185,32 +195,30 @@ void BaseAutoAggrModule::FindTarget(CallbackRecArgs_Upd& args) {
 				dist = Length(parTar->GetGlobalPosition() - pos);
 
 				if (dist < minDist) {		//Finds nearest target
-					TargetTransform = dynamic_cast<WorldTransfObj*>(parTar);
-					if (TargetTransform == nullptr)
-						continue;
 
 					if (!WarFogObserversManager::GetInstance()->Intersect(obj->GetGlobalPosition(), Owner.GetFraction()))
 						continue;
 
 					auto& t_ptr = parTar->GetPtr();
 
-					Target = new watch_ptr_handler_wr<IAttackableObj>(t_ptr);
+					TarInfo = new TargetInfo(*new watch_ptr_handler_wr<IAttackableObj>(t_ptr));
+					IFractionMember::MemberHasChangedFracEvent.Add(OnFracChangedSub);
 
 					delete &t_ptr;
 					minDist = dist;
 				}
 			}
 		}
-		if (Target != nullptr) {
+		if (TarInfo != nullptr) {
 
 			HasTarget = true;
 			auto& aaMod = Owner.GetAAModule();
-			auto ptr= Target->GetPtr_t();
-			aaMod.SetAsTarget(new watch_ptr_handler_wr<IAttackableObj>(*(watch_ptr_handler*)Target));
+			auto ptr= TarInfo->Target.GetPtr_t();
+			aaMod.SetAsTarget(new watch_ptr_handler_wr<IAttackableObj>(*(watch_ptr_handler*)&TarInfo->Target));
 			ActionMediator.ResetCurrActions();
 			if (aaMod.CheckTargetReach(*ptr)) {			//Target is in attack range of executor
 
-				auto aaAct = new EntityAction_AutoAttack(Owner, watch_ptr_handler_wr<IAttackableObj>(*Target));
+				auto aaAct = new EntityAction_AutoAttack(Owner, watch_ptr_handler_wr<IAttackableObj>(TarInfo->Target));
 				ActionMediator.AddAction((IEntityAction*)aaAct);
 				IsAttack = true;
 			}
@@ -219,8 +227,8 @@ void BaseAutoAggrModule::FindTarget(CallbackRecArgs_Upd& args) {
 				if (IsFollowTargets) {
 
 					float alloDist = Owner.GetBattleStats().GetCurrAAStats()->GetRange();
-					auto aaAct_ = new EntityAction_AutoAttack(Owner, watch_ptr_handler_wr<IAttackableObj>(*Target));
-					auto folAct = new EntityAction_FollowObject(Owner, Owner, watch_ptr_handler_wr_c<WorldTransfObj>(*Target), alloDist);
+					auto aaAct_ = new EntityAction_AutoAttack(Owner, watch_ptr_handler_wr<IAttackableObj>(TarInfo->Target));
+					auto folAct = new EntityAction_FollowObject(Owner, Owner, watch_ptr_handler_wr_c<WorldTransfObj>(TarInfo->Target), alloDist);
 					ActionMediator.AddAction((IEntityAction*)aaAct_);
 					ActionMediator.AddAction((IEntityAction*)folAct);
 
@@ -248,10 +256,11 @@ void BaseAutoAggrModule::FindTarget(CallbackRecArgs_Upd& args) {
 	}
 }
 void BaseAutoAggrModule::TurnFindTargetState() {
-	if (Target != nullptr) {
+	if (TarInfo != nullptr) {
 
-		delete Target;
-		Target = nullptr;
+		delete TarInfo;
+		TarInfo = nullptr;
+		IFractionMember::MemberHasChangedFracEvent.Remove(OnFracChangedSub);
 	}
 	Owner.GetAAModule().SetAsTarget(nullptr);
 	HasTarget = false;

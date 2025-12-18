@@ -34,7 +34,6 @@ void EntitiesCtrlInputMode::GiveOrderToSelected_MoveToPoint(Vector2f targetGloba
 		}
 		++begIt;
 	}
-	cout << "Give an order: Move to " << to_string<float>(targetGlobalPos) << endl;
 }
 
 void EntitiesCtrlInputMode::GiveOrderToSelected_FollowObject(ITransformableObj& target, bool isGrouped) {
@@ -62,7 +61,6 @@ void EntitiesCtrlInputMode::GiveOrderToSelected_FollowObject(ITransformableObj& 
 		}
 		++begIt;
 	}
-	cout << "Give an order: Follow target " << endl;
 }
 
 void EntitiesCtrlInputMode::GiveOrderToSelected_AttackTarget(IAttackableObj& target, bool isGrouped) {
@@ -73,6 +71,7 @@ void EntitiesCtrlInputMode::GiveOrderToSelected_AttackTarget(IAttackableObj& tar
 	auto endIt = GroupSelectionSystem::GetEntitiesEndIter();
 	Entity* parEl;
 	watch_ptr_handler* wtch_ptr = nullptr;
+	IFractionMember* target_fracMem = dynamic_cast<IFractionMember*>(&target);
 	EntityOrder_AttackTarget* ord = nullptr;
 	for (;begIt != endIt;) {
 
@@ -84,13 +83,12 @@ void EntitiesCtrlInputMode::GiveOrderToSelected_AttackTarget(IAttackableObj& tar
 			if (wtch_ptr == nullptr)
 				throw exception("Cant observe object with watch_ptr");
 
-			ord = new EntityOrder_AttackTarget(*parEl, *parEl, watch_ptr_handler_wr<IAttackableObj>(*wtch_ptr));
+			ord = new EntityOrder_AttackTarget(*parEl, *parEl, watch_ptr_handler_wr<IAttackableObj>(*wtch_ptr),target_fracMem);
 			parEl->TryAddOrder(*ord, !isGrouped);
 			delete wtch_ptr;
 		}
 		++begIt;
 	}
-	cout << "Give an order: Attack target " << endl;
 }
 
 void EntitiesCtrlInputMode::GiveOrderToSelected_Idle(bool isGrouped) {
@@ -107,7 +105,6 @@ void EntitiesCtrlInputMode::GiveOrderToSelected_Idle(bool isGrouped) {
 		}
 		++begIt;
 	}
-	cout << "Give an order: Idle " << endl;
 }
 
 void EntitiesCtrlInputMode::GiveOrderToSelected_Cancel() {
@@ -124,7 +121,6 @@ void EntitiesCtrlInputMode::GiveOrderToSelected_Cancel() {
 		}
 		++begIt;
 	}
-	cout << "Give an order: Cancel " << endl;
 }
 
 void EntitiesCtrlInputMode::GiveOrderToSelected_HoldPosition(bool isGrouped) {
@@ -141,7 +137,6 @@ void EntitiesCtrlInputMode::GiveOrderToSelected_HoldPosition(bool isGrouped) {
 		}
 		++begIt;
 	}
-	cout << "Give an order: Hold position" << endl;
 }
 void EntitiesCtrlInputMode::GiveOrderToSelected_AttackArea(Vector2f targetGlobalPos, bool isGrouped) {
 	if (!GivingOrderCondition())
@@ -157,5 +152,4 @@ void EntitiesCtrlInputMode::GiveOrderToSelected_AttackArea(Vector2f targetGlobal
 		}
 		++begIt;
 	}
-	cout << "Give an order: Attack area on way to " << to_string<float>(targetGlobalPos) << endl;
 }

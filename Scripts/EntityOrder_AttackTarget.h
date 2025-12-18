@@ -13,8 +13,9 @@ namespace KrostganEngine::EntitiesControl {
 	public:
 		EntityOrder_AttackTarget
 			(OrdersExecutor&						Owner, 
-			WorldTransfObj&						OwnerTransform,
-			watch_ptr_handler_wr<IAttackableObj>	Target);
+			WorldTransfObj&							OwnerTransform,
+			watch_ptr_handler_wr<IAttackableObj>	Target,
+			IFractionMember*						Target_FracMem = nullptr);
 		virtual ~EntityOrder_AttackTarget();
 
 		bool CheckExecCondition() override;
@@ -32,5 +33,35 @@ namespace KrostganEngine::EntitiesControl {
 
 	protected:
 		bool IsTargetObserving() const;
+
+	private:
+		class OnFractionChanged final : public IEventSubscriber<const IFractionMember::ChangeFractionEvArgs> {
+
+		public:
+			OnFractionChanged(EntityOrder_AttackTarget& Owner, IFractionMember& Target)
+				:Owner(Owner),
+				Target(Target),
+				Target_OldFraction(Target.GetFraction())
+			{}
+
+			void Execute(IFractionMember::ChangeFractionEvArgs const& args) override {
+
+				if (&Target == &args.Owner) {
+
+					if (args.OldFraction!=args.NewFraction ||
+						FractionsSystem::GetRelation(Target_OldFraction, args.NewFraction) != Relation::Enemy) {
+
+						Owner.Owner.CancelOrder(0);
+					}
+				}
+			}
+
+		private:
+			EntityOrder_AttackTarget& Owner;
+			IFractionMember& Target;
+			Fraction Target_OldFraction;
+		};
+
+		OnFractionChanged* OnFractionChangedSubs = nullptr;
 	};
 }

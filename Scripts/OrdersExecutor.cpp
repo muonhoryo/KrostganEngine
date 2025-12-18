@@ -111,6 +111,26 @@ void OrdersExecutor::ResetOrdersQueue() {
 	OrdersQueue.clear();
 	ResetOrderListEventHandler.Execute();
 }
+void OrdersExecutor::CancelOrder(size_t orderIndex) {
+	if (orderIndex == 0) {
+		UnloadCurrentOrder();
+	}
+	else {
+		auto it = OrdersQueue.begin();
+		auto end = OrdersQueue.end();
+		for (size_t index = 0;index != orderIndex && it != end;++index) {
+			++it;
+		}
+
+		if (it == end)
+			throw exception("Index of order is out of range");
+
+		auto order = *it;
+		OrdersQueue.erase(it);
+		ExecuteOrderEventHandler.Execute(*order);
+		delete order;
+	}
+}
 
 list<IEntityOrder*>::const_iterator OrdersExecutor::GetOrderQueueIter_Begin() const {
 	return OrdersQueue.cbegin();

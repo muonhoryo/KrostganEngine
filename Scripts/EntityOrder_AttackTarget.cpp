@@ -13,16 +13,30 @@ using namespace KrostganEngine::GameObjects;
 using namespace KrostganEngine::EntitiesControl;
 using namespace KrostganEngine::Core;
 
-EntityOrder_AttackTarget::EntityOrder_AttackTarget(OrdersExecutor& Owner,WorldTransfObj& OwnerTransform, 
-	watch_ptr_handler_wr<IAttackableObj> Target)
+EntityOrder_AttackTarget::EntityOrder_AttackTarget(
+	OrdersExecutor& Owner,
+	WorldTransfObj& OwnerTransform, 
+	watch_ptr_handler_wr<IAttackableObj> Target,
+	IFractionMember* Target_FracMem)
 	:IEntityOrder(),
 	EntityOrder_ImmobilityChecking(OwnerTransform),
 		Owner(Owner),
 		Target(Target),
-		AAModule(Owner.GetAAModule())
-{}
-EntityOrder_AttackTarget::~EntityOrder_AttackTarget() {
+		AAModule(Owner.GetAAModule()),
+		OnFractionChangedSubs(nullptr){
 
+	if (Target_FracMem != nullptr) {
+
+		OnFractionChangedSubs = new OnFractionChanged(*this, *Target_FracMem);
+		IFractionMember::MemberHasChangedFracEvent.Add(*OnFractionChangedSubs);
+	}
+}
+EntityOrder_AttackTarget::~EntityOrder_AttackTarget() {
+	if (OnFractionChangedSubs != nullptr) {
+		
+		IFractionMember::MemberHasChangedFracEvent.Remove(*OnFractionChangedSubs);
+		delete OnFractionChangedSubs;
+	}
 }
 
 bool EntityOrder_AttackTarget::CheckExecCondition() {

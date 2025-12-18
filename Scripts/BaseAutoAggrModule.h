@@ -14,6 +14,18 @@ using namespace KrostganEngine;
 namespace KrostganEngine::GameObjects {
 	class BaseAutoAggrModule : public AutoAggressionModule {
 	public:
+		struct TargetInfo final {
+
+			TargetInfo(watch_ptr_handler_wr<IAttackableObj>& Target)
+					:Target(Target)
+			{}
+			~TargetInfo() {
+				delete& Target;
+			}
+
+			watch_ptr_handler_wr<IAttackableObj>& Target;
+		};
+
 		BaseAutoAggrModule(Entity& Owner, ExecutorActionsMediator& ActionMediator);
 		~BaseAutoAggrModule();
 
@@ -26,7 +38,7 @@ namespace KrostganEngine::GameObjects {
 		IAttackableObj* GetCurrTarget() const;
 
 	private:
-		class OnAAStatsChanged : public IEventSubscriber<const int> {
+		class OnAAStatsChanged final : public IEventSubscriber<const int> {
 
 		public:
 			OnAAStatsChanged(BaseAutoAggrModule& Owner)
@@ -35,6 +47,27 @@ namespace KrostganEngine::GameObjects {
 			void Execute( const int& args) override {
 				if (args == -1)
 					Owner.TurnFindTargetState();
+			}
+
+		private:
+			BaseAutoAggrModule& Owner;
+		};
+		class OnFractionChanged final : public IEventSubscriber<const IFractionMember::ChangeFractionEvArgs> {
+
+		public:
+			OnFractionChanged(BaseAutoAggrModule& Owner)
+				:Owner(Owner)
+			{}
+
+			void Execute(IFractionMember::ChangeFractionEvArgs const& args) override {
+				
+				auto tar = dynamic_cast<IAttackableObj*>(&args.Owner);
+				if (Owner.GetCurrTarget() == tar) {
+
+					if (FractionsSystem::GetRelation(Owner.Owner.GetFraction(), args.NewFraction) != Relation::Enemy) {
+						Owner.Restart();
+					}
+				}
 			}
 
 		private:
@@ -51,8 +84,8 @@ namespace KrostganEngine::GameObjects {
 		/// <returns></returns>
 		bool CheckTargetReachability() const;
 
-		watch_ptr_handler_wr<IAttackableObj>* Target;
-		WorldTransfObj* TargetTransform;
+		TargetInfo* TarInfo;
+		OnFractionChanged OnFracChangedSub;
 		Entity& Owner;
 
 		bool HasTarget;
