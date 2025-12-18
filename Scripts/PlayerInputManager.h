@@ -82,7 +82,6 @@ namespace KrostganEngine::PlayerControl {
 
 		void Update(CallbackRecArgs_Upd args) override;
 
-
 	private:
 		vector<IBaseInputHandler*>		InputHandlers;
 		vector<IWindowInputHandler*>	WindInputHandlers;
@@ -112,6 +111,8 @@ namespace KrostganEngine::PlayerControl {
 		static bool GetBtnState_Shift();
 		static bool GetBtnState_Alt();
 		static bool GetBtnState_Ctrl();
+
+		static bool HasPriorityInputHandler();
 
 	private:
 		static inline PlayerInputManager* Instance = nullptr;

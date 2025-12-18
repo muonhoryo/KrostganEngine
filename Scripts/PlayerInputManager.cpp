@@ -72,14 +72,14 @@ void PlayerInputManager::RemoveInputHandler(IBaseInputHandler& handler) {
 void PlayerInputManager::AddPriorityInputHan(IPriorityInputHandler& handler) {
 
 	if (PriorityInputHan != nullptr)
-		throw exception("Trying to add new priority input handler while the same is active");
+		delete PriorityInputHan;
 
 	PriorityInputHan = &handler;
 }
 void PlayerInputManager::RemovePriorityInputHan(IPriorityInputHandler& handler) {
 
 	if (PriorityInputHan != &handler)
-		throw exception("Current priority input handler is not this script");
+		throw exception("Current priority input handler is not parameter of this method");
 
 	PriorityInputHan = nullptr;
 }
@@ -215,4 +215,8 @@ bool PlayerInputManager::GetBtnState_Alt() {
 /// <returns></returns>
 bool PlayerInputManager::GetBtnState_Ctrl() {
 	return IsPressed_Ctrl;
+}
+
+bool PlayerInputManager::HasPriorityInputHandler() {
+	return Instance->PriorityInputHan != nullptr;
 }

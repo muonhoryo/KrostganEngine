@@ -33,7 +33,7 @@ void EngineUpdateModule::Execute() {
 
 		if (scr == nullptr)
 			continue;
-		
+
 		scr->Update(args);
 
 		if (Engine::IsNeedToInterrupt())

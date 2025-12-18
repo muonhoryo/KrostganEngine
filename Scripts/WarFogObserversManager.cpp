@@ -71,7 +71,7 @@ bool WarFogObserversManager::Intersect(Vector2f pos, Fraction observersFraction)
 
 	while (it != end) {
 
-		if ((*it) == nullptr) {
+		if (*it == nullptr) {
 			++it;
 			continue;
 		}
@@ -84,7 +84,8 @@ bool WarFogObserversManager::Intersect(Vector2f pos, Fraction observersFraction)
 
 
 	while (it != end) {
-		if ((*it) == nullptr) {
+
+		if (*it == nullptr) {
 			++it;
 			continue;
 		}

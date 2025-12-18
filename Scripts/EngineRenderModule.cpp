@@ -15,6 +15,7 @@ void EngineRenderModule::Execute() {
 	FrameRenderTime.restart();
 	if (!Window.isOpen())
 		return;
+
 	IsIteratingCallbacks = true;
 
 	if (NeedToSort) {
@@ -48,6 +49,11 @@ void EngineRenderModule::Execute() {
 	glStencilFunc(GL_NOTEQUAL, WarFogStencilGen::WARFOG_STENCIL_MASK, 0xFF);
 	while (it != itEnd) {
 
+		if (*it == nullptr) {
+			++it;
+			continue;
+		}
+
 		calbck = *it;
 		if (!calbck->Get_IsHidenByWarFog() ||
 			calbck->Get_IsShownByWarFog()) {
@@ -63,6 +69,11 @@ void EngineRenderModule::Execute() {
 	glStencilFunc(GL_EQUAL, WarFogStencilGen::WARFOG_STENCIL_MASK, 0xFF);
 	while (it != itEnd) {
 
+		if (*it == nullptr) {
+			++it;
+			continue;
+		}
+
 		calbck = *it;
 		if (!calbck->Get_IsShownByWarFog()) {
 			//Check if iterator came to next group of render
@@ -77,6 +88,11 @@ void EngineRenderModule::Execute() {
 	//Render objects which are not hidden by any stencil-test value (!IsHidenByWarFog & !IsShownByWarFog)
 	glDisable(GL_STENCIL_TEST);
 	while (it != itEnd) {
+
+		if (*it == nullptr) {
+			++it;
+			continue;
+		}
 
 		calbck = *it;
 

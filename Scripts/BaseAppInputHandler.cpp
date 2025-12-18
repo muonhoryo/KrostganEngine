@@ -23,6 +23,7 @@ void BaseAppInputHandler::Update(const CallbackRecArgs_Upd& args) {
 		if (input.type == Event::KeyPressed) {
 
 			if (!DbgConsoleInputHandler::GetDbgConsoleStats() &&
+				!PlayerInputManager::HasPriorityInputHandler() &&
 				input.key.code == Keyboard::Tilde) { //Open console
 
 				auto dbgConsHan=new DbgConsoleInputHandler();

@@ -18,6 +18,7 @@ WinScript::WinScript()
 	MessageAppearingDeltaTime(MessageShowingTime - MessageAppearingTime) {
 
 	//PlayerInputManager::GetInstance().Clear();
+	GroupSelectionSystem::Clear();
 	auto locker=new DummyLockerHandler();
 	locker->StartHandling();
 	LostTimer.restart();
