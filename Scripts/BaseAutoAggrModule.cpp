@@ -87,7 +87,8 @@ void BaseAutoAggrModule::CheckCurrTarget(CallbackRecArgs_Upd& args) {
 	}
 
 	auto t_ptr = Target->GetPtr_t();
-	if (!CheckTargetReachability())
+	if (!CheckTargetReachability() ||
+		!WarFogObserversManager::GetInstance()->Intersect(Target->GetPtr_t()->GetGlobalPosition(), Owner.GetFraction())) //Target left out the range of observing
 	{
 		TurnFindTargetState();
 		return;
@@ -95,8 +96,8 @@ void BaseAutoAggrModule::CheckCurrTarget(CallbackRecArgs_Upd& args) {
 
 	if (IsAttack) {		//Is there target in owner's attack range
 
-		if (!Owner.GetAAModule().CheckTargetReach() ||		//Target left out the range of AA
-			!WarFogObserversManager::GetInstance()->Intersect(Target->GetPtr_t()->GetGlobalPosition(), Owner.GetFraction())) {		//Target left out the range of observing
+		//Target left out the range of AA
+		if (!Owner.GetAAModule().CheckTargetReach()) {		
 
 			//Follow the target and start attacking it
 			IsAttack = false;

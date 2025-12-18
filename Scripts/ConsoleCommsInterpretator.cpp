@@ -45,7 +45,11 @@ void ConsoleCommsInterpretator::ExecuteCommand(const string& input) {
 			return;
 	}
 	else if (input.find(WARFOG_COMMAND) != string::npos) {
-		if (InterpretateCom_WarFog(input))
+		if (InterpretateComm_WarFog(input))
+			return;
+	}
+	else if (input.find(FRACSET_COMMAND) != string::npos) {
+		if (InterpretateComm_FracSet(input))
 			return;
 	}
 	PrintInterpetatorMessage("Unknown command: " + input);
@@ -209,7 +213,7 @@ bool ConsoleCommsInterpretator::InterpretateComm_Rearm(const string& input) {
 	return true;
 }
 
-bool ConsoleCommsInterpretator::InterpretateCom_WarFog(const string& input) {
+bool ConsoleCommsInterpretator::InterpretateComm_WarFog(const string& input) {
 	auto& syntax = SplitCommandSyntax(input);
 	if (syntax.size() != 1 ||
 		syntax.at(0) != WARFOG_COMMAND) {
@@ -223,6 +227,48 @@ bool ConsoleCommsInterpretator::InterpretateCom_WarFog(const string& input) {
 		"Set WarFog active" :
 		"Set WarFog inactive");
 
+	return true;
+}
+
+bool ConsoleCommsInterpretator::InterpretateComm_FracSet(const string& input) {
+	auto& syntax = SplitCommandSyntax(input);
+	if (syntax.size() != 2 ||
+		syntax.at(0) != FRACSET_COMMAND) {
+
+		return false;
+	}
+
+	Fraction frac;
+
+	if (FractionsSystem::FractionNames.find(syntax[1]) != FractionsSystem::FractionNames.end())
+		frac = FractionsSystem::FractionNames.at(syntax[1]);
+	else {
+		PrintInterpetatorMessage("Unknown fraction name");
+		return false;
+	}
+	
+
+	IFractionMember* fracMem = nullptr;
+	vector<IFractionMember*> fracMembs = vector<IFractionMember*>(GroupSelectionSystem::GetSelectionCount());
+	for (auto mem : fracMembs) {
+		mem = nullptr;
+	}
+	size_t fracMembsCount = 0;
+	auto it = GroupSelectionSystem::GetEntitiesBegIter();
+	auto end = GroupSelectionSystem::GetEntitiesEndIter();
+	while (it != end) {
+
+		fracMem = dynamic_cast<IFractionMember*>((*it)->GetPtr_t());
+		if (fracMem != nullptr) {
+			fracMembs[fracMembsCount] = fracMem;
+			++fracMembsCount;
+		}
+		++it;
+	}
+	for (auto mem : fracMembs) {
+		if (mem != nullptr)
+			mem->SetFraction(frac);
+	}
 	return true;
 }
 

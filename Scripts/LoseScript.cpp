@@ -15,6 +15,7 @@ LoseScript::LoseScript()
 	MessageShowingTime(Engine::GetGlobalConsts().LoseMsg_ShowingTime),
 	MessageAppearingDeltaTime(MessageShowingTime - MessageAppearingTime) {
 
+	//PlayerInputManager::GetInstance().Clear();
 	auto locker=new DummyLockerHandler();
 	locker->StartHandling();
 	LostTimer.restart();

@@ -267,6 +267,7 @@ bool EntityLoadInfo::WriteParam(Attr& param) {
 	if (CheckParamName(param,SerializationParDefNames::ENTITY_FRACTION)) {
 		string buffer = param.second;
 		FStreamExts::ClearPath(buffer);
+		FStreamExts::ToLowerStr(buffer);
 		if (FractionsSystem::FractionNames.find(buffer) == FractionsSystem::FractionNames.end())
 			EntityFraction = Fraction::Neutral;
 		else

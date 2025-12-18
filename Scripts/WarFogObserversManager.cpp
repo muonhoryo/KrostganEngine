@@ -44,10 +44,14 @@ bool WarFogObserversManager::Intersect(Vector2f pos, Fraction observersFraction)
 		clbk = CachedObservers[input]->GetPtr_t_c();
 		if (clbk != nullptr) {
 
+			cout << "WarFogObserversManager: calculate from cache" << endl;
 			obsr.Center = clbk->GetGlobalPosition();
 			obsr.Radius = clbk->GetObservingRange();
-			if (obsr.IsPointInCollider(pos))
+			if (obsr.IsPointInCollider(pos)) {
+
+				DeleteDelayedCallbacks();
 				return true;
+			}
 			else {
 
 				CachedObservers.erase(input);
@@ -86,21 +90,39 @@ bool WarFogObserversManager::Intersect(Vector2f pos, Fraction observersFraction)
 		}
 
 		clbk = *it;
-		if (clbk->GetFraction() != observersFraction)
+		if (clbk->GetFraction() != observersFraction) {
+
+			IsIteratingCallbacks = false;
+			DeleteDelayedCallbacks();
 			return false;
+		}
 		else {
 			obsr.Center = clbk->GetGlobalPosition();
 			obsr.Radius = clbk->GetObservingRange();
 			if (obsr.IsPointInCollider(pos)) {
 
-				if (CachedObservers.size() >= Engine::GetGlobalConsts().WarFogObserversManager_CacheSize)
+				if (CachedObservers.size() >= Engine::GetGlobalConsts().WarFogObserversManager_CacheSize) {
+
 					CachedObservers.clear();
+					cout << "WarFogObserversManager: Reset cached observers" << endl;
+				}
 				auto& ptr = clbk->GetPtr_c();
 				CachedObservers[input]=new watch_ptr_handler_wr_c<WarFogObserver>(ptr);
+
+				IsIteratingCallbacks = false;
+				DeleteDelayedCallbacks();
 				return true;
 			}
 		}
 		++it;
 	}
+
+	IsIteratingCallbacks = false;
+	DeleteDelayedCallbacks();
+
 	return false;
+}
+
+void WarFogObserversManager::Set_NeedToSort() {
+	NeedToSort = true;
 }

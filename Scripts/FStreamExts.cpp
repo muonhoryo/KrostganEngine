@@ -70,3 +70,8 @@ char FStreamExts::SFKeyToChar(Keyboard::Key key) {
 	else
 		return (char)key;
 }
+void FStreamExts::ToLowerStr(string& str) {
+	for (auto it = str.begin();it < str.end();++it) {
+		(*it)=tolower(*it);
+	}
+}

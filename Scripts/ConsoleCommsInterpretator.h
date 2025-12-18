@@ -12,54 +12,23 @@ namespace KrostganEngine {
 		public:
 			static void ExecuteCommand(const string& input);
 
-			/// <summary>
-			/// Return true if is Zoom command
-			/// </summary>
-			/// <param name="input"></param>
-			/// <returns></returns>
+			//Commands below return true if input match the command syntax
+
 			static bool InterpretateComm_Zoom(const string& input);
 			
-			/// <summary>
-			/// Return true if is Divine commander command
-			/// </summary>
-			/// <param name="input"></param>
-			/// <returns></returns>
 			static bool InterpretateComm_DivComm(const string& input);
 			
-			/// <summary>
-			/// Return true if is Camera moving command
-			/// </summary>
-			/// <param name="input"></param>
-			/// <returns></returns>
 			static bool InterpretateComm_CamMov(const string& input);
 
-			/// <summary>
-			/// Return true if is Immortality army command
-			/// </summary>
-			/// <param name="input"></param>
-			/// <returns></returns>
 			static bool InterpretateComm_ImmArmy(const string& input);
 
-			/// <summary>
-			/// Return true if Disarm entities command
-			/// </summary>
-			/// <param name="input"></param>
-			/// <returns></returns>
 			static bool InterpretateComm_Disarm(const string& input);
 
-			/// <summary>
-			/// Return true if is Rearm entities command
-			/// </summary>
-			/// <param name="input"></param>
-			/// <returns></returns>
 			static bool InterpretateComm_Rearm(const string& input);
 
-			/// <summary>
-			/// Return true if is WarFog command
-			/// </summary>
-			/// <param name="input"></param>
-			/// <returns></returns>
-			static bool InterpretateCom_WarFog(const string& input);
+			static bool InterpretateComm_WarFog(const string& input);
+
+			static bool InterpretateComm_FracSet(const string& input);
 		private:
 			static vector<string>& SplitCommandSyntax(const string& input);
 			static void PrintInterpetatorMessage(const string& message);
@@ -71,6 +40,7 @@ namespace KrostganEngine {
 			static inline const string DISARM_COMMAND				= "disarm";
 			static inline const string REARM_COMMAND				= "rearm";
 			static inline const string WARFOG_COMMAND				= "warfog";
+			static inline const string FRACSET_COMMAND				= "fracset";
 
 			static inline const char& SPLIT_COMM_DELIMS = {' '};
 		};

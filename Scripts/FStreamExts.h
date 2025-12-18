@@ -13,6 +13,7 @@ namespace KrostganEngine {
 		static char*	ReadToEnd	(const string& path);
 		static bool		ParseBool	(const string& servalue);
 		static char		SFKeyToChar	(Keyboard::Key key);
+		static void		ToLowerStr	(string& str);
 
 	private:
 		FStreamExts();

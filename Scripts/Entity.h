@@ -120,6 +120,8 @@ namespace KrostganEngine::GameObjects {
 
 		Fraction GetFraction() const override;
 
+		void SetFraction(Fraction fraction) override;
+
 	//
 	// IWarFogObserver
 	//

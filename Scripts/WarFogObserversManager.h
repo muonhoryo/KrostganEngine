@@ -44,6 +44,10 @@ namespace KrostganEngine::Core {
 
 	static bool WarFogObsrsSortPredicate(const WarFogObserver* const& first, const WarFogObserver* const& second) {
 
+		if (first == nullptr)
+			return true;
+		if (second == nullptr)
+			return false;
 		return (int)first->GetFraction() < (int)second->GetFraction();
 	}
 
@@ -53,6 +57,7 @@ namespace KrostganEngine::Core {
 		WarFogObserversManager();
 
 		bool Intersect(Vector2f pos, Fraction observersFraction);
+		void Set_NeedToSort();
 
 		static WarFogObserversManager* GetInstance() {
 			return Singleton;

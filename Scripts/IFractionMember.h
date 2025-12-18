@@ -9,6 +9,8 @@ namespace KrostganEngine::EntitiesControl {
 
 		virtual Fraction GetFraction()const=0;
 
+		virtual void SetFraction(Fraction fraction) = 0;
+
 	protected:
 		IFractionMember(){}
 	};

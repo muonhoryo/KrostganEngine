@@ -34,3 +34,15 @@ Color FractionsSystem::GetRelationColor(Relation rel) {
 Color FractionsSystem::GetRelationToPlayerColor(Fraction objFrac) {
 	return FractionsSystem::GetRelationColor(GetRelationToPlayer(objFrac));
 }
+/// <summary>
+/// Return empty string in heap if frac is invalid
+/// </summary>
+/// <param name="frac"></param>
+/// <returns></returns>
+const string& FractionsSystem::GetNameOfFraction(Fraction frac) {
+	for (auto it = FractionNames.begin();it != FractionNames.end();++it) {
+		if ((*it).second == frac)
+			return (*it).first;
+	}
+	return *new string("");
+}
