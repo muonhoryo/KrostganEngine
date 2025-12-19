@@ -56,7 +56,7 @@ namespace KrostganEngine::Core {
 	public:
 		WarFogObserversManager();
 
-		bool Intersect(Vector2f pos, Fraction observersFraction);
+		bool Intersect(Vector2f pos, Fraction observersFraction, float maxRange = FLT_MAX);
 		void Set_NeedToSort();
 
 		static WarFogObserversManager* GetInstance() {

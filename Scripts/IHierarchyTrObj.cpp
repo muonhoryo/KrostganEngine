@@ -17,7 +17,7 @@ void IHierarchyTrObj::RemoveChild(IHierarchyTrObj& child) {
 vector<IHierarchyTrObj*>::const_iterator	IHierarchyTrObj::GetChildrenBegin() const {
 	return ChildObjs.begin();
 }
-vector<IHierarchyTrObj*>::const_iterator	IHierarchyTrObj::GetChildrenCEnd() const {
+vector<IHierarchyTrObj*>::const_iterator	IHierarchyTrObj::GetChildrenAfterEnd() const {
 	return ChildObjs.cend();
 }
 size_t										IHierarchyTrObj::GetChildrenCount() const {

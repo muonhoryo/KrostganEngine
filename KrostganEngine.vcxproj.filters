@@ -361,6 +361,9 @@
     <Filter Include="Файлы заголовков\CoreSystems\Visual\Primitives">
       <UniqueIdentifier>{37c69a07-d98f-4e52-9180-cc5f4fc21a17}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Исходные файлы\CoreSystems\GameObjects\VirtualObjects\Entity">
+      <UniqueIdentifier>{e7dd60b4-a288-40ba-9b7c-7f03a8ef7e44}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\main.cpp">
@@ -504,9 +507,6 @@
     <ClCompile Include="Scripts\FractionSystem.cpp">
       <Filter>Исходные файлы\CoreSystems\EntitiesControl\RelationsSystem</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Entity_FractionsSystem.cpp">
-      <Filter>Исходные файлы\CoreSystems\EntitiesControl\RelationsSystem</Filter>
-    </ClCompile>
     <ClCompile Include="Scripts\AutoAggressionModule.cpp">
       <Filter>Исходные файлы\CoreSystems\EntitiesControl</Filter>
     </ClCompile>
@@ -559,9 +559,6 @@
       <Filter>Исходные файлы\CoreSystems\EngineCallbacks</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\DynamicPhysObject.cpp">
-      <Filter>Исходные файлы\CoreSystems\GameObjects\VirtualObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Entity.cpp">
       <Filter>Исходные файлы\CoreSystems\GameObjects\VirtualObjects</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\GameObject.cpp">
@@ -743,6 +740,15 @@
     </ClCompile>
     <ClCompile Include="Scripts\WarFogObserversManager.cpp">
       <Filter>Исходные файлы\CoreSystems\Engine\EngineWorkCycles</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Entity.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameObjects\VirtualObjects\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Entity_FractionsSystem.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameObjects\VirtualObjects\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Entity_Stealth.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameObjects\VirtualObjects\Entity</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

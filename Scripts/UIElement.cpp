@@ -205,7 +205,7 @@ const string& UIElement::GetName() const {
 UIElement* UIElement::GetUIElementByName(const string& name) const {
 	
 	auto it = GetChildrenBegin();
-	auto end = GetChildrenCEnd();
+	auto end = GetChildrenAfterEnd();
 	UIElement* el = nullptr;
 	for (;it != end;++it) {
 		el = dynamic_cast<UIElement*>(*it);
@@ -287,7 +287,7 @@ void UIElement::SetUISize_Inherit(Vector2f oldSize) {
 void UIElement::SetChildren_UISize(Vector2f oldSize) {
 	
 	UIElement* ch = nullptr;
-	for (auto it = GetChildrenBegin();it != GetChildrenCEnd();++it) {
+	for (auto it = GetChildrenBegin();it != GetChildrenAfterEnd();++it) {
 		ch = dynamic_cast<UIElement*>(*it);
 		if (ch != nullptr)
 			ch->SetUISize_Inherit(oldSize);

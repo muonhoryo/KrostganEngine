@@ -27,7 +27,7 @@ void WarFogObserversManager::OnAddCallback(WarFogObserver* const& callbck) {
 /// <param name="pos"></param>
 /// <param name="observersFraction"></param>
 /// <returns></returns>
-bool WarFogObserversManager::Intersect(Vector2f pos, Fraction observersFraction) {
+bool WarFogObserversManager::Intersect(Vector2f pos, Fraction observersFraction, float maxRange) {
 
 	if (!WarFogStencilGen::GetActivity() && FractionsSystem::GetRelationToPlayer(observersFraction) == Relation::Ally)
 		return true;
@@ -35,6 +35,7 @@ bool WarFogObserversManager::Intersect(Vector2f pos, Fraction observersFraction)
 	IntersectInput input;
 	input.Position = Vector2i(pos/Engine::GetGlobalConsts().WarFogObserversManager_PosHashCellSize);
 	input.Fraction = observersFraction;
+
 
 	CircleCollShape obsr = CircleCollShape(DEFAULT_POSITION, 0);
 	const WarFogObserver* clbk = nullptr;
@@ -47,6 +48,9 @@ bool WarFogObserversManager::Intersect(Vector2f pos, Fraction observersFraction)
 			cout << "WarFogObserversManager: calculate from cache" << endl;
 			obsr.Center = clbk->GetGlobalPosition();
 			obsr.Radius = clbk->GetObservingRange();
+			if (obsr.Radius > maxRange)
+				obsr.Radius = maxRange;
+
 			if (obsr.IsPointInCollider(pos)) {
 
 				DeleteDelayedCallbacks();
@@ -100,6 +104,9 @@ bool WarFogObserversManager::Intersect(Vector2f pos, Fraction observersFraction)
 		else {
 			obsr.Center = clbk->GetGlobalPosition();
 			obsr.Radius = clbk->GetObservingRange();
+			if (obsr.Radius > maxRange)
+				obsr.Radius = maxRange;
+
 			if (obsr.IsPointInCollider(pos)) {
 
 				if (CachedObservers.size() >= Engine::GetGlobalConsts().WarFogObserversManager_CacheSize) {

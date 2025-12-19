@@ -30,7 +30,8 @@ Entity::Entity(EntityCtorParams& params)
 	EntityFraction			(params.EntityFraction),
 	HPBar					(params.HPBarSprite),
 	HitEffectSprite			(params.HitEffectSprite),
-	SelectionSpriteSource	(params.SelectionSpriteSource)
+	SelectionSpriteSource	(params.SelectionSpriteSource),
+	StlHider_Subs			(StealthStatChangedSubs(*this))
 
 {
 	params.Owner = this;
@@ -56,12 +57,43 @@ Entity::Entity(EntityCtorParams& params)
 	BodySprite.Set_IsHidenByWarFog(true);
 	HPBar->Set_IsHidenByWarFog(true);
 	HitEffectSprite->Set_IsHidenByWarFog(true);
+
+	GetBattleStats().StatChangedEvent.Add(StlHider_Subs);
 }
 
 Entity::~Entity() {
 	delete HPModule;
 
 	EntitiesObserver::RemoveEntity(this);
+}
+
+void Entity::SetRenderActivity(bool isActive) {
+
+	if (isActive != IsRenderActive) {
+
+		ICallbackRec_GraphRen* buffer = nullptr;
+		Internal_SetRenderActivity(*this, buffer, isActive);
+		IsRenderActive = isActive;
+	}
+}
+void Entity::Internal_SetRenderActivity(IHierarchyTrObj& target, ICallbackRec_GraphRen* buffer,const bool activity) {
+
+	if (target.GetChildrenCount() > 0) {
+
+		auto it = GetChildrenBegin();
+		auto end = GetChildrenAfterEnd();
+		while (it != end) {
+
+			buffer = dynamic_cast<ICallbackRec_GraphRen*>(*it);
+			if (buffer != nullptr)
+				buffer->SetActivity(activity);
+			Internal_SetRenderActivity(**it, buffer, activity);
+			++it;
+		}
+	}
+}
+bool Entity::Get_IsRenderActive() const {
+	return IsRenderActive;
 }
 
 void Entity::SetColor(Color color) {

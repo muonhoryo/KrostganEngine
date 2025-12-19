@@ -13,6 +13,7 @@
 #include <CallbackDelegates.h>
 #include <ExtGlResources.h>
 #include <WarFogObserver.h>
+#include <WarFogObserversManager.h>
 
 using namespace sf;
 using namespace std;
@@ -73,6 +74,10 @@ namespace KrostganEngine::GameObjects {
 	public:
 		virtual ~Entity();
 
+		void SetRenderActivity(bool isActive);
+
+		bool Get_IsRenderActive() const;
+
 	//
 	// ISelectableEntity
 	//
@@ -131,18 +136,95 @@ namespace KrostganEngine::GameObjects {
 	protected:
 		Entity(EntityCtorParams& params);
 
+	//
+	// Stealth-mechanic
+	//
+
 	private:
-		bool					IsEntitySelected		=	false;
-		const ExtGlRes_Sprite*	SelectionSpriteSource	=	nullptr;
-		SpriteRenderer*			SelectionSprite			=	nullptr;
+		class OnStealthGraphHider final : public ICallbackRec_Upd {
+
+		public:
+			OnStealthGraphHider(Entity& Owner)
+				:Owner(Owner) {
+
+				IsActiveOwner = !IsOwnerMustHide();
+				Owner.SetRenderActivity(IsActiveOwner);
+			}
+			virtual ~OnStealthGraphHider()
+			{}
+
+			void Update(CallbackRecArgs_Upd args) override {
+
+				if (IsActiveOwner == IsOwnerMustHide()) {
+
+					IsActiveOwner = !IsActiveOwner;
+					Owner.SetRenderActivity(IsActiveOwner);
+				}
+			}
+
+		private:
+			bool IsOwnerMustHide() {
+
+				Vector2f pos = Owner.GetGlobalPosition();
+				Fraction frac = Owner.GetFraction();
+				float stealth = Owner.GetBattleStats().GetStealth();
+
+				return !WarFogObserversManager::GetInstance()->Intersect(pos, Fraction::Player, stealth);
+			}
+
+			Entity& Owner;
+			bool IsActiveOwner;
+		};
+		class StealthStatChangedSubs final : public IEventSubscriber<int> {
+
+		public:
+			StealthStatChangedSubs(Entity& Owner);
+			virtual ~StealthStatChangedSubs(){}
+
+			void Execute(int& args) override;
+
+		private:
+			Entity& Owner;
+
+			void ExecuteAction(int args);
+
+			/// <summary>
+			/// Initialize stealth-subsystems of entity after the entity has created
+			/// </summary>
+			struct DelayedInit final : public ICallbackRec_Upd {
+			
+				DelayedInit(StealthStatChangedSubs& Owner)
+					:Owner(Owner)
+				{}
+				virtual ~DelayedInit(){}
+
+				void Update(CallbackRecArgs_Upd args) override {
+
+					Owner.ExecuteAction((int)EntityBattleStatType::Stealth);
+					delete this;
+				}
+
+				StealthStatChangedSubs& Owner;
+			};
+		};
+
+		OnStealthGraphHider* StlHider = nullptr;
+		StealthStatChangedSubs StlHider_Subs;
+
+	private:
+		
+		void Internal_SetRenderActivity(IHierarchyTrObj& target, ICallbackRec_GraphRen* buffer, const bool activity);
+
+		bool					IsEntitySelected		= false;
+		bool					IsRenderActive			= true;
+		const ExtGlRes_Sprite*	SelectionSpriteSource	= nullptr;
+		SpriteRenderer*			SelectionSprite			= nullptr;
 		IHitPointModule*		HPModule;
 		IndicatorFill*			HPBar;
 		SpriteRenderer*			HitEffectSprite;
-		
-		friend class AutoAggressionModule;
+		Fraction				EntityFraction;
 
-	private:
-		Fraction EntityFraction;
+		friend class AutoAggressionModule;
 
 		static const inline string MASK_SHADER_PATH = "Scripts/Shaders/MaskableImage.frag";
 	};

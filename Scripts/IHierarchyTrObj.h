@@ -26,7 +26,7 @@ namespace KrostganEngine::Core {
 		virtual const IHierarchyTrObj*	GetParent_c() const = 0;
 
 		vector<IHierarchyTrObj*>::const_iterator	GetChildrenBegin() const;
-		vector<IHierarchyTrObj*>::const_iterator	GetChildrenCEnd() const;
+		vector<IHierarchyTrObj*>::const_iterator	GetChildrenAfterEnd() const;
 		size_t										GetChildrenCount() const;
 		/// <summary>
 		/// Return is object should be deleted with its parent or not

@@ -99,7 +99,13 @@ namespace KrostganEngine::GameObjects {
 			return (ModStatsWrapper_Consts::StatType)(type & (int)ModStatsWrapper_Consts::StatType::type_mask);
 		}
 
+		/// <summary>
+		/// Parameter - type of changed stat
+		/// </summary>
 		ExecutedEvent<int> StatChangedEvent = ExecutedEvent<int>();
+		/// <summary>
+		/// Parameter - type of changed stat
+		/// </summary>
 		ExecutedEvent<int> DefaultStatChangedEvent = ExecutedEvent<int>();
 
 	protected:
