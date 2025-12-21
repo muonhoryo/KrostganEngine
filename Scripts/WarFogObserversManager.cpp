@@ -22,12 +22,15 @@ void WarFogObserversManager::OnAddCallback(WarFogObserver* const& callbck) {
 }
 
 /// <summary>
-/// Return true if target in observing range by entities of input fraction
+/// Return true if target in observing range by entities of input fraction. If maxRange less then eps than set it as FLT_MAX
 /// </summary>
 /// <param name="pos"></param>
 /// <param name="observersFraction"></param>
 /// <returns></returns>
 bool WarFogObserversManager::Intersect(Vector2f pos, Fraction observersFraction, float maxRange) {
+
+	if (maxRange <= eps)
+		maxRange = FLT_MAX;
 
 	if (!WarFogStencilGen::GetActivity() && FractionsSystem::GetRelationToPlayer(observersFraction) == Relation::Ally)
 		return true;

@@ -83,7 +83,7 @@ void EntitiesCtrlInputMode::GiveOrderToSelected_AttackTarget(IAttackableObj& tar
 			if (wtch_ptr == nullptr)
 				throw exception("Cant observe object with watch_ptr");
 
-			ord = new EntityOrder_AttackTarget(*parEl, *parEl, watch_ptr_handler_wr<IAttackableObj>(*wtch_ptr),target_fracMem);
+			ord = new EntityOrder_AttackTarget(*parEl, *parEl, watch_ptr_handler_wr<IAttackableObj>(*wtch_ptr),target_fracMem,&parEl->GetBattleStats());
 			parEl->TryAddOrder(*ord, !isGrouped);
 			delete wtch_ptr;
 		}

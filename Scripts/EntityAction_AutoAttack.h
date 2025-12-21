@@ -10,7 +10,10 @@ using namespace KrostganEngine::Core;
 namespace KrostganEngine::EntitiesControl {
 	class EntityAction_AutoAttack:public IEntityAction {
 	public:
-		EntityAction_AutoAttack(OrdersExecutor& Owner, watch_ptr_handler_wr<IAttackableObj> Target);
+		EntityAction_AutoAttack(
+			OrdersExecutor&							Owner,
+			watch_ptr_handler_wr<IAttackableObj>	Target,
+			EntityBattleStats*						Target_BatStats = nullptr);
 
 		bool CheckExecCondition() override;
 		void Execute() override;
@@ -18,6 +21,7 @@ namespace KrostganEngine::EntitiesControl {
 	private:
 		OrdersExecutor& Owner;
 		watch_ptr_handler_wr<IAttackableObj> Target;
+		EntityBattleStats* Target_BatStats;
 		
 		//Cashed
 		//IHitPointModule& TargetHPModule;

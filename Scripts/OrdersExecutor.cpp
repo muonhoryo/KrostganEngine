@@ -227,7 +227,6 @@ bool OrdersExecutor::IsFirstOrderExecution() {
 	return CurrentOrder == nullptr;
 }
 void OrdersExecutor::UnloadCurrentOrder() {
-	cout << "Order of type: " << (int)CurrentOrder->GetOrderType() << " is done" << endl;
 	UnloadActionsToDo();
 
 	OrdersQueue.pop_front();
@@ -264,7 +263,6 @@ void OrdersExecutor::UpdateCurrActionToExec() {
 	if (ActionsToExecute->size() > 0) {
 
 		CurrentActionToExecute = ActionsToExecute->front();
-		cout << "Execute action: " << typeid(*CurrentActionToExecute).name() << endl;
 	}
 }
 

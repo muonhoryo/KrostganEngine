@@ -97,8 +97,10 @@ void BaseAutoAggrModule::CheckCurrTarget(CallbackRecArgs_Upd& args) {
 		return;
 	}
 
+	float stealth = (TarInfo->Target_Ent == nullptr) ? FLT_MAX : TarInfo->Target_Ent->GetBattleStats().GetStealth().Stat;
+
 	if (!CheckTargetReachability() ||
-		!WarFogObserversManager::GetInstance()->Intersect(t_ptr->GetGlobalPosition(), Owner.GetFraction())) //Target left out the range of observing
+		!WarFogObserversManager::GetInstance()->Intersect(t_ptr->GetGlobalPosition(), Owner.GetFraction(), stealth)) //Target left out the range of observing
 	{
 		TurnFindTargetState();
 		return;
@@ -177,7 +179,9 @@ void BaseAutoAggrModule::FindTarget(CallbackRecArgs_Upd& args) {
 		IAttackableObj* parTar = nullptr;
 		IFractionMember* memParTar = nullptr;
 		float dist=0;
+		float stealth = FLT_MAX;
 		Relation relat=Relation::Neutral;
+		Entity* entParTar = nullptr;
 		for (auto obj : TargsBuffer) {
 
 			if (obj == nullptr ||
@@ -189,6 +193,9 @@ void BaseAutoAggrModule::FindTarget(CallbackRecArgs_Upd& args) {
 				memParTar!=nullptr &&
 				parTar->CheckAttackReachability(IAttackableObj::AtkParam::IsAA)) {		//Check that object is can be attacked enemy
 
+				entParTar = dynamic_cast<Entity*>(obj);
+				stealth = (entParTar == nullptr) ? FLT_MAX : entParTar->GetBattleStats().GetStealth().Stat;
+
 				relat = FractionsSystem::GetRelation(Owner.GetFraction(), memParTar->GetFraction());
 				if (relat != Relation::Enemy)
 					continue;
@@ -196,12 +203,12 @@ void BaseAutoAggrModule::FindTarget(CallbackRecArgs_Upd& args) {
 
 				if (dist < minDist) {		//Finds nearest target
 
-					if (!WarFogObserversManager::GetInstance()->Intersect(obj->GetGlobalPosition(), Owner.GetFraction()))
+					if (!WarFogObserversManager::GetInstance()->Intersect(obj->GetGlobalPosition(), Owner.GetFraction(), stealth))
 						continue;
 
 					auto& t_ptr = parTar->GetPtr();
 
-					TarInfo = new TargetInfo(*new watch_ptr_handler_wr<IAttackableObj>(t_ptr));
+					TarInfo = new TargetInfo(*new watch_ptr_handler_wr<IAttackableObj>(t_ptr), entParTar);
 					IFractionMember::MemberHasChangedFracEvent.Add(OnFracChangedSub);
 
 					delete &t_ptr;

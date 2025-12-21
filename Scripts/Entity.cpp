@@ -63,6 +63,8 @@ Entity::Entity(EntityCtorParams& params)
 
 Entity::~Entity() {
 	delete HPModule;
+	if (StlHider != nullptr)
+		delete StlHider;
 
 	EntitiesObserver::RemoveEntity(this);
 }

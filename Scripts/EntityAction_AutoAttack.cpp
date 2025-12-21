@@ -10,16 +10,24 @@ using namespace KrostganEngine;
 using namespace KrostganEngine::GameObjects;
 using namespace KrostganEngine::EntitiesControl;
 
-EntityAction_AutoAttack::EntityAction_AutoAttack(OrdersExecutor& Owner, watch_ptr_handler_wr<IAttackableObj> Target)
-	:IEntityAction(),
-	Owner(Owner),
-	Target(Target),
-	AAModule(Owner.GetAAModule())
+EntityAction_AutoAttack::EntityAction_AutoAttack(
+	OrdersExecutor&							Owner, 
+	watch_ptr_handler_wr<IAttackableObj>	Target,
+	EntityBattleStats*						Target_BatStats)
+		:IEntityAction(),
+			Owner(Owner),
+			Target(Target),
+			AAModule(Owner.GetAAModule()),
+			Target_BatStats(Target_BatStats)
 {}
 
 bool EntityAction_AutoAttack::CheckExecCondition() {
 
 	if (Owner.GetAAModule().GetCurrAAStats() == nullptr)	//Owner cannot auto-attacking now
+		return true;
+
+	float stealth = Target_BatStats == nullptr ? FLT_MAX : Target_BatStats->GetStealth().Stat;
+	if (!WarFogObserversManager::GetInstance()->Intersect(Target.GetPtr_t_c()->GetGlobalPosition(), Owner.GetFraction(), stealth))
 		return true;
 
 	return !AAModule.CheckTargetReach();	//Target is untargetable for AA or disappeared

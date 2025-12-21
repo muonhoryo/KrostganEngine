@@ -17,13 +17,15 @@ EntityOrder_AttackTarget::EntityOrder_AttackTarget(
 	OrdersExecutor& Owner,
 	WorldTransfObj& OwnerTransform, 
 	watch_ptr_handler_wr<IAttackableObj> Target,
-	IFractionMember* Target_FracMem)
-	:IEntityOrder(),
-	EntityOrder_ImmobilityChecking(OwnerTransform),
-		Owner(Owner),
-		Target(Target),
-		AAModule(Owner.GetAAModule()),
-		OnFractionChangedSubs(nullptr){
+	IFractionMember* Target_FracMem,
+	EntityBattleStats* Target_BatStats)
+		:IEntityOrder(),
+		EntityOrder_ImmobilityChecking(OwnerTransform),
+			Owner(Owner),
+			Target(Target),
+			Target_BatStats(Target_BatStats),
+			AAModule(Owner.GetAAModule()),
+			OnFractionChangedSubs(nullptr){
 
 	if (Target_FracMem != nullptr) {
 
@@ -70,7 +72,7 @@ list<IEntityAction*>* EntityOrder_AttackTarget::GetActions() {
 
 	if (Owner.GetAAModule().CheckTargetReach(*ptr)) {			//Target is in attack range of executor
 
-		EntityAction_AutoAttack* act = new EntityAction_AutoAttack(Owner, watch_ptr_handler_wr<IAttackableObj>(Target));
+		EntityAction_AutoAttack* act = new EntityAction_AutoAttack(Owner, watch_ptr_handler_wr<IAttackableObj>(Target), Target_BatStats);
 		lst->push_back((IEntityAction*)act);
 	}
 	else {									//Owner needs to follow target first
@@ -95,7 +97,7 @@ list<IEntityAction*>* EntityOrder_AttackTarget::GetActions() {
 		EntityAction_FollowObject* folAct = new EntityAction_FollowObject(Owner, OwnerTransform, 
 			*new watch_ptr_handler_wr_c<WorldTransfObj>(Target),
 			alloDist);
-		EntityAction_AutoAttack* aaAct = new EntityAction_AutoAttack(Owner, watch_ptr_handler_wr<IAttackableObj>(Target));
+		EntityAction_AutoAttack* aaAct = new EntityAction_AutoAttack(Owner, watch_ptr_handler_wr<IAttackableObj>(Target), Target_BatStats);
 		lst->push_back((IEntityAction*)folAct);
 		lst->push_back((IEntityAction*)aaAct);
 	}
@@ -121,5 +123,8 @@ const ITransformableObj* EntityOrder_AttackTarget::GetTarget() const {
 }
 
 bool EntityOrder_AttackTarget::IsTargetObserving() const {
-	return WarFogObserversManager::GetInstance()->Intersect(Target.GetPtr_t_c()->GetGlobalPosition(), Owner.GetFraction());
+
+	float stealth = (Target_BatStats == nullptr) ? FLT_MAX : Target_BatStats->GetStealth().Stat;
+
+	return WarFogObserversManager::GetInstance()->Intersect(Target.GetPtr_t_c()->GetGlobalPosition(), Owner.GetFraction(),stealth);
 }

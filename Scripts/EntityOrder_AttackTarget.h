@@ -15,7 +15,8 @@ namespace KrostganEngine::EntitiesControl {
 			(OrdersExecutor&						Owner, 
 			WorldTransfObj&							OwnerTransform,
 			watch_ptr_handler_wr<IAttackableObj>	Target,
-			IFractionMember*						Target_FracMem = nullptr);
+			IFractionMember*						Target_FracMem = nullptr,
+			EntityBattleStats*						Target_BatStats = nullptr);
 		virtual ~EntityOrder_AttackTarget();
 
 		bool CheckExecCondition() override;
@@ -27,9 +28,10 @@ namespace KrostganEngine::EntitiesControl {
 		const ITransformableObj* GetTarget() const override;
 
 		OrdersExecutor& Owner;
+		watch_ptr_handler_wr<IAttackableObj> Target;
+		EntityBattleStats* Target_BatStats;
 		//Cashed
 		AutoAttackModule& AAModule;
-		watch_ptr_handler_wr<IAttackableObj> Target;
 
 	protected:
 		bool IsTargetObserving() const;

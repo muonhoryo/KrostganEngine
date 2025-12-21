@@ -16,14 +16,18 @@ namespace KrostganEngine::GameObjects {
 	public:
 		struct TargetInfo final {
 
-			TargetInfo(watch_ptr_handler_wr<IAttackableObj>& Target)
-					:Target(Target)
+			TargetInfo(
+				watch_ptr_handler_wr<IAttackableObj>& Target,
+				Entity*	Target_Ent = nullptr)
+					:Target(Target),
+					Target_Ent(Target_Ent)
 			{}
 			~TargetInfo() {
 				delete& Target;
 			}
 
 			watch_ptr_handler_wr<IAttackableObj>& Target;
+			Entity* Target_Ent;
 		};
 
 		BaseAutoAggrModule(Entity& Owner, ExecutorActionsMediator& ActionMediator);
