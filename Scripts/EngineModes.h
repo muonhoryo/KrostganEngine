@@ -51,43 +51,4 @@ namespace KrostganEngine::Core {
 		LevelDeserializationMode() : EngineMode() {};
 		virtual ~LevelDeserializationMode(){}
 	};
-
-	/*class StartMessageMode :public EngineMode {
-
-	private:
-		class StartMsgInputHandler :public ICallbackRec_Upd {
-
-		public:
-			StartMsgInputHandler() {
-
-			}
-			~StartMsgInputHandler() {
-				delete LoadMessage;
-			}
-
-			void Update(CallbackRecArgs_Upd args) override;
-
-			bool		HasPressed = false;
-			UIText*		LoadMessage = nullptr;
-		};
-
-	private:
-		UIText					Message;
-		StartMsgInputHandler	InputHandler;
-
-		static inline const string MessageText = "Welcome to sector 17 of the Krostgan's Valley, commander.\n"
-			"Your current objective is eleminating the enemy's hero.\n"
-			"The enemy is superior to you, but their fighters are same like your mercenaries,\n"
-			"and the forces are unevenly distributed throughout the location.\n"
-			"Press Enter to proceed to combat.\n"
-			"Good luck!";
-		static inline const Vector2f MESSAGE_ANCHOR = Vector2f(0.25, 0.25);
-		static inline const Vector2f LOAD_MESSAGE_ANCHOR = Vector2f(0.9, 0.9);
-
-	public:
-		StartMessageMode();
-
-		void ExecuteCycle() override;
-
-	};*/
 }

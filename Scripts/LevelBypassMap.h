@@ -314,6 +314,8 @@ namespace KrostganEngine::Core {
 		}
 
 	private:
+		LevelBypassMapManager(){}
+
 		static bool IsWall(const vector<size_t>& Indexes, LvlObjInstantiationInfo* cell) {
 			
 			for (int i = 0;i < Indexes.size();++i)

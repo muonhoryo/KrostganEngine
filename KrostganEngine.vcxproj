@@ -324,6 +324,7 @@
     <ClInclude Include="Scripts\ICallbackRec.h" />
     <ClInclude Include="Scripts\IModifiableStatsWrapper.h" />
     <ClInclude Include="Scripts\InputHandlers.h" />
+    <ClInclude Include="Scripts\PathFinding_Algorithms.h" />
     <ClInclude Include="Scripts\TransparencyVisEff.h" />
     <ClInclude Include="Scripts\TransparencyVisEff_Des.h" />
     <ClInclude Include="Scripts\TransparencyVisEff_MRes.h" />

@@ -34,7 +34,6 @@ namespace KrostganEngine::Visual {
 		}
 		void RemoveEffect	(VisualEffect& effect) {
 			CollectionsExts::Remove(AddedEffects, &effect);
-			//CollectionsExts::Remove<VisualEffect*, vector<VisualEffect*>>(AddedEffects, &effect);
 		}
 
 	protected:

@@ -1343,6 +1343,9 @@
     <ClInclude Include="Scripts\TransparencyVisEff_MRes.h">
       <Filter>Файлы заголовков\Visual\Effects\Transparency</Filter>
     </ClInclude>
+    <ClInclude Include="Scripts\PathFinding_Algorithms.h">
+      <Filter>Файлы заголовков\CoreSystems\GameLevel\PathFinding</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Config.txt">

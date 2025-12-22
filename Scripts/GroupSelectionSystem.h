@@ -102,7 +102,7 @@ namespace KrostganEngine::EntitiesControl {
 
 		GroupSelectionSystem();
 
-		static GroupSelectionSystem* Singleton;
+		static inline GroupSelectionSystem* Singleton = nullptr;
 
 		/// <summary>
 		/// Insert element by sorting order

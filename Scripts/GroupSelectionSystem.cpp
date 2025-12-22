@@ -13,6 +13,9 @@ using namespace KrostganEngine::GameObjects;
 using namespace KrostganEngine::EntitiesControl;
 
 GroupSelectionSystem::GroupSelectionSystem(){
+	if (Singleton != nullptr)
+		throw exception("Trying to recreate GroupSelectionSystem");
+
 	Singleton = this;
 	SelEntsRelationToPl = FractionsSystem::DefaultRel;
 	DeathEvSubs = new DeathEventSubscr();
@@ -132,5 +135,3 @@ void GroupSelectionSystem::Clear() {
 	Singleton->ClearSelectionEventHandler.Execute();
 	Singleton->ChangeSelectablesEventHandler.Execute();
 }
-
-GroupSelectionSystem* GroupSelectionSystem::Singleton = nullptr;

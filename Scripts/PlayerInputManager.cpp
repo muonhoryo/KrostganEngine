@@ -10,15 +10,15 @@ using namespace sf;
 IBaseInputHandler::IBaseInputHandler()
 	:IPlayerInputHandler(){
 
-	PlayerInputManager::Instance->AddInputHandler(*this);
+	PlayerInputManager::Singleton->AddInputHandler(*this);
 }
 IBaseInputHandler::~IBaseInputHandler() {
-	PlayerInputManager::Instance->RemoveInputHandler(*this);
+	PlayerInputManager::Singleton->RemoveInputHandler(*this);
 }
 
 IPriorityInputHandler::~IPriorityInputHandler() {
 	
-	auto& inst = *PlayerInputManager::Instance;
+	auto& inst = *PlayerInputManager::Singleton;
 	if (inst.PriorityInputHan == this)
 		AbortHandling();
 }
@@ -28,13 +28,13 @@ IPriorityInputHandler::~IPriorityInputHandler() {
 void IPriorityInputHandler::StartHandling() {
 
 	StartHandling_Action();
-	auto& inst = *PlayerInputManager::Instance;
+	auto& inst = *PlayerInputManager::Singleton;
 	inst.AddPriorityInputHan(*this);
 }
 void IPriorityInputHandler::AbortHandling() {
 	
 	AbortHandling_Action();
-	auto& inst = *PlayerInputManager::Instance;
+	auto& inst = *PlayerInputManager::Singleton;
 	inst.RemovePriorityInputHan(*this);
 }
 
@@ -42,10 +42,10 @@ void IPriorityInputHandler::AbortHandling() {
 IWindowInputHandler::IWindowInputHandler()
 	:IPlayerInputHandler() {
 
-	PlayerInputManager::Instance->AddWindInputHandler(*this);
+	PlayerInputManager::Singleton->AddWindInputHandler(*this);
 }
 IWindowInputHandler::~IWindowInputHandler() {
-	PlayerInputManager::Instance->RemoveWindInputHandler(*this);
+	PlayerInputManager::Singleton->RemoveWindInputHandler(*this);
 }
 
 
@@ -53,15 +53,15 @@ IWindowInputHandler::~IWindowInputHandler() {
 PlayerInputManager::PlayerInputManager()
 	:ICallbackRec_Upd(){
 
-	if (Instance != nullptr)
+	if (Singleton != nullptr)
 		throw exception("PlayerInputManager is already instantiated");
 
 	DestroyOnUnload = false;
-	Instance = this;
+	Singleton = this;
 }
 PlayerInputManager::~PlayerInputManager() {
 
-	Instance = nullptr;
+	Singleton = nullptr;
 }
 void PlayerInputManager::AddInputHandler(IBaseInputHandler& handler) {
 	InputHandlers.push_back(&handler);
@@ -143,17 +143,17 @@ void PlayerInputManager::Update(CallbackRecArgs_Upd args) {
 
 void PlayerInputManager::Clear() {
 	
-	if (Instance->PriorityInputHan != nullptr)
-		delete Instance->PriorityInputHan;
+	if (Singleton->PriorityInputHan != nullptr)
+		delete Singleton->PriorityInputHan;
 
-	for (auto han : Instance->InputHandlers)
+	for (auto han : Singleton->InputHandlers)
 		delete han;
 
-	for (auto han : Instance->WindInputHandlers)
+	for (auto han : Singleton->WindInputHandlers)
 		delete han;
 
-	Instance->InputHandlers.clear();
-	Instance->WindInputHandlers.clear();
+	Singleton->InputHandlers.clear();
+	Singleton->WindInputHandlers.clear();
 }
 
 //
@@ -163,7 +163,7 @@ void PlayerInputManager::Clear() {
 //
 
 const PlayerInputManager& PlayerInputManager::GetInstance() {
-	return *Instance;
+	return *Singleton;
 }
 bool PlayerInputManager::GetBtnState_Escape() {
 
@@ -218,5 +218,5 @@ bool PlayerInputManager::GetBtnState_Ctrl() {
 }
 
 bool PlayerInputManager::HasPriorityInputHandler() {
-	return Instance->PriorityInputHan != nullptr;
+	return Singleton->PriorityInputHan != nullptr;
 }

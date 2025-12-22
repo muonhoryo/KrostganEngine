@@ -115,7 +115,7 @@ namespace KrostganEngine::PlayerControl {
 		static bool HasPriorityInputHandler();
 
 	private:
-		static inline PlayerInputManager* Instance = nullptr;
+		static inline PlayerInputManager* Singleton = nullptr;
 
 		static inline bool	IsReservedBtn_Escape = false;
 		static inline bool	FreeBtn_Escape = false;
