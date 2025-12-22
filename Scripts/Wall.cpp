@@ -11,9 +11,11 @@ using namespace KrostganEngine::GameObjects;
 void WallObject::RecreateCollider() {
 	float innerRad = GetGlobalScale_Sng()* Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution * 0.5f;
 	Vector2f pos = GetGlobalPosition();
+	if (Collider != nullptr)
+		delete Collider;
 	Collider = new AABBCollShape(Vector2f(pos.x - innerRad, pos.y - innerRad), Vector2f(pos.x + innerRad, pos.y + innerRad));
 }
-WallObject::WallObject(const WallCtorParams& params)
+WallObject::WallObject(const GameObjectCtorParams& params)
 	:GameObject(params){
 
 	RecreateCollider();

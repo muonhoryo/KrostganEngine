@@ -24,17 +24,12 @@ using namespace KrostganEngine::Core;
 namespace KrostganEngine::GameObjects {
 	class Entity;
 
-	struct EntityCtorParams : protected GameObjectCtorParams {
+	struct EntityCtorParams : public GameObjectCtorParams {
 
-		using GameObjectCtorParams::BodySpriteSource;
-		using GameObjectCtorParams::GlobalPosition;
-		using GameObjectCtorParams::GlobalScale;
-		//SprColor;
-		using GameObjectCtorParams::CatalogID;
-		using GameObjectCtorParams::SubcatalogID;
+		Fraction				EntityFraction = Fraction::Neutral;
 
 		EntityBattleStats*		BattleStats				=	nullptr;
-		const ExtGlRes_Sprite*	SelectionSpriteSource			=	nullptr;
+		const ExtGlRes_Sprite*	SelectionSpriteSource	=	nullptr;
 		IndicatorFill*			HPBarSprite				=	nullptr;
 		SpriteRenderer*			HitEffectSprite			=	nullptr;
 		
@@ -43,13 +38,6 @@ namespace KrostganEngine::GameObjects {
 		EntityHPModule*			GetHPModule()			const { return HPModule; }
 		IDeathModule*			GetDeathModule()		const { return DeathModule; }
 		HPRegenModule*			GetHPRegenModule()		const { return RegenModule; }
-		Color					GetBodySpriteColor()	const { return SprColor; }
-		Fraction				GetFraction()			const { return EntityFraction; }
-
-		void	SetFraction(Fraction fraction) {
-			EntityFraction = fraction;
-			SprColor = FractionsSystem::GetRelationToPlayerColor(fraction);
-		}
 
 	protected:
 		virtual void Init_AAModule			() = 0;
@@ -63,7 +51,6 @@ namespace KrostganEngine::GameObjects {
 		EntityHPModule*			HPModule		= nullptr;
 		IDeathModule*			DeathModule		= nullptr;
 		HPRegenModule*			RegenModule		= nullptr;
-		Fraction				EntityFraction = Fraction::Neutral;
 
 		Entity* Owner=nullptr;
 
@@ -237,17 +224,5 @@ namespace KrostganEngine::GameObjects {
 
 	protected:
 		Entity& ParOwner;
-
-		class DelayedDeath final: public CallbackDelegate_Upd {
-		public:
-			DelayedDeath(Entity& Owner):CallbackDelegate_Upd(),
-				Owner(Owner){}
-
-			void Execute(CallbackRecArgs_Upd args) override {
-				delete& Owner;
-			}
-		private:
-			Entity& Owner;
-		};
 	};
 }

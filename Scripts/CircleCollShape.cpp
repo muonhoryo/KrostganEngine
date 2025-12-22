@@ -146,3 +146,10 @@ bool CircleCollShape::IntersectSegment(const Segment& segm) const {
 CircleCollShape CircleCollShape::GetBoundedCircle()const {
 	return CircleCollShape(Center,Radius);
 }
+
+void CircleCollShape::MoveCollider(Vector2f vec) {
+	Center += vec;
+}
+void CircleCollShape::Resize(float resizeValue) {
+	Radius *= resizeValue;
+}

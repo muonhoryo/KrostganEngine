@@ -61,3 +61,16 @@ bool ColliderShape::Intersect_AABBvsAABB(const AABBCollShape& coll1,const AABBCo
 		coll2.Min.y < coll1.Max.y &&
 		coll1.Min.y < coll2.Max.y;
 }
+
+Vector2f ColliderShape::GetCollisionResolvPoint_d(const ColliderShape& subjShape, Vector2f subjMovDir, bool isSlideColl) const {
+
+	const AABBCollShape* aabbSh = dynamic_cast<const AABBCollShape*>(&subjShape);
+	if (aabbSh != nullptr)
+		return GetCollisionResolvPoint(*aabbSh, subjMovDir, isSlideColl);
+
+	const CircleCollShape* circleSh = dynamic_cast<const CircleCollShape*>(&subjShape);
+	if (circleSh != nullptr)
+		return GetCollisionResolvPoint(*circleSh, subjMovDir, isSlideColl);
+
+	return DEFAULT_POSITION;
+}

@@ -26,11 +26,15 @@ bool EntityAction_AutoAttack::CheckExecCondition() {
 	if (Owner.GetAAModule().GetCurrAAStats() == nullptr)	//Owner cannot auto-attacking now
 		return true;
 
-	float stealth = Target_BatStats == nullptr ? FLT_MAX : Target_BatStats->GetStealth().Stat;
-	if (!WarFogObserversManager::GetInstance()->Intersect(Target.GetPtr_t_c()->GetGlobalPosition(), Owner.GetFraction(), stealth))
+	if (!AAModule.CheckTargetReach())	//Target is untargetable for AA or disappeared
 		return true;
 
-	return !AAModule.CheckTargetReach();	//Target is untargetable for AA or disappeared
+	float stealth = Target_BatStats == nullptr ? FLT_MAX : Target_BatStats->GetStealth().Stat;
+	return !WarFogObserversManager::GetInstance()->Intersect(
+		Target.GetPtr_t_c()->GetGlobalPosition(),
+		Owner.GetFraction(), 
+		stealth);
+
 }
 void EntityAction_AutoAttack::Execute() {
 	if(Target.GetPtr_t()!=nullptr)

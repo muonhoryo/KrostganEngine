@@ -10,23 +10,10 @@ using namespace KrostganEngine::Physics;
 
 namespace KrostganEngine::GameObjects {
 
-	class WallObject;
-
-	struct WallCtorParams : protected GameObjectCtorParams {
-		
-		WallCtorParams():GameObjectCtorParams(){}
-
-		using GameObjectCtorParams::BodySpriteSource;
-		using GameObjectCtorParams::GlobalPosition;
-		using GameObjectCtorParams::GlobalScale;
-
-		friend class WallObject;
-	};
-
 	class WallObject :public GameObject {
 
 	public:
-		WallObject(const WallCtorParams& params);
+		WallObject(const GameObjectCtorParams& params);
 		virtual ~WallObject();
 
 		PhysicsLayer GetLayer() const override;

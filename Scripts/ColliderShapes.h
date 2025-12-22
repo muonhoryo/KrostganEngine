@@ -27,6 +27,11 @@ namespace KrostganEngine::Physics {
 
 		virtual CircleCollShape GetBoundedCircle()const = 0;
 
+		virtual void MoveCollider(Vector2f vec) = 0;
+		virtual void Resize(float resizeValue) = 0;
+
+		Vector2f GetCollisionResolvPoint_d(const ColliderShape& subjShape, Vector2f subjMovDir, bool isSlideColl = true) const;
+
 		static bool Intersect_CircleVsCircle(const CircleCollShape& coll1, const CircleCollShape& coll2);
 		static bool Intersect_CircleVsAABB(const CircleCollShape& coll1, const AABBCollShape& coll2);
 		static bool Intersect_AABBvsAABB(const AABBCollShape& coll1,const AABBCollShape& coll2);
@@ -35,7 +40,7 @@ namespace KrostganEngine::Physics {
 		ColliderShape(){}
 	};
 
-	struct AABBCollShape:ColliderShape
+	struct AABBCollShape: public ColliderShape
 	{
 		AABBCollShape(Vector2f Min,Vector2f Max);
 
@@ -56,13 +61,17 @@ namespace KrostganEngine::Physics {
 
 		CircleCollShape GetBoundedCircle()const override;
 
+		void MoveCollider(Vector2f vec) override;
+		void Resize(float resizeValue) override;
+
 		Vector2f GetCenter() const;
 		Vector2f GetCornerByMask(size_t mask) const;
 		Vector2f GetSize() const;
 	};
 
-	struct CircleCollShape:ColliderShape {
+	struct CircleCollShape: public ColliderShape {
 		CircleCollShape(Vector2f Center, float Radius);
+		~CircleCollShape(){}
 		
 		 Vector2f Center;
 		 float Radius;
@@ -80,6 +89,9 @@ namespace KrostganEngine::Physics {
 		bool IntersectSegment(const Segment& segm) const override;
 
 		CircleCollShape GetBoundedCircle()const override;
+
+		void MoveCollider(Vector2f vec) override;
+		void Resize(float resizeValue) override;
 	};
 
 	struct EmptyShape :ColliderShape {
@@ -117,6 +129,9 @@ namespace KrostganEngine::Physics {
 		CircleCollShape GetBoundedCircle()const override {
 			return CircleCollShape(Vector2f(0,0), 0);
 		}
+
+		void MoveCollider(Vector2f vec) override{}
+		void Resize(float resizeValue) override{}
 
 		EmptyShape() : ColliderShape() {
 

@@ -361,6 +361,9 @@
     <Filter Include="Исходные файлы\Visual\Effects\Transparency">
       <UniqueIdentifier>{1cd314f7-255f-407b-a4fc-ef43c5aa5e3d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems\GameObjects\FightingSystems\HitPointSystem\DeathModules">
+      <UniqueIdentifier>{d639adb4-f46a-4dd5-9c52-b24ffb7bb5f2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\main.cpp">
@@ -743,6 +746,15 @@
     </ClCompile>
     <ClCompile Include="Scripts\TransparencyVisEff_MRes.cpp">
       <Filter>Исходные файлы\Visual\Effects\Transparency</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Decoration.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\DecorationHPModule.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameObjects\FightingSystems\HitPointSystem\HPModules</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\DecorationDeathModule.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameObjects\FightingSystems\HitPointSystem\DeathModules</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1345,6 +1357,15 @@
     </ClInclude>
     <ClInclude Include="Scripts\PathFinding_Algorithms.h">
       <Filter>Файлы заголовков\CoreSystems\GameLevel\PathFinding</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Decoration.h">
+      <Filter>Файлы заголовков\CoreSystems\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\DecorationHPModule.h">
+      <Filter>Файлы заголовков\CoreSystems\GameObjects\FightingSystems\HitPointSystem\HPModules</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\DecorationDeathModule.h">
+      <Filter>Файлы заголовков\CoreSystems\GameObjects\FightingSystems\HitPointSystem\DeathModules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

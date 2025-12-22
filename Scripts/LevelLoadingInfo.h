@@ -94,6 +94,8 @@ namespace KrostganEngine::Core {
 	protected:
 		GameObjectLoadInfo() {}
 		GameObjectLoadInfo(const GameObjectLoadInfo& copy);
+
+		virtual void FillCtorParams(GameObjectCtorParams& params, const GameObjectLoadInfo& usedInfo) const;
 	};
 
 	struct EntityLoadInfo : public GameObjectLoadInfo{
@@ -116,7 +118,7 @@ namespace KrostganEngine::Core {
 		void VerifyAAStatsExisting();
 		void WriteBattleStatsParams(const string& input, IModifiableStatsWrapper& stats);
 
-		virtual EntityCtorParams& GetCtorParams(const WorldObjectLoadInfo& usedInfo) const = 0;
+		void FillCtorParams(GameObjectCtorParams& params, const GameObjectLoadInfo& usedInfo) const override;
 
 		static inline const string ENTITY_BSTATS_PARAMS_SEP = ";;";
 	};
@@ -131,9 +133,6 @@ namespace KrostganEngine::Core {
 	protected:
 		WorldTransfObj*	InstantiateObject_Action(const WorldObjectLoadInfo& usedInfo) const override;
 		WorldObjectLoadInfo* CreateCacheInfo() const override;
-
-	protected:
-		EntityCtorParams& GetCtorParams(const WorldObjectLoadInfo& usedInfo) const override;
 	};
 
 	struct HeroLoadInfo : public UnitLoadInfo {
@@ -148,20 +147,39 @@ namespace KrostganEngine::Core {
 	protected:
 		WorldTransfObj* InstantiateObject_Action(const WorldObjectLoadInfo& usedInfo) const override;
 		WorldObjectLoadInfo* CreateCacheInfo() const override;
-
-		EntityCtorParams& GetCtorParams(const WorldObjectLoadInfo& usedInfo) const override;
 	};
 
 	struct WallLoadInfo :public GameObjectLoadInfo {
 
 		virtual ~WallLoadInfo(){}
 
-		WallLoadInfo() : GameObjectLoadInfo() {};
+		WallLoadInfo() : GameObjectLoadInfo() {}
 		WallLoadInfo(const WallLoadInfo& copy) : GameObjectLoadInfo(copy) {}
 
 		bool WriteParam(Attr& param) override;
 
 	protected:
+		WorldTransfObj* InstantiateObject_Action(const WorldObjectLoadInfo& usedInfo) const override;
+		WorldObjectLoadInfo* CreateCacheInfo() const override;
+
+	};
+
+	struct DecorationLoadInfo : public GameObjectLoadInfo {
+
+		virtual ~DecorationLoadInfo(){}
+
+		string	HitEffectSprite = "";
+		size_t	CurrentHP = 1;
+		size_t	MaxHP = 1;
+		bool	IsTargetableForAA = true;
+
+		DecorationLoadInfo() : GameObjectLoadInfo(){}
+		DecorationLoadInfo(const DecorationLoadInfo& copy);
+
+		bool WriteParam(Attr& param) override;
+
+	protected:
+		void FillCtorParams(GameObjectCtorParams& params, const GameObjectLoadInfo& usedInfo) const override;
 		WorldTransfObj* InstantiateObject_Action(const WorldObjectLoadInfo& usedInfo) const override;
 		WorldObjectLoadInfo* CreateCacheInfo() const override;
 

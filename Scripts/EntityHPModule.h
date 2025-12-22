@@ -28,8 +28,8 @@ namespace KrostganEngine::GameObjects {
 		void	RestoreHealth		() override;
 		void	SetRegenModule		(HPRegenModule* Module);
 
-		size_t			GetCurrentHP	()	const { return CurrentHP; }
-		size_t			GetMaxHP		()	const { return BattleStats.GetMaxHP(); }
+		size_t			GetCurrentHP	()	const override { return CurrentHP; }
+		size_t			GetMaxHP		()	const override { return BattleStats.GetMaxHP(); }
 		HPRegenModule*	GetRegenModule	()	const { return RegenModule; }
 
 		const EntityBattleStats& GetStats() const {

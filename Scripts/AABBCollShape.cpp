@@ -255,6 +255,24 @@ CircleCollShape AABBCollShape::GetBoundedCircle()const {
 	return CircleCollShape(GetCenter(), Length(size));
 }
 
+void AABBCollShape::MoveCollider(Vector2f vec) {
+
+	Min += vec;
+	Max += vec;
+}
+void AABBCollShape::Resize(float resizeValue) {
+
+	Vector2f center = GetCenter();
+	float x = center.x - Min.x;
+	x *= resizeValue;
+	float y = center.y - Min.y;
+	y *= resizeValue;
+	Min.x = center.x - x;
+	Min.y = center.y - y;
+	Max.x = center.x + x;
+	Max.y = center.y + y;
+}
+
 Vector2f AABBCollShape::GetCenter() const {
 	return Vector2f((Min.x + Max.x) * 0.5f, (Min.y + Max.y) * 0.5f);
 }

@@ -31,29 +31,29 @@ void LvlObjInstantiationInfo::Deserialize(const string& serInfo) {
 			subInfoIndex += LVLSER_SUBINFO_SEPARATOR.length();
 			string subs = serInfo.substr(subInfoIndex, serInfo.length() - subInfoIndex);
 			CatalogSubID = (std::byte)stoi(subs);
-			end = subInfoIndex - LVLSER_SUBINFO_SEPARATOR.length()-1;
+			end = subInfoIndex - LVLSER_SUBINFO_SEPARATOR.length();
 		}
 		else
-			end = serInfo.length()-1;
+			end = serInfo.length();
 
-		subStr = serInfo.substr(0, end - 1);
-		CatalogID = stoi(serInfo);
+		subStr = serInfo.substr(0, end);
+		CatalogID = stoi(subStr);
 	}
 	else {
-		if (subInfoIndex != string::npos) {
+		if (subInfoIndex != string::npos &&
+			subInfoIndex < end) {		//Index is not part of additional params
+
 			subInfoIndex += LVLSER_SUBINFO_SEPARATOR.length();
-			string subs = serInfo.substr(subInfoIndex, end - subInfoIndex - 2);
+			string subs = serInfo.substr(subInfoIndex, end - subInfoIndex - 1);
 			CatalogSubID = (std::byte)stoi(subs);
-			end = subInfoIndex - LVLSER_SUBINFO_SEPARATOR.length() - 1;
+			end = subInfoIndex - LVLSER_SUBINFO_SEPARATOR.length();
 		}
-		else
-			end -= 1;
 
 		size_t start = 0;
 		size_t sepInd = 0;
-		subStr = serInfo.substr(0, end - 1);
+		subStr = serInfo.substr(0, end);
 		CatalogID = stoi(subStr);
-		start = end + LVLSER_ELEM_PARAMS_DEF.length()+1;
+		start = end + LVLSER_ELEM_PARAMS_DEF.length();
 		const pair<const string, const string>* param = nullptr;
 
 		//Read additional params
@@ -62,13 +62,13 @@ void LvlObjInstantiationInfo::Deserialize(const string& serInfo) {
 			sepInd = serInfo.find(ObjsCatalogDeserial::PAR_DEF_NAME_END_SYM, start);
 			if (end == string::npos)
 				break;
-			subStr = serInfo.substr(start, end - 1);
-			param = new pair<const string, const string>(subStr.substr(start, sepInd), subStr.substr(sepInd + 1, subStr.length() - sepInd));
+			//subStr = serInfo.substr(start, end - 1);
+			param = new pair<const string, const string>(serInfo.substr(start, sepInd-start), serInfo.substr(sepInd + 1, serInfo.length() - sepInd));
 			attrs.push_back(param);
 			start = end + LVLSER_ELEM_PARAMS_DEF.length();
 		}
-		subStr = serInfo.substr(start, serInfo.length() - start);
-		param = new pair<const string, const string>(subStr.substr(start, sepInd), subStr.substr(sepInd + 1, subStr.length() - sepInd));
+		//subStr = serInfo.substr(start, serInfo.length() - start);
+		param = new pair<const string, const string>(serInfo.substr(start, sepInd- start), serInfo.substr(sepInd + 1, serInfo.length() - sepInd));
 		attrs.push_back(param);
 		if (attrs.size() != 0)
 			AdditParams = new LvlObjAdditParams(attrs);
@@ -256,6 +256,17 @@ bool GameObjectLoadInfo::WriteParam(Attr& param) {
 	return true;
 }
 
+void GameObjectLoadInfo::FillCtorParams(GameObjectCtorParams& params, const GameObjectLoadInfo& usedInfo) const {
+
+	ExtGlRes_Sprite* spr = dynamic_cast<ExtGlRes_Sprite*>(ExternalGlobalResources::GetRes(usedInfo.SpriteSource));
+
+	params.BodySpriteSource = spr;
+
+	params.GlobalPosition = usedInfo.Position;
+	params.GlobalScale = usedInfo.Size;
+	params.CatalogID = usedInfo.CatID;
+}
+
 //Entity
 
 bool EntityLoadInfo::WriteParam(Attr& param) {
@@ -281,7 +292,7 @@ bool EntityLoadInfo::WriteParam(Attr& param) {
 		HPBarMaskSource = param.second;
 		FStreamExts::ClearPath(HPBarMaskSource);
 	}
-	else if (CheckParamName(param, SerializationParDefNames::ENTITY_HITEFF_SPRITE_SOURCE)) {
+	else if (CheckParamName(param, SerializationParDefNames::ATTBLEOBJ_HITEFF_SPRITE_SOURCE)) {
 		HitEffectSprite = param.second;
 		FStreamExts::ClearPath(HitEffectSprite);
 	}
@@ -342,51 +353,45 @@ void EntityLoadInfo::WriteBattleStatsParams(const string& input, IModifiableStat
 		}
 	}
 }
-//Unit
 
-WorldTransfObj* UnitLoadInfo::InstantiateObject_Action(const WorldObjectLoadInfo& usedInfo) const {
+void EntityLoadInfo::FillCtorParams(GameObjectCtorParams& params, const GameObjectLoadInfo& usedInfo) const {
+	GameObjectLoadInfo::FillCtorParams(params, usedInfo);
 
-	UnitObjectCtorParams& params = dynamic_cast<UnitObjectCtorParams&>(GetCtorParams(usedInfo));
-	UnitObject* unit = new UnitObject(params);
+	EntityCtorParams* parParams = static_cast<EntityCtorParams*>(&params);
+	auto& parUsedInfo = *dynamic_cast<const EntityLoadInfo*>(&usedInfo);
 
-	delete &params;
-
-	return unit;
-}
-EntityCtorParams& UnitLoadInfo::GetCtorParams(const WorldObjectLoadInfo& usedInfo) const {
-
-	auto& parUsedInfo = *dynamic_cast<const UnitLoadInfo*>(&usedInfo);
-
-	ExtGlRes_Sprite* spr = dynamic_cast<ExtGlRes_Sprite*>(ExternalGlobalResources::GetRes(parUsedInfo.SpriteSource));
 	ExtGlRes_Sprite* selSpr = dynamic_cast<ExtGlRes_Sprite*>(ExternalGlobalResources::GetRes(parUsedInfo.SelectionAreaSource));
 	ExtGlRes_Sprite* hpbarSpr = dynamic_cast<ExtGlRes_Sprite*>(ExternalGlobalResources::GetRes(parUsedInfo.HPBarSpriteSource));
 	ExtGlRes_Texture* hpbarMask = dynamic_cast<ExtGlRes_Texture*>(ExternalGlobalResources::GetRes(parUsedInfo.HPBarMaskSource));
 	ExtGlRes_Sprite* hitEffSpr = ExternalGlobalResources::GetRes_t<ExtGlRes_Sprite>(parUsedInfo.HitEffectSprite);
 	auto hpBarShad = hpbarSpr->RenShader;
 
-	UnitObjectCtorParams& params = *new UnitObjectCtorParams();
-
-	params.BattleStats = new EntityBattleStats(parUsedInfo.BattleStats);
-	params.SetFraction(parUsedInfo.EntityFraction);
-	params.BodySpriteSource = spr;
-	params.SelectionSpriteSource = selSpr;
-	params.HitEffectSprite = new SpriteRenderer
-		(hitEffSpr->Tex,
+	parParams->HitEffectSprite = new SpriteRenderer
+	(hitEffSpr->Tex,
 		hitEffSpr->MaxSize < eps ? Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution : hitEffSpr->MaxSize,
 		hitEffSpr->RenShader);
-	params.HitEffectSprite->SetRendLayer((std::byte)40);
-	params.GlobalPosition = parUsedInfo.Position;
-	params.GlobalScale = parUsedInfo.Size;
-	params.HPBarSprite = new IndicatorFill(
+	parParams->HitEffectSprite->SetRendLayer((std::byte)40);
+	parParams->BattleStats = new EntityBattleStats(parUsedInfo.BattleStats);
+	parParams->EntityFraction=parUsedInfo.EntityFraction;
+	parParams->SelectionSpriteSource = selSpr;
+	parParams->HPBarSprite = new IndicatorFill(
 		hpbarSpr->Tex,
 		hpbarMask->Tex,
 		*hpbarSpr->RenShader,
 		hpbarSpr->MaxSize);
-	params.HPBarSprite->SetGlobalPosition(params.GlobalPosition);
-	params.HPBarSprite->SetGlobalScale_Sng(params.HPBarSprite->GetGlobalScale_Sng() * params.GlobalScale);
-	params.CatalogID = parUsedInfo.CatID;
+	parParams->HPBarSprite->SetGlobalPosition(params.GlobalPosition);
+	parParams->HPBarSprite->SetGlobalScale_Sng(parParams->HPBarSprite->GetGlobalScale_Sng() * params.GlobalScale);
+}
+//Unit
 
-	return params;
+WorldTransfObj* UnitLoadInfo::InstantiateObject_Action(const WorldObjectLoadInfo& usedInfo) const {
+
+	UnitObjectCtorParams& params = *new UnitObjectCtorParams();
+	FillCtorParams(params, *dynamic_cast<const GameObjectLoadInfo*>(&usedInfo));
+	UnitObject* unit = new UnitObject(params);
+	delete &params;
+
+	return unit;
 }
 WorldObjectLoadInfo* UnitLoadInfo::CreateCacheInfo() const {
 	return new UnitLoadInfo(*this);
@@ -396,22 +401,15 @@ WorldObjectLoadInfo* UnitLoadInfo::CreateCacheInfo() const {
 
 WorldTransfObj* HeroLoadInfo::InstantiateObject_Action(const WorldObjectLoadInfo& usedInfo) const {
 
-	HeroObjectCtorParams& heParams = dynamic_cast<HeroObjectCtorParams&>(GetCtorParams(usedInfo));
-	HeroObject* hero = new HeroObject(heParams);
-
-	delete& heParams;
+	auto& params = *new HeroObjectCtorParams();
+	FillCtorParams(params, *dynamic_cast<const GameObjectLoadInfo*>(&usedInfo));
+	HeroObject* hero = new HeroObject(params);
+	delete& params;
 
 	return hero;
 }
 bool HeroLoadInfo::WriteParam(Attr& param) {
 	return UnitLoadInfo::WriteParam(param);
-}
-EntityCtorParams& HeroLoadInfo::GetCtorParams(const WorldObjectLoadInfo& usedInfo) const {
-	
-	UnitObjectCtorParams& uparams = dynamic_cast<UnitObjectCtorParams&>(UnitLoadInfo::GetCtorParams(usedInfo));
-	HeroObjectCtorParams& hparams = *new HeroObjectCtorParams(uparams);
-	delete& uparams;
-	return hparams;
 }
 WorldObjectLoadInfo* HeroLoadInfo::CreateCacheInfo() const {
 	return new HeroLoadInfo(*this);
@@ -423,14 +421,8 @@ WorldTransfObj* WallLoadInfo::InstantiateObject_Action(const WorldObjectLoadInfo
 
 	auto& parInfo = *dynamic_cast<const WallLoadInfo*>(&usedInfo);
 
-	string path = string(parInfo.SpriteSource);
-	FStreamExts::ClearPath(path);
-	ExtGlRes_Sprite* spr = dynamic_cast<ExtGlRes_Sprite*>(ExternalGlobalResources::GetRes(path));
-
-	WallCtorParams& params = *new WallCtorParams();
-	params.BodySpriteSource = spr;
-	params.GlobalPosition = parInfo.Position;
-	params.GlobalScale = parInfo.Size;
+	auto& params = *new GameObjectCtorParams();
+	FillCtorParams(params, *dynamic_cast<const GameObjectLoadInfo*>(&usedInfo));
 	WallObject* wall = new WallObject(params);
 	delete &params;
 
@@ -441,6 +433,77 @@ bool WallLoadInfo::WriteParam(Attr& param) {
 }
 WorldObjectLoadInfo* WallLoadInfo::CreateCacheInfo() const {
 	return new WallLoadInfo(*this);
+}
+
+//Decoration
+
+DecorationLoadInfo::DecorationLoadInfo(const DecorationLoadInfo& copy)
+	:GameObjectLoadInfo(copy){
+
+	HitEffectSprite = copy.HitEffectSprite;
+	CurrentHP = copy.CurrentHP;
+	MaxHP = copy.MaxHP;
+	IsTargetableForAA = copy.IsTargetableForAA;;
+}
+
+bool DecorationLoadInfo::WriteParam(Attr& param) {
+	if (GameObjectLoadInfo::WriteParam(param))
+		return true;
+
+	if (CheckParamName(param, SerializationParDefNames::ATTBLEOBJ_HITEFF_SPRITE_SOURCE)) {
+		HitEffectSprite = param.second;
+		FStreamExts::ClearPath(HitEffectSprite);
+	}
+	else if (CheckParamName(param, SerializationParDefNames::DECOR_HP_CURRENT)) {
+
+		CurrentHP = stol(param.second);
+	}
+	else if (CheckParamName(param, SerializationParDefNames::DECOR_HP_MAX)) {
+
+		MaxHP = stol(param.second);
+	}
+	else if (CheckParamName(param, SerializationParDefNames::DECOR_ISTARGBLE_FORAA)) {
+		
+		IsTargetableForAA = FStreamExts::ParseBool(param.second);
+	}
+	else
+		return false;
+
+	return true;
+}
+
+void DecorationLoadInfo::FillCtorParams(GameObjectCtorParams& params, const GameObjectLoadInfo& usedInfo) const {
+
+	GameObjectLoadInfo::FillCtorParams(params, usedInfo);
+
+	auto parParams = static_cast<DecorationCtorParams*>(&params);
+	auto parUsedInfo = dynamic_cast<const DecorationLoadInfo*>(&usedInfo);
+
+	ExtGlRes_Sprite* hitEffSpr = ExternalGlobalResources::GetRes_t<ExtGlRes_Sprite>(parUsedInfo->HitEffectSprite);
+
+	parParams->HitEffectSprite = new SpriteRenderer
+	(hitEffSpr->Tex,
+		hitEffSpr->MaxSize < eps ? Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution : hitEffSpr->MaxSize,
+		hitEffSpr->RenShader);
+	parParams->HitEffectSprite->SetRendLayer((std::byte)40);
+	parParams->CurrentHP = parUsedInfo->CurrentHP;
+	parParams->MaxHP = parUsedInfo->MaxHP;
+}
+
+WorldTransfObj* DecorationLoadInfo::InstantiateObject_Action(const WorldObjectLoadInfo& usedInfo) const {
+
+	auto& parInfo = *dynamic_cast<const DecorationLoadInfo*>(&usedInfo);
+
+	auto& params = *new DecorationCtorParams();
+	FillCtorParams(params, *dynamic_cast<const GameObjectLoadInfo*>(&usedInfo));
+	DecorationObject* decor = new DecorationObject(params);
+	delete& params;
+
+	return decor;
+}
+
+WorldObjectLoadInfo* DecorationLoadInfo::CreateCacheInfo() const {
+	return new DecorationLoadInfo(*this);
 }
 
 //SpriteRenderer

@@ -94,6 +94,9 @@ WorldObjectLoadInfo& ObjsCatalogDeserial::ParseObjInfo(const vector<string>& par
 		else if (parParam->second.find(SerializationObjectsTypes::OBJECT_TYPE_AA_PROJECTILE) != string::npos) {
 			info = new AAProjectileLoadInfo();
 		}
+		else if (parParam->second.find(SerializationObjectsTypes::OBJECT_TYPE_DECORATION) != string::npos) {
+			info = new DecorationLoadInfo();
+		}
 		else
 			throw exception("Cant parse info: uknown type");
 

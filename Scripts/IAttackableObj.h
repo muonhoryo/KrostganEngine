@@ -4,6 +4,7 @@
 #include <ITransformableObj.h>
 #include <Events.h>
 #include <FractionsSystem.h>
+#include <CallbackDelegates.h>
 
 using namespace sf;
 using namespace std;
@@ -74,7 +75,7 @@ namespace KrostganEngine::GameObjects {
 	public:
 		NoArgsExecutedEvent ChangedHPEvent;
 
-		virtual ~IHitPointModule(){}
+		virtual ~IHitPointModule();
 
 		void TakeDamage		(const AttackHitInfo& attInfo);
 
@@ -135,5 +136,17 @@ namespace KrostganEngine::GameObjects {
 	private:
 		EventHandler<const ObjectDeathEventArgs> DeathEvHandler = EventHandler<const ObjectDeathEventArgs>(DeathEvent);
 		static inline EventHandler<const GlObjectDeathEventArgs> DeathEventGlHandler = EventHandler<const GlObjectDeathEventArgs>(DeathEvent_global);
+	};
+
+	class DelayedDeath final : public CallbackDelegate_Upd {
+	public:
+		DelayedDeath(IAttackableObj& Owner) :CallbackDelegate_Upd(),
+			Owner(Owner) {}
+
+		void Execute(CallbackRecArgs_Upd args) override {
+			delete& Owner;
+		}
+	private:
+		IAttackableObj& Owner;
 	};
 }

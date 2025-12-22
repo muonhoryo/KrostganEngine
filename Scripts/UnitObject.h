@@ -35,6 +35,8 @@ namespace KrostganEngine {
 		};
 
 		struct UnitObjectCtorParams : public EntityCtorParams {
+
+		protected:
 			void Init_AAModule() override {
 				auto& hitAnim = *new LineAAAnimation(*Owner);
 				AAModule = new EntityAutoAttackModule(hitAnim, *Owner);

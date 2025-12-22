@@ -35,6 +35,21 @@ vector<IPhysicalObject*> PhysicsEngine::OverlapCircle_All(Vector2f center, float
 	return objs;
 }
 
+vector<IPhysicalObject*> PhysicsEngine::OverlapDynamic_All(const ColliderShape& collider, PhysicsLayer layer) {
+
+	{
+		auto aabbShape = dynamic_cast<const AABBCollShape*>(&collider);
+		if (aabbShape != nullptr)
+			return OverlapAABB_All(aabbShape->Min, aabbShape->Max, layer);
+	}
+	{
+		auto circleShape = dynamic_cast<const CircleCollShape*>(&collider);
+		if (circleShape != nullptr)
+			return OverlapCircle_All(circleShape->Center, circleShape->Radius, layer);
+	}
+	return vector<IPhysicalObject*>();
+}
+
 vector<IPhysicalObject*> PhysicsEngine::RayCast_All(Vector2f origin, Vector2f direction, float distance, PhysicsLayer layer) {
 	Vector2f second = origin + Vector2f(direction.x * distance, direction.y * distance);
 	return RayCast_All(*new Segment(origin,second), layer);

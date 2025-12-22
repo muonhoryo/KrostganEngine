@@ -25,8 +25,6 @@ bool EntCtrlMode_Base::AbleToGiveOrders() {
 void EntCtrlMode_Base::HandleInput(CallbackRecArgs_Upd& args) {
 
 	for (auto& input : args.PlayerInput) {
-		/*if (Owner.HandleShiftInput(input))
-			continue;*/
 
 		if (input.type == Event::MouseButtonPressed) {
 

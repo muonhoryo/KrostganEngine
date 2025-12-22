@@ -158,6 +158,7 @@ namespace KrostganEngine::Core {
 		static inline const string OBJECT_TYPE_HERO = "Hero";
 		static inline const string OBJECT_TYPE_SPRITE = "Sprite";
 		static inline const string OBJECT_TYPE_AA_PROJECTILE = "Projectile";
+		static inline const string OBJECT_TYPE_DECORATION = "Decoration";
 	};
 	struct SerializationParDefNames {
 		static inline const string CATALOG_SUB_INFO_ID	= "Subcatalog";
@@ -176,13 +177,18 @@ namespace KrostganEngine::Core {
 		static inline const string IMAGEUSR_SPRITE_SOURCE	= "SpriteSource";
 		static inline const string IMAGEUSR_SPRITE_LAYER	= "Layer";
 
+		static inline const string ATTBLEOBJ_HITEFF_SPRITE_SOURCE = "HitEffectSprite";
+
 		static inline const string ENTITY_FRACTION				= "Fraction";
 		static inline const string ENTITY_SELECT_AREA_SOURCE	= "SelectionAreaSource";
 		static inline const string ENTITY_HPBAR_SPRITE_SOURCE	= "HPBarSprite";
-		static inline const string ENTITY_HITEFF_SPRITE_SOURCE	= "HitEffectSprite";
 		static inline const string ENTITY_HPBAR_MASK			= "HPBarMask";
 
 		static inline const string ENTITY_BATTLE_STATS			= "BattleStats";
 		static inline const string ENTITY_AA_STATS				= "AAStats";
+
+		static inline const string DECOR_HP_CURRENT			= "CurrentHP";
+		static inline const string DECOR_HP_MAX				= "MaxHP";
+		static inline const string DECOR_ISTARGBLE_FORAA	= "IsTargetableForAA";
 	};
 }

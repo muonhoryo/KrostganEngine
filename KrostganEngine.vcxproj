@@ -150,6 +150,9 @@
     <ClCompile Include="Scripts\CommonHPRegenModule.cpp" />
     <ClCompile Include="Scripts\DbgConsoleInputHandler.cpp" />
     <ClCompile Include="Scripts\DBG_ImmortalArmy.cpp" />
+    <ClCompile Include="Scripts\Decoration.cpp" />
+    <ClCompile Include="Scripts\DecorationDeathModule.cpp" />
+    <ClCompile Include="Scripts\DecorationHPModule.cpp" />
     <ClCompile Include="Scripts\DivineCommander.cpp" />
     <ClCompile Include="Scripts\EngineLateUpdateModule.cpp" />
     <ClCompile Include="Scripts\Engine_ModeSelection.cpp" />
@@ -288,6 +291,9 @@
     <ClInclude Include="Scripts\DBG_ImmortalArmy.h" />
     <ClInclude Include="Scripts\DBG_DivineCommander.h" />
     <ClInclude Include="Scripts\DbgConsoleInputHandler.h" />
+    <ClInclude Include="Scripts\DecorationDeathModule.h" />
+    <ClInclude Include="Scripts\Decoration.h" />
+    <ClInclude Include="Scripts\DecorationHPModule.h" />
     <ClInclude Include="Scripts\DummyLockerHandler.h" />
     <ClInclude Include="Scripts\EffectObjects.h" />
     <ClInclude Include="Scripts\EngineLateUpdateModule.h" />

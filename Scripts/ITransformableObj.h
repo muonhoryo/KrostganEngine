@@ -74,7 +74,7 @@ namespace KrostganEngine::Core {
 			SetLocalRotation(GetLocalRotation() + rotation);
 		}
 
-		static inline const Vector2i		NULL_POS = Vector2i(INT_MIN, INT_MIN);
+		static inline const Vector2i		NULL_POS = Vector2i(-7000000, -7000000);
 
 	protected:
 		ITransformableObj() {}

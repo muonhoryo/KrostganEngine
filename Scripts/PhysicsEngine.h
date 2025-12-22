@@ -29,6 +29,8 @@ namespace KrostganEngine::Physics {
 
 		vector<IPhysicalObject*> OverlapAABB_All(Vector2f min, Vector2f max, PhysicsLayer layer=PhysicsLayer::All);
 		vector<IPhysicalObject*> OverlapCircle_All(Vector2f center, float radius, PhysicsLayer layer = PhysicsLayer::All);
+		vector<IPhysicalObject*> OverlapDynamic_All(const ColliderShape& collider, PhysicsLayer layer = PhysicsLayer::All);
+
 		vector<IPhysicalObject*> RayCast_All(Vector2f origin, Vector2f direction, float distance, PhysicsLayer layer = PhysicsLayer::All);
 		vector<IPhysicalObject*> RayCast_All(const Segment& segm, PhysicsLayer layer = PhysicsLayer::All);
 

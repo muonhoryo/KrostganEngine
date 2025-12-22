@@ -32,7 +32,7 @@ bool EntitiesCtrlInputMode::TryGetTargetAtPos(Vector2f pos, IPhysicalObject*& ta
 		return false;
 	}
 
-	PhysicsLayer castLayer = (PhysicsLayer)((size_t)PhysicsLayer::Buildings | (size_t)PhysicsLayer::Units);
+	PhysicsLayer castLayer = (PhysicsLayer)((size_t)PhysicsLayer::Buildings | (size_t)PhysicsLayer::Units | (size_t)PhysicsLayer::Decorations);
 	target = Engine::GetPhysicsEngine().PointCast(pos, castLayer);
 	if (target == nullptr)
 		return false;
