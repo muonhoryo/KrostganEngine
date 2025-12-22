@@ -4,7 +4,7 @@
 		FontSize="50"
 		AnchorX="0.25"
 		AnchorY="0.25"
-		Color="FFFFFF00"
+		Color="FFFFFFFF"
 		PosY="-100">
 	</TextBlock>
 	<TextBlock
@@ -12,6 +12,6 @@
 		FontSize="50"
 		AnchorX="0.25"
 		AnchorY="0.25"
-		Color="FFFFFF00">
+		Color="FFFFFFFF">
 	</TextBlock>
 </root>

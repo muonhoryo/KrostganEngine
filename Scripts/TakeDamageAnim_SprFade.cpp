@@ -7,7 +7,10 @@ using namespace KrostganEngine::Visual;
 
 TakeDamageAnim_SprFade::TakeDamageAnim_SprFade(SpriteRenderer& HitSprite)
 	:HitSprite(HitSprite),
-	HitEffect(*new FadingVisualEff_MRes(Engine::GetGlobalConsts().TakeDmg_FadeTime, HitSprite)){
+	HitEffect(*new TransparencyVisEff_MRes(
+		TransparencyVisEff::GetEffectType(TransparencyEffectType::Fading, TransparencyEffectType::Linear),
+		Engine::GetGlobalConsts().TakeDmg_FadeTime, 
+		HitSprite)){
 
 	HitSprite.SetColor(Color(255, 0, 0, HitSprite.GetColor().a));
 	HitSprite.AddEffect(HitEffect);
@@ -19,5 +22,5 @@ TakeDamageAnim_SprFade::~TakeDamageAnim_SprFade() {
 
 void TakeDamageAnim_SprFade::OnTakeDmg(const AttackHitInfo& attInfo, size_t totalDmg) {
 	
-	HitEffect.ResetFade();
+	HitEffect.ResetEffect();
 }

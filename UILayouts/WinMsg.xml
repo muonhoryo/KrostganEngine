@@ -5,7 +5,7 @@ Victory is yours."
 		FontSize="50"
 		AnchorX="0.5"
 		AnchorY="0.5"
-		Color="FFFFFF00"
+		Color="FFFFFFFF"
 		PosY="-200">
 	</TextBlock>
 	<TextBlock
@@ -13,6 +13,6 @@ Victory is yours."
 		FontSize="50"
 		AnchorX="0.5"
 		AnchorY="0.5"
-		Color="FFFFFF00">
+		Color="FFFFFFFF">
 	</TextBlock>
 </root>

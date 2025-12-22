@@ -19,7 +19,10 @@ void UnitDeathModule::Death() {
 	dSpr->SetColor(color);
 	dSpr->SetGlobalScale_Sng(unitOwner->GetGlobalScale_Sng() * dSpr->GetGlobalScale_Sng());
 	dSpr->SetGlobalPosition(unitOwner->GetGlobalPosition());
-	auto& eff = *new FadingVisualEff_Des(Engine::GetGlobalConsts().AverageLifeTime_DeathEffect, *dSpr);
+	auto& eff = *new TransparencyVisEff_Des(
+		TransparencyVisEff::GetEffectType(TransparencyEffectType::Fading, TransparencyEffectType::Linear),
+		Engine::GetGlobalConsts().AverageLifeTime_DeathEffect, 
+		*dSpr);
 	dSpr->AddEffect(eff);
 	EntityDeathModule::Death();
 }

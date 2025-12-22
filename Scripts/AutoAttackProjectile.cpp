@@ -129,7 +129,10 @@ void AutoAttackProjectile::DealDmgByAOE(Vector2f center) const {
 		auto hitEffObj = dynamic_cast<SpriteRenderer*>(hitEff->InstantiateObj());
 		hitEffObj->SetGlobalPosition(center);
 		hitEffObj->SetScaleByPixelSize_Global(range*2);
-		auto& eff = *new FadingVisualEff_Des(Engine::GetGlobalConsts().AverageLifeTime_DeathEffect, *hitEffObj);
+		auto& eff = *new TransparencyVisEff_Des(
+			TransparencyVisEff::GetEffectType(TransparencyEffectType::Fading, TransparencyEffectType::Linear),
+			Engine::GetGlobalConsts().AverageLifeTime_DeathEffect, 
+			*hitEffObj);
 		hitEffObj->AddEffect(eff);
 	}
 }

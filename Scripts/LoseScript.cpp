@@ -36,14 +36,17 @@ void LoseScript::RenderGraphicAction(RenderWindow& window) {
 			auto beg = UserInterfaceManager::GetRoot().GetChildrenBegin();
 			auto end = UserInterfaceManager::GetRoot().GetChildrenAfterEnd();
 			IColoredObject* el = nullptr;
-			HighlightVisualEff_MRes* eff = nullptr;
+			TransparencyVisEff_MRes* eff = nullptr;
 			for (;beg != end;++beg) {
 				el = dynamic_cast<IColoredObject*>(*beg);
 				if (el != nullptr) {
 
-					eff = new HighlightVisualEff_MRes(MessageAppearingDeltaTime, *el);
+					eff = new TransparencyVisEff_MRes(
+						TransparencyVisEff::GetEffectType(TransparencyEffectType::Highlight, TransparencyEffectType::Linear),
+						MessageAppearingDeltaTime, 
+						*el);
 					el->AddEffect(*eff);
-					eff->ResetHighlight();
+					eff->ResetEffect();
 				}
 			}
 

@@ -1,8 +1,5 @@
 #pragma once
 
-#include <FadingVisualEffect.h>
-#include <FadingVisualEff_Des.h>
-#include <FadingVisualEff_MRes.h>
-
-#include <HighlightVisualEffect.h>
-#include <HighlightVisualEff_MRes.h>
+#include <TransparencyVisEff.h>
+#include <TransparencyVisEff_Des.h>
+#include <TransparencyVisEff_MRes.h>

@@ -10,7 +10,9 @@ using namespace KrostganEngine::GameObjects;
 LineAAAnimation::LineAAAnimation(WorldTransfObj& Owner)
 	:AutoAttackAnimation(Owner),
 	LineRender(Owner.GetGlobalPosition(), Owner.GetGlobalPosition(), Engine::GetGlobalConsts().AAAnim_LineWidth, Color::Red),
-	LineEffect(*new FadingVisualEff_MRes(LineRender)){
+	LineEffect(*new TransparencyVisEff_MRes(
+						TransparencyVisEff_MRes::GetEffectType(TransparencyEffectType::Fading, TransparencyEffectType::Linear), 
+						LineRender)){
 
 	LineRender.AddEffect(LineEffect);
 }
@@ -25,7 +27,7 @@ LineAAAnimation::~LineAAAnimation() {
 void LineAAAnimation::OnTakeDmg(const AutoAttackHitInfo& attInfo) {
 
 	float cdown = attInfo.AAStats.GetCooldown();
-	LineEffect.ResetFade(cdown);
+	LineEffect.ResetEffect(cdown);
 	Target = new watch_ptr_handler_wr<WorldTransfObj>(attInfo.Target);
 	LineRender.SetStart(Owner.GetGlobalPosition());
 	auto ptr = Target->GetPtr_t();
@@ -37,7 +39,7 @@ void LineAAAnimation::OnTakeDmg(const AutoAttackHitInfo& attInfo) {
 }
 void LineAAAnimation::RenderGraphicAction(RenderWindow& window) {
 
-	if (LineEffect.GetIsFadingState()) {
+	if (LineEffect.GetIsEffUpdateState()) {
 
 		LineRender.SetStart(Owner.GetGlobalPosition());
 		if (Target != nullptr) {

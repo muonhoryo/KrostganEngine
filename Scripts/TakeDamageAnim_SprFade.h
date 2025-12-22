@@ -17,6 +17,6 @@ namespace KrostganEngine::Visual {
 
 	private:
 		SpriteRenderer& HitSprite;
-		FadingVisualEff_MRes& HitEffect;
+		TransparencyVisEff_MRes& HitEffect;
 	};
 }
