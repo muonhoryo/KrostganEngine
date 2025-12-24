@@ -17,7 +17,7 @@ using namespace KrostganEngine::Core;
 using namespace KrostganEngine::Physics;
 using namespace KrostganEngine::Visual;
 
-const std::string Engine::ENGINE_VERSION = "A0.5.1.0";
+const std::string Engine::ENGINE_VERSION = "A0.5.2.0";
 
 Engine::Engine()
 	:RenderModule(*new EngineRenderModule(RendWin)),
@@ -32,8 +32,7 @@ Engine::Engine()
 	EngineConfiguration = &config.LoadEngineConfig();
 	GlobalConstsLoad consts = GlobalConstsLoad();
 	Consts = &consts.LoadGlobalConsts();
-	ExtGlobalResourcesLoad resources = ExtGlobalResourcesLoad();
-	resources.LoadGlobalResources();
+	ExtGlobalResourcesLoad::LoadGlobalResources();
 
 	auto uiDeser=new UserInterfacesDeserializer();
 	uiDeser->Deserialize();

@@ -9,141 +9,158 @@
 #include <EntityBattleStats.h>
 #include <RelationsSystem.h>
 
+using namespace sf;
+using namespace std;
+using namespace rapidxml;
 using namespace KrostganEngine::Core;
 
-void ObjsCatalogDeserial::DeserializeCatalog(string serPath) {
-
-	string line;
-	ifstream st(serPath);
-	if (st.bad() == true ||
-		st.fail() == true)
-		throw exception("Cannot open level file");
+void ObjsCatalogDeserial::DeserializeCatalog(const string& serPath) {
 
 	ObjectsCatalog::Unload();
 
-	vector<string>& params = *new vector<string>();
-	pair<size_t, _ObjSubsPairType>* subinfo = nullptr;
-	if (st.is_open()) {
-		while (getline(st, line)) {
+	char* file = FStreamExts::ReadToEnd(serPath);
+	xml_document<>* doc = new xml_document<>();
+	doc->parse<0>(file);
 
-			if (line.find(OBJECTS_SEP_LINE) != string::npos) {
+	xml_node<>* serObj = doc->first_node()->first_node();
+	while (serObj != nullptr) {
 
-				if (params[0].find(SerializationParDefNames::OBJECT_TYPE) != string::npos) {
+		DeserObjForCatalog(*serObj);
 
-					ObjectsCatalog::Add(&ParseObjInfo(params));
-				}
-				else if(params[0].find(SerializationParDefNames::CATALOG_SUB_INFO_ID)!=string::npos){
-					
-					subinfo = &ParseObjSubinfo(params);
-					ObjectsCatalog::AddSub(subinfo->first,subinfo->second.first,*subinfo->second.second);
-					delete subinfo;
-				}
-				params.clear();
-			}
-			else {
-
-				if(line.size()>1)
-					params.push_back(line);
-			}
-		}
+		serObj = serObj->next_sibling();
 	}
-	st.close();
-	size_t size = params.size();
-	if (size > 1 ||
-		size == 1 && params[0].size() > 1) {
 
-		if (params[0].find(SerializationParDefNames::OBJECT_TYPE) != string::npos) {
-
-			ObjectsCatalog::Add(&ParseObjInfo(params));
-		}
-		else if (params[0].find(SerializationParDefNames::CATALOG_SUB_INFO_ID) != string::npos) {
-
-			subinfo = &ParseObjSubinfo(params);
-			ObjectsCatalog::AddSub(subinfo->first, subinfo->second.first, *subinfo->second.second);
-			delete subinfo;
-		}
-	}
-	params.clear();
-	ObjectsCatalog::GetObjectInfo(0);
-	delete& params;
+	delete doc;
 }
 
-WorldObjectLoadInfo& ObjsCatalogDeserial::ParseObjInfo(const vector<string>& params) {
+WorldObjectLoadInfo& ObjsCatalogDeserial::DeserializeObjInfo(xml_node<>& serObj) {
 
+	char* type = serObj.name();
 	WorldObjectLoadInfo* info = nullptr;
-	const pair<const string, const string>* parParam = nullptr;
-	parParam = ParseParamLine(params[0]);
+	if (type == SerializationObjectsTypes::OBJECT_TYPE_UNIT) {
 
-	if (parParam->first.find(SerializationParDefNames::OBJECT_TYPE) != string::npos)
-	{
-		if (parParam->second.find(SerializationObjectsTypes::OBJECT_TYPE_UNIT) != string::npos) {
+		info = new UnitLoadInfo();
+	}
+	else if (type == SerializationObjectsTypes::OBJECT_TYPE_HERO) {
 
-			info = new UnitLoadInfo();
-		}
-		else if (parParam->second.find(SerializationObjectsTypes::OBJECT_TYPE_HERO) != string::npos) {
+		info = new HeroLoadInfo();
+	}
+	else if (type == SerializationObjectsTypes::OBJECT_TYPE_WALL) {
 
-			info = new HeroLoadInfo();
-		}
-		else if (parParam->second.find(SerializationObjectsTypes::OBJECT_TYPE_WALL) != string::npos) {
+		info = new WallLoadInfo();
+	}
+	else if (type == SerializationObjectsTypes::OBJECT_TYPE_SPRITE) {
 
-			info = new WallLoadInfo();
-		}
-		else if (parParam->second.find(SerializationObjectsTypes::OBJECT_TYPE_SPRITE) != string::npos) {
-			info = new SpriteRendLoadInfo();
-		}
-		else if (parParam->second.find(SerializationObjectsTypes::OBJECT_TYPE_AA_PROJECTILE) != string::npos) {
-			info = new AAProjectileLoadInfo();
-		}
-		else if (parParam->second.find(SerializationObjectsTypes::OBJECT_TYPE_DECORATION) != string::npos) {
-			info = new DecorationLoadInfo();
-		}
-		else
-			throw exception("Cant parse info: uknown type");
+		info = new SpriteRendLoadInfo();
+	}
+	else if (type == SerializationObjectsTypes::OBJECT_TYPE_AA_PROJECTILE) {
 
-		delete parParam;
-		auto beg = params.begin();
-		++beg;
-		auto end = params.cend();
-		for (;beg != end;++beg) {
+		info = new AAProjectileLoadInfo();
+	}
+	else if (type == SerializationObjectsTypes::OBJECT_TYPE_DECORATION) {
 
-			parParam = ParseParamLine(*beg);
-			info->WriteParam(*parParam);
-			delete parParam;
-		}
-		return *info;
+		info = new DecorationLoadInfo();
 	}
 	else
-		throw exception("Cant parse info: missing type");
-}
+		throw exception("Cant parse info: uknown type");
 
-pair<size_t, _ObjSubsPairType>& ObjsCatalogDeserial::ParseObjSubinfo(const vector<string>& params) {
-	
-	if (params.size() < 2)
-		throw exception("Incorrect format of object's subinfo.");
+	//Load base params of object
+	{
+		pair< const string, const string>* param = nullptr;
+		xml_attribute<>* attr = serObj.first_attribute();
+		string paramName;
+		string paramValue;
+		while (attr != nullptr) {
 
-	std::byte subID;
-	size_t objID;
-	AttrsCollectn& attrs = *new AttrsCollectn();
+			paramName = string(attr->name());
+			paramValue = string(attr->value());
+			param = new pair< const string, const string>(paramName, paramValue);
+			info->WriteParam(*param);
 
-	const pair<const string, const string>* parLine = ParseParamLine(params[0]);
-	subID = (std::byte)stoi(parLine->second);
-	delete parLine;
-	parLine = ParseParamLine(params[1]);
-	if (parLine->first.find(SerializationParDefNames::OBJECT_CATALOG_ID) == string::npos)
-		throw exception("Missing catalog ID.");
+			delete param;
 
-	objID = stoll(parLine->second);
-	delete parLine;
-
-	auto beg = params.begin();
-	auto end = params.cend();
-	++beg; ++beg;
-	for (;beg != end;++beg) {
-		parLine = ParseParamLine(*beg);
-		attrs.push_back(parLine);
+			attr = attr->next_attribute();
+		}
 	}
-	return *new pair<size_t, _ObjSubsPairType>(objID, _ObjSubsPairType(subID, new LvlObjAdditParams(attrs)));
+
+	//Parse child nodes
+	{
+		xml_node<>* ch = serObj.first_node();
+		while (ch != nullptr) {
+
+			info->WriteParamByNode(*ch);
+
+			ch = ch->next_sibling();
+		}
+
+	}
+
+	return *info;
 }
+
+void ObjsCatalogDeserial::DeserObjForCatalog(xml_node<>& serObj) {
+
+	auto& info = DeserializeObjInfo(serObj);
+
+	ObjectsCatalog::Add(info);
+
+	//Find sub infos
+	{
+		xml_node<>* ch = serObj.first_node();
+		char* chType = nullptr;
+		while (ch != nullptr) {
+			
+			chType = ch->name();
+
+			if (chType == SerXMLObjChildrenTypes::SUBINFO) {
+
+				_ObjSubsPairType& parseSub = ParseObjSubInfo(*ch);
+
+				ObjectsCatalog::AddSub(info.CatID, parseSub.first, *parseSub.second);
+			}
+
+			ch = ch->next_sibling();
+		}
+	}
+}
+_ObjSubsPairType& ObjsCatalogDeserial::ParseObjSubInfo(const xml_node<>& serObj) {
+
+	std::byte subID = ObjectsCatalog::ABSENT_SUB_CATALOG_ID;
+	//size_t objID = ObjectsCatalog::EMPTY_CATALOG_ID;
+	AttrsCollectn& attrs = *new AttrsCollectn();
+	string paramName;
+	string paramValue;
+
+	xml_attribute<>* attr = serObj.first_attribute();
+	char* attrName = nullptr;
+	while (attr != nullptr) {
+
+		attrName = attr->name();
+		/*if (attrName == SerializationParDefNames::OBJECT_CATALOG_ID) {
+
+			objID = stol(attr->value());
+		}
+		else */if (attrName == SerializationParDefNames::OBJECT_SUB_CATALOG_ID) {
+
+			subID = (std::byte)stoi(attr->value());
+		}
+		else {
+
+			paramName = string(attrName);
+			paramValue = string(attr->value());
+			attrs.push_back(new pair<const string,const string>(paramName, paramValue));
+		}
+
+		attr = attr->next_attribute();
+	}
+
+	if (subID == ObjectsCatalog::ABSENT_SUB_CATALOG_ID /*||
+		objID == ObjectsCatalog::EMPTY_CATALOG_ID*/)
+		throw exception("Absent definition/s of ID and/or subID");
+
+	return *new  _ObjSubsPairType(subID, new LvlObjAdditParams(attrs));
+}
+
 /// <summary>
 /// Return nullptr if cannot parse line
 /// </summary>

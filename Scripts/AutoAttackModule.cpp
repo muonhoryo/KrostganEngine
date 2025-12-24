@@ -165,7 +165,7 @@ void AutoAttackModule::CacheAAStats() {
 void AutoAttackModule::CreateProjectile() {
 	
 	auto& projInfo = OwnerAAStats->GetProjectileInfo();
-	auto projMainInfo = dynamic_cast<const AAProjectileLoadInfo*>(ObjectsCatalog::GetObjectInfo(projInfo.CatalogID));
+	auto projMainInfo = dynamic_cast<const AAProjectileLoadInfo*>(&ObjectsCatalog::GetObjectInfo(projInfo.CatalogID));
 	auto projSubInfo = ObjectsCatalog::GetSubObjInfo(projInfo.CatalogID, projInfo.CatalogSubID);
 	auto& proj= projMainInfo->InstantiateProjectile
 		(*this,

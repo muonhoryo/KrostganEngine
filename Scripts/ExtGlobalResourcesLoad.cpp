@@ -6,15 +6,15 @@
 #include <Extensions.h>
 #include <iostream>
 #include <fstream>
+#include <ValuesListDeserializer.h>
 
 using namespace sf;
+using namespace rapidxml;
 using namespace std;
 using namespace KrostganEngine::Core;
 
-ExtGlobalResourcesLoad::ExtGlobalResourcesLoad() :ValuesListDeserializer() { }
-
 void ExtGlobalResourcesLoad::LoadGlobalResources() {
-
+	
 	ExternalGlobalResources::Unload();
 
 	LoadAdditionalResources();
@@ -23,197 +23,261 @@ void ExtGlobalResourcesLoad::LoadGlobalResources() {
 
 void ExtGlobalResourcesLoad::LoadAdditionalResources() {
 
-	string line;
-	ifstream st(GetFilePath());
-	if (st.bad() == true ||
-		st.fail() == true)
-		throw exception("Cannot open resource file");
+	auto doc = new xml_document<>();
+	char* file = FStreamExts::ReadToEnd(GLOBAL_RESOURCES_PATH);
+	doc->parse<0>(file);
 
-	while (getline(st, line)) {
+	char* type = nullptr;
+	xml_node<>* serRes = doc->first_node()->first_node();
+	ExtGlResource* deserRes = nullptr;
 
-		if (line.find(RESOURCE_DEF_SEP_LINE) != string::npos) {
+	while (serRes != nullptr) {
 
-			DeserializeValues(ParamsBuffer);
-			ExternalGlobalResources::AddRes(DeserRes());
-			ParamsBuffer.clear();
+		type = serRes->name();
+
+		if (type == RESOURCETYPE_TEXTURE) {
+
+			deserRes = &DeserRes_Texture(*serRes);
+		}
+		else if (type == RESOURCETYPE_SPRITE) {
+
+			deserRes = &DeserRes_Sprite(*serRes);
+		}
+		else if (type == RESOURCETYPE_FONT) {
+
+			deserRes = &DeserRes_Font(*serRes);
+		}
+		else if (type == RESOURCETYPE_SHADER) {
+
+			deserRes = &DeserRes_Shader(*serRes);
 		}
 		else {
-
-			ParamsBuffer.push_back(line);
+			cout << "!!!Unknown type of resource: " << type << endl;
+			serRes = doc->next_sibling();
+			continue;
 		}
+		
+		ExternalGlobalResources::AddRes(*deserRes);
+		serRes = serRes->next_sibling();
 	}
-	st.close();
-	size_t size = ParamsBuffer.size();
-	if (size > 1 ||
-		size == 1 && ParamsBuffer[0].size() > 1) {
 
-		DeserializeValues(ParamsBuffer);
-		ExternalGlobalResources::AddRes(DeserRes());
-	}
-	ParamsBuffer.clear();
+	delete doc;
 }
+
 void ExtGlobalResourcesLoad::LoadCoreResources() {
 
 }
 
-ExtGlResource& ExtGlobalResourcesLoad::DeserRes() {
+ExtGlRes_Texture& ExtGlobalResourcesLoad::DeserRes_Texture(xml_node<>& serRes) {
 
-	string serType;
-	GetValueByDef(DEF_RESOURCE_TYPE, serType);
+	xml_attribute<>* attr = serRes.first_attribute();
+	char* attrName = nullptr;
 
-	if (serType.find(RESOURCETYPE_TEXTURE) != string::npos) {
+	string name = "";
+	const Texture* tex = nullptr;
+	while (attr != nullptr) {
 
-		return DeserRes_Texture();
+		attrName = attr->name();
+
+		if (attrName == DEF_RESOURCE_NAME) {
+
+			name = string(attr->value());
+		}
+		else if (attrName == DEF_PATH) {
+
+			if (tex != nullptr)
+				delete tex;
+			string path = string(attr->value());
+			tex = LoadTextureByPath(path);
+		}
+
+		attr = attr->next_attribute();
 	}
-	else if (serType.find(RESOURCETYPE_SPRITE) != string::npos) {
 
-		return DeserRes_Sprite();
-	}
-	else if (serType.find(RESOURCETYPE_FONT) != string::npos) {
-
-		return DeserRes_Font();
-	}
-	else if (serType.find(RESOURCETYPE_SHADER) != string::npos) {
-
-		return DeserRes_Shader();
-	}
-	else
-		throw exception("Cant parse resource type");
-
+	FStreamExts::ClearPath(name);
+	if (tex == nullptr)
+		throw exception("Absent texture");
+	return *new ExtGlRes_Texture(name, *tex);
 }
 
-ExtGlRes_Texture&	ExtGlobalResourcesLoad::DeserRes_Texture(){
+ExtGlRes_Sprite& ExtGlobalResourcesLoad::DeserRes_Sprite(xml_node<>& serRes) {
 
-	string* name=new string();
-	GetValueByDef(DEF_RESOURCE_NAME, *name);
-	FStreamExts::ClearPath(*name);
-	const Texture* tex = nullptr;
-	GetValueByDef(DEF_PATH ,LineBuffer);
-	tex = LoadTextureByPath();
-	auto& res = *new ExtGlRes_Texture(*name, *tex);
-	delete name;
-	return res;
-}
-ExtGlRes_Sprite&	ExtGlobalResourcesLoad::DeserRes_Sprite(){
+	xml_attribute<>* attr = serRes.first_attribute();
+	char* attrName = nullptr;
 
-	string* name = new string();
-	GetValueByDef(DEF_RESOURCE_NAME, *name);
-	FStreamExts::ClearPath(*name);
+	string name = "";
 	const Texture* tex = nullptr;
-	GetValueByDef(DEF_SOURCE, LineBuffer);
-	FStreamExts::ClearPath(LineBuffer);
-	if (CouldBeName(LineBuffer)) {
-		tex = GetTextureByName();
-	}
-	else {
-		tex = LoadTextureByPath();
-	}
 	Shader* shad = nullptr;
-	if (TryGetValue(DEF_RENDER_SHADER, LineBuffer)) {
+	float maxSize = Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution;
+	while (attr != nullptr) {
 
-		FStreamExts::ClearPath(LineBuffer);
-		shad = GetShaderByName();
-	}
-	float maxSize = 0;
-	if (TryGetValue(DEF_SPRITE_MAXSIZE, LineBuffer)) {
+		attrName = attr->name();
 
-		maxSize = stof(LineBuffer);
-	}
-	else {
+		if (attrName == DEF_RESOURCE_NAME) {
 
-		maxSize = Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution;
+			name = string(attr->value());
+		}
+		else if (attrName == DEF_SOURCE) {
+
+			char* attrValue = attr->value();
+			if (tex != nullptr)
+				delete tex;
+			if (ValuesListDeserializer::CouldBeName(attrValue)) {
+
+				string texName = string(attrValue);
+				tex = GetTextureByName(texName);
+			}
+			else {
+
+				string path = string(attrValue);
+				tex = LoadTextureByPath(path);
+			}
+		}
+		else if (attrName == DEF_RENDER_SHADER) {
+
+			if (shad != nullptr)
+				delete shad;
+			string shadName = string(attr->value());
+			shad = GetShaderByName(shadName);
+		}
+		else if (attrName == DEF_SPRITE_MAXSIZE) {
+
+			maxSize = stof(attr->value());
+		}
+
+		attr = attr->next_attribute();
 	}
-	auto& res = *new ExtGlRes_Sprite(*name, *tex,maxSize,shad);
-	delete name;
-	return res;
+
+	FStreamExts::ClearPath(name);
+	if (tex == nullptr)
+		throw exception("Absebt texture");
+	return *new ExtGlRes_Sprite(name, *tex, maxSize, shad);
 }
-ExtGlRes_Font& ExtGlobalResourcesLoad::DeserRes_Font() {
 
-	string* name = new string();
-	GetValueByDef(DEF_RESOURCE_NAME, *name);
-	FStreamExts::ClearPath(*name);
+ExtGlRes_Font& ExtGlobalResourcesLoad::DeserRes_Font(xml_node<>& serRes) {
+
+	xml_attribute<>* attr = serRes.first_attribute();
+	char* attrName = nullptr;
+
+	string name = "";
 	Font* font = nullptr;
-	GetValueByDef(DEF_PATH, LineBuffer);
-	FStreamExts::ClearPath(LineBuffer);
-	font = LoadFontByPath();
-	auto& res = *new ExtGlRes_Font(*name, *font);
-	delete name;
-	return res;
-}
-ExtGlRes_Shader& ExtGlobalResourcesLoad::DeserRes_Shader() {
+	while (attr != nullptr) {
 
-	string* name = new string();
-	GetValueByDef(DEF_RESOURCE_NAME, *name);
-	FStreamExts::ClearPath(*name);
-	Shader* shad = new Shader();
-	GetValueByDef(DEF_PATH, LineBuffer);
-	FStreamExts::ClearPath(LineBuffer);
-	shad=LoadShaderByPath();
-	auto& res = *new ExtGlRes_Shader(*name, *shad);
-	delete name;
-	return res;
-}
+		attrName = attr->name();
 
-Texture*	ExtGlobalResourcesLoad::LoadTextureByPath() {
+		if (attrName == DEF_RESOURCE_NAME) {
 
-	FStreamExts::ClearPath(LineBuffer);
-	Texture* tex = new Texture();
-	tex->loadFromFile(LineBuffer);
-	return tex;
-}
-Font*		ExtGlobalResourcesLoad::LoadFontByPath(){
+			name = string(attr->value());
+		}
+		else if (attrName == DEF_PATH) {
 
-	FStreamExts::ClearPath(LineBuffer);
-	Font* font = new Font();
-	font->loadFromFile(LineBuffer);
-	return font;
-}
-Shader* ExtGlobalResourcesLoad::LoadShaderByPath() {
+			if (font != nullptr)
+				delete font;
+			string path = string(attr->value());
+			font = LoadFontByPath(path);
+		}
 
-	FStreamExts::ClearPath(LineBuffer);
-	string shadPath = string(LineBuffer);
-	Shader* shad = new Shader();
-	GetValueByDef(DEF_SHADER_TYPE, LineBuffer);
-	Shader::Type type;
-	if (LineBuffer.find(SHADERTYPE_FRAG) != string::npos) {
-		type = Shader::Fragment;
+		attr = attr->next_attribute();
 	}
-	else if (LineBuffer.find(SHADERTYPE_VERT) != string::npos) {
-		type = Shader::Vertex;
-	}
-	else if (LineBuffer.find(SHADERTYPE_GEO) != string::npos) {
-		type = Shader::Geometry;
-	}
-	else
-		throw exception("Cant get shader type");
-	LineBuffer.clear();
-	LineBuffer.append(shadPath);
-	shad->loadFromFile(LineBuffer, type);
-	return shad;
+
+	FStreamExts::ClearPath(name);
+	if (font == nullptr)
+		throw exception("Absent font");
+	return *new ExtGlRes_Font(name, *font);
 }
 
-const Texture*	ExtGlobalResourcesLoad::GetTextureByName() const{
-	ExtGlResource* res = ExternalGlobalResources::GetRes(LineBuffer);
+ExtGlRes_Shader& ExtGlobalResourcesLoad::DeserRes_Shader(xml_node<>& serRes) {
+
+	xml_attribute<>* attr = serRes.first_attribute();
+	char* attrName = nullptr;
+
+	string name = "";
+	Shader* shad = nullptr;
+	Shader::Type shadType = Shader::Type::Fragment;
+	while (attr != nullptr) {
+
+		attrName = attr->name();
+
+		if (attrName == DEF_RESOURCE_NAME) {
+
+			name = string(attr->value());
+		}
+		else if (attrName == DEF_SHADER_TYPE) {
+
+			char* attrValue = attr->value();
+			if (attrValue == SHADERTYPE_FRAG) {
+				shadType = Shader::Fragment;
+			}
+			else if (attrValue == SHADERTYPE_VERT) {
+				shadType = Shader::Vertex;
+			}
+			else if (attrValue == SHADERTYPE_GEO) {
+				shadType = Shader::Geometry;
+			}
+			else
+				throw exception("Cant get shader type");
+		}
+		else if (attrName == DEF_PATH) {
+
+			if (shad != nullptr)
+				delete shad;
+			string shadPath = string(attr->value());
+			shad = LoadShaderByPath(shadPath, shadType);
+		}
+
+		attr = attr->next_attribute();
+	}
+
+	FStreamExts::ClearPath(name);
+	if (shad == nullptr)
+		throw exception("Absent shader");
+	return *new ExtGlRes_Shader(name, *shad);
+}
+
+
+const Texture* ExtGlobalResourcesLoad::GetTextureByName(string& path) {
+
+	FStreamExts::ClearPath(path);
+	ExtGlResource* res = ExternalGlobalResources::GetRes(path);
 	if (res == nullptr)
 		return nullptr;
 	return &dynamic_cast<ExtGlRes_Texture*>(res)->Tex;
 }
-const Font*		ExtGlobalResourcesLoad::GetFontByName() const{
-	ExtGlResource* res = ExternalGlobalResources::GetRes(LineBuffer);
+const Font* ExtGlobalResourcesLoad::GetFontByName(string& path) {
+
+	FStreamExts::ClearPath(path);
+	ExtGlResource* res = ExternalGlobalResources::GetRes(path);
 	if (res == nullptr)
 		return nullptr;
 	return &dynamic_cast<ExtGlRes_Font*>(res)->Font_;
 }
-Shader*	ExtGlobalResourcesLoad::GetShaderByName() const{
-	ExtGlResource* res = ExternalGlobalResources::GetRes(LineBuffer);
+Shader* ExtGlobalResourcesLoad::GetShaderByName(string& path) {
+
+	FStreamExts::ClearPath(path);
+	ExtGlResource* res = ExternalGlobalResources::GetRes(path);
 	if (res == nullptr)
 		return nullptr;
 	return &dynamic_cast<ExtGlRes_Shader*>(res)->Shader_;
 }
 
-const string ExtGlobalResourcesLoad::GetFilePath() {
-	return GLOBAL_RESOURCES_PATH;
+Texture* ExtGlobalResourcesLoad::LoadTextureByPath(string& path) {
+
+	FStreamExts::ClearPath(path);
+	Texture* tex = new Texture();
+	tex->loadFromFile(path);
+	return tex;
 }
-const char ExtGlobalResourcesLoad::GetValuesDefEndSym() {
-	return RESOURCE_DEF_END_SYM;
+Font* ExtGlobalResourcesLoad::LoadFontByPath(string& path) {
+
+	FStreamExts::ClearPath(path);
+	Font* font = new Font();
+	font->loadFromFile(path);
+	return font;
+}
+Shader* ExtGlobalResourcesLoad::LoadShaderByPath(string& path, Shader::Type type) {
+
+	FStreamExts::ClearPath(path);
+	Shader* shad = new Shader();
+	shad->loadFromFile(path, type);
+	return shad;
 }

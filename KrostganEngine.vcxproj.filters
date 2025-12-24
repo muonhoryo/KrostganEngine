@@ -756,6 +756,9 @@
     <ClCompile Include="Scripts\DecorationDeathModule.cpp">
       <Filter>Исходные файлы\CoreSystems\GameObjects\FightingSystems\HitPointSystem\DeathModules</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\ColliderDeserializer.cpp">
+      <Filter>Исходные файлы\CoreSystems\Physics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\CoreGameObjects.h">
@@ -1367,6 +1370,9 @@
     <ClInclude Include="Scripts\DecorationDeathModule.h">
       <Filter>Файлы заголовков\CoreSystems\GameObjects\FightingSystems\HitPointSystem\DeathModules</Filter>
     </ClInclude>
+    <ClInclude Include="Scripts\ColliderDeserializer.h">
+      <Filter>Файлы заголовков\CoreSystems\Physics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Config.txt">
@@ -1406,5 +1412,9 @@
     <None Include="UILayouts\WinMsg.xml">
       <Filter>UILayouts</Filter>
     </None>
+    <None Include="GlobalResources.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="TestLevelCatalog.xml" />
   </ItemGroup>
 </Project>

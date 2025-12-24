@@ -37,7 +37,7 @@ void LvlObjInstantiationInfo::Deserialize(const string& serInfo) {
 			end = serInfo.length();
 
 		subStr = serInfo.substr(0, end);
-		CatalogID = stoi(subStr);
+		CatalogID = stol(subStr);
 	}
 	else {
 		if (subInfoIndex != string::npos &&
@@ -52,7 +52,7 @@ void LvlObjInstantiationInfo::Deserialize(const string& serInfo) {
 		size_t start = 0;
 		size_t sepInd = 0;
 		subStr = serInfo.substr(0, end);
-		CatalogID = stoi(subStr);
+		CatalogID = stol(subStr);
 		start = end + LVLSER_ELEM_PARAMS_DEF.length();
 		const pair<const string, const string>* param = nullptr;
 
@@ -62,12 +62,10 @@ void LvlObjInstantiationInfo::Deserialize(const string& serInfo) {
 			sepInd = serInfo.find(ObjsCatalogDeserial::PAR_DEF_NAME_END_SYM, start);
 			if (end == string::npos)
 				break;
-			//subStr = serInfo.substr(start, end - 1);
 			param = new pair<const string, const string>(serInfo.substr(start, sepInd-start), serInfo.substr(sepInd + 1, serInfo.length() - sepInd));
 			attrs.push_back(param);
 			start = end + LVLSER_ELEM_PARAMS_DEF.length();
 		}
-		//subStr = serInfo.substr(start, serInfo.length() - start);
 		param = new pair<const string, const string>(serInfo.substr(start, sepInd- start), serInfo.substr(sepInd + 1, serInfo.length() - sepInd));
 		attrs.push_back(param);
 		if (attrs.size() != 0)
@@ -76,11 +74,51 @@ void LvlObjInstantiationInfo::Deserialize(const string& serInfo) {
 			delete& attrs;
 	}
 }
+void LvlObjInstantiationInfo::Deserialize(const xml_node<>& serInfo) {
+
+	const xml_attribute<>* attr = nullptr;
+	char* attrName = nullptr;
+	attr = serInfo.first_attribute();
+	AttrsCollectn& attrs = *new AttrsCollectn();
+	const pair<const string, const string>* param = nullptr;
+	string addParamName;
+	string addParamValue;
+	
+	//Deserialize attributes
+	while (attr != nullptr) {
+
+		attrName = attr->name();
+		if (attrName == SerializationParDefNames::OBJECT_CATALOG_ID) {
+
+			CatalogID = stol(attr->value());
+		}
+		else if (attrName == SerializationParDefNames::OBJECT_SUB_CATALOG_ID) {
+
+			CatalogSubID = (std::byte)stoi(attr->value());
+		}
+		else {
+
+			addParamName = string(attrName);
+			addParamValue = string(attr->value());
+			param = new pair<const string, const string>(addParamName, addParamValue);
+			attrs.push_back(param);
+		}
+
+		attr = attr->next_attribute();
+	}
+
+	
+	if (attrs.size() != 0)
+		AdditParams = new LvlObjAdditParams(attrs);
+	else
+		delete& attrs;
+}
+
 WorldTransfObj* LvlObjInstantiationInfo::InstantiateObj() const {
 
-	auto objInfo = ObjectsCatalog::GetObjectInfo(CatalogID);
+	auto& objInfo = ObjectsCatalog::GetObjectInfo(CatalogID);
 	auto subInfo = ObjectsCatalog::GetSubObjInfo(CatalogID, CatalogSubID);
-	return objInfo->InstantiateObject(subInfo, AdditParams);
+	return objInfo.InstantiateObject(subInfo, AdditParams);
 }
 
 vector<LvlObjInstantiationInfo*>* LvlObjInstantiationInfo::DeserializeRow(const string& row) {
@@ -118,6 +156,38 @@ vector<LvlObjInstantiationInfo*>* LvlObjInstantiationInfo::DeserializeRow(const 
 		delete& deserRow;
 		return nullptr;
 	}
+}
+
+vector<LvlObjInstantiationInfo*>* LvlObjInstantiationInfo::DeserializeRow(const xml_node<>& rootNode) {
+
+	vector<LvlObjInstantiationInfo*>& deserRow = *new vector<LvlObjInstantiationInfo*>();
+	
+	LvlObjInstantiationInfo* instInfo = nullptr;
+	const xml_node<>* ch = rootNode.first_node();
+	while (ch != nullptr) {
+
+		if (ch->name() != SerXMLObjChildrenTypes::CHILD)
+			throw exception("In children field must be only children of object");
+
+		instInfo = new LvlObjInstantiationInfo();
+
+		instInfo->Deserialize(*ch);
+
+		if (instInfo->CatalogID == ObjectsCatalog::EMPTY_CATALOG_ID)
+			throw exception("Instantiation injo hasn't CatalogID");
+
+		deserRow.push_back(instInfo);
+
+		ch = ch->next_sibling();
+	}
+
+	if (deserRow.size() == 0) {
+
+		delete& deserRow;
+		return nullptr;
+	}
+	else
+		return &deserRow;
 }
 
 //WorldObjectLoadInfo
@@ -188,14 +258,6 @@ bool WorldObjectLoadInfo::WriteParam(Attr& param) {
 	else if (CheckParamName(param, SerializationParDefNames::OBJECT_SIZE)) {
 		Size = stof(param.second);
 	}
-	else if (CheckParamName(param, SerializationParDefNames::OBJECT_CHILDREN)) {
-
-		ChildObjs.clear();
-		auto info = LvlObjInstantiationInfo::DeserializeRow(param.second);
-		for (auto in : *info) {
-			ChildObjs.push_back(LvlObjInstantiationInfo(*in));
-		}
-	}
 	else if (CheckParamName(param, SerializationParDefNames::OBJECT_REND_WARFOG_ISHIDEN)){
 		WarFog_IsHiden = FStreamExts::ParseBool(param.second);
 	}
@@ -205,6 +267,23 @@ bool WorldObjectLoadInfo::WriteParam(Attr& param) {
 	else {
 		return false;
 	}
+	return true;
+}
+bool WorldObjectLoadInfo::WriteParamByNode(xml_node<>& node) {
+
+	char* nodeName = node.name();
+
+	if (nodeName == SerXMLObjChildrenTypes::CHILDREN) {
+
+		ChildObjs.clear();
+		auto info = LvlObjInstantiationInfo::DeserializeRow(node);
+		for (auto in : *info) {
+			ChildObjs.push_back(LvlObjInstantiationInfo(*in));
+		}
+	}
+	else
+		return false;
+
 	return true;
 }
 
@@ -300,22 +379,36 @@ bool EntityLoadInfo::WriteParam(Attr& param) {
 		SelectionAreaSource = param.second;
 		FStreamExts::ClearPath(SelectionAreaSource);
 	}
-	else if (CheckParamName(param, SerializationParDefNames::ENTITY_BATTLE_STATS)) {
-		WriteBattleStatsParams(param.second, BattleStats);
-	}
-	else if (CheckParamName(param, SerializationParDefNames::ENTITY_AA_STATS)) {
-
-		auto index = BattleStats.AddAAStats(*new AutoAttackStats());
-		BattleStats.SetAAStats(index);
-		auto stats = BattleStats.GetCurrAAStats();
-		WriteBattleStatsParams(param.second, *stats);
-		BattleStats.SetAAStats(0);
-	}
 	else {
 		return false;
 	}
 	return true;
 }
+bool EntityLoadInfo::WriteParamByNode(xml_node<>& node) {
+
+	if (WorldObjectLoadInfo::WriteParamByNode(node))
+		return false;
+
+	char* nodeName = node.name();
+
+	if (nodeName == SerXMLObjChildrenTypes::AASTATS) {
+
+		auto index = BattleStats.AddAAStats(*new AutoAttackStats());
+		BattleStats.SetAAStats(index);
+		auto stats = BattleStats.GetCurrAAStats();
+		WriteBattleStatsParams(node, *stats);
+		BattleStats.SetAAStats(0);
+	}
+	else if (nodeName == SerXMLObjChildrenTypes::BATSTATS) {
+
+		WriteBattleStatsParams(node, BattleStats);
+	}
+	else
+		return false;
+
+	return true;
+}
+
 EntityLoadInfo::EntityLoadInfo(const EntityLoadInfo& copy)
 	:GameObjectLoadInfo(copy){
 
@@ -351,6 +444,22 @@ void EntityLoadInfo::WriteBattleStatsParams(const string& input, IModifiableStat
 			stats.WriteParam(*param);
 			start = end + ENTITY_BSTATS_PARAMS_SEP.length();
 		}
+	}
+}
+void EntityLoadInfo::WriteBattleStatsParams(const xml_node<>& input, IModifiableStatsWrapper& stats) {
+
+	string attrName;
+	string attrValue;
+	Attr* param = nullptr;
+	const xml_attribute<>* attr = input.first_attribute();
+	while (attr != nullptr) {
+
+		attrName = attr->name();
+		attrValue = attr->value();
+		param = new Attr(attrName, attrValue);
+		stats.WriteParam(*param);
+
+		attr = attr->next_attribute();
 	}
 }
 

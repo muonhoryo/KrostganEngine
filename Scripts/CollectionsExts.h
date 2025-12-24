@@ -282,5 +282,26 @@ namespace KrostganEngine {
 			}
 			collection.insert(it, element);
 		}
+
+		template<typename TCollectionType>
+		static char* Join(const TCollectionType& collection) {
+
+			string testStr;
+			size_t size = 0;
+			for (auto& str : collection) {
+
+				size += str.size();
+			}
+			char* result = new char[size];
+			char* offset = result;
+			const char* buffer = nullptr;
+			for (auto& str : collection) {
+
+				buffer = str.c_str();
+				strcpy_s(offset, str.size()+1, buffer);
+				offset += str.size();
+			}
+			return result;
+		}
 	};
 }

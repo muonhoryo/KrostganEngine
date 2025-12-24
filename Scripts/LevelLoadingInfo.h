@@ -48,6 +48,7 @@ namespace KrostganEngine::Core {
 		/// <param name="param"></param>
 		/// <returns></returns>
 		virtual bool WriteParam(Attr& param);
+		virtual bool WriteParamByNode(xml_node<>& node);
 
 	protected:
 		WorldObjectLoadInfo() { }
@@ -110,6 +111,7 @@ namespace KrostganEngine::Core {
 		EntityBattleStats	BattleStats				= EntityBattleStats();
 
 		bool WriteParam(Attr& param) override;
+		bool WriteParamByNode(xml_node<>& node) override;
 
 	protected:
 		EntityLoadInfo():GameObjectLoadInfo(){}
@@ -117,6 +119,7 @@ namespace KrostganEngine::Core {
 
 		void VerifyAAStatsExisting();
 		void WriteBattleStatsParams(const string& input, IModifiableStatsWrapper& stats);
+		void WriteBattleStatsParams(const xml_node<>& input, IModifiableStatsWrapper& stats);
 
 		void FillCtorParams(GameObjectCtorParams& params, const GameObjectLoadInfo& usedInfo) const override;
 
@@ -237,7 +240,7 @@ namespace KrostganEngine::Core {
 	struct LevelLoadingInfo final {
 
 		vector<vector<LvlObjInstantiationInfo*>*>& LevelMap;
-		forward_list<WorldObjectLoadInfo*>& UniqueObjects;
+		forward_list<LvlObjInstantiationInfo*>& UniqueObjects;
 		size_t MapRowsCount = 0;
 		size_t MapColumnsCount = 0;
 
@@ -249,7 +252,7 @@ namespace KrostganEngine::Core {
 
 		string WarFogShaderPath;
 
-		LevelLoadingInfo(vector<vector<LvlObjInstantiationInfo*>*>& LevelMap, forward_list<WorldObjectLoadInfo*>& UniqueObjects)
+		LevelLoadingInfo(vector<vector<LvlObjInstantiationInfo*>*>& LevelMap, forward_list<LvlObjInstantiationInfo*>& UniqueObjects)
 			:LevelMap(LevelMap),
 			UniqueObjects(UniqueObjects)
 		{}

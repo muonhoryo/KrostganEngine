@@ -48,22 +48,22 @@ void LevelLoader::LoadLevel(const LevelLoadingInfo& levelInfo) {
 					subInfo = ObjectsCatalog::GetSubObjInfo(cell->CatalogID, cell->CatalogSubID);
 				}
 
-				objInfo = ObjectsCatalog::GetObjectInfo(cell->CatalogID);
+				objInfo = &ObjectsCatalog::GetObjectInfo(cell->CatalogID);
 				obj = objInfo->InstantiateObject(subInfo, cell->AdditParams);
 				if((Vector2i)obj->GetGlobalPosition()== ITransformableObj::NULL_POS)
 					obj->SetGlobalPosition(LevelCellMapDeser::GetCellGlobalPosition(Vector2u(i, j)));
 				subInfo = nullptr;
-
-				cout << ObjectsCatalog::GetObjectInfo(cell->CatalogID)->Name << ": " << to_string(obj->GetGlobalPosition()) << endl;
 			}
 		}
 	}
 
-	for (auto obj : levelInfo.UniqueObjects) {
+	for (auto unObjInfo : levelInfo.UniqueObjects) {
 
-		auto insObj=obj->InstantiateObject();
-
-		cout << obj->Name << ": " << to_string(insObj->GetGlobalPosition()) << endl;
+		objInfo = &ObjectsCatalog::GetObjectInfo(unObjInfo->CatalogID);
+		if (unObjInfo->CatalogSubID != ObjectsCatalog::ABSENT_SUB_CATALOG_ID)
+			subInfo = ObjectsCatalog::GetSubObjInfo(unObjInfo->CatalogID, unObjInfo->CatalogSubID);
+		obj = objInfo->InstantiateObject(subInfo, unObjInfo->AdditParams);
+		subInfo = nullptr;
 	}
 
 	LevelBypassMapManager::LoadFromLevelMap(levelInfo.LevelMap);

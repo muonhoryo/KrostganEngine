@@ -4,9 +4,11 @@
 #include <LevelLoadingInfo.h>
 #include <SFML/System.hpp>
 #include <LevelSerialization.h>
+#include <rapidxml.hpp>
 
 using namespace sf;
 using namespace std;
+using namespace rapidxml;
 
 #define _ObjSubsPairType		pair<std::byte,LvlObjAdditParams*>
 #define _ObjSubsCollection		vector<_ObjSubsPairType>
@@ -33,16 +35,16 @@ namespace KrostganEngine::Core {
 
 	public:
 
-		static void					Add(WorldObjectLoadInfo* obj) {
-			if (obj->CatID== EMPTY_CATALOG_ID)
+		static void					Add(WorldObjectLoadInfo& obj) {
+			if (obj.CatID== EMPTY_CATALOG_ID)
 				return;
 
-			if (Catalog.find(obj->CatID) == Catalog.end()) {
-				Catalog.insert(pair<size_t, WorldObjectLoadInfo*>(obj->CatID, obj));
+			if (Catalog.find(obj.CatID) == Catalog.end()) {
+				Catalog.insert(pair<size_t, WorldObjectLoadInfo*>(obj.CatID, &obj));
 			}
 		}
-		static void					Remove(WorldObjectLoadInfo* obj) {
-			Remove(obj->CatID);
+		static void					Remove(WorldObjectLoadInfo& obj) {
+			Remove(obj.CatID);
 		}
 		static void					Remove(size_t id) {
 			Catalog.erase(id);
@@ -57,8 +59,8 @@ namespace KrostganEngine::Core {
 		static size_t				GetCatalogSize() {
 			return Catalog.size();
 		}
-		static WorldObjectLoadInfo*	GetObjectInfo(size_t id) {
-			return Catalog[id];
+		static WorldObjectLoadInfo&	GetObjectInfo(size_t id) {
+			return *Catalog[id];
 		}
 
 		static void						AddSub(size_t objID, std::byte subID, LvlObjAdditParams& subObjInfo) {
@@ -138,13 +140,32 @@ namespace KrostganEngine::Core {
 	class ObjsCatalogDeserial {
 		
 	public:
-		static void										DeserializeCatalog(string serPath);
-		static WorldObjectLoadInfo&						ParseObjInfo	(const vector<string>& params);
-		static pair<size_t,_ObjSubsPairType>&			ParseObjSubinfo	(const vector<string>& params);
+		/// <summary>
+		/// Fill objects catalog with objects, deserialized from xml-file
+		/// </summary>
+		/// <param name="line"></param>
+		/// <returns></returns>
+		static void										DeserializeCatalog(const string& serPath);
+		/// <summary>
+		/// Divide line of param definition and return pair with serialized name and value of param
+		/// </summary>
 		static const pair<const string, const string>*	ParseParamLine(const string& line);
+		/// <summary>
+		/// Deserialize object's info only and return it
+		/// </summary>
+		static WorldObjectLoadInfo&						DeserializeObjInfo(xml_node<>& serObj);
 
 		static inline const string PAR_DEF_NAME_END_SYM = ":";
-		static inline const string OBJECTS_SEP_LINE = "endl;";
+
+	private:
+		/// <summary>
+		/// Deserialize object info with its sub infos and add them to the ObjectsCatalog
+		/// </summary>
+		static void	DeserObjForCatalog (xml_node<>& serObj);
+
+		static _ObjSubsPairType&						ParseObjSubInfo(const xml_node<>& serObj);
+		static pair<size_t,_ObjSubsPairType>&			ParseObjSubinfo	(const vector<string>& params);
+
 
 	private:
 		ObjsCatalogDeserial() {}
@@ -160,16 +181,23 @@ namespace KrostganEngine::Core {
 		static inline const string OBJECT_TYPE_AA_PROJECTILE = "Projectile";
 		static inline const string OBJECT_TYPE_DECORATION = "Decoration";
 	};
-	struct SerializationParDefNames {
-		static inline const string CATALOG_SUB_INFO_ID	= "Subcatalog";
+	struct SerXMLObjChildrenTypes {
 
-		static inline const string OBJECT_NAME			= "Name";
-		static inline const string OBJECT_POSITION		= "Position";
-		static inline const string OBJECT_ROTATION		= "Rotation";
-		static inline const string OBJECT_SIZE			= "Size";
-		static inline const string OBJECT_TYPE			= "Type";
-		static inline const string OBJECT_CATALOG_ID	= "CatalogID";
-		static inline const string OBJECT_CHILDREN		= "Children";
+		static inline const string SUBINFO		= "Subcatalog";
+		static inline const string CHILDREN		= "Children";
+		static inline const string CHILD		= "Child";
+		static inline const string AASTATS		= "AAStats";
+		static inline const string BATSTATS		= "BattleStats";
+	};
+	struct SerializationParDefNames {
+
+		static inline const string OBJECT_NAME				= "Name";
+		static inline const string OBJECT_POSITION			= "Position";
+		static inline const string OBJECT_ROTATION			= "Rotation";
+		static inline const string OBJECT_SIZE				= "Size";
+		static inline const string OBJECT_TYPE				= "Type";
+		static inline const string OBJECT_CATALOG_ID		= "CatalogID";
+		static inline const string OBJECT_SUB_CATALOG_ID	= "SubCatalogID";
 
 		static inline const string OBJECT_REND_WARFOG_ISHIDEN	= "WarFog_IsHiden";
 		static inline const string OJBECT_REND_WARFOG_ISSHOWED	= "WarFog_IsShowed";
@@ -184,11 +212,10 @@ namespace KrostganEngine::Core {
 		static inline const string ENTITY_HPBAR_SPRITE_SOURCE	= "HPBarSprite";
 		static inline const string ENTITY_HPBAR_MASK			= "HPBarMask";
 
-		static inline const string ENTITY_BATTLE_STATS			= "BattleStats";
-		static inline const string ENTITY_AA_STATS				= "AAStats";
-
 		static inline const string DECOR_HP_CURRENT			= "CurrentHP";
 		static inline const string DECOR_HP_MAX				= "MaxHP";
 		static inline const string DECOR_ISTARGBLE_FORAA	= "IsTargetableForAA";
+
+		static inline const string PHYS_COLLIDER_DEF = "Collider";
 	};
 }

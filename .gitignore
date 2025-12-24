@@ -370,3 +370,5 @@ FodyWeavers.xsd
 *.jpg
 
 !Scripts/rapidxml/license.txt
+GlobalResources.xml
+TestLevelCatalog.xml

@@ -30,7 +30,7 @@ namespace KrostganEngine::Core {
 			forward_list<Vector2u> addedPnts;
 
 			for (int i = 0;i < ObjectsCatalog::GetCatalogSize();++i) {			
-				wallinf = dynamic_cast<WallLoadInfo*>(ObjectsCatalog::GetObjectInfo(i));
+				wallinf = dynamic_cast<WallLoadInfo*>(&ObjectsCatalog::GetObjectInfo(i));
 				if (wallinf != nullptr)
 					wallIndexes.push_back(wallinf->CatID);
 			}

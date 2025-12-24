@@ -146,6 +146,7 @@
     <ClCompile Include="Scripts\CameraControlInputHandler.cpp" />
     <ClCompile Include="Scripts\CircleCollShape.cpp" />
     <ClCompile Include="Scripts\CircleVisPrimitive.cpp" />
+    <ClCompile Include="Scripts\ColliderDeserializer.cpp" />
     <ClCompile Include="Scripts\ColliderShapes.cpp" />
     <ClCompile Include="Scripts\CommonHPRegenModule.cpp" />
     <ClCompile Include="Scripts\DbgConsoleInputHandler.cpp" />
@@ -286,6 +287,7 @@
     <ClInclude Include="Scripts\CallbackDelegates.h" />
     <ClInclude Include="Scripts\CachedBattleStats.h" />
     <ClInclude Include="Scripts\CameraControlInputHan.h" />
+    <ClInclude Include="Scripts\ColliderDeserializer.h" />
     <ClInclude Include="Scripts\CommonHPRegenModule.h" />
     <ClInclude Include="Scripts\CoreVisual.h" />
     <ClInclude Include="Scripts\DBG_ImmortalArmy.h" />
@@ -489,6 +491,12 @@
     <None Include="UILayouts\LoseMsg.xml" />
     <None Include="UILayouts\MainMenu.xml" />
     <None Include="UILayouts\WinMsg.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="GlobalResources.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="TestLevelCatalog.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

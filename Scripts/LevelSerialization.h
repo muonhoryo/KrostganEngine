@@ -12,8 +12,10 @@ using namespace KrostganEngine::GameObjects;
 namespace KrostganEngine::Core {
 	class LevelSerialization {
 	public:
-		static LevelLoadingInfo& DeserializeLevel(string serPath);
+		static LevelLoadingInfo& DeserializeLevel(const string& serPath);
 		static void SerializeLevel(string serPath, LevelLoadingInfo levelInfo);
+
+		static inline const string UNIQUE_OBJECTS_HEADER = "UniqueObjects:";
 
 		static inline const string DEF_CAMERA_BORDERS_AREA_LEFT = "Camera_Borders_Left";
 		static inline const string DEF_CAMERA_BORDERS_AREA_RIGHT = "Camera_Borders_Right";
