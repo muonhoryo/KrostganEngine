@@ -13,6 +13,8 @@ namespace KrostganEngine::Physics {
 
 	struct ColliderShape {
 	public:
+		virtual ColliderShape& Clone() const = 0;
+
 		virtual bool Intersect(const CircleCollShape& objShape) const = 0;
 		virtual bool Intersect(const AABBCollShape& objShape)const = 0;
 		virtual bool Intersect(const ColliderShape* coll[], size_t count)const = 0;
@@ -44,6 +46,10 @@ namespace KrostganEngine::Physics {
 	{
 		AABBCollShape(Vector2f Min,Vector2f Max);
 
+		ColliderShape& Clone() const override;
+
+		static AABBCollShape& InstanceBy_CenterAndSize(Vector2f center, float width, float height);
+
 		 Vector2f Min;
 		 Vector2f Max;
 
@@ -72,6 +78,8 @@ namespace KrostganEngine::Physics {
 	struct CircleCollShape: public ColliderShape {
 		CircleCollShape(Vector2f Center, float Radius);
 		~CircleCollShape(){}
+
+		ColliderShape& Clone() const override;
 		
 		 Vector2f Center;
 		 float Radius;
@@ -95,6 +103,10 @@ namespace KrostganEngine::Physics {
 	};
 
 	struct EmptyShape :ColliderShape {
+
+		ColliderShape& Clone() const override {
+			return *new EmptyShape();
+		}
 
 		bool Intersect(const CircleCollShape& collision) const  override {
 			return false;

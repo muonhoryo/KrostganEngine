@@ -8,6 +8,10 @@ using namespace std;
 using namespace sf;
 
 void FStreamExts::ClearPath(string& path) {
+
+	if (path.size() <= 1)
+		return;
+
 	long long index = -1;
 	long long nextIndex = -1;
 	long long count = path.size();

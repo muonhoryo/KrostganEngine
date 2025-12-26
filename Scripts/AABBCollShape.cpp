@@ -17,6 +17,24 @@ AABBCollShape::AABBCollShape(Vector2f Min,Vector2f Max)
 	this->Max = Max;
 }
 
+ColliderShape& AABBCollShape::Clone() const {
+
+	return *new AABBCollShape(Min, Max);
+}
+
+AABBCollShape& AABBCollShape::InstanceBy_CenterAndSize(Vector2f center, float width, float height) {
+
+	width *= 0.5;
+	height *= 0.5;
+	Vector2f min = center;
+	Vector2f max = center;
+	min.x -= width;
+	min.y -= height;
+	max.x += width;
+	max.y += height;
+	return *new AABBCollShape(min, max);
+}
+
 bool AABBCollShape::Intersect(const AABBCollShape& collision) const {
 	return Intersect_AABBvsAABB(collision, *this);
 }

@@ -12,6 +12,11 @@ CircleCollShape::CircleCollShape(Vector2f Center, float Radius)
 	this->Radius= Radius;
 }
 
+ColliderShape& CircleCollShape::Clone() const {
+
+	return *new CircleCollShape(Center, Radius);
+}
+
 bool CircleCollShape::Intersect(const AABBCollShape& collision) const {
 	return Intersect_CircleVsAABB(*this, collision);
 }

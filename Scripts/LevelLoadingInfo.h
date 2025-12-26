@@ -171,15 +171,17 @@ namespace KrostganEngine::Core {
 
 		virtual ~DecorationLoadInfo(){}
 
-		string	HitEffectSprite = "";
-		size_t	CurrentHP = 1;
-		size_t	MaxHP = 1;
-		bool	IsTargetableForAA = true;
+		string			HitEffectSprite = "";
+		size_t			CurrentHP = 1;
+		size_t			MaxHP = 1;
+		bool			IsTargetableForAA = true;
+		ColliderShape*	Collider = nullptr;
 
 		DecorationLoadInfo() : GameObjectLoadInfo(){}
 		DecorationLoadInfo(const DecorationLoadInfo& copy);
 
 		bool WriteParam(Attr& param) override;
+		bool WriteParamByNode(xml_node<>& node) override;
 
 	protected:
 		void FillCtorParams(GameObjectCtorParams& params, const GameObjectLoadInfo& usedInfo) const override;

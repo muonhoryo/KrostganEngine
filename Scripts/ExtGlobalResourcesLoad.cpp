@@ -74,6 +74,7 @@ ExtGlRes_Texture& ExtGlobalResourcesLoad::DeserRes_Texture(xml_node<>& serRes) {
 	char* attrName = nullptr;
 
 	string name = "";
+	string texPath = "";
 	const Texture* tex = nullptr;
 	while (attr != nullptr) {
 
@@ -87,12 +88,17 @@ ExtGlRes_Texture& ExtGlobalResourcesLoad::DeserRes_Texture(xml_node<>& serRes) {
 
 			if (tex != nullptr)
 				delete tex;
-			string path = string(attr->value());
-			tex = LoadTextureByPath(path);
+			texPath = string(attr->value());
+			
 		}
 
 		attr = attr->next_attribute();
 	}
+
+	if (texPath == "")
+		throw exception("Absent path to texture");
+
+	tex = LoadTextureByPath(texPath);
 
 	FStreamExts::ClearPath(name);
 	if (tex == nullptr)
@@ -106,6 +112,8 @@ ExtGlRes_Sprite& ExtGlobalResourcesLoad::DeserRes_Sprite(xml_node<>& serRes) {
 	char* attrName = nullptr;
 
 	string name = "";
+	string texSource = "";
+	string shadName = "";
 	const Texture* tex = nullptr;
 	Shader* shad = nullptr;
 	float maxSize = Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution;
@@ -119,26 +127,11 @@ ExtGlRes_Sprite& ExtGlobalResourcesLoad::DeserRes_Sprite(xml_node<>& serRes) {
 		}
 		else if (attrName == DEF_SOURCE) {
 
-			char* attrValue = attr->value();
-			if (tex != nullptr)
-				delete tex;
-			if (ValuesListDeserializer::CouldBeName(attrValue)) {
-
-				string texName = string(attrValue);
-				tex = GetTextureByName(texName);
-			}
-			else {
-
-				string path = string(attrValue);
-				tex = LoadTextureByPath(path);
-			}
+			texSource = string(attr->value());
 		}
 		else if (attrName == DEF_RENDER_SHADER) {
 
-			if (shad != nullptr)
-				delete shad;
-			string shadName = string(attr->value());
-			shad = GetShaderByName(shadName);
+			shadName = string(attr->value());
 		}
 		else if (attrName == DEF_SPRITE_MAXSIZE) {
 
@@ -147,6 +140,21 @@ ExtGlRes_Sprite& ExtGlobalResourcesLoad::DeserRes_Sprite(xml_node<>& serRes) {
 
 		attr = attr->next_attribute();
 	}
+
+	if (texSource == "")
+		throw exception("Absent texture source");
+
+
+	if (ValuesListDeserializer::CouldBeName(texSource)) {
+
+		tex = GetTextureByName(texSource);
+	}
+	else {
+
+		tex = LoadTextureByPath(texSource);
+	}
+
+	shad = GetShaderByName(shadName);
 
 	FStreamExts::ClearPath(name);
 	if (tex == nullptr)
@@ -160,6 +168,7 @@ ExtGlRes_Font& ExtGlobalResourcesLoad::DeserRes_Font(xml_node<>& serRes) {
 	char* attrName = nullptr;
 
 	string name = "";
+	string fontPath = "";
 	Font* font = nullptr;
 	while (attr != nullptr) {
 
@@ -171,14 +180,16 @@ ExtGlRes_Font& ExtGlobalResourcesLoad::DeserRes_Font(xml_node<>& serRes) {
 		}
 		else if (attrName == DEF_PATH) {
 
-			if (font != nullptr)
-				delete font;
-			string path = string(attr->value());
-			font = LoadFontByPath(path);
+			fontPath = string(attr->value());
 		}
 
 		attr = attr->next_attribute();
 	}
+
+	if (fontPath == "")
+		throw exception("Absent font path");
+
+	font = LoadFontByPath(fontPath);
 
 	FStreamExts::ClearPath(name);
 	if (font == nullptr)
@@ -192,6 +203,7 @@ ExtGlRes_Shader& ExtGlobalResourcesLoad::DeserRes_Shader(xml_node<>& serRes) {
 	char* attrName = nullptr;
 
 	string name = "";
+	string shadPath = "";
 	Shader* shad = nullptr;
 	Shader::Type shadType = Shader::Type::Fragment;
 	while (attr != nullptr) {
@@ -219,14 +231,16 @@ ExtGlRes_Shader& ExtGlobalResourcesLoad::DeserRes_Shader(xml_node<>& serRes) {
 		}
 		else if (attrName == DEF_PATH) {
 
-			if (shad != nullptr)
-				delete shad;
-			string shadPath = string(attr->value());
-			shad = LoadShaderByPath(shadPath, shadType);
+			shadPath = string(attr->value());
 		}
 
 		attr = attr->next_attribute();
 	}
+
+	if (shadPath == "")
+		throw exception("Absent shader path");
+
+	shad = LoadShaderByPath(shadPath, shadType);
 
 	FStreamExts::ClearPath(name);
 	if (shad == nullptr)

@@ -67,10 +67,11 @@ namespace KrostganEngine::GameObjects {
 
 		DecorationCtorParams() :GameObjectCtorParams() {}
 
-		size_t CurrentHP =1;
-		size_t MaxHP = 1;
-		bool IsTargetableForAutoAttack = true;
+		size_t			CurrentHP =1;
+		size_t			MaxHP = 1;
+		bool			IsTargetableForAutoAttack = true;
 		SpriteRenderer* HitEffectSprite = nullptr;
+		ColliderShape*	Collider = nullptr;
 
 		IHitPointModule* GetHPModule() const { return HPModule; }
 		IDeathModule* GetDeathModule() const { return DeathModule; }

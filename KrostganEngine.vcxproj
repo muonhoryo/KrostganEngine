@@ -187,7 +187,7 @@
     <ClCompile Include="Scripts\LineAAAnimation.cpp" />
     <ClCompile Include="Scripts\LoseScript.cpp" />
     <ClCompile Include="Scripts\MainMenuTransitionHandler.cpp" />
-    <ClCompile Include="Scripts\ObjectsCatalog.cpp" />
+    <ClCompile Include="Scripts\ObjsCatalogDeserial.cpp" />
     <ClCompile Include="Scripts\LevelCellMapDeser.cpp" />
     <ClCompile Include="Scripts\ObservingArea.cpp" />
     <ClCompile Include="Scripts\OutlineLineVisual.cpp" />

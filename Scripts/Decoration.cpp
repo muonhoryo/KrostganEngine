@@ -10,8 +10,9 @@ using namespace KrostganEngine::GameObjects;
 
 DecorationObject::DecorationObject(DecorationCtorParams& params)
 	:GameObject(params),
+		Collider(*((params.Collider==nullptr)?new EmptyShape():params.Collider)),
 		//test
-		Collider(*new CircleCollShape(GetGlobalPosition(), Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution * 0.5f)),
+		//Collider(*new CircleCollShape(GetGlobalPosition(), Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution * 0.5f)),
 		//test endl
 		HitEffectSprite(params.HitEffectSprite),
 		IsTargetableForAutoAttack(params.IsTargetableForAutoAttack){
@@ -26,6 +27,7 @@ DecorationObject::DecorationObject(DecorationCtorParams& params)
 	HitEffectSprite->SetGlobalPosition(GetGlobalPosition());
 	HitEffectSprite->SetParent(this);
 
+	Collider.MoveCollider(GetGlobalPosition());
 	RecreateCollider(1, GetGlobalScale_Sng());
 }
 DecorationObject::~DecorationObject() {

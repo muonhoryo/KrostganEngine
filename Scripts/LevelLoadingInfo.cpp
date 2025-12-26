@@ -552,7 +552,8 @@ DecorationLoadInfo::DecorationLoadInfo(const DecorationLoadInfo& copy)
 	HitEffectSprite = copy.HitEffectSprite;
 	CurrentHP = copy.CurrentHP;
 	MaxHP = copy.MaxHP;
-	IsTargetableForAA = copy.IsTargetableForAA;;
+	IsTargetableForAA = copy.IsTargetableForAA;
+	Collider = &copy.Collider->Clone();
 }
 
 bool DecorationLoadInfo::WriteParam(Attr& param) {
@@ -581,6 +582,24 @@ bool DecorationLoadInfo::WriteParam(Attr& param) {
 	return true;
 }
 
+bool DecorationLoadInfo::WriteParamByNode(xml_node<>& node) {
+	if (WorldObjectLoadInfo::WriteParamByNode(node))
+		return true;
+
+	char* nodeName = node.name();
+
+	if (nodeName == SerXMLObjChildrenTypes::Collider) {
+
+		if (Collider != nullptr)
+			delete Collider;
+		Collider = &ColliderDeserializer::DeserializeCollider(node);
+	}
+	else
+		return false;
+
+	return true;
+}
+
 void DecorationLoadInfo::FillCtorParams(GameObjectCtorParams& params, const GameObjectLoadInfo& usedInfo) const {
 
 	GameObjectLoadInfo::FillCtorParams(params, usedInfo);
@@ -597,6 +616,7 @@ void DecorationLoadInfo::FillCtorParams(GameObjectCtorParams& params, const Game
 	parParams->HitEffectSprite->SetRendLayer((std::byte)40);
 	parParams->CurrentHP = parUsedInfo->CurrentHP;
 	parParams->MaxHP = parUsedInfo->MaxHP;
+	parParams->Collider = Collider;
 }
 
 WorldTransfObj* DecorationLoadInfo::InstantiateObject_Action(const WorldObjectLoadInfo& usedInfo) const {

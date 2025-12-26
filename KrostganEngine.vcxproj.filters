@@ -597,7 +597,7 @@
     <ClCompile Include="Scripts\LevelCellMapDeser.cpp">
       <Filter>Исходные файлы\CoreSystems\GameLevel\LevelLoading</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\ObjectsCatalog.cpp">
+    <ClCompile Include="Scripts\ObjsCatalogDeserial.cpp">
       <Filter>Исходные файлы\CoreSystems\GameLevel\LevelLoading</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\BypassVertex.cpp">

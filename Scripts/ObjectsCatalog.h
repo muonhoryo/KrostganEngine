@@ -188,6 +188,7 @@ namespace KrostganEngine::Core {
 		static inline const string CHILD		= "Child";
 		static inline const string AASTATS		= "AAStats";
 		static inline const string BATSTATS		= "BattleStats";
+		static inline const string Collider		= "Collider";
 	};
 	struct SerializationParDefNames {
 
