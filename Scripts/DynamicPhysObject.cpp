@@ -24,9 +24,10 @@ void DynamicPhysObject::Update(CallbackRecArgs_LUpd args) {
 		size_t max = Engine::GetGlobalConsts().Physics_MaxCollsResolvCount;
 		DynamicPhysObject* dynPhObj = nullptr;
 		Vector2f resolPnt;
-		bool isSlide;
+		//bool isSlide;
 		for (auto coll : colls) {
-			if (coll == this)
+			if (coll == this ||
+				!coll->IsSolidCollision())
 				continue;
 
 			//dynPhObj = dynamic_cast<DynamicPhysObject*>(coll);

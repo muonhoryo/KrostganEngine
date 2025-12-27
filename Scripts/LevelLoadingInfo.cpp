@@ -329,6 +329,9 @@ bool GameObjectLoadInfo::WriteParam(Attr& param) {
 		SpriteSource = *new string(param.second);
 		FStreamExts::ClearPath(SpriteSource);
 	}
+	else if (param.first == SerializationParDefNames::GAMEOBJ_ISSOLID_COLL) {
+		SolidCollision = FStreamExts::ParseBool(param.second);
+	}
 	else
 		return false;
 
@@ -344,6 +347,7 @@ void GameObjectLoadInfo::FillCtorParams(GameObjectCtorParams& params, const Game
 	params.GlobalPosition = usedInfo.Position;
 	params.GlobalScale = usedInfo.Size;
 	params.CatalogID = usedInfo.CatID;
+	params.SolidCollision = usedInfo.SolidCollision;
 }
 
 //Entity

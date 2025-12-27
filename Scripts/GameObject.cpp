@@ -28,7 +28,8 @@ GameObject::GameObject(const GameObjectCtorParams& params)
 		params.BodySpriteSource->Tex,
 		*this,
 		Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution,
-		params.BodySpriteSource->RenShader))
+		params.BodySpriteSource->RenShader)),
+	SolidCollision(params.SolidCollision)
 {
 	SetGlobalPosition(params.GlobalPosition);
 	SetGlobalScale_Sng(params.GlobalScale);
@@ -65,4 +66,12 @@ Color	GameObject::GetColor() const {
 }
 void	GameObject::SetColor(Color color) {
 	BodySprite.SetColor(color);
+}
+
+bool GameObject::IsSolidCollision() const {
+	return SolidCollision;
+}
+
+void GameObject::Set_IsSolidCollision(bool isSolidColl) {
+	SolidCollision = isSolidColl;
 }

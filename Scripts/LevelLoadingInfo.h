@@ -84,6 +84,8 @@ namespace KrostganEngine::Core {
 		virtual ~GameObjectLoadInfo(){}
 
 		string SpriteSource="";
+		
+		bool SolidCollision = true;
 
 		/// <summary>
 		/// Return true if param was wrotten.

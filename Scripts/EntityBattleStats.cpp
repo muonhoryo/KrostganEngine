@@ -47,6 +47,7 @@ void EntityBattleStats::InitializeDefaultStats() {
 
 	//bool
 	InitializeField_bool(EntityBattleStatType::IsTargetableForAA, true);
+	InitializeField_bool(EntityBattleStatType::Ghostliness, false);
 }
 void EntityBattleStats::CopyTo(ModifiableStatsWrapper
 	<EntBatStats_Consts::StatType,
@@ -195,4 +196,8 @@ void EntityBattleStats::SetStealth(float stealth) {
 void EntityBattleStats::SetTargetableForAA(bool isTargetable) {
 
 	SetDefaultStat(EntityBattleStatType::IsTargetableForAA, isTargetable);
+}
+void EntityBattleStats::SetGhostliness(bool ghostliness) {
+
+	SetDefaultStat(EntityBattleStatType::Ghostliness, ghostliness);
 }

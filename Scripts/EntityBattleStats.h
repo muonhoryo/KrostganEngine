@@ -13,7 +13,7 @@ namespace KrostganEngine::GameObjects {
 
 		static inline const size_t FIELDS_COUNT_F	= 5;
 		static inline const size_t FIELDS_COUNT_S_T = 2;
-		static inline const size_t FIELDS_COUNT_BOOL = 1;
+		static inline const size_t FIELDS_COUNT_BOOL = 2;
 		static inline const size_t FIELDS_COUNT		= FIELDS_COUNT_S_T + FIELDS_COUNT_F + FIELDS_COUNT_BOOL;
 
 		enum class StatType : int {
@@ -32,7 +32,8 @@ namespace KrostganEngine::GameObjects {
 			ObservingRange	= t_float | (4 << ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT),
 			Stealth			= t_float | (5 << ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT),
 			//bool
-			IsTargetableForAA	= t_bool | (1 << ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT)
+			IsTargetableForAA	= t_bool | (1 << ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT),
+			Ghostliness			= t_bool | (2 << ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT)
 		};
 		static inline const array<pair<StatType, string>, FIELDS_COUNT> StatTypeNames{
 				pair<StatType,string>(StatType::MaxHP,				"MaxHP"),
@@ -42,7 +43,8 @@ namespace KrostganEngine::GameObjects {
 				pair<StatType,string>(StatType::AutoAggrRange,		"AutoAggrRange"),
 				pair<StatType,string>(StatType::ObservingRange,		"ObservingRange"),
 				pair<StatType,string>(StatType::Stealth,			"Stealth"),
-				pair<StatType,string>(StatType::IsTargetableForAA,	"IsTargetableForAA")
+				pair<StatType,string>(StatType::IsTargetableForAA,	"IsTargetableForAA"),
+				pair<StatType,string>(StatType::Ghostliness,		"Ghostliness")
 		};
 	};
 
@@ -145,6 +147,8 @@ namespace KrostganEngine::GameObjects {
 	//bool
 		const bool&		GetState_IsTargetableForAA() const { return *GetFieldRef_bool(EntityBattleStatType::IsTargetableForAA); }
 
+		const bool&		GetState_Ghostliness() const {return *GetFieldRef_bool(EntityBattleStatType::Ghostliness);}
+
 //
 //
 // Setters (default)
@@ -161,6 +165,7 @@ namespace KrostganEngine::GameObjects {
 		void SetStealth(float stealth);
 
 		void SetTargetableForAA(bool isTargetable);
+		void SetGhostliness(bool ghostliness);
 
 	};
 

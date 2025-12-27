@@ -62,6 +62,11 @@ namespace KrostganEngine {
 			UnitObject(UnitObjectCtorParams& params);
 			virtual ~UnitObject();
 
+			static inline const PhysicsLayer	GHOST_COLLISION_LAYER = (PhysicsLayer)
+				((size_t)PhysicsLayer::Environment |
+					(size_t)PhysicsLayer::Decorations |
+					(size_t)PhysicsLayer::Buildings);
+
 			PhysicsLayer GetLayer() const override;
 
 			void SetGlobalScale(Vector2f size) override;
@@ -70,7 +75,7 @@ namespace KrostganEngine {
 			const vector<EntityOrderType>& GetAllowedOrdersCatalog() override;
 
 		protected:
-			vector<IPhysicalObject*> OverlapAll_Action() const override ;
+			vector<IPhysicalObject*> OverlapAll_Action() const override;
 			const ColliderShape& GetCollider_Action() const override;
 			Vector2f GetResolvingPnt(const ColliderShape& objShape, Vector2f movDir, bool isSlideColl) const override;
 

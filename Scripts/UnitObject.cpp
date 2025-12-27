@@ -54,7 +54,16 @@ const ColliderShape& UnitObject::GetCollider_Action() const {
 }
 
 vector<IPhysicalObject*> UnitObject::OverlapAll_Action() const {
-	return Engine::GetPhysicsEngine().OverlapCircle_All(Collider.Center, Collider.Radius, SOLID_COLLISION_LAYER);
+
+	PhysicsLayer layer;
+	if (GetBattleStats().GetState_Ghostliness()) {
+		layer = GHOST_COLLISION_LAYER;
+	}
+	else {
+		layer = SOLID_COLLISION_LAYER;
+	}
+
+	return Engine::GetPhysicsEngine().OverlapCircle_All(Collider.Center, Collider.Radius, layer);
 }
 Vector2f UnitObject::GetResolvingPnt(const ColliderShape& objShape, Vector2f movDir, bool isSlideColl) const {
 
