@@ -41,27 +41,32 @@
 		</Empty>		
 		<Empty
 			AnchorX="0.01"
-			AnchorY="0.85">
-			<Sprite Source="Spr_GUI_AutoAttackPanel" Layer="100" ScaleX="0.5" ScaleY="0.5">
-				<TextBlock
-						Text=""
-						AnchorX="0.3"
-						AnchorY="0.3"
-						FirstSelEnt_Depend="AutoAttack"
-						TextDepend_BatStats_FieldType="Damage"
-						Color="000000FF"
-						FontSize="30"
-						Layer="120"/>
-				<TextBlock
-						Text="{:.5}"
-						AnchorX="0.7"
-						AnchorY="0.3"
-						FirstSelEnt_Depend="AutoAttack"
-						TextDepend_BatStats_FieldType="Speed"
-						Color="000000FF"
-						FontSize="30"
-						Layer="120"/>
-			</Sprite>
+			AnchorY="0.85"
+			ScaleX="0.5"
+			ScaleY="0.5"
+			UISizeX="558"
+			UISizeY="193">
+			
+			<Sprite Source = "Spr_GUI_AutoAttackPanel_Dis" Layer="100" HieAct_AAActivityDepend="0"/>
+			<Sprite Source="Spr_GUI_AutoAttackPanel" Layer="100" HieAct_AAActivityDepend="1"/>
+			<TextBlock
+					Text=""
+					AnchorX="0.3"
+					AnchorY="0.3"
+					FirstSelEnt_Depend="AutoAttack"
+					TextDepend_BatStats_FieldType="Damage"
+					Color="000000FF"
+					FontSize="30"
+					Layer="120"/>
+			<TextBlock
+					Text="{:.5}"
+					AnchorX="0.7"
+					AnchorY="0.3"
+					FirstSelEnt_Depend="AutoAttack"
+					TextDepend_BatStats_FieldType="Speed"
+					Color="000000FF"
+					FontSize="30"
+					Layer="120"/>
 		</Empty>
 		<Empty
 			AnchorX="0.8"

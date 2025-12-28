@@ -28,12 +28,13 @@ void UserInterfaceLoader::DeserializeNode(xml_node<>* node, UIElement& parent)
 	UIElement* el = nullptr;
 	xml_attribute<>* attr = nullptr;
 	xml_node<>* child = nullptr;
-	forward_list<IUIDependency*> depends;
+	//forward_list<IUIDependency*> depends;
 	while (node != nullptr) {
 
 		Vector2f pos=DEFAULT_POSITION;
 		Vector2f scale = DEFAULT_SCALE;
 		Vector2f anchor= DEFAULT_ANCHOR;
+		Vector2f uisize = DEFAULT_SCALE;
 		std::byte layer(DEFAULT_RENDLAYER_UI);
 		bool active(true);
 		bool resizeUIInherit(false);
@@ -44,44 +45,55 @@ void UserInterfaceLoader::DeserializeNode(xml_node<>* node, UIElement& parent)
 
 		//read attributes for ui-element
 		attr = node->first_attribute();
+
+		char* attrName = nullptr;
+
 		while (attr != nullptr) {
-			if (attr->name() == ATTR_POSITION_X) {
+
+			attrName= attr->name();
+
+			if (attrName == ATTR_POSITION_X) {
 				pos.x = stof(attr->value());
 			}
-			else if (attr->name() == ATTR_POSITION_Y) {
+			else if (attrName == ATTR_POSITION_Y) {
 				pos.y = stof(attr->value());
 			}
-			else if (attr->name() == ATTR_SCALE_X) {
+			else if (attrName == ATTR_SCALE_X) {
 				scale.x = stof(attr->value());
 			}
-			else if (attr->name() == ATTR_SCALE_Y) {
+			else if (attrName == ATTR_SCALE_Y) {
 				scale.y = stof(attr->value());
 			}
-			else if (attr->name() == ATTR_ANCHOR_X) {
+			else if (attrName == ATTR_ANCHOR_X) {
 				anchor.x = stof(attr->value());
 			}
-			else if (attr->name() == ATTR_ANCHOR_Y) {
+			else if (attrName == ATTR_ANCHOR_Y) {
 				anchor.y = stof(attr->value());
 			}
-			else if (attr->name() == ATTR_LAYER) {
+			else if (attrName == ATTR_LAYER) {
 				layer = (std::byte)stoi(attr->value());
 			}
-			else if (attr->name() == ATTR_ACTIVE) {
+			else if (attrName == ATTR_ACTIVE) {
 				active = FStreamExts::ParseBool(attr->value());
 			}
-			else if (attr->name() == ATTR_RESIZEINHERIT_UI) {
+			else if (attrName == ATTR_RESIZEINHERIT_UI) {
 				resizeUIInherit = FStreamExts::ParseBool(attr->value());
 			}
-			else if (attr->name() == ATTR_COLOR) {
+			else if (attrName == ATTR_COLOR) {
 				color = Color(stoul(attr->value(), nullptr, 16));
 			}
-			else if (attr->name() == ATTR_SHADER) {
+			else if (attrName == ATTR_SHADER) {
 				shad= &dynamic_cast<ExtGlRes_Shader*>(ExternalGlobalResources::GetRes(string(attr->value())))->Shader_;
 			}
-			else if (attr->name() == ATTR_NAME) {
+			else if (attrName == ATTR_NAME) {
 				name = attr->value();
 			}
-
+			else if (attrName == ATTR_UISIZE_X) {
+				uisize.x = stof(attr->value());
+			}
+			else if (attrName == ATTR_UISIZE_Y) {
+				uisize.y = stof(attr->value());
+			}
 			attr = attr->next_attribute();
 		}
 
@@ -169,64 +181,89 @@ void UserInterfaceLoader::DeserializeNode(xml_node<>* node, UIElement& parent)
 
 			el->SetResizingUIByInherit(resizeUIInherit);
 			el->SetActivity(active);
+			if (uisize != DEFAULT_SCALE)
+				el->SetLocalUISize(uisize);
 			//Read dependencies
 			char* name = nullptr;
 			attr = node->first_attribute();
-			bool isFirstSelEntityAttr = false;
-			DependStatsWrapperType wrType = DependStatsWrapperType::ABSENT;
-			while (attr != nullptr)
-			{
-				if (attr->name() == ATTR_TAG_DEPEND_HIEACT_GRS) {
-					depends.push_front(new HieObjActDepend_GroupSelect(*el));
-				}
-				else if (attr->name() == ATTR_DEPEND_HIEACT_GRS_THRESHOLD) {
-					auto dep = dynamic_cast<HieObjActDepend_GroupSelect*>(GetDependencyByType(depends, typeid(HieObjActDepend_GroupSelect*)));
-					dep->SetSelectionThreshold(stoi(attr->value()));
-				}
-				else if (attr->name() == ATTR_DEPEND_HIEACT_GRS_GREAT) {
-					auto dep = dynamic_cast<HieObjActDepend_GroupSelect*>(GetDependencyByType(depends, typeid(HieObjActDepend_GroupSelect*)));
-					dep->SetGreaterCondition(FStreamExts::ParseBool(attr->value()));
-				}
-				else if (attr->name() == ATTR_DEPEND_HIEACT_GRS_EQUAL) {
-					auto dep = dynamic_cast<HieObjActDepend_GroupSelect*>(GetDependencyByType(depends, typeid(HieObjActDepend_GroupSelect*)));
-					dep->SetEqualCondition(FStreamExts::ParseBool(attr->value()));
-				}
-				//Text only dependencies
-				else if (attr->name() == ATTR_TAG_DEPEND_FIRST_SEL_ENTITY) {
-					isFirstSelEntityAttr = true;
-					if (attr->value() == ATTR_DEPEND_STATS_CONTAINER_BASE) {
-						wrType = DependStatsWrapperType::Base;
-					}
-					else if (attr->value() == ATTR_DEPEND_STATS_CONTAINER_AA) {
-						wrType = DependStatsWrapperType::AutoAttack;
-					}
-				}
-				else if (attr->name() == ATTR_DEPEND_TXT_BATSTAT_FIELDTYPE) {
-					if (node->name() != UIEL_NAME_TEXT)
-						cout << "WARNING!!!: attribute is used only for TextBlock" << endl;
-					else{
 
-						int statType = -1;
-						const GetEntStatsWrapperFunc* gStWrFunc = nullptr;
+			while (attr != nullptr) {
+				name = attr->name();
 
-						switch (wrType)
-						{
-						case KrostganEngine::Core::UserInterfaceLoader::DependStatsWrapperType::Base:
-							gStWrFunc = &EntityStatsWrGettingFuncs::GetBaseStatsFunc;
-							statType = (int)EntityBattleStats::StrToStat(attr->value());
-							break;
-						case KrostganEngine::Core::UserInterfaceLoader::DependStatsWrapperType::AutoAttack:
-							gStWrFunc = &EntityStatsWrGettingFuncs::GetAutoAttackStatsFunc;
-							statType = (int)AutoAttackStats::StrToStat(attr->value());
-							break;
-						default:
-							throw exception("Invalid type of stat wrapper's type.");
+				//HieObjActDepend_GroupSelect
+				if (name == ATTR_TAG_DEPEND_HIEACT_GRS) {
+
+					HieObjActDepend_GroupSelect* depend_groupSel = new HieObjActDepend_GroupSelect(*el);
+
+					auto nextAttr = attr->next_attribute();
+
+					while (nextAttr != nullptr) {
+
+						name = attr->name();
+						if (name == ATTR_DEPEND_HIEACT_GRS_THRESHOLD) {
+							depend_groupSel->SetSelectionThreshold(stoi(attr->value()));
+							/*auto dep = dynamic_cast<HieObjActDepend_GroupSelect*>(GetDependencyByType(depends, typeid(HieObjActDepend_GroupSelect*)));
+							dep->SetSelectionThreshold(stoi(attr->value()));*/
+						}
+						else if (name == ATTR_DEPEND_HIEACT_GRS_GREAT) {
+							depend_groupSel->SetGreaterCondition(FStreamExts::ParseBool(attr->value()));
+							/*auto dep = dynamic_cast<HieObjActDepend_GroupSelect*>(GetDependencyByType(depends, typeid(HieObjActDepend_GroupSelect*)));
+							dep->SetGreaterCondition(FStreamExts::ParseBool(attr->value()));*/
+						}
+						else if (name == ATTR_DEPEND_HIEACT_GRS_EQUAL) {
+							depend_groupSel->SetEqualCondition(FStreamExts::ParseBool(attr->value()));
+							/*auto dep = dynamic_cast<HieObjActDepend_GroupSelect*>(GetDependencyByType(depends, typeid(HieObjActDepend_GroupSelect*)));
+							dep->SetEqualCondition(FStreamExts::ParseBool(attr->value()));*/
 						}
 
-						if ((int)statType != -1) {			//Check if parsing was succesfull
-							if (isFirstSelEntityAttr) {			//Create dependency for UI-panel of first selected entity
+						nextAttr = nextAttr->next_attribute();
+					}
+				}
 
-								IEntityUIDependency* depend=nullptr;
+				//First selected entitiy's dependencies
+				else if (name == ATTR_TAG_DEPEND_FIRST_SEL_ENTITY) {
+
+					char* value = attr->value();
+					DependStatsWrapperType wrType = DependStatsWrapperType::ABSENT;
+
+					if (value == ATTR_DEPEND_STATS_CONTAINER_BASE) {
+						
+						wrType = DependStatsWrapperType::Base;
+					}
+					else if (value == ATTR_DEPEND_STATS_CONTAINER_AA) {
+
+						wrType = DependStatsWrapperType::AutoAttack;
+					}
+
+					auto nextAttr = attr->next_attribute();
+
+					while (nextAttr != nullptr) {
+
+						name = nextAttr->name();
+						//Initialize dependency on battle stats
+						if (name == ATTR_DEPEND_TXT_BATSTAT_FIELDTYPE) {
+
+							int statType = -1;
+							const GetEntStatsWrapperFunc* gStWrFunc = nullptr;
+
+							switch (wrType)
+							{
+							case KrostganEngine::Core::UserInterfaceLoader::DependStatsWrapperType::Base:
+								gStWrFunc = &EntityStatsWrGettingFuncs::GetBaseStatsFunc;
+								statType = (int)EntityBattleStats::StrToStat(nextAttr->value());
+								break;
+							case KrostganEngine::Core::UserInterfaceLoader::DependStatsWrapperType::AutoAttack:
+								gStWrFunc = &EntityStatsWrGettingFuncs::GetAutoAttackStatsFunc;
+								statType = (int)AutoAttackStats::StrToStat(nextAttr->value());
+								break;
+							default:
+								throw exception("Invalid type of stat wrapper's type for dependency on battle stat of entity.");
+							}
+
+
+							if ((int)statType != -1) {			//Check if parsing was succesfull
+
+								IEntityUIDependency* depend = nullptr;
 								ModStatsWrapper_Consts::StatType fieldType = IModifiableStatsWrapper::GetFieldType((int)statType);
 								string* fmt = new string(dynamic_cast<UIText*>(el)->GetString());
 								if (fmt->length() <= 1) {
@@ -236,24 +273,25 @@ void UserInterfaceLoader::DeserializeNode(xml_node<>* node, UIElement& parent)
 								switch (fieldType)
 								{
 								case KrostganEngine::GameObjects::ModStatsWrapper_Consts::StatType::t_size_t:
-									depend = new BattleStatDepend_toTxt_s_t(nullptr, *gStWrFunc, (int)statType, *dynamic_cast<UIText*>(el), nullptr,*fmt);
+									depend = new BattleStatDepend_toTxt_s_t(nullptr, *gStWrFunc, (int)statType, *dynamic_cast<UIText*>(el), nullptr, *fmt);
 									break;
 								case KrostganEngine::GameObjects::ModStatsWrapper_Consts::StatType::t_float:
 									depend = new BattleStatDepend_toTxt_f(nullptr, *gStWrFunc, (int)statType, *dynamic_cast<UIText*>(el), nullptr, *fmt);
 									break;
+								default:
+									throw exception("Unknown type of stat");
 								}
 
-								if(depend!=nullptr)
+								if (depend != nullptr)
 									UserInterfaceManager::GetFirstSelEntityDepend().AddDependency(*depend);
 							}
+							else
+								throw exception("Unknown type of stat");
+
+							break;
 						}
-					}
-				}
-				else if (attr->name() == ATTR_TAG_DEPEND_TXT_CURRHP) {
-					if(node->name()!=UIEL_NAME_TEXT)
-						cout<< "WARNING!!!: attribute is used only for TextBlock" << endl;
-					else {
-						if (isFirstSelEntityAttr) {		//Create dependency for UI-panel of first selected entity
+						//Initialize dependency on current hp
+						else if (name == ATTR_TAG_DEPEND_TXT_CURRHP) {
 
 							string* fmt = new string(dynamic_cast<UIText*>(el)->GetString());
 							if (fmt->length() <= 1) {
@@ -262,15 +300,27 @@ void UserInterfaceLoader::DeserializeNode(xml_node<>* node, UIElement& parent)
 							}
 							auto depend = new CurrHPDepend_toTxt(nullptr, *dynamic_cast<UIText*>(el), *fmt);
 							UserInterfaceManager::GetFirstSelEntityDepend().AddDependency(*depend);
+
+							break;
 						}
+
+						nextAttr = nextAttr->next_attribute();
 					}
 				}
 
-				attr = attr->next_attribute();
-			}
+				//Hierarchy activity depended on first selected activity
+				else if (name == ATTR_TAG_DEPEND_HIEACT_ABLE2AA) {
 
-			for (auto dep : depends) {
-				UserInterfaceManager::AddDependency(*dep);
+					HieObjActDepend_AutoAtkActivity* depend_aaAct = 
+						new HieObjActDepend_AutoAtkActivity(
+							*el,
+							EntityStatsWrGettingFuncs::GetAutoAttackStatsFunc, 
+							FStreamExts::ParseBool(attr->value()));
+
+					UserInterfaceManager::GetFirstSelEntityDepend().AddDependency(*depend_aaAct);
+				}
+
+				attr = attr->next_attribute();
 			}
 
 			DeserializeNode(node->first_node(), *el);

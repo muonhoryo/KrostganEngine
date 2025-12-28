@@ -67,6 +67,8 @@ namespace KrostganEngine::Core {
 		static inline const string ATTR_RESIZEINHERIT_UI	= "ResizeInherit_UI";
 		static inline const string ATTR_SHADER				= "Shader";
 		static inline const string ATTR_NAME				= "Name";
+		static inline const string ATTR_UISIZE_X			= "UISizeX";
+		static inline const string ATTR_UISIZE_Y			= "UISizeY";
 
 		static inline const string ATTR_SPRITE_SOURCE		= "Source";
 
@@ -75,6 +77,7 @@ namespace KrostganEngine::Core {
 		static inline const string ATTR_TEXT_FONT			= "Font";
 
 		static inline const string ATTR_TAG_DEPEND_HIEACT_GRS		= "HieAct_GroupSelDepend";
+		static inline const string ATTR_TAG_DEPEND_HIEACT_ABLE2AA	= "HieAct_AAActivityDepend";
 		static inline const string ATTR_TAG_DEPEND_FIRST_SEL_ENTITY = "FirstSelEnt_Depend";
 
 		static inline const string ATTR_DEPEND_HIEACT_GRS_THRESHOLD	= "HieAct_GroupSelDepend_Threshold";

@@ -3,6 +3,7 @@
 #include <StatsWrapperDepend_toTxt.h>
 #include <IEntityUIDependency.h>
 #include <MemoryExts.h>
+#include <GetEntStatsWrapperFunc.h>
 
 using namespace KrostganEngine;
 using namespace KrostganEngine::Core;
@@ -10,14 +11,6 @@ using namespace KrostganEngine::GameObjects;
 
 namespace KrostganEngine::UI {
 
-	class GetEntStatsWrapperFunc {
-
-	public:
-		virtual IModifiableStatsWrapper* GetStatsWrapper(Entity* entity) const = 0;
-
-	protected:
-		GetEntStatsWrapperFunc() {}
-	};
 
 	template<typename TObjValue>
 	class BattleStatDepend_toTxt final : protected StatsWrapperDepend_toTxt<TObjValue>, public IEntityUIDependency {

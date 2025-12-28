@@ -364,6 +364,9 @@
     <Filter Include="Файлы заголовков\CoreSystems\GameObjects\FightingSystems\HitPointSystem\DeathModules">
       <UniqueIdentifier>{d639adb4-f46a-4dd5-9c52-b24ffb7bb5f2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы заголовков\Visual\UI/UX\ValueDependencies\HieObjActDependencies">
+      <UniqueIdentifier>{afc9be0f-d683-45f0-acea-c9092edffd6b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\main.cpp">
@@ -1175,9 +1178,6 @@
     <ClInclude Include="Scripts\GameValueDependencies.h">
       <Filter>Файлы заголовков\Visual\UI/UX\ValueDependencies</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\HieObjActDepend_GroupSelect.h">
-      <Filter>Файлы заголовков\Visual\UI/UX\ValueDependencies</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\FirstSelEntityDependsManager.h">
       <Filter>Файлы заголовков\Visual\UI/UX\ValueDependencies</Filter>
     </ClInclude>
@@ -1372,6 +1372,24 @@
     </ClInclude>
     <ClInclude Include="Scripts\ColliderDeserializer.h">
       <Filter>Файлы заголовков\CoreSystems\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\GetEntStatsWrapperFunc.h">
+      <Filter>Файлы заголовков\Visual\UI/UX\ValueDependencies\EntityUIDependencies</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\HieObjActDependency.h">
+      <Filter>Файлы заголовков\Visual\UI/UX\ValueDependencies\HieObjActDependencies</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\HieObjActDependencies.h">
+      <Filter>Файлы заголовков\Visual\UI/UX\ValueDependencies\HieObjActDependencies</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\HieObjActDepend_GroupSelect.h">
+      <Filter>Файлы заголовков\Visual\UI/UX\ValueDependencies\HieObjActDependencies</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\HieObjActDepend_AutoAtkActivity.h">
+      <Filter>Файлы заголовков\Visual\UI/UX\ValueDependencies\HieObjActDependencies</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\RapidXMLExtensions.h">
+      <Filter>Файлы заголовков\Extensions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

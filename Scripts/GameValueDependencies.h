@@ -4,5 +4,5 @@
 
 #include <GeneralUIDependencies.h>
 
-#include <HieObjActDepend_GroupSelect.h>
+#include <HieObjActDependencies.h>
 #include <FirstSelEntityDependsManager.h>

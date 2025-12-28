@@ -329,10 +329,15 @@
     <ClInclude Include="Scripts\ExtVisual.h" />
     <ClInclude Include="Scripts\GameVisualEffects.h" />
     <ClInclude Include="Scripts\GeneralUIDependencies.h" />
+    <ClInclude Include="Scripts\GetEntStatsWrapperFunc.h" />
+    <ClInclude Include="Scripts\HieObjActDependencies.h" />
+    <ClInclude Include="Scripts\HieObjActDependency.h" />
+    <ClInclude Include="Scripts\HieObjActDepend_AutoAtkActivity.h" />
     <ClInclude Include="Scripts\ICallbackRec.h" />
     <ClInclude Include="Scripts\IModifiableStatsWrapper.h" />
     <ClInclude Include="Scripts\InputHandlers.h" />
     <ClInclude Include="Scripts\PathFinding_Algorithms.h" />
+    <ClInclude Include="Scripts\RapidXMLExtensions.h" />
     <ClInclude Include="Scripts\TransparencyVisEff.h" />
     <ClInclude Include="Scripts\TransparencyVisEff_Des.h" />
     <ClInclude Include="Scripts\TransparencyVisEff_MRes.h" />

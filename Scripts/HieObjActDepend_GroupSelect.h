@@ -1,46 +1,26 @@
 #pragma once
 
-#include <GroupSelectionSystem.h>
+#include <HieObjActDependency.h>
 #include <UIElement.h>
-#include <ValueDependency.h>
 
 using namespace KrostganEngine::Core;
 
 namespace KrostganEngine::UI {
-	class HieObjActDepend_GroupSelect final : public IUIDependency{
-
-	private:
-		class ChangeFirstSelSubsc final : public INoArgsEventSubscriber{
-
-		public:
-			ChangeFirstSelSubsc(HieObjActDepend_GroupSelect& Owner)
-				:Owner(Owner)
-			{}
-
-			void Execute() override {
-				Owner.Update();
-			}
-
-		private:
-			HieObjActDepend_GroupSelect& Owner;
-		};
+	class HieObjActDepend_GroupSelect final : public HieObjActDependency{
 
 	public:
 		HieObjActDepend_GroupSelect(UIElement& TargetEl,
 			int SelectionThreshold = 1, bool GreaterToActivate = true, bool EqualToActivate = true)
-			:TargetEl(TargetEl),
-			SelectionThreshold(SelectionThreshold),
-			GreaterToActivate(GreaterToActivate),
-			EqualToActivate(EqualToActivate)
+			:HieObjActDependency(), 
+				TargetEl(TargetEl),
+				SelectionThreshold(SelectionThreshold),
+				GreaterToActivate(GreaterToActivate),
+				EqualToActivate(EqualToActivate)
+				
 		{
-			Subsc_ChangeTar = new ChangeFirstSelSubsc(*this);
-			GroupSelectionSystem::ChangeSelectablesEvent.Add(*Subsc_ChangeTar);
 			Update();
 		}
-		virtual ~HieObjActDepend_GroupSelect() {
-			GroupSelectionSystem::ChangeSelectablesEvent.Remove(*Subsc_ChangeTar);
-			delete Subsc_ChangeTar;
-		}
+		virtual ~HieObjActDepend_GroupSelect() {}
 
 		int GetSelectionThreshold() const { return SelectionThreshold; }
 		bool GetGreaterToActivateCond() const { return GreaterToActivate; }
@@ -73,8 +53,5 @@ namespace KrostganEngine::UI {
 		int			SelectionThreshold;
 		bool		GreaterToActivate;
 		bool		EqualToActivate;
-		ChangeFirstSelSubsc* Subsc_ChangeTar;
-
-		friend class ChangeFirstSelSubsc;
 	};
 }
