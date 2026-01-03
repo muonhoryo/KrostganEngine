@@ -2,6 +2,8 @@
 #include <Decoration.h>
 #include <Engine.h>
 
+#include <TestTrigger.h>
+
 using namespace sf;
 using namespace std;
 using namespace KrostganEngine;
@@ -11,9 +13,6 @@ using namespace KrostganEngine::GameObjects;
 DecorationObject::DecorationObject(DecorationCtorParams& params)
 	:GameObject(params),
 		Collider(*((params.Collider==nullptr)?new EmptyShape():params.Collider)),
-		//test
-		//Collider(*new CircleCollShape(GetGlobalPosition(), Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution * 0.5f)),
-		//test endl
 		HitEffectSprite(params.HitEffectSprite),
 		IsTargetableForAutoAttack(params.IsTargetableForAutoAttack){
 

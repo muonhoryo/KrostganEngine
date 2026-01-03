@@ -104,6 +104,13 @@ namespace KrostganEngine {
 			return Owner.GetPtr_t_c<T>();
 		}
 
+		w_ptr_observable* GetPtr_b() const {
+			return Owner.GetPtr();
+		}
+		const w_ptr_observable* GetPtr_b_c() const {
+			return Owner.GetPtr_c();
+		}
+
 	private:
 		friend class w_ptr_observable;
 	};

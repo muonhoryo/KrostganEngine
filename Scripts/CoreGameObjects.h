@@ -23,3 +23,5 @@
 #include <EntityBattleStats.h>
 #include <AutoAttackSystem.h>
 #include <HPSystem.h>
+
+#include <TriggerZones.h>

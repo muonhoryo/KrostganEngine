@@ -26,10 +26,10 @@ bool GroupSelectionSystem::AddSelComparator::Compare
 	else
 		return id1 < id2;
 }
-
-
-bool GroupSelectionSystem::EqSelComparator::Equal
-	(watch_ptr_handler_wr<ISelectableEntity>* const& first,watch_ptr_handler_wr<ISelectableEntity>* const& second) const {
-
-	return first->GetPtr_t() == second->GetPtr_t();
-}
+//
+//
+//bool GroupSelectionSystem::EqSelComparator::Equal
+//	(watch_ptr_handler_wr<ISelectableEntity>* const& first,watch_ptr_handler_wr<ISelectableEntity>* const& second) const {
+//
+//	return first->GetPtr_t() == second->GetPtr_t();
+//}

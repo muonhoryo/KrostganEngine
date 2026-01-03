@@ -367,6 +367,12 @@
     <Filter Include="Файлы заголовков\Visual\UI/UX\ValueDependencies\HieObjActDependencies">
       <UniqueIdentifier>{afc9be0f-d683-45f0-acea-c9092edffd6b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems\GameObjects\TriggerZones">
+      <UniqueIdentifier>{4afb4f0c-b146-4893-a461-3e8abbe0b1bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\CoreSystems\GameObjects\TriggerZones">
+      <UniqueIdentifier>{711cffca-0c8d-4f41-9ebd-aabdefad1ac1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\main.cpp">
@@ -761,6 +767,9 @@
     </ClCompile>
     <ClCompile Include="Scripts\ColliderDeserializer.cpp">
       <Filter>Исходные файлы\CoreSystems\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\TriggerZone.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameObjects\TriggerZones</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1390,6 +1399,18 @@
     </ClInclude>
     <ClInclude Include="Scripts\RapidXMLExtensions.h">
       <Filter>Файлы заголовков\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\TriggerZones.h">
+      <Filter>Файлы заголовков\CoreSystems\GameObjects\TriggerZones</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\TriggerZone.h">
+      <Filter>Файлы заголовков\CoreSystems\GameObjects\TriggerZones</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\watch_ptr_predicates.h">
+      <Filter>Файлы заголовков\Memory\WatchPtr</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\TestTrigger.h">
+      <Filter>Файлы заголовков\CoreSystems\GameObjects\TriggerZones</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

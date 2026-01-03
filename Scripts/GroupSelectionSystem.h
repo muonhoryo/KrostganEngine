@@ -6,6 +6,7 @@
 #include <RelationsSystem.h>
 #include <CollectionsExts.h>
 #include <IAttackableObj.h>
+#include <watch_ptr_predicates.h>
 
 using namespace std;
 using namespace KrostganEngine;
@@ -21,15 +22,9 @@ namespace KrostganEngine::EntitiesControl {
 				(watch_ptr_handler_wr<ISelectableEntity>* const& first,
 				watch_ptr_handler_wr<ISelectableEntity>* const& second) const override;
 		};
-		struct EqSelComparator : public CollectionsExts::EqualCompareFunc<watch_ptr_handler_wr<ISelectableEntity>*> {
-
-			bool Equal
-				(watch_ptr_handler_wr<ISelectableEntity>* const& first,
-				watch_ptr_handler_wr<ISelectableEntity>* const& second) const override;
-		};
 
 		static inline const AddSelComparator InstanceAddComparator;
-		static inline const EqSelComparator InstanceEqComparator;
+		static inline const w_ptr_han_pred_eqByOwners<watch_ptr_handler_wr<ISelectableEntity>> InstanceEqComparator;
 
 		struct DeathEventSubscr : public IEventSubscriber<const GlObjectDeathEventArgs> {
 			void Execute(const GlObjectDeathEventArgs& args) override {
@@ -38,7 +33,8 @@ namespace KrostganEngine::EntitiesControl {
 					auto& ptr = deadObj->GetPtr();
 					auto& ptr_wr = *new watch_ptr_handler_wr<ISelectableEntity>(ptr);
 					delete &ptr;
-					if (CollectionsExts::Contains(Singleton->SelectedEntities, &ptr_wr,InstanceEqComparator)) {
+					if (CollectionsExts::Contains(Singleton->SelectedEntities, &ptr_wr, InstanceEqComparator)) {
+						
 						Remove(*deadObj);
 					}
 					delete& ptr_wr;

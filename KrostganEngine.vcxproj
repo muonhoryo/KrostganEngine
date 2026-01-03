@@ -181,6 +181,7 @@
     <ClCompile Include="Scripts\TransparencyVisEff_Des.cpp" />
     <ClCompile Include="Scripts\TransparencyVisEff_Funcs.cpp" />
     <ClCompile Include="Scripts\TransparencyVisEff_MRes.cpp" />
+    <ClCompile Include="Scripts\TriggerZone.cpp" />
     <ClCompile Include="Scripts\WarFogObserver.cpp" />
     <ClCompile Include="Scripts\IWarFogObserver_ObsrArea.cpp" />
     <ClCompile Include="Scripts\LevelManager.cpp" />
@@ -338,9 +339,12 @@
     <ClInclude Include="Scripts\InputHandlers.h" />
     <ClInclude Include="Scripts\PathFinding_Algorithms.h" />
     <ClInclude Include="Scripts\RapidXMLExtensions.h" />
+    <ClInclude Include="Scripts\TestTrigger.h" />
     <ClInclude Include="Scripts\TransparencyVisEff.h" />
     <ClInclude Include="Scripts\TransparencyVisEff_Des.h" />
     <ClInclude Include="Scripts\TransparencyVisEff_MRes.h" />
+    <ClInclude Include="Scripts\TriggerZone.h" />
+    <ClInclude Include="Scripts\TriggerZones.h" />
     <ClInclude Include="Scripts\UIMan_ZoomChangedEvSubs.h" />
     <ClInclude Include="Scripts\WarFogObserver.h" />
     <ClInclude Include="Scripts\LevelManager.h" />
@@ -463,6 +467,7 @@
     <ClInclude Include="Scripts\WarFog.h" />
     <ClInclude Include="Scripts\WarFogObserversManager.h" />
     <ClInclude Include="Scripts\WarFogStencilGen.h" />
+    <ClInclude Include="Scripts\watch_ptr_predicates.h" />
     <ClInclude Include="Scripts\WorldTransfObj.h" />
     <ClInclude Include="Scripts\UnitObject.h" />
     <ClInclude Include="Scripts\UserInterfaceLoader.h" />

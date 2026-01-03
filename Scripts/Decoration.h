@@ -6,7 +6,9 @@
 #include <IAttackableObj.h>
 #include <DecorationDeathModule.h>
 #include <DecorationHPModule.h>
-#include<TakeDamageAnim_SprFade.h>
+#include <TakeDamageAnim_SprFade.h>
+
+#include <TriggerZone.h>
 
 using namespace sf;
 using namespace std;
