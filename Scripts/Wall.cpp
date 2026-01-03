@@ -11,21 +11,20 @@ using namespace KrostganEngine::GameObjects;
 void WallObject::RecreateCollider() {
 	float innerRad = GetGlobalScale_Sng()* Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution * 0.5f;
 	Vector2f pos = GetGlobalPosition();
-	if (Collider != nullptr)
-		delete Collider;
-	Collider = new AABBCollShape(Vector2f(pos.x - innerRad, pos.y - innerRad), Vector2f(pos.x + innerRad, pos.y + innerRad));
+	Collider = AABBCollShape(Vector2f(pos.x - innerRad, pos.y - innerRad), Vector2f(pos.x + innerRad, pos.y + innerRad));
 }
 WallObject::WallObject(const GameObjectCtorParams& params)
-	:GameObject(params){
+	:GameObject(params),
+	Collider(AABBCollShape(DEFAULT_POSITION, DEFAULT_POSITION)){
 
 	RecreateCollider();
 }
 WallObject::~WallObject() {
-	delete Collider;
+
 }
 
 PhysicsLayer WallObject::GetLayer() const {
-	return PhysicsLayer::Decorations;
+	return PhysicsLayer::Environment;
 }
 
 void WallObject::SetGlobalPosition(Vector2f position) {
@@ -38,12 +37,12 @@ void WallObject::SetGlobalScale(Vector2f scale) {
 }
 
 const ColliderShape& WallObject::GetCollider() const {
-	return *Collider;
+	return Collider;
 }
 vector<IPhysicalObject*> WallObject::OverlapAll() const {
-	return Engine::GetPhysicsEngine().OverlapAABB_All(Collider->Min, Collider->Max, SOLID_COLLISION_LAYER);
+	return Engine::GetPhysicsEngine().OverlapAABB_All(Collider.Min, Collider.Max, SOLID_COLLISION_LAYER);
 }
 Vector2f WallObject::GetResolvingPnt(const ColliderShape& objShape, Vector2f movDir, bool isSlideColl) const {
 
-	return objShape.GetCollisionResolvPoint(*Collider, movDir,isSlideColl);
+	return objShape.GetCollisionResolvPoint(Collider, movDir,isSlideColl);
 }

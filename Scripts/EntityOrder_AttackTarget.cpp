@@ -78,8 +78,7 @@ list<IEntityAction*>* EntityOrder_AttackTarget::GetActions() {
 	else {									//Owner needs to follow target first
 
 		Segment ray(OwnerTransform.GetGlobalPosition(), ptr->GetGlobalPosition());
-		if (Engine::GetPhysicsEngine().RayHit(ray,
-			(PhysicsLayer)((int)PhysicsLayer::Decorations | (int)PhysicsLayer::Buildings)))
+		if (Engine::GetPhysicsEngine().RayHit(ray, LevelBypassMapManager::ENTITY_UNPASSABLE_OBJS_LAYER))
 		{
 			list<Vector2f>* pnts = PathFinding_Diijkstra::GetPath(ray.First, ray.Second);
 			if (pnts != nullptr && pnts->size() >1) {

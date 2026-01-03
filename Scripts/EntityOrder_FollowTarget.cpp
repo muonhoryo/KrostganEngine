@@ -38,8 +38,7 @@ list<IEntityAction*>* EntityOrder_FollowTarget::GetActions() {
 	list<IEntityAction*>* lst = new list<IEntityAction*>();
 
 	Segment ray(OwnerTransform.GetGlobalPosition(), ptr->GetGlobalPosition());
-	if (Engine::GetPhysicsEngine().RayHit(ray,
-		(PhysicsLayer)((int)PhysicsLayer::Decorations | (int)PhysicsLayer::Buildings)))
+	if (Engine::GetPhysicsEngine().RayHit(ray, LevelBypassMapManager::ENTITY_UNPASSABLE_OBJS_LAYER))
 	{
 		IEntityAction* act = nullptr;
 		list<Vector2f>* pnts = PathFinding_Diijkstra::GetPath(ray.First, ray.Second);

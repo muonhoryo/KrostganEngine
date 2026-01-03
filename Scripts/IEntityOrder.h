@@ -3,8 +3,10 @@
 #include <list>
 #include <IEntityAction.h>
 #include <EntityOrderType.h>
+#include <PhysicsLayer.h>
 
 using namespace std;
+using namespace KrostganEngine::Physics;
 
 namespace KrostganEngine::EntitiesControl {
 	 class IEntityOrder {

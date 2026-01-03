@@ -305,13 +305,15 @@ namespace KrostganEngine::Core {
 			Segment segm(pnt,Vector2f(0,0));
 			for (auto& it : BypassMap) {
 				segm.Second = it->GetPosition();
-				if (!Engine::GetPhysicsEngine().RayHit(segm,
-					(PhysicsLayer)((int)PhysicsLayer::Decorations | (int)PhysicsLayer::Buildings))) {
+				if (!Engine::GetPhysicsEngine().RayHit(segm, ENTITY_UNPASSABLE_OBJS_LAYER)) {
 					verts.push_back(it);
 				}
 			}
 			return verts;
 		}
+
+		static inline const PhysicsLayer ENTITY_UNPASSABLE_OBJS_LAYER = (PhysicsLayer)
+			((int)PhysicsLayer::Decorations | (int)PhysicsLayer::Buildings | (int)PhysicsLayer::Environment);
 
 	private:
 		LevelBypassMapManager(){}
@@ -347,8 +349,7 @@ namespace KrostganEngine::Core {
 						continue;
 
 					segm.Second = target->GetPosition();
-					if (!Engine::GetPhysicsEngine().RayHit(segm,
-						(PhysicsLayer)((int)PhysicsLayer::Decorations | (int)PhysicsLayer::Buildings))) {
+					if (!Engine::GetPhysicsEngine().RayHit(segm, ENTITY_UNPASSABLE_OBJS_LAYER)) {
 
 						BypassWays.push_back(&vert->GenerateWay(*target));
 					}
