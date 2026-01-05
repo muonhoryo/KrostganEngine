@@ -19,5 +19,8 @@
 #include <CoreGameObjects.h>
 #include <Physics.h>
 #include <CorePlayerControl.h>
+#include <GameEffectsSystem.h>
 
 #include <Memory.h>
+
+#include <GeneralGameEffects.h>

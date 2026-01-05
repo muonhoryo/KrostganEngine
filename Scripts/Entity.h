@@ -14,6 +14,7 @@
 #include <ExtGlResources.h>
 #include <WarFogObserver.h>
 #include <WarFogObserversManager.h>
+#include <GameEffectsSystem.h>
 
 using namespace sf;
 using namespace std;
@@ -57,7 +58,14 @@ namespace KrostganEngine::GameObjects {
 		friend class Entity;
 	};
 
-	class Entity :public GameObject,public ISelectableEntity,public IAttackableObj,public OrdersExecutor, public WarFogObserver{
+	class Entity : 
+		public GameObject,
+		public ISelectableEntity,
+		public IAttackableObj,
+		public OrdersExecutor, 
+		public WarFogObserver, 
+		public IGameEffTarget{
+	
 	public:
 		virtual ~Entity();
 

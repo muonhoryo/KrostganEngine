@@ -104,9 +104,17 @@ namespace KrostganEngine {
 			return Owner.GetPtr_t_c<T>();
 		}
 
+		/// <summary>
+		/// Return pointer to target in type as w_ptr_observable
+		/// </summary>
+		/// <returns></returns>
 		w_ptr_observable* GetPtr_b() const {
 			return Owner.GetPtr();
 		}
+		/// <summary>
+		/// Return const pointer to target in type as w_ptr_observable
+		/// </summary>
+		/// <returns></returns>
 		const w_ptr_observable* GetPtr_b_c() const {
 			return Owner.GetPtr_c();
 		}

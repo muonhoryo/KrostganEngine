@@ -15,6 +15,7 @@ TriggerZone::TriggerZone(Transformable& Owner)
 }
 TriggerZone::~TriggerZone() {
 	for (auto ptr : EnteredObjects) {
+		OnTriggerExit(*ptr);
 		delete ptr;
 	}
 }

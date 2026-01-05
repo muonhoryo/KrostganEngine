@@ -136,6 +136,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\AABBCollShape.cpp" />
+    <ClCompile Include="Scripts\Aura.cpp" />
     <ClCompile Include="Scripts\AutoAggressionModule.cpp" />
     <ClCompile Include="Scripts\AutoAttackModule.cpp" />
     <ClCompile Include="Scripts\AutoAttackProjectile.cpp" />
@@ -149,6 +150,11 @@
     <ClCompile Include="Scripts\ColliderDeserializer.cpp" />
     <ClCompile Include="Scripts\ColliderShapes.cpp" />
     <ClCompile Include="Scripts\CommonHPRegenModule.cpp" />
+    <ClCompile Include="Scripts\ComposeGameEffect.cpp" />
+    <ClCompile Include="Scripts\ComposeGameEff_Durable.cpp" />
+    <ClCompile Include="Scripts\ComposeGameEff_Instant.cpp" />
+    <ClCompile Include="Scripts\ComposeGameEff_Permanent.cpp" />
+    <ClCompile Include="Scripts\ComposeGameEff_Temporal.cpp" />
     <ClCompile Include="Scripts\DbgConsoleInputHandler.cpp" />
     <ClCompile Include="Scripts\DBG_ImmortalArmy.cpp" />
     <ClCompile Include="Scripts\Decoration.cpp" />
@@ -170,11 +176,13 @@
     <ClCompile Include="Scripts\EntsCtrlOrdersGiving.cpp" />
     <ClCompile Include="Scripts\DynamicPhysObject.cpp" />
     <ClCompile Include="Scripts\ExternalGlobalResources.cpp" />
+    <ClCompile Include="Scripts\GameEff_Dur_BatStatMult.cpp" />
     <ClCompile Include="Scripts\GroupSelectionSystem_Comparators.cpp" />
     <ClCompile Include="Scripts\HeroDeathModule.cpp" />
     <ClCompile Include="Scripts\IAttackableObj.cpp" />
     <ClCompile Include="Scripts\ICallbackRec_LUpd.cpp" />
     <ClCompile Include="Scripts\CatalogObject.cpp" />
+    <ClCompile Include="Scripts\IGameEffTarget.cpp" />
     <ClCompile Include="Scripts\IHierarchyTrObj.cpp" />
     <ClCompile Include="Scripts\IndicatorFill.cpp" />
     <ClCompile Include="Scripts\TransparencyVisEff.cpp" />
@@ -274,6 +282,7 @@
     <ClInclude Include="Scripts\AnimationsCore.h" />
     <ClInclude Include="Scripts\AnimationsExtend.h" />
     <ClInclude Include="Scripts\AttackInfo.h" />
+    <ClInclude Include="Scripts\Aura.h" />
     <ClInclude Include="Scripts\AutoAttackAnimation.h" />
     <ClInclude Include="Scripts\AutoAttackHitInfo.h" />
     <ClInclude Include="Scripts\AutoAttackProjectiles.h" />
@@ -323,12 +332,15 @@
     <ClInclude Include="Scripts\ExtGlRes_Texture.h" />
     <ClInclude Include="Scripts\FightingSystems.h" />
     <ClInclude Include="Scripts\FirstSelEntityDependsManager.h" />
+    <ClInclude Include="Scripts\GameEffectsSystem.h" />
+    <ClInclude Include="Scripts\GameEff_Dur_BatStatMult.h" />
     <ClInclude Include="Scripts\GameLevel.h" />
     <ClInclude Include="Scripts\GameObjStatParameter.h" />
     <ClInclude Include="Scripts\GameTransitions.h" />
     <ClInclude Include="Scripts\GameValueDependencies.h" />
     <ClInclude Include="Scripts\ExtVisual.h" />
     <ClInclude Include="Scripts\GameVisualEffects.h" />
+    <ClInclude Include="Scripts\GeneralGameEffects.h" />
     <ClInclude Include="Scripts\GeneralUIDependencies.h" />
     <ClInclude Include="Scripts\GetEntStatsWrapperFunc.h" />
     <ClInclude Include="Scripts\HieObjActDependencies.h" />

@@ -8,7 +8,7 @@
 #include <DecorationHPModule.h>
 #include <TakeDamageAnim_SprFade.h>
 
-#include <TriggerZone.h>
+#include <Aura.h>
 
 using namespace sf;
 using namespace std;
@@ -61,6 +61,8 @@ namespace KrostganEngine::GameObjects {
 		IHitPointModule*	HPModule;
 		bool				IsTargetableForAutoAttack = true;
 		SpriteRenderer*		HitEffectSprite;
+
+		Aura* TestAura = nullptr;
 
 		void RecreateCollider(float oldSize, float newSize);
 	};
