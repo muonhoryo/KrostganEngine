@@ -1,8 +1,8 @@
 
 #include <Decoration.h>
 #include <Engine.h>
-
-#include <GeneralGameEffects.h>
+//
+//#include <GeneralGameEffects.h>
 
 using namespace sf;
 using namespace std;
@@ -29,10 +29,10 @@ DecorationObject::DecorationObject(DecorationCtorParams& params)
 	Collider.MoveCollider(GetGlobalPosition());
 	RecreateCollider(1, GetGlobalScale_Sng());
 
-	ComposeGameEff_Permanent& gameEff = *new ComposeGameEff_Permanent();
-	gameEff.AddGameEffect_Durable(*new GameEff_Dur_EntBatStatMult(EntityBattleStatType::MovingSpeed, 2));
-	TestAura = new Aura(300, Fraction::Neutral, Relation::Neutral, gameEff, *this);
-	TestAura->SetGlobalPosition(GetGlobalPosition());
+	//ComposeGameEff_Permanent& gameEff = *new ComposeGameEff_Permanent();
+	//gameEff.AddGameEffect_Durable(*new GameEff_Dur_EntBatStatMult(EntityBattleStatType::MovingSpeed, 2));
+	//TestAura = new Aura(300, Fraction::Neutral, Relation::Neutral, gameEff, *this);
+	//TestAura->SetGlobalPosition(GetGlobalPosition());
 }
 DecorationObject::~DecorationObject() {
 	delete& Collider;
@@ -59,6 +59,17 @@ void DecorationObject::SetGlobalScale(Vector2f scale) {
 	float oldScale = GetGlobalScale_Sng();
 	GameObject::SetGlobalScale(scale);
 	RecreateCollider(oldScale, GetGlobalScale_Sng());
+}
+void DecorationObject::SetLocalScale(Vector2f scale) {
+	float oldScale = GetGlobalScale_Sng();
+	GameObject::SetLocalScale(scale);
+	RecreateCollider(oldScale, GetGlobalScale_Sng());
+}
+void DecorationObject::SetLocalPosition(Vector2f pos) {
+
+	Vector2f oldPos = GetGlobalPosition();
+	GameObject::SetLocalPosition(pos);
+	Collider.MoveCollider(GetGlobalPosition() - oldPos);
 }
 
 vector<IPhysicalObject*> DecorationObject::OverlapAll() const {

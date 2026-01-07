@@ -7,8 +7,8 @@
 #include <DecorationDeathModule.h>
 #include <DecorationHPModule.h>
 #include <TakeDamageAnim_SprFade.h>
-
-#include <Aura.h>
+//
+//#include <Aura.h>
 
 using namespace sf;
 using namespace std;
@@ -35,6 +35,8 @@ namespace KrostganEngine::GameObjects {
 
 		void SetGlobalPosition(Vector2f position) override;
 		void SetGlobalScale(Vector2f scale) override;
+		void SetLocalScale(Vector2f scale) override;
+		void SetLocalPosition(Vector2f pos) override;
 
 	protected:
 		const ColliderShape& GetCollider() const override;
@@ -62,7 +64,7 @@ namespace KrostganEngine::GameObjects {
 		bool				IsTargetableForAutoAttack = true;
 		SpriteRenderer*		HitEffectSprite;
 
-		Aura* TestAura = nullptr;
+		//Aura* TestAura = nullptr;
 
 		void RecreateCollider(float oldSize, float newSize);
 	};

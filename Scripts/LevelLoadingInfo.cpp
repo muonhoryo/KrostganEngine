@@ -620,7 +620,7 @@ void DecorationLoadInfo::FillCtorParams(GameObjectCtorParams& params, const Game
 	parParams->HitEffectSprite->SetRendLayer((std::byte)40);
 	parParams->CurrentHP = parUsedInfo->CurrentHP;
 	parParams->MaxHP = parUsedInfo->MaxHP;
-	parParams->Collider = Collider;
+	parParams->Collider = &Collider->Clone();
 }
 
 WorldTransfObj* DecorationLoadInfo::InstantiateObject_Action(const WorldObjectLoadInfo& usedInfo) const {
