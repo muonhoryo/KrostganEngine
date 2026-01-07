@@ -8,7 +8,46 @@ using namespace KrostganEngine::EntitiesControl;
 
 namespace KrostganEngine::GameObjects {
 
+
 	class Aura final : public TriggerZone, public virtual IFractionMember {
+
+	//
+	// OnFractionChanged-event subscriber
+	//
+
+	public:
+		/// <summary>
+		/// ToOwnerFracDependency is used in cases, where aura is spotted to object 
+		/// that has a definitely fraction and which fraction can be changed during game.
+		/// 
+		/// </summary>
+		class ToOwnerFracDependency final : public IEventSubscriber<const IFractionMember::ChangeFractionEvArgs> {
+
+		public:
+			ToOwnerFracDependency(Aura& Owner, const IFractionMember& Target)
+				:Owner(Owner),
+				Target(Target)
+			{}
+
+			void Execute(IFractionMember::ChangeFractionEvArgs const& args) override {
+
+				if (&Target == &args.Owner) {
+
+					if (args.OldFraction != args.NewFraction) {
+
+						Owner.SetFraction(args.NewFraction);
+					}
+				}
+			}
+
+		private:
+			Aura& Owner;
+			const IFractionMember& Target;
+		};
+
+	//
+	// Aura's class body
+	//
 
 	public:
 		Aura(float auraRange, Fraction AuraFrac, Relation ToTargetRelMask, ComposeGameEff_Permanent& GameEff, WorldTransfObj& Parent);
@@ -25,6 +64,8 @@ namespace KrostganEngine::GameObjects {
 		Fraction GetFraction()const override;
 		void SetFraction(Fraction fraction) override;
 
+		void CreateToFracMemDependency(const IFractionMember& Owner);
+
 		static inline const PhysicsLayer AURA_PHYSLAYER = (PhysicsLayer)((int)PhysicsLayer::Buildings | (int)PhysicsLayer::Units);
 
 	protected:
@@ -40,9 +81,11 @@ namespace KrostganEngine::GameObjects {
 		Relation					ToTargetRelMask;
 		ComposeGameEff_Permanent&	GameEff;
 		Fraction					AuraFrac;
+		ToOwnerFracDependency*		FracDependency = nullptr;
 
 		bool IsEffectedByAura(Fraction targetFrac) const;
 		bool PassNeutral;
 		bool IsEffInstant;
+
 	};
 }

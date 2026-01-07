@@ -1,8 +1,10 @@
 
 #include <TriggerZone.h>
 #include <CollectionsExts.h>
+#include <Engine.h>
 
 using namespace KrostganEngine;
+using namespace KrostganEngine::Core;
 using namespace KrostganEngine::GameObjects;
 
 TriggerZone::TriggerZone(Transformable& Owner, WorldTransfObj& Parent)
@@ -37,6 +39,15 @@ void TriggerZone::Update(CallbackRecArgs_Upd args) {
 	auto inputObjs = OverlapAll();
 	Update_DeleteExited(inputObjs);
 	Update_AddEnteredObjs(inputObjs);
+}
+void TriggerZone::RecalculateEnteredObjs() {
+
+	for (auto tar : EnteredObjects) {
+		OnTriggerExit(*tar);
+		delete tar;
+	}
+	EnteredObjects.clear();
+	Update(CallbackRecArgs_Upd(vector<Event>(), Engine::GetFrameDeltaTime()));
 }
 
 void TriggerZone::Update_DeleteNull() {

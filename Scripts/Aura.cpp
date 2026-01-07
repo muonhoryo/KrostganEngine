@@ -27,6 +27,10 @@ Aura::Aura(float auraRange, Fraction AuraFrac, Relation ToTargetRelMask, Compose
 }
 Aura::~Aura() {
 
+	if (FracDependency != nullptr) {
+		IFractionMember::MemberHasChangedFracEvent.Remove(*FracDependency);
+		delete FracDependency;
+	}
 }
 
 void Aura::SetGlobalScale(Vector2f  scale) {
@@ -54,8 +58,15 @@ Fraction Aura::GetFraction()const {
 	return AuraFrac;
 }
 void Aura::SetFraction(Fraction fraction) {
-	//TO DO:
-	//Change aura's fraction
+
+	AuraFrac = fraction;
+	RecalculateEnteredObjs();
+}
+void Aura::CreateToFracMemDependency(const IFractionMember& Owner) {
+	if (FracDependency == nullptr) {
+		FracDependency = new ToOwnerFracDependency(*this, Owner);
+		IFractionMember::MemberHasChangedFracEvent.Add(*FracDependency);
+	}
 }
 
 vector<IPhysicalObject*>	Aura::OverlapAll() const {

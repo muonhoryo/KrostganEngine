@@ -4,6 +4,8 @@
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
 
+#include <Aura.h>
+
 using namespace sf;
 using namespace KrostganEngine::EntitiesControl;
 
@@ -34,5 +36,8 @@ namespace KrostganEngine::GameObjects {
 	public:
 		HeroObject(HeroObjectCtorParams& params);
 		virtual ~HeroObject();
+
+	private:
+		Aura* TestAura = nullptr;
 	};
 }

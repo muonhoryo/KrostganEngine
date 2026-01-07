@@ -28,6 +28,8 @@ namespace KrostganEngine::GameObjects {
 		TriggerZone(Transformable& Owner, WorldTransfObj& Parent);
 		TriggerZone(Transformable& Owner);
 
+		void RecalculateEnteredObjs();
+
 		virtual vector<IPhysicalObject*>	OverlapAll() const = 0;
 		virtual bool						EnterTriggerCondition(const IPhysicalObject& inputObj) const = 0;
 
