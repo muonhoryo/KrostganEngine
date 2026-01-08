@@ -136,6 +136,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\AABBCollShape.cpp" />
+    <ClCompile Include="Scripts\Ability.cpp" />
+    <ClCompile Include="Scripts\AbilityUserObject.cpp" />
+    <ClCompile Include="Scripts\Ability_Aura.cpp" />
+    <ClCompile Include="Scripts\Ability_Directional.cpp" />
+    <ClCompile Include="Scripts\Ability_NonTargetable.cpp" />
+    <ClCompile Include="Scripts\Ability_Passive.cpp" />
+    <ClCompile Include="Scripts\Ability_Targetable.cpp" />
     <ClCompile Include="Scripts\Aura.cpp" />
     <ClCompile Include="Scripts\AutoAggressionModule.cpp" />
     <ClCompile Include="Scripts\AutoAttackModule.cpp" />
@@ -279,6 +286,12 @@
   <ItemGroup>
     <ClInclude Include="Scripts\AAProj_NoTar.h" />
     <ClInclude Include="Scripts\AAProj_TarDir.h" />
+    <ClInclude Include="Scripts\AbilitiesSystem.h" />
+    <ClInclude Include="Scripts\Ability_Aura.h" />
+    <ClInclude Include="Scripts\Ability_Directional.h" />
+    <ClInclude Include="Scripts\Ability_NonTargetable.h" />
+    <ClInclude Include="Scripts\Ability_Passive.h" />
+    <ClInclude Include="Scripts\Ability_Targetable.h" />
     <ClInclude Include="Scripts\AnimationsCore.h" />
     <ClInclude Include="Scripts\AnimationsExtend.h" />
     <ClInclude Include="Scripts\AttackInfo.h" />
@@ -494,6 +507,8 @@
     <ClInclude Include="Scripts\watch_ptr.h" />
     <ClInclude Include="Scripts\WinScript.h" />
     <ClInclude Include="Scripts\ZeroArgsEvent.h" />
+    <ClInclude Include="Scripts\_AbilitiesSystem.h" />
+    <ClInclude Include="Scripts\_BuiltAbilities.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Config.txt" />

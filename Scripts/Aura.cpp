@@ -68,6 +68,14 @@ void Aura::CreateToFracMemDependency(const IFractionMember& Owner) {
 		IFractionMember::MemberHasChangedFracEvent.Add(*FracDependency);
 	}
 }
+void Aura::DestroyToFracMemDependency() {
+
+	if (FracDependency != nullptr) {
+		IFractionMember::MemberHasChangedFracEvent.Remove(*FracDependency);
+		delete FracDependency;
+		FracDependency = nullptr;
+	}
+}
 
 vector<IPhysicalObject*>	Aura::OverlapAll() const {
 	return Engine::GetPhysicsEngine().OverlapCircle_All(TriggerCollider.Center, TriggerCollider.Radius, AURA_PHYSLAYER);

@@ -23,4 +23,4 @@
 
 #include <Memory.h>
 
-#include <GeneralGameEffects.h>
+#include <_AbilitiesSystem.h>

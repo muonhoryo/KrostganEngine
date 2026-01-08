@@ -8,6 +8,7 @@
 #include <AutoAttackModule.h>
 #include <list>
 #include <IFractionMember.h>
+#include <AbilitiesSystem.h>
 
 using namespace std;
 using namespace KrostganEngine;
@@ -18,7 +19,7 @@ namespace KrostganEngine::GameObjects {
 	class AutoAggressionModule;
 	class ExecutorActionsMediator;
 
-	class OrdersExecutor : public virtual ICallbackRec_Upd, public virtual IFractionMember{
+	class OrdersExecutor : public virtual ICallbackRec_Upd, public virtual IFractionMember, public AbilityUserObject{
 	public:
 		virtual ~OrdersExecutor();
 

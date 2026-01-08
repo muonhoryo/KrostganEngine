@@ -65,6 +65,7 @@ namespace KrostganEngine::GameObjects {
 		void SetFraction(Fraction fraction) override;
 
 		void CreateToFracMemDependency(const IFractionMember& Owner);
+		void DestroyToFracMemDependency();
 
 		static inline const PhysicsLayer AURA_PHYSLAYER = (PhysicsLayer)((int)PhysicsLayer::Buildings | (int)PhysicsLayer::Units);
 

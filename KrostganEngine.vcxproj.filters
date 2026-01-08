@@ -373,20 +373,32 @@
     <Filter Include="Исходные файлы\CoreSystems\GameObjects\TriggerZones">
       <UniqueIdentifier>{711cffca-0c8d-4f41-9ebd-aabdefad1ac1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Файлы заголовков\CoreSystems\GameEffectsSystem">
-      <UniqueIdentifier>{5feefa83-1a2e-42f7-8c2c-9b5ccf07f9fe}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Исходные файлы\CoreSystems\GameEffectsSystem">
       <UniqueIdentifier>{85f7f4dd-42b1-406c-b67b-36a648b132f4}</UniqueIdentifier>
     </Filter>
     <Filter Include="Исходные файлы\CoreSystems\GameEffectsSystem\ComposeGameEffects">
       <UniqueIdentifier>{601dbb2d-b17e-4d12-b780-d146516a36ac}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Файлы заголовков\CoreSystems\GameEffectsSystem\GeneralGameEffects">
-      <UniqueIdentifier>{9c6856df-9219-45ee-bfe2-35096c9fb872}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Исходные файлы\CoreSystems\GameEffectsSystem\GeneralGameEffects">
       <UniqueIdentifier>{d38e0ba6-1a86-4d17-8ed2-84c82b365635}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems\GameObjects\GameEffectsSystem">
+      <UniqueIdentifier>{5feefa83-1a2e-42f7-8c2c-9b5ccf07f9fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems\GameObjects\GameEffectsSystem\GeneralGameEffects">
+      <UniqueIdentifier>{9c6856df-9219-45ee-bfe2-35096c9fb872}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems\AbilitiesSystem">
+      <UniqueIdentifier>{7d2d89ba-ec64-44a8-aa27-fcfc32ee8266}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\CoreSystems\AbilitiesSystem">
+      <UniqueIdentifier>{16bcd47b-e6ac-4988-a183-500e6716500e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems\AbilitiesSystem\BuiltAbilities">
+      <UniqueIdentifier>{7fb44305-6dd7-48ab-8da1-f4a8c0e2e89c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\CoreSystems\AbilitiesSystem\BuiltAbilities">
+      <UniqueIdentifier>{1773795c-5829-4a1a-ad30-f836fbfc4c48}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -809,6 +821,27 @@
     </ClCompile>
     <ClCompile Include="Scripts\GameEff_Dur_BatStatMult.cpp">
       <Filter>Исходные файлы\CoreSystems\GameEffectsSystem\GeneralGameEffects</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\AbilityUserObject.cpp">
+      <Filter>Исходные файлы\CoreSystems\AbilitiesSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Ability.cpp">
+      <Filter>Исходные файлы\CoreSystems\AbilitiesSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Ability_Passive.cpp">
+      <Filter>Исходные файлы\CoreSystems\AbilitiesSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Ability_NonTargetable.cpp">
+      <Filter>Исходные файлы\CoreSystems\AbilitiesSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Ability_Targetable.cpp">
+      <Filter>Исходные файлы\CoreSystems\AbilitiesSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Ability_Directional.cpp">
+      <Filter>Исходные файлы\CoreSystems\AbilitiesSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Ability_Aura.cpp">
+      <Filter>Исходные файлы\CoreSystems\AbilitiesSystem\BuiltAbilities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1455,13 +1488,37 @@
       <Filter>Файлы заголовков\CoreSystems\GameObjects\TriggerZones</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\GameEffectsSystem.h">
-      <Filter>Файлы заголовков\CoreSystems\GameEffectsSystem</Filter>
+      <Filter>Файлы заголовков\CoreSystems\GameObjects\GameEffectsSystem</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\GameEff_Dur_BatStatMult.h">
-      <Filter>Файлы заголовков\CoreSystems\GameEffectsSystem\GeneralGameEffects</Filter>
+      <Filter>Файлы заголовков\CoreSystems\GameObjects\GameEffectsSystem\GeneralGameEffects</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\GeneralGameEffects.h">
-      <Filter>Файлы заголовков\CoreSystems\GameEffectsSystem\GeneralGameEffects</Filter>
+      <Filter>Файлы заголовков\CoreSystems\GameObjects\GameEffectsSystem\GeneralGameEffects</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\AbilitiesSystem.h">
+      <Filter>Файлы заголовков\CoreSystems\AbilitiesSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Ability_Passive.h">
+      <Filter>Файлы заголовков\CoreSystems\AbilitiesSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Ability_NonTargetable.h">
+      <Filter>Файлы заголовков\CoreSystems\AbilitiesSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Ability_Targetable.h">
+      <Filter>Файлы заголовков\CoreSystems\AbilitiesSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Ability_Directional.h">
+      <Filter>Файлы заголовков\CoreSystems\AbilitiesSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\_AbilitiesSystem.h">
+      <Filter>Файлы заголовков\CoreSystems\AbilitiesSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\_BuiltAbilities.h">
+      <Filter>Файлы заголовков\CoreSystems\AbilitiesSystem\BuiltAbilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Ability_Aura.h">
+      <Filter>Файлы заголовков\CoreSystems\AbilitiesSystem\BuiltAbilities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

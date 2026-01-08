@@ -25,3 +25,5 @@
 #include <HPSystem.h>
 
 #include <TriggerZones.h>
+
+#include <GameEffectsSystem.h>

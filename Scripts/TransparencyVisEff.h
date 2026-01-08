@@ -9,7 +9,7 @@ namespace KrostganEngine::Visual {
 	enum class TransparencyEffectType : unsigned int {
 
 		ProgressTypeMask = 1,
-		FuncTypeMask = ~1,
+		FuncTypeMask = (unsigned int)~1,
 
 		Fading = 0,
 		Highlight = 1,

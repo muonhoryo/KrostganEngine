@@ -47,7 +47,7 @@ void TriggerZone::RecalculateEnteredObjs() {
 		delete tar;
 	}
 	EnteredObjects.clear();
-	Update(CallbackRecArgs_Upd(vector<Event>(), Engine::GetFrameDeltaTime()));
+	//Update(CallbackRecArgs_Upd(vector<Event>(), Engine::GetFrameDeltaTime()));
 }
 
 void TriggerZone::Update_DeleteNull() {

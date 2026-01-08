@@ -7,7 +7,9 @@
 #include <DBG_DivineCommander.h>
 #include <DBG_ImmortalArmy.h>
 #include <Extensions.h>
-
+//
+//#include <GeneralGameEffects.h>
+//#include <Ability_Aura.h>
 
 using namespace KrostganEngine;
 using namespace KrostganEngine::Debug;
@@ -52,6 +54,25 @@ void ConsoleCommsInterpretator::ExecuteCommand(const string& input) {
 		if (InterpretateComm_FracSet(input))
 			return;
 	}
+
+	//else if (input == "testab") {
+
+	//	auto it = GroupSelectionSystem::GetEntitiesBegIter();
+	//	auto end = GroupSelectionSystem::GetEntitiesEndIter();
+	//	Entity* parObj = nullptr;
+	//	while (it != end) {
+	//		parObj = dynamic_cast<Entity*>((*it)->GetPtr_t());
+	//		if (parObj != nullptr) {
+
+	//			ComposeGameEff_Permanent& gameEff = *new ComposeGameEff_Permanent();
+	//			gameEff.AddGameEffect_Durable(*new GameEff_Dur_EntBatStatMult(EntityBattleStatType::MovingSpeed, 3));
+	//			auto abil = new Ability_Aura(300, Relation::Ally, gameEff);
+	//			parObj->AddAbility(*abil);
+	//			return;
+	//		}
+	//		++it;
+	//	}
+	//}
 	PrintInterpetatorMessage("Unknown command: " + input);
 };
 
