@@ -41,6 +41,7 @@ namespace KrostganEngine::GameObjects {
 		HPRegenModule*		RegenModule	= nullptr;
 		IndicatorFill&		HPBar;
 		size_t				CurrentHP	= 1;
+		size_t				MaxHP		= 1;	//Cache for stat-changing event
 
 		class StatChangedEvSubs : public IEventSubscriber<int> {
 		public:
@@ -51,8 +52,9 @@ namespace KrostganEngine::GameObjects {
 
 				if ((EntityBattleStatType)args == EntityBattleStatType::MaxHP) {
 					size_t hp = Owner.GetCurrentHP();
-					float rel = (float)hp/ (float)Owner.GetMaxHP();
-					size_t resHP = (size_t)((float)hp * rel);
+					float rel = (float)hp/ (float)Owner.MaxHP;
+					Owner.MaxHP = Owner.GetMaxHP();
+					size_t resHP = (size_t)((float)Owner.MaxHP * rel);
 					Owner.SetCurrentHP(resHP);
 				}
 			}

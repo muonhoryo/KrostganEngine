@@ -16,7 +16,8 @@ EntityHPModule::EntityHPModule(
 
 	:IHitPointModule(DeathModule,TakeDmgAnim),
 		BattleStats(BattleStats),
-		HPBar(HPBar){
+		HPBar(HPBar),
+		MaxHP(BattleStats.GetMaxHP()){
 
 	Subscriber = new StatChangedEvSubs(*this);
 	RestoreHealth();

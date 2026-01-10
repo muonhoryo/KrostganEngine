@@ -141,6 +141,7 @@
     <ClCompile Include="Scripts\Ability_Aura.cpp" />
     <ClCompile Include="Scripts\Ability_Directional.cpp" />
     <ClCompile Include="Scripts\Ability_NonTargetable.cpp" />
+    <ClCompile Include="Scripts\Ability_NonTar_TempEff.cpp" />
     <ClCompile Include="Scripts\Ability_Passive.cpp" />
     <ClCompile Include="Scripts\Ability_Targetable.cpp" />
     <ClCompile Include="Scripts\Aura.cpp" />
@@ -173,6 +174,7 @@
     <ClCompile Include="Scripts\EntityAARadVisualizer.cpp" />
     <ClCompile Include="Scripts\EntityAutoAggrRadVisualizer.cpp" />
     <ClCompile Include="Scripts\EntityDeathModule.cpp" />
+    <ClCompile Include="Scripts\EntityOrder_ActivateAbility_NonTar.cpp" />
     <ClCompile Include="Scripts\EntityOrder_AttackArea.cpp" />
     <ClCompile Include="Scripts\EntityOrder_Cancel.cpp" />
     <ClCompile Include="Scripts\EntityOrder_FollowTarget.cpp" />
@@ -292,6 +294,7 @@
     <ClInclude Include="Scripts\Ability_NonTargetable.h" />
     <ClInclude Include="Scripts\Ability_Passive.h" />
     <ClInclude Include="Scripts\Ability_Targetable.h" />
+    <ClInclude Include="Scripts\Ability_NonTar_TempEff.h" />
     <ClInclude Include="Scripts\AnimationsCore.h" />
     <ClInclude Include="Scripts\AnimationsExtend.h" />
     <ClInclude Include="Scripts\AttackInfo.h" />
@@ -326,6 +329,7 @@
     <ClInclude Include="Scripts\EngineUpdateModule.h" />
     <ClInclude Include="Scripts\EngineWorkModules.h" />
     <ClInclude Include="Scripts\EntityAutoAttackModule.h" />
+    <ClInclude Include="Scripts\EntityOrder_ActivateAbility_NonTar.h" />
     <ClInclude Include="Scripts\EntityOrder_AttackArea.h" />
     <ClInclude Include="Scripts\EntityOrder_Cancel.h" />
     <ClInclude Include="Scripts\EntityOrder_FollowTarget.h" />
@@ -344,7 +348,7 @@
     <ClInclude Include="Scripts\ExtGlRes_Sprite.h" />
     <ClInclude Include="Scripts\ExtGlRes_Texture.h" />
     <ClInclude Include="Scripts\FightingSystems.h" />
-    <ClInclude Include="Scripts\FirstSelEntityDependsManager.h" />
+    <ClInclude Include="Scripts\FirstChoosenEntityDependsManager.h" />
     <ClInclude Include="Scripts\GameEffectsSystem.h" />
     <ClInclude Include="Scripts\GameEff_Dur_BatStatMult.h" />
     <ClInclude Include="Scripts\GameLevel.h" />

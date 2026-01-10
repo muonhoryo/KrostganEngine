@@ -5,4 +5,4 @@
 #include <GeneralUIDependencies.h>
 
 #include <HieObjActDependencies.h>
-#include <FirstSelEntityDependsManager.h>
+#include <FirstChoosenEntityDependsManager.h>

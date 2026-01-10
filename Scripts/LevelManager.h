@@ -26,6 +26,6 @@ namespace KrostganEngine::Core {
 
 		static inline const LevelLoadingInfo* LoadedLevelInfo = nullptr;
 
-		friend class WorldObjectLoadInfo;
+		friend struct WorldObjectLoadInfo;
 	};
 }

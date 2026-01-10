@@ -80,7 +80,7 @@ namespace KrostganEngine::Core {
 		ITransformableObj() {}
 
 		float ClampRotation(float in) const {
-			in = fmod(in, 360);
+			in = (float)fmod(in, 360);
 			if (in < 0)
 				in += 360;
 			return in;

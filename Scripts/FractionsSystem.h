@@ -34,7 +34,7 @@ namespace KrostganEngine::EntitiesControl {
 			pair{ "neutral",Fraction::Neutral },
 			pair{ "enemy",Fraction::Enemy }
 		};
-		static inline const Fraction DefaultFrac = Fraction::Neutral;
+		static inline const Fraction DEFAULT_FRAC = Fraction::Neutral;
 		static inline const Relation DefaultRel = Relation::Neutral;
 
 	private:

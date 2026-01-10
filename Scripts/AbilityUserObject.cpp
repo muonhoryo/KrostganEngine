@@ -18,16 +18,27 @@ AbilityUserObject::~AbilityUserObject() {
 	}
 }
 
+size_t AbilityUserObject::AddNewAbilityToArr(Ability& ability) {
+
+	for (size_t i = 0;i < Abilities->size();++i) {
+		if ((*Abilities)[i] == nullptr) {
+			(*Abilities)[i] = &ability;
+			ability.OnAddToUser(*this);
+			return i;
+		}
+	}
+	Abilities->push_back(&ability);
+	ability.OnAddToUser(*this);
+	return Abilities->size()-1;
+}
 size_t AbilityUserObject::AddAbility(Ability& ability) {
 	if (Abilities == nullptr)
-		Abilities = new vector<Ability*>();
+		Abilities = new vector<Ability*>(1);
 
 	if (!CheckAbilityClone(ability.GetCatalogID(),ability.GetSubcatalogID()))
 		return SIZE_MAX;
 
-	Abilities->push_back(&ability);
-	ability.OnAddToUser(*this);
-	return Abilities->size() - 1;
+	return AddNewAbilityToArr(ability);
 }
 size_t AbilityUserObject::AddAbilityFromCatalog(size_t catID, std::byte subCatID) {
 
@@ -47,19 +58,35 @@ bool AbilityUserObject::CheckAbilityClone(size_t catID, std::byte subCatID) cons
 	return true;
 }
 
+void AbilityUserObject::RemoveAbilityFromArr(size_t index) {
+
+	if ((*Abilities)[index] == nullptr)
+		throw exception("Request to del ability is already null");
+
+	(*Abilities)[index]->OnRemoveFromUser(*this);
+	delete (*Abilities)[index];
+	(*Abilities)[index] = nullptr;
+
+	for (auto ab : *Abilities) {
+		if (ab != nullptr)
+			return;
+	}
+
+	delete Abilities;
+	Abilities = nullptr;
+}
 void AbilityUserObject::RemoveAbility(Ability& ability) {
 	
 	if (Abilities == nullptr)
 		throw exception("Object hasn't any abilities");
 
-	CollectionsExts::Remove(*Abilities, &ability);
-	ability.OnRemoveFromUser(*this);
-	delete &ability;
-
-	if (Abilities->size() == 0) {
-		delete Abilities;
-		Abilities = nullptr;
+	for (size_t i = 0;i < Abilities->size();++i) {
+		if ((*Abilities)[i] == &ability) {
+			RemoveAbilityFromArr(i);
+		}
 	}
+
+	throw exception("Haven't requested ability in array");
 }
 void AbilityUserObject::RemoveCatalogAbility(size_t catID, std::byte subCatID) {
 
@@ -72,14 +99,15 @@ void AbilityUserObject::RemoveCatalogAbility(size_t catID, std::byte subCatID) {
 	if (ability == nullptr)
 		throw exception("Object hasn't ability with input catalog information");
 
-	CollectionsExts::Remove(*Abilities, ability);
-	ability->OnRemoveFromUser(*this);
-	delete ability;
+	Ability* ab = nullptr;
 
-	if (Abilities->size() == 0) {
-		delete Abilities;
-		Abilities = nullptr;
+	for (size_t i = 0; i < Abilities->size(); ++i) {
+		ab = (*Abilities)[i];
+		if (predicate.Condition(ab))
+			RemoveAbilityByArrIndex(i);
 	}
+
+	throw exception("Haven't requested ability in array");
 }
 void AbilityUserObject::RemoveAbilityByArrIndex(size_t index) {
 	if (Abilities == nullptr)
@@ -88,19 +116,7 @@ void AbilityUserObject::RemoveAbilityByArrIndex(size_t index) {
 	if (Abilities->size() <= index)
 		throw exception("Index out of range");
 
-	auto ability = (*Abilities)[index];
-
-	auto it = Abilities->begin();
-	it += index;
-	Abilities->erase(it);
-
-	ability->OnRemoveFromUser(*this);
-	delete ability;
-
-	if (Abilities->size() == 0) {
-		delete Abilities;
-		Abilities = nullptr;
-	}
+	RemoveAbilityFromArr(index);
 }
 
 Ability* AbilityUserObject::GetAbility(size_t orderInArr) const {

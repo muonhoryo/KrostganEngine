@@ -64,7 +64,7 @@ void AutoAttackProjectile::Update(CallbackRecArgs_LUpd args) {
 	else {
 		Move_Global(dir * Speed);
 		if (!LockRotation)
-			SetGlobalRotation(DirectionToAngle(dir));
+			SetGlobalRotation((float)DirectionToAngle(dir));
 	}
 }
 const AttackHitInfo& AutoAttackProjectile::GetAttInfo(IAttackableObj& target) const {

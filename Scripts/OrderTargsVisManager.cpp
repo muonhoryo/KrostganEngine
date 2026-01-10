@@ -82,8 +82,8 @@ void OrderTargsVisManager::Clear() {
 
 void OrderTargsVisManager::Initialize_EntitiesTargetViss() {
 	EntitiesTargetViss = map<Entity*, OrderTargetsVisualizer*>();
-	auto begIt = GroupSelectionSystem::GetEntitiesBegIter();
-	auto endIt = GroupSelectionSystem::GetEntitiesEndIter();
+	auto begIt = GroupSelectionSystem::GetSelectedEnts_Begin();
+	auto endIt = GroupSelectionSystem::GetSelectedEnts_End();
 	
 	ISelectableEntity* ent = nullptr;
 	for (;begIt != endIt;++begIt) {

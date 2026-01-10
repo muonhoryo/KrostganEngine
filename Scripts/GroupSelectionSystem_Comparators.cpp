@@ -7,7 +7,7 @@ using namespace KrostganEngine;
 using namespace KrostganEngine::Core;
 using namespace KrostganEngine::EntitiesControl;
 
-bool GroupSelectionSystem::AddSelComparator::Compare
+bool GroupSelectionSystem::SelectedEntsComparator::Compare
 	(watch_ptr_handler_wr<ISelectableEntity>* const& first, watch_ptr_handler_wr<ISelectableEntity>* const& second) const {
 
 	const CatalogObject* parFirst = dynamic_cast<const CatalogObject*>(first->GetPtr_t_c());
@@ -25,6 +25,22 @@ bool GroupSelectionSystem::AddSelComparator::Compare
 	}
 	else
 		return id1 < id2;
+}
+
+GroupSelectionSystem::SelectedEntsPredicate::SelectedEntsPredicate(pair<size_t, std::byte> PredicateValue)
+	:PredicateValue(PredicateValue){
+
+}
+bool GroupSelectionSystem::SelectedEntsPredicate::Condition
+	(watch_ptr_handler_wr<ISelectableEntity>* input) const {
+
+	const CatalogObject* parInput = dynamic_cast<const CatalogObject*>(input->GetPtr_t_c());
+	if (parInput == nullptr)
+		return PredicateValue.first == 0 &&
+			PredicateValue.second == (std::byte)0;
+
+	return parInput->GetCatalogID() == PredicateValue.first && 
+		parInput->GetSubcatalogID() == PredicateValue.second;
 }
 //
 //

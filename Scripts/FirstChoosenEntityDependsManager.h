@@ -11,12 +11,12 @@ using namespace KrostganEngine::EntitiesControl;
 using namespace KrostganEngine::GameObjects;
 
 namespace KrostganEngine::UI {
-	class FirstSelEntityDependsManager : public IUIDependency{
+	class FirstChoosenEntityDependsManager : public IUIDependency{
 		
 	private:
-		struct FirstSelChangedEvSubsc : public INoArgsEventSubscriber {
-
-			FirstSelChangedEvSubsc(FirstSelEntityDependsManager& Owner)
+		struct FirstChoosenChangedEvSub : public INoArgsEventSubscriber {
+			
+			FirstChoosenChangedEvSub(FirstChoosenEntityDependsManager& Owner)
 				:Owner(Owner)
 			{}
 
@@ -25,12 +25,26 @@ namespace KrostganEngine::UI {
 			}
 
 		private:
-			FirstSelEntityDependsManager& Owner;
+			FirstChoosenEntityDependsManager& Owner;
+		};
+
+		struct ChoosenGroupChangedEvSub : public IEventSubscriber<pair<size_t,std::byte>>{
+
+			ChoosenGroupChangedEvSub(FirstChoosenEntityDependsManager& Owner)
+				:Owner(Owner)
+			{}
+
+			void Execute(pair<size_t, std::byte>& args) override {
+				Owner.Update();
+			}
+
+		private:
+			FirstChoosenEntityDependsManager& Owner;
 		};
 
 		struct TargetAAStatsChangedEvSubsc : public IEventSubscriber<const int> {
 
-			TargetAAStatsChangedEvSubsc(FirstSelEntityDependsManager& Owner)
+			TargetAAStatsChangedEvSubsc(FirstChoosenEntityDependsManager& Owner)
 				:Owner(Owner)
 			{}
 
@@ -39,25 +53,28 @@ namespace KrostganEngine::UI {
 			}
 
 		private:
-			FirstSelEntityDependsManager& Owner;
+			FirstChoosenEntityDependsManager& Owner;
 		};
 
 	public:
-		FirstSelEntityDependsManager()
-			:Subsc_ChangeTar(FirstSelChangedEvSubsc(*this)),
+		FirstChoosenEntityDependsManager()
+			:Subsc_ChangeTar(FirstChoosenChangedEvSub(*this)),
+			Subsc_ChangeTar_ChoiseGroup(ChoosenGroupChangedEvSub(*this)),
 			Subsc_ChangeAAStats(TargetAAStatsChangedEvSubsc(*this)){
 
-			GroupSelectionSystem::ChangeSelectablesEvent.Add(Subsc_ChangeTar);
+			GroupSelectionSystem::ChangeChoosenEntsEvent.Add(Subsc_ChangeTar);
+			GroupSelectionSystem::ChangeChoosenGroupEvent.Add(Subsc_ChangeTar_ChoiseGroup);
 		}
-		~FirstSelEntityDependsManager() {
+		~FirstChoosenEntityDependsManager() {
 			for (auto depend : Dependencies)
 				delete depend;
 
-			GroupSelectionSystem::ChangeSelectablesEvent.Remove(Subsc_ChangeTar);
+			GroupSelectionSystem::ChangeChoosenEntsEvent.Remove(Subsc_ChangeTar);
+			GroupSelectionSystem::ChangeChoosenGroupEvent.Remove(Subsc_ChangeTar_ChoiseGroup);
 		}
 
 		void Update() override {
-			Entity* newTar = dynamic_cast<Entity*>(GroupSelectionSystem::GetFirstSelectable());
+			Entity* newTar = dynamic_cast<Entity*>(GroupSelectionSystem::GetFirstChoosen());
 			if (Target != newTar) {
 
 				if (Target != nullptr) {
@@ -89,7 +106,8 @@ namespace KrostganEngine::UI {
 
 	private:
 		vector<IEntityUIDependency*> Dependencies;
-		FirstSelChangedEvSubsc Subsc_ChangeTar;
+		FirstChoosenChangedEvSub Subsc_ChangeTar;
+		ChoosenGroupChangedEvSub Subsc_ChangeTar_ChoiseGroup;
 		TargetAAStatsChangedEvSubsc Subsc_ChangeAAStats;
 
 		Entity* Target=nullptr;

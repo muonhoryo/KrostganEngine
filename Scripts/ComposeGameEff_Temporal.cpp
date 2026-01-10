@@ -32,6 +32,12 @@ void ComposeGameEff_Temporal::AddGameEffect_TimeDepended(IGameEffect_TimeDepende
 void ComposeGameEff_Temporal::RemoveGameEffect_TimeDepended(IGameEffect_TimeDepended& eff) {
 	CollectionsExts::Remove(GameEffects_TimeDepended, &eff);
 }
+float ComposeGameEff_Temporal::GetEffectTime() const {
+	return EffTime;
+}
+void ComposeGameEff_Temporal::SetEffectTime(float EffTime) {
+	EffTime = EffTime;
+}
 
 void ComposeGameEff_Temporal::OnApplyToTarget(IGameEffTarget& target) {
 

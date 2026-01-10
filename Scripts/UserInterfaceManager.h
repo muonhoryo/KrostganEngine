@@ -4,7 +4,7 @@
 #include <ICallbackRec_LUpd.h>
 #include <vector>
 #include <ValueDependency.h>
-#include <FirstSelEntityDependsManager.h>
+#include <FirstChoosenEntityDependsManager.h>
 #include <UIRoot.h>
 
 using namespace std;
@@ -31,7 +31,7 @@ namespace KrostganEngine::UI {
 		UserInterfaceManager() {}
 
 		static inline UIRoot*						UserInterface = nullptr;
-		static inline FirstSelEntityDependsManager* FirstSelEntityDepend = new FirstSelEntityDependsManager();
+		static inline FirstChoosenEntityDependsManager* FirstSelEntityDepend = new FirstChoosenEntityDependsManager();
 		static inline vector<IUIDependency*>	UIDependencies{
 			FirstSelEntityDepend
 		};
@@ -42,7 +42,7 @@ namespace KrostganEngine::UI {
 		static UIRoot& GetRoot() {
 			return *UserInterface;
 		}
-		static FirstSelEntityDependsManager& GetFirstSelEntityDepend() {
+		static FirstChoosenEntityDependsManager& GetFirstSelEntityDepend() {
 			return *FirstSelEntityDepend;
 		}
 

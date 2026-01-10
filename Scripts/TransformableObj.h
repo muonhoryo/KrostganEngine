@@ -1,5 +1,7 @@
 #pragma once
 
+#pragma warning( disable : 4250 )
+
 #define _USE_MATH_DEFINES
 
 #include <math.h>

@@ -90,5 +90,6 @@ EntityOrderType::AttackTarget,
 EntityOrderType::AttackArea,
 EntityOrderType::HoldPosition,
 EntityOrderType::Cancel,
-EntityOrderType::Idle
+EntityOrderType::Idle,
+EntityOrderType::AbilityUsing
 };

@@ -217,8 +217,6 @@ namespace KrostganEngine {
 				auto postIt = collection.begin();
 				auto end = collection.cend();
 				++postIt;
-				++postIt;
-				++it;
 				while (postIt != end) {
 					if (comparator.Compare(element, (*postIt))) {
 						collection.insert_after(it, element);

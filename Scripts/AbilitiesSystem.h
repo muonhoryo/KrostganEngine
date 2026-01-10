@@ -21,8 +21,8 @@ namespace KrostganEngine::GameObjects {
 		Ability(size_t CatalogID, std::byte SubcatalogID);
 		Ability();
 
-		virtual void OnAddToUser(AbilityUserObject& user) = 0;
-		virtual void OnRemoveFromUser(AbilityUserObject& user) = 0;
+		virtual void OnAddToUser(AbilityUserObject& user) {};
+		virtual void OnRemoveFromUser(AbilityUserObject& user) {};
 
 	private:
 		friend class AbilityUserObject;
@@ -67,6 +67,8 @@ namespace KrostganEngine::GameObjects {
 
 	private:
 		bool CheckAbilityClone(size_t catID, std::byte subCatID) const;
+		void RemoveAbilityFromArr(size_t index);
+		size_t AddNewAbilityToArr(Ability& ability);
 
 		vector<Ability*>* Abilities = nullptr;
 	};

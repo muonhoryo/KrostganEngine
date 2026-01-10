@@ -113,7 +113,7 @@ void EntityBattleStats::SetAAStats(const AutoAttackStats* stats) {
 		if (index == string::npos)
 			throw exception("Input AAStats didn't push in saved AutoAttackStats's");
 
-		CurrAAStats = index;
+		CurrAAStats = (int)index;
 		ChangeCurrAAStatsEventHan.Execute(CurrAAStats);
 	}
 
@@ -124,7 +124,7 @@ int EntityBattleStats::AddAAStats(AutoAttackStats& stats) {
 		throw exception("AAStats already contain input stats");
 
 	SavedAAStats.push_back(&stats);
-	return SavedAAStats.size() - 1;
+	return (int)SavedAAStats.size() - 1;
 }
 void EntityBattleStats::RemoveAAStats(const AutoAttackStats& stats) {
 

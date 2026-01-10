@@ -843,6 +843,12 @@
     <ClCompile Include="Scripts\Ability_Aura.cpp">
       <Filter>Исходные файлы\CoreSystems\AbilitiesSystem\BuiltAbilities</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\EntityOrder_ActivateAbility_NonTar.cpp">
+      <Filter>Исходные файлы\CoreSystems\EntitiesControl\Orders\BaseOrders</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Ability_NonTar_TempEff.cpp">
+      <Filter>Исходные файлы\CoreSystems\AbilitiesSystem\BuiltAbilities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\CoreGameObjects.h">
@@ -1259,7 +1265,7 @@
     <ClInclude Include="Scripts\GameValueDependencies.h">
       <Filter>Файлы заголовков\Visual\UI/UX\ValueDependencies</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\FirstSelEntityDependsManager.h">
+    <ClInclude Include="Scripts\FirstChoosenEntityDependsManager.h">
       <Filter>Файлы заголовков\Visual\UI/UX\ValueDependencies</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\MemoryExts.h">
@@ -1518,6 +1524,12 @@
       <Filter>Файлы заголовков\CoreSystems\AbilitiesSystem\BuiltAbilities</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Ability_Aura.h">
+      <Filter>Файлы заголовков\CoreSystems\AbilitiesSystem\BuiltAbilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\EntityOrder_ActivateAbility_NonTar.h">
+      <Filter>Файлы заголовков\CoreSystems\EntitiesControl\Orders\BaseOrders</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Ability_NonTar_TempEff.h">
       <Filter>Файлы заголовков\CoreSystems\AbilitiesSystem\BuiltAbilities</Filter>
     </ClInclude>
   </ItemGroup>

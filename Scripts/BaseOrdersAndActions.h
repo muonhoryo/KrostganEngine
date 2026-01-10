@@ -4,7 +4,7 @@
 #include <EntityOrder_GlobalPosTarget.h>
 #include <EntityOrder_ObjectTarget.h>
 #include <EntityOrder_ImmobilityChecking.h>
-//Compiled orders
+//Built orders
 #include <EntityOrder_MoveToPoint.h>
 #include <EntityOrder_FollowTarget.h>
 #include <EntityOrder_AttackTarget.h>
@@ -12,6 +12,7 @@
 #include <EntityOrder_Idle.h>
 #include <EntityOrder_Cancel.h>
 #include <EntityOrder_HoldPosition.h>
+#include <EntityOrder_ActivateAbility_NonTar.h> 
 //Entity's base actions
 #include <EntityAction_MoveTo.h>
 //Entity's actions

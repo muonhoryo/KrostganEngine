@@ -79,6 +79,9 @@ bool BaseAutoAggrModule::CheckTargetReachability() const {
 
 		return false;
 	}
+	else {
+		return true;
+	}
 }
 
 void BaseAutoAggrModule::CheckCurrTarget(CallbackRecArgs_Upd& args) {

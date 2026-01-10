@@ -20,7 +20,7 @@ void UserInterfaceManager::Unload() {
 		delete depend;
 	}
 	UIDependencies.clear();
-	FirstSelEntityDepend = new FirstSelEntityDependsManager();
+	FirstSelEntityDepend = new FirstChoosenEntityDependsManager();
 	UIDependencies.push_back(FirstSelEntityDepend);
 	UserInterface->DestroyChildren();
 }

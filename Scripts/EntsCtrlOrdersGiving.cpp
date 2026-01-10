@@ -23,8 +23,8 @@ void EntitiesCtrlInputMode::GiveOrderToSelected_MoveToPoint(Vector2f targetGloba
 	if (!GivingOrderCondition())
 		return;
 
-	auto begIt = GroupSelectionSystem::GetEntitiesBegIter();
-	auto endIt = GroupSelectionSystem::GetEntitiesEndIter();
+	auto begIt = GroupSelectionSystem::GetSelectedEnts_Begin();
+	auto endIt = GroupSelectionSystem::GetSelectedEnts_End();
 	Entity* parEl;
 	for (;begIt != endIt;) {
 
@@ -40,8 +40,8 @@ void EntitiesCtrlInputMode::GiveOrderToSelected_FollowObject(ITransformableObj& 
 	if (!GivingOrderCondition())
 		return;
 
-	auto begIt = GroupSelectionSystem::GetEntitiesBegIter();
-	auto endIt = GroupSelectionSystem::GetEntitiesEndIter();
+	auto begIt = GroupSelectionSystem::GetSelectedEnts_Begin();
+	auto endIt = GroupSelectionSystem::GetSelectedEnts_End();
 	Entity* parEl;
 	watch_ptr_handler* wtch_ptr = nullptr;
 	EntityOrder_FollowTarget* ord = nullptr;
@@ -67,8 +67,8 @@ void EntitiesCtrlInputMode::GiveOrderToSelected_AttackTarget(IAttackableObj& tar
 	if (!GivingOrderCondition())
 		return;
 
-	auto begIt = GroupSelectionSystem::GetEntitiesBegIter();
-	auto endIt = GroupSelectionSystem::GetEntitiesEndIter();
+	auto begIt = GroupSelectionSystem::GetSelectedEnts_Begin();
+	auto endIt = GroupSelectionSystem::GetSelectedEnts_End();
 	Entity* parEl;
 	watch_ptr_handler* wtch_ptr = nullptr;
 	IFractionMember* target_fracMem = dynamic_cast<IFractionMember*>(&target);
@@ -95,8 +95,8 @@ void EntitiesCtrlInputMode::GiveOrderToSelected_Idle(bool isGrouped) {
 	if (!GivingOrderCondition())
 		return;
 
-	auto begIt = GroupSelectionSystem::GetEntitiesBegIter();
-	auto endIt = GroupSelectionSystem::GetEntitiesEndIter();
+	auto begIt = GroupSelectionSystem::GetSelectedEnts_Begin();
+	auto endIt = GroupSelectionSystem::GetSelectedEnts_End();
 	Entity* parEl;
 	for (;begIt != endIt;) {
 		parEl = dynamic_cast<Entity*>((*begIt)->GetPtr_t());
@@ -111,8 +111,8 @@ void EntitiesCtrlInputMode::GiveOrderToSelected_Cancel() {
 	if (!GivingOrderCondition())
 		return;
 
-	auto begIt = GroupSelectionSystem::GetEntitiesBegIter();
-	auto endIt = GroupSelectionSystem::GetEntitiesEndIter();
+	auto begIt = GroupSelectionSystem::GetSelectedEnts_Begin();
+	auto endIt = GroupSelectionSystem::GetSelectedEnts_End();
 	Entity* parEl;
 	for (;begIt != endIt;) {
 		parEl = dynamic_cast<Entity*>((*begIt)->GetPtr_t());
@@ -127,8 +127,8 @@ void EntitiesCtrlInputMode::GiveOrderToSelected_HoldPosition(bool isGrouped) {
 	if (!GivingOrderCondition())
 		return;
 
-	auto begIt = GroupSelectionSystem::GetEntitiesBegIter();
-	auto endIt = GroupSelectionSystem::GetEntitiesEndIter();
+	auto begIt = GroupSelectionSystem::GetSelectedEnts_Begin();
+	auto endIt = GroupSelectionSystem::GetSelectedEnts_End();
 	Entity* parEl;
 	for (;begIt != endIt;) {
 		parEl = dynamic_cast<Entity*>((*begIt)->GetPtr_t());
@@ -142,13 +142,30 @@ void EntitiesCtrlInputMode::GiveOrderToSelected_AttackArea(Vector2f targetGlobal
 	if (!GivingOrderCondition())
 		return;
 
-	auto begIt = GroupSelectionSystem::GetEntitiesBegIter();
-	auto endIt = GroupSelectionSystem::GetEntitiesEndIter();
+	auto begIt = GroupSelectionSystem::GetSelectedEnts_Begin();
+	auto endIt = GroupSelectionSystem::GetSelectedEnts_End();
 	Entity* parEl;
 	for (;begIt != endIt;) {
 		parEl = dynamic_cast<Entity*>((*begIt)->GetPtr_t());
 		if (parEl != nullptr) {
 			parEl->TryAddOrder(*new EntityOrder_AttackArea(*parEl, *parEl, targetGlobalPos, parEl->GetCollider().GetBoundedCircle().Radius), !isGrouped);
+		}
+		++begIt;
+	}
+}
+
+void EntitiesCtrlInputMode::GiveOrderToChoosen_UseAbility(size_t abilityIndex) {
+
+	if (!GivingOrderCondition())
+		return;
+
+	auto begIt = GroupSelectionSystem::GetChoosenEntities_Begin();
+	auto endIt = GroupSelectionSystem::GetChoosenEntities_End();
+	Entity* parEl;
+	for (;begIt != endIt;) {
+		parEl = dynamic_cast<Entity*>((*begIt)->GetPtr_t());
+		if (parEl != nullptr) {
+			parEl->TryAddOrder(*new EntityOrder_ActivateAbility_NonTar(*parEl, 0));
 		}
 		++begIt;
 	}

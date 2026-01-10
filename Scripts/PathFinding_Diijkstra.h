@@ -62,7 +62,7 @@ namespace KrostganEngine::Core {
 					}
 					else {
 
-						index = CollectionsExts::IndexOf(endPnts_raw, vert);
+						index = (int)CollectionsExts::IndexOf(endPnts_raw, vert);
 						if (index != string::npos) {	//pnt is one of end points
 
 							endPnts[index] = map[i];

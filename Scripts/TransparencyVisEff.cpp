@@ -44,7 +44,7 @@ void TransparencyVisEff::Reset() {
 	if (!CheckOwnerExistane())
 		return;
 
-	SetOwnerColor((this->*GetTransparencyFunc)(0) * 255 * DefaultAlpha);
+	SetOwnerColor((Uint8)((this->*GetTransparencyFunc)(0) * (float)255 * DefaultAlpha));
 	EffTimer.restart();
 }
 void TransparencyVisEff::SetDefaultAlpha(float alpha) {

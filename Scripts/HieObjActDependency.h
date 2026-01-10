@@ -13,10 +13,9 @@ namespace KrostganEngine::UI {
 	class HieObjActDependency : public IUIDependency {
 
 	private:
-		class ChangeFirstSelSubsc final : public INoArgsEventSubscriber {
+		struct ChangeFirstChoosenSubsc final : public INoArgsEventSubscriber {
 
-		public:
-			ChangeFirstSelSubsc(HieObjActDependency& Owner)
+			ChangeFirstChoosenSubsc(HieObjActDependency& Owner)
 				:Owner(Owner)
 			{}
 
@@ -28,20 +27,39 @@ namespace KrostganEngine::UI {
 			HieObjActDependency& Owner;
 		};
 
-		ChangeFirstSelSubsc Subsc_ChangeTar;
+		struct ChangeChoosenGroupSubsc final : public IEventSubscriber<pair<size_t, std::byte>> {
+
+			ChangeChoosenGroupSubsc(HieObjActDependency& Owner)
+				:Owner(Owner)
+			{}
+
+			void Execute(pair<size_t, std::byte>& args) override {
+				Owner.Update();
+			}
+
+		private:
+			HieObjActDependency& Owner;
+		};
 
 	protected:
 		HieObjActDependency()
-			:Subsc_ChangeTar(ChangeFirstSelSubsc(*this)){
+			:Subsc_ChangeTar(ChangeFirstChoosenSubsc(*this)),
+			Subsc_ChangeTar_Group(ChangeChoosenGroupSubsc(*this)){
 
-			GroupSelectionSystem::ChangeSelectablesEvent.Add(Subsc_ChangeTar);
+			GroupSelectionSystem::ChangeChoosenEntsEvent.Add(Subsc_ChangeTar);
+			GroupSelectionSystem::ChangeChoosenGroupEvent.Add(Subsc_ChangeTar_Group);
 		}
 
 		virtual ~HieObjActDependency() {
 
-			GroupSelectionSystem::ChangeSelectablesEvent.Remove(Subsc_ChangeTar);
+			GroupSelectionSystem::ChangeChoosenEntsEvent.Remove(Subsc_ChangeTar);
+			GroupSelectionSystem::ChangeChoosenGroupEvent.Remove(Subsc_ChangeTar_Group);
 		}
 
 		friend class ChangeFirstSelSubsc;
+
+	private:
+		ChangeFirstChoosenSubsc Subsc_ChangeTar;
+		ChangeChoosenGroupSubsc Subsc_ChangeTar_Group;
 	};
 }

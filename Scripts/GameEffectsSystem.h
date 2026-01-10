@@ -155,6 +155,8 @@ namespace KrostganEngine::GameObjects {
 
 		void AddGameEffect_TimeDepended(IGameEffect_TimeDepended& eff);
 		void RemoveGameEffect_TimeDepended(IGameEffect_TimeDepended& eff);
+		float GetEffectTime() const;
+		void SetEffectTime(float EffTime);
 
 		void Update(CallbackRecArgs_Upd args) override;
 

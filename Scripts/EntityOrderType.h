@@ -8,6 +8,7 @@ namespace KrostganEngine::EntitiesControl {
 		AttackArea,
 		HoldPosition,
 		Cancel,
-		Idle
+		Idle,
+		AbilityUsing
 	};
 }

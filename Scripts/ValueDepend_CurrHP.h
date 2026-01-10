@@ -14,7 +14,7 @@ namespace KrostganEngine::UI {
 	class CurrHPDepend_toTxt final : public IUIDependency, public IEntityUIDependency {
 	
 	private:
-		class OnHPChangedSubsc;
+		struct OnHPChangedSubsc;
 
 	private:
 		watch_ptr_handler_wr<Entity>* Target = nullptr;

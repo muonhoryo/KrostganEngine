@@ -57,13 +57,11 @@ void EntCtrlMode_Base::HandleInput(CallbackRecArgs_Upd& args) {
 				return;
 			}
 		}
-		else {	//Give order
+		else if (input.type == Event::KeyPressed) {
 
-			if (!AbleToGiveOrders())
-				continue;
+			if (AbleToGiveOrders()) {
 
-			if (input.type == Event::KeyPressed) {
-
+				//Give order
 				switch (input.key.code)
 				{
 				case Keyboard::A:
@@ -74,21 +72,35 @@ void EntCtrlMode_Base::HandleInput(CallbackRecArgs_Upd& args) {
 				case Keyboard::I:
 				{
 					GiveOrderToSelected_Idle(PlayerInputManager::GetBtnState_Shift());
-					break;
+					continue;
 				}
 				case Keyboard::C:
 				{
 					GiveOrderToSelected_Cancel();
-					break;
+					continue;
 				}
 				case Keyboard::H:
 				{
 					GiveOrderToSelected_HoldPosition(PlayerInputManager::GetBtnState_Shift());
-					break;
+					continue;
+				}
+				case Keyboard::Num1:
+				{
+					GiveOrderToChoosen_UseAbility(0);
 				}
 				default:
 					break;
 				}
+			}
+
+			switch (input.key.code) {
+			case Keyboard::Tab:
+			{
+				GroupSelectionSystem::ChoiseNextEntsGroup();
+				continue;
+			}
+			default:
+				break;
 			}
 		}
 	}

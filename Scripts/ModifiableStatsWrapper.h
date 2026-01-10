@@ -427,7 +427,7 @@ namespace KrostganEngine::GameObjects {
 						++it;
 					}
 				}
-				field *= mulSumCoef;
+				field = (TFieldType)((float)field * mulSumCoef);
 			}
 
 			if (it == itEnd ||

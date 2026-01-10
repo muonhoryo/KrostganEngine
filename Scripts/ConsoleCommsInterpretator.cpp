@@ -57,21 +57,39 @@ void ConsoleCommsInterpretator::ExecuteCommand(const string& input) {
 
 	//else if (input == "testab") {
 
-	//	auto it = GroupSelectionSystem::GetEntitiesBegIter();
-	//	auto end = GroupSelectionSystem::GetEntitiesEndIter();
+	//	auto it = GroupSelectionSystem::GetChoosenEntities_Begin();
+	//	auto end = GroupSelectionSystem::GetChoosenEntities_End();
 	//	Entity* parObj = nullptr;
 	//	while (it != end) {
 	//		parObj = dynamic_cast<Entity*>((*it)->GetPtr_t());
 	//		if (parObj != nullptr) {
 
-	//			ComposeGameEff_Permanent& gameEff = *new ComposeGameEff_Permanent();
-	//			gameEff.AddGameEffect_Durable(*new GameEff_Dur_EntBatStatMult(EntityBattleStatType::MovingSpeed, 3));
-	//			auto abil = new Ability_Aura(300, Relation::Ally, gameEff);
+	//			ComposeGameEff_Temporal& gameEff = *new ComposeGameEff_Temporal(10);
+	//			gameEff.AddGameEffect_Durable(*new GameEff_Dur_EntBatStatMult(EntityBattleStatType::MovingSpeed, 10));
+	//			auto abil = new Ability_NonTar_TempEff(gameEff, 10);
 	//			parObj->AddAbility(*abil);
-	//			return;
 	//		}
 	//		++it;
 	//	}
+	//	return;
+	//}
+	//else if (input == "testab2") {
+
+	//	auto it = GroupSelectionSystem::GetChoosenEntities_Begin();
+	//	auto end = GroupSelectionSystem::GetChoosenEntities_End();
+	//	Entity* parObj = nullptr;
+	//	while (it != end) {
+	//		parObj = dynamic_cast<Entity*>((*it)->GetPtr_t());
+	//		if (parObj != nullptr) {
+
+	//			ComposeGameEff_Temporal& gameEff = *new ComposeGameEff_Temporal(10);
+	//			gameEff.AddGameEffect_Durable(*new GameEff_Dur_EntBatStatMult(EntityBattleStatType::MaxHP, 10));
+	//			auto abil = new Ability_NonTar_TempEff(gameEff, 10);
+	//			parObj->AddAbility(*abil);
+	//		}
+	//		++it;
+	//	}
+	//	return;
 	//}
 	PrintInterpetatorMessage("Unknown command: " + input);
 };
@@ -163,8 +181,8 @@ bool ConsoleCommsInterpretator::InterpretateComm_Disarm(const string& input) {
 	bool hasChanged = false;
 	bool disarm = true;
 	Entity* parObj = nullptr;
-	auto it = GroupSelectionSystem::GetEntitiesBegIter();
-	auto end = GroupSelectionSystem::GetEntitiesEndIter();
+	auto it = GroupSelectionSystem::GetSelectedEnts_Begin();
+	auto end = GroupSelectionSystem::GetSelectedEnts_End();
 	while (it != end) {		///define disarm- or arm-mode
 		parObj = dynamic_cast<Entity*>((*it)->GetPtr_t());
 		if (parObj != nullptr) {
@@ -214,8 +232,8 @@ bool ConsoleCommsInterpretator::InterpretateComm_Rearm(const string& input) {
 	}
 	bool hasChanged = false;
 	Entity* parObj = nullptr;
-	auto it = GroupSelectionSystem::GetEntitiesBegIter();
-	auto end = GroupSelectionSystem::GetEntitiesEndIter();
+	auto it = GroupSelectionSystem::GetSelectedEnts_Begin();
+	auto end = GroupSelectionSystem::GetSelectedEnts_End();
 	while (it != end) {
 		parObj = dynamic_cast<Entity*>((*it)->GetPtr_t());
 		if (parObj != nullptr &&
@@ -275,8 +293,8 @@ bool ConsoleCommsInterpretator::InterpretateComm_FracSet(const string& input) {
 		mem = nullptr;
 	}
 	size_t fracMembsCount = 0;
-	auto it = GroupSelectionSystem::GetEntitiesBegIter();
-	auto end = GroupSelectionSystem::GetEntitiesEndIter();
+	auto it = GroupSelectionSystem::GetSelectedEnts_Begin();
+	auto end = GroupSelectionSystem::GetSelectedEnts_End();
 	while (it != end) {
 
 		fracMem = dynamic_cast<IFractionMember*>((*it)->GetPtr_t());

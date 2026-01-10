@@ -40,7 +40,7 @@ namespace KrostganEngine::UI {
 	protected:
 		void Update() override {
 
-			auto target = GroupSelectionSystem::GetFirstSelectable();
+			auto target = GroupSelectionSystem::GetFirstChoosen();
 			auto parTar = dynamic_cast<Entity*>(target);
 			ChangeDepTarget(parTar);
 		}
