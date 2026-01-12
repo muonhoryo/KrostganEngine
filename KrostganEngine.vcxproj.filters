@@ -849,6 +849,9 @@
     <ClCompile Include="Scripts\Ability_NonTar_TempEff.cpp">
       <Filter>Исходные файлы\CoreSystems\AbilitiesSystem\BuiltAbilities</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\Ability_NonTar_SetAA.cpp">
+      <Filter>Исходные файлы\CoreSystems\AbilitiesSystem\BuiltAbilities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\CoreGameObjects.h">
@@ -1530,6 +1533,9 @@
       <Filter>Файлы заголовков\CoreSystems\EntitiesControl\Orders\BaseOrders</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Ability_NonTar_TempEff.h">
+      <Filter>Файлы заголовков\CoreSystems\AbilitiesSystem\BuiltAbilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Ability_NonTar_SetAA.h">
       <Filter>Файлы заголовков\CoreSystems\AbilitiesSystem\BuiltAbilities</Filter>
     </ClInclude>
   </ItemGroup>

@@ -141,6 +141,7 @@
     <ClCompile Include="Scripts\Ability_Aura.cpp" />
     <ClCompile Include="Scripts\Ability_Directional.cpp" />
     <ClCompile Include="Scripts\Ability_NonTargetable.cpp" />
+    <ClCompile Include="Scripts\Ability_NonTar_SetAA.cpp" />
     <ClCompile Include="Scripts\Ability_NonTar_TempEff.cpp" />
     <ClCompile Include="Scripts\Ability_Passive.cpp" />
     <ClCompile Include="Scripts\Ability_Targetable.cpp" />
@@ -292,6 +293,7 @@
     <ClInclude Include="Scripts\Ability_Aura.h" />
     <ClInclude Include="Scripts\Ability_Directional.h" />
     <ClInclude Include="Scripts\Ability_NonTargetable.h" />
+    <ClInclude Include="Scripts\Ability_NonTar_SetAA.h" />
     <ClInclude Include="Scripts\Ability_Passive.h" />
     <ClInclude Include="Scripts\Ability_Targetable.h" />
     <ClInclude Include="Scripts\Ability_NonTar_TempEff.h" />

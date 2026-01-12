@@ -86,7 +86,8 @@ void EntCtrlMode_Base::HandleInput(CallbackRecArgs_Upd& args) {
 				}
 				case Keyboard::Num1:
 				{
-					GiveOrderToChoosen_UseAbility(0);
+					GiveOrderToChoosen_UseAbility(0, PlayerInputManager::GetBtnState_Shift());
+					continue;
 				}
 				default:
 					break;

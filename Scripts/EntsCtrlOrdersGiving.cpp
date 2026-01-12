@@ -154,7 +154,7 @@ void EntitiesCtrlInputMode::GiveOrderToSelected_AttackArea(Vector2f targetGlobal
 	}
 }
 
-void EntitiesCtrlInputMode::GiveOrderToChoosen_UseAbility(size_t abilityIndex) {
+void EntitiesCtrlInputMode::GiveOrderToChoosen_UseAbility(size_t abilityIndex, bool isGrouped) {
 
 	if (!GivingOrderCondition())
 		return;
@@ -165,7 +165,7 @@ void EntitiesCtrlInputMode::GiveOrderToChoosen_UseAbility(size_t abilityIndex) {
 	for (;begIt != endIt;) {
 		parEl = dynamic_cast<Entity*>((*begIt)->GetPtr_t());
 		if (parEl != nullptr) {
-			parEl->TryAddOrder(*new EntityOrder_ActivateAbility_NonTar(*parEl, 0));
+			parEl->TryAddOrder(*new EntityOrder_ActivateAbility_NonTar(*parEl, 0), !isGrouped);
 		}
 		++begIt;
 	}

@@ -3,6 +3,7 @@
 #include <CatalogObject.h>
 #include <vector>
 #include <IHierarchyTrObj.h>
+#include <ICallbackRec_Upd.h>
 
 using namespace std;
 using namespace KrostganEngine::Core;
@@ -12,10 +13,17 @@ namespace KrostganEngine::GameObjects {
 	class AbilityUserObject;
 
 
-	class Ability : public CatalogObject{
+	class Ability : public CatalogObject, public virtual ICallbackRec_Upd{
 
 	public:
 		virtual ~Ability();
+
+		void TurnToCooldown(float duration);
+		void ResetCooldown();
+		bool Get_IsOnCooldown() const;
+		float GetCooldownDuration() const;
+
+		void Update(CallbackRecArgs_Upd args) override;
 
 	protected:
 		Ability(size_t CatalogID, std::byte SubcatalogID);
@@ -26,6 +34,9 @@ namespace KrostganEngine::GameObjects {
 
 	private:
 		friend class AbilityUserObject;
+		Clock CooldownTimer;
+		float CooldownDuration = 0;
+		bool IsOnCooldown = false;
 	};
 
 	class AbilityUserObject : public virtual IHierarchyTrObj {
@@ -47,9 +58,9 @@ namespace KrostganEngine::GameObjects {
 		/// <param name="ability"></param>
 		/// <returns></returns>
 		size_t AddAbilityFromCatalog(size_t catID, std::byte subCatID = (std::byte)0);
-		void RemoveAbility(Ability& ability);
-		void RemoveCatalogAbility(size_t catID, std::byte subCatID = (std::byte)0);
-		void RemoveAbilityByArrIndex(size_t index);
+		void RemoveAbility(Ability& ability, bool isSafe = false);
+		void RemoveCatalogAbility(size_t catID, std::byte subCatID = (std::byte)0, bool isSafe = false);
+		void RemoveAbilityByArrIndex(size_t index, bool isSafe = false);
 
 		/// <summary>
 		/// Return nullptr if object hasn't any abilities or input index out of range of array
@@ -67,7 +78,7 @@ namespace KrostganEngine::GameObjects {
 
 	private:
 		bool CheckAbilityClone(size_t catID, std::byte subCatID) const;
-		void RemoveAbilityFromArr(size_t index);
+		void RemoveAbilityFromArr(size_t index, bool isSafe = false);
 		size_t AddNewAbilityToArr(Ability& ability);
 
 		vector<Ability*>* Abilities = nullptr;

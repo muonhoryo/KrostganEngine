@@ -58,13 +58,14 @@ bool AbilityUserObject::CheckAbilityClone(size_t catID, std::byte subCatID) cons
 	return true;
 }
 
-void AbilityUserObject::RemoveAbilityFromArr(size_t index) {
+void AbilityUserObject::RemoveAbilityFromArr(size_t index, bool isSafe) {
 
 	if ((*Abilities)[index] == nullptr)
 		throw exception("Request to del ability is already null");
 
 	(*Abilities)[index]->OnRemoveFromUser(*this);
-	delete (*Abilities)[index];
+	if(!isSafe)
+		delete (*Abilities)[index];
 	(*Abilities)[index] = nullptr;
 
 	for (auto ab : *Abilities) {
@@ -75,20 +76,21 @@ void AbilityUserObject::RemoveAbilityFromArr(size_t index) {
 	delete Abilities;
 	Abilities = nullptr;
 }
-void AbilityUserObject::RemoveAbility(Ability& ability) {
+void AbilityUserObject::RemoveAbility(Ability& ability, bool isSafe) {
 	
 	if (Abilities == nullptr)
 		throw exception("Object hasn't any abilities");
 
-	for (size_t i = 0;i < Abilities->size();++i) {
+	for (size_t i = 0; i < Abilities->size() ; ++i) {
 		if ((*Abilities)[i] == &ability) {
-			RemoveAbilityFromArr(i);
+			RemoveAbilityFromArr(i, isSafe);
+			return;
 		}
 	}
 
 	throw exception("Haven't requested ability in array");
 }
-void AbilityUserObject::RemoveCatalogAbility(size_t catID, std::byte subCatID) {
+void AbilityUserObject::RemoveCatalogAbility(size_t catID, std::byte subCatID, bool isSafe) {
 
 	if(Abilities==nullptr)
 		throw exception("Object hasn't any abilities");
@@ -103,20 +105,20 @@ void AbilityUserObject::RemoveCatalogAbility(size_t catID, std::byte subCatID) {
 
 	for (size_t i = 0; i < Abilities->size(); ++i) {
 		ab = (*Abilities)[i];
-		if (predicate.Condition(ab))
-			RemoveAbilityByArrIndex(i);
+		if (predicate.Condition(ab)) {
+			RemoveAbilityByArrIndex(i, isSafe);
+			return;
+		}
 	}
-
-	throw exception("Haven't requested ability in array");
 }
-void AbilityUserObject::RemoveAbilityByArrIndex(size_t index) {
+void AbilityUserObject::RemoveAbilityByArrIndex(size_t index, bool isSafe) {
 	if (Abilities == nullptr)
 		throw exception("Object hasn't any abilities");
 
 	if (Abilities->size() <= index)
 		throw exception("Index out of range");
 
-	RemoveAbilityFromArr(index);
+	RemoveAbilityFromArr(index,isSafe);
 }
 
 Ability* AbilityUserObject::GetAbility(size_t orderInArr) const {

@@ -7,9 +7,10 @@
 #include <DBG_DivineCommander.h>
 #include <DBG_ImmortalArmy.h>
 #include <Extensions.h>
-//
-//#include <GeneralGameEffects.h>
-//#include <Ability_Aura.h>
+
+#include <GeneralGameEffects.h>
+#include <Ability_Aura.h>
+#include <Ability_NonTar_SetAA.h>
 
 using namespace KrostganEngine;
 using namespace KrostganEngine::Debug;
@@ -55,24 +56,31 @@ void ConsoleCommsInterpretator::ExecuteCommand(const string& input) {
 			return;
 	}
 
-	//else if (input == "testab") {
+	else if (input == "testab") {
 
-	//	auto it = GroupSelectionSystem::GetChoosenEntities_Begin();
-	//	auto end = GroupSelectionSystem::GetChoosenEntities_End();
-	//	Entity* parObj = nullptr;
-	//	while (it != end) {
-	//		parObj = dynamic_cast<Entity*>((*it)->GetPtr_t());
-	//		if (parObj != nullptr) {
+		auto it = GroupSelectionSystem::GetChoosenEntities_Begin();
+		auto end = GroupSelectionSystem::GetChoosenEntities_End();
+		Entity* parObj = nullptr;
+		while (it != end) {
+			parObj = dynamic_cast<Entity*>((*it)->GetPtr_t());
+			if (parObj != nullptr) {
 
-	//			ComposeGameEff_Temporal& gameEff = *new ComposeGameEff_Temporal(10);
-	//			gameEff.AddGameEffect_Durable(*new GameEff_Dur_EntBatStatMult(EntityBattleStatType::MovingSpeed, 10));
-	//			auto abil = new Ability_NonTar_TempEff(gameEff, 10);
-	//			parObj->AddAbility(*abil);
-	//		}
-	//		++it;
-	//	}
-	//	return;
-	//}
+				ComposeGameEff_Temporal& gameEff = *new ComposeGameEff_Temporal(1000);
+				gameEff.AddGameEffect_Durable(*new GameEff_Dur_EntBatStatMult(EntityBattleStatType::MovingSpeed, 5));
+
+				auto abil1 = new Ability_NonTar_SetAA(0);
+				auto abil2 = new Ability_NonTar_SetAA(*abil1, 1, 1, (std::byte)0);
+				abil1->Set_NextAbility(*abil2);
+				abil1->Set_DeleteGameEffOnRemove(true);
+				
+				abil2->Set_OnAddingAbilityGameEff(&gameEff);
+
+				parObj->AddAbility(*abil1);
+			}
+			++it;
+		}
+		return;
+	}
 	//else if (input == "testab2") {
 
 	//	auto it = GroupSelectionSystem::GetChoosenEntities_Begin();

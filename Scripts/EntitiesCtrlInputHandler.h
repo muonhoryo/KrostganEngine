@@ -47,7 +47,7 @@ namespace KrostganEngine::PlayerControl {
 		static void GiveOrderToSelected_Idle(bool isGrouped);
 		static void GiveOrderToSelected_Cancel();
 		static void GiveOrderToSelected_HoldPosition(bool isGrouped);
-		static void GiveOrderToChoosen_UseAbility(size_t abilityIndex);
+		static void GiveOrderToChoosen_UseAbility(size_t abilityIndex, bool isGrouped);
 	};
 
 	class EntitiesCtrlInputHandler :public IBaseInputHandler {
