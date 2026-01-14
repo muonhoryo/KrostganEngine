@@ -22,6 +22,9 @@ void Ability::TurnToCooldown(float duration) {
 void Ability::ResetCooldown() {
 	IsOnCooldown = false;
 }
+void Ability::Set_CooldownDuration(float duration) {
+	CooldownDuration = duration;
+}
 bool Ability::Get_IsOnCooldown() const {
 	return IsOnCooldown;
 }

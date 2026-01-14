@@ -1,3 +1,4 @@
 #pragma once
 
-#include <GameEff_Dur_BatStatMult.h>
+#include <GameEff_Dur_EntBatStatMult.h>
+#include <GameEff_Dur_EntBatStatConst_bool.h>

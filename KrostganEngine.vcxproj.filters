@@ -852,6 +852,12 @@
     <ClCompile Include="Scripts\Ability_NonTar_SetAA.cpp">
       <Filter>Исходные файлы\CoreSystems\AbilitiesSystem\BuiltAbilities</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\Ability_NonTar_Durable.cpp">
+      <Filter>Исходные файлы\CoreSystems\AbilitiesSystem\BuiltAbilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\GameEff_Dur_EntBatStatConst_bool.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameEffectsSystem\GeneralGameEffects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\CoreGameObjects.h">
@@ -1499,7 +1505,7 @@
     <ClInclude Include="Scripts\GameEffectsSystem.h">
       <Filter>Файлы заголовков\CoreSystems\GameObjects\GameEffectsSystem</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\GameEff_Dur_BatStatMult.h">
+    <ClInclude Include="Scripts\GameEff_Dur_EntBatStatMult.h">
       <Filter>Файлы заголовков\CoreSystems\GameObjects\GameEffectsSystem\GeneralGameEffects</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\GeneralGameEffects.h">
@@ -1537,6 +1543,12 @@
     </ClInclude>
     <ClInclude Include="Scripts\Ability_NonTar_SetAA.h">
       <Filter>Файлы заголовков\CoreSystems\AbilitiesSystem\BuiltAbilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Ability_NonTar_Durable.h">
+      <Filter>Файлы заголовков\CoreSystems\AbilitiesSystem\BuiltAbilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\GameEff_Dur_EntBatStatConst_bool.h">
+      <Filter>Файлы заголовков\CoreSystems\GameObjects\GameEffectsSystem\GeneralGameEffects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,5 +1,5 @@
 
-#include <GameEff_Dur_BatStatMult.h>
+#include <GameEff_Dur_EntBatStatMult.h>
 #include <OrdersExecutor.h>
 
 using namespace KrostganEngine::EntitiesControl;

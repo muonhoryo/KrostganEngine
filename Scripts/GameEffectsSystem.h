@@ -5,6 +5,7 @@
 #include <forward_list>
 #include <CollectionsExts.h>
 #include <ICallbackRec_Upd.h>
+#include <Events.h>
 
 using namespace sf;
 using namespace std;
@@ -188,6 +189,9 @@ namespace KrostganEngine::GameObjects {
 	class IGameEffTarget {
 		
 	public:
+		ExecutedEvent<const ComposeGameEffect&> AddGameEffEvent;
+		ExecutedEvent<const ComposeGameEffect&> RemoveGameEffEvent;
+
 		virtual ~IGameEffTarget();
 
 		void AddGameEff(ComposeGameEffect& eff);
@@ -212,5 +216,8 @@ namespace KrostganEngine::GameObjects {
 
 	private:
 		forward_list<ComposeGameEffect*> AppliedGameEffects;
+
+		EventHandler<const ComposeGameEffect&> AddGameEffEventHan = EventHandler<const ComposeGameEffect&>(AddGameEffEvent);
+		EventHandler<const ComposeGameEffect&> RemoveGameEffEventHan = EventHandler<const ComposeGameEffect&>(RemoveGameEffEvent);
 	};
 }

@@ -19,16 +19,24 @@ namespace KrostganEngine::GameObjects {
 			}
 			return arr;
 		}
+		template <size_t ARRAY_SIZE>
+		static const array<bool, ARRAY_SIZE>& GetValuesFromParams(const array<ParameterBool, ARRAY_SIZE>& params) {
+			auto& arr = *new array<bool, ARRAY_SIZE>();
+			for (int i = 0;i < ARRAY_SIZE;++i) {
+				arr[i] = params[i].GetCurrentValue();
+			}
+			return arr;
+		}
 
 	public:
 		CachedBattleStats
 			(const array<Parameter<size_t>, FIELDSCOUNT_S_T>& params_s_t,
 			const array<Parameter<float>, FIELDSCOUNT_F>& params_f,
-			const array<bool, FIELDSCOUNT_BOOL>& params_bool,
+			const array<ParameterBool, FIELDSCOUNT_BOOL>& params_bool,
 			const TAdditionalParams& AdditionalParams)
 				:Params_s_t(GetValuesFromParams(params_s_t)),
 				Params_f(GetValuesFromParams(params_f)),
-				Params_bool(*new array<bool, FIELDSCOUNT_BOOL>(params_bool)), 
+				Params_bool(GetValuesFromParams(params_bool)),
 					AdditionalParams(AdditionalParams)
 		{}
 		
@@ -57,15 +65,23 @@ namespace KrostganEngine::GameObjects {
 			}
 			return arr;
 		}
+		template <size_t ARRAY_SIZE>
+		static const array<bool, ARRAY_SIZE>& GetValuesFromParams(const array<ParameterBool, ARRAY_SIZE>& params) {
+			auto& arr = *new array<bool, ARRAY_SIZE>();
+			for (int i = 0;i < ARRAY_SIZE;++i) {
+				arr[i] = params[i].GetCurrentValue();
+			}
+			return arr;
+		}
 
 	public:
 		CachedBattleStats
 			(const array<Parameter<size_t>, FIELDSCOUNT_S_T>& params_s_t,
 			const array<Parameter<float>, FIELDSCOUNT_F>& params_f,
-			const array<bool, FIELDSCOUNT_BOOL>& params_bool)
+			const array<ParameterBool, FIELDSCOUNT_BOOL>& params_bool)
 			:Params_s_t(GetValuesFromParams(params_s_t)),
 			Params_f(GetValuesFromParams(params_f)),
-			Params_bool(*new array<bool, FIELDSCOUNT_BOOL>(params_bool))
+			Params_bool(GetValuesFromParams(params_bool))
 		{}
 
 		virtual ~CachedBattleStats() {

@@ -18,13 +18,13 @@ namespace KrostganEngine::GameObjects {
 
 		void Set_NextAbility(Ability_NonTar_SetAA& NextAbility);
 
-		void Set_OnAddingAbilityGameEff	(ComposeGameEffect* OnAddingAbilityGameEff);
+		void Set_OnAddingAbilityGameEff	(const ComposeGameEffect* OnAddingAbilityGameEff);
 		void Set_NextAbilityCooldown	(float NextAbilityCooldown);
 		void Set_DeleteGameEffOnRemove	(bool DeleteGameEffOnRemove);
 
-		ComposeGameEffect*	Get_OnAddingAbilityGameEff() const;
-		float				Get_NextAbilityCooldown() const;
-		bool				Get_DeleteGameEffOnRemove() const;
+		const ComposeGameEffect*	Get_OnAddingAbilityGameEff() const;
+		float						Get_NextAbilityCooldown() const;
+		bool						Get_DeleteGameEffOnRemove() const;
 
 	protected:
 		void OnAddToUser		(AbilityUserObject& user) override;
@@ -34,7 +34,7 @@ namespace KrostganEngine::GameObjects {
 		Ability_NonTar_SetAA* NextAbility = nullptr;
 		size_t AAIndex;
 
-		ComposeGameEffect* OnAddingAbilityGameEff = nullptr;
+		const ComposeGameEffect* OnAddingAbilityGameEff = nullptr;
 		/// <summary>
 		/// Cooldown which will set to next ability on activating current
 		/// </summary>

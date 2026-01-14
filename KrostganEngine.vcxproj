@@ -141,6 +141,7 @@
     <ClCompile Include="Scripts\Ability_Aura.cpp" />
     <ClCompile Include="Scripts\Ability_Directional.cpp" />
     <ClCompile Include="Scripts\Ability_NonTargetable.cpp" />
+    <ClCompile Include="Scripts\Ability_NonTar_Durable.cpp" />
     <ClCompile Include="Scripts\Ability_NonTar_SetAA.cpp" />
     <ClCompile Include="Scripts\Ability_NonTar_TempEff.cpp" />
     <ClCompile Include="Scripts\Ability_Passive.cpp" />
@@ -187,6 +188,7 @@
     <ClCompile Include="Scripts\DynamicPhysObject.cpp" />
     <ClCompile Include="Scripts\ExternalGlobalResources.cpp" />
     <ClCompile Include="Scripts\GameEff_Dur_BatStatMult.cpp" />
+    <ClCompile Include="Scripts\GameEff_Dur_EntBatStatConst_bool.cpp" />
     <ClCompile Include="Scripts\GroupSelectionSystem_Comparators.cpp" />
     <ClCompile Include="Scripts\HeroDeathModule.cpp" />
     <ClCompile Include="Scripts\IAttackableObj.cpp" />
@@ -293,6 +295,7 @@
     <ClInclude Include="Scripts\Ability_Aura.h" />
     <ClInclude Include="Scripts\Ability_Directional.h" />
     <ClInclude Include="Scripts\Ability_NonTargetable.h" />
+    <ClInclude Include="Scripts\Ability_NonTar_Durable.h" />
     <ClInclude Include="Scripts\Ability_NonTar_SetAA.h" />
     <ClInclude Include="Scripts\Ability_Passive.h" />
     <ClInclude Include="Scripts\Ability_Targetable.h" />
@@ -352,7 +355,8 @@
     <ClInclude Include="Scripts\FightingSystems.h" />
     <ClInclude Include="Scripts\FirstChoosenEntityDependsManager.h" />
     <ClInclude Include="Scripts\GameEffectsSystem.h" />
-    <ClInclude Include="Scripts\GameEff_Dur_BatStatMult.h" />
+    <ClInclude Include="Scripts\GameEff_Dur_EntBatStatConst_bool.h" />
+    <ClInclude Include="Scripts\GameEff_Dur_EntBatStatMult.h" />
     <ClInclude Include="Scripts\GameLevel.h" />
     <ClInclude Include="Scripts\GameObjStatParameter.h" />
     <ClInclude Include="Scripts\GameTransitions.h" />

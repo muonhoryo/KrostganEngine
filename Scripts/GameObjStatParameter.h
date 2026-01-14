@@ -29,6 +29,61 @@ namespace KrostganEngine::GameObjects {
 		TValueType Default;
 	};
 
+	struct ParameterBool final {
+
+		ParameterBool()
+			:Current(true){}
+		ParameterBool(bool Default)
+			:Default(Default),
+			Current(Default){}
+		ParameterBool(const ParameterBool& copy) 
+			:Default(copy.Default),
+			Current(copy.Current),
+			ModsCount(copy.ModsCount){
+			
+		}
+
+		bool const& GetRef_Current() const { return Current; }
+		bool const& GetRef_Default() const { return Default; }
+
+		bool GetDefaultValue() const { return Default; }
+		bool GetCurrentValue() const { return Current; }
+
+		void SetDefaultValue(bool value) {
+			Default = value;
+			if (ModsCount != 0)
+				Current = !Default;
+			else
+				Current = Default;
+		}
+
+		void AddMod() {
+			if (Current == Default) {
+				Current = !Default;
+			}
+			++ModsCount;
+		}
+		void RemoveMod() {
+			if (ModsCount == 0)
+				throw new exception("Trying to remove mod from unmodded parameter");
+
+			if (ModsCount == 1) {
+				Current = Default;
+			}
+			--ModsCount;
+		}
+
+		operator bool() const {
+			return Current;
+		}
+
+	private:
+		bool Current;
+		bool Default = true;
+
+		unsigned int ModsCount = 0;
+	};
+
 	enum class ParamModOpType : char {
 		PreSum,
 		Mul,

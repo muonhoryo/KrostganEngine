@@ -35,6 +35,9 @@ void Ability_NonTar_SetAA::Activate() {
 	if (NextAbility == nullptr)
 		throw exception("NextAbility is not assigned");
 
+	if (Get_IsOnCooldown())
+		return;
+
 	Owner->RemoveAbility(*this, true);
 	Owner->AddAbility(*NextAbility);
 	NextAbility->TurnToCooldown(NextAbilityCooldown);
@@ -44,7 +47,7 @@ void Ability_NonTar_SetAA::Set_NextAbility(Ability_NonTar_SetAA& NextAbility) {
 	this->NextAbility = &NextAbility;
 }
 
-void Ability_NonTar_SetAA::Set_OnAddingAbilityGameEff(ComposeGameEffect* OnAddingAbilityGameEff) {
+void Ability_NonTar_SetAA::Set_OnAddingAbilityGameEff(const ComposeGameEffect* OnAddingAbilityGameEff) {
 	if (this->OnAddingAbilityGameEff != nullptr)
 		delete this->OnAddingAbilityGameEff;
 	this->OnAddingAbilityGameEff = OnAddingAbilityGameEff;
@@ -56,7 +59,7 @@ void Ability_NonTar_SetAA::Set_DeleteGameEffOnRemove(bool DeleteGameEffOnRemove)
 	this->DeleteGameEffOnRemove = DeleteGameEffOnRemove;
 }
 
-ComposeGameEffect* Ability_NonTar_SetAA::Get_OnAddingAbilityGameEff() const {
+const ComposeGameEffect* Ability_NonTar_SetAA::Get_OnAddingAbilityGameEff() const {
 	return OnAddingAbilityGameEff;
 }
 float Ability_NonTar_SetAA::Get_NextAbilityCooldown() const {
@@ -81,13 +84,13 @@ void Ability_NonTar_SetAA::OnAddToUser(AbilityUserObject& user) {
 	else {
 		parOwner->GetBattleStats().SetAAStats(AAIndex);
 		if(OnAddingAbilityGameEff!=nullptr)
-			parOwner->AddGameEff(*OnAddingAbilityGameEff);
+			parOwner->AddGameEff(OnAddingAbilityGameEff->Clone());
 	}
 }
 void Ability_NonTar_SetAA::OnRemoveFromUser(AbilityUserObject& user) {
 	if (DeleteGameEffOnRemove && OnAddingAbilityGameEff!=nullptr) {
 
 		auto parOwner = dynamic_cast<Entity*>(Owner);
-		parOwner->RemoveGameEff(*OnAddingAbilityGameEff);
+		parOwner->RemoveGameEffByID(OnAddingAbilityGameEff->GetCatalogID(), OnAddingAbilityGameEff->GetSubcatalogID());
 	}
 }

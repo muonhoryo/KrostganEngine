@@ -66,7 +66,7 @@ namespace KrostganEngine::GameObjects {
 		/// </summary>
 		/// <param name="type"></param>
 		/// <returns></returns>
-		const bool*		GetFieldRef_bool(int type) const {return _GetFieldRef_bool(type); }
+		const bool*		GetFieldRef_bool(int type, bool isDefField = false) const {return _GetFieldRef_bool(type,isDefField); }
 		/// <summary>
 		/// Return nullptr of field has another type or field don't exists
 		/// </summary>
@@ -93,6 +93,12 @@ namespace KrostganEngine::GameObjects {
 		/// </summary>
 		/// <param name="type"></param>
 		/// <returns></returns>
+		const ParameterBool*		GetParameterByType_b(int type) const {return GetParameterByType_b(type); }
+		/// <summary>
+		/// Return nullptr if field has another type of field doesn't exist
+		/// </summary>
+		/// <param name="type"></param>
+		/// <returns></returns>
 		const void*					GetParameterByType(int type) const {return _GetParameterByType(type); }
 
 		static ModStatsWrapper_Consts::StatType	GetFieldType(int type) {
@@ -113,11 +119,12 @@ namespace KrostganEngine::GameObjects {
 
 		virtual const size_t*	_GetFieldRef_s_t(int type, bool isDefField = false) const = 0;
 		virtual const float*	_GetFieldRef_f(int type, bool isDefField = false) const = 0;
-		virtual const bool*		_GetFieldRef_bool(int type) const = 0;
+		virtual const bool*		_GetFieldRef_bool(int type, bool isDefField = false) const = 0;
 		virtual const void*		_GetFieldRef(int type, bool isDefField = false) const = 0;
 
 		virtual const Parameter<size_t>*	_GetParameterByType_s_t(int type) const = 0;
 		virtual const Parameter<float>*		_GetParameterByType_f(int type) const = 0;
+		virtual const ParameterBool*		_GetParameterByType_b(int type) const = 0;
 		virtual const void*					_GetParameterByType(int type) const = 0;
 
 		EventHandler<int> StatChangedEventHan = EventHandler<int>(StatChangedEvent);

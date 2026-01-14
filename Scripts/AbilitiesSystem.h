@@ -20,6 +20,8 @@ namespace KrostganEngine::GameObjects {
 
 		void TurnToCooldown(float duration);
 		void ResetCooldown();
+		void Set_CooldownDuration(float duration);
+
 		bool Get_IsOnCooldown() const;
 		float GetCooldownDuration() const;
 

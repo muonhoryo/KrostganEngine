@@ -53,7 +53,7 @@ namespace KrostganEngine::GameObjects {
 	protected:
 		array<Parameter<float>, FIELDSCOUNT_F>		Parameters_f;
 		array<Parameter<size_t>, FIELDSCOUNT_S_T>	Parameters_s_t;
-		array<bool, FIELDSCOUNT_BOOL>				Parameter_bool;
+		array<ParameterBool, FIELDSCOUNT_BOOL>		Parameters_bool;
 
 		const size_t*			_GetFieldRef_s_t(int type, bool isDefField = false) const override{
 
@@ -71,16 +71,13 @@ namespace KrostganEngine::GameObjects {
 			else
 				return &GetFieldRefFromParameter(*param, isDefField);
 		}
-		const bool*				_GetFieldRef_bool(int type) const override{
+		const bool*				_GetFieldRef_bool(int type, bool isDefField = false) const override{
 
-			if (GetFieldType((TStatEnum)type) != ModStatsWrapper_Consts::StatType::t_bool)
+			auto param = _GetParameterByType_b(type);
+			if (param == nullptr)
 				return nullptr;
-
-			int index = GetArrayIndexOfField(type);
-			if (index < FIELDSCOUNT_BOOL)
-				return &Parameter_bool[index];
 			else
-				return nullptr;
+				return &GetFieldRefFromParameter(*param, isDefField);
 		}
 		const void*				_GetFieldRef(int type, bool isDefField = false) const override {
 
@@ -119,6 +116,17 @@ namespace KrostganEngine::GameObjects {
 			else
 				return nullptr;
 		}
+		const ParameterBool*		_GetParameterByType_b(int type) const override {
+
+			if (GetFieldType((TStatEnum)type) != ModStatsWrapper_Consts::StatType::t_bool)
+				return nullptr;
+
+			int index = GetArrayIndexOfField(type);
+			if (index < FIELDSCOUNT_BOOL)
+				return &Parameters_bool[index];
+			else
+				return nullptr;
+		}
 		const void*					_GetParameterByType(int type) const override{
 
 			ModStatsWrapper_Consts::StatType fieldType = GetFieldType((TStatEnum)type);
@@ -127,6 +135,8 @@ namespace KrostganEngine::GameObjects {
 				return _GetParameterByType_s_t(type);
 			case ModStatsWrapper_Consts::StatType::t_float:
 				return _GetParameterByType_f(type);
+			case ModStatsWrapper_Consts::StatType::t_bool:
+				return _GetParameterByType_b(type);
 			default:
 				return nullptr;
 			}
@@ -176,7 +186,8 @@ namespace KrostganEngine::GameObjects {
 			}
 			case KrostganEngine::GameObjects::ModStatsWrapper_Consts::StatType::t_bool: {
 
-				*Internal_GetFieldByType_bool(paramType) = FStreamExts::ParseBool(param.second);
+				auto paramPtr_b = Internal_GetFieldByType_bool(paramType);
+				paramPtr_b->SetDefaultValue(FStreamExts::ParseBool(param.second));
 				return true;
 			}
 			default:
@@ -202,7 +213,7 @@ namespace KrostganEngine::GameObjects {
 				toCopy.Parameters_s_t[it] = Parameter<size_t>(Parameters_s_t[it]);
 			}
 			for (it = 0;it < FIELDSCOUNT_BOOL;++it) {
-				toCopy.Parameter_bool[it] = Parameter_bool[it];
+				toCopy.Parameters_bool[it] = ParameterBool(Parameters_bool[it]);
 			}
 		}
 		
@@ -214,8 +225,8 @@ namespace KrostganEngine::GameObjects {
 		const array<Parameter<size_t>, FIELDSCOUNT_S_T>& GetParamsArray_s_t() const {
 			return Parameters_s_t;
 		}
-		const array<bool, FIELDSCOUNT_BOOL>& GetParamsArray_bool() const {
-			return Parameter_bool;
+		const array<ParameterBool, FIELDSCOUNT_BOOL>& GetParamsArray_bool() const {
+			return Parameters_bool;
 		}
 
 		/// <summary>
@@ -239,8 +250,8 @@ namespace KrostganEngine::GameObjects {
 		/// </summary>
 		/// <param name="type"></param>
 		/// <returns></returns>
-		const bool*		GetFieldRef_bool(TStatEnum type) const {
-			return _GetFieldRef_bool((int)type);
+		const bool*		GetFieldRef_bool(TStatEnum type, bool isDefField = false) const {
+			return _GetFieldRef_bool((int)type,isDefField);
 		}
 		/// <summary>
 		/// Return nullptr of field has another type or field don't exists
@@ -272,6 +283,14 @@ namespace KrostganEngine::GameObjects {
 		/// </summary>
 		/// <param name="type"></param>
 		/// <returns></returns>
+		const ParameterBool*		GetParameterByType_b(TStatEnum type) const {
+			return _GetParameterByType_b((int)type);
+		}
+		/// <summary>
+		/// Return nullptr if field has another type of field doesn't exist
+		/// </summary>
+		/// <param name="type"></param>
+		/// <returns></returns>
 		const void*					GetParameterByType(TStatEnum type) const{
 			return _GetParameterByType((int)type);
 		}
@@ -279,6 +298,9 @@ namespace KrostganEngine::GameObjects {
 		template<typename TFieldType>
 		static TFieldType const& GetFieldRefFromParameter(Parameter<TFieldType> const& param, bool isDefField = false) {
 			return isDefField ? param.GetRef_Default() : param.GetRef_Stat();
+		}
+		static bool const& GetFieldRefFromParameter(ParameterBool const& param, bool isDefField = false) {
+			return isDefField ? param.GetRef_Default() : param.GetRef_Current();
 		}
 		static int GetArrayIndexOfField(int type) {
 			return ((type & (int)ModStatsWrapper_Consts::StatType::r_type_mask) >> ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT) - 1;
@@ -293,8 +315,8 @@ namespace KrostganEngine::GameObjects {
 
 			return const_cast<Parameter<float>*>(GetParameterByType_f(type));
 		}
-		bool*				Internal_GetFieldByType_bool(TStatEnum type){
-			return const_cast<bool*>(GetFieldRef_bool(type));
+		ParameterBool*		Internal_GetFieldByType_bool(TStatEnum type){
+			return const_cast<ParameterBool*>(GetParameterByType_b(type));
 		}
 		void* Internal_GetParamByType(TStatEnum type) {
 
@@ -312,7 +334,7 @@ namespace KrostganEngine::GameObjects {
 		template<>
 		void SetDefaultStat<bool>(TStatEnum type, bool value) {
 			auto param = Internal_GetFieldByType_bool(type);
-			*param = value;
+			param->SetDefaultValue(value);
 			int args = (int)type;
 			DefaultStatChangedEventHan.Execute(args);
 		}
@@ -329,7 +351,8 @@ namespace KrostganEngine::GameObjects {
 			param->Stat = value;
 		}
 		void InitializeField_bool(TStatEnum type, bool value) {
-			*Internal_GetFieldByType_bool(type) = value;
+			auto param = Internal_GetFieldByType_bool(type);
+			param->SetDefaultValue(value);
 		}
 
 
@@ -461,6 +484,29 @@ namespace KrostganEngine::GameObjects {
 		void RemoveModifier(const ParamModifier<TStatEnum>& mod) {
 			CollectionsExts::Remove(ParamModifiers, &mod);
 			RecalculateStat(mod.FieldType);
+		}
+
+		void AddModifier_bool(TStatEnum type) {
+
+			if (StatToStr(type) == "")
+				throw exception("Missing field type");
+
+			auto param = Internal_GetFieldByType_bool(type);
+			param->AddMod();
+			int& args = *new int((int)type);
+			StatChangedEventHan.Execute(args);
+			delete& args;
+		}
+		void RemoveModifier_bool(TStatEnum type) {
+
+			if (StatToStr(type) == "")
+				throw exception("Missing field type");
+
+			auto param = Internal_GetFieldByType_bool(type);
+			param->RemoveMod();
+			int& args = *new int((int)type);
+			StatChangedEventHan.Execute(args);
+			delete& args;
 		}
 	};
 };

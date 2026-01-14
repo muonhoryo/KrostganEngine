@@ -65,15 +65,13 @@ void ConsoleCommsInterpretator::ExecuteCommand(const string& input) {
 			parObj = dynamic_cast<Entity*>((*it)->GetPtr_t());
 			if (parObj != nullptr) {
 
-				ComposeGameEff_Temporal& gameEff = *new ComposeGameEff_Temporal(1000);
+				ComposeGameEff_Temporal& gameEff = *new ComposeGameEff_Temporal(3);
+				gameEff.AddGameEffect_Durable(*new GameEff_Dur_EntBatStatConst_bool(EntityBattleStatType::Ghostliness, true));
 				gameEff.AddGameEffect_Durable(*new GameEff_Dur_EntBatStatMult(EntityBattleStatType::MovingSpeed, 5));
 
-				auto abil1 = new Ability_NonTar_SetAA(0);
-				auto abil2 = new Ability_NonTar_SetAA(*abil1, 1, 1, (std::byte)0);
-				abil1->Set_NextAbility(*abil2);
-				abil1->Set_DeleteGameEffOnRemove(true);
-				
-				abil2->Set_OnAddingAbilityGameEff(&gameEff);
+				auto abil1 = new Ability_NonTar_Durable(gameEff);
+				abil1->Set_CooldownSinceStart(true);
+				abil1->Set_CooldownDuration(3);
 
 				parObj->AddAbility(*abil1);
 			}
