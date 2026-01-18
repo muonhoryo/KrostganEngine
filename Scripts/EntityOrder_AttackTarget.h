@@ -13,7 +13,6 @@ namespace KrostganEngine::EntitiesControl {
 	public:
 		EntityOrder_AttackTarget
 			(OrdersExecutor&						Owner, 
-			WorldTransfObj&							OwnerTransform,
 			watch_ptr_handler_wr<IAttackableObj>	Target,
 			IFractionMember*						Target_FracMem = nullptr,
 			EntityBattleStats*						Target_BatStats = nullptr);
@@ -27,7 +26,6 @@ namespace KrostganEngine::EntitiesControl {
 
 		const ITransformableObj* GetTarget() const override;
 
-		OrdersExecutor& Owner;
 		watch_ptr_handler_wr<IAttackableObj> Target;
 		EntityBattleStats* Target_BatStats;
 		//Cashed

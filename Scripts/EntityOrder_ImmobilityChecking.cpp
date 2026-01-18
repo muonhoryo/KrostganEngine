@@ -8,7 +8,7 @@ using namespace KrostganEngine::Core;
 using namespace KrostganEngine::EntitiesControl;
 
 bool EntityOrder_ImmobilityChecking::CheckImmobility(Vector2f target) const{
-	return CheckImmobility(SquareLength(target - OwnerTransform.GetGlobalPosition()));
+	return CheckImmobility(SquareLength(target - Owner.GetGlobalPosition()));
 }
 bool EntityOrder_ImmobilityChecking::CheckImmobility(float toTargetDist_sqr) const{
 

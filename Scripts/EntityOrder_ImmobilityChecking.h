@@ -1,6 +1,6 @@
 #pragma once
 
-#include <WorldTransfObj.h>
+#include <OrdersExecutor.h>
 
 using namespace KrostganEngine::GameObjects;
 
@@ -10,11 +10,11 @@ namespace KrostganEngine::EntitiesControl {
 	public:
 		virtual ~EntityOrder_ImmobilityChecking(){}
 
-		WorldTransfObj& OwnerTransform;
+		OrdersExecutor& Owner;
 
 	protected:
-		EntityOrder_ImmobilityChecking(WorldTransfObj& OwnerTransform)
-			:OwnerTransform(OwnerTransform){}
+		EntityOrder_ImmobilityChecking(OrdersExecutor& Owner)
+			:Owner(Owner){}
 
 		/// <summary>
 		/// Return true if owner is staying in a single point

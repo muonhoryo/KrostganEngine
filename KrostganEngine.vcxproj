@@ -161,9 +161,9 @@
     <ClCompile Include="Scripts\ColliderShapes.cpp" />
     <ClCompile Include="Scripts\CommonHPRegenModule.cpp" />
     <ClCompile Include="Scripts\ComposeGameEffect.cpp" />
-    <ClCompile Include="Scripts\ComposeGameEff_Durable.cpp" />
-    <ClCompile Include="Scripts\ComposeGameEff_Instant.cpp" />
     <ClCompile Include="Scripts\ComposeGameEff_Permanent.cpp" />
+    <ClCompile Include="Scripts\ComposeGameEff_Instant.cpp" />
+    <ClCompile Include="Scripts\ComposeGameEff_Periodical.cpp" />
     <ClCompile Include="Scripts\ComposeGameEff_Temporal.cpp" />
     <ClCompile Include="Scripts\DbgConsoleInputHandler.cpp" />
     <ClCompile Include="Scripts\DBG_ImmortalArmy.cpp" />
@@ -187,9 +187,11 @@
     <ClCompile Include="Scripts\EntsCtrlOrdersGiving.cpp" />
     <ClCompile Include="Scripts\DynamicPhysObject.cpp" />
     <ClCompile Include="Scripts\ExternalGlobalResources.cpp" />
-    <ClCompile Include="Scripts\GameEff_Dur_BatStatMult.cpp" />
+    <ClCompile Include="Scripts\GameEff_Dur_Deserter.cpp" />
+    <ClCompile Include="Scripts\GameEff_Dur_EntBatStatMult.cpp" />
     <ClCompile Include="Scripts\GameEff_Dur_Disarm.cpp" />
     <ClCompile Include="Scripts\GameEff_Dur_EntBatStatConst_bool.cpp" />
+    <ClCompile Include="Scripts\GameEff_Inst_AddDurEff.cpp" />
     <ClCompile Include="Scripts\GroupSelectionSystem_Comparators.cpp" />
     <ClCompile Include="Scripts\HeroDeathModule.cpp" />
     <ClCompile Include="Scripts\IAttackableObj.cpp" />
@@ -356,9 +358,11 @@
     <ClInclude Include="Scripts\FightingSystems.h" />
     <ClInclude Include="Scripts\FirstChoosenEntityDependsManager.h" />
     <ClInclude Include="Scripts\GameEffectsSystem.h" />
+    <ClInclude Include="Scripts\GameEff_Dur_Deserter.h" />
     <ClInclude Include="Scripts\GameEff_Dur_Disarm.h" />
     <ClInclude Include="Scripts\GameEff_Dur_EntBatStatConst_bool.h" />
     <ClInclude Include="Scripts\GameEff_Dur_EntBatStatMult.h" />
+    <ClInclude Include="Scripts\GameEff_Inst_AddDurEff.h" />
     <ClInclude Include="Scripts\GameLevel.h" />
     <ClInclude Include="Scripts\GameObjStatParameter.h" />
     <ClInclude Include="Scripts\GameTransitions.h" />

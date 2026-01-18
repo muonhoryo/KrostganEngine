@@ -15,7 +15,6 @@ namespace KrostganEngine::EntitiesControl {
 	public:
 		EntityOrder_MoveToPoint(
 			OrdersExecutor&		Owner,
-			WorldTransfObj&		OwnerTransform,
 			Vector2f			TargetGlobalCoord,
 			float				ToTargetMinDistance = 0);
 

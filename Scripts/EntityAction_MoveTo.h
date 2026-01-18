@@ -11,12 +11,11 @@ using namespace KrostganEngine::GameObjects;
 namespace KrostganEngine::EntitiesControl {
 	class EntityAction_MoveTo:public IEntityAction {
 	public:
-		EntityAction_MoveTo(OrdersExecutor& Owner,WorldTransfObj& OwnerTransform);
+		EntityAction_MoveTo(OrdersExecutor& Owner);
 
 	protected:
 		float DistToTarget;
 		OrdersExecutor& Owner;
-		WorldTransfObj& OwnerTransform;
 
 		bool GetCantMoveState() const{
 			return CantMove;

@@ -382,12 +382,6 @@
     <Filter Include="Исходные файлы\CoreSystems\GameEffectsSystem\GeneralGameEffects">
       <UniqueIdentifier>{d38e0ba6-1a86-4d17-8ed2-84c82b365635}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Файлы заголовков\CoreSystems\GameObjects\GameEffectsSystem">
-      <UniqueIdentifier>{5feefa83-1a2e-42f7-8c2c-9b5ccf07f9fe}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Файлы заголовков\CoreSystems\GameObjects\GameEffectsSystem\GeneralGameEffects">
-      <UniqueIdentifier>{9c6856df-9219-45ee-bfe2-35096c9fb872}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Файлы заголовков\CoreSystems\AbilitiesSystem">
       <UniqueIdentifier>{7d2d89ba-ec64-44a8-aa27-fcfc32ee8266}</UniqueIdentifier>
     </Filter>
@@ -399,6 +393,12 @@
     </Filter>
     <Filter Include="Исходные файлы\CoreSystems\AbilitiesSystem\BuiltAbilities">
       <UniqueIdentifier>{1773795c-5829-4a1a-ad30-f836fbfc4c48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems\GameEffectsSystem">
+      <UniqueIdentifier>{5feefa83-1a2e-42f7-8c2c-9b5ccf07f9fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems\GameEffectsSystem\GeneralGameEffects">
+      <UniqueIdentifier>{9c6856df-9219-45ee-bfe2-35096c9fb872}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -813,13 +813,10 @@
     <ClCompile Include="Scripts\ComposeGameEff_Instant.cpp">
       <Filter>Исходные файлы\CoreSystems\GameEffectsSystem\ComposeGameEffects</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\ComposeGameEff_Durable.cpp">
-      <Filter>Исходные файлы\CoreSystems\GameEffectsSystem\ComposeGameEffects</Filter>
-    </ClCompile>
     <ClCompile Include="Scripts\ComposeGameEff_Permanent.cpp">
       <Filter>Исходные файлы\CoreSystems\GameEffectsSystem\ComposeGameEffects</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\GameEff_Dur_BatStatMult.cpp">
+    <ClCompile Include="Scripts\GameEff_Dur_EntBatStatMult.cpp">
       <Filter>Исходные файлы\CoreSystems\GameEffectsSystem\GeneralGameEffects</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\AbilityUserObject.cpp">
@@ -859,6 +856,15 @@
       <Filter>Исходные файлы\CoreSystems\GameEffectsSystem\GeneralGameEffects</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\GameEff_Dur_Disarm.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameEffectsSystem\GeneralGameEffects</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\ComposeGameEff_Periodical.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameEffectsSystem\ComposeGameEffects</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\GameEff_Inst_AddDurEff.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameEffectsSystem\GeneralGameEffects</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\GameEff_Dur_Deserter.cpp">
       <Filter>Исходные файлы\CoreSystems\GameEffectsSystem\GeneralGameEffects</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1283,9 +1289,6 @@
     <ClInclude Include="Scripts\MemoryExts.h">
       <Filter>Файлы заголовков\Extensions</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\DBG_ImmortalArmy.h">
-      <Filter>Файлы заголовков\Debug</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\IEntityUIDependency.h">
       <Filter>Файлы заголовков\Visual\UI/UX\ValueDependencies\EntityUIDependencies</Filter>
     </ClInclude>
@@ -1506,13 +1509,13 @@
       <Filter>Файлы заголовков\CoreSystems\GameObjects\TriggerZones</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\GameEffectsSystem.h">
-      <Filter>Файлы заголовков\CoreSystems\GameObjects\GameEffectsSystem</Filter>
+      <Filter>Файлы заголовков\CoreSystems\GameEffectsSystem</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\GameEff_Dur_EntBatStatMult.h">
-      <Filter>Файлы заголовков\CoreSystems\GameObjects\GameEffectsSystem\GeneralGameEffects</Filter>
+      <Filter>Файлы заголовков\CoreSystems\GameEffectsSystem\GeneralGameEffects</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\GeneralGameEffects.h">
-      <Filter>Файлы заголовков\CoreSystems\GameObjects\GameEffectsSystem\GeneralGameEffects</Filter>
+      <Filter>Файлы заголовков\CoreSystems\GameEffectsSystem\GeneralGameEffects</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\AbilitiesSystem.h">
       <Filter>Файлы заголовков\CoreSystems\AbilitiesSystem</Filter>
@@ -1551,10 +1554,19 @@
       <Filter>Файлы заголовков\CoreSystems\AbilitiesSystem\BuiltAbilities</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\GameEff_Dur_EntBatStatConst_bool.h">
-      <Filter>Файлы заголовков\CoreSystems\GameObjects\GameEffectsSystem\GeneralGameEffects</Filter>
+      <Filter>Файлы заголовков\CoreSystems\GameEffectsSystem\GeneralGameEffects</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\GameEff_Dur_Disarm.h">
-      <Filter>Файлы заголовков\CoreSystems\GameObjects\GameEffectsSystem\GeneralGameEffects</Filter>
+      <Filter>Файлы заголовков\CoreSystems\GameEffectsSystem\GeneralGameEffects</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\GameEff_Inst_AddDurEff.h">
+      <Filter>Файлы заголовков\CoreSystems\GameEffectsSystem\GeneralGameEffects</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\GameEff_Dur_Deserter.h">
+      <Filter>Файлы заголовков\CoreSystems\GameEffectsSystem\GeneralGameEffects</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\DBG_ImmortalArmy.h">
+      <Filter>Файлы заголовков\Debug</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

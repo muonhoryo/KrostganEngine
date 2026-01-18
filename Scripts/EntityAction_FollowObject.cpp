@@ -9,13 +9,12 @@ using namespace KrostganEngine::EntitiesControl;
 
 
 EntityAction_FollowObject::EntityAction_FollowObject
-	(OrdersExecutor&								Owner, 
-	WorldTransfObj&								OwnerTransform, 
+	(OrdersExecutor&						Owner, 
 	watch_ptr_handler_wr_c<WorldTransfObj>	Target,
-	const float									DistToFoll)
-	:EntityAction_MoveTo	(Owner,OwnerTransform),
-	Target		(Target),
-	DistToFoll	(DistToFoll){
+	const float								DistToFoll)
+		:EntityAction_MoveTo(Owner),
+			Target		(Target),
+			DistToFoll	(DistToFoll){
 }
 EntityAction_FollowObject::~EntityAction_FollowObject() {
 }

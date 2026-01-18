@@ -15,13 +15,11 @@ using namespace KrostganEngine::Core;
 
 EntityOrder_AttackTarget::EntityOrder_AttackTarget(
 	OrdersExecutor& Owner,
-	WorldTransfObj& OwnerTransform, 
 	watch_ptr_handler_wr<IAttackableObj> Target,
 	IFractionMember* Target_FracMem,
 	EntityBattleStats* Target_BatStats)
 		:IEntityOrder(),
-		EntityOrder_ImmobilityChecking(OwnerTransform),
-			Owner(Owner),
+		EntityOrder_ImmobilityChecking(Owner),
 			Target(Target),
 			Target_BatStats(Target_BatStats),
 			AAModule(Owner.GetAAModule()),
@@ -77,7 +75,7 @@ list<IEntityAction*>* EntityOrder_AttackTarget::GetActions() {
 	}
 	else {									//Owner needs to follow target first
 
-		Segment ray(OwnerTransform.GetGlobalPosition(), ptr->GetGlobalPosition());
+		Segment ray(Owner.GetGlobalPosition(), ptr->GetGlobalPosition());
 		if (Engine::GetPhysicsEngine().RayHit(ray, LevelBypassMapManager::ENTITY_UNPASSABLE_OBJS_LAYER))
 		{
 			list<Vector2f>* pnts = PathFinding_Diijkstra::GetPath(ray.First, ray.Second);
@@ -87,13 +85,14 @@ list<IEntityAction*>* EntityOrder_AttackTarget::GetActions() {
 				--end;
 				for (auto it = pnts->begin(); it != end;++it) {
 
-					IEntityAction* act = new EntityAction_MoveToPoint(Owner, OwnerTransform, *it);
+					IEntityAction* act = new EntityAction_MoveToPoint(Owner, *it);
 					lst->push_back(act);
 				}
 			}
 		}
 		float alloDist = Owner.GetBattleStats().GetCurrAAStats()->GetRange();
-		EntityAction_FollowObject* folAct = new EntityAction_FollowObject(Owner, OwnerTransform, 
+		EntityAction_FollowObject* folAct = new EntityAction_FollowObject
+			(Owner, 
 			*new watch_ptr_handler_wr_c<WorldTransfObj>(Target),
 			alloDist);
 		EntityAction_AutoAttack* aaAct = new EntityAction_AutoAttack(Owner, watch_ptr_handler_wr<IAttackableObj>(Target), Target_BatStats);

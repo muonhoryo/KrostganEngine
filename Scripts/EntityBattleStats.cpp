@@ -50,6 +50,7 @@ void EntityBattleStats::InitializeDefaultStats() {
 	InitializeField_f(EntityBattleStatType::AutoAggrRange, 0);
 	InitializeField_f(EntityBattleStatType::ObservingRange, 0);
 	InitializeField_f(EntityBattleStatType::Stealth, 0);
+	InitializeField_f(EntityBattleStatType::Resistance_MindAtt, 0.1);
 
 	//bool
 	InitializeField_bool(EntityBattleStatType::IsTargetableForAA, true);
@@ -197,6 +198,10 @@ void EntityBattleStats::SetStealth(float stealth) {
 		throw exception("Stealth cannot be less than zero");
 
 	SetDefaultStat(EntityBattleStatType::Stealth, stealth);
+}
+void EntityBattleStats::SetResistance_MindAtt(float resistance) {
+	
+	SetDefaultStat(EntityBattleStatType::Resistance_MindAtt, resistance);
 }
 
 //bool

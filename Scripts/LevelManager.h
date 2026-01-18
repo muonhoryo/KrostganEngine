@@ -14,6 +14,8 @@ namespace KrostganEngine::Core {
 		static inline ExecutedEvent<const LevelLoadingInfo&> LoadLevelEvent = ExecutedEvent<const LevelLoadingInfo&>();
 
 		static const LevelLoadingInfo* GetLevelInfo();
+		static Vector2f GetCenterOfLevel(const LevelLoadingInfo& levelInfo);
+		static Vector2f GetCenterOfLevel();
 
 		static void AssignLevelInfo(const LevelLoadingInfo& info);
 		static void UnassignLevelInfo();

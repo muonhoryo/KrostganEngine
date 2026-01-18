@@ -16,9 +16,16 @@ TriggerZone::TriggerZone(Transformable& Owner)
 
 }
 TriggerZone::~TriggerZone() {
-	for (auto ptr : EnteredObjects) {
-		OnTriggerExit(*ptr);
-		delete ptr;
+	ClearTriggerList();
+}
+void TriggerZone::ClearTriggerList() {
+	if (EnteredObjects.begin() != EnteredObjects.end()) {
+
+		for (auto ptr : EnteredObjects) {
+			this->OnTriggerExit(*ptr);
+			delete ptr;
+		}
+		EnteredObjects.clear();
 	}
 }
 
@@ -42,12 +49,25 @@ void TriggerZone::Update(CallbackRecArgs_Upd args) {
 }
 void TriggerZone::RecalculateEnteredObjs() {
 
-	for (auto tar : EnteredObjects) {
-		OnTriggerExit(*tar);
-		delete tar;
+
+	auto befIt = EnteredObjects.before_begin();
+	auto it = EnteredObjects.begin();
+	auto end = EnteredObjects.end();
+	watch_ptr_handler_wr<IPhysicalObject>* ptr = nullptr;
+	while (it != end) {
+
+		ptr = *it;
+		if (!EnterTriggerCondition(*ptr->GetPtr_t())){
+
+			OnTriggerExit(*ptr);
+			delete ptr;
+			EnteredObjects.erase_after(befIt);
+			it = befIt;
+		}
+
+		++it;
+		++befIt;
 	}
-	EnteredObjects.clear();
-	//Update(CallbackRecArgs_Upd(vector<Event>(), Engine::GetFrameDeltaTime()));
 }
 
 void TriggerZone::Update_DeleteNull() {
@@ -80,7 +100,8 @@ void TriggerZone::Update_DeleteExited(const vector<IPhysicalObject*>& inputObjs)
 	while (it != end) {
 
 		ptr = *it;
-		if (!CollectionsExts::Contains(inputObjs, ptr->GetPtr_t())) {
+		if (!CollectionsExts::Contains(inputObjs, ptr->GetPtr_t())
+			|| !EnterTriggerCondition(*ptr->GetPtr_t())) {
 
 			OnTriggerExit(*ptr);
 			delete ptr;

@@ -3,14 +3,14 @@
 
 using namespace KrostganEngine::GameObjects;
 
-Ability_NonTar_Durable::Ability_NonTar_Durable(const ComposeGameEff_Durable& GameEff, size_t CatalogID, std::byte SubcatalogID) 
+Ability_NonTar_Durable::Ability_NonTar_Durable(const ComposeGameEff_Permanent& GameEff, size_t CatalogID, std::byte SubcatalogID) 
 	:Ability_NonTargetable(CatalogID, SubcatalogID),
 	GameEff(GameEff),
 	OnRemoveEffAction(OnRemoveGameEffEvAction(*this)){
 
 	OnRemoveEffAction.Update();
 }
-Ability_NonTar_Durable::Ability_NonTar_Durable(const ComposeGameEff_Durable& GameEff) 
+Ability_NonTar_Durable::Ability_NonTar_Durable(const ComposeGameEff_Permanent& GameEff) 
 	:GameEff(GameEff),
 	OnRemoveEffAction(OnRemoveGameEffEvAction(*this)) {
 

@@ -31,6 +31,7 @@ Aura::~Aura() {
 		IFractionMember::MemberHasChangedFracEvent.Remove(*FracDependency);
 		delete FracDependency;
 	}
+	ClearTriggerList();
 }
 
 void Aura::SetGlobalScale(Vector2f  scale) {

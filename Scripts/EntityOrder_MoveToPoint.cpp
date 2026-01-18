@@ -11,44 +11,43 @@ using namespace KrostganEngine::EntitiesControl;
 
 EntityOrder_MoveToPoint::EntityOrder_MoveToPoint
 		(OrdersExecutor& Owner, 
-		WorldTransfObj& OwnerTransform,
 		Vector2f TargetGlobalCoord,
 		float ToTargetMinDistance)
 	:EntityOrder_GlobalPosTarget(TargetGlobalCoord),
-	EntityOrder_ImmobilityChecking(OwnerTransform),
+	EntityOrder_ImmobilityChecking(Owner),
 		Owner					(Owner),
 		ToTargetMinDistance_Sqr	(ToTargetMinDistance * ToTargetMinDistance){
 
 }
 
 bool EntityOrder_MoveToPoint::CheckExecCondition() {
-	float dist = SquareLength(TargetGlobalPos - OwnerTransform.GetGlobalPosition());
+	float dist = SquareLength(TargetGlobalPos - Owner.GetGlobalPosition());
 	return dist <= ToTargetMinDistance_Sqr || CheckImmobility(dist);
 }
 list <IEntityAction*>* EntityOrder_MoveToPoint::GetActions() {
 
 	list<IEntityAction*>* lst = new list<IEntityAction*>();
 
-	Segment ray(OwnerTransform.GetGlobalPosition(), TargetGlobalPos);
+	Segment ray(Owner.GetGlobalPosition(), TargetGlobalPos);
 	if (Engine::GetPhysicsEngine().RayHit(ray, LevelBypassMapManager::ENTITY_UNPASSABLE_OBJS_LAYER))
 	{
 		list<Vector2f>* pnts = PathFinding_Diijkstra::GetPath(ray.First, ray.Second);
 		if (pnts == nullptr || pnts->size() == 0) {
 
-			IEntityAction* act = new EntityAction_MoveToPoint(Owner, OwnerTransform, TargetGlobalPos);
+			IEntityAction* act = new EntityAction_MoveToPoint(Owner, TargetGlobalPos);
 			lst->push_back(act);
 		}
 		else {
 			for (Vector2f pnt : *pnts) {
 
-				IEntityAction* act = new EntityAction_MoveToPoint(Owner, OwnerTransform, pnt);
+				IEntityAction* act = new EntityAction_MoveToPoint(Owner, pnt);
 				lst->push_back(act);
 			}
 		}
 	}
 	else {
 
-		IEntityAction* act = new EntityAction_MoveToPoint(Owner, OwnerTransform, TargetGlobalPos);
+		IEntityAction* act = new EntityAction_MoveToPoint(Owner, TargetGlobalPos);
 		lst->push_back(act);
 	}
 	return lst;

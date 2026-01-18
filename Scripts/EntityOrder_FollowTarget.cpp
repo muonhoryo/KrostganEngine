@@ -15,11 +15,9 @@ using namespace KrostganEngine::EntitiesControl;
 
 EntityOrder_FollowTarget::EntityOrder_FollowTarget
 	(OrdersExecutor&							Owner, 
-	WorldTransfObj&							OwnerTransform, 
 	watch_ptr_handler_wr_c<TransformableObj>		Target)
 	:IEntityOrder(),
-	EntityOrder_ImmobilityChecking(OwnerTransform),
-		Owner			(Owner),
+	EntityOrder_ImmobilityChecking(Owner),
 		Target			(Target)
 {}
 EntityOrder_FollowTarget::~EntityOrder_FollowTarget() {
@@ -37,7 +35,7 @@ list<IEntityAction*>* EntityOrder_FollowTarget::GetActions() {
 
 	list<IEntityAction*>* lst = new list<IEntityAction*>();
 
-	Segment ray(OwnerTransform.GetGlobalPosition(), ptr->GetGlobalPosition());
+	Segment ray(Owner.GetGlobalPosition(), ptr->GetGlobalPosition());
 	if (Engine::GetPhysicsEngine().RayHit(ray, LevelBypassMapManager::ENTITY_UNPASSABLE_OBJS_LAYER))
 	{
 		IEntityAction* act = nullptr;
@@ -47,28 +45,28 @@ list<IEntityAction*>* EntityOrder_FollowTarget::GetActions() {
 			--end;
 			for (auto it = pnts->begin(); it != end;++it) {
 
-				act= new EntityAction_MoveToPoint(Owner, OwnerTransform, *it);
+				act= new EntityAction_MoveToPoint(Owner, *it);
 				lst->push_back(act);
 			}
 		}
-		act = new EntityAction_FollowObject(Owner, OwnerTransform, Target, eps);
+		act = new EntityAction_FollowObject(Owner, Target, eps);
 		lst->push_back(act);
 		return lst;
 	}
 	else {
 
-		float dist = Length(OwnerTransform.GetGlobalPosition() - ptr->GetGlobalPosition());
+		float dist = Length(Owner.GetGlobalPosition() - ptr->GetGlobalPosition());
 		if (dist > eps) {	//Owner is too far from target
 
 			if (FirstExec) {		//Immidiet first execution
 
 				FirstExec = false;
-				lst->push_back(new EntityAction_FollowObject(Owner,OwnerTransform,Target,eps));
+				lst->push_back(new EntityAction_FollowObject(Owner,Target,eps));
 			}
 			else if (FollRepeatTimer.getElapsedTime().asSeconds() > Engine::GetGlobalConsts().EntityAct_RepCoolDown) {		//Limit requests to follow
 
 				FollRepeatTimer.restart();
-				lst->push_back(new EntityAction_FollowObject(Owner, OwnerTransform, Target, eps));
+				lst->push_back(new EntityAction_FollowObject(Owner, Target, eps));
 			}
 			return lst;
 		}

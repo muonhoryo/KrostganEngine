@@ -3,10 +3,12 @@
 
 using namespace KrostganEngine::GameObjects;
 
-ComposeGameEff_Instant::ComposeGameEff_Instant() {
+ComposeGameEff_Instant::ComposeGameEff_Instant(size_t CatalogID, std::byte SubcatalogID) 
+	:ComposeGameEffect(CatalogID, SubcatalogID){
 
 }
-ComposeGameEff_Instant::ComposeGameEff_Instant(const ComposeGameEff_Instant& copy) {
+ComposeGameEff_Instant::ComposeGameEff_Instant(const ComposeGameEff_Instant& copy)
+	:ComposeGameEffect(copy){
 
 	GameEffects = vector<IGameEffect_Instant*>(copy.GameEffects.size());
 	for (int i = 0;i < GameEffects.size();++i) {

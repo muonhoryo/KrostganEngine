@@ -4,12 +4,13 @@
 using namespace KrostganEngine::GameObjects;
 
 
-ComposeGameEff_Temporal::ComposeGameEff_Temporal(float EffTime)
-	:EffTime(EffTime){
+ComposeGameEff_Temporal::ComposeGameEff_Temporal(float EffTime, size_t CatalogID, std::byte SubcatalogID)
+	:ComposeGameEff_Permanent(CatalogID,SubcatalogID),
+	EffTime(EffTime){
 
 }
 ComposeGameEff_Temporal::ComposeGameEff_Temporal(const ComposeGameEff_Temporal& copy)
-	:ComposeGameEff_Durable(copy),
+	:ComposeGameEff_Permanent(copy),
 	EffTime(copy.EffTime){
 
 	GameEffects_TimeDepended = vector<IGameEffect_TimeDepended*>(copy.GameEffects_TimeDepended.size());
@@ -35,15 +36,18 @@ void ComposeGameEff_Temporal::RemoveGameEffect_TimeDepended(IGameEffect_TimeDepe
 float ComposeGameEff_Temporal::GetEffectTime() const {
 	return EffTime;
 }
+IGameEffTarget& ComposeGameEff_Temporal::GetTarget() const {
+	return *Target;
+}
 void ComposeGameEff_Temporal::SetEffectTime(float EffTime) {
-	EffTime = EffTime;
+	this->EffTime = EffTime;
 }
 
 void ComposeGameEff_Temporal::OnApplyToTarget(IGameEffTarget& target) {
 
 	IsActive = true;
 	Target = &target;
-	ComposeGameEff_Durable::OnApplyToTarget(target);
+	ComposeGameEff_Permanent::OnApplyToTarget(target);
 	for (auto eff : GameEffects_TimeDepended) {
 		eff->Activate(target);
 	}
@@ -51,7 +55,7 @@ void ComposeGameEff_Temporal::OnApplyToTarget(IGameEffTarget& target) {
 }
 void ComposeGameEff_Temporal::OnRemoveFromTarget(IGameEffTarget& target) {
 	IsActive = false;
-	ComposeGameEff_Durable::OnRemoveFromTarget(target);
+	ComposeGameEff_Permanent::OnRemoveFromTarget(target);
 	for (auto eff : GameEffects_TimeDepended) {
 		eff->Deactivate(target);
 	}

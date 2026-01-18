@@ -34,8 +34,8 @@ namespace KrostganEngine::GameObjects {
 		};
 
 	public:
-		Ability_NonTar_Durable(const ComposeGameEff_Durable& GameEff,size_t CatalogID, std::byte SubcatalogID);
-		Ability_NonTar_Durable(const ComposeGameEff_Durable& GameEff);
+		Ability_NonTar_Durable(const ComposeGameEff_Permanent& GameEff,size_t CatalogID, std::byte SubcatalogID);
+		Ability_NonTar_Durable(const ComposeGameEff_Permanent& GameEff);
 		virtual ~Ability_NonTar_Durable();
 
 		void Activate() override;
@@ -52,7 +52,7 @@ namespace KrostganEngine::GameObjects {
 	private:
 		void Cancel();
 
-		const ComposeGameEff_Durable& GameEff;
+		const ComposeGameEff_Permanent& GameEff;
 		OnRemoveGameEffEvAction OnRemoveEffAction;
 
 		bool IsActive = false;

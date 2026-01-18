@@ -3,7 +3,12 @@
 
 using namespace KrostganEngine::GameObjects;
 
-ComposeGameEffect::ComposeGameEffect() {
+ComposeGameEffect::ComposeGameEffect(size_t CatalogID, std::byte SubcatalogID) 
+	:CatalogObject(CatalogID,SubcatalogID){
+
+}
+ComposeGameEffect::ComposeGameEffect(const ComposeGameEffect& copy) 
+	:CatalogObject(copy.GetCatalogID(),copy.GetSubcatalogID()){
 
 }
 ComposeGameEffect::~ComposeGameEffect() {

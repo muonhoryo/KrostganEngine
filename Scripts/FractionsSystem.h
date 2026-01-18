@@ -17,7 +17,8 @@ namespace KrostganEngine::EntitiesControl {
 	enum class Relation {
 		Ally	= 1,
 		Neutral	= 2,
-		Enemy	= 4
+		Enemy	= 4,
+		All = ~0 
 	};
 	
 	class FractionsSystem {

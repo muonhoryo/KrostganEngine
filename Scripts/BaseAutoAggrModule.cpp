@@ -122,7 +122,7 @@ void BaseAutoAggrModule::CheckCurrTarget(CallbackRecArgs_Upd& args) {
 
 			if (IsFollowTargets) {
 
-				auto folAct = new EntityAction_FollowObject(Owner, Owner,watch_ptr_handler_wr_c<WorldTransfObj>(TarInfo->Target), alloDist);
+				auto folAct = new EntityAction_FollowObject(Owner, watch_ptr_handler_wr_c<WorldTransfObj>(TarInfo->Target), alloDist);
 
 				ActionMediator.AddAction((IEntityAction*)folAct);
 
@@ -139,7 +139,7 @@ void BaseAutoAggrModule::CheckCurrTarget(CallbackRecArgs_Upd& args) {
 
 						for (;beg != end;++beg) {
 
-							ActionMediator.AddAction((IEntityAction*)new EntityAction_MoveToPoint(Owner, Owner, *beg));
+							ActionMediator.AddAction((IEntityAction*)new EntityAction_MoveToPoint(Owner, *beg));
 						}
 					}
 				}
@@ -238,7 +238,7 @@ void BaseAutoAggrModule::FindTarget(CallbackRecArgs_Upd& args) {
 
 					float alloDist = Owner.GetBattleStats().GetCurrAAStats()->GetRange();
 					auto aaAct_ = new EntityAction_AutoAttack(Owner, watch_ptr_handler_wr<IAttackableObj>(TarInfo->Target));
-					auto folAct = new EntityAction_FollowObject(Owner, Owner, watch_ptr_handler_wr_c<WorldTransfObj>(TarInfo->Target), alloDist);
+					auto folAct = new EntityAction_FollowObject(Owner,  watch_ptr_handler_wr_c<WorldTransfObj>(TarInfo->Target), alloDist);
 					ActionMediator.AddAction((IEntityAction*)aaAct_);
 					ActionMediator.AddAction((IEntityAction*)folAct);
 
@@ -255,7 +255,7 @@ void BaseAutoAggrModule::FindTarget(CallbackRecArgs_Upd& args) {
 
 							for (;beg != end;++beg) {
 
-								ActionMediator.AddAction((IEntityAction*)new EntityAction_MoveToPoint(Owner, Owner, *beg));
+								ActionMediator.AddAction((IEntityAction*)new EntityAction_MoveToPoint(Owner, *beg));
 							}
 						}
 					}

@@ -14,8 +14,7 @@ namespace KrostganEngine::EntitiesControl {
 	class EntityOrder_AttackArea :public IEntityOrder, public EntityOrder_GlobalPosTarget, public virtual EntityOrder_ImmobilityChecking {
 	public:
 		EntityOrder_AttackArea(
-			OrdersExecutor&		Owner, 
-			WorldTransfObj&		OwnerTransform, 
+			OrdersExecutor&		Owner,  
 			Vector2f			TargetGlobalCoord,
 			float				ToTargetMinDistance = 0);
 		virtual ~EntityOrder_AttackArea(){}
@@ -26,7 +25,6 @@ namespace KrostganEngine::EntitiesControl {
 		void OnEndExecution() override;
 		EntityOrderType GetOrderType() override;
 
-		OrdersExecutor& Owner;
 		float ToTargetMinDistance_Sqr;
 	};
 }

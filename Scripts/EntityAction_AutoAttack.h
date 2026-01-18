@@ -24,7 +24,6 @@ namespace KrostganEngine::EntitiesControl {
 		EntityBattleStats* Target_BatStats;
 		
 		//Cashed
-		//IHitPointModule& TargetHPModule;
 		AutoAttackModule& AAModule;
 	};
 }

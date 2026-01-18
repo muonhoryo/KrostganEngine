@@ -11,12 +11,10 @@ using namespace KrostganEngine::EntitiesControl;
 
 EntityOrder_AttackArea::EntityOrder_AttackArea(
 	OrdersExecutor&		Owner, 
-	WorldTransfObj&		OwnerTransform, 
 	Vector2f			TargetGlobalCoord,
 	float				ToTargetMinDistance) 
 	:EntityOrder_GlobalPosTarget(TargetGlobalCoord),
-	EntityOrder_ImmobilityChecking(OwnerTransform),
-		Owner(Owner),
+	EntityOrder_ImmobilityChecking(Owner),
 		ToTargetMinDistance_Sqr(ToTargetMinDistance * ToTargetMinDistance){
 }
 
@@ -25,38 +23,38 @@ bool EntityOrder_AttackArea::CheckExecCondition() {
 	if (Owner.GetAAModule().GetCurrAAStats() == nullptr) {	
 		
 		//Replace AttackArea-order with MoveToPoint-order
-		auto newOrder = new EntityOrder_MoveToPoint(Owner, OwnerTransform, TargetGlobalPos, sqrtf(ToTargetMinDistance_Sqr));
+		auto newOrder = new EntityOrder_MoveToPoint(Owner, TargetGlobalPos, sqrtf(ToTargetMinDistance_Sqr));
 		Owner.TryInsertOrder(*newOrder, 1);
 		return true;
 	}		//Owner cannot auto-attack for now
 
-	float dist = SquareLength(TargetGlobalPos - OwnerTransform.GetGlobalPosition());
+	float dist = SquareLength(TargetGlobalPos - Owner.GetGlobalPosition());
 	return dist <= ToTargetMinDistance_Sqr || CheckImmobility(dist);
 }
 list <IEntityAction*>* EntityOrder_AttackArea::GetActions() {
 
 	list<IEntityAction*>* lst = new list<IEntityAction*>();
 
-	Segment ray(OwnerTransform.GetGlobalPosition(), TargetGlobalPos);
+	Segment ray(Owner.GetGlobalPosition(), TargetGlobalPos);
 	if (Engine::GetPhysicsEngine().RayHit(ray, LevelBypassMapManager::ENTITY_UNPASSABLE_OBJS_LAYER))
 	{
 		list<Vector2f>* pnts= PathFinding_Diijkstra::GetPath(ray.First, ray.Second);
 		if (pnts == nullptr || pnts->size() == 0) {
 
-			IEntityAction* act = new EntityAction_MoveToPoint(Owner, OwnerTransform, TargetGlobalPos);
+			IEntityAction* act = new EntityAction_MoveToPoint(Owner, TargetGlobalPos);
 			lst->push_back(act);
 		}
 		else {
 			for (Vector2f pnt : *pnts) {
 
-				IEntityAction* act = new EntityAction_MoveToPoint(Owner, OwnerTransform, pnt);
+				IEntityAction* act = new EntityAction_MoveToPoint(Owner, pnt);
 				lst->push_back(act);
 			}
 		}
 	}
 	else {
 
-		IEntityAction* act = new EntityAction_MoveToPoint(Owner, OwnerTransform, TargetGlobalPos);
+		IEntityAction* act = new EntityAction_MoveToPoint(Owner, TargetGlobalPos);
 		lst->push_back(act);
 	}
 	return lst;

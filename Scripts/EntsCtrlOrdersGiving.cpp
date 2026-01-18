@@ -30,7 +30,7 @@ void EntitiesCtrlInputMode::GiveOrderToSelected_MoveToPoint(Vector2f targetGloba
 
 		parEl = dynamic_cast<Entity*>((*begIt)->GetPtr_t());
 		if (parEl != nullptr) {
-			parEl->TryAddOrder(*new EntityOrder_MoveToPoint(*parEl, *parEl, targetGlobalPos,parEl->GetCollider().GetBoundedCircle().Radius), !isGrouped);
+			parEl->TryAddOrder(*new EntityOrder_MoveToPoint(*parEl, targetGlobalPos,parEl->GetCollider().GetBoundedCircle().Radius), !isGrouped);
 		}
 		++begIt;
 	}
@@ -55,7 +55,7 @@ void EntitiesCtrlInputMode::GiveOrderToSelected_FollowObject(ITransformableObj& 
 			if (wtch_ptr == nullptr)
 				throw exception("Cant observe object with watch_ptr");
 
-			ord = new EntityOrder_FollowTarget(*parEl, *parEl, watch_ptr_handler_wr_c<WorldTransfObj>(*wtch_ptr));
+			ord = new EntityOrder_FollowTarget(*parEl, watch_ptr_handler_wr_c<WorldTransfObj>(*wtch_ptr));
 			parEl->TryAddOrder(*ord, !isGrouped);
 			delete wtch_ptr;
 		}
@@ -83,7 +83,7 @@ void EntitiesCtrlInputMode::GiveOrderToSelected_AttackTarget(IAttackableObj& tar
 			if (wtch_ptr == nullptr)
 				throw exception("Cant observe object with watch_ptr");
 
-			ord = new EntityOrder_AttackTarget(*parEl, *parEl, watch_ptr_handler_wr<IAttackableObj>(*wtch_ptr),target_fracMem,&parEl->GetBattleStats());
+			ord = new EntityOrder_AttackTarget(*parEl, watch_ptr_handler_wr<IAttackableObj>(*wtch_ptr),target_fracMem,&parEl->GetBattleStats());
 			parEl->TryAddOrder(*ord, !isGrouped);
 			delete wtch_ptr;
 		}
@@ -148,7 +148,7 @@ void EntitiesCtrlInputMode::GiveOrderToSelected_AttackArea(Vector2f targetGlobal
 	for (;begIt != endIt;) {
 		parEl = dynamic_cast<Entity*>((*begIt)->GetPtr_t());
 		if (parEl != nullptr) {
-			parEl->TryAddOrder(*new EntityOrder_AttackArea(*parEl, *parEl, targetGlobalPos, parEl->GetCollider().GetBoundedCircle().Radius), !isGrouped);
+			parEl->TryAddOrder(*new EntityOrder_AttackArea(*parEl, targetGlobalPos, parEl->GetCollider().GetBoundedCircle().Radius), !isGrouped);
 		}
 		++begIt;
 	}

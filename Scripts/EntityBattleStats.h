@@ -11,7 +11,7 @@ namespace KrostganEngine::GameObjects {
 
 	struct EntBatStats_Consts{
 
-		static inline const size_t FIELDS_COUNT_F	= 5;
+		static inline const size_t FIELDS_COUNT_F	= 6;
 		static inline const size_t FIELDS_COUNT_S_T = 2;
 		static inline const size_t FIELDS_COUNT_BOOL = 3;
 		static inline const size_t FIELDS_COUNT		= FIELDS_COUNT_S_T + FIELDS_COUNT_F + FIELDS_COUNT_BOOL;
@@ -26,11 +26,12 @@ namespace KrostganEngine::GameObjects {
 			MaxHP			= t_size_t | (1 << ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT),
 			RegenHP_Amount	= t_size_t | (2 << ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT),
 			//float
-			RegenHP_Tick	= t_float | (1 << ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT),
-			MovingSpeed		= t_float | (2 << ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT),
-			AutoAggrRange	= t_float | (3 << ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT),
-			ObservingRange	= t_float | (4 << ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT),
-			Stealth			= t_float | (5 << ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT),
+			RegenHP_Tick		= t_float | (1 << ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT),
+			MovingSpeed			= t_float | (2 << ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT),
+			AutoAggrRange		= t_float | (3 << ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT),
+			ObservingRange		= t_float | (4 << ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT),
+			Stealth				= t_float | (5 << ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT),
+			Resistance_MindAtt	= t_float | (6 << ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT),
 			//bool
 			IsTargetableForAA	= t_bool | (1 << ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT),
 			Ghostliness			= t_bool | (2 << ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT),
@@ -44,6 +45,7 @@ namespace KrostganEngine::GameObjects {
 				pair<StatType,string>(StatType::AutoAggrRange,		"AutoAggrRange"),
 				pair<StatType,string>(StatType::ObservingRange,		"ObservingRange"),
 				pair<StatType,string>(StatType::Stealth,			"Stealth"),
+				pair<StatType,string>(StatType::Resistance_MindAtt,	"Resistance_MindAtt"),
 				pair<StatType,string>(StatType::IsTargetableForAA,	"IsTargetableForAA"),
 				pair<StatType,string>(StatType::Ghostliness,		"Ghostliness"),
 				pair<StatType,string>(StatType::Disarmed,			"Disarmed")
@@ -164,22 +166,24 @@ namespace KrostganEngine::GameObjects {
 
 	//float
 		//Cooldown between hp's restoring by regeneration
-		Parameter<float> const&		GetHPRegenTick()	const { return *GetParameterByType_f(EntityBattleStatType::RegenHP_Tick); }
+		Parameter<float> const&		GetHPRegenTick()		const { return *GetParameterByType_f(EntityBattleStatType::RegenHP_Tick); }
 
-		Parameter<float> const&		GetMovingSpeed()	const { return *GetParameterByType_f(EntityBattleStatType::MovingSpeed); }
+		Parameter<float> const&		GetMovingSpeed()		const { return *GetParameterByType_f(EntityBattleStatType::MovingSpeed); }
 
-		Parameter<float> const&		GetAutoAggrRange()	const { return *GetParameterByType_f(EntityBattleStatType::AutoAggrRange); }
+		Parameter<float> const&		GetAutoAggrRange()		const { return *GetParameterByType_f(EntityBattleStatType::AutoAggrRange); }
 
-		Parameter<float> const&		GetObservingRange()	const {return *GetParameterByType_f(EntityBattleStatType::ObservingRange); }
+		Parameter<float> const&		GetObservingRange()		const {return *GetParameterByType_f(EntityBattleStatType::ObservingRange); }
 
-		Parameter<float> const&		GetStealth()		const {return *GetParameterByType_f(EntityBattleStatType::Stealth); }
+		Parameter<float> const&		GetStealth()			const {return *GetParameterByType_f(EntityBattleStatType::Stealth); }
+
+		Parameter<float> const&		GetResistance_MindAtt()	const {return *GetParameterByType_f(EntityBattleStatType::Resistance_MindAtt); }
 
 	//bool
-		const bool&		GetState_IsTargetableForAA() const { return *GetFieldRef_bool(EntityBattleStatType::IsTargetableForAA); }
+		const bool&		GetState_IsTargetableForAA()	const { return *GetFieldRef_bool(EntityBattleStatType::IsTargetableForAA); }
 
-		const bool&		GetState_Ghostliness() const {return *GetFieldRef_bool(EntityBattleStatType::Ghostliness);}
+		const bool&		GetState_Ghostliness()			const {return *GetFieldRef_bool(EntityBattleStatType::Ghostliness);}
 
-		const bool&		GetState_Disarmed() const { return *GetFieldRef_bool(EntityBattleStatType::Disarmed); }
+		const bool&		GetState_Disarmed()				const { return *GetFieldRef_bool(EntityBattleStatType::Disarmed); }
 
 //
 //
@@ -195,6 +199,7 @@ namespace KrostganEngine::GameObjects {
 		void SetAutoAggrRange(float range);
 		void SetObservingRange(float range);
 		void SetStealth(float stealth);
+		void SetResistance_MindAtt(float resistance);
 
 		void SetTargetableForAA(bool isTargetable);
 		void SetGhostliness(bool ghostliness);

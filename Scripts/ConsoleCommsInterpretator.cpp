@@ -65,20 +65,42 @@ void ConsoleCommsInterpretator::ExecuteCommand(const string& input) {
 			parObj = dynamic_cast<Entity*>((*it)->GetPtr_t());
 			if (parObj != nullptr) {
 
-				ComposeGameEff_Temporal& gameEff = *new ComposeGameEff_Temporal(3);
-				gameEff.AddGameEffect_Durable(*new GameEff_Dur_EntBatStatConst_bool(EntityBattleStatType::Ghostliness, true));
-				gameEff.AddGameEffect_Durable(*new GameEff_Dur_EntBatStatMult(EntityBattleStatType::MovingSpeed, 5));
-				gameEff.AddGameEffect_Durable(*new GameEff_Dur_Disarm());
+				ComposeGameEff_Permanent& gameEff = *new ComposeGameEff_Permanent();
+				gameEff.AddGameEffect_Durable(*new GameEff_Dur_EntBatStatMult(EntityBattleStatType::Resistance_MindAtt, 20));
+				gameEff.AddGameEffect_Durable(*new GameEff_Dur_EntBatStatMult(EntityBattleStatType::MovingSpeed, 2));
+				Ability_Aura& aura = *new Ability_Aura(700, Relation::All, gameEff);
 
-				auto abil1 = new Ability_NonTar_Durable(gameEff);
-				abil1->Set_CooldownSinceStart(true);
-				abil1->Set_CooldownDuration(3);
-
-				parObj->AddAbility(*abil1);
+				parObj->AddAbility(aura);
 			}
 			++it;
 		}
 		return;
+	}
+	else if (input == "testaura") {
+
+		auto it = GroupSelectionSystem::GetChoosenEntities_Begin();
+		auto end = GroupSelectionSystem::GetChoosenEntities_End();
+		WorldTransfObj* parObj = nullptr;
+		while (it != end) {
+			parObj = dynamic_cast<WorldTransfObj*>((*it)->GetPtr_t());
+			if (parObj != nullptr) {
+
+				ComposeGameEff_Permanent& deserGameEff = *new ComposeGameEff_Permanent(1);
+				auto deserGameEff_gen = new GameEff_Dur_Deserter(Fraction::Neutral);
+				deserGameEff_gen->SetOwnedEffect(deserGameEff);
+				deserGameEff.AddGameEffect_Durable(*deserGameEff_gen);
+
+
+				ComposeGameEff_Instant& tickGameEff = *new ComposeGameEff_Instant(2);
+				tickGameEff.AddGameEffect(*new GameEff_Inst_AddDurEff(deserGameEff));
+
+				ComposeGameEff_Periodical& gameEff = *new ComposeGameEff_Periodical(tickGameEff, 1, 10000000, 3);
+
+				Aura& aura = *new Aura(15000, Fraction::Neutral, Relation::All, gameEff,*parObj);
+			}
+
+			++it;
+		}
 	}
 	//else if (input == "testab2") {
 

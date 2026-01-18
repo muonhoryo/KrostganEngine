@@ -11,7 +11,6 @@ namespace KrostganEngine::EntitiesControl {
 	public:
 		EntityAction_FollowObject	
 			(OrdersExecutor&							Owner,
-			WorldTransfObj&							OwnerTransform, 
 			watch_ptr_handler_wr_c<WorldTransfObj>	Target,
 			const float									DistToFoll);
 		~EntityAction_FollowObject();

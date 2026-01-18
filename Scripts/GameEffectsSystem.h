@@ -17,10 +17,10 @@ namespace KrostganEngine::GameObjects {
 	class IGameEffTarget;
 
 	class ComposeGameEffect;
-	class ComposeGameEff_Durable;
 	class ComposeGameEff_Instant;
-	class ComposeGameEff_Temporal;
 	class ComposeGameEff_Permanent;
+	class ComposeGameEff_Temporal;
+	class ComposeGameEff_Periodical;
 
 
 	class IGameEffect {
@@ -49,7 +49,7 @@ namespace KrostganEngine::GameObjects {
 		virtual void Deactivate(IGameEffTarget& target) = 0;
 
 	private:
-		friend class ComposeGameEff_Durable;
+		friend class ComposeGameEff_Permanent;
 		friend class ComposeGameEff_Permanent;
 		friend class ComposeGameEff_Temporal;
 	};
@@ -78,6 +78,7 @@ namespace KrostganEngine::GameObjects {
 
 	private:
 		friend class ComposeGameEff_Instant;
+		friend class ComposeGameEff_Periodical;
 	};
 
 
@@ -94,7 +95,8 @@ namespace KrostganEngine::GameObjects {
 		bool Get_IsStackable() const;
 
 	protected:
-		ComposeGameEffect();
+		ComposeGameEffect(size_t CatalogID = 0, std::byte SubcatalogID = (std::byte)0);
+		ComposeGameEffect(const ComposeGameEffect& copy);
 
 		virtual void OnApplyToTarget(IGameEffTarget& target) = 0;
 		virtual void OnRemoveFromTarget(IGameEffTarget& target) = 0;
@@ -109,8 +111,10 @@ namespace KrostganEngine::GameObjects {
 	class ComposeGameEff_Instant : public ComposeGameEffect {
 
 	public:
-		ComposeGameEff_Instant(const ComposeGameEff_Instant& copy);
-		ComposeGameEff_Instant();
+		ComposeGameEff_Instant
+			(size_t CatalogID = 0,
+			std::byte SubcatalogID = (std::byte)0);
+		ComposeGameEff_Instant (const ComposeGameEff_Instant& copy);
 		virtual ~ComposeGameEff_Instant();
 
 		ComposeGameEffect& Clone() const override;
@@ -126,18 +130,21 @@ namespace KrostganEngine::GameObjects {
 		vector<IGameEffect_Instant*> GameEffects;
 	};
 
-	class ComposeGameEff_Durable : public ComposeGameEffect{
+	class ComposeGameEff_Permanent : public ComposeGameEffect{
 
 	public:
-		virtual ~ComposeGameEff_Durable();
+		ComposeGameEff_Permanent
+			(size_t CatalogID = 0,
+			std::byte SubcatalogID = (std::byte)0);
+		ComposeGameEff_Permanent(const ComposeGameEff_Permanent& copy);
+		virtual ~ComposeGameEff_Permanent();
 
 		void AddGameEffect_Durable(IGameEffect_Durable& eff);
 		void RemoveGameEffect_Durable(IGameEffect_Durable& eff);
 
-	protected:
-		ComposeGameEff_Durable();
-		ComposeGameEff_Durable(const ComposeGameEff_Durable& copy);
+		ComposeGameEffect& Clone() const override;
 
+	protected:
 		void OnApplyToTarget(IGameEffTarget& target) override;
 		void OnRemoveFromTarget(IGameEffTarget& target) override;
 
@@ -145,14 +152,15 @@ namespace KrostganEngine::GameObjects {
 		vector<IGameEffect_Durable*> GameEffects_Durable;
 	};
 
-	class ComposeGameEff_Temporal : public ComposeGameEff_Durable, public virtual ICallbackRec_Upd {
+	class ComposeGameEff_Temporal : public ComposeGameEff_Permanent, public virtual ICallbackRec_Upd {
 
 	public:
-		ComposeGameEff_Temporal(float EffTime);
+		ComposeGameEff_Temporal
+			(float EffTime,
+			size_t CatalogID = 0,
+			std::byte SubcatalogID = (std::byte)0);
 		ComposeGameEff_Temporal(const ComposeGameEff_Temporal& copy);
 		virtual ~ComposeGameEff_Temporal();
-
-		ComposeGameEffect& Clone() const override;
 
 		void AddGameEffect_TimeDepended(IGameEffect_TimeDepended& eff);
 		void RemoveGameEffect_TimeDepended(IGameEffect_TimeDepended& eff);
@@ -160,12 +168,15 @@ namespace KrostganEngine::GameObjects {
 		void SetEffectTime(float EffTime);
 
 		void Update(CallbackRecArgs_Upd args) override;
+		ComposeGameEffect& Clone() const override;
 
 	protected:
 		void OnApplyToTarget(IGameEffTarget& target) override;
 		void OnRemoveFromTarget(IGameEffTarget& target) override;
 
 		virtual void Update_Action(CallbackRecArgs_Upd& args) {}
+
+		IGameEffTarget& GetTarget() const;
 
 	private:
 		vector<IGameEffect_TimeDepended*> GameEffects_TimeDepended;
@@ -175,14 +186,31 @@ namespace KrostganEngine::GameObjects {
 		bool IsActive = false;
 	};
 
-	class ComposeGameEff_Permanent : public ComposeGameEff_Durable {
+	class ComposeGameEff_Periodical : public ComposeGameEff_Temporal {
 
 	public:
-		ComposeGameEff_Permanent();
-		ComposeGameEff_Permanent(const ComposeGameEff_Permanent& copy);
-		virtual ~ComposeGameEff_Permanent();
+		ComposeGameEff_Periodical
+			(ComposeGameEff_Instant& TickGameEffect,
+			float TickTime, 
+			float EffTime = FLT_MAX,
+			size_t CatalogID = 0,
+			std::byte SubcatalogID = (std::byte)0);
+		ComposeGameEff_Periodical(const ComposeGameEff_Periodical& copy);
+		virtual ~ComposeGameEff_Periodical();
 
 		ComposeGameEffect& Clone() const override;
+
+		float GetTickTime() const;
+		void SetTickTime(float TickTime);
+
+	protected:
+		void OnApplyToTarget(IGameEffTarget& target) override;
+		void Update_Action(CallbackRecArgs_Upd& args) override;
+
+	private:
+		ComposeGameEff_Instant& TickGameEffect;
+		Clock TickTimer;
+		float TickTime;
 	};
 
 
@@ -210,6 +238,8 @@ namespace KrostganEngine::GameObjects {
 		/// <param name="catalogID"></param>
 		/// <param name="subCatalogID"></param>
 		void RemoveGameEffByID(size_t catalogID);
+
+		bool HasGameEffect(size_t catalogID, std::byte subcatalogID);
 
 	protected:
 		IGameEffTarget();

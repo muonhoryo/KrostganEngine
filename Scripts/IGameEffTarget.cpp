@@ -73,3 +73,10 @@ void IGameEffTarget::RemoveGameEffByID(size_t catalogID, std::byte subCatalogID)
 void IGameEffTarget::RemoveGameEffByID(size_t catalogID) {
 	RemoveGameEffByID(catalogID, (std::byte)0);
 }
+
+bool IGameEffTarget::HasGameEffect(size_t catalogID, std::byte subcatalogID) {
+
+	auto predicate = CatalogObject::Predicate_ByID_n_SubID_ref<ComposeGameEffect>(catalogID, subcatalogID);
+	auto eff = CollectionsExts::Get(AppliedGameEffects, predicate);
+	return eff != nullptr;
+}

@@ -14,7 +14,6 @@ namespace KrostganEngine::EntitiesControl {
 	public:
 		EntityOrder_FollowTarget
 			(OrdersExecutor&							Owner, 
-			WorldTransfObj&							OwnerTransform, 
 			watch_ptr_handler_wr_c<TransformableObj>	Target);
 		virtual ~EntityOrder_FollowTarget();
 
@@ -26,7 +25,6 @@ namespace KrostganEngine::EntitiesControl {
 
 		const TransformableObj* GetTarget() const override;
 
-		OrdersExecutor& Owner;
 		watch_ptr_handler_wr_c<TransformableObj> Target;
 		Clock FollRepeatTimer;
 		bool FirstExec = true;

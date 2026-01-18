@@ -11,7 +11,7 @@ using namespace KrostganEngine::Physics;
 
 namespace KrostganEngine::GameObjects {
 
-	class TriggerZone : public WorldTransfObj, public virtual ICallbackRec_Upd {
+	class TriggerZone : public WorldTransfObj, public virtual ICallbackRec_Upd{
 
 	public:
 		virtual ~TriggerZone();
@@ -29,6 +29,7 @@ namespace KrostganEngine::GameObjects {
 		TriggerZone(Transformable& Owner);
 
 		void RecalculateEnteredObjs();
+		void ClearTriggerList();
 
 		virtual vector<IPhysicalObject*>	OverlapAll() const = 0;
 		virtual bool						EnterTriggerCondition(const IPhysicalObject& inputObj) const = 0;
