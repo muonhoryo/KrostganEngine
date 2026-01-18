@@ -858,6 +858,9 @@
     <ClCompile Include="Scripts\GameEff_Dur_EntBatStatConst_bool.cpp">
       <Filter>Исходные файлы\CoreSystems\GameEffectsSystem\GeneralGameEffects</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\GameEff_Dur_Disarm.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameEffectsSystem\GeneralGameEffects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\CoreGameObjects.h">
@@ -1548,6 +1551,9 @@
       <Filter>Файлы заголовков\CoreSystems\AbilitiesSystem\BuiltAbilities</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\GameEff_Dur_EntBatStatConst_bool.h">
+      <Filter>Файлы заголовков\CoreSystems\GameObjects\GameEffectsSystem\GeneralGameEffects</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\GameEff_Dur_Disarm.h">
       <Filter>Файлы заголовков\CoreSystems\GameObjects\GameEffectsSystem\GeneralGameEffects</Filter>
     </ClInclude>
   </ItemGroup>

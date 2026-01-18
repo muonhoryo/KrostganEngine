@@ -13,6 +13,8 @@ EntityBattleStats::EntityBattleStats(AutoAttackStats* AAStats) {
 	}
 
 	InitializeDefaultStats();
+	StatChangedEvent.Add(DisarmingCheckEvSubs);
+	DefaultStatChangedEvent.Add(DisarmingCheckEvSubs);
 }
 EntityBattleStats::EntityBattleStats(const vector<AutoAttackStats*>& AAStats) {
 
@@ -21,11 +23,15 @@ EntityBattleStats::EntityBattleStats(const vector<AutoAttackStats*>& AAStats) {
 		CurrAAStats = 0;
 
 	InitializeDefaultStats();
+	StatChangedEvent.Add(DisarmingCheckEvSubs);
+	DefaultStatChangedEvent.Add(DisarmingCheckEvSubs);
 }
 EntityBattleStats::EntityBattleStats(const EntityBattleStats& copy)
 	:ModifiableStatsWrapper(copy) {
 
 	copy.CopyTo_Internal(*this);
+	StatChangedEvent.Add(DisarmingCheckEvSubs);
+	DefaultStatChangedEvent.Add(DisarmingCheckEvSubs);
 }
 EntityBattleStats::~EntityBattleStats() {
 
@@ -48,6 +54,7 @@ void EntityBattleStats::InitializeDefaultStats() {
 	//bool
 	InitializeField_bool(EntityBattleStatType::IsTargetableForAA, true);
 	InitializeField_bool(EntityBattleStatType::Ghostliness, false);
+	InitializeField_bool(EntityBattleStatType::Disarmed, false);
 }
 void EntityBattleStats::CopyTo(ModifiableStatsWrapper
 	<EntBatStats_Consts::StatType,
@@ -107,7 +114,7 @@ void EntityBattleStats::SetAAStats(const AutoAttackStats* stats) {
 		CurrAAStats = -1;
 		ChangeCurrAAStatsEventHan.Execute(-1);
 	}
-	else {
+	else if(!GetState_Disarmed()){
 
 		auto index = CollectionsExts::IndexOf(SavedAAStats, stats);
 		if (index == string::npos)
@@ -200,4 +207,8 @@ void EntityBattleStats::SetTargetableForAA(bool isTargetable) {
 void EntityBattleStats::SetGhostliness(bool ghostliness) {
 
 	SetDefaultStat(EntityBattleStatType::Ghostliness, ghostliness);
+}
+void EntityBattleStats::SetDisarmed(bool disarmed) {
+	
+	SetDefaultStat(EntityBattleStatType::Disarmed, disarmed);
 }

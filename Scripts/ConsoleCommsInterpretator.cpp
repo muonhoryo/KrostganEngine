@@ -68,6 +68,7 @@ void ConsoleCommsInterpretator::ExecuteCommand(const string& input) {
 				ComposeGameEff_Temporal& gameEff = *new ComposeGameEff_Temporal(3);
 				gameEff.AddGameEffect_Durable(*new GameEff_Dur_EntBatStatConst_bool(EntityBattleStatType::Ghostliness, true));
 				gameEff.AddGameEffect_Durable(*new GameEff_Dur_EntBatStatMult(EntityBattleStatType::MovingSpeed, 5));
+				gameEff.AddGameEffect_Durable(*new GameEff_Dur_Disarm());
 
 				auto abil1 = new Ability_NonTar_Durable(gameEff);
 				abil1->Set_CooldownSinceStart(true);

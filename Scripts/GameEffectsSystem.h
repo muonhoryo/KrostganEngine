@@ -46,7 +46,7 @@ namespace KrostganEngine::GameObjects {
 	protected:
 		IGameEffect_Durable(){}
 
-		virtual void Dectivate(IGameEffTarget& target) = 0;
+		virtual void Deactivate(IGameEffTarget& target) = 0;
 
 	private:
 		friend class ComposeGameEff_Durable;

@@ -53,7 +53,7 @@ void ComposeGameEff_Temporal::OnRemoveFromTarget(IGameEffTarget& target) {
 	IsActive = false;
 	ComposeGameEff_Durable::OnRemoveFromTarget(target);
 	for (auto eff : GameEffects_TimeDepended) {
-		eff->Dectivate(target);
+		eff->Deactivate(target);
 	}
 }
 void ComposeGameEff_Temporal::Update(CallbackRecArgs_Upd args) {

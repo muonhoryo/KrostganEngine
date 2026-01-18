@@ -33,7 +33,7 @@ void GameEff_Dur_EntBatStatConst_bool::Activate(IGameEffTarget& target) {
 		}
 	}
 }
-void GameEff_Dur_EntBatStatConst_bool::Dectivate(IGameEffTarget& target) {
+void GameEff_Dur_EntBatStatConst_bool::Deactivate(IGameEffTarget& target) {
 
 	auto parTar = dynamic_cast<OrdersExecutor*>(&target);
 	if (parTar != nullptr) {

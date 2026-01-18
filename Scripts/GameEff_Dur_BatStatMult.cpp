@@ -30,7 +30,7 @@ void GameEff_Dur_EntBatStatMult::Activate(IGameEffTarget& target) {
 		parTar->GetBattleStats().AddModifier(*ParamMod);
 	}
 }
-void GameEff_Dur_EntBatStatMult::Dectivate(IGameEffTarget& target) {
+void GameEff_Dur_EntBatStatMult::Deactivate(IGameEffTarget& target) {
 
 	if (ParamMod != nullptr) {
 

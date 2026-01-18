@@ -16,7 +16,7 @@ namespace KrostganEngine::GameObjects {
 
 	protected:
 		void Activate(IGameEffTarget& target) override;
-		void Dectivate(IGameEffTarget& target) override;
+		void Deactivate(IGameEffTarget& target) override;
 
 	private:
 		EntityBattleStatType StatType;

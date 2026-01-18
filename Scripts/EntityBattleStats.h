@@ -13,7 +13,7 @@ namespace KrostganEngine::GameObjects {
 
 		static inline const size_t FIELDS_COUNT_F	= 5;
 		static inline const size_t FIELDS_COUNT_S_T = 2;
-		static inline const size_t FIELDS_COUNT_BOOL = 2;
+		static inline const size_t FIELDS_COUNT_BOOL = 3;
 		static inline const size_t FIELDS_COUNT		= FIELDS_COUNT_S_T + FIELDS_COUNT_F + FIELDS_COUNT_BOOL;
 
 		enum class StatType : int {
@@ -33,7 +33,8 @@ namespace KrostganEngine::GameObjects {
 			Stealth			= t_float | (5 << ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT),
 			//bool
 			IsTargetableForAA	= t_bool | (1 << ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT),
-			Ghostliness			= t_bool | (2 << ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT)
+			Ghostliness			= t_bool | (2 << ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT),
+			Disarmed			= t_bool | (3 << ModStatsWrapper_Consts::STATTYPE_TYPEDEF_BITSCOUNT)
 		};
 		static inline const array<pair<StatType, string>, FIELDS_COUNT> StatTypeNames{
 				pair<StatType,string>(StatType::MaxHP,				"MaxHP"),
@@ -44,7 +45,8 @@ namespace KrostganEngine::GameObjects {
 				pair<StatType,string>(StatType::ObservingRange,		"ObservingRange"),
 				pair<StatType,string>(StatType::Stealth,			"Stealth"),
 				pair<StatType,string>(StatType::IsTargetableForAA,	"IsTargetableForAA"),
-				pair<StatType,string>(StatType::Ghostliness,		"Ghostliness")
+				pair<StatType,string>(StatType::Ghostliness,		"Ghostliness"),
+				pair<StatType,string>(StatType::Disarmed,			"Disarmed")
 		};
 	};
 
@@ -84,6 +86,33 @@ namespace KrostganEngine::GameObjects {
 // AutoAttackStats
 //
 //
+
+	private:
+		struct OnChagedStat_Disarming : public IEventSubscriber<int> {
+
+			OnChagedStat_Disarming(EntityBattleStats& Owner) 
+				:Owner(Owner){
+
+			}
+
+			void Execute(int& args) override {
+
+				if (args == (int)EntityBattleStatType::Disarmed) {
+
+					if (Owner.GetState_Disarmed()) {
+
+						Owner.SetAAStats(-1);
+					}
+					else if(Owner.GetSavedAAStatsCount()>0){
+						Owner.SetAAStats(0);
+					}
+				}
+			}
+
+		private:
+			EntityBattleStats& Owner;
+		};
+
 	public:
 		AutoAttackStats* GetCurrAAStats() const;
 		size_t GetSavedAAStatsCount() const;
@@ -109,6 +138,7 @@ namespace KrostganEngine::GameObjects {
 		/// </summary>
 		int CurrAAStats = -1;
 		vector<AutoAttackStats*> SavedAAStats;
+		OnChagedStat_Disarming DisarmingCheckEvSubs = OnChagedStat_Disarming(*this);
 
 		EventHandler<const int> ChangeCurrAAStatsEventHan = EventHandler<const int>(ChangeCurrAAStatsEvent);
 
@@ -149,6 +179,8 @@ namespace KrostganEngine::GameObjects {
 
 		const bool&		GetState_Ghostliness() const {return *GetFieldRef_bool(EntityBattleStatType::Ghostliness);}
 
+		const bool&		GetState_Disarmed() const { return *GetFieldRef_bool(EntityBattleStatType::Disarmed); }
+
 //
 //
 // Setters (default)
@@ -166,6 +198,7 @@ namespace KrostganEngine::GameObjects {
 
 		void SetTargetableForAA(bool isTargetable);
 		void SetGhostliness(bool ghostliness);
+		void SetDisarmed(bool disarmed);
 
 	};
 

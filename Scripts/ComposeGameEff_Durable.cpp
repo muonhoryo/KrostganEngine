@@ -33,6 +33,6 @@ void ComposeGameEff_Durable::OnApplyToTarget(IGameEffTarget& target) {
 void ComposeGameEff_Durable::OnRemoveFromTarget(IGameEffTarget& target) {
 	
 	for (auto eff : GameEffects_Durable) {
-		eff->Dectivate(target);
+		eff->Deactivate(target);
 	}
 }

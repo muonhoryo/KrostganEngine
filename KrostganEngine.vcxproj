@@ -188,6 +188,7 @@
     <ClCompile Include="Scripts\DynamicPhysObject.cpp" />
     <ClCompile Include="Scripts\ExternalGlobalResources.cpp" />
     <ClCompile Include="Scripts\GameEff_Dur_BatStatMult.cpp" />
+    <ClCompile Include="Scripts\GameEff_Dur_Disarm.cpp" />
     <ClCompile Include="Scripts\GameEff_Dur_EntBatStatConst_bool.cpp" />
     <ClCompile Include="Scripts\GroupSelectionSystem_Comparators.cpp" />
     <ClCompile Include="Scripts\HeroDeathModule.cpp" />
@@ -355,6 +356,7 @@
     <ClInclude Include="Scripts\FightingSystems.h" />
     <ClInclude Include="Scripts\FirstChoosenEntityDependsManager.h" />
     <ClInclude Include="Scripts\GameEffectsSystem.h" />
+    <ClInclude Include="Scripts\GameEff_Dur_Disarm.h" />
     <ClInclude Include="Scripts\GameEff_Dur_EntBatStatConst_bool.h" />
     <ClInclude Include="Scripts\GameEff_Dur_EntBatStatMult.h" />
     <ClInclude Include="Scripts\GameLevel.h" />
