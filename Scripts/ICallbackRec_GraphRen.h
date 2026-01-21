@@ -27,21 +27,27 @@ namespace KrostganEngine::Core {
 		/// object is covered by war fog.
 		/// </summary>
 		bool			Get_IsShownByWarFog() const;
+		/// <summary>
+		/// Define object-inheritor is rendered in late queue.
+		/// </summary>
+		bool			Get_LateRender() const;
 		virtual bool	GetActivity() const;
 
 		void SetRendLayer(std::byte layer);
 		void SetActivity(bool isActive);
 		void Set_IsHidenByWarFog(bool isHiden);
 		void Set_IsShownByWarFog(bool isShown);
+		void Set_LateRender(bool lateRender);
 
 	protected:
-		ICallbackRec_GraphRen(std::byte RendLayer = DEFAULT_RENDLAYER);
+		ICallbackRec_GraphRen(std::byte RendLayer = DEFAULT_RENDLAYER, bool LateRender = true);
 
 		virtual void RenderGraphicAction(RenderWindow& window) = 0;
 
 		std::byte RendLayer;
 		bool IsActive = true;
 
+	private:
 		/// <summary>
 		/// Define that object-inheritor is hide by war fog on render or not. If false object always renders while placed on window.
 		/// </summary>
@@ -51,5 +57,9 @@ namespace KrostganEngine::Core {
 		/// object is covered by war fog.
 		/// </summary>
 		bool IsShownByWarFog = false;
+		/// <summary>
+		/// Define object-inheritor is rendered in late queue.
+		/// </summary>
+		bool LateRender = true;
 	};
 }

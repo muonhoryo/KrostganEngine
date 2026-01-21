@@ -261,8 +261,11 @@ bool WorldObjectLoadInfo::WriteParam(Attr& param) {
 	else if (CheckParamName(param, SerializationParDefNames::OBJECT_REND_WARFOG_ISHIDEN)){
 		WarFog_IsHiden = FStreamExts::ParseBool(param.second);
 	}
-	else if (CheckParamName(param, SerializationParDefNames::OJBECT_REND_WARFOG_ISSHOWED)) {
+	else if (CheckParamName(param, SerializationParDefNames::OBJECT_REND_WARFOG_ISSHOWED)) {
 		WarFog_IsShowed = FStreamExts::ParseBool(param.second);
+	}
+	else if (CheckParamName(param, SerializationParDefNames::OBJECT_REND_LATERENDER)) {
+		LateRender = FStreamExts::ParseBool(param.second);
 	}
 	else {
 		return false;
@@ -678,6 +681,7 @@ WorldTransfObj* SpriteRendLoadInfo::InstantiateObject_Action(const WorldObjectLo
 	sprt->SetRendLayer(RendLayer);
 	sprt->Set_IsHidenByWarFog(WarFog_IsHiden);
 	sprt->Set_IsShownByWarFog(WarFog_IsShowed);
+	sprt->Set_LateRender(LateRender);
 
 	return sprt;
 }

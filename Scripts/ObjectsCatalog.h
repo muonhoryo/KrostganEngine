@@ -201,7 +201,8 @@ namespace KrostganEngine::Core {
 		static inline const string OBJECT_SUB_CATALOG_ID	= "SubCatalogID";
 
 		static inline const string OBJECT_REND_WARFOG_ISHIDEN	= "WarFog_IsHiden";
-		static inline const string OJBECT_REND_WARFOG_ISSHOWED	= "WarFog_IsShowed";
+		static inline const string OBJECT_REND_WARFOG_ISSHOWED	= "WarFog_IsShowed";
+		static inline const string OBJECT_REND_LATERENDER		= "LateRender";
 
 		static inline const string IMAGEUSR_SPRITE_SOURCE	= "SpriteSource";
 		static inline const string IMAGEUSR_SPRITE_LAYER	= "Layer";

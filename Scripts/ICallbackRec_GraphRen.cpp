@@ -6,8 +6,9 @@ using namespace std;
 using namespace KrostganEngine::GameObjects;
 using namespace KrostganEngine::Core;
 
-ICallbackRec_GraphRen::ICallbackRec_GraphRen(std::byte RendLayer)
-	:RendLayer(RendLayer) {
+ICallbackRec_GraphRen::ICallbackRec_GraphRen(std::byte RendLayer, bool LateRender)
+	:RendLayer(RendLayer),
+	LateRender(LateRender){
 
 	EngineCallbackHandler<ICallbackRec_GraphRen>& mod = Engine::GetRenderModule();
 	mod.Add(*this);
@@ -32,6 +33,9 @@ bool ICallbackRec_GraphRen::Get_IsHidenByWarFog() const {
 bool ICallbackRec_GraphRen::Get_IsShownByWarFog() const {
 	return IsShownByWarFog;
 }
+bool ICallbackRec_GraphRen::Get_LateRender() const {
+	return LateRender;
+}
 bool ICallbackRec_GraphRen::GetActivity() const {
 	return IsActive;
 }
@@ -49,5 +53,9 @@ void ICallbackRec_GraphRen::Set_IsHidenByWarFog(bool isHiden){
 }
 void ICallbackRec_GraphRen::Set_IsShownByWarFog(bool isShown) {
 	IsShownByWarFog = isShown;
+	Engine::GetRenderModule().SetNeedToSort();
+}
+void ICallbackRec_GraphRen::Set_LateRender(bool lateRender) {
+	LateRender = lateRender;
 	Engine::GetRenderModule().SetNeedToSort();
 }

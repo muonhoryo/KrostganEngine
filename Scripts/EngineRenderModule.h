@@ -11,10 +11,17 @@ namespace KrostganEngine::Core {
 
 		//!!!Refactore with logic arichmetic!!!
 
+		bool lateRender_1 = first->Get_LateRender();
+		bool lateRender_2 = second->Get_LateRender();
 		bool isHide_1 = first->Get_IsHidenByWarFog();
 		bool isHide_2 = second->Get_IsHidenByWarFog();
 		bool isShow_1 = first->Get_IsShownByWarFog();
 		bool isShow_2 = second->Get_IsShownByWarFog();
+
+		if (lateRender_1 != lateRender_2) {
+
+			return lateRender_2;	//second clbk is rendered later than first
+		}
 
 		if (isHide_1) {
 
@@ -51,6 +58,30 @@ namespace KrostganEngine::Core {
 		void OnAddCallback(ICallbackRec_GraphRen& callbck) override;
 
 	private:
+		/// <summary>
+		/// Return true if reached end of the list
+		/// </summary>
+		/// <param name="it"></param>
+		/// <param name="end"></param>
+		/// <returns></returns>
+		bool RenderObjects_FogHidden
+			(list<ICallbackRec_GraphRen*>::iterator& it, list<ICallbackRec_GraphRen*>::const_iterator& end);
+		/// <summary>
+		/// Return true if reached end of the list
+		/// </summary>
+		/// <param name="it"></param>
+		/// <param name="end"></param>
+		/// <returns></returns>
+		bool RenderObjects_FogShown
+			(list<ICallbackRec_GraphRen*>::iterator& it, list<ICallbackRec_GraphRen*>::const_iterator& end);
+		/// <summary>
+		/// Return true if reached end of the list
+		/// </summary>
+		/// <param name="it"></param>
+		/// <param name="end"></param>
+		/// <returns></returns>
+		bool RenderObjects_AlwaysShown
+			(list<ICallbackRec_GraphRen*>::iterator& it, list<ICallbackRec_GraphRen*>::const_iterator& end);
 
 		RenderWindow& Window;
 		Clock FrameRenderTime;

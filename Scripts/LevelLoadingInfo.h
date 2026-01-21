@@ -36,6 +36,7 @@ namespace KrostganEngine::Core {
 
 		bool WarFog_IsHiden = false;
 		bool WarFog_IsShowed = false;
+		bool LateRender = true;
 		vector<LvlObjInstantiationInfo> ChildObjs;
 
 		WorldTransfObj* InstantiateObject
