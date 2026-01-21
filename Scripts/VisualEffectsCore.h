@@ -27,7 +27,10 @@ namespace KrostganEngine::Visual {
 
 	class EffectObject : public virtual w_ptr_observable {
 	public:
-		virtual ~EffectObject(){}
+		virtual ~EffectObject(){
+			for (auto eff : AddedEffects)
+				delete eff;
+		}
 
 		void AddEffect		(VisualEffect& effect) {
 			AddedEffects.push_back(&effect);

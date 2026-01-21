@@ -21,7 +21,6 @@ LineAAAnimation::~LineAAAnimation() {
 
 	if (Target != nullptr)
 		delete Target;
-	delete &LineEffect;
 }
 
 void LineAAAnimation::OnTakeDmg(const AutoAttackHitInfo& attInfo) {

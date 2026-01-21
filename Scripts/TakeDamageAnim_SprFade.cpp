@@ -17,7 +17,6 @@ TakeDamageAnim_SprFade::TakeDamageAnim_SprFade(SpriteRenderer& HitSprite)
 }
 TakeDamageAnim_SprFade::~TakeDamageAnim_SprFade() {
 
-	delete& HitEffect;
 }
 
 void TakeDamageAnim_SprFade::OnTakeDmg(const AttackHitInfo& attInfo, size_t totalDmg) {

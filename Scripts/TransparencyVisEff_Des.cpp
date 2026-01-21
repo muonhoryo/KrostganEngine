@@ -14,6 +14,5 @@ void TransparencyVisEff_Des::Update() {
 	if (UpdateEff()) {
 
 		delete Owner->GetPtr_t();
-		delete this;
 	}
 }
