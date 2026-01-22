@@ -25,6 +25,9 @@ namespace KrostganEngine::Core {
 		static inline const string DEF_WARFOG_OFFSET = "WarFogOffset";
 
 		static inline const string DEF_WARFOG_SHADER_PATH = "WarFogShaderPath";
+		static inline const string DEF_BG_IMAGE_PATH = "BG_ImagePath";
+
+		static inline const string DEF_BG_TILED = "BG_Tiled";
 
 	private:
 		LevelSerialization() {}

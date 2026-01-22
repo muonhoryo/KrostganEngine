@@ -85,6 +85,13 @@ LevelLoadingInfo& LevelSerialization::DeserializeLevel(const string& serPath) {
 		else if (pr->first == DEF_WARFOG_SHADER_PATH) {
 			info->WarFogShaderPath = pr->second;
 		}
+		else if (pr->first == DEF_BG_IMAGE_PATH) {
+			info->BackgroundImagePath = pr->second;
+		}
+		//bool
+		else if (pr->first == DEF_BG_TILED) {
+			info->BackgroundTiled = FStreamExts::ParseBool(pr->second);
+		}
 
 		//Check end of level parameters
 		else if (line.find(LevelSerialization::UNIQUE_OBJECTS_HEADER) != string::npos) {

@@ -68,5 +68,28 @@ void LevelLoader::LoadLevel(const LevelLoadingInfo& levelInfo) {
 
 	LevelBypassMapManager::LoadFromLevelMap(levelInfo.LevelMap);
 
+	//Instantiate background
+	if (levelInfo.BackgroundImagePath != "") {
+
+		Texture& bgTex = *new Texture();
+		bgTex.loadFromFile(levelInfo.BackgroundImagePath);
+		SpriteRenderer& bgSprite = *new SpriteRenderer(bgTex);
+		Vector2f lvlSize = Vector2f
+			(-levelInfo.CameraBorders.left + levelInfo.CameraBorders.width,
+			-levelInfo.CameraBorders.top + levelInfo.CameraBorders.height);
+		Vector2f lvlCenter = Vector2f(lvlSize.x / 2, lvlSize.y / 2);
+		lvlCenter.x += levelInfo.CameraBorders.left;
+		lvlCenter.y += levelInfo.CameraBorders.top;
+		pair<float, float> lvlSizeMinMax = minmax(lvlSize.x, lvlSize.y);
+		float lvlSizeMinMaxRatio = lvlSizeMinMax.first / lvlSizeMinMax.second;
+		bool coDirect = bgSprite.IsSpriteVertical() == (lvlSize.x < lvlSize.y);
+		bool lvlRatioBigger = lvlSizeMinMaxRatio > bgSprite.GetSpriteMinMaxRatio();
+		bgSprite.SetGlobalScale_Sng(lvlSizeMinMax.second / ((lvlRatioBigger ^ coDirect) ? bgSprite.GetMinSpritePixSize() : bgSprite.GetMaxSpritePixSize()));
+		bgSprite.SetGlobalPosition(lvlCenter);
+		bgSprite.Set_LateRender(false);
+		bgSprite.SetRendLayer((std::byte)0);
+	}
+
 	LevelManager::AssignLevelInfo(levelInfo);
+
 }

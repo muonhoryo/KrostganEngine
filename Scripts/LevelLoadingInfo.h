@@ -257,6 +257,9 @@ namespace KrostganEngine::Core {
 
 		string WarFogShaderPath;
 
+		string BackgroundImagePath;
+		bool BackgroundTiled = false;
+
 		LevelLoadingInfo(vector<vector<LvlObjInstantiationInfo*>*>& LevelMap, forward_list<LvlObjInstantiationInfo*>& UniqueObjects)
 			:LevelMap(LevelMap),
 			UniqueObjects(UniqueObjects)

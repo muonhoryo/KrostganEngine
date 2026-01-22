@@ -7,6 +7,14 @@ using namespace KrostganEngine::Core;
 const LevelLoadingInfo* LevelManager::GetLevelInfo() {
 	return LoadedLevelInfo;
 }
+Vector2f LevelManager::GetLevelSize(const LevelLoadingInfo& levelInfo) {
+	float cellSize = Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution;
+	return Vector2f(levelInfo.MapColumnsCount * cellSize, levelInfo.MapRowsCount * cellSize);
+}
+Vector2f LevelManager::GetLevelSize() {
+	auto lvlInfo = GetLevelInfo();
+	return lvlInfo == nullptr ? Vector2f(0, 0) : GetLevelSize(*lvlInfo);
+}
 Vector2f LevelManager::GetCenterOfLevel(const LevelLoadingInfo& levelInfo) {
 	float cellSize = Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution;
 	cellSize /= 2;
