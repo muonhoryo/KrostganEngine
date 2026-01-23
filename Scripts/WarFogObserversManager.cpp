@@ -48,7 +48,6 @@ bool WarFogObserversManager::Intersect(Vector2f pos, Fraction observersFraction,
 		clbk = CachedObservers[input]->GetPtr_t_c();
 		if (clbk != nullptr) {
 
-			cout << "WarFogObserversManager: calculate from cache" << endl;
 			obsr.Center = clbk->GetGlobalPosition();
 			obsr.Radius = clbk->GetObservingRange();
 			if (obsr.Radius > maxRange)

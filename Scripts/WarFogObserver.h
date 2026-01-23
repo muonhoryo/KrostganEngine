@@ -23,6 +23,8 @@ namespace KrostganEngine::Core {
 
 		void SetObservingActive(bool isActive);
 
+		void OnChangeFraction(Fraction frac);
+
 	private:
 		/// <summary>
 		///	Mark observer as used for warfog's render

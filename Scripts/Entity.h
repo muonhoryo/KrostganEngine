@@ -144,18 +144,12 @@ namespace KrostganEngine::GameObjects {
 
 				IsActiveOwner = !IsOwnerMustHide();
 				Owner.SetRenderActivity(IsActiveOwner);
+				UpdateDelayTimer.restart();
 			}
 			virtual ~OnStealthGraphHider()
 			{}
 
-			void Update(CallbackRecArgs_Upd args) override {
-
-				if (IsActiveOwner == IsOwnerMustHide()) {
-
-					IsActiveOwner = !IsActiveOwner;
-					Owner.SetRenderActivity(IsActiveOwner);
-				}
-			}
+			void Update(CallbackRecArgs_Upd args) override;
 
 		private:
 			bool IsOwnerMustHide() {
@@ -169,6 +163,7 @@ namespace KrostganEngine::GameObjects {
 
 			Entity& Owner;
 			bool IsActiveOwner;
+			Clock UpdateDelayTimer;
 		};
 		class StealthStatChangedSubs final : public IEventSubscriber<int> {
 

@@ -36,6 +36,7 @@ const GlobalConsts& GlobalConstsLoad::LoadGlobalConsts() {
 	LoadedGlobalConsts.Units_MovingAbilityCheckTick = DeserValueByDef_float(GlobalConsts::DEF_UNITS_MOVING_ABILITY_CHECK_TICK, line);
 	LoadedGlobalConsts.EscapeBtn_PressDelay = DeserValueByDef_float(GlobalConsts::DEF_ESCAPE_BTN_PRESS_DELAY, line);
 	LoadedGlobalConsts.TakeDmg_FadeTime = DeserValueByDef_float(GlobalConsts::DEF_TAKEDMG_FADETIME, line);
+	LoadedGlobalConsts.WarFogObserving_CheckTick = DeserValueByDef_float(GlobalConsts::DEF_WARFOG_OBSERVING_CHECKTICK, line);
 	LoadedGlobalConsts.AutoAggrModule_CheckTick = DeserValueByDef_float(GlobalConsts::DEF_AUTOAGGR_CHECKTICK, line);
 	LoadedGlobalConsts.WarFogObserversManager_PosHashCellSize = DeserValueByDef_float(GlobalConsts::DEF_WARFOG_OBSRMANAGER_POSHASHCELLSIZE, line);
 

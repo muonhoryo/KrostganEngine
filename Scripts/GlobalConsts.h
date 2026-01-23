@@ -27,6 +27,7 @@ namespace KrostganEngine::Core {
 		float Units_ImmobilityCheckValue;
 		float EscapeBtn_PressDelay;
 		float TakeDmg_FadeTime;
+		float WarFogObserving_CheckTick;
 		float AutoAggrModule_CheckTick;
 		float WarFogObserversManager_PosHashCellSize;
 
@@ -49,6 +50,7 @@ namespace KrostganEngine::Core {
 		static inline const string DEF_UNITS_IMMOBILITY_CHECK_VALUE			= "Units_ImmobilityCheckValue";		//In seconds
 		static inline const string DEF_ESCAPE_BTN_PRESS_DELAY				= "EscapeBtn_PressDelay";		//In seconds
 		static inline const string DEF_TAKEDMG_FADETIME						= "TakeDmg_FadeTime";		//In seconds
+		static inline const string DEF_WARFOG_OBSERVING_CHECKTICK			= "WarFogObserving_CheckTick";		//In seconds
 		static inline const string DEF_AUTOAGGR_CHECKTICK					= "AutoAggrModule_CheckTick";		//In seconds
 		static inline const string DEF_WARFOG_OBSRMANAGER_POSHASHCELLSIZE	= "WarFogObsrManager_PosHashCellSize";
 	};

@@ -1,4 +1,30 @@
 <root>
+	<Sprite Source="MainMenu_Hint" Layer="128" AnchorX="0.1" AnchorY="0.1">
+	</Sprite>
+	<TextBlock
+		Text="Tutorial:
+		
+Your main task is elimination opponent's hero.
+
+To control units select them by press and holding LMB
+and give a one of orders:
+
+-RMB under enemy - attack enemy
+
+-A + LMB under ground - attack area
+
+-RMB under ground - move to point
+
+-C - cancel all given orders"
+		FontSize="25"
+		ResizeInherit_UI="1"
+		AnchorX="0.35"
+		AnchorY="0.35"
+		Color="FFFFFFFF">
+	</TextBlock>
+
+
+
 	<TextBlock 
 		Text="Welcome to sector 17 of the Krostgan's Valley, commander.
 Your current objective is eleminating the enemy's hero.
@@ -10,7 +36,8 @@ Good luck!"
 		ResizeInherit_UI="1"
 		AnchorX="0.25"
 		AnchorY="0.25"
-		Color="FFFFFFFF">
+		Color="FFFFFFFF"
+		Active="0">
 	</TextBlock>
 	<TextBlock
 		Name ="LoadTxt"

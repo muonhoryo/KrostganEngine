@@ -48,7 +48,7 @@ namespace KrostganEngine::Core {
 			return true;
 		if (second == nullptr)
 			return false;
-		return (int)first->GetFraction() < (int)second->GetFraction();
+		return ((int)first->GetFraction()) < ((int)second->GetFraction());
 	}
 
 	class WarFogObserversManager final : public EngineCallbackHandler<const WarFogObserver> {

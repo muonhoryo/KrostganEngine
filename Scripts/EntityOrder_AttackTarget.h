@@ -63,5 +63,6 @@ namespace KrostganEngine::EntitiesControl {
 		};
 
 		OnFractionChanged* OnFractionChangedSubs = nullptr;
+		mutable Clock TargetCheckDelayTimer = Clock();
 	};
 }

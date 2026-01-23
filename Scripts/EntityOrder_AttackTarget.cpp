@@ -30,6 +30,7 @@ EntityOrder_AttackTarget::EntityOrder_AttackTarget(
 		OnFractionChangedSubs = new OnFractionChanged(*this, *Target_FracMem);
 		IFractionMember::MemberHasChangedFracEvent.Add(*OnFractionChangedSubs);
 	}
+	TargetCheckDelayTimer.restart();
 }
 EntityOrder_AttackTarget::~EntityOrder_AttackTarget() {
 	if (OnFractionChangedSubs != nullptr) {
@@ -121,6 +122,12 @@ const ITransformableObj* EntityOrder_AttackTarget::GetTarget() const {
 }
 
 bool EntityOrder_AttackTarget::IsTargetObserving() const {
+
+	if (TargetCheckDelayTimer.getElapsedTime().asSeconds() < Engine::GetGlobalConsts().WarFogObserving_CheckTick) {
+		return true;
+	}
+
+	TargetCheckDelayTimer.restart();
 
 	float stealth = (Target_BatStats == nullptr) ? FLT_MAX : Target_BatStats->GetStealth().Stat;
 

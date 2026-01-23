@@ -23,5 +23,6 @@ void Entity::SetFraction(Fraction fraction) {
 	GroupSelectionSystem::Remove(*this);
 	GetAutoAggrModule().Restart();
 	ResetOrdersQueue();
+	OnChangeFraction(fraction);
 	MemberHasChangedFracEvHandler.Execute(evArgs);
 }

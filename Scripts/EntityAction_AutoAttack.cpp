@@ -19,7 +19,9 @@ EntityAction_AutoAttack::EntityAction_AutoAttack(
 			Target(Target),
 			AAModule(Owner.GetAAModule()),
 			Target_BatStats(Target_BatStats)
-{}
+{
+	WarFogCheckDelayTimer.restart();
+}
 
 bool EntityAction_AutoAttack::CheckExecCondition() {
 
@@ -28,6 +30,12 @@ bool EntityAction_AutoAttack::CheckExecCondition() {
 
 	if (!AAModule.CheckTargetReach())	//Target is untargetable for AA or disappeared
 		return true;
+
+	if (WarFogCheckDelayTimer.getElapsedTime().asSeconds() < Engine::GetGlobalConsts().WarFogObserving_CheckTick) {
+		return false;
+	}
+
+	WarFogCheckDelayTimer.restart();
 
 	float stealth = Target_BatStats == nullptr ? FLT_MAX : Target_BatStats->GetStealth().Stat;
 	return !WarFogObserversManager::GetInstance()->Intersect(

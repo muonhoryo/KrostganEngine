@@ -35,3 +35,16 @@ void Entity::StealthStatChangedSubs::ExecuteAction(int args) {
 		}
 	}
 }
+
+void Entity::OnStealthGraphHider::Update(CallbackRecArgs_Upd args) {
+
+	if (UpdateDelayTimer.getElapsedTime().asSeconds() >= Engine::GetGlobalConsts().WarFogObserving_CheckTick) {
+
+		UpdateDelayTimer.restart();
+		if (IsActiveOwner == IsOwnerMustHide()) {
+
+			IsActiveOwner = !IsActiveOwner;
+			Owner.SetRenderActivity(IsActiveOwner);
+		}
+	}
+}

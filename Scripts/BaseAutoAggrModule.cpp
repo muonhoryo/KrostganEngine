@@ -57,13 +57,13 @@ void BaseAutoAggrModule::UpdateAction(CallbackRecArgs_Upd& args) {
 
 	if (TargetCheckDelay.getElapsedTime().asSeconds() >= Engine::GetGlobalConsts().AutoAggrModule_CheckTick) {
 
+		TargetCheckDelay.restart();
 		if (HasTarget) {
 			CheckCurrTarget(args);
 		}
 		else {
 			FindTarget(args);
 		}
-		TargetCheckDelay.restart();
 	}
 }
 bool BaseAutoAggrModule::GetActivityState() const {

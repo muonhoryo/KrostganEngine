@@ -22,6 +22,7 @@ namespace KrostganEngine::EntitiesControl {
 		OrdersExecutor& Owner;
 		watch_ptr_handler_wr<IAttackableObj> Target;
 		EntityBattleStats* Target_BatStats;
+		Clock WarFogCheckDelayTimer;
 		
 		//Cashed
 		AutoAttackModule& AAModule;

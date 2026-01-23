@@ -36,16 +36,17 @@ void WarFogObserver::SetObservingActive(bool isActive) {
 		IsObservingActive = isActive;
 	}
 }
+void WarFogObserver::OnChangeFraction(Fraction frac) {
+	WarFogObserversManager::GetInstance()->Set_NeedToSort();
+}
+
 bool WarFogObserver::GetObservingActivity() const {
 	return IsObservingActive;
 }
 
 void WarFogObserver::SetActive() {
 	WarFogStencilGen::GetInstance()->Add(*this);
-	//ObservingArea = new WarFogObserver_ObsrArea(*this);
 }
 void WarFogObserver::SetInactive() {
 	WarFogStencilGen::GetInstance()->Remove(*this);
-	/*delete ObservingArea;
-	ObservingArea = nullptr;*/
 }

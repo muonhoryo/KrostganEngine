@@ -120,8 +120,9 @@ float AutoAttackModule::GetRemReloadTime() const {
 }
 
 void AutoAttackModule::Update(CallbackRecArgs_Upd args) {
-	if (RemReloadTime > 0)
-		RemReloadTime -= args.LastFrameDeltaTime;
+	
+		if (RemReloadTime > 0)
+			RemReloadTime -= args.LastFrameDeltaTime;
 }
 
 bool AutoAttackModule::UpdateByAASpeed() {
