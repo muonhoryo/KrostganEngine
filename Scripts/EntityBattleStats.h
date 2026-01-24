@@ -128,6 +128,7 @@ namespace KrostganEngine::GameObjects {
 		/// <param name="stats"></param>
 		/// <returns></returns>
 		int AddAAStats(AutoAttackStats& stats);
+		void AddAAStatsByIndex(AutoAttackStats& stats, int index);
 		void RemoveAAStats(const AutoAttackStats& stats);
 		void RemoveAAStats(size_t index);
 

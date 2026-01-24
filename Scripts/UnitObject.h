@@ -85,7 +85,7 @@ namespace KrostganEngine {
 
 		private:
 			PhysicsLayer Layer;
-			CircleCollShape& Collider;
+			CircleCollShape& COLLIDER;
 			static const vector<EntityOrderType> AllowedOrdersCatalog;
 		};
 

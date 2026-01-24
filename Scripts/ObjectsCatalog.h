@@ -188,7 +188,7 @@ namespace KrostganEngine::Core {
 		static inline const string CHILD		= "Child";
 		static inline const string AASTATS		= "AAStats";
 		static inline const string BATSTATS		= "BattleStats";
-		static inline const string Collider		= "Collider";
+		static inline const string COLLIDER		= "Collider";
 	};
 	struct SerializationParDefNames {
 
@@ -222,5 +222,7 @@ namespace KrostganEngine::Core {
 		static inline const string DECOR_ISTARGBLE_FORAA	= "IsTargetableForAA";
 
 		static inline const string PHYS_COLLIDER_DEF = "Collider";
+
+		static inline const string AASTATS_INDEX = "Index";
 	};
 }

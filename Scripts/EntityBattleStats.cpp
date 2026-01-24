@@ -134,6 +134,21 @@ int EntityBattleStats::AddAAStats(AutoAttackStats& stats) {
 	SavedAAStats.push_back(&stats);
 	return (int)SavedAAStats.size() - 1;
 }
+void EntityBattleStats::AddAAStatsByIndex(AutoAttackStats& stats, int index) {
+
+	if (CollectionsExts::Contains(SavedAAStats, &stats))
+		throw exception("AAStats already contain input stats");
+	if (index < 0)
+		throw exception("Index is out of range");
+
+	if (index >= SavedAAStats.size())
+		SavedAAStats.resize((size_t)index + 1);
+
+	if (SavedAAStats[index] != nullptr)
+		delete SavedAAStats[index];
+
+	SavedAAStats[index] = &stats;
+}
 void EntityBattleStats::RemoveAAStats(const AutoAttackStats& stats) {
 
 	if (!CollectionsExts::Remove(SavedAAStats,&stats))

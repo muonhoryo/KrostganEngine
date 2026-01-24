@@ -400,7 +400,17 @@ bool EntityLoadInfo::WriteParamByNode(xml_node<>& node) {
 
 	if (nodeName == SerXMLObjChildrenTypes::AASTATS) {
 
-		auto index = BattleStats.AddAAStats(*new AutoAttackStats());
+		auto indexAtt = node.first_attribute();
+		int index = -1;
+		if (indexAtt->name() == SerializationParDefNames::AASTATS_INDEX) {
+
+			index = stoi(indexAtt->value());
+		}
+		if (index == -1)
+			index = BattleStats.AddAAStats(*new AutoAttackStats());
+		else
+			BattleStats.AddAAStatsByIndex(*new AutoAttackStats(), index);
+
 		BattleStats.SetAAStats(index);
 		auto stats = BattleStats.GetCurrAAStats();
 		WriteBattleStatsParams(node, *stats);
@@ -560,7 +570,7 @@ DecorationLoadInfo::DecorationLoadInfo(const DecorationLoadInfo& copy)
 	CurrentHP = copy.CurrentHP;
 	MaxHP = copy.MaxHP;
 	IsTargetableForAA = copy.IsTargetableForAA;
-	Collider = &copy.Collider->Clone();
+	COLLIDER = &copy.COLLIDER->Clone();
 }
 
 bool DecorationLoadInfo::WriteParam(Attr& param) {
@@ -595,11 +605,11 @@ bool DecorationLoadInfo::WriteParamByNode(xml_node<>& node) {
 
 	char* nodeName = node.name();
 
-	if (nodeName == SerXMLObjChildrenTypes::Collider) {
+	if (nodeName == SerXMLObjChildrenTypes::COLLIDER) {
 
-		if (Collider != nullptr)
-			delete Collider;
-		Collider = &ColliderDeserializer::DeserializeCollider(node);
+		if (COLLIDER != nullptr)
+			delete COLLIDER;
+		COLLIDER = &ColliderDeserializer::DeserializeCollider(node);
 	}
 	else
 		return false;
@@ -623,7 +633,7 @@ void DecorationLoadInfo::FillCtorParams(GameObjectCtorParams& params, const Game
 	parParams->HitEffectSprite->SetRendLayer((std::byte)40);
 	parParams->CurrentHP = parUsedInfo->CurrentHP;
 	parParams->MaxHP = parUsedInfo->MaxHP;
-	parParams->Collider = &Collider->Clone();
+	parParams->COLLIDER = &COLLIDER->Clone();
 }
 
 WorldTransfObj* DecorationLoadInfo::InstantiateObject_Action(const WorldObjectLoadInfo& usedInfo) const {
@@ -664,9 +674,9 @@ bool SpriteRendLoadInfo::WriteParam(Attr& param) {
 		std::byte layer = (std::byte)stof(param.second);
 		RendLayer = layer;
 	}
-	else if (CheckParamName(param, SerializationParDefNames::SPRITE_ORIGIN)) {
+	/*else if (CheckParamName(param, SerializationParDefNames::SPRITE_ORIGIN)) {
 		Origin = ParseVec2f(param.second);
-	}
+	}*/
 	else
 		return false;
 
@@ -678,7 +688,7 @@ WorldTransfObj* SpriteRendLoadInfo::InstantiateObject_Action(const WorldObjectLo
 
 	auto src = ExternalGlobalResources::GetRes_t<ExtGlRes_Sprite>(parInfo.SpriteSource);
 	auto sprt = new SpriteRenderer(src->Tex, parInfo.MaxSpriteSize < eps ? src->MaxSize : parInfo.MaxSpriteSize, src->RenShader);
-	sprt->SetOrigin(Origin);
+	//sprt->SetOrigin(Origin);
 	sprt->SetGlobalPosition(parInfo.Position);
 	sprt->SetGlobalRotation(parInfo.Rotation);
 	sprt->SetGlobalScale_Sng(parInfo.Size * sprt->GetGlobalScale_Sng());

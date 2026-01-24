@@ -178,7 +178,7 @@ namespace KrostganEngine::Core {
 		size_t			CurrentHP = 1;
 		size_t			MaxHP = 1;
 		bool			IsTargetableForAA = true;
-		ColliderShape*	Collider = nullptr;
+		ColliderShape*	COLLIDER = nullptr;
 
 		DecorationLoadInfo() : GameObjectLoadInfo(){}
 		DecorationLoadInfo(const DecorationLoadInfo& copy);
@@ -202,7 +202,7 @@ namespace KrostganEngine::Core {
 
 		string SpriteSource = "";
 		float MaxSpriteSize = 0;
-		Vector2f	Origin = DEFAULT_ORIGIN;
+		//Vector2f	Origin = DEFAULT_ORIGIN;
 		std::byte RendLayer = DEFAULT_RENDLAYER;
 
 		bool WriteParam(Attr& param) override;
