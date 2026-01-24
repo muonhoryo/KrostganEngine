@@ -5,25 +5,27 @@
 using namespace KrostganEngine;
 using namespace KrostganEngine::GameObjects;
 
-Aura::Aura(float auraRange, Fraction AuraFrac, Relation ToTargetRelMask, ComposeGameEff_Permanent& GameEff, WorldTransfObj& Parent)
+Aura::Aura(ColliderShape& TriggerCollider, Fraction AuraFrac, Relation ToTargetRelMask, ComposeGameEff_Permanent& GameEff, WorldTransfObj& Parent)
 	:TriggerZone(*new Transformable(),Parent),
-		TriggerCollider(CircleCollShape(GetGlobalPosition(),auraRange)),
+		TriggerCollider(TriggerCollider),
 		AuraFrac(AuraFrac),
 		ToTargetRelMask(ToTargetRelMask),
 		GameEff(GameEff),
 		PassNeutral(IsEffectedByAura(Fraction::Neutral)),
 		IsEffInstant(dynamic_cast<ComposeGameEff_Instant*>(&GameEff)!=nullptr){
 
+	TriggerCollider.SetCenter(GetGlobalPosition());
 }
-Aura::Aura(float auraRange, Fraction AuraFrac, Relation ToTargetRelMask, ComposeGameEff_Permanent& GameEff)
+Aura::Aura(ColliderShape& TriggerCollider, Fraction AuraFrac, Relation ToTargetRelMask, ComposeGameEff_Permanent& GameEff)
 	:TriggerZone(*new Transformable()),
-		TriggerCollider(CircleCollShape(GetGlobalPosition(),auraRange)),
+		TriggerCollider(TriggerCollider),
 		AuraFrac(AuraFrac),
 		ToTargetRelMask(ToTargetRelMask),
 		GameEff(GameEff),
 		PassNeutral(IsEffectedByAura(Fraction::Neutral)),
 		IsEffInstant(dynamic_cast<ComposeGameEff_Instant*>(&GameEff) != nullptr) {
 
+	TriggerCollider.SetCenter(GetGlobalPosition());
 }
 Aura::~Aura() {
 
@@ -32,25 +34,27 @@ Aura::~Aura() {
 		delete FracDependency;
 	}
 	ClearTriggerList();
+
+	delete& TriggerCollider;
 }
 
 void Aura::SetGlobalScale(Vector2f  scale) {
 	float oldScale = GetGlobalScale_Sng();
 	WorldTransfObj::SetGlobalScale(scale);
-	TriggerCollider.Radius = TriggerCollider.Radius/oldScale * GetGlobalScale_Sng();
+	TriggerCollider.Resize(oldScale * GetGlobalScale_Sng());
 }
 void Aura::SetGlobalPosition(Vector2f pos) {
 	WorldTransfObj::SetGlobalPosition(pos);
-	TriggerCollider.Center = pos;
+	TriggerCollider.SetCenter(pos);
 }
 void Aura::SetLocalScale(Vector2f scale) {
 	float oldScale = GetGlobalScale_Sng();
 	WorldTransfObj::SetLocalScale(scale);
-	TriggerCollider.Radius = TriggerCollider.Radius / oldScale * GetGlobalScale_Sng();
+	TriggerCollider.Resize(oldScale * GetGlobalScale_Sng());
 }
 void Aura::SetLocalPosition(Vector2f pos) {
 	WorldTransfObj::SetLocalPosition(pos);
-	TriggerCollider.Center = GetGlobalPosition();
+	TriggerCollider.SetCenter(GetGlobalPosition());
 }
 const ColliderShape& Aura::GetCollider() const {
 	return TriggerCollider;
@@ -79,7 +83,7 @@ void Aura::DestroyToFracMemDependency() {
 }
 
 vector<IPhysicalObject*>	Aura::OverlapAll() const {
-	return Engine::GetPhysicsEngine().OverlapCircle_All(TriggerCollider.Center, TriggerCollider.Radius, AURA_PHYSLAYER);
+	return Engine::GetPhysicsEngine().OverlapDynamic_All(TriggerCollider, AURA_PHYSLAYER);
 }
 
 bool Aura::EnterTriggerCondition(const IPhysicalObject& inputObj) const {

@@ -29,6 +29,7 @@ namespace KrostganEngine::Physics {
 
 		virtual CircleCollShape GetBoundedCircle()const = 0;
 
+		virtual void SetCenter(Vector2f center) = 0;
 		virtual void MoveCollider(Vector2f vec) = 0;
 		virtual void Resize(float resizeValue) = 0;
 
@@ -67,6 +68,7 @@ namespace KrostganEngine::Physics {
 
 		CircleCollShape GetBoundedCircle()const override;
 
+		void SetCenter(Vector2f center) override;
 		void MoveCollider(Vector2f vec) override;
 		void Resize(float resizeValue) override;
 
@@ -98,6 +100,7 @@ namespace KrostganEngine::Physics {
 
 		CircleCollShape GetBoundedCircle()const override;
 
+		void SetCenter(Vector2f center) override;
 		void MoveCollider(Vector2f vec) override;
 		void Resize(float resizeValue) override;
 	};
@@ -142,6 +145,7 @@ namespace KrostganEngine::Physics {
 			return CircleCollShape(Vector2f(0,0), 0);
 		}
 
+		void SetCenter(Vector2f center) override{}
 		void MoveCollider(Vector2f vec) override{}
 		void Resize(float resizeValue) override{}
 

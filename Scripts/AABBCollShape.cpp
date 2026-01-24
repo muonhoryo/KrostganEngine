@@ -273,6 +273,14 @@ CircleCollShape AABBCollShape::GetBoundedCircle()const {
 	return CircleCollShape(GetCenter(), Length(size));
 }
 
+void AABBCollShape::SetCenter(Vector2f center) {
+
+	auto size = GetSize();
+	size.x *= 0.5;
+	size.y *= 0.5;
+	Min = Vector2f(center.x - size.x, center.y - size.y);
+	Max = Vector2f(center.x + size.y, center.y + size.y);
+}
 void AABBCollShape::MoveCollider(Vector2f vec) {
 
 	Min += vec;

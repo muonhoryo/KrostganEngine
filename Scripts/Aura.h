@@ -50,8 +50,8 @@ namespace KrostganEngine::GameObjects {
 	//
 
 	public:
-		Aura(float auraRange, Fraction AuraFrac, Relation ToTargetRelMask, ComposeGameEff_Permanent& GameEff, WorldTransfObj& Parent);
-		Aura(float auraRange, Fraction AuraFrac, Relation ToTargetRelMask, ComposeGameEff_Permanent& GameEff);
+		Aura(ColliderShape& TriggerCollider, Fraction AuraFrac, Relation ToTargetRelMask, ComposeGameEff_Permanent& GameEff, WorldTransfObj& Parent);
+		Aura(ColliderShape& TriggerCollider, Fraction AuraFrac, Relation ToTargetRelMask, ComposeGameEff_Permanent& GameEff);
 		virtual ~Aura();
 
 		void SetGlobalScale(Vector2f size) override;
@@ -77,7 +77,7 @@ namespace KrostganEngine::GameObjects {
 		void OnTriggerExit(watch_ptr_handler_wr<IPhysicalObject>& obj) override;
 
 	private:
-		CircleCollShape TriggerCollider;
+		ColliderShape& TriggerCollider;
 
 		Relation					ToTargetRelMask;
 		ComposeGameEff_Permanent&	GameEff;

@@ -152,6 +152,10 @@ CircleCollShape CircleCollShape::GetBoundedCircle()const {
 	return CircleCollShape(Center,Radius);
 }
 
+void CircleCollShape::SetCenter(Vector2f center) {
+
+	Center = center;
+}
 void CircleCollShape::MoveCollider(Vector2f vec) {
 	Center += vec;
 }

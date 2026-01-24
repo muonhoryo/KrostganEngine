@@ -56,7 +56,7 @@ void ConsoleCommsInterpretator::ExecuteCommand(const string& input) {
 			return;
 	}
 
-	else if (input == "testab") {
+	/*else if (input == "testab") {
 
 		auto it = GroupSelectionSystem::GetChoosenEntities_Begin();
 		auto end = GroupSelectionSystem::GetChoosenEntities_End();
@@ -101,7 +101,7 @@ void ConsoleCommsInterpretator::ExecuteCommand(const string& input) {
 
 			++it;
 		}
-	}
+	}*/
 	//else if (input == "testab2") {
 
 	//	auto it = GroupSelectionSystem::GetChoosenEntities_Begin();

@@ -6,11 +6,11 @@ using namespace KrostganEngine::GameObjects;
 
 Ability_Aura::Ability_Aura(float range, Relation ToTargetRelMask, ComposeGameEff_Permanent& GameEff, size_t CatalogID, std::byte SubcatalogID)
 	:Ability_Passive(CatalogID,SubcatalogID),
-		AuraObj(*new Aura(range,Fraction::Neutral,ToTargetRelMask,GameEff)){
+		AuraObj(*new Aura(*new CircleCollShape(DEFAULT_POSITION, range) ,Fraction::Neutral,ToTargetRelMask,GameEff)){
 
 }
 Ability_Aura::Ability_Aura(float range, Relation ToTargetRelMask, ComposeGameEff_Permanent& GameEff)
-	:AuraObj(*new Aura(range,Fraction::Neutral, ToTargetRelMask, GameEff)){
+	:AuraObj(*new Aura(*new CircleCollShape(DEFAULT_POSITION, range), Fraction::Neutral, ToTargetRelMask, GameEff)){
 
 }
 Ability_Aura::~Ability_Aura() {
