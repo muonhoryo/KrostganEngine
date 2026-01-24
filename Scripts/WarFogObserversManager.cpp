@@ -16,7 +16,7 @@ WarFogObserversManager::WarFogObserversManager()
 	Singleton = this;
 }
 
-void WarFogObserversManager::OnAddCallback(WarFogObserver* const& callbck) {
+void WarFogObserversManager::OnAddCallback(WarFogObserver const& callbck) {
 
 	NeedToSort = true;
 }

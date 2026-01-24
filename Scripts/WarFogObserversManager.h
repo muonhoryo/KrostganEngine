@@ -64,7 +64,7 @@ namespace KrostganEngine::Core {
 		}
 
 	protected:
-		void OnAddCallback(WarFogObserver* const& callbck);
+		void OnAddCallback(WarFogObserver const& callbck) override;
 
 	private:
 		~WarFogObserversManager(){}
