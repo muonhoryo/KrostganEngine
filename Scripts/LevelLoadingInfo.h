@@ -28,15 +28,15 @@ namespace KrostganEngine::Core {
 
 		virtual ~WorldObjectLoadInfo() {}
 
-		string Name = "";
-		Vector2f Position = (Vector2f)ITransformableObj::NULL_POS;
-		float Size = 1;
-		float Rotation = 0;
-		size_t CatID = 0;
+		string		Name		= "";
+		Vector2f	Position	= (Vector2f)ITransformableObj::NULL_POS;
+		float		Size		= 1;
+		float		Rotation	= 0;
+		size_t		CatID		= 0;
 
-		bool WarFog_IsHiden = false;
-		bool WarFog_IsShowed = false;
-		bool LateRender = true;
+		bool WarFog_IsHiden		= false;
+		bool WarFog_IsShowed	= false;
+		bool LateRender			= true;
 		vector<LvlObjInstantiationInfo> ChildObjs;
 
 		WorldTransfObj* InstantiateObject
@@ -202,6 +202,7 @@ namespace KrostganEngine::Core {
 
 		string SpriteSource = "";
 		float MaxSpriteSize = 0;
+		Vector2f	Origin = DEFAULT_ORIGIN;
 		std::byte RendLayer = DEFAULT_RENDLAYER;
 
 		bool WriteParam(Attr& param) override;

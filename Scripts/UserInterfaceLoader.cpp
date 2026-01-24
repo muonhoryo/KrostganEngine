@@ -28,13 +28,13 @@ void UserInterfaceLoader::DeserializeNode(xml_node<>* node, UIElement& parent)
 	UIElement* el = nullptr;
 	xml_attribute<>* attr = nullptr;
 	xml_node<>* child = nullptr;
-	//forward_list<IUIDependency*> depends;
 	while (node != nullptr) {
 
 		Vector2f pos=DEFAULT_POSITION;
 		Vector2f scale = DEFAULT_SCALE;
 		Vector2f anchor= DEFAULT_ANCHOR;
 		Vector2f uisize = DEFAULT_SCALE;
+		Vector2f origin = DEFAULT_ORIGIN;
 		std::byte layer(DEFAULT_RENDLAYER_UI);
 		bool active(true);
 		bool resizeUIInherit(false);
@@ -69,6 +69,12 @@ void UserInterfaceLoader::DeserializeNode(xml_node<>* node, UIElement& parent)
 			}
 			else if (attrName == ATTR_ANCHOR_Y) {
 				anchor.y = stof(attr->value());
+			}
+			else if (attrName == ATTR_ORIGIN_X) {
+				origin.x = stof(attr->value());
+			}
+			else if (attrName == ATTR_ORIGIN_Y) {
+				origin.y = stof(attr->value());
 			}
 			else if (attrName == ATTR_LAYER) {
 				layer = (std::byte)stoi(attr->value());
@@ -127,6 +133,7 @@ void UserInterfaceLoader::DeserializeNode(xml_node<>* node, UIElement& parent)
 				shad,
 				layer);
 
+			textB->SetOrigin(origin);
 			textB->SetLocalPosition(pos);
 			textB->SetLocalScale(scale);
 			textB->SetAnchor(anchor);
@@ -162,6 +169,7 @@ void UserInterfaceLoader::DeserializeNode(xml_node<>* node, UIElement& parent)
 				&name,
 				shad,
 				layer);
+			spr->SetOrigin(origin);
 			spr->SetLocalPosition(pos);
 			spr->SetLocalScale(scale);
 			spr->SetAnchor(anchor);
@@ -171,6 +179,7 @@ void UserInterfaceLoader::DeserializeNode(xml_node<>* node, UIElement& parent)
 		else if (node->name() == UIEL_NAME_EMPTY) {
 
 			UIEmpty* empt = new UIEmpty(&parent, &name, parent.GetGlobalUISize());
+			empt->SetOrigin(origin);
 			empt->SetLocalPosition(pos);
 			empt->SetLocalScale(scale);
 			empt->SetAnchor(anchor);
@@ -202,18 +211,12 @@ void UserInterfaceLoader::DeserializeNode(xml_node<>* node, UIElement& parent)
 						name = attr->name();
 						if (name == ATTR_DEPEND_HIEACT_GRS_THRESHOLD) {
 							depend_groupSel->SetSelectionThreshold(stoi(attr->value()));
-							/*auto dep = dynamic_cast<HieObjActDepend_GroupSelect*>(GetDependencyByType(depends, typeid(HieObjActDepend_GroupSelect*)));
-							dep->SetSelectionThreshold(stoi(attr->value()));*/
 						}
 						else if (name == ATTR_DEPEND_HIEACT_GRS_GREAT) {
 							depend_groupSel->SetGreaterCondition(FStreamExts::ParseBool(attr->value()));
-							/*auto dep = dynamic_cast<HieObjActDepend_GroupSelect*>(GetDependencyByType(depends, typeid(HieObjActDepend_GroupSelect*)));
-							dep->SetGreaterCondition(FStreamExts::ParseBool(attr->value()));*/
 						}
 						else if (name == ATTR_DEPEND_HIEACT_GRS_EQUAL) {
 							depend_groupSel->SetEqualCondition(FStreamExts::ParseBool(attr->value()));
-							/*auto dep = dynamic_cast<HieObjActDepend_GroupSelect*>(GetDependencyByType(depends, typeid(HieObjActDepend_GroupSelect*)));
-							dep->SetEqualCondition(FStreamExts::ParseBool(attr->value()));*/
 						}
 
 						nextAttr = nextAttr->next_attribute();

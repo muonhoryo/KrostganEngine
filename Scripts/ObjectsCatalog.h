@@ -206,6 +206,7 @@ namespace KrostganEngine::Core {
 
 		static inline const string IMAGEUSR_SPRITE_SOURCE	= "SpriteSource";
 		static inline const string IMAGEUSR_SPRITE_LAYER	= "Layer";
+		static inline const string SPRITE_ORIGIN			= "Origin";
 
 		static inline const string GAMEOBJ_ISSOLID_COLL		= "SolidCollision";
 

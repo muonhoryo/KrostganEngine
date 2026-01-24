@@ -1,5 +1,5 @@
 <root>
-	<Sprite Source="MainMenu_Hint" Layer="128" AnchorX="0.1" AnchorY="0.1">
+	<Sprite Source="MainMenu_Hint" Layer="128" AnchorX="0.1" AnchorY="0.1" OriginX ="0">
 	</Sprite>
 	<TextBlock
 		Text="Tutorial:
@@ -20,6 +20,8 @@ and give a one of orders:
 		ResizeInherit_UI="1"
 		AnchorX="0.35"
 		AnchorY="0.35"
+		OriginX ="50"
+		OriginY ="0"
 		Color="FFFFFFFF">
 	</TextBlock>
 
@@ -36,6 +38,8 @@ Good luck!"
 		ResizeInherit_UI="1"
 		AnchorX="0.25"
 		AnchorY="0.25"
+		OriginX ="500"
+		OriginY ="500"
 		Color="FFFFFFFF"
 		Active="0">
 	</TextBlock>
