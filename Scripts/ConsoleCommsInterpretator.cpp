@@ -18,40 +18,44 @@ using namespace KrostganEngine::Core;
 using namespace std;
 
 void ConsoleCommsInterpretator::ExecuteCommand(const string& input) {
-	if (input.find(ZOOM_COMMAND) != string::npos)
+
+	string cpyInput = input;
+	FStreamExts::ClearPath(cpyInput);
+
+	if (cpyInput == ZOOM_COMMAND)
 	{
 		if (InterpretateComm_Zoom(input)) {
 			return;
 		}
 	}
-	else if (input.find(DIVIVE_COMMANDER_COMMAND) != string::npos) {
+	else if (cpyInput==DIVIVE_COMMANDER_COMMAND) {
 
 		if (InterpretateComm_DivComm(input)) {
 			return;
 		}
 	}
-	else if (input.find(CAMERA_MOVING_COMMAND) != string::npos) {
+	else if (cpyInput ==CAMERA_MOVING_COMMAND) {
 		if (InterpretateComm_CamMov(input)) {
 			return;
 		}
 	}
-	else if (input.find(IMMORTAL_ARMY_COMMAND) != string::npos) {
+	else if (cpyInput==IMMORTAL_ARMY_COMMAND) {
 		if (InterpretateComm_ImmArmy(input))
 			return;
 	}
-	else if (input.find(DISARM_COMMAND) != string::npos) {
+	else if (cpyInput == DISARM_COMMAND) {
 		if (InterpretateComm_Disarm(input))
 			return;
 	}
-	else if (input.find(REARM_COMMAND) != string::npos) {
+	else if (cpyInput == REARM_COMMAND) {
 		if (InterpretateComm_Rearm(input))
 			return;
 	}
-	else if (input.find(WARFOG_COMMAND) != string::npos) {
+	else if (cpyInput == WARFOG_COMMAND) {
 		if (InterpretateComm_WarFog(input))
 			return;
 	}
-	else if (input.find(FRACSET_COMMAND) != string::npos) {
+	else if (cpyInput == FRACSET_COMMAND) {
 		if (InterpretateComm_FracSet(input))
 			return;
 	}
