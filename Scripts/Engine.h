@@ -115,9 +115,10 @@ namespace KrostganEngine::Core {
 			static EngineLateUpdateModule& GetLateUpdModule();
 			static PhysicsEngine& GetPhysicsEngine();
 			static CursorManager& GetCursorManager();
-			static const EngineConfig& GetEngineConfig();
+			static EngineConfig& GetEngineConfig();
 			static const GlobalConsts& GetGlobalConsts();
 			static const ExternalGlobalResources& GetGlobalResources();
+			static PlayerControlSettings& GetPlayerCtrlSettings();
 			static bool IsFullScreenWindow();
 
 			static float GetZoom();
@@ -143,14 +144,15 @@ namespace KrostganEngine::Core {
 
 			static inline Engine* Singleton=nullptr;
 
-			EngineRenderModule& RenderModule;
-			EngineUpdateModule& UpdateModule;
-			EngineLateUpdateModule& LateUpdateModule;
-			PhysicsEngine& PhysicsEng;
-			CursorManager* WindCursorManager;
-			const EngineConfig* EngineConfiguration;
-			const GlobalConsts* Consts;
-			const ExternalGlobalResources* GlobalResources;
+			EngineRenderModule&				RenderModule;
+			EngineUpdateModule&				UpdateModule;
+			EngineLateUpdateModule&			LateUpdateModule;
+			PhysicsEngine&					PhysicsEng;
+			CursorManager*					WindCursorManager;
+			EngineConfig*					EngineConfiguration;
+			const GlobalConsts*				Consts;
+			const ExternalGlobalResources*	GlobalResources;
+			PlayerControlSettings*			PlayerCtrlSetts;
 
 			RenderWindow RendWin;
 			/// <summary>

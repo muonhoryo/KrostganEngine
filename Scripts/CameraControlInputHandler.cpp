@@ -25,7 +25,7 @@ void CameraControlInputHan::Update(const CallbackRecArgs_Upd& args) {
 
 		if (cameraMov != VECTOR2_INT_ZERO) {
 
-			float movStep = Engine::GetEngineConfig().Camera_MovSpeed;
+			float movStep = Engine::GetPlayerCtrlSettings().CameraMoveSpeed;
 			Vector2f movVect = Vector2f(cameraMov.x * movStep, cameraMov.y * movStep);
 			Engine::MoveCamera(movVect);
 		}

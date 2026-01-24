@@ -200,6 +200,7 @@
     <ClCompile Include="Scripts\IGameEffTarget.cpp" />
     <ClCompile Include="Scripts\IHierarchyTrObj.cpp" />
     <ClCompile Include="Scripts\IndicatorFill.cpp" />
+    <ClCompile Include="Scripts\PlayerControlSettsLoad.cpp" />
     <ClCompile Include="Scripts\TransparencyVisEff.cpp" />
     <ClCompile Include="Scripts\TransparencyVisEff_Des.cpp" />
     <ClCompile Include="Scripts\TransparencyVisEff_Funcs.cpp" />
@@ -379,6 +380,8 @@
     <ClInclude Include="Scripts\IModifiableStatsWrapper.h" />
     <ClInclude Include="Scripts\InputHandlers.h" />
     <ClInclude Include="Scripts\PathFinding_Algorithms.h" />
+    <ClInclude Include="Scripts\PlayerControlSettings.h" />
+    <ClInclude Include="Scripts\PlayerControlSettsLoad.h" />
     <ClInclude Include="Scripts\RapidXMLExtensions.h" />
     <ClInclude Include="Scripts\TestTrigger.h" />
     <ClInclude Include="Scripts\TransparencyVisEff.h" />

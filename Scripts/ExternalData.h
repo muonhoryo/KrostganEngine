@@ -12,3 +12,6 @@
 
 #include <UserInterfacesDeserializer.h>
 #include <UserInterfaceLoader.h>
+
+#include <PlayerControlSettings.h>
+#include <PlayerControlSettsLoad.h>

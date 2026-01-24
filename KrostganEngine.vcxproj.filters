@@ -867,6 +867,9 @@
     <ClCompile Include="Scripts\GameEff_Dur_Deserter.cpp">
       <Filter>Исходные файлы\CoreSystems\GameEffectsSystem\GeneralGameEffects</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\PlayerControlSettsLoad.cpp">
+      <Filter>Исходные файлы\CoreSystems\ExternalData</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\CoreGameObjects.h">
@@ -1567,6 +1570,12 @@
     </ClInclude>
     <ClInclude Include="Scripts\DBG_ImmortalArmy.h">
       <Filter>Файлы заголовков\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\PlayerControlSettings.h">
+      <Filter>Файлы заголовков\CoreSystems\ExternalData</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\PlayerControlSettsLoad.h">
+      <Filter>Файлы заголовков\CoreSystems\ExternalData</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

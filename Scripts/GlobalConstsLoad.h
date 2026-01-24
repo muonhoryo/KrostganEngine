@@ -11,7 +11,7 @@ namespace KrostganEngine::Core {
 	class GlobalConstsLoad:public ValuesListDeserializer{
 	public:
 		GlobalConstsLoad();
-		~GlobalConstsLoad(){}
+		virtual ~GlobalConstsLoad(){}
 
 		const GlobalConsts& LoadGlobalConsts();
 		const GlobalConsts& GetLoadedConsts();

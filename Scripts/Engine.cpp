@@ -17,7 +17,7 @@ using namespace KrostganEngine::Core;
 using namespace KrostganEngine::Physics;
 using namespace KrostganEngine::Visual;
 
-const std::string Engine::ENGINE_VERSION = "A0.8.3.0";
+const std::string Engine::ENGINE_VERSION = "A0.8.4.0";
 
 Engine::Engine()
 	:RenderModule(*new EngineRenderModule(RendWin)),
@@ -33,6 +33,8 @@ Engine::Engine()
 	GlobalConstsLoad consts = GlobalConstsLoad();
 	Consts = &consts.LoadGlobalConsts();
 	ExtGlobalResourcesLoad::LoadGlobalResources();
+	PlayerControlSettsLoad playerCtrlSettsLoad = PlayerControlSettsLoad();
+	PlayerCtrlSetts = &playerCtrlSettsLoad.LoadPlayerCtrlSettings();
 
 	auto uiDeser=new UserInterfacesDeserializer();
 	uiDeser->Deserialize();
@@ -205,7 +207,7 @@ PhysicsEngine& Engine::GetPhysicsEngine() {
 CursorManager& Engine::GetCursorManager() {
 	return *Singleton->WindCursorManager;
 }
-const EngineConfig& Engine::GetEngineConfig() {
+EngineConfig& Engine::GetEngineConfig() {
 	return *(Singleton->EngineConfiguration);
 }
 const GlobalConsts& Engine::GetGlobalConsts() {
@@ -213,6 +215,9 @@ const GlobalConsts& Engine::GetGlobalConsts() {
 }
 const ExternalGlobalResources& Engine::GetGlobalResources() {
 	return *Singleton->GlobalResources;
+}
+PlayerControlSettings& Engine::GetPlayerCtrlSettings() {
+	return *Singleton->PlayerCtrlSetts;
 }
 bool Engine::IsFullScreenWindow() {
 	return Singleton->IsFullscreen;

@@ -59,49 +59,32 @@ void EntCtrlMode_Base::HandleInput(CallbackRecArgs_Upd& args) {
 		}
 		else if (input.type == Event::KeyPressed) {
 
+			auto& ctrlSett = Engine::GetPlayerCtrlSettings();
+
 			if (AbleToGiveOrders()) {
 
-				//Give order
-				switch (input.key.code)
-				{
-				case Keyboard::A:
-				{
+				if (input.key.code == ctrlSett.Btn_Order_Attack) {
 					Owner.SetNewMode(*new EntCtrlMode_AttackOrder(Owner));
 					return;
 				}
-				case Keyboard::I:
-				{
+				else if (input.key.code == ctrlSett.Btn_Order_Idle) {
 					GiveOrderToSelected_Idle(PlayerInputManager::GetBtnState_Shift());
-					continue;
 				}
-				case Keyboard::C:
-				{
+				else if (input.key.code == ctrlSett.Btn_Order_Cancel) {
 					GiveOrderToSelected_Cancel();
-					continue;
 				}
-				case Keyboard::H:
-				{
+				else if (input.key.code == ctrlSett.Btn_Order_HoldPosition) {
 					GiveOrderToSelected_HoldPosition(PlayerInputManager::GetBtnState_Shift());
-					continue;
 				}
-				case Keyboard::Num1:
-				{
+				else if (input.key.code == ctrlSett.Btn_Order_UseAbility_1) {
 					GiveOrderToChoosen_UseAbility(0, PlayerInputManager::GetBtnState_Shift());
-					continue;
-				}
-				default:
-					break;
 				}
 			}
+			else {
 
-			switch (input.key.code) {
-			case Keyboard::Tab:
-			{
-				GroupSelectionSystem::ChoiseNextEntsGroup();
-				continue;
-			}
-			default:
-				break;
+				if (input.key.code == ctrlSett.Btn_GSS_ChoiseNext) {
+					GroupSelectionSystem::ChoiseNextEntsGroup();
+				}
 			}
 		}
 	}

@@ -14,8 +14,8 @@ namespace KrostganEngine {
 			EngineConfigLoad();
 			~EngineConfigLoad() {}
 
-			const EngineConfig& LoadEngineConfig();
-			const EngineConfig& GetLoadedConfig();
+			EngineConfig& LoadEngineConfig();
+			EngineConfig& GetLoadedConfig();
 		private:
 			EngineConfig& LoadedConfig;
 

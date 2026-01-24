@@ -37,7 +37,8 @@ void EntCtrlMode_AttackOrder::HandleInput(CallbackRecArgs_Upd& args) {
 			return;
 		}
 		else if (input.type == Event::KeyPressed &&
-			(input.key.code==Keyboard::Escape||input.key.code==Keyboard::A)) {
+					(input.key.code==Keyboard::Escape||
+					input.key.code==Engine::GetPlayerCtrlSettings().Btn_Order_Attack)) {
 
 			Owner.SetNewMode(*new EntCtrlMode_Base(Owner));
 			return;

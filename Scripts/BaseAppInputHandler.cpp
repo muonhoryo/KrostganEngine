@@ -24,13 +24,13 @@ void BaseAppInputHandler::Update(const CallbackRecArgs_Upd& args) {
 
 			if (!DbgConsoleInputHandler::GetDbgConsoleStats() &&
 				!PlayerInputManager::HasPriorityInputHandler() &&
-				input.key.code == Keyboard::Tilde) { //Open console
+				input.key.code == Engine::GetPlayerCtrlSettings().Btn_OpenConsole) { //Open console
 
 				auto dbgConsHan=new DbgConsoleInputHandler();
 				dbgConsHan->StartHandling();
 				return;
 			}
-			else if (input.key.code == Keyboard::F3) {
+			else if (input.key.code == Engine::GetPlayerCtrlSettings().Btn_CloseApp) {
 
 				//if (PlayerInputManager::GetBtnState_Escape()) {
 				//	continue;
@@ -39,7 +39,7 @@ void BaseAppInputHandler::Update(const CallbackRecArgs_Upd& args) {
 				Engine::GetRenderWindow().close();
 				exit(0);
 			}
-			else if (input.key.code == Keyboard::F5) {
+			else if (input.key.code == Engine::GetPlayerCtrlSettings().Btn_FullScreen) {
 				Engine::SetFullScreen(!Engine::IsFullScreenWindow());
 			}
 		}

@@ -15,7 +15,7 @@ EngineConfigLoad::EngineConfigLoad() :ValuesListDeserializer(),
 	LoadedConfig(*new EngineConfig()){
 }
 
-const EngineConfig& EngineConfigLoad::LoadEngineConfig() {
+EngineConfig& EngineConfigLoad::LoadEngineConfig() {
 	DeserializeValues();
 
 	string buffer = string();
@@ -33,7 +33,6 @@ const EngineConfig& EngineConfigLoad::LoadEngineConfig() {
 
 	LoadedConfig.FrameRateLimit			= DeserValueByDef_int	(EngineConfig::DEF_FRAMERATE_LIMIT, buffer);
 	LoadedConfig.CursorHotspot_Attack	= DeserValueByDef_Vec2u	(EngineConfig::DEF_CURSOR_ATTACK_HOTSPOT, buffer);
-	LoadedConfig.Camera_MovSpeed		= DeserValueByDef_float	(EngineConfig::DEF_CAMERA_MOVING_SPEED, buffer);
 
 	GetValueByDef(EngineConfig::DEF_WARFOG_STENCIL_SHADER_PATH, buffer);
 	FStreamExts::ClearPath(buffer);
@@ -44,7 +43,7 @@ const EngineConfig& EngineConfigLoad::LoadEngineConfig() {
 	StrValuesArr.clear();
 	return LoadedConfig;
 }
-const EngineConfig& EngineConfigLoad::GetLoadedConfig() {
+EngineConfig& EngineConfigLoad::GetLoadedConfig() {
 	return LoadedConfig;
 }
 
