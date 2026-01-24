@@ -35,6 +35,7 @@ void UserInterfaceLoader::DeserializeNode(xml_node<>* node, UIElement& parent)
 		Vector2f anchor= DEFAULT_ANCHOR;
 		Vector2f uisize = DEFAULT_SCALE;
 		Vector2f origin = DEFAULT_ORIGIN;
+		float rotation = 0;
 		std::byte layer(DEFAULT_RENDLAYER_UI);
 		bool active(true);
 		bool resizeUIInherit(false);
@@ -75,6 +76,9 @@ void UserInterfaceLoader::DeserializeNode(xml_node<>* node, UIElement& parent)
 			}
 			else if (attrName == ATTR_ORIGIN_Y) {
 				origin.y = stof(attr->value());
+			}
+			else if (attrName == ATTR_ROTATION) {
+				rotation = stof(attr->value());
 			}
 			else if (attrName == ATTR_LAYER) {
 				layer = (std::byte)stoi(attr->value());
@@ -138,6 +142,7 @@ void UserInterfaceLoader::DeserializeNode(xml_node<>* node, UIElement& parent)
 			textB->SetLocalScale(scale);
 			textB->SetAnchor(anchor);
 			textB->SetColor(color);
+			textB->SetLocalRotation(rotation);
 			if (fontPath != "")
 				textB->SetFont(ExternalGlobalResources::GetRes_t<ExtGlRes_Font>(fontPath)->Font_);
 			el = textB;
@@ -174,6 +179,7 @@ void UserInterfaceLoader::DeserializeNode(xml_node<>* node, UIElement& parent)
 			spr->SetLocalScale(scale);
 			spr->SetAnchor(anchor);
 			spr->SetColor(color);
+			spr->SetLocalRotation(rotation);
 			el = spr;
 		}
 		else if (node->name() == UIEL_NAME_EMPTY) {
@@ -183,6 +189,7 @@ void UserInterfaceLoader::DeserializeNode(xml_node<>* node, UIElement& parent)
 			empt->SetLocalPosition(pos);
 			empt->SetLocalScale(scale);
 			empt->SetAnchor(anchor);
+			empt->SetLocalRotation(rotation);
 			el = empt;
 		}
 

@@ -1,5 +1,5 @@
 <root>
-	<Sprite Source="MainMenu_Hint" Layer="128" AnchorX="0.1" AnchorY="0.1" OriginX ="0">
+	<Sprite Source="MainMenu_Hint" Layer="128" AnchorX="0.1" AnchorY="0.1" OriginX ="0" Rotation ="0">
 	</Sprite>
 	<TextBlock
 		Text="Tutorial:

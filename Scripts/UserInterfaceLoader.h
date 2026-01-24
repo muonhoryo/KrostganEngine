@@ -63,6 +63,7 @@ namespace KrostganEngine::Core {
 		static inline const string ATTR_ANCHOR_Y			= "AnchorY";
 		static inline const string ATTR_ORIGIN_X			= "OriginX";
 		static inline const string ATTR_ORIGIN_Y			= "OriginY";
+		static inline const string ATTR_ROTATION			= "Rotation";
 		static inline const string ATTR_LAYER				= "Layer";
 		static inline const string ATTR_ACTIVE				= "Active";
 		static inline const string ATTR_COLOR				= "Color";
