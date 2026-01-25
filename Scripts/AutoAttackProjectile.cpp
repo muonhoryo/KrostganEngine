@@ -4,7 +4,7 @@
 #include <Engine.h>
 #include <ProjAAHitInfo.h>
 #include <GameVisualEffects.h>
-#include <ObjectsCatalog.h>
+#include <WorldTransfObjsCatalog.h>
 
 using namespace KrostganEngine;
 using namespace KrostganEngine::Core;
@@ -124,7 +124,7 @@ void AutoAttackProjectile::DealDmgByAOE(Vector2f center) const {
 		}
 	}
 
-	if (hitEff->CatalogID != ObjectsCatalog::EMPTY_CATALOG_ID) {
+	if (hitEff->CatalogID != EMPTY_CATALOG_ID) {
 
 		auto hitEffObj = dynamic_cast<SpriteRenderer*>(hitEff->InstantiateObj());
 		hitEffObj->SetGlobalPosition(center);

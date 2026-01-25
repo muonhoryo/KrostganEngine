@@ -212,7 +212,7 @@
     <ClCompile Include="Scripts\LineAAAnimation.cpp" />
     <ClCompile Include="Scripts\LoseScript.cpp" />
     <ClCompile Include="Scripts\MainMenuTransitionHandler.cpp" />
-    <ClCompile Include="Scripts\ObjsCatalogDeserial.cpp" />
+    <ClCompile Include="Scripts\WorldTransfObjsCatalogDeserial.cpp" />
     <ClCompile Include="Scripts\LevelCellMapDeser.cpp" />
     <ClCompile Include="Scripts\ObservingArea.cpp" />
     <ClCompile Include="Scripts\OutlineLineVisual.cpp" />
@@ -358,6 +358,7 @@
     <ClInclude Include="Scripts\ExtGlRes_Texture.h" />
     <ClInclude Include="Scripts\FightingSystems.h" />
     <ClInclude Include="Scripts\FirstChoosenEntityDependsManager.h" />
+    <ClInclude Include="Scripts\GameEffectsCatalog.h" />
     <ClInclude Include="Scripts\GameEffectsSystem.h" />
     <ClInclude Include="Scripts\GameEff_Dur_Deserter.h" />
     <ClInclude Include="Scripts\GameEff_Dur_Disarm.h" />
@@ -379,6 +380,8 @@
     <ClInclude Include="Scripts\ICallbackRec.h" />
     <ClInclude Include="Scripts\IModifiableStatsWrapper.h" />
     <ClInclude Include="Scripts\InputHandlers.h" />
+    <ClInclude Include="Scripts\LevelWorldObjsLoadInfo.h" />
+    <ClInclude Include="Scripts\ObjectsCatalog.h" />
     <ClInclude Include="Scripts\PathFinding_Algorithms.h" />
     <ClInclude Include="Scripts\PlayerControlSettings.h" />
     <ClInclude Include="Scripts\PlayerControlSettsLoad.h" />
@@ -420,7 +423,8 @@
     <ClInclude Include="Scripts\LevelPathFinding.h" />
     <ClInclude Include="Scripts\LineAAAnimation.h" />
     <ClInclude Include="Scripts\LoseScript.h" />
-    <ClInclude Include="Scripts\ObjectsCatalog.h" />
+    <ClInclude Include="Scripts\WorldObjsCatalogSerConsts.h" />
+    <ClInclude Include="Scripts\WorldTransfObjsCatalog.h" />
     <ClInclude Include="Scripts\PathFinding_Diijkstra.h" />
     <ClInclude Include="Scripts\PhysicsStructs.h" />
     <ClInclude Include="Scripts\PlayerInputManager.h" />
@@ -528,6 +532,7 @@
     <ClInclude Include="Scripts\ZeroArgsEvent.h" />
     <ClInclude Include="Scripts\_AbilitiesSystem.h" />
     <ClInclude Include="Scripts\_BuiltAbilities.h" />
+    <ClInclude Include="Scripts\_LevelCatalogs.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Config.txt" />

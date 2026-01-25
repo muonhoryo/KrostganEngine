@@ -38,32 +38,32 @@ void LevelLoader::LoadLevel(const LevelLoadingInfo& levelInfo) {
 	LvlObjInstantiationInfo* cell = nullptr;
 	WorldTransfObj* obj = nullptr;
 	WorldObjectLoadInfo* objInfo = nullptr;
-	LvlObjAdditParams* subInfo = nullptr;
 	for (int i = 0;i < levelInfo.LevelMap.size();++i) {
 		for (int j = 0;j < (*levelInfo.LevelMap[i]).size();++j) {
 			cell = (*levelInfo.LevelMap[i])[j];
-			if (cell->CatalogID != ObjectsCatalog::EMPTY_CATALOG_ID) {
+			if (cell->CatalogID != EMPTY_CATALOG_ID) {
 
-				if (cell->CatalogSubID!= ObjectsCatalog::ABSENT_SUB_CATALOG_ID) {
-					subInfo = ObjectsCatalog::GetSubObjInfo(cell->CatalogID, cell->CatalogSubID);
+				if (cell->CatalogSubID!= ABSENT_SUB_CATALOG_ID) {
+					objInfo = WorldTransfObjsCatalog::GetSubObjInfo(cell->CatalogID, cell->CatalogSubID);
 				}
+				else
+					objInfo = &WorldTransfObjsCatalog::GetObjectInfo(cell->CatalogID);
 
-				objInfo = &ObjectsCatalog::GetObjectInfo(cell->CatalogID);
-				obj = objInfo->InstantiateObject(subInfo, cell->AdditParams);
+				obj = objInfo->InstantiateObject(cell->AdditParams);
 				if((Vector2i)obj->GetGlobalPosition()== ITransformableObj::NULL_POS)
 					obj->SetGlobalPosition(LevelCellMapDeser::GetCellGlobalPosition(Vector2u(i, j)));
-				subInfo = nullptr;
 			}
 		}
 	}
 
 	for (auto unObjInfo : levelInfo.UniqueObjects) {
 
-		objInfo = &ObjectsCatalog::GetObjectInfo(unObjInfo->CatalogID);
-		if (unObjInfo->CatalogSubID != ObjectsCatalog::ABSENT_SUB_CATALOG_ID)
-			subInfo = ObjectsCatalog::GetSubObjInfo(unObjInfo->CatalogID, unObjInfo->CatalogSubID);
-		obj = objInfo->InstantiateObject(subInfo, unObjInfo->AdditParams);
-		subInfo = nullptr;
+		if(unObjInfo->CatalogSubID!=ABSENT_SUB_CATALOG_ID)
+			objInfo= WorldTransfObjsCatalog::GetSubObjInfo(unObjInfo->CatalogID, unObjInfo->CatalogSubID);
+		else
+			objInfo = &WorldTransfObjsCatalog::GetObjectInfo(unObjInfo->CatalogID);
+
+		obj = objInfo->InstantiateObject(unObjInfo->AdditParams);
 	}
 
 	LevelBypassMapManager::LoadFromLevelMap(levelInfo.LevelMap);

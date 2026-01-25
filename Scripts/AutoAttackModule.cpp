@@ -4,7 +4,7 @@
 #include <VectExts.h>
 #include <CachedBattleStats.h>
 #include <watch_ptr.h>
-#include <ObjectsCatalog.h>
+#include <WorldTransfObjsCatalog.h>
 
 using namespace KrostganEngine;
 using namespace KrostganEngine::GameObjects;
@@ -92,7 +92,7 @@ bool AutoAttackModule::TryDealDamageToTarget() {
 
 			size_t dealedDmg = OwnerAAStats->GetDamage();
 			if (OwnerAAStats->GetState_IsRange() &&	
-				OwnerAAStats->GetProjectileInfo().CatalogID!=ObjectsCatalog::EMPTY_CATALOG_ID) {
+				OwnerAAStats->GetProjectileInfo().CatalogID!=EMPTY_CATALOG_ID) {
 
 				CreateProjectile();
 			}
@@ -166,12 +166,15 @@ void AutoAttackModule::CacheAAStats() {
 void AutoAttackModule::CreateProjectile() {
 	
 	auto& projInfo = OwnerAAStats->GetProjectileInfo();
-	auto projMainInfo = dynamic_cast<const AAProjectileLoadInfo*>(&ObjectsCatalog::GetObjectInfo(projInfo.CatalogID));
-	auto projSubInfo = ObjectsCatalog::GetSubObjInfo(projInfo.CatalogID, projInfo.CatalogSubID);
-	auto& proj= projMainInfo->InstantiateProjectile
+	WorldObjectLoadInfo* projObjInfo = nullptr;
+	if (projInfo.CatalogSubID != ABSENT_SUB_CATALOG_ID)
+		projObjInfo = WorldTransfObjsCatalog::GetSubObjInfo(projInfo.CatalogID, projInfo.CatalogSubID);
+	else
+		projObjInfo = &WorldTransfObjsCatalog::GetObjectInfo(projInfo.CatalogID);
+	AAProjectileLoadInfo* parProjInfo = dynamic_cast<AAProjectileLoadInfo*>(projObjInfo);
+	auto& proj= parProjInfo->InstantiateProjectile
 		(*this,
 		*Target->GetPtr_t(),
-			projSubInfo,
 				projInfo.AdditParams != nullptr && projInfo.AdditParams->Attrs.size() != 0 ?
 				projInfo.AdditParams :
 				nullptr);

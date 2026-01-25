@@ -6,7 +6,7 @@ using namespace KrostganEngine::Core;
 using namespace sf;
 
 void LevelDeserializationMode :: ExecuteCycle() {
-    ObjsCatalogDeserial::DeserializeCatalog("TestLevelCatalog.xml");
+    WorldTransfObjsCatalogDeserial::DeserializeCatalog("TestLevelCatalog.xml");
     auto& levInf = LevelSerialization::DeserializeLevel("TestLevel.txt");
     LevelLoader::LoadLevel(levInf);
     Engine::ReqToSetMode_Game();

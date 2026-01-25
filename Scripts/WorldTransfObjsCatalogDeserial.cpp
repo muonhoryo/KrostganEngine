@@ -1,5 +1,5 @@
 
-#include <ObjectsCatalog.h>
+#include <WorldTransfObjsCatalog.h>
 #include <string>
 #include <fstream>
 #include <iostream>
@@ -8,15 +8,16 @@
 #include <EngineCore.h>
 #include <EntityBattleStats.h>
 #include <RelationsSystem.h>
+#include <WorldObjsCatalogSerConsts.h>
 
 using namespace sf;
 using namespace std;
 using namespace rapidxml;
 using namespace KrostganEngine::Core;
 
-void ObjsCatalogDeserial::DeserializeCatalog(const string& serPath) {
+void WorldTransfObjsCatalogDeserial::DeserializeCatalog(const string& serPath) {
 
-	ObjectsCatalog::Unload();
+	WorldTransfObjsCatalog::Unload();
 
 	char* file = FStreamExts::ReadToEnd(serPath);
 	xml_document<>* doc = new xml_document<>();
@@ -33,31 +34,31 @@ void ObjsCatalogDeserial::DeserializeCatalog(const string& serPath) {
 	delete doc;
 }
 
-WorldObjectLoadInfo& ObjsCatalogDeserial::DeserializeObjInfo(xml_node<>& serObj) {
+WorldObjectLoadInfo& WorldTransfObjsCatalogDeserial::DeserializeObjInfo(xml_node<>& serObj) {
 
 	char* type = serObj.name();
 	WorldObjectLoadInfo* info = nullptr;
-	if (type == SerializationObjectsTypes::OBJECT_TYPE_UNIT) {
+	if (type == WorldObjsLoad_Type::OBJECT_TYPE_UNIT) {
 
 		info = new UnitLoadInfo();
 	}
-	else if (type == SerializationObjectsTypes::OBJECT_TYPE_HERO) {
+	else if (type == WorldObjsLoad_Type::OBJECT_TYPE_HERO) {
 
 		info = new HeroLoadInfo();
 	}
-	else if (type == SerializationObjectsTypes::OBJECT_TYPE_WALL) {
+	else if (type == WorldObjsLoad_Type::OBJECT_TYPE_WALL) {
 
 		info = new WallLoadInfo();
 	}
-	else if (type == SerializationObjectsTypes::OBJECT_TYPE_SPRITE) {
+	else if (type == WorldObjsLoad_Type::OBJECT_TYPE_SPRITE) {
 
 		info = new SpriteRendLoadInfo();
 	}
-	else if (type == SerializationObjectsTypes::OBJECT_TYPE_AA_PROJECTILE) {
+	else if (type == WorldObjsLoad_Type::OBJECT_TYPE_AA_PROJECTILE) {
 
 		info = new AAProjectileLoadInfo();
 	}
-	else if (type == SerializationObjectsTypes::OBJECT_TYPE_DECORATION) {
+	else if (type == WorldObjsLoad_Type::OBJECT_TYPE_DECORATION) {
 
 		info = new DecorationLoadInfo();
 	}
@@ -98,11 +99,11 @@ WorldObjectLoadInfo& ObjsCatalogDeserial::DeserializeObjInfo(xml_node<>& serObj)
 	return *info;
 }
 
-void ObjsCatalogDeserial::DeserObjForCatalog(xml_node<>& serObj) {
+void WorldTransfObjsCatalogDeserial::DeserObjForCatalog(xml_node<>& serObj) {
 
 	auto& info = DeserializeObjInfo(serObj);
 
-	ObjectsCatalog::Add(info);
+	WorldTransfObjsCatalog::Add(info);
 
 	//Find sub infos
 	{
@@ -112,24 +113,23 @@ void ObjsCatalogDeserial::DeserObjForCatalog(xml_node<>& serObj) {
 			
 			chType = ch->name();
 
-			if (chType == SerXMLObjChildrenTypes::SUBINFO) {
+			if (chType == WorldObjsLoad_XMLChildrenType::SUBINFO) {
 
-				_ObjSubsPairType& parseSub = ParseObjSubInfo(*ch);
+				pair<std::byte, WorldObjectLoadInfo*>& parseSub = ParseObjSubInfo(info, *ch);
 
-				ObjectsCatalog::AddSub(info.CatID, parseSub.first, *parseSub.second);
+				WorldTransfObjsCatalog::AddSub(*parseSub.second, parseSub.first);
 			}
 
 			ch = ch->next_sibling();
 		}
 	}
 }
-_ObjSubsPairType& ObjsCatalogDeserial::ParseObjSubInfo(const xml_node<>& serObj) {
+pair<std::byte, WorldObjectLoadInfo*>& WorldTransfObjsCatalogDeserial::ParseObjSubInfo(const WorldObjectLoadInfo& base, const xml_node<>& serObj) {
 
-	std::byte subID = ObjectsCatalog::ABSENT_SUB_CATALOG_ID;
+	std::byte subID = ABSENT_SUB_CATALOG_ID;
 	//size_t objID = ObjectsCatalog::EMPTY_CATALOG_ID;
-	AttrsCollectn& attrs = *new AttrsCollectn();
-	string paramName;
-	string paramValue;
+	auto& subInfo = base.Clone();
+	pair<string, string> parAttr;
 
 	xml_attribute<>* attr = serObj.first_attribute();
 	char* attrName = nullptr;
@@ -140,25 +140,31 @@ _ObjSubsPairType& ObjsCatalogDeserial::ParseObjSubInfo(const xml_node<>& serObj)
 
 			objID = stol(attr->value());
 		}
-		else */if (attrName == SerializationParDefNames::OBJECT_SUB_CATALOG_ID) {
+		else */if (attrName == WorldObjsLoad_ParamDefs::OBJECT_SUB_CATALOG_ID) {
 
 			subID = (std::byte)stoi(attr->value());
 		}
 		else {
 
-			paramName = string(attrName);
-			paramValue = string(attr->value());
-			attrs.push_back(new pair<const string,const string>(paramName, paramValue));
+			parAttr.first = string(attrName);
+			parAttr.second = string(attr->value());
+			subInfo.WriteParam(parAttr);
 		}
 
 		attr = attr->next_attribute();
 	}
+	
+	xml_node<>* childNode = serObj.first_node();
+	while (childNode != nullptr) {
+		subInfo.WriteParamByNode(*childNode);
+		childNode = childNode->next_sibling();
+	}
 
-	if (subID == ObjectsCatalog::ABSENT_SUB_CATALOG_ID /*||
+	if (subID == ABSENT_SUB_CATALOG_ID /*||
 		objID == ObjectsCatalog::EMPTY_CATALOG_ID*/)
 		throw exception("Absent definition/s of ID and/or subID");
 
-	return *new  _ObjSubsPairType(subID, new LvlObjAdditParams(attrs));
+	return *new pair<std::byte, WorldObjectLoadInfo*>(subID, &subInfo);
 }
 
 /// <summary>
@@ -166,7 +172,7 @@ _ObjSubsPairType& ObjsCatalogDeserial::ParseObjSubInfo(const xml_node<>& serObj)
 /// </summary>
 /// <param name="line"></param>
 /// <returns></returns>
-const pair<const string, const string>* ObjsCatalogDeserial::ParseParamLine(const string& line) {
+const pair<const string, const string>* WorldTransfObjsCatalogDeserial::ParseParamLine(const string& line) {
 
 	size_t index = line.find(PAR_DEF_NAME_END_SYM);
 	if (index == string::npos)

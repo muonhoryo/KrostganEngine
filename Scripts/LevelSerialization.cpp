@@ -60,7 +60,7 @@ LevelLoadingInfo& LevelSerialization::DeserializeLevel(const string& serPath) {
 
 	while (getline(st, line)) {
 
-		pr = ObjsCatalogDeserial::ParseParamLine(line);
+		pr = WorldTransfObjsCatalogDeserial::ParseParamLine(line);
 		if (pr == nullptr)
 			continue;
 

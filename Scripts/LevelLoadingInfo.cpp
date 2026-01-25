@@ -1,6 +1,7 @@
 
 #include <LevelLoadingInfo.h>
-#include <ObjectsCatalog.h>
+#include <WorldObjsCatalogSerConsts.h>
+#include <WorldTransfObjsCatalog.h>
 #include <Extensions.h>
 #include <RelationsSystem.h>
 #include <LevelManager.h>
@@ -13,8 +14,8 @@ using namespace KrostganEngine::Core;
 using namespace KrostganEngine::EntitiesControl;
 
 LvlObjInstantiationInfo::LvlObjInstantiationInfo()
-	:CatalogID(ObjectsCatalog::EMPTY_CATALOG_ID),
-	CatalogSubID(ObjectsCatalog::ABSENT_SUB_CATALOG_ID)
+	:CatalogID(EMPTY_CATALOG_ID),
+	CatalogSubID(ABSENT_SUB_CATALOG_ID)
 {}
 
 void LvlObjInstantiationInfo::Deserialize(const string& serInfo) {
@@ -59,7 +60,7 @@ void LvlObjInstantiationInfo::Deserialize(const string& serInfo) {
 		//Read additional params
 		while (true) {
 			end = serInfo.find(LVLSER_ELEM_PARAMS_DEF, start);
-			sepInd = serInfo.find(ObjsCatalogDeserial::PAR_DEF_NAME_END_SYM, start);
+			sepInd = serInfo.find(WorldTransfObjsCatalogDeserial::PAR_DEF_NAME_END_SYM, start);
 			if (end == string::npos)
 				break;
 			param = new pair<const string, const string>(serInfo.substr(start, sepInd-start), serInfo.substr(sepInd + 1, serInfo.length() - sepInd));
@@ -88,11 +89,11 @@ void LvlObjInstantiationInfo::Deserialize(const xml_node<>& serInfo) {
 	while (attr != nullptr) {
 
 		attrName = attr->name();
-		if (attrName == SerializationParDefNames::OBJECT_CATALOG_ID) {
+		if (attrName == WorldObjsLoad_ParamDefs::OBJECT_CATALOG_ID) {
 
 			CatalogID = stol(attr->value());
 		}
-		else if (attrName == SerializationParDefNames::OBJECT_SUB_CATALOG_ID) {
+		else if (attrName == WorldObjsLoad_ParamDefs::OBJECT_SUB_CATALOG_ID) {
 
 			CatalogSubID = (std::byte)stoi(attr->value());
 		}
@@ -116,9 +117,12 @@ void LvlObjInstantiationInfo::Deserialize(const xml_node<>& serInfo) {
 
 WorldTransfObj* LvlObjInstantiationInfo::InstantiateObj() const {
 
-	auto& objInfo = ObjectsCatalog::GetObjectInfo(CatalogID);
-	auto subInfo = ObjectsCatalog::GetSubObjInfo(CatalogID, CatalogSubID);
-	return objInfo.InstantiateObject(subInfo, AdditParams);
+	WorldObjectLoadInfo* objInfo = nullptr;
+	if(CatalogSubID!=ABSENT_SUB_CATALOG_ID)
+		objInfo = WorldTransfObjsCatalog::GetSubObjInfo(CatalogID, CatalogSubID);
+	else
+		objInfo = &WorldTransfObjsCatalog::GetObjectInfo(CatalogID); 
+	return objInfo->InstantiateObject(AdditParams);
 }
 
 vector<LvlObjInstantiationInfo*>* LvlObjInstantiationInfo::DeserializeRow(const string& row) {
@@ -146,7 +150,7 @@ vector<LvlObjInstantiationInfo*>* LvlObjInstantiationInfo::DeserializeRow(const 
 	elStr = row.substr(start, row.length() - start);
 	celInf = new LvlObjInstantiationInfo();
 	celInf->Deserialize(elStr);
-	if (celInf->CatalogID!=ObjectsCatalog::EMPTY_CATALOG_ID)
+	if (celInf->CatalogID!=EMPTY_CATALOG_ID)
 		deserRow.push_back(celInf);
 
 	if (deserRow.size() > 0)
@@ -166,14 +170,14 @@ vector<LvlObjInstantiationInfo*>* LvlObjInstantiationInfo::DeserializeRow(const 
 	const xml_node<>* ch = rootNode.first_node();
 	while (ch != nullptr) {
 
-		if (ch->name() != SerXMLObjChildrenTypes::CHILD)
+		if (ch->name() != WorldObjsLoad_XMLChildrenType::CHILD)
 			throw exception("In children field must be only children of object");
 
 		instInfo = new LvlObjInstantiationInfo();
 
 		instInfo->Deserialize(*ch);
 
-		if (instInfo->CatalogID == ObjectsCatalog::EMPTY_CATALOG_ID)
+		if (instInfo->CatalogID == EMPTY_CATALOG_ID)
 			throw exception("Instantiation injo hasn't CatalogID");
 
 		deserRow.push_back(instInfo);
@@ -197,45 +201,37 @@ WorldObjectLoadInfo::WorldObjectLoadInfo(const WorldObjectLoadInfo& copy) {
 	Position = copy.Position;
 	Size = copy.Size;
 	Rotation = copy.Rotation;
-	CatID = copy.CatID;
+	CatalogID = copy.CatalogID;
 	ChildObjs = vector<LvlObjInstantiationInfo>(copy.ChildObjs);
+	WarFog_IsHiden = copy.WarFog_IsHiden;
+	LateRender = copy.LateRender;
+	WarFog_IsShowed = copy.WarFog_IsShowed;
 
 	Cache = nullptr;
 }
 
-WorldTransfObj* WorldObjectLoadInfo::InstantiateObject
-	(LvlObjAdditParams* objSubInfo,
-	LvlObjAdditParams* additParams) const {
+WorldTransfObj* WorldObjectLoadInfo::InstantiateObject(LvlObjAdditParams* additParams) const {
 
 	// ???Maybe it should be separate func, cause is used by three instance's in the same form???
 
-	bool isSub = objSubInfo != nullptr;
 	bool isAddParm = additParams != nullptr;
-	bool fromCache = isSub || isAddParm;
-	if (fromCache)
-		Cache = CreateCacheInfo();
-
-	if (isSub) {
-		for (auto par : objSubInfo->Attrs) {
-			Cache->WriteParam(*par);
-		}
-	}
 	if (isAddParm) {
+
+		Cache = &Clone();
 		for (auto par : additParams->Attrs) {
 			Cache->WriteParam(*par);
 		}
 	}
 
-	auto obj = InstantiateObject_Action(fromCache ? *Cache: *this);
+	auto obj = InstantiateObject_Action(isAddParm ? *Cache: *this);
 
-	if (fromCache)
+	if (isAddParm) {
+
 		Cache->InstantiateChildren(*obj);
-	else
-		InstantiateChildren(*obj);
-
-	if (fromCache)
-	{
 		delete Cache;
+	}
+	else {
+		InstantiateChildren(*obj);
 	}
 	LevelManager::InstantiateObjEvHandler.Execute(obj);
 	return obj;
@@ -243,28 +239,28 @@ WorldTransfObj* WorldObjectLoadInfo::InstantiateObject
 
 bool WorldObjectLoadInfo::WriteParam(Attr& param) {
 
-	if (CheckParamName(param, SerializationParDefNames::OBJECT_NAME)) {
+	if (CheckParamName(param, WorldObjsLoad_ParamDefs::OBJECT_NAME)) {
 		Name = param.second;
 	}
-	else if (CheckParamName(param, SerializationParDefNames::OBJECT_CATALOG_ID)) {
-		CatID = stol(param.second);
+	else if (CheckParamName(param, WorldObjsLoad_ParamDefs::OBJECT_CATALOG_ID)) {
+		CatalogID = stol(param.second);
 	}
-	else if (CheckParamName(param, SerializationParDefNames::OBJECT_ROTATION)) {
+	else if (CheckParamName(param, WorldObjsLoad_ParamDefs::OBJECT_ROTATION)) {
 		Rotation = stof(param.second);
 	}
-	else if (CheckParamName(param, SerializationParDefNames::OBJECT_POSITION)) {
+	else if (CheckParamName(param, WorldObjsLoad_ParamDefs::OBJECT_POSITION)) {
 		Position = ParseVec2f(param.second);
 	}
-	else if (CheckParamName(param, SerializationParDefNames::OBJECT_SIZE)) {
+	else if (CheckParamName(param, WorldObjsLoad_ParamDefs::OBJECT_SIZE)) {
 		Size = stof(param.second);
 	}
-	else if (CheckParamName(param, SerializationParDefNames::OBJECT_REND_WARFOG_ISHIDEN)){
+	else if (CheckParamName(param, WorldObjsLoad_ParamDefs::OBJECT_REND_WARFOG_ISHIDEN)){
 		WarFog_IsHiden = FStreamExts::ParseBool(param.second);
 	}
-	else if (CheckParamName(param, SerializationParDefNames::OBJECT_REND_WARFOG_ISSHOWED)) {
+	else if (CheckParamName(param, WorldObjsLoad_ParamDefs::OBJECT_REND_WARFOG_ISSHOWED)) {
 		WarFog_IsShowed = FStreamExts::ParseBool(param.second);
 	}
-	else if (CheckParamName(param, SerializationParDefNames::OBJECT_REND_LATERENDER)) {
+	else if (CheckParamName(param, WorldObjsLoad_ParamDefs::OBJECT_REND_LATERENDER)) {
 		LateRender = FStreamExts::ParseBool(param.second);
 	}
 	else {
@@ -276,7 +272,7 @@ bool WorldObjectLoadInfo::WriteParamByNode(xml_node<>& node) {
 
 	char* nodeName = node.name();
 
-	if (nodeName == SerXMLObjChildrenTypes::CHILDREN) {
+	if (nodeName == WorldObjsLoad_XMLChildrenType::CHILDREN) {
 
 		ChildObjs.clear();
 		auto info = LvlObjInstantiationInfo::DeserializeRow(node);
@@ -328,11 +324,11 @@ bool GameObjectLoadInfo::WriteParam(Attr& param) {
 	if (WorldObjectLoadInfo::WriteParam(param))
 		return true;
 
-	if (CheckParamName(param, SerializationParDefNames::IMAGEUSR_SPRITE_SOURCE)) {
+	if (CheckParamName(param, WorldObjsLoad_ParamDefs::IMAGEUSR_SPRITE_SOURCE)) {
 		SpriteSource = *new string(param.second);
 		FStreamExts::ClearPath(SpriteSource);
 	}
-	else if (param.first == SerializationParDefNames::GAMEOBJ_ISSOLID_COLL) {
+	else if (param.first == WorldObjsLoad_ParamDefs::GAMEOBJ_ISSOLID_COLL) {
 		SolidCollision = FStreamExts::ParseBool(param.second);
 	}
 	else
@@ -349,7 +345,7 @@ void GameObjectLoadInfo::FillCtorParams(GameObjectCtorParams& params, const Game
 
 	params.GlobalPosition = usedInfo.Position;
 	params.GlobalScale = usedInfo.Size;
-	params.CatalogID = usedInfo.CatID;
+	params.CatalogID = usedInfo.CatalogID;
 	params.SolidCollision = usedInfo.SolidCollision;
 }
 
@@ -361,7 +357,7 @@ bool EntityLoadInfo::WriteParam(Attr& param) {
 		return true;
 	}
 
-	if (CheckParamName(param,SerializationParDefNames::ENTITY_FRACTION)) {
+	if (CheckParamName(param, WorldObjsLoad_ParamDefs::ENTITY_FRACTION)) {
 		string buffer = param.second;
 		FStreamExts::ClearPath(buffer);
 		FStreamExts::ToLowerStr(buffer);
@@ -370,19 +366,19 @@ bool EntityLoadInfo::WriteParam(Attr& param) {
 		else
 			EntityFraction = FractionsSystem::FractionNames.at(buffer);
 	}
-	else if (CheckParamName(param,SerializationParDefNames::ENTITY_HPBAR_SPRITE_SOURCE)) {
+	else if (CheckParamName(param, WorldObjsLoad_ParamDefs::ENTITY_HPBAR_SPRITE_SOURCE)) {
 		HPBarSpriteSource = param.second;
 		FStreamExts::ClearPath(HPBarSpriteSource);
 	}
-	else if (CheckParamName(param,SerializationParDefNames::ENTITY_HPBAR_MASK)) {
+	else if (CheckParamName(param,WorldObjsLoad_ParamDefs::ENTITY_HPBAR_MASK)) {
 		HPBarMaskSource = param.second;
 		FStreamExts::ClearPath(HPBarMaskSource);
 	}
-	else if (CheckParamName(param, SerializationParDefNames::ATTBLEOBJ_HITEFF_SPRITE_SOURCE)) {
+	else if (CheckParamName(param, WorldObjsLoad_ParamDefs::ATTBLEOBJ_HITEFF_SPRITE_SOURCE)) {
 		HitEffectSprite = param.second;
 		FStreamExts::ClearPath(HitEffectSprite);
 	}
-	else if (CheckParamName(param,SerializationParDefNames::ENTITY_SELECT_AREA_SOURCE)) {
+	else if (CheckParamName(param,WorldObjsLoad_ParamDefs::ENTITY_SELECT_AREA_SOURCE)) {
 		SelectionAreaSource = param.second;
 		FStreamExts::ClearPath(SelectionAreaSource);
 	}
@@ -398,11 +394,11 @@ bool EntityLoadInfo::WriteParamByNode(xml_node<>& node) {
 
 	char* nodeName = node.name();
 
-	if (nodeName == SerXMLObjChildrenTypes::AASTATS) {
+	if (nodeName == WorldObjsLoad_XMLChildrenType::AASTATS) {
 
 		auto indexAtt = node.first_attribute();
 		int index = -1;
-		if (indexAtt->name() == SerializationParDefNames::AASTATS_INDEX) {
+		if (indexAtt->name() == WorldObjsLoad_ParamDefs::AASTATS_INDEX) {
 
 			index = stoi(indexAtt->value());
 		}
@@ -416,7 +412,7 @@ bool EntityLoadInfo::WriteParamByNode(xml_node<>& node) {
 		WriteBattleStatsParams(node, *stats);
 		BattleStats.SetAAStats(0);
 	}
-	else if (nodeName == SerXMLObjChildrenTypes::BATSTATS) {
+	else if (nodeName == WorldObjsLoad_XMLChildrenType::BATSTATS) {
 
 		WriteBattleStatsParams(node, BattleStats);
 	}
@@ -452,12 +448,12 @@ void EntityLoadInfo::WriteBattleStatsParams(const string& input, IModifiableStat
 	while (true) {
 		end = input.find(ENTITY_BSTATS_PARAMS_SEP, start);
 		if (end == string::npos) {
-			param = ObjsCatalogDeserial::ParseParamLine(input.substr(start, input.length() - start));
+			param = WorldTransfObjsCatalogDeserial::ParseParamLine(input.substr(start, input.length() - start));
 			stats.WriteParam(*param);
 			break;
 		}
 		else {
-			param = ObjsCatalogDeserial::ParseParamLine(input.substr(start, end - start));
+			param = WorldTransfObjsCatalogDeserial::ParseParamLine(input.substr(start, end - start));
 			stats.WriteParam(*param);
 			start = end + ENTITY_BSTATS_PARAMS_SEP.length();
 		}
@@ -519,8 +515,8 @@ WorldTransfObj* UnitLoadInfo::InstantiateObject_Action(const WorldObjectLoadInfo
 
 	return unit;
 }
-WorldObjectLoadInfo* UnitLoadInfo::CreateCacheInfo() const {
-	return new UnitLoadInfo(*this);
+WorldObjectLoadInfo& UnitLoadInfo::Clone() const {
+	return *new UnitLoadInfo(*this);
 }
 
 //Hero
@@ -537,8 +533,8 @@ WorldTransfObj* HeroLoadInfo::InstantiateObject_Action(const WorldObjectLoadInfo
 bool HeroLoadInfo::WriteParam(Attr& param) {
 	return UnitLoadInfo::WriteParam(param);
 }
-WorldObjectLoadInfo* HeroLoadInfo::CreateCacheInfo() const {
-	return new HeroLoadInfo(*this);
+WorldObjectLoadInfo& HeroLoadInfo::Clone() const {
+	return *new HeroLoadInfo(*this);
 }
 
 //Wall
@@ -557,8 +553,8 @@ WorldTransfObj* WallLoadInfo::InstantiateObject_Action(const WorldObjectLoadInfo
 bool WallLoadInfo::WriteParam(Attr& param) {
 	return GameObjectLoadInfo::WriteParam(param);
 }
-WorldObjectLoadInfo* WallLoadInfo::CreateCacheInfo() const {
-	return new WallLoadInfo(*this);
+WorldObjectLoadInfo& WallLoadInfo::Clone() const {
+	return *new WallLoadInfo(*this);
 }
 
 //Decoration
@@ -577,19 +573,19 @@ bool DecorationLoadInfo::WriteParam(Attr& param) {
 	if (GameObjectLoadInfo::WriteParam(param))
 		return true;
 
-	if (CheckParamName(param, SerializationParDefNames::ATTBLEOBJ_HITEFF_SPRITE_SOURCE)) {
+	if (CheckParamName(param, WorldObjsLoad_ParamDefs::ATTBLEOBJ_HITEFF_SPRITE_SOURCE)) {
 		HitEffectSprite = param.second;
 		FStreamExts::ClearPath(HitEffectSprite);
 	}
-	else if (CheckParamName(param, SerializationParDefNames::DECOR_HP_CURRENT)) {
+	else if (CheckParamName(param, WorldObjsLoad_ParamDefs::DECOR_HP_CURRENT)) {
 
 		CurrentHP = stol(param.second);
 	}
-	else if (CheckParamName(param, SerializationParDefNames::DECOR_HP_MAX)) {
+	else if (CheckParamName(param, WorldObjsLoad_ParamDefs::DECOR_HP_MAX)) {
 
 		MaxHP = stol(param.second);
 	}
-	else if (CheckParamName(param, SerializationParDefNames::DECOR_ISTARGBLE_FORAA)) {
+	else if (CheckParamName(param, WorldObjsLoad_ParamDefs::DECOR_ISTARGBLE_FORAA)) {
 		
 		IsTargetableForAA = FStreamExts::ParseBool(param.second);
 	}
@@ -605,7 +601,7 @@ bool DecorationLoadInfo::WriteParamByNode(xml_node<>& node) {
 
 	char* nodeName = node.name();
 
-	if (nodeName == SerXMLObjChildrenTypes::COLLIDER) {
+	if (nodeName == WorldObjsLoad_XMLChildrenType::COLLIDER) {
 
 		if (COLLIDER != nullptr)
 			delete COLLIDER;
@@ -648,8 +644,8 @@ WorldTransfObj* DecorationLoadInfo::InstantiateObject_Action(const WorldObjectLo
 	return decor;
 }
 
-WorldObjectLoadInfo* DecorationLoadInfo::CreateCacheInfo() const {
-	return new DecorationLoadInfo(*this);
+WorldObjectLoadInfo& DecorationLoadInfo::Clone() const {
+	return *new DecorationLoadInfo(*this);
 }
 
 //SpriteRenderer
@@ -666,15 +662,15 @@ bool SpriteRendLoadInfo::WriteParam(Attr& param) {
 	if (WorldObjectLoadInfo::WriteParam(param))
 		return true;
 
-	if (CheckParamName(param, SerializationParDefNames::IMAGEUSR_SPRITE_SOURCE)) {
+	if (CheckParamName(param, WorldObjsLoad_ParamDefs::IMAGEUSR_SPRITE_SOURCE)) {
 		SpriteSource = *new string(param.second);
 		FStreamExts::ClearPath(SpriteSource);
 	}
-	else if (CheckParamName(param, SerializationParDefNames::IMAGEUSR_SPRITE_LAYER)) {
+	else if (CheckParamName(param, WorldObjsLoad_ParamDefs::IMAGEUSR_SPRITE_LAYER)) {
 		std::byte layer = (std::byte)stof(param.second);
 		RendLayer = layer;
 	}
-	/*else if (CheckParamName(param, SerializationParDefNames::SPRITE_ORIGIN)) {
+	/*else if (CheckParamName(param, WorldObjsLoad_ParamDefs::SPRITE_ORIGIN)) {
 		Origin = ParseVec2f(param.second);
 	}*/
 	else
@@ -699,8 +695,8 @@ WorldTransfObj* SpriteRendLoadInfo::InstantiateObject_Action(const WorldObjectLo
 
 	return sprt;
 }
-WorldObjectLoadInfo* SpriteRendLoadInfo::CreateCacheInfo() const {
-	return new SpriteRendLoadInfo(*this);
+WorldObjectLoadInfo& SpriteRendLoadInfo::Clone() const {
+	return *new SpriteRendLoadInfo(*this);
 }
 
 //AAProjectileLoadInfo
@@ -714,12 +710,11 @@ AAProjectileLoadInfo::AAProjectileLoadInfo(const AAProjectileLoadInfo& copy)
 AutoAttackProjectile& AAProjectileLoadInfo::InstantiateProjectile
 	(AutoAttackModule& Owner,
 	IAttackableObj& Target,
-	LvlObjAdditParams* objSubInfo,
 	LvlObjAdditParams* additParams) const {
 
 	this->Owner = &Owner;
 	this->Target = &Target;
-	auto proj = InstantiateObject(objSubInfo, additParams);
+	auto proj = InstantiateObject(additParams);
 	this->Owner = nullptr;
 	this->Target = nullptr;
 	return *dynamic_cast<AutoAttackProjectile*>(proj);
@@ -731,7 +726,7 @@ WorldTransfObj* AAProjectileLoadInfo::InstantiateObject_Action(const WorldObject
 	if (aastats->GetState_IsSiege() && !aastats->GetState_Proj_IsSelfHoming()) {
 
 		AAProjectileCtorParams_NoTar params = AAProjectileCtorParams_NoTar(*Owner, Target->GetGlobalPosition());
-		params.CatalogID = CatID;
+		params.CatalogID = CatalogID;
 		params.GlobalPosition = Position;
 		params.GlobalScale = Size;
 		proj = new AAProj_NoTar(params);
@@ -739,7 +734,7 @@ WorldTransfObj* AAProjectileLoadInfo::InstantiateObject_Action(const WorldObject
 	else {
 		auto& ptr = Target->GetPtr();
 		AAProjectileCtorParams_TarDir params = AAProjectileCtorParams_TarDir(*Owner, ptr);
-		params.CatalogID = CatID;
+		params.CatalogID = CatalogID;
 		params.GlobalPosition = Position;
 		params.GlobalScale = Size;
 		proj = new AAProj_TarDir(params);
@@ -747,6 +742,6 @@ WorldTransfObj* AAProjectileLoadInfo::InstantiateObject_Action(const WorldObject
 	}
 	return proj;
 }
-WorldObjectLoadInfo* AAProjectileLoadInfo::CreateCacheInfo() const {
-	return new AAProjectileLoadInfo(*this);
+WorldObjectLoadInfo& AAProjectileLoadInfo::Clone() const {
+	return *new AAProjectileLoadInfo(*this);
 }

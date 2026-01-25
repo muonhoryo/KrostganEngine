@@ -6,7 +6,7 @@
 #include <Extensions.h>
 #include <Engine.h>
 #include <TransformableObj.h>
-#include <ObjectsCatalog.h>
+#include <WorldTransfObjsCatalog.h>
 
 using namespace std;
 using namespace sf;
@@ -17,8 +17,8 @@ using namespace KrostganEngine::GameObjects;
 GameObject::~GameObject() {
 }
 GameObjectCtorParams::GameObjectCtorParams() 
-	:CatalogID(ObjectsCatalog::EMPTY_CATALOG_ID),
-	SubcatalogID(ObjectsCatalog::ABSENT_SUB_CATALOG_ID)
+	:CatalogID(EMPTY_CATALOG_ID),
+	SubcatalogID(ABSENT_SUB_CATALOG_ID)
 {}
 GameObject::GameObject(const GameObjectCtorParams& params) 
 	:DynamicPhysObject(),

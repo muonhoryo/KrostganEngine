@@ -2,7 +2,7 @@
 
 #include <LevelCellMapDeser.h>
 #include <BypassVertex.h>
-#include <ObjectsCatalog.h>
+#include <WorldTransfObjsCatalog.h>
 #include <vector>
 #include <PrimitiveVisualShapes.h>
 
@@ -29,10 +29,10 @@ namespace KrostganEngine::Core {
 			vector<size_t> wallIndexes;
 			forward_list<Vector2u> addedPnts;
 
-			for (int i = 0;i < ObjectsCatalog::GetCatalogSize();++i) {			
-				wallinf = dynamic_cast<WallLoadInfo*>(&ObjectsCatalog::GetObjectInfo(i));
+			for (int i = 0;i < WorldTransfObjsCatalog::GetCatalogSize();++i) {			
+				wallinf = dynamic_cast<WallLoadInfo*>(&WorldTransfObjsCatalog::GetObjectInfo(i));
 				if (wallinf != nullptr)
-					wallIndexes.push_back(wallinf->CatID);
+					wallIndexes.push_back(wallinf->CatalogID);
 			}
 
 			if (wallIndexes.size() ==0)

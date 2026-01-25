@@ -1,30 +1,28 @@
 #pragma once
 
 #include <map>
-#include <LevelLoadingInfo.h>
 #include <SFML/System.hpp>
-#include <LevelSerialization.h>
 #include <rapidxml.hpp>
 
 using namespace sf;
 using namespace std;
 using namespace rapidxml;
 
-#define _ObjSubsPairType		pair<std::byte,LvlObjAdditParams*>
+#define _ObjSubsPairType		pair<std::byte,TObjInfoType*>
 #define _ObjSubsCollection		vector<_ObjSubsPairType>
 
-namespace KrostganEngine::Core {
-	class ObjectsCatalog {
+#define EMPTY_CATALOG_ID		(size_t)0
+#define ABSENT_SUB_CATALOG_ID	(std::byte)0
 
-	public:
-		static inline const size_t		EMPTY_CATALOG_ID		= 0;
-		static inline const std::byte	ABSENT_SUB_CATALOG_ID	= (std::byte)0;
+namespace KrostganEngine::Core {
+	template <typename TObjInfoType>
+	class ObjectsCatalog{
 
 	private:
-		struct GetSubInfoFunc : public CollectionsExts::Predicate<const _ObjSubsPairType &> {
-			
+		struct GetSubInfoFunc : public CollectionsExts::Predicate<const _ObjSubsPairType&> {
+
 			GetSubInfoFunc(std::byte ID)
-				:ID(ID){}
+				:ID(ID) {}
 
 			bool Condition(const _ObjSubsPairType& input) const override {
 				return input.first == ID;
@@ -35,16 +33,16 @@ namespace KrostganEngine::Core {
 
 	public:
 
-		static void					Add(WorldObjectLoadInfo& obj) {
-			if (obj.CatID== EMPTY_CATALOG_ID)
+		static void					Add(TObjInfoType& obj) {
+			if (obj.CatalogID == EMPTY_CATALOG_ID)
 				return;
 
-			if (Catalog.find(obj.CatID) == Catalog.end()) {
-				Catalog.insert(pair<size_t, WorldObjectLoadInfo*>(obj.CatID, &obj));
+			if (Catalog.find(obj.CatalogID) == Catalog.end()) {
+				Catalog.insert(pair<size_t, TObjInfoType*>(obj.CatalogID, &obj));
 			}
 		}
-		static void					Remove(WorldObjectLoadInfo& obj) {
-			Remove(obj.CatID);
+		static void					Remove(TObjInfoType& obj) {
+			Remove(obj.CatalogID);
 		}
 		static void					Remove(size_t id) {
 			Catalog.erase(id);
@@ -59,14 +57,16 @@ namespace KrostganEngine::Core {
 		static size_t				GetCatalogSize() {
 			return Catalog.size();
 		}
-		static WorldObjectLoadInfo&	GetObjectInfo(size_t id) {
+		static TObjInfoType& GetObjectInfo(size_t id) {
 			return *Catalog[id];
 		}
 
-		static void						AddSub(size_t objID, std::byte subID, LvlObjAdditParams& subObjInfo) {
+		static void						AddSub(TObjInfoType& subObjInfo, std::byte subID) {
+
+			size_t objID = subObjInfo.CatalogID;
 
 			if (Catalog.find(objID) != Catalog.end()) {
-				
+
 				auto subs = SubCatalog.find(objID);
 				if (subs == SubCatalog.end()) {
 
@@ -87,7 +87,7 @@ namespace KrostganEngine::Core {
 		static void						RemoveSub(size_t objID, std::byte subID) {
 			auto sub = SubCatalog.find(objID);
 			if (sub != SubCatalog.end()) {
-				
+
 				auto index = CollectionsExts::IndexOf<_ObjSubsCollection, _ObjSubsPairType>
 					((*sub).second, GetSubInfoFunc(subID));
 				auto it = (*sub).second.begin();
@@ -101,8 +101,8 @@ namespace KrostganEngine::Core {
 		/// <param name="id"></param>
 		/// <param name="subID"></param>
 		/// <returns></returns>
-		static LvlObjAdditParams*			GetSubObjInfo(size_t id, std::byte subID) {
-			
+		static TObjInfoType* GetSubObjInfo(size_t id, std::byte subID) {
+
 			if (subID == ABSENT_SUB_CATALOG_ID)
 				return nullptr;
 
@@ -130,99 +130,11 @@ namespace KrostganEngine::Core {
 			SubCatalog.clear();
 		}
 
-	private:
-		ObjectsCatalog(){}
+	protected:
+		ObjectsCatalog() {}
 
-		static inline map<size_t, WorldObjectLoadInfo*>	Catalog;
+	private:
+		static inline map<size_t, TObjInfoType*>		Catalog;
 		static inline map<size_t, _ObjSubsCollection >	SubCatalog;
-	};
-
-	class ObjsCatalogDeserial {
-		
-	public:
-		/// <summary>
-		/// Fill objects catalog with objects, deserialized from xml-file
-		/// </summary>
-		/// <param name="line"></param>
-		/// <returns></returns>
-		static void										DeserializeCatalog(const string& serPath);
-		/// <summary>
-		/// Divide line of param definition and return pair with serialized name and value of param
-		/// </summary>
-		static const pair<const string, const string>*	ParseParamLine(const string& line);
-		/// <summary>
-		/// Deserialize object's info only and return it
-		/// </summary>
-		static WorldObjectLoadInfo&						DeserializeObjInfo(xml_node<>& serObj);
-
-		static inline const string PAR_DEF_NAME_END_SYM = ":";
-
-	private:
-		/// <summary>
-		/// Deserialize object info with its sub infos and add them to the ObjectsCatalog
-		/// </summary>
-		static void	DeserObjForCatalog (xml_node<>& serObj);
-
-		static _ObjSubsPairType&						ParseObjSubInfo(const xml_node<>& serObj);
-		static pair<size_t,_ObjSubsPairType>&			ParseObjSubinfo	(const vector<string>& params);
-
-
-	private:
-		ObjsCatalogDeserial() {}
-
-	};
-
-	struct SerializationObjectsTypes {
-
-		static inline const string OBJECT_TYPE_UNIT = "Unit";
-		static inline const string OBJECT_TYPE_WALL = "Wall";
-		static inline const string OBJECT_TYPE_HERO = "Hero";
-		static inline const string OBJECT_TYPE_SPRITE = "Sprite";
-		static inline const string OBJECT_TYPE_AA_PROJECTILE = "Projectile";
-		static inline const string OBJECT_TYPE_DECORATION = "Decoration";
-	};
-	struct SerXMLObjChildrenTypes {
-
-		static inline const string SUBINFO		= "Subcatalog";
-		static inline const string CHILDREN		= "Children";
-		static inline const string CHILD		= "Child";
-		static inline const string AASTATS		= "AAStats";
-		static inline const string BATSTATS		= "BattleStats";
-		static inline const string COLLIDER		= "Collider";
-	};
-	struct SerializationParDefNames {
-
-		static inline const string OBJECT_NAME				= "Name";
-		static inline const string OBJECT_POSITION			= "Position";
-		static inline const string OBJECT_ROTATION			= "Rotation";
-		static inline const string OBJECT_SIZE				= "Size";
-		static inline const string OBJECT_TYPE				= "Type";
-		static inline const string OBJECT_CATALOG_ID		= "CatalogID";
-		static inline const string OBJECT_SUB_CATALOG_ID	= "SubCatalogID";
-
-		static inline const string OBJECT_REND_WARFOG_ISHIDEN	= "WarFog_IsHiden";
-		static inline const string OBJECT_REND_WARFOG_ISSHOWED	= "WarFog_IsShowed";
-		static inline const string OBJECT_REND_LATERENDER		= "LateRender";
-
-		static inline const string IMAGEUSR_SPRITE_SOURCE	= "SpriteSource";
-		static inline const string IMAGEUSR_SPRITE_LAYER	= "Layer";
-		static inline const string SPRITE_ORIGIN			= "Origin";
-
-		static inline const string GAMEOBJ_ISSOLID_COLL		= "SolidCollision";
-
-		static inline const string ATTBLEOBJ_HITEFF_SPRITE_SOURCE = "HitEffectSprite";
-
-		static inline const string ENTITY_FRACTION				= "Fraction";
-		static inline const string ENTITY_SELECT_AREA_SOURCE	= "SelectionAreaSource";
-		static inline const string ENTITY_HPBAR_SPRITE_SOURCE	= "HPBarSprite";
-		static inline const string ENTITY_HPBAR_MASK			= "HPBarMask";
-
-		static inline const string DECOR_HP_CURRENT			= "CurrentHP";
-		static inline const string DECOR_HP_MAX				= "MaxHP";
-		static inline const string DECOR_ISTARGBLE_FORAA	= "IsTargetableForAA";
-
-		static inline const string PHYS_COLLIDER_DEF = "Collider";
-
-		static inline const string AASTATS_INDEX = "Index";
 	};
 }
