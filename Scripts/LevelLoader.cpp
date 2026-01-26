@@ -44,10 +44,10 @@ void LevelLoader::LoadLevel(const LevelLoadingInfo& levelInfo) {
 			if (cell->CatalogID != EMPTY_CATALOG_ID) {
 
 				if (cell->CatalogSubID!= ABSENT_SUB_CATALOG_ID) {
-					objInfo = WorldTransfObjsCatalog::GetSubObjInfo(cell->CatalogID, cell->CatalogSubID);
+					objInfo = WorldObjsCatalog::GetSubObjInfo(cell->CatalogID, cell->CatalogSubID);
 				}
 				else
-					objInfo = &WorldTransfObjsCatalog::GetObjectInfo(cell->CatalogID);
+					objInfo = &WorldObjsCatalog::GetObjectInfo(cell->CatalogID);
 
 				obj = objInfo->InstantiateObject(cell->AdditParams);
 				if((Vector2i)obj->GetGlobalPosition()== ITransformableObj::NULL_POS)
@@ -59,9 +59,9 @@ void LevelLoader::LoadLevel(const LevelLoadingInfo& levelInfo) {
 	for (auto unObjInfo : levelInfo.UniqueObjects) {
 
 		if(unObjInfo->CatalogSubID!=ABSENT_SUB_CATALOG_ID)
-			objInfo= WorldTransfObjsCatalog::GetSubObjInfo(unObjInfo->CatalogID, unObjInfo->CatalogSubID);
+			objInfo= WorldObjsCatalog::GetSubObjInfo(unObjInfo->CatalogID, unObjInfo->CatalogSubID);
 		else
-			objInfo = &WorldTransfObjsCatalog::GetObjectInfo(unObjInfo->CatalogID);
+			objInfo = &WorldObjsCatalog::GetObjectInfo(unObjInfo->CatalogID);
 
 		obj = objInfo->InstantiateObject(unObjInfo->AdditParams);
 	}

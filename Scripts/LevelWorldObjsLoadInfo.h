@@ -11,7 +11,7 @@ using namespace sf;
 
 namespace KrostganEngine::GameObjects {
 
-	struct WorldObjectLoadInfo {
+	struct WorldObjectLoadInfo : public ObjectLoadInfo {
 
 		virtual ~WorldObjectLoadInfo() {}
 
@@ -19,7 +19,6 @@ namespace KrostganEngine::GameObjects {
 		Vector2f	Position = (Vector2f)ITransformableObj::NULL_POS;
 		float		Size = 1;
 		float		Rotation = 0;
-		size_t		CatalogID = EMPTY_CATALOG_ID;
 
 		bool WarFog_IsHiden = false;
 		bool WarFog_IsShowed = false;

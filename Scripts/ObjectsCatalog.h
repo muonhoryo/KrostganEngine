@@ -3,10 +3,15 @@
 #include <map>
 #include <SFML/System.hpp>
 #include <rapidxml.hpp>
+#include <string>
+#include <FStreamExts.h>
+#include <CollectionsExts.h>
 
 using namespace sf;
 using namespace std;
 using namespace rapidxml;
+
+using namespace KrostganEngine;
 
 #define _ObjSubsPairType		pair<std::byte,TObjInfoType*>
 #define _ObjSubsCollection		vector<_ObjSubsPairType>
@@ -30,6 +35,10 @@ namespace KrostganEngine::Core {
 
 			const std::byte ID;
 		};
+
+	private:
+		static inline map<size_t, TObjInfoType*>		Catalog;
+		static inline map<size_t, _ObjSubsCollection >	SubCatalog;
 
 	public:
 
@@ -60,6 +69,13 @@ namespace KrostganEngine::Core {
 		static TObjInfoType& GetObjectInfo(size_t id) {
 			return *Catalog[id];
 		}
+		static TObjInfoType& GetObjectInfo(size_t id, std::byte subID) {
+
+			if (subID == ABSENT_SUB_CATALOG_ID)
+				return GetObjectInfo(id);
+			else
+				return *GetSubObjInfo(id, subID);
+		}
 
 		static void						AddSub(TObjInfoType& subObjInfo, std::byte subID) {
 
@@ -76,7 +92,7 @@ namespace KrostganEngine::Core {
 					subs = SubCatalog.find(objID);
 				}
 				else {
-					auto el = CollectionsExts::Get<_ObjSubsCollection, _ObjSubsPairType>
+					auto el = CollectionsExts::template Get<_ObjSubsCollection, _ObjSubsPairType>
 						((*subs).second, GetSubInfoFunc(subID));
 					if (el != nullptr)
 						throw exception("Sub info is already defined.");
@@ -88,7 +104,7 @@ namespace KrostganEngine::Core {
 			auto sub = SubCatalog.find(objID);
 			if (sub != SubCatalog.end()) {
 
-				auto index = CollectionsExts::IndexOf<_ObjSubsCollection, _ObjSubsPairType>
+				auto index = CollectionsExts::template IndexOf<_ObjSubsCollection, _ObjSubsPairType>
 					((*sub).second, GetSubInfoFunc(subID));
 				auto it = (*sub).second.begin();
 				it += index;
@@ -109,7 +125,7 @@ namespace KrostganEngine::Core {
 			auto subs = SubCatalog.find(id);
 			if (subs != SubCatalog.end()) {
 
-				return CollectionsExts::Get<_ObjSubsCollection, _ObjSubsPairType>
+				return CollectionsExts::template Get<_ObjSubsCollection, _ObjSubsPairType>
 					((*subs).second, GetSubInfoFunc(subID))->second;
 
 			}
@@ -133,8 +149,40 @@ namespace KrostganEngine::Core {
 	protected:
 		ObjectsCatalog() {}
 
-	private:
-		static inline map<size_t, TObjInfoType*>		Catalog;
-		static inline map<size_t, _ObjSubsCollection >	SubCatalog;
+	};
+
+	struct ObjectLoadInfo {
+
+		virtual ~ObjectLoadInfo(){}
+
+		size_t CatalogID = EMPTY_CATALOG_ID;
+		std::byte SubCatalogID = ABSENT_SUB_CATALOG_ID;
+
+	protected:
+		ObjectLoadInfo(){}
+		ObjectLoadInfo(const ObjectLoadInfo& copy)
+			:CatalogID(copy.CatalogID),
+			SubCatalogID(copy.SubCatalogID){}
+	};
+
+	class ObjectsCatalogDeserial {
+
+	public:
+		static const pair<const string, const string>* ParseParamLine(const string& line) {
+
+			size_t index = line.find(PAR_DEF_NAME_END_SYM);
+			if (index == string::npos)
+				return nullptr;
+			string p1 = line.substr(0, index);
+			string p2 = line.substr(index + 1, line.size() - index);
+			FStreamExts::ClearPath(p1);
+			FStreamExts::ClearPath(p2);
+			return new pair<const string, const string>(p1, p2);
+		}
+
+		static inline const string PAR_DEF_NAME_END_SYM = ":";
+
+	protected:
+		ObjectsCatalogDeserial(){}
 	};
 }

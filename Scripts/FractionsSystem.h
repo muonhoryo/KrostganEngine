@@ -28,6 +28,7 @@ namespace KrostganEngine::EntitiesControl {
 		static Color			GetRelationColor			(Relation rel);
 		static Color			GetRelationToPlayerColor	(Fraction objFrac);
 		static const string&	GetNameOfFraction			(Fraction frac);
+		static Fraction			GetFractionByName			(const string& name);
 
 		static inline const map<string, Fraction>& FractionNames = *new map<string, Fraction>
 		{

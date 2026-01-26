@@ -60,7 +60,7 @@ LevelLoadingInfo& LevelSerialization::DeserializeLevel(const string& serPath) {
 
 	while (getline(st, line)) {
 
-		pr = WorldTransfObjsCatalogDeserial::ParseParamLine(line);
+		pr = WorldObjsCatalogDeserial::ParseParamLine(line);
 		if (pr == nullptr)
 			continue;
 
@@ -103,27 +103,6 @@ LevelLoadingInfo& LevelSerialization::DeserializeLevel(const string& serPath) {
 	info->CameraBorders = Rect<float>(left, top, right - left, bottom - top);
 
 	if (foundUniqueObjs) {
-		/*while (getline(st, line)) {
-
-			params.push_back(line);
-		}
-
-		char* objsXml = CollectionsExts::Join(params);
-		xml_document<>* doc = new xml_document<>();
-		doc->parse<0>(objsXml);
-
-		WorldObjectLoadInfo* uniqObj = nullptr;
-		xml_node<>* node = doc->first_node()->first_node();
-
-		while (node != nullptr) {
-
-			uniqObj = &ObjsCatalogDeserial::DeserializeObjInfo(*node);
-			uniqueObjects.push_front(uniqObj);
-
-			node = node->next_sibling();
-		}
-		delete objsXml;
-		delete doc;*/
 
 		LvlObjInstantiationInfo* unObjInfo = nullptr;
 

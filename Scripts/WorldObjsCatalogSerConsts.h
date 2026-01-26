@@ -24,7 +24,7 @@ namespace KrostganEngine::GameObjects {
 		static inline const string BATSTATS = "BattleStats";
 		static inline const string COLLIDER = "Collider";
 	};
-	struct WorldObjsLoad_ParamDefs {
+	struct WorldObjsLoad_ParamDefNames {
 
 		static inline const string OBJECT_NAME = "Name";
 		static inline const string OBJECT_POSITION = "Position";

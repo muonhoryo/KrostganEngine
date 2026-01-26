@@ -6,7 +6,7 @@
 #include <Extensions.h>
 #include <Engine.h>
 #include <TransformableObj.h>
-#include <WorldTransfObjsCatalog.h>
+#include <WorldObjsCatalog.h>
 
 using namespace std;
 using namespace sf;

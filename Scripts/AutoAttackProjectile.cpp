@@ -4,7 +4,7 @@
 #include <Engine.h>
 #include <ProjAAHitInfo.h>
 #include <GameVisualEffects.h>
-#include <WorldTransfObjsCatalog.h>
+#include <WorldObjsCatalog.h>
 
 using namespace KrostganEngine;
 using namespace KrostganEngine::Core;

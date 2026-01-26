@@ -28,11 +28,12 @@ namespace KrostganEngine::GameObjects {
 	public:
 		virtual ~IGameEffect(){}
 
+		virtual IGameEffect& Clone() const = 0;
+
 	protected:
 		IGameEffect(){}
 
 		virtual void Activate(IGameEffTarget& target) = 0;
-		virtual IGameEffect& Clone() const = 0;
 
 	private:
 		friend class ComposeGameEffect;

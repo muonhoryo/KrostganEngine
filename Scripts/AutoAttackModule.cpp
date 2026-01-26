@@ -4,7 +4,7 @@
 #include <VectExts.h>
 #include <CachedBattleStats.h>
 #include <watch_ptr.h>
-#include <WorldTransfObjsCatalog.h>
+#include <WorldObjsCatalog.h>
 
 using namespace KrostganEngine;
 using namespace KrostganEngine::GameObjects;
@@ -168,9 +168,9 @@ void AutoAttackModule::CreateProjectile() {
 	auto& projInfo = OwnerAAStats->GetProjectileInfo();
 	WorldObjectLoadInfo* projObjInfo = nullptr;
 	if (projInfo.CatalogSubID != ABSENT_SUB_CATALOG_ID)
-		projObjInfo = WorldTransfObjsCatalog::GetSubObjInfo(projInfo.CatalogID, projInfo.CatalogSubID);
+		projObjInfo = WorldObjsCatalog::GetSubObjInfo(projInfo.CatalogID, projInfo.CatalogSubID);
 	else
-		projObjInfo = &WorldTransfObjsCatalog::GetObjectInfo(projInfo.CatalogID);
+		projObjInfo = &WorldObjsCatalog::GetObjectInfo(projInfo.CatalogID);
 	AAProjectileLoadInfo* parProjInfo = dynamic_cast<AAProjectileLoadInfo*>(projObjInfo);
 	auto& proj= parProjInfo->InstantiateProjectile
 		(*this,

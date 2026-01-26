@@ -1,8 +1,10 @@
 
 #include <FractionsSystem.h>
+#include <FStreamExts.h>
 
 using namespace sf;
 using namespace std;
+using namespace KrostganEngine;
 using namespace KrostganEngine::EntitiesControl;
 
 Relation FractionsSystem::GetRelation(Fraction objFrac, Fraction subjFrac) {
@@ -45,4 +47,16 @@ const string& FractionsSystem::GetNameOfFraction(Fraction frac) {
 			return (*it).first;
 	}
 	return *new string("");
+}
+Fraction FractionsSystem::GetFractionByName(const string& name) {
+
+	string clName = name;
+	FStreamExts::ClearPath(clName);
+	Fraction frac;
+
+	if (FractionsSystem::FractionNames.find(name) == FractionsSystem::FractionNames.end())
+		frac = Fraction::Neutral;
+	else
+		frac = FractionsSystem::FractionNames.at(name);
+	return frac;
 }

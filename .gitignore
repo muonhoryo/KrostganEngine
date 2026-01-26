@@ -372,4 +372,5 @@ FodyWeavers.xsd
 !Licenses/SFML_License.txt
 !Scripts/rapidxml/license.txt
 GlobalResources.xml
-TestLevelCatalog.xml
+TestLevelCatalog_WorldObjs.xml
+TestLevelCatalog_GameEffects.xml

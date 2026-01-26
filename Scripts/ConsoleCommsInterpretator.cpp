@@ -8,6 +8,7 @@
 #include <DBG_ImmortalArmy.h>
 #include <Extensions.h>
 
+#include <GameEffectsCatalog.h>
 #include <GeneralGameEffects.h>
 #include <Ability_Aura.h>
 #include <Ability_NonTar_SetAA.h>
@@ -60,7 +61,7 @@ void ConsoleCommsInterpretator::ExecuteCommand(const string& input) {
 			return;
 	}
 
-	/*else if (input == "testab") {
+	else if (input == "testab") {
 
 		auto it = GroupSelectionSystem::GetChoosenEntities_Begin();
 		auto end = GroupSelectionSystem::GetChoosenEntities_End();
@@ -69,18 +70,19 @@ void ConsoleCommsInterpretator::ExecuteCommand(const string& input) {
 			parObj = dynamic_cast<Entity*>((*it)->GetPtr_t());
 			if (parObj != nullptr) {
 
-				ComposeGameEff_Permanent& gameEff = *new ComposeGameEff_Permanent();
-				gameEff.AddGameEffect_Durable(*new GameEff_Dur_EntBatStatMult(EntityBattleStatType::Resistance_MindAtt, 20));
-				gameEff.AddGameEffect_Durable(*new GameEff_Dur_EntBatStatMult(EntityBattleStatType::MovingSpeed, 2));
-				Ability_Aura& aura = *new Ability_Aura(700, Relation::All, gameEff);
+				Ability_NonTar_TempEff& ability = *new Ability_NonTar_TempEff(
+					*dynamic_cast<ComposeGameEff_Temporal*>(&GameEffectsCatalog::GetObjectInfo(1).InstantiateGameEff()),
+					(float)3,
+					(size_t)0,
+					(std::byte)0);
 
-				parObj->AddAbility(aura);
+				parObj->AddAbility(ability);
 			}
 			++it;
 		}
 		return;
 	}
-	else if (input == "testaura") {
+	/*else if (input == "testaura") {
 
 		auto it = GroupSelectionSystem::GetChoosenEntities_Begin();
 		auto end = GroupSelectionSystem::GetChoosenEntities_End();

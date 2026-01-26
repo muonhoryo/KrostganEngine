@@ -55,13 +55,13 @@ namespace KrostganEngine::GameObjects {
 		GameEff_Dur_Deserter(const GameEff_Dur_Deserter& copy);
 		virtual ~GameEff_Dur_Deserter();
 
+		IGameEffect& Clone() const override;
+
 		void SetOwnedEffect(ComposeGameEff_Permanent& ownedEffect);
 
 	protected:
 		void Activate(IGameEffTarget& target) override;
 		void Deactivate(IGameEffTarget& target) override;
-
-		IGameEffect& Clone() const override;
 
 	private:
 		void RemoveEff(IGameEffTarget& target);

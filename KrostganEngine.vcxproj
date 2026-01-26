@@ -161,6 +161,10 @@
     <ClCompile Include="Scripts\ColliderShapes.cpp" />
     <ClCompile Include="Scripts\CommonHPRegenModule.cpp" />
     <ClCompile Include="Scripts\ComposeGameEffect.cpp" />
+    <ClCompile Include="Scripts\ComposeGameEffectLoadInfo_Periodical.cpp" />
+    <ClCompile Include="Scripts\ComposeGameEffectLoadInfo_Permanent.cpp" />
+    <ClCompile Include="Scripts\ComposeGameEffectLoadInfo_Instant.cpp" />
+    <ClCompile Include="Scripts\ComposeGameEffectLoadInfo_Temporal.cpp" />
     <ClCompile Include="Scripts\ComposeGameEff_Permanent.cpp" />
     <ClCompile Include="Scripts\ComposeGameEff_Instant.cpp" />
     <ClCompile Include="Scripts\ComposeGameEff_Periodical.cpp" />
@@ -187,6 +191,8 @@
     <ClCompile Include="Scripts\EntsCtrlOrdersGiving.cpp" />
     <ClCompile Include="Scripts\DynamicPhysObject.cpp" />
     <ClCompile Include="Scripts\ExternalGlobalResources.cpp" />
+    <ClCompile Include="Scripts\ComposeGameEffectLoadInfo.cpp" />
+    <ClCompile Include="Scripts\GameEffectsCatalogDeserial.cpp" />
     <ClCompile Include="Scripts\GameEff_Dur_Deserter.cpp" />
     <ClCompile Include="Scripts\GameEff_Dur_EntBatStatMult.cpp" />
     <ClCompile Include="Scripts\GameEff_Dur_Disarm.cpp" />
@@ -212,7 +218,7 @@
     <ClCompile Include="Scripts\LineAAAnimation.cpp" />
     <ClCompile Include="Scripts\LoseScript.cpp" />
     <ClCompile Include="Scripts\MainMenuTransitionHandler.cpp" />
-    <ClCompile Include="Scripts\WorldTransfObjsCatalogDeserial.cpp" />
+    <ClCompile Include="Scripts\WorldObjsCatalogDeserial.cpp" />
     <ClCompile Include="Scripts\LevelCellMapDeser.cpp" />
     <ClCompile Include="Scripts\ObservingArea.cpp" />
     <ClCompile Include="Scripts\OutlineLineVisual.cpp" />
@@ -358,7 +364,9 @@
     <ClInclude Include="Scripts\ExtGlRes_Texture.h" />
     <ClInclude Include="Scripts\FightingSystems.h" />
     <ClInclude Include="Scripts\FirstChoosenEntityDependsManager.h" />
+    <ClInclude Include="Scripts\ComposeGameEffectLoadInfo.h" />
     <ClInclude Include="Scripts\GameEffectsCatalog.h" />
+    <ClInclude Include="Scripts\GameEffectsCatalogSerConsts.h" />
     <ClInclude Include="Scripts\GameEffectsSystem.h" />
     <ClInclude Include="Scripts\GameEff_Dur_Deserter.h" />
     <ClInclude Include="Scripts\GameEff_Dur_Disarm.h" />
@@ -424,7 +432,7 @@
     <ClInclude Include="Scripts\LineAAAnimation.h" />
     <ClInclude Include="Scripts\LoseScript.h" />
     <ClInclude Include="Scripts\WorldObjsCatalogSerConsts.h" />
-    <ClInclude Include="Scripts\WorldTransfObjsCatalog.h" />
+    <ClInclude Include="Scripts\WorldObjsCatalog.h" />
     <ClInclude Include="Scripts\PathFinding_Diijkstra.h" />
     <ClInclude Include="Scripts\PhysicsStructs.h" />
     <ClInclude Include="Scripts\PlayerInputManager.h" />
@@ -557,7 +565,8 @@
     <None Include="GlobalResources.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="TestLevelCatalog.xml" />
+    <Xml Include="TestLevelCatalog_GameEffects.xml" />
+    <Xml Include="TestLevelCatalog_WorldObjs.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

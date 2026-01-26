@@ -1,5 +1,5 @@
 
-#include <WorldTransfObjsCatalog.h>
+#include <WorldObjsCatalog.h>
 #include <string>
 #include <fstream>
 #include <iostream>
@@ -15,9 +15,9 @@ using namespace std;
 using namespace rapidxml;
 using namespace KrostganEngine::Core;
 
-void WorldTransfObjsCatalogDeserial::DeserializeCatalog(const string& serPath) {
+void WorldObjsCatalogDeserial::DeserializeCatalog(const string& serPath) {
 
-	WorldTransfObjsCatalog::Unload();
+	WorldObjsCatalog::Unload();
 
 	char* file = FStreamExts::ReadToEnd(serPath);
 	xml_document<>* doc = new xml_document<>();
@@ -26,7 +26,7 @@ void WorldTransfObjsCatalogDeserial::DeserializeCatalog(const string& serPath) {
 	xml_node<>* serObj = doc->first_node()->first_node();
 	while (serObj != nullptr) {
 
-		DeserObjForCatalog(*serObj);
+		DeserEffForCatalog(*serObj);
 
 		serObj = serObj->next_sibling();
 	}
@@ -34,7 +34,7 @@ void WorldTransfObjsCatalogDeserial::DeserializeCatalog(const string& serPath) {
 	delete doc;
 }
 
-WorldObjectLoadInfo& WorldTransfObjsCatalogDeserial::DeserializeObjInfo(xml_node<>& serObj) {
+WorldObjectLoadInfo& WorldObjsCatalogDeserial::DeserializeObjInfo(xml_node<>& serObj) {
 
 	char* type = serObj.name();
 	WorldObjectLoadInfo* info = nullptr;
@@ -99,11 +99,11 @@ WorldObjectLoadInfo& WorldTransfObjsCatalogDeserial::DeserializeObjInfo(xml_node
 	return *info;
 }
 
-void WorldTransfObjsCatalogDeserial::DeserObjForCatalog(xml_node<>& serObj) {
+void WorldObjsCatalogDeserial::DeserEffForCatalog(xml_node<>& serObj) {
 
 	auto& info = DeserializeObjInfo(serObj);
 
-	WorldTransfObjsCatalog::Add(info);
+	WorldObjsCatalog::Add(info);
 
 	//Find sub infos
 	{
@@ -117,14 +117,14 @@ void WorldTransfObjsCatalogDeserial::DeserObjForCatalog(xml_node<>& serObj) {
 
 				pair<std::byte, WorldObjectLoadInfo*>& parseSub = ParseObjSubInfo(info, *ch);
 
-				WorldTransfObjsCatalog::AddSub(*parseSub.second, parseSub.first);
+				WorldObjsCatalog::AddSub(*parseSub.second, parseSub.first);
 			}
 
 			ch = ch->next_sibling();
 		}
 	}
 }
-pair<std::byte, WorldObjectLoadInfo*>& WorldTransfObjsCatalogDeserial::ParseObjSubInfo(const WorldObjectLoadInfo& base, const xml_node<>& serObj) {
+pair<std::byte, WorldObjectLoadInfo*>& WorldObjsCatalogDeserial::ParseObjSubInfo(const WorldObjectLoadInfo& base, const xml_node<>& serObj) {
 
 	std::byte subID = ABSENT_SUB_CATALOG_ID;
 	//size_t objID = ObjectsCatalog::EMPTY_CATALOG_ID;
@@ -140,7 +140,7 @@ pair<std::byte, WorldObjectLoadInfo*>& WorldTransfObjsCatalogDeserial::ParseObjS
 
 			objID = stol(attr->value());
 		}
-		else */if (attrName == WorldObjsLoad_ParamDefs::OBJECT_SUB_CATALOG_ID) {
+		else */if (attrName == WorldObjsLoad_ParamDefNames::OBJECT_SUB_CATALOG_ID) {
 
 			subID = (std::byte)stoi(attr->value());
 		}
@@ -165,21 +165,4 @@ pair<std::byte, WorldObjectLoadInfo*>& WorldTransfObjsCatalogDeserial::ParseObjS
 		throw exception("Absent definition/s of ID and/or subID");
 
 	return *new pair<std::byte, WorldObjectLoadInfo*>(subID, &subInfo);
-}
-
-/// <summary>
-/// Return nullptr if cannot parse line
-/// </summary>
-/// <param name="line"></param>
-/// <returns></returns>
-const pair<const string, const string>* WorldTransfObjsCatalogDeserial::ParseParamLine(const string& line) {
-
-	size_t index = line.find(PAR_DEF_NAME_END_SYM);
-	if (index == string::npos)
-		return nullptr;
-	string p1 = line.substr(0, index);
-	string p2 = line.substr(index + 1, line.size() - index);
-	FStreamExts::ClearPath(p1);
-	FStreamExts::ClearPath(p2);
-	return new pair<const string, const string>(p1, p2);
 }

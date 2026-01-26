@@ -45,7 +45,7 @@ GameMode::~GameMode() {
 
     Engine::UnloadCallbacksModules();
     LevelBypassMapManager::Unload();
-    WorldTransfObjsCatalog::Unload();
+    WorldObjsCatalog::Unload();
     EntitiesObserver::Unload();
     LevelManager::UnassignLevelInfo();
     GroupSelectionSystem::Clear();

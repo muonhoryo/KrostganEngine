@@ -406,6 +406,15 @@
     <Filter Include="Файлы заголовков\CoreSystems\GameLevel\LevelLoading\LevelCatalogs">
       <UniqueIdentifier>{2e5a488b-c421-49b1-8789-bda867b64a78}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems\GameLevel\LevelLoading\LevelCatalogs\WorldTransfObjs">
+      <UniqueIdentifier>{cb3a0278-b62d-4593-aa9d-6bec54cc0bef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems\GameLevel\LevelLoading\LevelCatalogs\GameEffects">
+      <UniqueIdentifier>{8c0cafa2-486a-41ba-88c4-95f00139029e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\CoreSystems\GameLevel\LevelLoading\LevelCatalogs\GameEffects">
+      <UniqueIdentifier>{99b2b660-b0c5-4c06-8e5d-d2b621adeeb6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\main.cpp">
@@ -873,8 +882,26 @@
     <ClCompile Include="Scripts\LevelLoadingInfo.cpp">
       <Filter>Исходные файлы\CoreSystems\GameLevel\LevelLoading\LevelCatalogs</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\WorldTransfObjsCatalogDeserial.cpp">
+    <ClCompile Include="Scripts\WorldObjsCatalogDeserial.cpp">
       <Filter>Исходные файлы\CoreSystems\GameLevel\LevelLoading\LevelCatalogs</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\ComposeGameEffectLoadInfo.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameLevel\LevelLoading\LevelCatalogs\GameEffects</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\ComposeGameEffectLoadInfo_Instant.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameLevel\LevelLoading\LevelCatalogs\GameEffects</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\ComposeGameEffectLoadInfo_Permanent.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameLevel\LevelLoading\LevelCatalogs\GameEffects</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\ComposeGameEffectLoadInfo_Temporal.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameLevel\LevelLoading\LevelCatalogs\GameEffects</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\ComposeGameEffectLoadInfo_Periodical.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameLevel\LevelLoading\LevelCatalogs\GameEffects</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\GameEffectsCatalogDeserial.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameLevel\LevelLoading\LevelCatalogs\GameEffects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1580,23 +1607,29 @@
     <ClInclude Include="Scripts\LevelLoadingInfo.h">
       <Filter>Файлы заголовков\CoreSystems\GameLevel\LevelLoading\LevelCatalogs</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\ObjectsCatalog.h">
-      <Filter>Файлы заголовков\CoreSystems\GameLevel\LevelLoading\LevelCatalogs</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\_LevelCatalogs.h">
       <Filter>Файлы заголовков\CoreSystems\GameLevel\LevelLoading\LevelCatalogs</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\GameEffectsCatalog.h">
-      <Filter>Файлы заголовков\CoreSystems\GameLevel\LevelLoading\LevelCatalogs</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\LevelWorldObjsLoadInfo.h">
-      <Filter>Файлы заголовков\CoreSystems\GameLevel\LevelLoading\LevelCatalogs</Filter>
+      <Filter>Файлы заголовков\CoreSystems\GameLevel\LevelLoading\LevelCatalogs\WorldTransfObjs</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\WorldObjsCatalogSerConsts.h">
+      <Filter>Файлы заголовков\CoreSystems\GameLevel\LevelLoading\LevelCatalogs\WorldTransfObjs</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\WorldObjsCatalog.h">
+      <Filter>Файлы заголовков\CoreSystems\GameLevel\LevelLoading\LevelCatalogs\WorldTransfObjs</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\ObjectsCatalog.h">
       <Filter>Файлы заголовков\CoreSystems\GameLevel\LevelLoading\LevelCatalogs</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\WorldTransfObjsCatalog.h">
-      <Filter>Файлы заголовков\CoreSystems\GameLevel\LevelLoading\LevelCatalogs</Filter>
+    <ClInclude Include="Scripts\GameEffectsCatalog.h">
+      <Filter>Файлы заголовков\CoreSystems\GameLevel\LevelLoading\LevelCatalogs\GameEffects</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\ComposeGameEffectLoadInfo.h">
+      <Filter>Файлы заголовков\CoreSystems\GameLevel\LevelLoading\LevelCatalogs\GameEffects</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\GameEffectsCatalogSerConsts.h">
+      <Filter>Файлы заголовков\CoreSystems\GameLevel\LevelLoading\LevelCatalogs\GameEffects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1640,6 +1673,7 @@
     <None Include="GlobalResources.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="TestLevelCatalog.xml" />
+    <Xml Include="TestLevelCatalog_WorldObjs.xml" />
+    <Xml Include="TestLevelCatalog_GameEffects.xml" />
   </ItemGroup>
 </Project>

@@ -5,6 +5,8 @@
 #include <LevelLoadingInfo.h>
 
 #include <LevelWorldObjsLoadInfo.h>
-#include <WorldTransfObjsCatalog.h>
+#include <WorldObjsCatalog.h>
+#include <WorldObjsCatalogSerConsts.h>
 
+#include <ComposeGameEffectLoadInfo.h>
 #include <GameEffectsCatalog.h>
