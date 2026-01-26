@@ -369,6 +369,7 @@ FodyWeavers.xsd
 *.otf
 *.jpg
 
+!Licenses/SFML_License.txt
 !Scripts/rapidxml/license.txt
 GlobalResources.xml
 TestLevelCatalog.xml

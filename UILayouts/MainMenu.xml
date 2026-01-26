@@ -15,14 +15,42 @@ and give a one of orders:
 
 -RMB under ground - move to point
 
--C - cancel all given orders"
-		FontSize="25"
+-C - cancel all given orders
+
+-I - idle
+
+-H - hold position
+
+Others: F3 - close app; F5 - fullscreen mode"
+		FontSize="20"
 		ResizeInherit_UI="1"
 		AnchorX="0.35"
 		AnchorY="0.35"
 		OriginX ="50"
 		OriginY ="0"
 		Color="FFFFFFFF">
+	</TextBlock>
+	<TextBlock
+		Text="Authors:
+Alexandr &quot;Muonhoryo&quot; Antonovich Rozhdestvenskii
+	(Programming, Game design)
+Yuliya Gnevasheva
+	(Visual, Graphic design)"
+		FontSize="25"
+		ResizeInherit_UI="1"
+		AnchorX="0.5"
+		AnchorY="0.05"
+		OriginX ="50"
+		OriginY ="0"
+		Color="FFFFFFFF">
+	</TextBlock>
+	<TextBlock
+		Text="Press Enter to continue"
+		FontSize="30"
+		AnchorX="0.4"
+		AnchorY="0.9"
+		Color="FFFFFFFF"
+		Active="1">
 	</TextBlock>
 
 
@@ -47,7 +75,7 @@ Good luck!"
 		Name ="LoadTxt"
 		Text="Loading..."
 		FontSize="30"
-		AnchorX="0.9"
+		AnchorX="0.85"
 		AnchorY="0.9"
 		Color="00FF00FF"
 		Active="0">

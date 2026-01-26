@@ -400,6 +400,12 @@
     <Filter Include="Файлы заголовков\CoreSystems\GameEffectsSystem\GeneralGameEffects">
       <UniqueIdentifier>{9c6856df-9219-45ee-bfe2-35096c9fb872}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Исходные файлы\CoreSystems\GameLevel\LevelLoading\LevelCatalogs">
+      <UniqueIdentifier>{0e3abe10-a8fc-4452-91d3-215f827953d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems\GameLevel\LevelLoading\LevelCatalogs">
+      <UniqueIdentifier>{2e5a488b-c421-49b1-8789-bda867b64a78}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\main.cpp">
@@ -412,9 +418,6 @@
       <Filter>Исходные файлы\CoreSystems\Engine\EngineWorkCycles</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\LevelLoader.cpp">
-      <Filter>Исходные файлы\CoreSystems\GameLevel\LevelLoading</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\LevelLoadingInfo.cpp">
       <Filter>Исходные файлы\CoreSystems\GameLevel\LevelLoading</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\LevelSerialization.cpp">
@@ -633,9 +636,6 @@
     <ClCompile Include="Scripts\LevelCellMapDeser.cpp">
       <Filter>Исходные файлы\CoreSystems\GameLevel\LevelLoading</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\ObjsCatalogDeserial.cpp">
-      <Filter>Исходные файлы\CoreSystems\GameLevel\LevelLoading</Filter>
-    </ClCompile>
     <ClCompile Include="Scripts\BypassVertex.cpp">
       <Filter>Исходные файлы\CoreSystems\GameLevel\PathFinding</Filter>
     </ClCompile>
@@ -695,9 +695,6 @@
     </ClCompile>
     <ClCompile Include="Scripts\IHierarchyTrObj.cpp">
       <Filter>Исходные файлы\CoreSystems\GameObjects\VirtualObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\CatalogObject.cpp">
-      <Filter>Исходные файлы\CoreSystems\GameLevel\LevelLoading</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\GroupSelectionSystem_Comparators.cpp">
       <Filter>Исходные файлы\CoreSystems\EntitiesControl</Filter>
@@ -869,6 +866,15 @@
     </ClCompile>
     <ClCompile Include="Scripts\PlayerControlSettsLoad.cpp">
       <Filter>Исходные файлы\CoreSystems\ExternalData</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\CatalogObject.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameLevel\LevelLoading\LevelCatalogs</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\LevelLoadingInfo.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameLevel\LevelLoading\LevelCatalogs</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\WorldTransfObjsCatalogDeserial.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameLevel\LevelLoading\LevelCatalogs</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1136,9 +1142,6 @@
     <ClInclude Include="Scripts\GameTransitions.h">
       <Filter>Файлы заголовков\GameTransitionScripts</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\ObjectsCatalog.h">
-      <Filter>Файлы заголовков\CoreSystems\GameLevel\LevelLoading</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\LevelCellMapDeser.h">
       <Filter>Файлы заголовков\CoreSystems\GameLevel\LevelLoading</Filter>
     </ClInclude>
@@ -1277,9 +1280,6 @@
     <ClInclude Include="Scripts\IStepTracingObj.h">
       <Filter>Файлы заголовков\CoreSystems\GameObjects\HierarchySystem</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\CatalogObject.h">
-      <Filter>Файлы заголовков\CoreSystems\GameLevel\LevelLoading</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\ValueDependency.h">
       <Filter>Файлы заголовков\CoreSystems\Visual\UI/UX</Filter>
     </ClInclude>
@@ -1378,9 +1378,6 @@
     </ClInclude>
     <ClInclude Include="Scripts\LineAAAnimation.h">
       <Filter>Файлы заголовков\Visual\Animations\BattleAnimations</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\LevelLoadingInfo.h">
-      <Filter>Файлы заголовков\CoreSystems\GameLevel\LevelLoading</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\LvlLoadingStructs.h">
       <Filter>Файлы заголовков\CoreSystems\GameLevel\LevelLoading</Filter>
@@ -1576,6 +1573,30 @@
     </ClInclude>
     <ClInclude Include="Scripts\PlayerControlSettsLoad.h">
       <Filter>Файлы заголовков\CoreSystems\ExternalData</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\CatalogObject.h">
+      <Filter>Файлы заголовков\CoreSystems\GameLevel\LevelLoading\LevelCatalogs</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\LevelLoadingInfo.h">
+      <Filter>Файлы заголовков\CoreSystems\GameLevel\LevelLoading\LevelCatalogs</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\ObjectsCatalog.h">
+      <Filter>Файлы заголовков\CoreSystems\GameLevel\LevelLoading\LevelCatalogs</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\_LevelCatalogs.h">
+      <Filter>Файлы заголовков\CoreSystems\GameLevel\LevelLoading\LevelCatalogs</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\GameEffectsCatalog.h">
+      <Filter>Файлы заголовков\CoreSystems\GameLevel\LevelLoading\LevelCatalogs</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\LevelWorldObjsLoadInfo.h">
+      <Filter>Файлы заголовков\CoreSystems\GameLevel\LevelLoading\LevelCatalogs</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\WorldObjsCatalogSerConsts.h">
+      <Filter>Файлы заголовков\CoreSystems\GameLevel\LevelLoading\LevelCatalogs</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\WorldTransfObjsCatalog.h">
+      <Filter>Файлы заголовков\CoreSystems\GameLevel\LevelLoading\LevelCatalogs</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
