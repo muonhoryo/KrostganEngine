@@ -1,13 +1,12 @@
 
-#include <GameEffectsCatalog.h>
-#include <FStreamExts.h>
-#include <GameEffectsCatalogSerConsts.h>
+#include <AbilitiesCatalog.h>
+#include <AbilitiesCatalogSerConsts.h>
 
 using namespace KrostganEngine::GameObjects;
 
-void GameEffectsCatalogDeserial::DeserializeCatalog(const string& serPath) {
+void	AbilitiesCatalogDeserial::DeserializeCatalog(const string& serPath) {
 
-	GameEffectsCatalog::Unload();
+	AbilitiesCatalog::Unload();
 
 	char* file = FStreamExts::ReadToEnd(serPath);
 	xml_document<>* doc = new xml_document<>();
@@ -16,7 +15,7 @@ void GameEffectsCatalogDeserial::DeserializeCatalog(const string& serPath) {
 	xml_node<>* serObj = doc->first_node()->first_node();
 	while (serObj != nullptr) {
 
-		DeserEffForCatalog(*serObj);
+		DeserAbilityForCatalog(*serObj);
 
 		serObj = serObj->next_sibling();
 	}
@@ -24,11 +23,11 @@ void GameEffectsCatalogDeserial::DeserializeCatalog(const string& serPath) {
 	delete doc;
 }
 
-void	GameEffectsCatalogDeserial::DeserEffForCatalog(xml_node<>& serObj) {
+void	AbilitiesCatalogDeserial::DeserAbilityForCatalog(xml_node<>& serObj) {
 
-	auto& eff = DeserializeObjInfo(serObj);
-	GameEffectsCatalog::Add(eff);
-	
+	auto& ability = DeserializeObjInfo(serObj);
+	AbilitiesCatalog::Add(ability);
+
 	//Find sub infos
 	{
 		xml_node<>* ch = serObj.first_node();
@@ -37,40 +36,37 @@ void	GameEffectsCatalogDeserial::DeserEffForCatalog(xml_node<>& serObj) {
 
 			chType = ch->name();
 
-			if (chType == GameEffLoad_XMLChildrenTypes::TYPE_SUBINFO) {
+			if (chType == AbilitiesLoading_XMLChildrenType::ABILITY_SUBINFO) {
 
-				pair<std::byte, ComposeGameEffectLoadInfo*>& parseSub = ParseObjSubInfo(eff, *ch);
+				pair<std::byte, AbilityLoadInfo*>& parseSub = ParseObjSubInfo(ability, *ch);
 
-				GameEffectsCatalog::AddSub(*parseSub.second, parseSub.first);
+				AbilitiesCatalog::AddSub(*parseSub.second, parseSub.first);
 			}
 
 			ch = ch->next_sibling();
 		}
 	}
 }
-ComposeGameEffectLoadInfo& GameEffectsCatalogDeserial::DeserializeObjInfo(xml_node<>& serObj) {
+AbilityLoadInfo& AbilitiesCatalogDeserial::DeserializeObjInfo(xml_node<>& serObj) {
 
 	char* type = serObj.name();
-	ComposeGameEffectLoadInfo* info = nullptr;
-	if (type == GameEffLoad_Types::TYPE_INSTANT) {
+	AbilityLoadInfo* info = nullptr;
 
-		info = new ComposeGameEffectLoadInfo_Instant();
+	if (type == AbilitiesLoading_Types::AURA) {
+		info = new AbilityLoadInfo_Aura();
 	}
-	else if (type == GameEffLoad_Types::TYPE_PERMANENT) {
-
-		info = new ComposeGameEffectLoadInfo_Permanent();
+	else if (type == AbilitiesLoading_Types::NONTAR_DURABLE) {
+		info = new AbilityLoadInfo_NonTar_Durable();
 	}
-	else if (type == GameEffLoad_Types::TYPE_TEMPORAL) {
-
-		info = new ComposeGameEffectLoadInfo_Temporal();
+	else if (type == AbilitiesLoading_Types::NONTAR_SETAA) {
+		info = new AbilityLoadInfo_NonTar_SetAA();
 	}
-	else if (type == GameEffLoad_Types::TYPE_PERIODICAL) {
-
-		info = new ComposeGameEffectLoadInfo_Periodical();
+	else if (type == AbilitiesLoading_Types::NONTAR_TEMPEFF) {
+		info = new AbilityLoadInfo_NonTar_TempEff();
 	}
 	else
 		throw exception("Cant parse info: uknown type");
-
+	
 	//Load base params of object
 	{
 		pair< const string, const string>* param = nullptr;
@@ -95,10 +91,7 @@ ComposeGameEffectLoadInfo& GameEffectsCatalogDeserial::DeserializeObjInfo(xml_no
 		xml_node<>* ch = serObj.first_node();
 		while (ch != nullptr) {
 
-			if (ch->name() == GameEffLoad_XMLChildrenTypes::TYPE_GENERALGAMEEFF) {
-
-				info->WriteGeneralGameEff(*ch);
-			}
+			info->WriteParamByNode(*ch);
 
 			ch = ch->next_sibling();
 		}
@@ -107,7 +100,7 @@ ComposeGameEffectLoadInfo& GameEffectsCatalogDeserial::DeserializeObjInfo(xml_no
 
 	return *info;
 }
-pair<std::byte, ComposeGameEffectLoadInfo*>& GameEffectsCatalogDeserial::ParseObjSubInfo(const ComposeGameEffectLoadInfo& base, const xml_node<>& serObj) {
+pair<std::byte, AbilityLoadInfo*>& AbilitiesCatalogDeserial::ParseObjSubInfo(const AbilityLoadInfo& base, const xml_node<>& serObj) {
 
 	std::byte subID = ABSENT_SUB_CATALOG_ID;
 	auto& subInfo = base.Clone();
@@ -134,12 +127,12 @@ pair<std::byte, ComposeGameEffectLoadInfo*>& GameEffectsCatalogDeserial::ParseOb
 
 	xml_node<>* childNode = serObj.first_node();
 	while (childNode != nullptr) {
-		subInfo.WriteGeneralGameEff(*childNode);
+		subInfo.WriteParamByNode(*childNode);
 		childNode = childNode->next_sibling();
 	}
 
 	if (subID == ABSENT_SUB_CATALOG_ID)
 		throw exception("Absent definition/s of ID and/or subID");
 
-	return *new pair<std::byte, ComposeGameEffectLoadInfo*>(subID, &subInfo);
+	return *new pair<std::byte, AbilityLoadInfo*>(subID, &subInfo);
 }

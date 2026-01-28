@@ -31,7 +31,7 @@ bool ComposeGameEffectLoadInfo::WriteParam(Attr& param) {
 	else if (CheckParamName(param, GameEffLoad_ParamDefNames::EFFECT_STACKABLE)) {
 		IsStackable = FStreamExts::ParseBool(param.second);
 	}
-	else if (CheckParamName(param, GameEffLoad_ParamDefNames::EFFECT_CATALOG_ID)) {
+	else if (CheckParamName(param, DEF_CATALOG_ID)) {
 		CatalogID = stol(param.second);
 	}
 	else {
@@ -67,9 +67,6 @@ IGameEffect* ComposeGameEffectLoadInfo::DeserializeGeneralGameEff(xml_node<>& no
 	}
 	
 	return eff;
-}
-bool ComposeGameEffectLoadInfo::CheckParamName(Attr& param, const string& paramName) {
-	return param.first == paramName;
 }
 const char& ComposeGameEffectLoadInfo::GetGenGameEffType(xml_node<>& genGameEffNode) {
 

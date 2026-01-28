@@ -33,6 +33,7 @@ namespace KrostganEngine::GameObjects {
 		const ExtGlRes_Sprite*	SelectionSpriteSource	=	nullptr;
 		IndicatorFill*			HPBarSprite				=	nullptr;
 		SpriteRenderer*			HitEffectSprite			=	nullptr;
+		vector<pair<size_t, std::byte>>	Abilities;
 		
 		AutoAttackModule*		GetAAModule()			const { return AAModule; }
 		AutoAggressionModule*	GetAutoAggrModule()		const { return AutoAggrModule; }
@@ -131,6 +132,8 @@ namespace KrostganEngine::GameObjects {
 	protected:
 		Entity(EntityCtorParams& params);
 
+	private:
+		void InitializeAbilities(const vector<pair<size_t, std::byte>>& abilities);
 	//
 	// Stealth-mechanic
 	//

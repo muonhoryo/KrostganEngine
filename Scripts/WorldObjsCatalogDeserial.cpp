@@ -140,7 +140,7 @@ pair<std::byte, WorldObjectLoadInfo*>& WorldObjsCatalogDeserial::ParseObjSubInfo
 
 			objID = stol(attr->value());
 		}
-		else */if (attrName == WorldObjsLoad_ParamDefNames::OBJECT_SUB_CATALOG_ID) {
+		else */if (attrName == ObjectLoadInfo::DEF_SUB_CATALOG_ID) {
 
 			subID = (std::byte)stoi(attr->value());
 		}

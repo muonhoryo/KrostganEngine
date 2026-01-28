@@ -44,13 +44,6 @@ namespace KrostganEngine::GameObjects {
 		mutable WorldObjectLoadInfo* Cache = nullptr;
 
 		virtual WorldTransfObj* InstantiateObject_Action(const WorldObjectLoadInfo& usedInfo) const = 0;
-		/// <summary>
-		/// Return true if names are equal
-		/// </summary>
-		/// <param name="param"></param>
-		/// <param name="paramName"></param>
-		/// <returns></returns>
-		static bool CheckParamName(Attr& param, const string& paramName);
 
 		//
 		//
@@ -91,12 +84,13 @@ namespace KrostganEngine::GameObjects {
 
 		virtual ~EntityLoadInfo() {}
 
-		string				HPBarSpriteSource = "";
-		string				HPBarMaskSource = "";
-		string				HitEffectSprite = "";
-		string				SelectionAreaSource = "";
-		Fraction			EntityFraction = Fraction::Neutral;
-		EntityBattleStats	BattleStats = EntityBattleStats();
+		string								HPBarSpriteSource = "";
+		string								HPBarMaskSource = "";
+		string								HitEffectSprite = "";
+		string								SelectionAreaSource = "";
+		Fraction							EntityFraction = Fraction::Neutral;
+		EntityBattleStats					BattleStats = EntityBattleStats();
+		vector<pair<size_t, std::byte>>		Abilities = vector<pair<size_t, std::byte>>();
 
 		bool WriteParam(Attr& param) override;
 		bool WriteParamByNode(xml_node<>& node) override;
@@ -108,6 +102,7 @@ namespace KrostganEngine::GameObjects {
 		void VerifyAAStatsExisting();
 		void WriteBattleStatsParams(const string& input, IModifiableStatsWrapper& stats);
 		void WriteBattleStatsParams(const xml_node<>& input, IModifiableStatsWrapper& stats);
+		void WriteAbility(const xml_node<>& input);
 
 		void FillCtorParams(GameObjectCtorParams& params, const GameObjectLoadInfo& usedInfo) const override;
 

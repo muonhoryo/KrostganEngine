@@ -15,11 +15,27 @@ namespace KrostganEngine::EntitiesControl {
 	};
 
 	enum class Relation {
+		None	= -1,
 		Ally	= 1,
 		Neutral	= 2,
 		Enemy	= 4,
 		All = ~0 
 	};
+
+	struct RelationSerialization {
+
+		static inline const map<string, Relation> RelationNames{
+
+			pair{"Ally", Relation::Ally},
+			pair{"Neutral", Relation::Neutral},
+			pair{"Enemy", Relation::Enemy},
+			pair{"All", Relation::All}
+		};
+
+		static Relation GetRelationByName(const string& name);
+		static Relation DeserializeRelation(const string& rel);
+	};
+
 	
 	class FractionsSystem {
 	public:

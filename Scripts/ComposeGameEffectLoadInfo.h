@@ -46,13 +46,6 @@ namespace KrostganEngine::GameObjects {
 		/// <returns></returns>
 		IGameEffect* DeserializeGeneralGameEff(xml_node<>& node) const;
 
-		/// <summary>
-		/// Return true if names are equal
-		/// </summary>
-		/// <param name="param"></param>
-		/// <param name="paramName"></param>
-		/// <returns></returns>
-		static bool CheckParamName(Attr& param, const string& paramName);
 		static const char& GetGenGameEffType(xml_node<>& genGameEffNode);
 
 	private:

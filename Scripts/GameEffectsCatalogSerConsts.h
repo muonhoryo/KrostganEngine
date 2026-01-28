@@ -51,8 +51,6 @@ namespace KrostganEngine::GameObjects {
 
 		static inline const string EFFECT_NAME				= "Name";
 		static inline const string EFFECT_STACKABLE			= "IsStackable";
-		static inline const string EFFECT_CATALOG_ID		= "CatalogID";
-		static inline const string EFFECT_SUB_CATALOG_ID	= "SubCatalogID";
 
 		static inline const string EFFECT_TEMP_DURATION			= "EffectTime";
 

@@ -162,10 +162,18 @@ void EntitiesCtrlInputMode::GiveOrderToChoosen_UseAbility(size_t abilityIndex, b
 	auto begIt = GroupSelectionSystem::GetChoosenEntities_Begin();
 	auto endIt = GroupSelectionSystem::GetChoosenEntities_End();
 	Entity* parEl;
+	IEntityOrder* entOrder;
 	for (;begIt != endIt;) {
 		parEl = dynamic_cast<Entity*>((*begIt)->GetPtr_t());
 		if (parEl != nullptr) {
-			parEl->TryAddOrder(*new EntityOrder_ActivateAbility_NonTar(*parEl, 0), !isGrouped);
+
+			entOrder = new EntityOrder_ActivateAbility_NonTar(*parEl, 0);
+			if (isGrouped) {
+				parEl->TryAddOrder(*entOrder);
+			}
+			else {
+				parEl->TryInsertOrder(*entOrder, 0);
+			}
 		}
 		++begIt;
 	}

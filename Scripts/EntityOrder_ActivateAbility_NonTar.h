@@ -9,7 +9,7 @@ namespace KrostganEngine::EntitiesControl {
 	public:
 		EntityOrder_ActivateAbility_NonTar(OrdersExecutor& Owner, size_t AbilityIndex);
 
-		virtual bool CheckExecCondition() override { return false; }
+		virtual bool CheckExecCondition() override { return HasExecuted; }
 		virtual list<IEntityAction*>* GetActions() override { return nullptr; }
 		virtual void OnStartExecution() override;
 		virtual void OnEndExecution() override{}
@@ -17,5 +17,8 @@ namespace KrostganEngine::EntitiesControl {
 
 		OrdersExecutor& Owner;
 		size_t AbilityIndex;
+
+	private:
+		bool HasExecuted = false;
 	};
 }

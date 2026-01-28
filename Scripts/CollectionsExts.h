@@ -271,7 +271,7 @@ namespace KrostganEngine {
 			size_t					insertPos){
 			
 			size_t size = collection.size();
-			if (size > insertPos)
+			if (insertPos > size)
 				throw exception("Insert position is out of range");
 
 			auto it = collection.begin();
@@ -300,6 +300,24 @@ namespace KrostganEngine {
 				offset += str.size();
 			}
 			return result;
+		}
+		
+		template<typename TCollectionType>
+		static void Clone(const TCollectionType& source, TCollectionType& destination) {
+
+			destination.resize(source.size());
+			for (int i = 0;i < source.size();++i) {
+				destination[i] = source[i];
+			}
+		}
+		template<typename TCollectionType, typename TElementType>
+		static void CloneByPtrs(const TCollectionType& source, TCollectionType& destination) {
+
+			destination.resize(source.size());
+			for (int i = 0;i < source.size();++i) {
+				TElementType& copy = *dynamic_cast<TElementType*>(&source[i]->Clone());
+				destination[i] = &copy;
+			}
 		}
 	};
 }

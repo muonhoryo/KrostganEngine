@@ -7,6 +7,7 @@ using namespace sf;
 
 void LevelDeserializationMode :: ExecuteCycle() {
     GameEffectsCatalogDeserial::DeserializeCatalog("TestLevelCatalog_GameEffects.xml");
+    AbilitiesCatalogDeserial::DeserializeCatalog("TestLevelCatalog_Abilities.xml");
     WorldObjsCatalogDeserial::DeserializeCatalog("TestLevelCatalog_WorldObjs.xml");
     auto& levInf = LevelSerialization::DeserializeLevel("TestLevel.txt");
     LevelLoader::LoadLevel(levInf);

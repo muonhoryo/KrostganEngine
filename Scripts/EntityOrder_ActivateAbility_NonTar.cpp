@@ -11,6 +11,8 @@ EntityOrder_ActivateAbility_NonTar::EntityOrder_ActivateAbility_NonTar(OrdersExe
 
 void EntityOrder_ActivateAbility_NonTar::OnStartExecution() {
 
+	HasExecuted = true;
+
 	auto ability = Owner.GetAbility(AbilityIndex);
 	if (ability == nullptr)
 		return;

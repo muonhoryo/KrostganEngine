@@ -8,8 +8,7 @@
 #include <IEntityAction.h>
 #include <EntityHPModule.h>
 #include <EntitiesObserver.h>
-
-#include <ObservingArea.h>
+#include <AbilitiesCatalog.h>
 
 using namespace sf;
 using namespace KrostganEngine;
@@ -59,6 +58,17 @@ Entity::Entity(EntityCtorParams& params)
 	HitEffectSprite->Set_IsHidenByWarFog(true);
 
 	GetBattleStats().StatChangedEvent.Add(StlHider_Subs);
+
+	InitializeAbilities(params.Abilities);
+}
+void Entity::InitializeAbilities(const vector<pair<size_t, std::byte>>& abilities) {
+
+	Ability* ability = nullptr;
+	for (auto& abInfo : abilities) {
+
+		ability = &AbilitiesCatalog::GetObjectInfo(abInfo.first, abInfo.second).InstantiateAbility();
+		AddAbility(*ability);
+	}
 }
 
 Entity::~Entity() {

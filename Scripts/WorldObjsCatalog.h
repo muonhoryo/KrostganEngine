@@ -1,6 +1,6 @@
 #pragma once
 
-#include <LevelWorldObjsLoadInfo.h>
+#include <WorldObjectLoadInfo.h>
 #include <SFML/System.hpp>
 #include <ObjectsCatalog.h>
 

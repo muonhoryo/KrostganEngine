@@ -158,11 +158,24 @@ namespace KrostganEngine::Core {
 		size_t CatalogID = EMPTY_CATALOG_ID;
 		std::byte SubCatalogID = ABSENT_SUB_CATALOG_ID;
 
+		static inline const string DEF_CATALOG_ID = "CatalogID";
+		static inline const string DEF_SUB_CATALOG_ID = "SubCatalogID";
+
 	protected:
 		ObjectLoadInfo(){}
 		ObjectLoadInfo(const ObjectLoadInfo& copy)
 			:CatalogID(copy.CatalogID),
 			SubCatalogID(copy.SubCatalogID){}
+
+		/// <summary>
+		/// Return true if names are equal
+		/// </summary>
+		/// <param name="param"></param>
+		/// <param name="paramName"></param>
+		/// <returns></returns>
+		bool CheckParamName(const pair<const string, const string>& param, const string& paramName) {
+			return param.first == paramName;
+		}
 	};
 
 	class ObjectsCatalogDeserial {

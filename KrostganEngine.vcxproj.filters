@@ -415,6 +415,15 @@
     <Filter Include="Исходные файлы\CoreSystems\GameLevel\LevelLoading\LevelCatalogs\GameEffects">
       <UniqueIdentifier>{99b2b660-b0c5-4c06-8e5d-d2b621adeeb6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы заголовков\CoreSystems\GameLevel\LevelLoading\LevelCatalogs\Abilities">
+      <UniqueIdentifier>{2f2e0748-f345-4220-82ac-18c44d45bd0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\CoreSystems\GameLevel\LevelLoading\LevelCatalogs\Abilities">
+      <UniqueIdentifier>{1fe1a9a2-7fa7-48da-9da5-95b54244fd47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\CoreSystems\GameLevel\LevelLoading\LevelCatalogs\WorldObjects">
+      <UniqueIdentifier>{5851ab7f-8b97-406d-b718-58a4d07afdea}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\main.cpp">
@@ -879,12 +888,6 @@
     <ClCompile Include="Scripts\CatalogObject.cpp">
       <Filter>Исходные файлы\CoreSystems\GameLevel\LevelLoading\LevelCatalogs</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\LevelLoadingInfo.cpp">
-      <Filter>Исходные файлы\CoreSystems\GameLevel\LevelLoading\LevelCatalogs</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\WorldObjsCatalogDeserial.cpp">
-      <Filter>Исходные файлы\CoreSystems\GameLevel\LevelLoading\LevelCatalogs</Filter>
-    </ClCompile>
     <ClCompile Include="Scripts\ComposeGameEffectLoadInfo.cpp">
       <Filter>Исходные файлы\CoreSystems\GameLevel\LevelLoading\LevelCatalogs\GameEffects</Filter>
     </ClCompile>
@@ -902,6 +905,57 @@
     </ClCompile>
     <ClCompile Include="Scripts\GameEffectsCatalogDeserial.cpp">
       <Filter>Исходные файлы\CoreSystems\GameLevel\LevelLoading\LevelCatalogs\GameEffects</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\WorldObjsCatalogDeserial.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameLevel\LevelLoading\LevelCatalogs\WorldObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\AbilityLoadInfo.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameLevel\LevelLoading\LevelCatalogs\Abilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\AbilityLoadInfo_Aura.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameLevel\LevelLoading\LevelCatalogs\Abilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\AbilityLoadInfo_NonTar_Durable.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameLevel\LevelLoading\LevelCatalogs\Abilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\AbilityLoadInfo_NonTar_SetAA.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameLevel\LevelLoading\LevelCatalogs\Abilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\AbilityLoadInfo_NonTar_TempEff.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameLevel\LevelLoading\LevelCatalogs\Abilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\AbilitiesCatalogDeserial.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameLevel\LevelLoading\LevelCatalogs\Abilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\LvlObjInstantiationInfo.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameLevel\LevelLoading\LevelCatalogs\WorldObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\WorldObjectLoadInfo.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameLevel\LevelLoading\LevelCatalogs\WorldObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\GameObjectLoadInfo.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameLevel\LevelLoading\LevelCatalogs\WorldObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\EntityLoadInfo.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameLevel\LevelLoading\LevelCatalogs\WorldObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\UnitLoadInfo.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameLevel\LevelLoading\LevelCatalogs\WorldObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\HeroLoadInfo.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameLevel\LevelLoading\LevelCatalogs\WorldObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\WallLoadInfo.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameLevel\LevelLoading\LevelCatalogs\WorldObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\DecorationLoadInfo.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameLevel\LevelLoading\LevelCatalogs\WorldObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\SpriteRendLoadInfo.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameLevel\LevelLoading\LevelCatalogs\WorldObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\AAProjectileLoadInfo.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameLevel\LevelLoading\LevelCatalogs\WorldObjects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1610,7 +1664,7 @@
     <ClInclude Include="Scripts\_LevelCatalogs.h">
       <Filter>Файлы заголовков\CoreSystems\GameLevel\LevelLoading\LevelCatalogs</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\LevelWorldObjsLoadInfo.h">
+    <ClInclude Include="Scripts\WorldObjectLoadInfo.h">
       <Filter>Файлы заголовков\CoreSystems\GameLevel\LevelLoading\LevelCatalogs\WorldTransfObjs</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\WorldObjsCatalogSerConsts.h">
@@ -1630,6 +1684,15 @@
     </ClInclude>
     <ClInclude Include="Scripts\GameEffectsCatalogSerConsts.h">
       <Filter>Файлы заголовков\CoreSystems\GameLevel\LevelLoading\LevelCatalogs\GameEffects</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\AbilityLoadInfo.h">
+      <Filter>Файлы заголовков\CoreSystems\GameLevel\LevelLoading\LevelCatalogs\Abilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\AbilitiesCatalog.h">
+      <Filter>Файлы заголовков\CoreSystems\GameLevel\LevelLoading\LevelCatalogs\Abilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\AbilitiesCatalogSerConsts.h">
+      <Filter>Файлы заголовков\CoreSystems\GameLevel\LevelLoading\LevelCatalogs\Abilities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1675,5 +1738,6 @@
   <ItemGroup>
     <Xml Include="TestLevelCatalog_WorldObjs.xml" />
     <Xml Include="TestLevelCatalog_GameEffects.xml" />
+    <Xml Include="TestLevelCatalog_Abilities.xml" />
   </ItemGroup>
 </Project>

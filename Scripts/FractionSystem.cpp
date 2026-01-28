@@ -1,6 +1,7 @@
 
 #include <FractionsSystem.h>
 #include <FStreamExts.h>
+#include <iostream>
 
 using namespace sf;
 using namespace std;
@@ -54,9 +55,36 @@ Fraction FractionsSystem::GetFractionByName(const string& name) {
 	FStreamExts::ClearPath(clName);
 	Fraction frac;
 
-	if (FractionsSystem::FractionNames.find(name) == FractionsSystem::FractionNames.end())
+	auto it = FractionsSystem::FractionNames.find(clName);
+
+	if (it == FractionsSystem::FractionNames.end())
 		frac = Fraction::Neutral;
 	else
-		frac = FractionsSystem::FractionNames.at(name);
+		frac = (*it).second;
 	return frac;
+}
+
+Relation RelationSerialization::GetRelationByName(const string& name) {
+
+	string clName = name;
+	FStreamExts::ClearPath(clName);
+	Relation rel;
+
+	auto it = RelationNames.find(clName);
+
+	if (it == RelationNames.end())
+		rel = Relation::None;
+	else
+		rel = (*it).second;
+	return rel;
+}
+Relation RelationSerialization::DeserializeRelation(const string& rel) {
+
+	Relation relation = GetRelationByName(rel);
+
+	if (relation == Relation::None) {
+		relation = (Relation)stoi(rel);
+	}
+
+	return relation;
 }

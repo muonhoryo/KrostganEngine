@@ -17,12 +17,13 @@ namespace KrostganEngine::GameObjects {
 	};
 	struct WorldObjsLoad_XMLChildrenType {
 
-		static inline const string SUBINFO = "Subcatalog";
-		static inline const string CHILDREN = "Children";
-		static inline const string CHILD = "Child";
-		static inline const string AASTATS = "AAStats";
-		static inline const string BATSTATS = "BattleStats";
-		static inline const string COLLIDER = "Collider";
+		static inline const string SUBINFO		= "Subcatalog";
+		static inline const string CHILDREN		= "Children";
+		static inline const string CHILD		= "Child";
+		static inline const string AASTATS		= "AAStats";
+		static inline const string BATSTATS		= "BattleStats";
+		static inline const string COLLIDER		= "Collider";
+		static inline const string ABILITY		= "Ability";
 	};
 	struct WorldObjsLoad_ParamDefNames {
 
@@ -31,8 +32,6 @@ namespace KrostganEngine::GameObjects {
 		static inline const string OBJECT_ROTATION = "Rotation";
 		static inline const string OBJECT_SIZE = "Size";
 		static inline const string OBJECT_TYPE = "Type";
-		static inline const string OBJECT_CATALOG_ID = "CatalogID";
-		static inline const string OBJECT_SUB_CATALOG_ID = "SubCatalogID";
 
 		static inline const string OBJECT_REND_WARFOG_ISHIDEN = "WarFog_IsHiden";
 		static inline const string OBJECT_REND_WARFOG_ISSHOWED = "WarFog_IsShowed";

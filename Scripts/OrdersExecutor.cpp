@@ -97,7 +97,14 @@ bool OrdersExecutor::TryInsertOrder(IEntityOrder& order, size_t insertPos, bool 
 			ResetOrdersQueue();
 		}
 
-		CollectionsExts::Insert(OrdersQueue, &order, insertPos);
+		if (insertPos == 0) {
+			OrdersQueue.insert(OrdersQueue.begin(), &order);
+			CurrentOrder->OnEndExecution();
+			FirstOrderExecution();
+		}
+		else {
+			CollectionsExts::Insert(OrdersQueue, &order, insertPos);
+		}
 		GetOrderEventHandler.Execute(order);
 		return true;
 	}

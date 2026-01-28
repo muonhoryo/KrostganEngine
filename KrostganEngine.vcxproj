@@ -136,7 +136,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\AABBCollShape.cpp" />
+    <ClCompile Include="Scripts\AAProjectileLoadInfo.cpp" />
+    <ClCompile Include="Scripts\AbilitiesCatalogDeserial.cpp" />
     <ClCompile Include="Scripts\Ability.cpp" />
+    <ClCompile Include="Scripts\AbilityLoadInfo.cpp" />
+    <ClCompile Include="Scripts\AbilityLoadInfo_Aura.cpp" />
+    <ClCompile Include="Scripts\AbilityLoadInfo_NonTar_Durable.cpp" />
+    <ClCompile Include="Scripts\AbilityLoadInfo_NonTar_SetAA.cpp" />
+    <ClCompile Include="Scripts\AbilityLoadInfo_NonTar_TempEff.cpp" />
     <ClCompile Include="Scripts\AbilityUserObject.cpp" />
     <ClCompile Include="Scripts\Ability_Aura.cpp" />
     <ClCompile Include="Scripts\Ability_Directional.cpp" />
@@ -174,12 +181,14 @@
     <ClCompile Include="Scripts\Decoration.cpp" />
     <ClCompile Include="Scripts\DecorationDeathModule.cpp" />
     <ClCompile Include="Scripts\DecorationHPModule.cpp" />
+    <ClCompile Include="Scripts\DecorationLoadInfo.cpp" />
     <ClCompile Include="Scripts\DivineCommander.cpp" />
     <ClCompile Include="Scripts\EngineLateUpdateModule.cpp" />
     <ClCompile Include="Scripts\Engine_ModeSelection.cpp" />
     <ClCompile Include="Scripts\EntityAARadVisualizer.cpp" />
     <ClCompile Include="Scripts\EntityAutoAggrRadVisualizer.cpp" />
     <ClCompile Include="Scripts\EntityDeathModule.cpp" />
+    <ClCompile Include="Scripts\EntityLoadInfo.cpp" />
     <ClCompile Include="Scripts\EntityOrder_ActivateAbility_NonTar.cpp" />
     <ClCompile Include="Scripts\EntityOrder_AttackArea.cpp" />
     <ClCompile Include="Scripts\EntityOrder_Cancel.cpp" />
@@ -198,26 +207,33 @@
     <ClCompile Include="Scripts\GameEff_Dur_Disarm.cpp" />
     <ClCompile Include="Scripts\GameEff_Dur_EntBatStatConst_bool.cpp" />
     <ClCompile Include="Scripts\GameEff_Inst_AddDurEff.cpp" />
+    <ClCompile Include="Scripts\GameObjectLoadInfo.cpp" />
     <ClCompile Include="Scripts\GroupSelectionSystem_Comparators.cpp" />
     <ClCompile Include="Scripts\HeroDeathModule.cpp" />
+    <ClCompile Include="Scripts\HeroLoadInfo.cpp" />
     <ClCompile Include="Scripts\IAttackableObj.cpp" />
     <ClCompile Include="Scripts\ICallbackRec_LUpd.cpp" />
     <ClCompile Include="Scripts\CatalogObject.cpp" />
     <ClCompile Include="Scripts\IGameEffTarget.cpp" />
     <ClCompile Include="Scripts\IHierarchyTrObj.cpp" />
     <ClCompile Include="Scripts\IndicatorFill.cpp" />
+    <ClCompile Include="Scripts\LvlObjInstantiationInfo.cpp" />
     <ClCompile Include="Scripts\PlayerControlSettsLoad.cpp" />
+    <ClCompile Include="Scripts\SpriteRendLoadInfo.cpp" />
     <ClCompile Include="Scripts\TransparencyVisEff.cpp" />
     <ClCompile Include="Scripts\TransparencyVisEff_Des.cpp" />
     <ClCompile Include="Scripts\TransparencyVisEff_Funcs.cpp" />
     <ClCompile Include="Scripts\TransparencyVisEff_MRes.cpp" />
     <ClCompile Include="Scripts\TriggerZone.cpp" />
+    <ClCompile Include="Scripts\UnitLoadInfo.cpp" />
+    <ClCompile Include="Scripts\WallLoadInfo.cpp" />
     <ClCompile Include="Scripts\WarFogObserver.cpp" />
     <ClCompile Include="Scripts\IWarFogObserver_ObsrArea.cpp" />
     <ClCompile Include="Scripts\LevelManager.cpp" />
     <ClCompile Include="Scripts\LineAAAnimation.cpp" />
     <ClCompile Include="Scripts\LoseScript.cpp" />
     <ClCompile Include="Scripts\MainMenuTransitionHandler.cpp" />
+    <ClCompile Include="Scripts\WorldObjectLoadInfo.cpp" />
     <ClCompile Include="Scripts\WorldObjsCatalogDeserial.cpp" />
     <ClCompile Include="Scripts\LevelCellMapDeser.cpp" />
     <ClCompile Include="Scripts\ObservingArea.cpp" />
@@ -265,7 +281,6 @@
     <ClCompile Include="Scripts\IHitPointModule.cpp" />
     <ClCompile Include="Scripts\IPhysicalObject.cpp" />
     <ClCompile Include="Scripts\LevelLoader.cpp" />
-    <ClCompile Include="Scripts\LevelLoadingInfo.cpp" />
     <ClCompile Include="Scripts\LevelSerialization.cpp" />
     <ClCompile Include="Scripts\LinesVisPrimitive.cpp" />
     <ClCompile Include="Scripts\MainMenuMode.cpp" />
@@ -301,7 +316,10 @@
   <ItemGroup>
     <ClInclude Include="Scripts\AAProj_NoTar.h" />
     <ClInclude Include="Scripts\AAProj_TarDir.h" />
+    <ClInclude Include="Scripts\AbilitiesCatalog.h" />
+    <ClInclude Include="Scripts\AbilitiesCatalogSerConsts.h" />
     <ClInclude Include="Scripts\AbilitiesSystem.h" />
+    <ClInclude Include="Scripts\AbilityLoadInfo.h" />
     <ClInclude Include="Scripts\Ability_Aura.h" />
     <ClInclude Include="Scripts\Ability_Directional.h" />
     <ClInclude Include="Scripts\Ability_NonTargetable.h" />
@@ -388,7 +406,7 @@
     <ClInclude Include="Scripts\ICallbackRec.h" />
     <ClInclude Include="Scripts\IModifiableStatsWrapper.h" />
     <ClInclude Include="Scripts\InputHandlers.h" />
-    <ClInclude Include="Scripts\LevelWorldObjsLoadInfo.h" />
+    <ClInclude Include="Scripts\WorldObjectLoadInfo.h" />
     <ClInclude Include="Scripts\ObjectsCatalog.h" />
     <ClInclude Include="Scripts\PathFinding_Algorithms.h" />
     <ClInclude Include="Scripts\PlayerControlSettings.h" />
@@ -565,6 +583,7 @@
     <None Include="GlobalResources.xml" />
   </ItemGroup>
   <ItemGroup>
+    <Xml Include="TestLevelCatalog_Abilities.xml" />
     <Xml Include="TestLevelCatalog_GameEffects.xml" />
     <Xml Include="TestLevelCatalog_WorldObjs.xml" />
   </ItemGroup>
