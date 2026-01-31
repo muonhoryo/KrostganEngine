@@ -49,7 +49,8 @@ Entity::Entity(EntityCtorParams& params)
 	HitEffectSprite->SetGlobalPosition(GetGlobalPosition());
 	HitEffectSprite->SetParent(this);
 
-	SetColor(FractionsSystem::GetRelationToPlayerColor(GetFraction()));
+	SetColor(EntityFraction.Fraction_.FracColor);
+	//SetColor(FractionsSystem::GetRelationToPlayerColor(GetFraction()));
 
 	EntitiesObserver::AddEntity(this);
 

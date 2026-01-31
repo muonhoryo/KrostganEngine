@@ -2,11 +2,10 @@
 
 #include <forward_list>
 #include <ISelectableEntity.h>
-#include <Events.h>
 #include <RelationsSystem.h>
-#include <CollectionsExts.h>
 #include <IAttackableObj.h>
 #include <watch_ptr_predicates.h>
+#include <Events.h>
 
 using namespace std;
 using namespace KrostganEngine;
@@ -157,7 +156,7 @@ namespace KrostganEngine::EntitiesControl {
 
 		forward_list<watch_ptr_handler_wr<ISelectableEntity>*>	SelectedEntities;
 		Relation												SelEntsRelationToPl		= Relation::Neutral;
-		Fraction												SelEntsFraction			= Fraction::Neutral;
+		const Fraction*											SelEntsFraction			= nullptr;
 		pair<size_t, std::byte>									ChoosenEntitesCatalInfo = ZERO_CHOISE;
 		DeathEventSubscr*										DeathEvSubs;
 

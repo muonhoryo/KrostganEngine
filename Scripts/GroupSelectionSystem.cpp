@@ -17,7 +17,7 @@ GroupSelectionSystem::GroupSelectionSystem(){
 		throw exception("Trying to recreate GroupSelectionSystem");
 
 	Singleton = this;
-	SelEntsRelationToPl = FractionsSystem::DefaultRel;
+	SelEntsRelationToPl = FractionsSystem::DEFAULT_RELATION;
 	DeathEvSubs = new DeathEventSubscr();
 	IDeathModule::DeathEvent_global.Add(*DeathEvSubs);
 }
@@ -67,12 +67,12 @@ void GroupSelectionSystem::Add(ISelectableEntity& entity) {
 	// Check relation of entity to player for not allowing selection more than one of not ally entity
 	ptrdiff_t size = CollectionsExts::Size(Singleton->SelectedEntities);
 	IFractionMember* fracEnt = dynamic_cast<IFractionMember*>(&entity);
-	Fraction frac = fracEnt == nullptr ? FractionsSystem::DEFAULT_FRAC : fracEnt->GetFraction();
-	Relation rel = FractionsSystem::GetRelation(frac, Fraction::Player);
+	FractionWrapper frac = fracEnt == nullptr ? FractionsSystem::GetDefaultFraction() : fracEnt->GetFraction();
+	Relation rel = FractionsSystem::GetRelationToPlayer(frac);
 	auto catObj = dynamic_cast<CatalogObject*>(&entity);
 	if (size == 0) {
 		Singleton->SelEntsRelationToPl = rel;
-		Singleton->SelEntsFraction = frac;
+		Singleton->SelEntsFraction = &frac.Fraction_;
 		if (catObj == nullptr) {
 			Singleton->ChoosenEntitesCatalInfo = ZERO_CHOISE;
 		}
@@ -99,15 +99,15 @@ void GroupSelectionSystem::Add(ISelectableEntity& entity) {
 
 				Clear();
 				Singleton->SelEntsRelationToPl = rel;
-				Singleton->SelEntsFraction = frac;
+				Singleton->SelEntsFraction = &frac.Fraction_;
 			}
-			else if(Singleton->SelEntsFraction!=frac) {		//Can select only entities from one fraction at the same time even when both of them is allies
+			else if(Singleton->SelEntsFraction != &frac.Fraction_) {		//Can select only entities from one fraction at the same time even when both of them is allies
 
 				delete &ptr_wr;
 				return;
 			}
 		}
-		else if(Singleton->SelEntsFraction!=frac) {		//Cannot select entites from different fraction at the same time
+		else if(Singleton->SelEntsFraction != &frac.Fraction_) {		//Cannot select entites from different fraction at the same time
 
 			delete &ptr_wr;
 			return;
@@ -195,6 +195,7 @@ void GroupSelectionSystem::Clear() {
 	}
 	Singleton->SelectedEntities.clear();
 	Singleton->ChoosenEntitesCatalInfo = ZERO_CHOISE;
+	Singleton->SelEntsFraction = nullptr;
 
 	Singleton->ChangeChoosenGroupEvHan.Execute(Singleton->ChoosenEntitesCatalInfo);
 	Singleton->ChangeChoosenEntsEvHan.Execute();

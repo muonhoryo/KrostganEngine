@@ -201,6 +201,9 @@
     <ClCompile Include="Scripts\DynamicPhysObject.cpp" />
     <ClCompile Include="Scripts\ExternalGlobalResources.cpp" />
     <ClCompile Include="Scripts\ComposeGameEffectLoadInfo.cpp" />
+    <ClCompile Include="Scripts\Fraction.cpp" />
+    <ClCompile Include="Scripts\FractionsDeserializator.cpp" />
+    <ClCompile Include="Scripts\FractionWrapper.cpp" />
     <ClCompile Include="Scripts\GameEffectsCatalogDeserial.cpp" />
     <ClCompile Include="Scripts\GameEff_Dur_Deserter.cpp" />
     <ClCompile Include="Scripts\GameEff_Dur_EntBatStatMult.cpp" />
@@ -219,6 +222,7 @@
     <ClCompile Include="Scripts\IndicatorFill.cpp" />
     <ClCompile Include="Scripts\LvlObjInstantiationInfo.cpp" />
     <ClCompile Include="Scripts\PlayerControlSettsLoad.cpp" />
+    <ClCompile Include="Scripts\RelationSerialization.cpp" />
     <ClCompile Include="Scripts\SpriteRendLoadInfo.cpp" />
     <ClCompile Include="Scripts\TransparencyVisEff.cpp" />
     <ClCompile Include="Scripts\TransparencyVisEff_Des.cpp" />
@@ -586,6 +590,7 @@
     <Xml Include="TestLevelCatalog_Abilities.xml" />
     <Xml Include="TestLevelCatalog_GameEffects.xml" />
     <Xml Include="TestLevelCatalog_WorldObjs.xml" />
+    <Xml Include="TestLevel_Fractions.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

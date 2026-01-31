@@ -312,15 +312,11 @@ bool ConsoleCommsInterpretator::InterpretateComm_FracSet(const string& input) {
 		return false;
 	}
 
-	Fraction frac;
-
-	if (FractionsSystem::FractionNames.find(syntax[1]) != FractionsSystem::FractionNames.end())
-		frac = FractionsSystem::FractionNames.at(syntax[1]);
-	else {
+	const Fraction* frac = FractionsSystem::GetFractionByName(syntax[1]);
+	if (frac == nullptr) {
 		PrintInterpetatorMessage("Unknown fraction name");
 		return false;
 	}
-	
 
 	IFractionMember* fracMem = nullptr;
 	vector<IFractionMember*> fracMembs = vector<IFractionMember*>(GroupSelectionSystem::GetSelectionCount());
@@ -341,7 +337,7 @@ bool ConsoleCommsInterpretator::InterpretateComm_FracSet(const string& input) {
 	}
 	for (auto mem : fracMembs) {
 		if (mem != nullptr)
-			mem->SetFraction(frac);
+			mem->SetFraction(*frac);
 	}
 	return true;
 }

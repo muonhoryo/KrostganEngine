@@ -5,24 +5,24 @@
 using namespace KrostganEngine;
 using namespace KrostganEngine::GameObjects;
 
-Aura::Aura(ColliderShape& TriggerCollider, Fraction AuraFrac, Relation ToTargetRelMask, ComposeGameEff_Permanent& GameEff, WorldTransfObj& Parent)
+Aura::Aura(ColliderShape& TriggerCollider, FractionWrapper AuraFrac, Relation ToTargetRelMask, ComposeGameEff_Permanent& GameEff, WorldTransfObj& Parent)
 	:TriggerZone(*new Transformable(),Parent),
 		TriggerCollider(TriggerCollider),
 		AuraFrac(AuraFrac),
 		ToTargetRelMask(ToTargetRelMask),
 		GameEff(GameEff),
-		PassNeutral(IsEffectedByAura(Fraction::Neutral)),
+		PassNeutral(IsEffectedByAura(FractionsSystem::GetDefaultFraction())),
 		IsEffInstant(dynamic_cast<ComposeGameEff_Instant*>(&GameEff)!=nullptr){
 
 	TriggerCollider.SetCenter(GetGlobalPosition());
 }
-Aura::Aura(ColliderShape& TriggerCollider, Fraction AuraFrac, Relation ToTargetRelMask, ComposeGameEff_Permanent& GameEff)
+Aura::Aura(ColliderShape& TriggerCollider, FractionWrapper AuraFrac, Relation ToTargetRelMask, ComposeGameEff_Permanent& GameEff)
 	:TriggerZone(*new Transformable()),
 		TriggerCollider(TriggerCollider),
 		AuraFrac(AuraFrac),
 		ToTargetRelMask(ToTargetRelMask),
 		GameEff(GameEff),
-		PassNeutral(IsEffectedByAura(Fraction::Neutral)),
+		PassNeutral(IsEffectedByAura(FractionsSystem::GetDefaultFraction())),
 		IsEffInstant(dynamic_cast<ComposeGameEff_Instant*>(&GameEff) != nullptr) {
 
 	TriggerCollider.SetCenter(GetGlobalPosition());
@@ -59,10 +59,10 @@ void Aura::SetLocalPosition(Vector2f pos) {
 const ColliderShape& Aura::GetCollider() const {
 	return TriggerCollider;
 }
-Fraction Aura::GetFraction()const {
+FractionWrapper Aura::GetFraction()const {
 	return AuraFrac;
 }
-void Aura::SetFraction(Fraction fraction) {
+void Aura::SetFraction(FractionWrapper fraction) {
 
 	AuraFrac = fraction;
 	RecalculateEnteredObjs();
@@ -104,7 +104,7 @@ bool Aura::EnterTriggerCondition(const IPhysicalObject& inputObj) const {
 	else
 		return false;
 }
-bool Aura::IsEffectedByAura(Fraction targetFrac) const {
+bool Aura::IsEffectedByAura(FractionWrapper targetFrac) const {
 	
 	return ((int)FractionsSystem::GetRelation(targetFrac, AuraFrac) & (int)ToTargetRelMask) != 0;
 }

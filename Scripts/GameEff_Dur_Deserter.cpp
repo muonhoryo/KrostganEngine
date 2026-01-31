@@ -8,7 +8,7 @@ using namespace KrostganEngine::Core;
 using namespace KrostganEngine::GameObjects;
 using namespace KrostganEngine::EntitiesControl;
 
-GameEff_Dur_Deserter::GameEff_Dur_Deserter(Fraction DesertingFrac)
+GameEff_Dur_Deserter::GameEff_Dur_Deserter(FractionWrapper DesertingFrac)
 	:DesertingFrac(DesertingFrac),
 	StatChangedSubs(StatChangedEvSubs(*this)){
 

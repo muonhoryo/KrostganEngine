@@ -27,7 +27,7 @@ void WarFogObserversManager::OnAddCallback(WarFogObserver const& callbck) {
 /// <param name="pos"></param>
 /// <param name="observersFraction"></param>
 /// <returns></returns>
-bool WarFogObserversManager::Intersect(Vector2f pos, Fraction observersFraction, float maxRange) {
+bool WarFogObserversManager::Intersect(Vector2f pos, FractionWrapper observersFraction, float maxRange) {
 
 	if (maxRange <= eps)
 		maxRange = FLT_MAX;
@@ -37,7 +37,7 @@ bool WarFogObserversManager::Intersect(Vector2f pos, Fraction observersFraction,
 
 	IntersectInput input;
 	input.Position = Vector2i(pos/Engine::GetGlobalConsts().WarFogObserversManager_PosHashCellSize);
-	input.Fraction = observersFraction;
+	input.Fraction_old = observersFraction;
 
 
 	CircleCollShape obsr = CircleCollShape(DEFAULT_POSITION, 0);

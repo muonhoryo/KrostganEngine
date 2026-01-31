@@ -88,7 +88,7 @@ namespace KrostganEngine::GameObjects {
 		string								HPBarMaskSource = "";
 		string								HitEffectSprite = "";
 		string								SelectionAreaSource = "";
-		Fraction							EntityFraction = Fraction::Neutral;
+		FractionWrapper						EntityFraction = FractionWrapper();
 		EntityBattleStats					BattleStats = EntityBattleStats();
 		vector<pair<size_t, std::byte>>		Abilities = vector<pair<size_t, std::byte>>();
 

@@ -75,14 +75,14 @@ const AttackHitInfo& AutoAttackProjectile::GetAttInfo(IAttackableObj& target) co
 const AttackHitInfo& AutoAttackProjectile::GetAttInfo_FromOwn(IAttackableObj& target) const {
 
 	IFractionMember* parOwner = dynamic_cast<IFractionMember*>(&Owner);
-	Fraction frac = parOwner == nullptr ? Fraction::Neutral : parOwner->GetFraction();
+	FractionWrapper frac = parOwner == nullptr ? FractionsSystem::GetDefaultFraction() : parOwner->GetFraction();
 	return *new AutoAttackHitInfo(AAStats.GetDamage(), target.GetPtr(), AAStats, frac);
 }
 const AttackHitInfo& AutoAttackProjectile::GetAttInfo_FromCache(IAttackableObj& target) const {
 
 	int index = AutoAttackStats::GetArrayIndexOfField((int)AutoAttackStats_Consts::StatType::Damage);
 	size_t dmg = CachedAAStats.get()->Params_s_t[index];
-	Fraction frac = Fraction::Neutral;
+	FractionWrapper frac = FractionsSystem::GetDefaultFraction();
 	return *new ProjAAHitInfo(dmg, target.GetPtr(), *CachedAAStats.get(), frac);
 }
 

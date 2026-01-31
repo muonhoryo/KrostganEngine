@@ -6,11 +6,11 @@ using namespace KrostganEngine::GameObjects;
 
 Ability_Aura::Ability_Aura(float range, Relation ToTargetRelMask, ComposeGameEff_Permanent& GameEff, size_t CatalogID, std::byte SubcatalogID)
 	:Ability_Passive(CatalogID,SubcatalogID),
-		AuraObj(*new Aura(*new CircleCollShape(DEFAULT_POSITION, range) ,Fraction::Neutral,ToTargetRelMask,GameEff)){
+		AuraObj(*new Aura(*new CircleCollShape(DEFAULT_POSITION, range) ,FractionsSystem::GetDefaultFraction(), ToTargetRelMask, GameEff)) {
 
 }
 Ability_Aura::Ability_Aura(float range, Relation ToTargetRelMask, ComposeGameEff_Permanent& GameEff)
-	:AuraObj(*new Aura(*new CircleCollShape(DEFAULT_POSITION, range), Fraction::Neutral, ToTargetRelMask, GameEff)){
+	:AuraObj(*new Aura(*new CircleCollShape(DEFAULT_POSITION, range), FractionsSystem::GetDefaultFraction(), ToTargetRelMask, GameEff)){
 
 }
 Ability_Aura::~Ability_Aura() {
@@ -31,7 +31,7 @@ void Ability_Aura::OnAddToUser(AbilityUserObject& user) {
 void Ability_Aura::OnRemoveFromUser(AbilityUserObject& user) {
 
 	if (Owner_Frac != nullptr) {
-		AuraObj.SetFraction(Fraction::Neutral);
+		AuraObj.SetFraction(FractionsSystem::GetDefaultFraction());
 		AuraObj.DestroyToFracMemDependency();
 		Owner_Frac = nullptr;
 	}

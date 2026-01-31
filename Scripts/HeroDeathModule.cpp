@@ -9,12 +9,12 @@ using namespace KrostganEngine::GameTransitions;
 void HeroDeathModule::Death() {
 
 	HeroObject* parOwner = dynamic_cast<HeroObject*>(&Owner);
-	Fraction frac= parOwner->GetFraction();
-	if (frac== Fraction::Player) {
+	FractionWrapper frac= parOwner->GetFraction();
+	if (frac.Fraction_.Index == FractionsSystem::PLAYER_FRACTION) {
 
 		new LoseScript();
 	}
-	else if(frac==Fraction::Enemy){
+	else if(FractionsSystem::GetRelationToPlayer(frac) == Relation::Enemy){
 
 		new WinScript();
 	}

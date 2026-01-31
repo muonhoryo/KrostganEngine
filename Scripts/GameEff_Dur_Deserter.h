@@ -8,13 +8,13 @@ using namespace KrostganEngine::EntitiesControl;
 
 namespace KrostganEngine::GameObjects {
 	class GameEff_Dur_Deserter : public IGameEffect_Durable {
-
+		
 	private:
 		struct FractionChangedEvSubs : public IEventSubscriber<const IFractionMember::ChangeFractionEvArgs> {
 
-			FractionChangedEvSubs(IFractionMember& Owner,Fraction DesertingFrac)
+			FractionChangedEvSubs(IFractionMember& Owner, FractionWrapper DesertingFrac)
 				:Owner(Owner),
-				DesertingFrac(DesertingFrac){
+				DesertingFrac(DesertingFrac) {
 
 			}
 
@@ -26,7 +26,7 @@ namespace KrostganEngine::GameObjects {
 
 		private:
 			IFractionMember& Owner;
-			Fraction DesertingFrac;
+			FractionWrapper DesertingFrac = FractionWrapper();
 		};
 		struct StatChangedEvSubs : public IEventSubscriber<int> {
 
@@ -49,9 +49,8 @@ namespace KrostganEngine::GameObjects {
 			GameEff_Dur_Deserter& Owner;
 		};
 
-
 	public:
-		GameEff_Dur_Deserter(Fraction DesertingFrac);
+		GameEff_Dur_Deserter(FractionWrapper DesertingFrac);
 		GameEff_Dur_Deserter(const GameEff_Dur_Deserter& copy);
 		virtual ~GameEff_Dur_Deserter();
 
@@ -72,13 +71,15 @@ namespace KrostganEngine::GameObjects {
 		/// <returns></returns>
 		bool CheckResistance(OrdersExecutor& target) const;
 
-		Fraction DesertingFrac;
-		Fraction OriginFrac = FractionsSystem::DEFAULT_FRAC;
+		FractionWrapper DesertingFrac = FractionWrapper();
+		FractionWrapper OriginFrac = FractionWrapper();
 		size_t OwnedEff_CatID = 0;
 		std::byte OwnedEff_SubcatID = (std::byte)0;
 		IGameEffTarget* Target = nullptr;
 
 		FractionChangedEvSubs* FracChangedSubs = nullptr;
 		StatChangedEvSubs StatChangedSubs;
+
+
 	};
 }

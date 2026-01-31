@@ -16,7 +16,7 @@ namespace KrostganEngine::GameObjects {
 				AutoAttackStats_Consts::FIELDS_COUNT_F, 
 				AutoAttackStats_Consts::FIELDS_COUNT_BOOL,
 				LvlObjInstantiationInfo>					&CachedAAStats,
-			Fraction DmgDealerFrac)
+				FractionWrapper DmgDealerFrac)
 					:AttackHitInfo(DealtDmg,Target, DmgDealerFrac),
 					CachedAAStats(CachedAAStats)
 		{}

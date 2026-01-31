@@ -5,20 +5,21 @@
 #include <unordered_map>
 
 using namespace std;
+using namespace KrostganEngine::EntitiesControl;
 
 namespace KrostganEngine::Core {
 
 	struct IntersectInput final {
-		Vector2i Position;
-		Fraction Fraction;
+		Vector2i Position = (Vector2i)DEFAULT_POSITION;
+		FractionWrapper Fraction_old = FractionWrapper();
 
 		bool operator < (const IntersectInput& other) const {
 			return (Position.x < other.Position.x ||
 				(Position.x == other.Position.x && Position.y < other.Position.y) ||
-				(Position.x == other.Position.x && Position.y == other.Position.y && (int)Fraction < (int)other.Fraction));
+				(Position.x == other.Position.x && Position.y == other.Position.y && Fraction_old < other.Fraction_old));
 		}
 		bool operator == (const IntersectInput& other) const {
-			return Position == other.Position && Fraction == other.Fraction;
+			return Position == other.Position && Fraction_old == other.Fraction_old;
 		}
 	};
 
@@ -34,7 +35,7 @@ namespace std {
 
 			return ((hash<int>()(k.Position.x)
 				^ (hash<int>()(k.Position.y) << 1)) >> 1)
-				^ (hash<int>()((int)k.Fraction) << 1);
+				^ (hash<int>()((int)k.Fraction_old) << 1);
 		}
 	};
 }
@@ -56,7 +57,7 @@ namespace KrostganEngine::Core {
 	public:
 		WarFogObserversManager();
 
-		bool Intersect(Vector2f pos, Fraction observersFraction, float maxRange = FLT_MAX);
+		bool Intersect(Vector2f pos, FractionWrapper observersFraction, float maxRange = FLT_MAX);
 		void Set_NeedToSort();
 
 		static WarFogObserversManager* GetInstance() {

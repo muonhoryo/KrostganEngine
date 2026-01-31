@@ -3,6 +3,7 @@
 #include <forward_list>
 #include <string>
 #include <vector>
+#include <map>
 
 using namespace std;
 
@@ -308,6 +309,13 @@ namespace KrostganEngine {
 			destination.resize(source.size());
 			for (int i = 0;i < source.size();++i) {
 				destination[i] = source[i];
+			}
+		}
+		template<typename TKey, typename TValue>
+		static void CloneMap(const map<TKey, TValue>& source, map<TKey, TValue>& destination) {
+
+			for (auto& sourcePair : source) {
+				destination.insert(pair<TKey,TValue>(sourcePair.first, sourcePair.second));
 			}
 		}
 		template<typename TCollectionType, typename TElementType>

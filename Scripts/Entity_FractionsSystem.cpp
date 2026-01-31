@@ -6,11 +6,11 @@
 using namespace KrostganEngine::GameObjects;
 using namespace KrostganEngine::EntitiesControl;
 
-Fraction Entity::GetFraction() const {
+FractionWrapper Entity::GetFraction() const {
 	return EntityFraction;
 }
 
-void Entity::SetFraction(Fraction fraction) {
+void Entity::SetFraction(FractionWrapper fraction) {
 	if (fraction == GetFraction()) {
 		return;
 	}
@@ -19,7 +19,7 @@ void Entity::SetFraction(Fraction fraction) {
 	EntityFraction = fraction;
 	SetObservingActive(FractionsSystem::GetRelationToPlayer(fraction) == Relation::Ally);
 	WarFogObserversManager::GetInstance()->Set_NeedToSort();
-	SetColor(FractionsSystem::GetRelationToPlayerColor(fraction));
+	SetColor(EntityFraction.Fraction_.FracColor);
 	GroupSelectionSystem::Remove(*this);
 	GetAutoAggrModule().Restart();
 	ResetOrdersQueue();

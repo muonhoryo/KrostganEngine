@@ -27,7 +27,7 @@ WinScript::WinScript()
 	HeroObject* hero = nullptr;
 	for (;beg != end;++beg) {
 		hero = dynamic_cast<HeroObject*>(*beg);
-		if (hero != nullptr && hero->GetFraction() == Fraction::Player)
+		if (hero != nullptr && hero->GetFraction().Fraction_.Index == FractionsSystem::PLAYER_FRACTION)
 		{
 			auto& stats = hero->GetBattleStats();
 			stats.SetMaxHP(1000000);

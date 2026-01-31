@@ -16,7 +16,10 @@ bool EntityLoadInfo::WriteParam(Attr& param) {
 		string buffer = param.second;
 		FStreamExts::ClearPath(buffer);
 		FStreamExts::ToLowerStr(buffer);
-		EntityFraction = FractionsSystem::GetFractionByName(buffer);
+		auto frac = FractionsSystem::GetFractionByName(buffer);
+		if (frac == nullptr)
+			throw exception("Unknown fraction");
+		EntityFraction = FractionWrapper(*frac);
 	}
 	else if (CheckParamName(param, WorldObjsLoad_ParamDefNames::ENTITY_HPBAR_SPRITE_SOURCE)) {
 		HPBarSpriteSource = param.second;

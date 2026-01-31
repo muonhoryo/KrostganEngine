@@ -8,83 +8,104 @@ using namespace std;
 using namespace KrostganEngine;
 using namespace KrostganEngine::EntitiesControl;
 
-Relation FractionsSystem::GetRelation(Fraction objFrac, Fraction subjFrac) {
-	if (objFrac == subjFrac)
-		return Relation::Ally;
-	else {
-		if (objFrac == Fraction::Neutral || subjFrac == Fraction::Neutral)
-			return Relation::Neutral;
-		else
-			return Relation::Enemy;
-	}
+Relation FractionsSystem::GetRelation(const Fraction& subjectFrac, const Fraction& objectFrac) {
+	return GetRelation(subjectFrac.Index, objectFrac.Index);
 }
-Relation FractionsSystem::GetRelationToPlayer(Fraction objFrac) {
-	return GetRelation(objFrac, Fraction::Player);
-}
-Color FractionsSystem::GetRelationColor(Relation rel) {
-	switch (rel)
-	{
-	case KrostganEngine::EntitiesControl::Relation::Ally:
-		return Color::Green;
-	case KrostganEngine::EntitiesControl::Relation::Neutral:
-		return Color::Yellow;
-	case KrostganEngine::EntitiesControl::Relation::Enemy:
-		return Color::Red;
-	default:
-		throw exception("Undefined relation: " + (int)rel);
-	}
-}
-Color FractionsSystem::GetRelationToPlayerColor(Fraction objFrac) {
-	return FractionsSystem::GetRelationColor(GetRelationToPlayer(objFrac));
-}
-/// <summary>
-/// Return empty string in heap if frac is invalid
-/// </summary>
-/// <param name="frac"></param>
-/// <returns></returns>
-const string& FractionsSystem::GetNameOfFraction(Fraction frac) {
-	for (auto it = FractionNames.begin();it != FractionNames.end();++it) {
-		if ((*it).second == frac)
-			return (*it).first;
-	}
-	return *new string("");
-}
-Fraction FractionsSystem::GetFractionByName(const string& name) {
+Relation FractionsSystem::GetRelation(FRACTION_INDEX subjectFracIndex, FRACTION_INDEX objectFracIndex) {
+	if (subjectFracIndex >= Fractions.size() || objectFracIndex >= Fractions.size())
+		return DEFAULT_RELATION;
 
-	string clName = name;
-	FStreamExts::ClearPath(clName);
-	Fraction frac;
+	return RelationsMatrix[subjectFracIndex][objectFracIndex];
+}
+Relation FractionsSystem::GetRelationToPlayer(const Fraction& subjectFrac) {
+	return GetRelationToPlayer(subjectFrac.Index);
+}
+Relation FractionsSystem::GetRelationToPlayer(FRACTION_INDEX subjectFracIndex) {
+	if (subjectFracIndex >= Fractions.size())
+		return DEFAULT_RELATION;
 
-	auto it = FractionsSystem::FractionNames.find(clName);
+	return RelationsMatrix[subjectFracIndex][PLAYER_FRACTION];
+}
+const Fraction* FractionsSystem::GetFraction(FRACTION_INDEX fracIndex) {
+	if (fracIndex >= Fractions.size())
+		return nullptr;
 
-	if (it == FractionsSystem::FractionNames.end())
-		frac = Fraction::Neutral;
-	else
-		frac = (*it).second;
+	return &Fractions[fracIndex];
+}
+const Fraction* FractionsSystem::GetFractionByProgramName(const string& fracProgramName) {
+
+	auto predicate = FractionsPredicate_ByProgName(fracProgramName);
+	return CollectionsExts::Get(Fractions, predicate);
+}
+const size_t FractionsSystem::GetFractionsCount() {
+	return RelationsMatrix.size();
+}
+const Fraction* FractionsSystem::GetFractionByName(const string& fracName) {
+	string& programName = GetProgramName(fracName);
+	const Fraction* frac = GetFractionByProgramName(programName);
+	delete& programName;
 	return frac;
 }
 
-Relation RelationSerialization::GetRelationByName(const string& name) {
-
-	string clName = name;
-	FStreamExts::ClearPath(clName);
-	Relation rel;
-
-	auto it = RelationNames.find(clName);
-
-	if (it == RelationNames.end())
-		rel = Relation::None;
-	else
-		rel = (*it).second;
-	return rel;
+FractionWrapper FractionsSystem::GetDefaultFraction() {
+	return FractionWrapper(*FractionsSystem::GetFraction(DEFAULT_FRACTION));
 }
-Relation RelationSerialization::DeserializeRelation(const string& rel) {
+FractionWrapper FractionsSystem::GetPlayerFraction() {
+	return FractionWrapper(*FractionsSystem::GetFraction(PLAYER_FRACTION));
+}
 
-	Relation relation = GetRelationByName(rel);
+string& FractionsSystem::GetProgramName(const string& name) {
 
-	if (relation == Relation::None) {
-		relation = (Relation)stoi(rel);
+	string& programName = *new string(name);
+
+	int nameSize = programName.size();
+	char* nameData = programName.data();
+
+	for (int i = 0;i < nameSize;++i) {
+
+		*nameData = tolower(*nameData);
+		++nameData;
 	}
+	return programName;
+}
 
-	return relation;
+void FractionsSystem::Unload() {
+	Fractions = vector<Fraction>();
+	RelationsMatrix = vector<vector<Relation>>();
+}
+
+void FractionsSystem::AddFraction(const Fraction& frac) {
+
+	if (GetFractionByProgramName(frac.ProgramName) != nullptr)
+		return;
+
+	size_t oldMatrixSize = RelationsMatrix.size();
+	size_t newMatrixSize = oldMatrixSize + 1;
+	for (auto& relsArr : RelationsMatrix) {
+
+		relsArr.resize(newMatrixSize);
+		relsArr[oldMatrixSize] = DEFAULT_RELATION;
+	}
+	RelationsMatrix.resize(newMatrixSize);
+	RelationsMatrix[oldMatrixSize].resize(newMatrixSize);
+	for (int i = 0;i < newMatrixSize;++i) {
+		RelationsMatrix[oldMatrixSize][i] = DEFAULT_RELATION;
+	}
+	Fractions.push_back(frac);
+}
+void FractionsSystem::SetFractionRelation(const Fraction& fraction, const vector<Relation>& fracRelations) {
+	SetFractionRelation(fraction.Index, fracRelations);
+}
+void FractionsSystem::SetFractionRelation(FRACTION_INDEX fracIndex, const vector<Relation>& fracRelations) {
+
+	size_t size = GetFractionsCount();
+
+	if (fracRelations.size() != size)
+		throw exception("fracRelations' size must be equal to RelationsMatrix's size");
+	if (fracIndex >= size)
+		throw exception("Index out of range");
+
+	for (int i = 0; i < size;++i) {
+		RelationsMatrix[fracIndex][i] = fracRelations[i];
+	}
 }

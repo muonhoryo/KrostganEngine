@@ -59,7 +59,7 @@ namespace KrostganEngine::EntitiesControl {
 		private:
 			EntityOrder_AttackTarget& Owner;
 			IFractionMember& Target;
-			Fraction Target_OldFraction;
+			FractionWrapper Target_OldFraction = FractionWrapper();
 		};
 
 		OnFractionChanged* OnFractionChangedSubs = nullptr;

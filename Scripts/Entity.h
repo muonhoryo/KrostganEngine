@@ -27,7 +27,7 @@ namespace KrostganEngine::GameObjects {
 
 	struct EntityCtorParams : public GameObjectCtorParams {
 
-		Fraction				EntityFraction = Fraction::Neutral;
+		FractionWrapper			EntityFraction = FractionWrapper();
 
 		EntityBattleStats*		BattleStats				=	nullptr;
 		const ExtGlRes_Sprite*	SelectionSpriteSource	=	nullptr;
@@ -119,9 +119,9 @@ namespace KrostganEngine::GameObjects {
 	// IFractionMember
 	//
 
-		Fraction GetFraction() const override;
+		FractionWrapper GetFraction() const override;
 
-		void SetFraction(Fraction fraction) override;
+		void SetFraction(FractionWrapper fraction) override;
 
 	//
 	// IWarFogObserver
@@ -158,10 +158,13 @@ namespace KrostganEngine::GameObjects {
 			bool IsOwnerMustHide() {
 
 				Vector2f pos = Owner.GetGlobalPosition();
-				Fraction frac = Owner.GetFraction();
+				FractionWrapper frac = Owner.GetFraction();
 				float stealth = Owner.GetBattleStats().GetStealth();
 
-				return !WarFogObserversManager::GetInstance()->Intersect(pos, Fraction::Player, stealth);
+				return !WarFogObserversManager::GetInstance()->Intersect
+						(pos, 
+						*FractionsSystem::GetFraction(FractionsSystem::PLAYER_FRACTION),
+						stealth);
 			}
 
 			Entity& Owner;
@@ -215,7 +218,7 @@ namespace KrostganEngine::GameObjects {
 		IHitPointModule*		HPModule;
 		IndicatorFill*			HPBar;
 		SpriteRenderer*			HitEffectSprite;
-		Fraction				EntityFraction;
+		FractionWrapper			EntityFraction = FractionWrapper();
 
 		friend class AutoAggressionModule;
 

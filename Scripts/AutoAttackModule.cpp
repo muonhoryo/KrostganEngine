@@ -99,7 +99,7 @@ bool AutoAttackModule::TryDealDamageToTarget() {
 			else {
 
 				IFractionMember* parOwner = dynamic_cast<IFractionMember*>(&Owner);
-				Fraction frac = parOwner == nullptr ? Fraction::Neutral : parOwner->GetFraction();
+				FractionWrapper frac = parOwner == nullptr ? FractionsSystem::GetDefaultFraction() : parOwner->GetFraction();
 				AutoAttackHitInfo attInfo = AutoAttackHitInfo(dealedDmg, watch_ptr_handler_wr<IAttackableObj>(*Target), *OwnerAAStats,frac);
 				Target->GetPtr_t()->GetHPModule().TakeDamage(attInfo);
 				AAAnimation.OnTakeDmg(attInfo);

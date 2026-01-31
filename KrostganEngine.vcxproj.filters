@@ -957,6 +957,18 @@
     <ClCompile Include="Scripts\AAProjectileLoadInfo.cpp">
       <Filter>Исходные файлы\CoreSystems\GameLevel\LevelLoading\LevelCatalogs\WorldObjects</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\FractionsDeserializator.cpp">
+      <Filter>Исходные файлы\CoreSystems\EntitiesControl\RelationsSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\FractionWrapper.cpp">
+      <Filter>Исходные файлы\CoreSystems\EntitiesControl\RelationsSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\RelationSerialization.cpp">
+      <Filter>Исходные файлы\CoreSystems\EntitiesControl\RelationsSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Fraction.cpp">
+      <Filter>Исходные файлы\CoreSystems\EntitiesControl\RelationsSystem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\CoreGameObjects.h">
@@ -1739,5 +1751,6 @@
     <Xml Include="TestLevelCatalog_WorldObjs.xml" />
     <Xml Include="TestLevelCatalog_GameEffects.xml" />
     <Xml Include="TestLevelCatalog_Abilities.xml" />
+    <Xml Include="TestLevel_Fractions.xml" />
   </ItemGroup>
 </Project>

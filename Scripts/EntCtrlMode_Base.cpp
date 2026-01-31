@@ -38,7 +38,7 @@ void EntCtrlMode_Base::HandleInput(CallbackRecArgs_Upd& args) {
 				Vector2f pos = GetPosByCursor();
 				if (TryGetTargetByTypeAtPos(pos, target)) {
 					IFractionMember* fracMember = dynamic_cast<IFractionMember*>(target);
-					Relation rel = fracMember != nullptr ? FractionsSystem::GetRelation(Fraction::Player, fracMember->GetFraction()) : Relation::Neutral;
+					Relation rel = fracMember != nullptr ? FractionsSystem::GetRelationToPlayer(fracMember->GetFraction()) : Relation::Neutral;
 					if (rel == Relation::Enemy)
 						GiveOrderToSelected_AttackTarget(*target,PlayerInputManager::GetBtnState_Shift());
 					else

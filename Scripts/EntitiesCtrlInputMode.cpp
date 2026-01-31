@@ -27,7 +27,7 @@ Vector2f EntitiesCtrlInputMode::GetPosByCursor() {
 bool EntitiesCtrlInputMode::TryGetTargetAtPos(Vector2f pos, IPhysicalObject*& target) {
 
 	if (WarFogStencilGen::GetActivity() &&
-		!WarFogObserversManager::GetInstance()->Intersect(pos, Fraction::Player)) {
+		!WarFogObserversManager::GetInstance()->Intersect(pos, FractionsSystem::GetPlayerFraction())) {
 
 		return false;
 	}

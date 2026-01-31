@@ -36,7 +36,7 @@ void WarFogObserver::SetObservingActive(bool isActive) {
 		IsObservingActive = isActive;
 	}
 }
-void WarFogObserver::OnChangeFraction(Fraction frac) {
+void WarFogObserver::OnChangeFraction(FractionWrapper frac) {
 	WarFogObserversManager::GetInstance()->Set_NeedToSort();
 }
 

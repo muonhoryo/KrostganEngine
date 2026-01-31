@@ -13,7 +13,7 @@ namespace KrostganEngine::GameObjects {
 			(size_t DealtDmg, 
 			watch_ptr_handler_wr<IAttackableObj> Target, 
 			const AutoAttackStats& AAStats,
-			Fraction DmgDealerFrac)
+			FractionWrapper DmgDealerFrac)
 				:AttackHitInfo(DealtDmg, Target, DmgDealerFrac),
 				AAStats(AAStats){}
 

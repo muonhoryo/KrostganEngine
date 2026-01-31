@@ -55,7 +55,7 @@ void EntCtrlMode_GroupSelect::HandleInput(CallbackRecArgs_Upd& args) {
 
 					parRef_trObj = dynamic_cast<ITransformableObj*>(ref);
 					if (parRef_trObj == nullptr ||
-						WarFogObserversManager::GetInstance()->Intersect(parRef_trObj->GetGlobalPosition(), Fraction::Player)) {
+						WarFogObserversManager::GetInstance()->Intersect(parRef_trObj->GetGlobalPosition(), FractionsSystem::GetPlayerFraction())) {
 
 						selecUnits.push_front(ref);
 						++selEntsCount;

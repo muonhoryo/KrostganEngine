@@ -20,7 +20,7 @@ namespace KrostganEngine::GameObjects {
 	struct AttackHitInfo {
 
 		AttackHitInfo(size_t DealtDmg, watch_ptr_handler_wr<IAttackableObj> Target, 
-			Fraction DmgDealerFrac)
+			FractionWrapper DmgDealerFrac)
 			:DealtDmg(DealtDmg),
 			Target(Target),
 			DmgDealerFrac(DmgDealerFrac)
@@ -28,7 +28,7 @@ namespace KrostganEngine::GameObjects {
 
 		const size_t DealtDmg;
 		watch_ptr_handler_wr<IAttackableObj> Target;
-		Fraction DmgDealerFrac;
+		FractionWrapper DmgDealerFrac = FractionWrapper();
 	};
 
 	class TakeDamageAnimation {

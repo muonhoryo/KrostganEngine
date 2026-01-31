@@ -50,8 +50,8 @@ namespace KrostganEngine::GameObjects {
 	//
 
 	public:
-		Aura(ColliderShape& TriggerCollider, Fraction AuraFrac, Relation ToTargetRelMask, ComposeGameEff_Permanent& GameEff, WorldTransfObj& Parent);
-		Aura(ColliderShape& TriggerCollider, Fraction AuraFrac, Relation ToTargetRelMask, ComposeGameEff_Permanent& GameEff);
+		Aura(ColliderShape& TriggerCollider, FractionWrapper  AuraFrac, Relation ToTargetRelMask, ComposeGameEff_Permanent& GameEff, WorldTransfObj& Parent);
+		Aura(ColliderShape& TriggerCollider, FractionWrapper  AuraFrac, Relation ToTargetRelMask, ComposeGameEff_Permanent& GameEff);
 		virtual ~Aura();
 
 		void SetGlobalScale(Vector2f size) override;
@@ -61,8 +61,8 @@ namespace KrostganEngine::GameObjects {
 
 		const ColliderShape& GetCollider() const override;
 
-		Fraction GetFraction()const override;
-		void SetFraction(Fraction fraction) override;
+		FractionWrapper GetFraction()const override;
+		void SetFraction(FractionWrapper fraction) override;
 
 		void CreateToFracMemDependency(const IFractionMember& Owner);
 		void DestroyToFracMemDependency();
@@ -81,10 +81,10 @@ namespace KrostganEngine::GameObjects {
 
 		Relation					ToTargetRelMask;
 		ComposeGameEff_Permanent&	GameEff;
-		Fraction					AuraFrac;
+		FractionWrapper 			AuraFrac = FractionWrapper();
 		ToOwnerFracDependency*		FracDependency = nullptr;
 
-		bool IsEffectedByAura(Fraction targetFrac) const;
+		bool IsEffectedByAura(FractionWrapper  targetFrac) const;
 		bool PassNeutral;
 		bool IsEffInstant;
 

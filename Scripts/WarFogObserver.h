@@ -23,7 +23,7 @@ namespace KrostganEngine::Core {
 
 		void SetObservingActive(bool isActive);
 
-		void OnChangeFraction(Fraction frac);
+		void OnChangeFraction(FractionWrapper frac);
 
 	private:
 		/// <summary>

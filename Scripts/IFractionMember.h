@@ -9,24 +9,27 @@ namespace KrostganEngine::EntitiesControl {
 	public:
 		struct ChangeFractionEvArgs final {
 
-			ChangeFractionEvArgs(IFractionMember& Owner, Fraction OldFraction, Fraction NewFraction) 
+			ChangeFractionEvArgs(IFractionMember& Owner, FractionWrapper OldFraction, FractionWrapper NewFraction)
 				:Owner(Owner),
 				OldFraction(OldFraction),
 				NewFraction(NewFraction)
 			{}
 
 			IFractionMember& Owner;
-			Fraction OldFraction;
-			Fraction NewFraction;
+			FractionWrapper OldFraction = FractionWrapper();
+			FractionWrapper NewFraction = FractionWrapper();
 		};
 
 		static inline ExecutedEvent<const ChangeFractionEvArgs> MemberHasChangedFracEvent = ExecutedEvent<const ChangeFractionEvArgs>();
 
 		virtual ~IFractionMember(){}
 
-		virtual Fraction GetFraction()const=0;
+		virtual FractionWrapper GetFraction()const=0;
 
-		virtual void SetFraction(Fraction fraction) = 0;
+		virtual void SetFraction(FractionWrapper fraction) = 0;
+		void SetFraction(const Fraction& fraction) {
+			SetFraction(FractionWrapper(fraction));
+		}
 
 	protected:
 		IFractionMember(){}

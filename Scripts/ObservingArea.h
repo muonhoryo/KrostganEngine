@@ -13,7 +13,7 @@ namespace KrostganEngine::GameObjects{
 
 		float GetObservingRange() const override;
 
-		Fraction GetFraction()const override;
+		FractionWrapper GetFraction() const override;
 
 	private:
 		float ObservingRange;

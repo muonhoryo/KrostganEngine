@@ -85,12 +85,12 @@ const char& ComposeGameEffectLoadInfo::GetGenGameEffType(xml_node<>& genGameEffN
 }
 IGameEffect& ComposeGameEffectLoadInfo::DeserializeGameEff_Dur_Deserter(xml_node<>& node, string& nameBuffer) const {
 
-	Fraction deserFraction = FractionsSystem::DEFAULT_FRAC;
+	FractionWrapper deserFraction = FractionsSystem::GetDefaultFraction();
 	xml_attribute<>* attr = node.first_attribute();
 	while (attr != nullptr) {
 		nameBuffer = attr->name();
 		if (nameBuffer == GameEffLoad_ParamDefNames::EFFECT_DESERTER_FRACTION) {
-			deserFraction = FractionsSystem::GetFractionByName(attr->value());
+			deserFraction = FractionWrapper(*FractionsSystem::GetFractionByName(attr->value()));
 		}
 
 		attr = attr->next_attribute();
