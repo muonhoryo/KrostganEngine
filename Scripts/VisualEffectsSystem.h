@@ -1,4 +1,55 @@
 #pragma once
 
-#include <VisualEffectsCore.h>
-#include <EffectObjects.h>
+#include <SFML/Graphics.hpp>
+#include <vector>
+#include <CollectionsExts.h>
+#include <watch_ptr.h>
+
+using namespace sf;
+using namespace std;
+using namespace KrostganEngine;
+
+namespace KrostganEngine::Visual {
+
+	class EffectObject;
+
+	class VisualEffect {
+	public:
+		virtual ~VisualEffect(){}
+
+	protected:
+		VisualEffect(){}
+
+		virtual void Update() = 0;
+
+		friend class EffectObject;
+	};
+
+	class EffectObject : public virtual w_ptr_observable {
+	public:
+		virtual ~EffectObject(){
+			for (auto eff : AddedEffects)
+				delete eff;
+		}
+
+		void AddEffect		(VisualEffect& effect) {
+			AddedEffects.push_back(&effect);
+		}
+		void RemoveEffect	(VisualEffect& effect) {
+			CollectionsExts::Remove(AddedEffects, &effect);
+		}
+
+	protected:
+		EffectObject(){}
+
+		void UpdateEffects() {
+			for (auto eff : AddedEffects) {
+				eff->Update();
+			}
+		}
+
+	private:
+		vector<VisualEffect*> AddedEffects;
+
+	};
+}

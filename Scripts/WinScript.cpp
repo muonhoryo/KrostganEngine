@@ -2,8 +2,8 @@
 #include <WinScript.h>
 #include <Engine.h>
 #include <EntitiesObserver.h>
-#include <CoreGameObjects.h>
-#include <InputHandlers.h>
+#include <_CoreGameObjects.h>
+#include <_InputHandlers.h>
 
 using namespace KrostganEngine::GameTransitions;
 using namespace KrostganEngine::UI;

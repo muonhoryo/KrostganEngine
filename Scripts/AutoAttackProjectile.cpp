@@ -3,7 +3,7 @@
 #include <VectExts.h>
 #include <Engine.h>
 #include <ProjAAHitInfo.h>
-#include <GameVisualEffects.h>
+#include <_GameVisualEffects.h>
 #include <WorldObjsCatalog.h>
 
 using namespace KrostganEngine;

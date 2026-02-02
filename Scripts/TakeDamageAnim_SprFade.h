@@ -2,7 +2,7 @@
 
 #include <SpriteRenderer.h>
 #include <IAttackableObj.h>
-#include <GameVisualEffects.h>
+#include <_GameVisualEffects.h>
 
 using namespace KrostganEngine::GameObjects;
 

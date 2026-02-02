@@ -1,8 +1,8 @@
 #pragma once
 
 #include <AutoAttackAnimation.h>
-#include <CoreVisual_UI.h>
-#include <GameVisualEffects.h>
+#include <_CoreVisual_UI.h>
+#include <_GameVisualEffects.h>
 
 using namespace std;
 using namespace sf;

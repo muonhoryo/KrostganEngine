@@ -1,7 +1,7 @@
 
 #include <WorldObjectLoadInfo.h>
 #include <WorldObjsCatalogSerConsts.h>
-#include <AutoAttackProjectiles.h>
+#include <_AutoAttackProjectiles.h>
 
 using namespace KrostganEngine::GameObjects;
 

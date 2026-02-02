@@ -1,7 +1,7 @@
 
 #include <EntitiesCtrlInputModes.h>
 #include <Engine.h>
-#include <Extensions.h>
+#include <_Extensions.h>
 #include <WarFogObserversManager.h>
 #include <WarFogStencilGen.h>
 

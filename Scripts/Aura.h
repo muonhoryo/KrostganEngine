@@ -1,7 +1,7 @@
 #pragma once
 
 #include <TriggerZone.h>
-#include <RelationsSystem.h>
+#include <_RelationsSystem.h>
 #include <GameEffectsSystem.h>
 
 using namespace KrostganEngine::EntitiesControl;

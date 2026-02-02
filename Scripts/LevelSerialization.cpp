@@ -3,10 +3,10 @@
 #include <fstream>
 #include <iostream>
 #include <vector>
-#include <Extensions.h>
-#include <EngineCore.h>
+#include <_Extensions.h>
+#include <_EngineCore.h>
 #include <EntityBattleStats.h>
-#include <RelationsSystem.h>
+#include <_RelationsSystem.h>
 
 using namespace std;
 using namespace KrostganEngine;

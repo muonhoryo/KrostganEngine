@@ -1,10 +1,10 @@
 
 #include <BaseAppInputHandler.h>
 #include <Engine.h>
-#include <Extensions.h>
+#include <_Extensions.h>
 #include <ConsoleCommsInterpretator.h>
-#include <EngineCore.h>
-#include <Debug.h>
+#include <_EngineCore.h>
+#include <_Debug.h>
 
 using namespace KrostganEngine;
 using namespace KrostganEngine::Core;

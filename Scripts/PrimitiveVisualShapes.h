@@ -4,7 +4,7 @@
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
 #include <vector>
-#include <VisualEffectsSystem.h>
+#include <_VisualEffectsCore.h>
 
 using namespace sf;
 using namespace std;

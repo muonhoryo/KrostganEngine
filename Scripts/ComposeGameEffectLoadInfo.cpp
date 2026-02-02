@@ -2,8 +2,8 @@
 #include <iostream>
 #include <ComposeGameEffectLoadInfo.h>
 #include <GameEffectsCatalogSerConsts.h>
-#include <RelationsSystem.h>
-#include <GeneralGameEffects.h>
+#include <_RelationsSystem.h>
+#include <_GeneralGameEffects.h>
 #include <GameEffectsCatalog.h>
 
 using namespace std;

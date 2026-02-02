@@ -1,11 +1,11 @@
 
-#include <EngineCore.h>
+#include <_EngineCore.h>
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include <Extensions.h>
+#include <_Extensions.h>
 #include <SFML/System.hpp>
 #include <DBG_DivineCommander.h>
-#include <CoreVisual.h>
+#include <_CoreVisual.h>
 #include <WarFogStencilGen.h>
 #include <WarFogObserversManager.h>
 
@@ -17,7 +17,7 @@ using namespace KrostganEngine::Core;
 using namespace KrostganEngine::Physics;
 using namespace KrostganEngine::Visual;
 
-const std::string Engine::ENGINE_VERSION = "A0.8.8.0";
+const std::string Engine::ENGINE_VERSION = "A0.9.0.0";
 
 Engine::Engine()
 	:RenderModule(*new EngineRenderModule(RendWin)),

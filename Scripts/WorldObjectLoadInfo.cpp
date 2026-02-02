@@ -2,7 +2,7 @@
 #include <WorldObjectLoadInfo.h>
 #include <LevelManager.h>
 #include <WorldObjsCatalogSerConsts.h>
-#include <Extensions.h>
+#include <_Extensions.h>
 
 using namespace KrostganEngine::GameObjects;
 

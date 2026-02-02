@@ -1,12 +1,12 @@
 
 #include <SFML/System.hpp>
-#include <CoreGameObjects.h>
+#include <_CoreGameObjects.h>
 #include <UnitObject.h>
 #include <SFML/Graphics.hpp>
 #include <Entity.h>
 #include <Engine.h>
 #include <vector>
-#include <CoreEntitiesControl.h>
+#include <_CoreEntitiesControl.h>
 
 #include <PrimitiveVisualShapes.h>
 

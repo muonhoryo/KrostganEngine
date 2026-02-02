@@ -1,6 +1,6 @@
 #pragma once
 
-#include <VisualEffectsCore.h>
+#include <_VisualEffectsCore.h>
 #include <SFML/Graphics.hpp>
 
 using namespace sf;

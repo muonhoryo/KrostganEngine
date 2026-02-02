@@ -7,11 +7,11 @@
 #include <EntityHPModule.h>
 #include <vector>
 #include <ISelectableEntity.h>
-#include <Events.h>
-#include <RelationsSystem.h>
+#include <_Events.h>
+#include <_RelationsSystem.h>
 #include <OrdersExecutor.h>
 #include <CallbackDelegates.h>
-#include <ExtGlResources.h>
+#include <_ExtGlResources.h>
 #include <WarFogObserver.h>
 #include <WarFogObserversManager.h>
 #include <GameEffectsSystem.h>

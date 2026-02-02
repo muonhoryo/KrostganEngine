@@ -1,7 +1,7 @@
 
 #include <BaseAutoAggrModule.h>
 #include <Engine.h>
-#include <Extensions.h>
+#include <_Extensions.h>
 #include <list>
 #include <PathFinding_Diijkstra.h>
 #include <IAttackableObj.h>

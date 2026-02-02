@@ -2,7 +2,7 @@
 
 #include <GameObject.h>
 #include <SFML/System.hpp>
-#include <Physics.h>
+#include <_Physics.h>
 #include <IAttackableObj.h>
 #include <DecorationDeathModule.h>
 #include <DecorationHPModule.h>

@@ -971,10 +971,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Scripts\CoreGameObjects.h">
+    <ClInclude Include="Scripts\_CoreGameObjects.h">
       <Filter>Файлы заголовков\CoreSystems\GameObjects</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Events.h">
+    <ClInclude Include="Scripts\_Events.h">
       <Filter>Файлы заголовков\Events</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\TemplateEvent.h">
@@ -983,7 +983,7 @@
     <ClInclude Include="Scripts\Engine.h">
       <Filter>Файлы заголовков\CoreSystems</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\EngineCore.h">
+    <ClInclude Include="Scripts\_EngineCore.h">
       <Filter>Файлы заголовков\CoreSystems</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\EngineModes.h">
@@ -998,13 +998,13 @@
     <ClInclude Include="Scripts\LevelLoader.h">
       <Filter>Файлы заголовков\CoreSystems\GameLevel\LevelLoading</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\LevelLoading.h">
+    <ClInclude Include="Scripts\_LevelLoading.h">
       <Filter>Файлы заголовков\CoreSystems\GameLevel\LevelLoading</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\LevelSerialization.h">
       <Filter>Файлы заголовков\CoreSystems\GameLevel\LevelLoading</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Extensions.h">
+    <ClInclude Include="Scripts\_Extensions.h">
       <Filter>Файлы заголовков\Extensions</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\UnitObject.h">
@@ -1016,7 +1016,7 @@
     <ClInclude Include="Scripts\ICallbackRec_GraphRen.h">
       <Filter>Файлы заголовков\CoreSystems\EngineCallbacks</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Debug.h">
+    <ClInclude Include="Scripts\_Debug.h">
       <Filter>Файлы заголовков\Debug</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\ConsoleCommsInterpretator.h">
@@ -1025,10 +1025,10 @@
     <ClInclude Include="Scripts\ICallbackRec_LUpd.h">
       <Filter>Файлы заголовков\CoreSystems\EngineCallbacks</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\CorePlayerControl.h">
+    <ClInclude Include="Scripts\_CorePlayerControl.h">
       <Filter>Файлы заголовков\CoreSystems\PlayerControl</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Physics.h">
+    <ClInclude Include="Scripts\_Physics.h">
       <Filter>Файлы заголовков\CoreSystems\Physics</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\ColliderShapes.h">
@@ -1046,13 +1046,13 @@
     <ClInclude Include="Scripts\ISelectableEntity.h">
       <Filter>Файлы заголовков\CoreSystems\EntitiesControl</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\CoreEntitiesControl.h">
+    <ClInclude Include="Scripts\_CoreEntitiesControl.h">
       <Filter>Файлы заголовков\CoreSystems\EntitiesControl</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\GroupSelectionQuad.h">
       <Filter>Файлы заголовков\CoreSystems\Visual\UI/UX</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\CoreVisual_UI.h">
+    <ClInclude Include="Scripts\_CoreVisual_UI.h">
       <Filter>Файлы заголовков\CoreSystems\Visual\UI/UX</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\PrimitiveVisualShapes.h">
@@ -1088,7 +1088,7 @@
     <ClInclude Include="Scripts\IEntityAction.h">
       <Filter>Файлы заголовков\CoreSystems\EntitiesControl\Orders</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\EntityOrders.h">
+    <ClInclude Include="Scripts\_EntityOrders.h">
       <Filter>Файлы заголовков\CoreSystems\EntitiesControl\Orders</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\EntityOrderType.h">
@@ -1103,16 +1103,16 @@
     <ClInclude Include="Scripts\EntityAction_MoveToPoint.h">
       <Filter>Файлы заголовков\CoreSystems\EntitiesControl\Orders\EntityActions</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\BaseOrdersAndActions.h">
+    <ClInclude Include="Scripts\_BaseOrdersAndActions.h">
       <Filter>Файлы заголовков\CoreSystems\EntitiesControl\Orders</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\AutoAttackModule.h">
       <Filter>Файлы заголовков\CoreSystems\GameObjects\FightingSystems\AutoAttackSystem</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\HPSystem.h">
+    <ClInclude Include="Scripts\_HPSystem.h">
       <Filter>Файлы заголовков\CoreSystems\GameObjects\FightingSystems\HitPointSystem</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\AutoAttackSystem.h">
+    <ClInclude Include="Scripts\_AutoAttackSystem.h">
       <Filter>Файлы заголовков\CoreSystems\GameObjects\FightingSystems\AutoAttackSystem</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\EntityOrder_AttackTarget.h">
@@ -1151,7 +1151,7 @@
     <ClInclude Include="Scripts\FractionsSystem.h">
       <Filter>Файлы заголовков\CoreSystems\EntitiesControl\RelationsSystem</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\RelationsSystem.h">
+    <ClInclude Include="Scripts\_RelationsSystem.h">
       <Filter>Файлы заголовков\CoreSystems\EntitiesControl\RelationsSystem</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\IFractionMember.h">
@@ -1193,7 +1193,7 @@
     <ClInclude Include="Scripts\EntityOrder_AttackArea.h">
       <Filter>Файлы заголовков\CoreSystems\EntitiesControl\Orders\BaseOrders</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\ExternalData.h">
+    <ClInclude Include="Scripts\_ExternalData.h">
       <Filter>Файлы заголовков\CoreSystems\ExternalData</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\PhysicsStructs.h">
@@ -1211,10 +1211,10 @@
     <ClInclude Include="Scripts\Wall.h">
       <Filter>Файлы заголовков\CoreSystems\GameObjects</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\FightingSystems.h">
+    <ClInclude Include="Scripts\_FightingSystems.h">
       <Filter>Файлы заголовков\CoreSystems\GameObjects\FightingSystems</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\BattleInfo.h">
+    <ClInclude Include="Scripts\_BattleInfo.h">
       <Filter>Файлы заголовков\CoreSystems\GameObjects\FightingSystems\BattleInfo</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\EntityHPModule.h">
@@ -1223,22 +1223,22 @@
     <ClInclude Include="Scripts\CallbackDelegates.h">
       <Filter>Файлы заголовков\CoreSystems\EngineCallbacks</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\CoreVisual.h">
+    <ClInclude Include="Scripts\_CoreVisual.h">
       <Filter>Файлы заголовков\CoreSystems\Visual</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\GameVisualEffects.h">
+    <ClInclude Include="Scripts\_GameVisualEffects.h">
       <Filter>Файлы заголовков\Visual\Effects</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\LoseScript.h">
       <Filter>Файлы заголовков\GameTransitionScripts</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\GameTransitions.h">
+    <ClInclude Include="Scripts\_GameTransitions.h">
       <Filter>Файлы заголовков\GameTransitionScripts</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\LevelCellMapDeser.h">
       <Filter>Файлы заголовков\CoreSystems\GameLevel\LevelLoading</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\GameLevel.h">
+    <ClInclude Include="Scripts\_GameLevel.h">
       <Filter>Файлы заголовков\CoreSystems\GameLevel</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\LevelBypassMap.h">
@@ -1256,7 +1256,7 @@
     <ClInclude Include="Scripts\CommonHPRegenModule.h">
       <Filter>Файлы заголовков\CoreSystems\GameObjects\FightingSystems\HitPointSystem\RegenModules</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\HPRegenModules.h">
+    <ClInclude Include="Scripts\_HPRegenModules.h">
       <Filter>Файлы заголовков\CoreSystems\GameObjects\FightingSystems\HitPointSystem\RegenModules</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\WinScript.h">
@@ -1265,7 +1265,7 @@
     <ClInclude Include="Scripts\PlayerInputManager.h">
       <Filter>Файлы заголовков\CoreSystems\PlayerControl</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\kv_memory.h">
+    <ClInclude Include="Scripts\_kv_memory.h">
       <Filter>Файлы заголовков\Memory</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\watch_ptr.h">
@@ -1286,7 +1286,7 @@
     <ClInclude Include="Scripts\ExtGlRes_Texture.h">
       <Filter>Файлы заголовков\CoreSystems\ExternalData\ExtGlResources\Resources</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\ExtGlResources.h">
+    <ClInclude Include="Scripts\_ExtGlResources.h">
       <Filter>Файлы заголовков\CoreSystems\ExternalData\ExtGlResources</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\ValuesListDeserializer.h">
@@ -1304,16 +1304,16 @@
     <ClInclude Include="Scripts\IndicatorFill.h">
       <Filter>Файлы заголовков\CoreSystems\Visual</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\VisualEffectsSystem.h">
+    <ClInclude Include="Scripts\_VisualEffectsCore.h">
       <Filter>Файлы заголовков\CoreSystems\Visual\VisualEffectsSystem</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\VisualEffectsCore.h">
+    <ClInclude Include="Scripts\VisualEffectsSystem.h">
       <Filter>Файлы заголовков\CoreSystems\Visual\VisualEffectsSystem</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\IColoredObject.h">
       <Filter>Файлы заголовков\CoreSystems\Visual\VisualEffectsSystem\EffectObjects</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\EffectObjects.h">
+    <ClInclude Include="Scripts\_EffectObjects.h">
       <Filter>Файлы заголовков\CoreSystems\Visual\VisualEffectsSystem\EffectObjects</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\TransformableObj.h">
@@ -1376,7 +1376,7 @@
     <ClInclude Include="Scripts\ValueDependency.h">
       <Filter>Файлы заголовков\CoreSystems\Visual\UI/UX</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\GameValueDependencies.h">
+    <ClInclude Include="Scripts\_GameValueDependencies.h">
       <Filter>Файлы заголовков\Visual\UI/UX\ValueDependencies</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\FirstChoosenEntityDependsManager.h">
@@ -1391,10 +1391,10 @@
     <ClInclude Include="Scripts\ValueDepend_EntBattStats.h">
       <Filter>Файлы заголовков\Visual\UI/UX\ValueDependencies\EntityUIDependencies</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\EntityUIDependencies.h">
+    <ClInclude Include="Scripts\_EntityUIDependencies.h">
       <Filter>Файлы заголовков\Visual\UI/UX\ValueDependencies\EntityUIDependencies</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\GeneralUIDependencies.h">
+    <ClInclude Include="Scripts\_GeneralUIDependencies.h">
       <Filter>Файлы заголовков\Visual\UI/UX\ValueDependencies\GeneralUIDependencies</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\StatsWrapperDepend_toTxt.h">
@@ -1406,10 +1406,10 @@
     <ClInclude Include="Scripts\EntityStatsWrGettingFuncs.h">
       <Filter>Файлы заголовков\Visual\UI/UX\ValueDependencies\EntityUIDependencies</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\ExtVisual_UI.h">
+    <ClInclude Include="Scripts\_ExtVisual_UI.h">
       <Filter>Файлы заголовков\Visual\UI/UX</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\ExtVisual.h">
+    <ClInclude Include="Scripts\_ExtVisual.h">
       <Filter>Файлы заголовков\Visual</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\ExtVisualManager.h">
@@ -1424,10 +1424,10 @@
     <ClInclude Include="Scripts\EntityBattleStats.h">
       <Filter>Файлы заголовков\CoreSystems\GameObjects\FightingSystems\BattleInfo\BattleStats</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\BattleStats.h">
+    <ClInclude Include="Scripts\_BattleStats.h">
       <Filter>Файлы заголовков\CoreSystems\GameObjects\FightingSystems\BattleInfo\BattleStats</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\AttackInfo.h">
+    <ClInclude Include="Scripts\_AttackInfo.h">
       <Filter>Файлы заголовков\CoreSystems\GameObjects\FightingSystems\BattleInfo\AttackInfo</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\ProjAAHitInfo.h">
@@ -1451,19 +1451,19 @@
     <ClInclude Include="Scripts\LevelManager.h">
       <Filter>Файлы заголовков\CoreSystems\GameLevel</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\AnimationsCore.h">
+    <ClInclude Include="Scripts\_AnimationsCore.h">
       <Filter>Файлы заголовков\CoreSystems\Visual\Animations</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\BattleAnimations.h">
+    <ClInclude Include="Scripts\_BattleAnimations.h">
       <Filter>Файлы заголовков\CoreSystems\Visual\Animations\BattleAnimations</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\AutoAttackAnimation.h">
       <Filter>Файлы заголовков\CoreSystems\Visual\Animations\BattleAnimations</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\AnimationsExtend.h">
+    <ClInclude Include="Scripts\_AnimationsExtend.h">
       <Filter>Файлы заголовков\Visual\Animations</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\BattleAnimationsExt.h">
+    <ClInclude Include="Scripts\_BattleAnimationsExt.h">
       <Filter>Файлы заголовков\Visual\Animations\BattleAnimations</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\TakeDamageAnim_SprFade.h">
@@ -1478,7 +1478,7 @@
     <ClInclude Include="Scripts\AAProj_TarDir.h">
       <Filter>Файлы заголовков\CoreSystems\GameObjects\FightingSystems\AutoAttackSystem\Projectiles</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\AutoAttackProjectiles.h">
+    <ClInclude Include="Scripts\_AutoAttackProjectiles.h">
       <Filter>Файлы заголовков\CoreSystems\GameObjects\FightingSystems\AutoAttackSystem\Projectiles</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\AAProj_NoTar.h">
@@ -1490,7 +1490,7 @@
     <ClInclude Include="Scripts\CameraControlInputHan.h">
       <Filter>Файлы заголовков\CoreSystems\PlayerControl\InputHandlers\Base</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\InputHandlers.h">
+    <ClInclude Include="Scripts\_InputHandlers.h">
       <Filter>Файлы заголовков\CoreSystems\PlayerControl\InputHandlers</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\BaseAppInputHandler.h">
@@ -1526,7 +1526,7 @@
     <ClInclude Include="Scripts\EngineUpdateModule.h">
       <Filter>Файлы заголовков\CoreSystems\EngineWorkCycles</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\EngineWorkModules.h">
+    <ClInclude Include="Scripts\_EngineWorkModules.h">
       <Filter>Файлы заголовков\CoreSystems\EngineWorkCycles</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\EngineRenderModule.h">
@@ -1574,7 +1574,7 @@
     <ClInclude Include="Scripts\HieObjActDependency.h">
       <Filter>Файлы заголовков\Visual\UI/UX\ValueDependencies\HieObjActDependencies</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\HieObjActDependencies.h">
+    <ClInclude Include="Scripts\_HieObjActDependencies.h">
       <Filter>Файлы заголовков\Visual\UI/UX\ValueDependencies\HieObjActDependencies</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\HieObjActDepend_GroupSelect.h">
@@ -1586,7 +1586,7 @@
     <ClInclude Include="Scripts\RapidXMLExtensions.h">
       <Filter>Файлы заголовков\Extensions</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\TriggerZones.h">
+    <ClInclude Include="Scripts\_TriggerZones.h">
       <Filter>Файлы заголовков\CoreSystems\GameObjects\TriggerZones</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\TriggerZone.h">
@@ -1607,7 +1607,7 @@
     <ClInclude Include="Scripts\GameEff_Dur_EntBatStatMult.h">
       <Filter>Файлы заголовков\CoreSystems\GameEffectsSystem\GeneralGameEffects</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\GeneralGameEffects.h">
+    <ClInclude Include="Scripts\_GeneralGameEffects.h">
       <Filter>Файлы заголовков\CoreSystems\GameEffectsSystem\GeneralGameEffects</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\AbilitiesSystem.h">
@@ -1705,6 +1705,9 @@
     </ClInclude>
     <ClInclude Include="Scripts\AbilitiesCatalogSerConsts.h">
       <Filter>Файлы заголовков\CoreSystems\GameLevel\LevelLoading\LevelCatalogs\Abilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\_EngineCallbacks.h">
+      <Filter>Файлы заголовков\CoreSystems\EngineCallbacks</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

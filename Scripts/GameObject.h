@@ -2,9 +2,9 @@
 
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
-#include <Physics.h>
+#include <_Physics.h>
 #include <CatalogObject.h>
-#include <ExtGlResources.h>
+#include <_ExtGlResources.h>
 #include <SpriteRenderer.h>
 
 using namespace sf;

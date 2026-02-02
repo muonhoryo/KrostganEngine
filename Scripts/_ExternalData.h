@@ -8,7 +8,7 @@
 #include <EngineConfigLoad.h>
 #include <GlobalConstsLoad.h>
 
-#include <ExtGlResources.h>
+#include <_ExtGlResources.h>
 
 #include <UserInterfacesDeserializer.h>
 #include <UserInterfaceLoader.h>

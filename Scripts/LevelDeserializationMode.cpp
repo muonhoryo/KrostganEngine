@@ -1,6 +1,6 @@
 
 #include <SFML/Graphics.hpp>
-#include <EngineCore.h>
+#include <_EngineCore.h>
 
 using namespace KrostganEngine::Core;
 using namespace sf;

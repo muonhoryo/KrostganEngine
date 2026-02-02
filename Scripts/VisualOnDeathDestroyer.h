@@ -1,7 +1,7 @@
 #pragma once
 
-#include <Events.h>
-#include <HPSystem.h>
+#include <_Events.h>
+#include <_HPSystem.h>
 #include <ICallbackRec_GraphRen.h>
 
 using namespace KrostganEngine::GameObjects;

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include <VisualEffectsSystem.h>
+#include <_VisualEffectsCore.h>
 #include <WorldTransfObj.h>
 #include <ICallbackRec_GraphRen.h>
 

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <UIElement.h>
-#include <VisualEffectsSystem.h>
+#include <_VisualEffectsCore.h>
 
 using namespace KrostganEngine::Visual;
 

@@ -3,7 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <PrimitiveVisualShapes.h>
 #include <iostream>
-#include <Extensions.h>
+#include <_Extensions.h>
 
 using namespace sf;
 using namespace std;

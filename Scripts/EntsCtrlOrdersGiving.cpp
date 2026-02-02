@@ -3,7 +3,7 @@
 #include <EntitiesCtrlInputHandler.h>
 #include <Engine.h>
 #include <GroupSelectionSystem.h>
-#include <Extensions.h>
+#include <_Extensions.h>
 #include <FractionsSystem.h>
 #include <DBG_DivineCommander.h>
 

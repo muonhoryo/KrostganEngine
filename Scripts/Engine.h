@@ -6,10 +6,10 @@
 #include <EngineUpdateModule.h>
 #include <EngineRenderModule.h>
 #include <EngineLateUpdateModule.h>
-#include <ExternalData.h>
-#include <Physics.h>
+#include <_ExternalData.h>
+#include <_Physics.h>
 #include <CursorManager.h>
-#include <Events.h>
+#include <_Events.h>
 
 #define eps Engine::GetGlobalConsts().EPS
 

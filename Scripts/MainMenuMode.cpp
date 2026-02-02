@@ -1,9 +1,9 @@
 
 #include <SFML/System.hpp>
 #include <Engine.h>
-#include <ExternalData.h>
+#include <_ExternalData.h>
 #include <VectExts.h>
-#include <InputHandlers.h>
+#include <_InputHandlers.h>
 
 using namespace KrostganEngine;
 using namespace KrostganEngine::Core;

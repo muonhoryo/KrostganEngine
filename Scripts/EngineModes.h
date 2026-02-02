@@ -2,10 +2,10 @@
 
 #include <SFML/Graphics.hpp>
 #include <ICallbackRec_Upd.h>
-#include <CoreEntitiesControl.h>
-#include <CorePlayerControl.h>
-#include <CoreVisual_UI.h>
-#include <ExtVisual.h>
+#include <_CoreEntitiesControl.h>
+#include <_CorePlayerControl.h>
+#include <_CoreVisual_UI.h>
+#include <_ExtVisual.h>
 
 using namespace sf;
 using namespace KrostganEngine::EntitiesControl;

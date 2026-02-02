@@ -1,8 +1,8 @@
 #pragma once
 
 #include <PlayerInputManager.h>
-#include <Physics.h>
-#include <HPSystem.h>
+#include <_Physics.h>
+#include <_HPSystem.h>
 #include <SFML/System.hpp>
 
 using namespace sf;

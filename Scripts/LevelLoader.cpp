@@ -1,10 +1,10 @@
 
-#include <EngineCore.h>
-#include <CoreGameObjects.h>
+#include <_EngineCore.h>
+#include <_CoreGameObjects.h>
 #include <forward_list>
 #include <SFML/Graphics.hpp>
 #include <string>
-#include <Events.h>
+#include <_Events.h>
 #include <SFML/System.hpp>
 #include <WarFogStencilGen.h>
 #include <WarFog.h>

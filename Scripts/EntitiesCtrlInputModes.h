@@ -1,8 +1,8 @@
 #pragma once
 
 #include <EntitiesCtrlInputHandler.h>
-#include <Physics.h>
-#include <CoreVisual_UI.h>
+#include <_Physics.h>
+#include <_CoreVisual_UI.h>
 
 using namespace KrostganEngine::UI;
 using namespace KrostganEngine::Physics;

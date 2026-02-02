@@ -1,5 +1,5 @@
 
-#include <ExtGlResources.h>
+#include <_ExtGlResources.h>
 
 using namespace KrostganEngine::Core;
 using namespace sf;

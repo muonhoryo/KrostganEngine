@@ -1,7 +1,7 @@
 
 #include <SFML/System.hpp>
-#include <EngineCore.h> 
-#include <Extensions.h>
+#include <_EngineCore.h> 
+#include <_Extensions.h>
 
 using namespace sf;
 using namespace KrostganEngine::Physics;

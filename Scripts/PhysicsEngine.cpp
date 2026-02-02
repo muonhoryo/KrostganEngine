@@ -1,9 +1,9 @@
 
-#include <Physics.h>
+#include <_Physics.h>
 #include <vector>
 #include <SFML/System.hpp>
 #include <Engine.h>
-#include <Extensions.h>
+#include <_Extensions.h>
 
 using namespace sf;
 using namespace KrostganEngine::Physics;

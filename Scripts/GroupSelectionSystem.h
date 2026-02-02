@@ -2,10 +2,10 @@
 
 #include <forward_list>
 #include <ISelectableEntity.h>
-#include <RelationsSystem.h>
+#include <_RelationsSystem.h>
 #include <IAttackableObj.h>
 #include <watch_ptr_predicates.h>
-#include <Events.h>
+#include <_Events.h>
 
 using namespace std;
 using namespace KrostganEngine;

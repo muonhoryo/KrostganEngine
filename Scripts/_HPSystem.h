@@ -4,4 +4,4 @@
 
 #include <EntityHPModule.h>
 
-#include <HPRegenModules.h>
+#include <_HPRegenModules.h>

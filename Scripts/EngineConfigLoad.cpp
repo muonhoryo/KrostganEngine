@@ -3,8 +3,8 @@
 #include <iostream>
 #include <vector>
 #include <SFML/System.hpp>
-#include <EngineCore.h>
-#include <Extensions.h>
+#include <_EngineCore.h>
+#include <_Extensions.h>
 
 using namespace std;
 using namespace sf;

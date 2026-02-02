@@ -21,9 +21,9 @@
 #include <EntitiesObserver.h>
 
 #include <EntityBattleStats.h>
-#include <AutoAttackSystem.h>
-#include <HPSystem.h>
+#include <_AutoAttackSystem.h>
+#include <_HPSystem.h>
 
-#include <TriggerZones.h>
+#include <_TriggerZones.h>
 
 #include <GameEffectsSystem.h>

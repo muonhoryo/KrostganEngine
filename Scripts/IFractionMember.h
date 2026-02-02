@@ -1,7 +1,7 @@
 #pragma once
 
 #include <FractionsSystem.h>
-#include <Events.h>
+#include <_Events.h>
 
 namespace KrostganEngine::EntitiesControl {
 

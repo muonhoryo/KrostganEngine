@@ -2,19 +2,19 @@
 
 #include <SFML/System.hpp>
 #include <GameObject.h>
-#include <CoreEntitiesControl.h>
-#include <Physics.h>
+#include <_CoreEntitiesControl.h>
+#include <_Physics.h>
 #include <Entity.h>
-#include <EntityOrders.h>
+#include <_EntityOrders.h>
 #include <vector>
 #include <EntityOrderType.h>
 #include <BaseAutoAggrModule.h>
 #include <EntityHPModule.h>
-#include <HPRegenModules.h>
-#include <BattleAnimationsExt.h>
+#include <_HPRegenModules.h>
+#include <_BattleAnimationsExt.h>
 #include <EntityAutoAttackModule.h>
 
-#include <CoreVisual_UI.h>
+#include <_CoreVisual_UI.h>
 
 using namespace sf;
 using namespace std;

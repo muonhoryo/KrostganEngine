@@ -1,7 +1,7 @@
 #pragma once
 
 #include <GameEffectsSystem.h>
-#include <RelationsSystem.h>
+#include <_RelationsSystem.h>
 #include <OrdersExecutor.h>
 
 using namespace KrostganEngine::EntitiesControl;

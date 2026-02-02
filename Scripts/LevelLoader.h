@@ -2,8 +2,8 @@
 
 #include <forward_list>
 #include <string>
-#include <CoreGameObjects.h>
-#include <Events.h>
+#include <_CoreGameObjects.h>
+#include <_Events.h>
 #include <LevelLoadingInfo.h>
 #include <ICallbackRec_GraphRen.h>
 #include <iostream>

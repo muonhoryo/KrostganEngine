@@ -3,13 +3,13 @@
 #include <ConsoleCommsInterpretator.h>
 #include <string>
 #include <iostream>
-#include <EngineCore.h>
+#include <_EngineCore.h>
 #include <DBG_DivineCommander.h>
 #include <DBG_ImmortalArmy.h>
-#include <Extensions.h>
+#include <_Extensions.h>
 
 #include <GameEffectsCatalog.h>
-#include <GeneralGameEffects.h>
+#include <_GeneralGameEffects.h>
 #include <Ability_Aura.h>
 #include <Ability_NonTar_SetAA.h>
 

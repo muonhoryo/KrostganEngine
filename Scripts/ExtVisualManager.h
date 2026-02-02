@@ -1,9 +1,9 @@
 #pragma once
 
 #include <map>
-#include <CoreEntitiesControl.h>
+#include <_CoreEntitiesControl.h>
 #include <OrderTargetsVisualizer.h>
-#include <Events.h>
+#include <_Events.h>
 
 using namespace std;
 using namespace KrostganEngine;

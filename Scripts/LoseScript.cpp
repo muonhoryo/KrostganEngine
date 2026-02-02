@@ -1,8 +1,8 @@
 
 #include <LoseScript.h>
 #include <Engine.h>
-#include <GameVisualEffects.h>
-#include <InputHandlers.h>
+#include <_GameVisualEffects.h>
+#include <_InputHandlers.h>
 
 using namespace KrostganEngine::GameTransitions;
 using namespace KrostganEngine::UI;

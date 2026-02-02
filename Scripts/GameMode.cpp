@@ -3,9 +3,9 @@
 #include <Engine.h>
 #include <EngineWorkCycleModule.h>
 #include <LevelBypassMap.h>
-#include <GameLevel.h>
+#include <_GameLevel.h>
 #include <WarFogStencilGen.h>
-#include <Debug.h>
+#include <_Debug.h>
 
 using namespace KrostganEngine::Core;
 using namespace sf;
@@ -25,20 +25,6 @@ GameMode::GameMode() :EngineMode() {
     Engine::SetCameraPos(Vector2f(0, 0));
 
     UserInterfaceLoader::Load_GameUI();
-
-    //Create object's debug-visualizer
-    //ATTENTION!!!! Memory leak
-   /* UnitObject* ent = nullptr;
-    auto beg = EntitiesObserver::GetBeginIter();
-    auto end = EntitiesObserver::GetAfterEndIter();
-    for (;beg != end;++beg) {
-        ent = dynamic_cast<UnitObject*>(*beg);
-        if (ent != nullptr) {
-            new UnitColliderVisualizer(*ent);
-            new EntityAARadVisualizer(*ent);
-            new EntityAutoAggrRadVisualizer(*ent);
-        }
-    }*/
 }
 GameMode::~GameMode() {
     delete GameInterface;
