@@ -969,6 +969,15 @@
     <ClCompile Include="Scripts\Fraction.cpp">
       <Filter>Исходные файлы\CoreSystems\EntitiesControl\RelationsSystem</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\PolygonCollShaper.cpp">
+      <Filter>Исходные файлы\CoreSystems\Physics\CollisionShapes</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\PolygonColliderVisualizer.cpp">
+      <Filter>Исходные файлы\Debug\Visualization</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\AuraLoadInfo.cpp">
+      <Filter>Исходные файлы\CoreSystems\GameLevel\LevelLoading\LevelCatalogs\WorldObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\_CoreGameObjects.h">
@@ -1708,6 +1717,9 @@
     </ClInclude>
     <ClInclude Include="Scripts\_EngineCallbacks.h">
       <Filter>Файлы заголовков\CoreSystems\EngineCallbacks</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\PolygonColliderVisualizer.h">
+      <Filter>Файлы заголовков\Debug\Visualization</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

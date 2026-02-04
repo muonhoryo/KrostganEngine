@@ -12,7 +12,7 @@ bool EntityLoadInfo::WriteParam(Attr& param) {
 		return true;
 	}
 
-	if (CheckParamName(param, WorldObjsLoad_ParamDefNames::ENTITY_FRACTION)) {
+	if (CheckParamName(param, WorldObjsLoad_ParamDefNames::OBJECT_FRACTION)) {
 		string buffer = param.second;
 		FStreamExts::ClearPath(buffer);
 		FStreamExts::ToLowerStr(buffer);

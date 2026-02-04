@@ -27,8 +27,37 @@ namespace KrostganEngine::Physics {
 
 		PhysicsEngine();
 
+		/// <summary>
+		/// Return empty array if there is not any physics in over circle or radius is too small for cast
+		/// </summary>
+		/// <param name="center"></param>
+		/// <param name="radius"></param>
+		/// <param name="layer"></param>
+		/// <returns></returns>
 		vector<IPhysicalObject*> OverlapAABB_All(Vector2f min, Vector2f max, PhysicsLayer layer=PhysicsLayer::All);
+		/// <summary>
+		/// Return empty array if there is not any physics in over circle or radius is too small for cast
+		/// </summary>
+		/// <param name="center"></param>
+		/// <param name="radius"></param>
+		/// <param name="layer"></param>
+		/// <returns></returns>
 		vector<IPhysicalObject*> OverlapCircle_All(Vector2f center, float radius, PhysicsLayer layer = PhysicsLayer::All);
+		/// <summary>
+		/// Return empty array if there is not any physics in over circle or radius is too small for cast
+		/// </summary>
+		/// <param name="center"></param>
+		/// <param name="radius"></param>
+		/// <param name="layer"></param>
+		/// <returns></returns>
+		vector<IPhysicalObject*> OverlapPolygon_All(const PolygonCollShape& polygon, PhysicsLayer layer = PhysicsLayer::All);
+		/// <summary>
+		/// Return empty array if there is not any physics in over circle or radius is too small for cast
+		/// </summary>
+		/// <param name="center"></param>
+		/// <param name="radius"></param>
+		/// <param name="layer"></param>
+		/// <returns></returns>
 		vector<IPhysicalObject*> OverlapDynamic_All(const ColliderShape& collider, PhysicsLayer layer = PhysicsLayer::All);
 
 		vector<IPhysicalObject*> RayCast_All(Vector2f origin, Vector2f direction, float distance, PhysicsLayer layer = PhysicsLayer::All);

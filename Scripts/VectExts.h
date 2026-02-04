@@ -141,4 +141,18 @@ namespace KrostganEngine {
 		double angle = Rad2Deg(atan2(dir.y, dir.x));
 		return angle;
 	}
+
+	/// <summary>
+	/// Return true if point is placed in half-dimension by left-side of line
+	/// </summary>
+	static bool GetDimRelToLine_Left(Vector2f line_a, Vector2f line_b, Vector2f point) {
+
+		float d = (point.x - line_a.x) * (line_b.y - line_a.y) - (point.y - line_a.y) * (line_b.x - line_a.x);
+		return d > 0;
+	}
+	static double DistanceToLine(Vector2f line_a, Vector2f line_b, Vector2f point) {
+		double numerator = abs((line_b.y - line_a.y) * point.x - (line_b.x - line_a.x) * point.y + line_b.x * line_a.y - line_b.y * line_a.x);
+		double denominator = Length(line_b - line_a);
+		return numerator / denominator;
+	}
 }

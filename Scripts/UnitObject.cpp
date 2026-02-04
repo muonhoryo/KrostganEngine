@@ -22,13 +22,13 @@ using namespace KrostganEngine;
 
 UnitObject::UnitObject(UnitObjectCtorParams& params)
 	:Entity(params),
-	COLLIDER(*new CircleCollShape(params.GlobalPosition, params.GlobalScale* Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution * 0.5f)),
+	Collider(*new CircleCollShape(params.GlobalPosition, params.GlobalScale* Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution * 0.5f)),
 	Layer(PhysicsLayer::Units){
 
 
 }
 UnitObject::~UnitObject() {
-	delete &COLLIDER;
+	delete &Collider;
 }
 
 
@@ -38,19 +38,19 @@ PhysicsLayer UnitObject::GetLayer() const {
 
 void UnitObject::SetGlobalScale(Vector2f  scale) {
 	Entity::SetGlobalScale(scale);
-	COLLIDER.Radius= GetGlobalScale_Sng() * Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution * 0.5;
+	Collider.Radius= GetGlobalScale_Sng() * Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution * 0.5;
 }
 void UnitObject::SetGlobalPosition(Vector2f pos) {
 	Entity::SetGlobalPosition(pos);
-	COLLIDER.Center = pos;
+	Collider.Center = pos;
 }
 void UnitObject::SetLocalScale(Vector2f scale) {
 	Entity::SetLocalScale(scale);
-	COLLIDER.Radius = GetGlobalScale_Sng() * Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution * 0.5;
+	Collider.Radius = GetGlobalScale_Sng() * Engine::GetGlobalConsts().GameObjs_OneSizeSpriteResolution * 0.5;
 }
 void UnitObject::SetLocalPosition(Vector2f pos) {
 	Entity::SetLocalPosition(pos);
-	COLLIDER.Center = GetGlobalPosition();
+	Collider.Center = GetGlobalPosition();
 }
 
 const vector<EntityOrderType>& UnitObject::GetAllowedOrdersCatalog() {
@@ -58,7 +58,7 @@ const vector<EntityOrderType>& UnitObject::GetAllowedOrdersCatalog() {
 }
 
 const ColliderShape& UnitObject::GetCollider_Action() const {
-	return COLLIDER;
+	return Collider;
 }
 
 vector<IPhysicalObject*> UnitObject::OverlapAll_Action() const {
@@ -71,15 +71,15 @@ vector<IPhysicalObject*> UnitObject::OverlapAll_Action() const {
 		layer = SOLID_COLLISION_LAYER;
 	}
 
-	return Engine::GetPhysicsEngine().OverlapCircle_All(COLLIDER.Center, COLLIDER.Radius, layer);
+	return Engine::GetPhysicsEngine().OverlapCircle_All(Collider.Center, Collider.Radius, layer);
 }
 Vector2f UnitObject::GetResolvingPnt(const ColliderShape& objShape, Vector2f movDir, bool isSlideColl) const {
 
-	return objShape.GetCollisionResolvPoint(COLLIDER, movDir,isSlideColl);
+	return objShape.GetCollisionResolvPoint(Collider, movDir,isSlideColl);
 }
 
 Vector2f UnitObject::GetClosestPoint(Vector2f dmgDealerPos) const {
-	return COLLIDER.GetClosestPoint(dmgDealerPos);
+	return Collider.GetClosestPoint(dmgDealerPos);
 }
 
 const vector<EntityOrderType> UnitObject::AllowedOrdersCatalog = vector<EntityOrderType>

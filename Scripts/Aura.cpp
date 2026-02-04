@@ -121,7 +121,14 @@ void Aura::OnTriggerExit(watch_ptr_handler_wr<IPhysicalObject>& obj) {
 		if (ptr != nullptr) {
 			
 			auto geffTar = dynamic_cast<IGameEffTarget*>(ptr);
-			geffTar->RemoveGameEff(GameEff);
+			if (geffTar->HasGameEffect(GameEff.GetCatalogID(), GameEff.GetSubcatalogID())) {
+
+				geffTar->RemoveGameEff(GameEff);
+			}
+			else {
+				if (dynamic_cast<ComposeGameEff_Temporal*>(&GameEff) == nullptr)
+					throw exception("Permanent effect has been removed not by aura-source");
+			}
 		}
 	}
 }

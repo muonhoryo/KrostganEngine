@@ -10,7 +10,7 @@ using namespace KrostganEngine::GameObjects;
 
 DecorationObject::DecorationObject(DecorationCtorParams& params)
 	:GameObject(params),
-		COLLIDER(*((params.COLLIDER==nullptr)?new EmptyShape():params.COLLIDER)),
+		Collider(*((params.Collider==nullptr)?new EmptyShape():params.Collider)),
 		HitEffectSprite(params.HitEffectSprite),
 		IsTargetableForAutoAttack(params.IsTargetableForAutoAttack){
 
@@ -24,18 +24,18 @@ DecorationObject::DecorationObject(DecorationCtorParams& params)
 	HitEffectSprite->SetGlobalPosition(GetGlobalPosition());
 	HitEffectSprite->SetParent(this);
 
-	COLLIDER.MoveCollider(GetGlobalPosition());
+	Collider.MoveCollider(GetGlobalPosition());
 	RecreateCollider(1, GetGlobalScale_Sng());
 }
 DecorationObject::~DecorationObject() {
-	delete& COLLIDER;
+	delete& Collider;
 	delete HPModule;
 }
 
 void DecorationObject::RecreateCollider(float oldSize, float newSize) {
 
-	COLLIDER.Resize(1 / oldSize);
-	COLLIDER.Resize(newSize);
+	Collider.Resize(1 / oldSize);
+	Collider.Resize(newSize);
 }
 
 void DecorationObject::Update(CallbackRecArgs_LUpd args) {
@@ -45,7 +45,7 @@ void DecorationObject::Update(CallbackRecArgs_LUpd args) {
 void DecorationObject::SetGlobalPosition(Vector2f position) {
 
 	Vector2f diff = position - GetGlobalPosition();
-	COLLIDER.MoveCollider(diff);
+	Collider.MoveCollider(diff);
 	GameObject::SetGlobalPosition(position);
 }
 void DecorationObject::SetGlobalScale(Vector2f scale) {
@@ -62,28 +62,28 @@ void DecorationObject::SetLocalPosition(Vector2f pos) {
 
 	Vector2f oldPos = GetGlobalPosition();
 	GameObject::SetLocalPosition(pos);
-	COLLIDER.MoveCollider(GetGlobalPosition() - oldPos);
+	Collider.MoveCollider(GetGlobalPosition() - oldPos);
 }
 
 vector<IPhysicalObject*> DecorationObject::OverlapAll() const {
-	return Engine::GetPhysicsEngine().OverlapDynamic_All(COLLIDER, SOLID_COLLISION_LAYER);
+	return Engine::GetPhysicsEngine().OverlapDynamic_All(Collider, SOLID_COLLISION_LAYER);
 }
 Vector2f DecorationObject::GetResolvingPnt(const ColliderShape& objShape, Vector2f movDir, bool isSlideColl) const {
-	return objShape.GetCollisionResolvPoint_d(COLLIDER, movDir, isSlideColl);
+	return objShape.GetCollisionResolvPoint_d(Collider, movDir, isSlideColl);
 }
 
 PhysicsLayer DecorationObject::GetLayer() const {
 	return PhysicsLayer::Decorations;
 }
 const ColliderShape& DecorationObject::GetCollider() const {
-	return COLLIDER;
+	return Collider;
 }
 
 IHitPointModule& DecorationObject::GetHPModule() const {
 	return *HPModule;
 }
 Vector2f DecorationObject::GetClosestPoint(Vector2f dmgDealerPos) const {
-	return COLLIDER.GetClosestPoint(dmgDealerPos);
+	return Collider.GetClosestPoint(dmgDealerPos);
 }
 bool DecorationObject::IsTargetableForAA() const {
 	return IsTargetableForAutoAttack;

@@ -24,7 +24,7 @@ bool ColliderShape::Intersect_CircleVsAABB(const CircleCollShape& coll1,const AA
 
 	bool isInHor = coll2.Min.x < coll1.Center.x && coll1.Center.x < coll2.Max.x;
 	bool isInVer = coll2.Min.y < coll1.Center.y && coll1.Center.y < coll2.Max.y;
-	if (isInHor&& isInVer)
+	if (isInHor&& isInVer)	//circle is inside aabb
 		return true;
 	else {
 		float dist;
@@ -60,6 +60,49 @@ bool ColliderShape::Intersect_AABBvsAABB(const AABBCollShape& coll1,const AABBCo
 		coll1.Min.x < coll2.Max.x &&
 		coll2.Min.y < coll1.Max.y &&
 		coll1.Min.y < coll2.Max.y;
+}
+bool ColliderShape::Intersect_PolygonVsCircle(const PolygonCollShape& coll1, const CircleCollShape& coll2) {
+
+	if (coll2.Radius < eps)
+		return false;
+
+	auto& circle = coll1.GetOutterBoundCircle();
+	if (!Intersect_CircleVsCircle(circle, coll2))
+		return false;
+	
+	auto& points = coll1.GetPoints();
+	Vector2f a = points[points.size()-1];	//get last point
+	Vector2f b;
+	bool isInsideColl = true;
+	for (auto it = points.cbegin();it != points.cend();++it) {
+		b = *it;
+		if (DistanceToLine(a, b, coll2.Center) <= coll2.Radius)
+			return true;
+
+		//Check is circle inside polygon
+		//If center of circle is not by right-side of every edge of polygon circle cannot be inside of polygon
+		if (isInsideColl && GetDimRelToLine_Left(a, b, coll2.Center)) {
+			
+			isInsideColl = false;
+		}
+
+		a = b;
+	}
+	return isInsideColl;
+}
+bool ColliderShape::Intersect_PolygonVsAABB(const PolygonCollShape& col11, const AABBCollShape& coll2) {
+
+	//TODO
+	//Do something with that
+
+	return false;
+}
+bool ColliderShape::Intersect_PolygonVsPolygon(const PolygonCollShape& coll1, const PolygonCollShape& coll2) {
+
+	//TODO
+	//Currently are not wanted
+
+	return false;
 }
 
 Vector2f ColliderShape::GetCollisionResolvPoint_d(const ColliderShape& subjShape, Vector2f subjMovDir, bool isSlideColl) const {

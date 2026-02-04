@@ -13,7 +13,7 @@ DecorationLoadInfo::DecorationLoadInfo(const DecorationLoadInfo& copy)
 	CurrentHP = copy.CurrentHP;
 	MaxHP = copy.MaxHP;
 	IsTargetableForAA = copy.IsTargetableForAA;
-	COLLIDER = &copy.COLLIDER->Clone();
+	Collider = &copy.Collider->Clone();
 }
 
 bool DecorationLoadInfo::WriteParam(Attr& param) {
@@ -50,9 +50,9 @@ bool DecorationLoadInfo::WriteParamByNode(xml_node<>& node) {
 
 	if (nodeName == WorldObjsLoad_XMLChildrenType::COLLIDER) {
 
-		if (COLLIDER != nullptr)
-			delete COLLIDER;
-		COLLIDER = &ColliderDeserializer::DeserializeCollider(node);
+		if (Collider != nullptr)
+			delete Collider;
+		Collider = &ColliderDeserializer::DeserializeCollider(node);
 	}
 	else
 		return false;
@@ -76,7 +76,7 @@ void DecorationLoadInfo::FillCtorParams(GameObjectCtorParams& params, const Game
 	parParams->HitEffectSprite->SetRendLayer((std::byte)40);
 	parParams->CurrentHP = parUsedInfo->CurrentHP;
 	parParams->MaxHP = parUsedInfo->MaxHP;
-	parParams->COLLIDER = &COLLIDER->Clone();
+	parParams->Collider = &Collider->Clone();
 }
 
 WorldTransfObj* DecorationLoadInfo::InstantiateObject_Action(const WorldObjectLoadInfo& usedInfo) const {

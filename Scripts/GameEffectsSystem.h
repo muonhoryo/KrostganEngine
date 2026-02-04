@@ -134,10 +134,10 @@ namespace KrostganEngine::GameObjects {
 	class ComposeGameEff_Permanent : public ComposeGameEffect{
 
 	public:
-		ComposeGameEff_Permanent
+		explicit ComposeGameEff_Permanent
 			(size_t CatalogID = 0,
 			std::byte SubcatalogID = (std::byte)0);
-		ComposeGameEff_Permanent(const ComposeGameEff_Permanent& copy);
+		explicit  ComposeGameEff_Permanent(const ComposeGameEff_Permanent& copy);
 		virtual ~ComposeGameEff_Permanent();
 
 		void AddGameEffect_Durable(IGameEffect_Durable& eff);

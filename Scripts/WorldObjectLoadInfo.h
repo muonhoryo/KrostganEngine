@@ -63,7 +63,6 @@ namespace KrostganEngine::GameObjects {
 		virtual ~GameObjectLoadInfo() {}
 
 		string SpriteSource = "";
-
 		bool SolidCollision = true;
 
 		/// <summary>
@@ -161,7 +160,7 @@ namespace KrostganEngine::GameObjects {
 		size_t			CurrentHP = 1;
 		size_t			MaxHP = 1;
 		bool			IsTargetableForAA = true;
-		ColliderShape* COLLIDER = nullptr;
+		ColliderShape*	Collider = nullptr;
 
 		DecorationLoadInfo() : GameObjectLoadInfo() {}
 		DecorationLoadInfo(const DecorationLoadInfo& copy);
@@ -220,5 +219,26 @@ namespace KrostganEngine::GameObjects {
 
 		mutable AutoAttackModule* Owner = nullptr;
 		mutable IAttackableObj* Target = nullptr;
+	};
+
+	struct AuraLoadInfo : public WorldObjectLoadInfo {
+
+		AuraLoadInfo();
+		AuraLoadInfo(const AuraLoadInfo& copy);
+		virtual ~AuraLoadInfo();
+
+		ColliderShape*	TriggerCollider			= nullptr;
+		Relation		ToTargetRelMask			= Relation::None;
+		size_t			GameEff_CatalogID		= EMPTY_CATALOG_ID;
+		std::byte		GameEff_SubCatalogID	= ABSENT_SUB_CATALOG_ID;
+		FractionWrapper	AuraFrac				= FractionWrapper();
+
+		bool WriteParam(Attr& param) override;
+		bool WriteParamByNode(xml_node<>& node) override;
+
+		WorldObjectLoadInfo& Clone() const override;
+
+	protected:
+		WorldTransfObj* InstantiateObject_Action(const WorldObjectLoadInfo& usedInfo) const override;
 	};
 }

@@ -17,14 +17,6 @@ vector<IPhysicalObject*> PhysicsEngine::OverlapAABB_All(Vector2f min, Vector2f m
 	delete shape;
 	return objs;
 }
-
-/// <summary>
-/// Return empty array if there is not any physics in over circle or radius is too small for cast
-/// </summary>
-/// <param name="center"></param>
-/// <param name="radius"></param>
-/// <param name="layer"></param>
-/// <returns></returns>
 vector<IPhysicalObject*> PhysicsEngine::OverlapCircle_All(Vector2f center, float radius, PhysicsLayer layer) {
 	if (radius <= eps)
 		return vector<IPhysicalObject*>();
@@ -34,7 +26,11 @@ vector<IPhysicalObject*> PhysicsEngine::OverlapCircle_All(Vector2f center, float
 	delete castShape;
 	return objs;
 }
+vector<IPhysicalObject*> PhysicsEngine::OverlapPolygon_All(const PolygonCollShape& polygon, PhysicsLayer layer) {
 
+	auto objs = Overlap_All<PolygonCollShape>(polygon, layer);
+	return objs;
+}
 vector<IPhysicalObject*> PhysicsEngine::OverlapDynamic_All(const ColliderShape& collider, PhysicsLayer layer) {
 
 	{
@@ -46,6 +42,11 @@ vector<IPhysicalObject*> PhysicsEngine::OverlapDynamic_All(const ColliderShape& 
 		auto circleShape = dynamic_cast<const CircleCollShape*>(&collider);
 		if (circleShape != nullptr)
 			return OverlapCircle_All(circleShape->Center, circleShape->Radius, layer);
+	}
+	{
+		auto polygonShape = dynamic_cast<const PolygonCollShape*>(&collider);
+		if (polygonShape != nullptr)
+			return OverlapPolygon_All(*polygonShape, layer);
 	}
 	return vector<IPhysicalObject*>();
 }

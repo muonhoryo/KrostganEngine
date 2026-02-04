@@ -27,7 +27,7 @@ ComposeGameEffect& ComposeGameEffectLoadInfo_Permanent::InstantiateGameEff() con
 	
 	auto& eff = *new ComposeGameEff_Permanent(CatalogID, SubCatalogID);
 	for (auto genEff : GeneralGameEffects_Dur) {
-		eff.AddGameEffect_Durable(*reinterpret_cast<IGameEffect_Durable*>(&eff.Clone()));
+		eff.AddGameEffect_Durable(*dynamic_cast<IGameEffect_Durable*>(&genEff->Clone()));
 	}
 	return eff;
 }

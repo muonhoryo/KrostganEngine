@@ -154,6 +154,7 @@
     <ClCompile Include="Scripts\Ability_Passive.cpp" />
     <ClCompile Include="Scripts\Ability_Targetable.cpp" />
     <ClCompile Include="Scripts\Aura.cpp" />
+    <ClCompile Include="Scripts\AuraLoadInfo.cpp" />
     <ClCompile Include="Scripts\AutoAggressionModule.cpp" />
     <ClCompile Include="Scripts\AutoAttackModule.cpp" />
     <ClCompile Include="Scripts\AutoAttackProjectile.cpp" />
@@ -222,6 +223,8 @@
     <ClCompile Include="Scripts\IndicatorFill.cpp" />
     <ClCompile Include="Scripts\LvlObjInstantiationInfo.cpp" />
     <ClCompile Include="Scripts\PlayerControlSettsLoad.cpp" />
+    <ClCompile Include="Scripts\PolygonColliderVisualizer.cpp" />
+    <ClCompile Include="Scripts\PolygonCollShaper.cpp" />
     <ClCompile Include="Scripts\RelationSerialization.cpp" />
     <ClCompile Include="Scripts\SpriteRendLoadInfo.cpp" />
     <ClCompile Include="Scripts\TransparencyVisEff.cpp" />
@@ -332,6 +335,7 @@
     <ClInclude Include="Scripts\Ability_Passive.h" />
     <ClInclude Include="Scripts\Ability_Targetable.h" />
     <ClInclude Include="Scripts\Ability_NonTar_TempEff.h" />
+    <ClInclude Include="Scripts\PolygonColliderVisualizer.h" />
     <ClInclude Include="Scripts\_AnimationsCore.h" />
     <ClInclude Include="Scripts\_AnimationsExtend.h" />
     <ClInclude Include="Scripts\_AttackInfo.h" />

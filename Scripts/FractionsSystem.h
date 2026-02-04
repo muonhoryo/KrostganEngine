@@ -20,7 +20,7 @@ namespace KrostganEngine::EntitiesControl {
 	class FractionsDeserializator;
 	class FractionsSystem;
 
-	enum class Relation {
+	enum class Relation{
 		None	= -1,
 		Ally	= 1,
 		Neutral	= 2,
@@ -177,7 +177,17 @@ namespace KrostganEngine::EntitiesControl {
 			pair{"All", Relation::All}
 		};
 
-		static Relation GetRelationByName(const string& name);
+		/// <summary>
+		/// If cannot parse by name (return Relation::None on first try), try parse by int-value of relation
+		/// </summary>
 		static Relation DeserializeRelation(const string& rel);
+		/// <summary>
+		/// Return Relation::None if cannot parse by name
+		/// </summary>
+		static Relation GetRelationByName(const string& name);
+		/// <summary>
+		/// Return Relation::None if cannot parse by name
+		/// </summary>
+		static Relation GetRelationByInt(int rel);
 	};
 }

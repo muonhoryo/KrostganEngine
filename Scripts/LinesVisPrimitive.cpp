@@ -60,15 +60,15 @@ void LinesVisPrimitive::RemovePointAt(size_t index) {
 	size_t overWCount = count - index - 1;
 	--count;
 	if (overWCount > 0) {
-		vector<Vector2f> points = vector<Vector2f>(overWCount);
+		vector<Vector2f> Points = vector<Vector2f>(overWCount);
 		for (size_t i = index+1,j=0;i < count+1;) {
-			points[j] = Vertexes[i].position;
+			Points[j] = Vertexes[i].position;
 			++i;
 			++j;
 		}
 		Vertexes.resize(count);
 		for (size_t i = index, j = 0;i < count;) {
-			Vertexes[i].position = points[j];
+			Vertexes[i].position = Points[j];
 			Vertexes[i].color = Vertexes[0].color;
 			++i;
 			++j;

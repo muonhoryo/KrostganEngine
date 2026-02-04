@@ -27,6 +27,9 @@ ColliderShape& ColliderDeserializer::DeserializeCollider(const xml_node<>& serCo
 	else if (attrValue == ColliderSerDefNames::TYPE_EMPTY) {
 		return *new EmptyShape();
 	}
+	else if (attrValue == ColliderSerDefNames::TYPE_POLYGON) {
+		return DeserializeColl_Polygon(serColl, attr);
+	}
 	else
 		throw exception("Unknown type of collider");
 }
@@ -87,4 +90,40 @@ ColliderShape& ColliderDeserializer::DeserializeColl_AABB(const xml_node<>& serC
 	}
 
 	return AABBCollShape::InstanceBy_CenterAndSize(center, width, height);
+}
+
+ColliderShape& ColliderDeserializer::DeserializeColl_Polygon(const xml_node<>& serColl, xml_attribute<>* attrBuffer) {
+
+	attrBuffer = attrBuffer->next_attribute();
+
+	char* name = nullptr;
+
+	vector<Vector2f>& points = *new vector<Vector2f>();
+
+	//Currently dont has any attributes
+	/*while (attrBuffer != nullptr) {
+
+		attrName = attrBuffer->name();
+
+		attrBuffer = attrBuffer->next_attribute();
+	}*/
+
+	xml_node<>* ch = serColl.first_node();
+	while (ch != nullptr) {
+		
+		name = ch->name();
+		if (name == ColliderSerDefNames::CHILD_POLYGON_POINT) {
+
+			points.push_back(Polygon_DeserializePoint(*ch));
+		}
+
+		ch = ch->next_sibling();
+	}
+
+	return *new PolygonCollShape(points);
+}
+Vector2f ColliderDeserializer::Polygon_DeserializePoint(const xml_node<>& serPoint) {
+
+	string value = serPoint.first_attribute()->value();
+	return ParseVec2f(value);
 }

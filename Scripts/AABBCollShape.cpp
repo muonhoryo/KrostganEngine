@@ -8,13 +8,13 @@ using namespace KrostganEngine::Physics;
 using namespace KrostganEngine;
 
 AABBCollShape::AABBCollShape(Vector2f Min,Vector2f Max)
+	:Min(Min),
+	Max(Max),
+	BoundCircle(CircleCollShape(Vector2f(0,0), 1))
 {
 	if (Min.x > Max.x ||
 		Min.y > Max.y)
 		throw std::exception("Incorrect params of AABB shape");
-
-	this->Min = Min;
-	this->Max = Max;
 }
 
 ColliderShape& AABBCollShape::Clone() const {
@@ -37,6 +37,9 @@ AABBCollShape& AABBCollShape::InstanceBy_CenterAndSize(Vector2f center, float wi
 
 bool AABBCollShape::Intersect(const AABBCollShape& collision) const {
 	return Intersect_AABBvsAABB(collision, *this);
+}
+bool AABBCollShape::Intersect(const PolygonCollShape& objShape) const {
+	return Intersect_PolygonVsAABB(objShape, *this);
 }
 bool AABBCollShape::Intersect(const CircleCollShape& collision) const {
 	return Intersect_CircleVsAABB(collision, *this);
@@ -130,6 +133,8 @@ Vector2f AABBCollShape::GetCollisionResolvPoint(const CircleCollShape& subjShape
 		//}
 }
 Vector2f AABBCollShape::GetCollisionResolvPoint(const AABBCollShape& subjShape, Vector2f subjMovDir,bool isSlideColl)const {
+	//TODO
+	
 	//NEED TO FIX
 	//NEED TO FIX
 	//NEED TO FIX
@@ -137,6 +142,7 @@ Vector2f AABBCollShape::GetCollisionResolvPoint(const AABBCollShape& subjShape, 
 	//NEED TO FIX
 	//NEED TO FIX
 	//NEED TO FIX
+	throw exception("Absent solution");
 	return Vector2f(1, 0);
 	//NEED TO FIX
 	//NEED TO FIX
@@ -145,6 +151,11 @@ Vector2f AABBCollShape::GetCollisionResolvPoint(const AABBCollShape& subjShape, 
 	//NEED TO FIX
 	//NEED TO FIX
 	//NEED TO FIX
+}
+Vector2f AABBCollShape::GetCollisionResolvPoint(const PolygonCollShape& subjShape, Vector2f subjMovDir, bool isSlideColl) const {
+	//TODO
+
+	throw exception("Absent solution");
 }
 
 bool AABBCollShape::IsPointInCollider(Vector2f point) const {
@@ -219,6 +230,9 @@ Vector2f AABBCollShape::GetClosestPoint(Vector2f point) const {
 	return clPoint;
 }
 bool AABBCollShape::IntersectRay(const Ray& ray, Vector2f* interPnt, bool selFarthest) const {
+	
+	//TODO
+	
 	//NEED TO FIX
 	//NEED TO FIX
 	//NEED TO FIX
@@ -227,6 +241,7 @@ bool AABBCollShape::IntersectRay(const Ray& ray, Vector2f* interPnt, bool selFar
 	//NEED TO FIX
 	//NEED TO FIX
 	*interPnt = Vector2f(0, 0);
+	throw exception("Unimplemented method");
 	return true;
 	//NEED TO FIX
 	//NEED TO FIX
@@ -267,10 +282,19 @@ bool AABBCollShape::IntersectSegment(const Segment& segm) const {
 	return false;
 }
 
-CircleCollShape AABBCollShape::GetBoundedCircle()const {
+const CircleCollShape& AABBCollShape::GetOutterBoundCircle()const {
+
 	Vector2f size = GetSize();
 	size *= 0.5f;
-	return CircleCollShape(GetCenter(), Length(size));
+	UpdateBoundCirclePos();
+	BoundCircle.Radius = Length(size);
+	return BoundCircle;
+}
+
+void AABBCollShape::UpdateBoundCirclePos() const {
+
+	Vector2f center = GetCenter();
+	BoundCircle.Center = center;
 }
 
 void AABBCollShape::SetCenter(Vector2f center) {

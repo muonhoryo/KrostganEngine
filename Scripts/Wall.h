@@ -27,7 +27,7 @@ namespace KrostganEngine::GameObjects {
 		Vector2f GetResolvingPnt(const ColliderShape& objShape, Vector2f movDir, bool isSlideColl) const override;
 
 	private:
-		AABBCollShape COLLIDER;
+		AABBCollShape Collider;
 
 		void RecreateCollider();
 	};

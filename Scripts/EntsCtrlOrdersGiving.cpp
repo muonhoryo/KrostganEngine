@@ -30,7 +30,7 @@ void EntitiesCtrlInputMode::GiveOrderToSelected_MoveToPoint(Vector2f targetGloba
 
 		parEl = dynamic_cast<Entity*>((*begIt)->GetPtr_t());
 		if (parEl != nullptr) {
-			parEl->TryAddOrder(*new EntityOrder_MoveToPoint(*parEl, targetGlobalPos,parEl->GetCollider().GetBoundedCircle().Radius), !isGrouped);
+			parEl->TryAddOrder(*new EntityOrder_MoveToPoint(*parEl, targetGlobalPos,parEl->GetCollider().GetOutterBoundCircle().Radius), !isGrouped);
 		}
 		++begIt;
 	}
@@ -148,7 +148,7 @@ void EntitiesCtrlInputMode::GiveOrderToSelected_AttackArea(Vector2f targetGlobal
 	for (;begIt != endIt;) {
 		parEl = dynamic_cast<Entity*>((*begIt)->GetPtr_t());
 		if (parEl != nullptr) {
-			parEl->TryAddOrder(*new EntityOrder_AttackArea(*parEl, targetGlobalPos, parEl->GetCollider().GetBoundedCircle().Radius), !isGrouped);
+			parEl->TryAddOrder(*new EntityOrder_AttackArea(*parEl, targetGlobalPos, parEl->GetCollider().GetOutterBoundCircle().Radius), !isGrouped);
 		}
 		++begIt;
 	}

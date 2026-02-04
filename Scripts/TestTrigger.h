@@ -14,22 +14,22 @@ namespace KrostganEngine::GameObjects {
 	public:
 		TestTrigger(Vector2f Pos) 
 			:TriggerZone(*new Transformable()),
-			COLLIDER(CircleCollShape(Pos,300)){
+			Collider(CircleCollShape(Pos,300)){
 
 			SetGlobalPosition(Pos);
 		}
 
 		const ColliderShape& GetCollider() const override {
 
-			return COLLIDER;
+			return Collider;
 		}
 
-		CircleCollShape COLLIDER;
+		CircleCollShape Collider;
 
 	protected:
 		vector<IPhysicalObject*>	OverlapAll() const override {
 
-			return Engine::GetPhysicsEngine().OverlapCircle_All(COLLIDER.Center, COLLIDER.Radius, PhysicsLayer::Units);
+			return Engine::GetPhysicsEngine().OverlapCircle_All(Collider.Center, Collider.Radius, PhysicsLayer::Units);
 		}
 		bool						EnterTriggerCondition(const IPhysicalObject& inputObj) const override {
 			return true;

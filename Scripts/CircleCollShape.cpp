@@ -23,6 +23,9 @@ bool CircleCollShape::Intersect(const AABBCollShape& collision) const {
 bool CircleCollShape::Intersect(const CircleCollShape& collision)const {
 	return Intersect_CircleVsCircle(collision, *this);
 }
+bool CircleCollShape::Intersect(const PolygonCollShape& objShape) const {
+	return Intersect_PolygonVsCircle(objShape, *this);
+}
 bool CircleCollShape::Intersect(const ColliderShape* coll[], size_t count)const {
 	int index = 0;
 	while (index < count) {
@@ -71,6 +74,9 @@ Vector2f CircleCollShape::GetCollisionResolvPoint(const CircleCollShape& subjSha
 
 }
 Vector2f CircleCollShape::GetCollisionResolvPoint(const AABBCollShape& subjShape, Vector2f subjMovDir, bool isSlideColl) const {
+
+	//TODO
+
 	//NEED TO FIX
 	//NEED TO FIX
 	//NEED TO FIX
@@ -78,6 +84,7 @@ Vector2f CircleCollShape::GetCollisionResolvPoint(const AABBCollShape& subjShape
 	//NEED TO FIX
 	//NEED TO FIX
 	//NEED TO FIX
+	throw exception("Unimplemented method");
 	return Vector2f(1, 0);
 	//NEED TO FIX
 	//NEED TO FIX
@@ -86,6 +93,11 @@ Vector2f CircleCollShape::GetCollisionResolvPoint(const AABBCollShape& subjShape
 	//NEED TO FIX
 	//NEED TO FIX
 	//NEED TO FIX
+}
+Vector2f CircleCollShape::GetCollisionResolvPoint(const PolygonCollShape& subjShape, Vector2f subjMovDir, bool isSlideColl) const {
+	//TODO
+
+	throw exception("Unimplemented method");
 }
 
 bool CircleCollShape::IsPointInCollider(Vector2f point) const {
@@ -148,8 +160,8 @@ bool CircleCollShape::IntersectSegment(const Segment& segm) const {
 	return dist - Radius < eps;
 }
 
-CircleCollShape CircleCollShape::GetBoundedCircle()const {
-	return CircleCollShape(Center,Radius);
+const CircleCollShape& CircleCollShape::GetOutterBoundCircle()const {
+	return *this;
 }
 
 void CircleCollShape::SetCenter(Vector2f center) {

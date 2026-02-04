@@ -62,6 +62,9 @@ WorldObjectLoadInfo& WorldObjsCatalogDeserial::DeserializeObjInfo(xml_node<>& se
 
 		info = new DecorationLoadInfo();
 	}
+	else if (type == WorldObjsLoad_Type::OBJECT_TYPE_AURA) {
+		info = new AuraLoadInfo();
+	}
 	else
 		throw exception("Cant parse info: uknown type");
 

@@ -57,7 +57,7 @@ namespace KrostganEngine::GameObjects {
 	// Internal
 	//
 	private:
-		ColliderShape&		COLLIDER;
+		ColliderShape&		Collider;
 		IHitPointModule*	HPModule;
 		bool				IsTargetableForAutoAttack = true;
 		SpriteRenderer*		HitEffectSprite;
@@ -73,7 +73,7 @@ namespace KrostganEngine::GameObjects {
 		size_t			MaxHP = 1;
 		bool			IsTargetableForAutoAttack = true;
 		SpriteRenderer* HitEffectSprite = nullptr;
-		ColliderShape*	COLLIDER = nullptr;
+		ColliderShape*	Collider = nullptr;
 
 		IHitPointModule* GetHPModule() const { return HPModule; }
 		IDeathModule* GetDeathModule() const { return DeathModule; }
