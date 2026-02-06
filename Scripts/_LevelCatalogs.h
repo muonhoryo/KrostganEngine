@@ -2,7 +2,6 @@
 
 #include <CatalogObject.h>
 #include <ObjectsCatalog.h>
-#include <LevelLoadingInfo.h>
 
 #include <WorldObjectLoadInfo.h>
 #include <WorldObjsCatalog.h>

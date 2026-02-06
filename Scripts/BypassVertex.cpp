@@ -25,7 +25,7 @@ BypassWay& BypassVertex::GenerateWay(BypassVertex& secondPnt) {
 	AddWay(way);
 	secondPnt.AddWay(way);
 
-	cout << "Genearate bypass way from " << to_string(Position) << " to " << to_string(secondPnt.Position) << endl;
+	//cout << "Genearate bypass way from " << to_string(Position) << " to " << to_string(secondPnt.Position) << endl;
 
 	return way;
 }

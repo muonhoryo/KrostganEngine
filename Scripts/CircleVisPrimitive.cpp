@@ -24,8 +24,6 @@ CircleVisPrimitive::CircleVisPrimitive(
 	CirShape.setOutlineThickness(1);
 	SetCenter(center);
 	SetEdgeColor(edgeColor);
-
-	cout << "Create circle at position: " + to_string<float>(GetCenter())<<endl;
 }
 
 Vector2f CircleVisPrimitive::GetCenter() {

@@ -22,46 +22,52 @@ void ConsoleCommsInterpretator::ExecuteCommand(const string& input) {
 
 	string cpyInput = input;
 	FStreamExts::ClearPath(cpyInput);
+	auto& syntax = SplitCommandSyntax(cpyInput);
+	auto& comDef = syntax[0];
 
-	if (cpyInput == ZOOM_COMMAND)
+	if (comDef == ZOOM_COMMAND)
 	{
-		if (InterpretateComm_Zoom(input)) {
+		if (InterpretateComm_Zoom(syntax)) {
 			return;
 		}
 	}
-	else if (cpyInput==DIVIVE_COMMANDER_COMMAND) {
+	else if (comDef ==DIVIVE_COMMANDER_COMMAND) {
 
-		if (InterpretateComm_DivComm(input)) {
+		if (InterpretateComm_DivComm(syntax)) {
 			return;
 		}
 	}
-	else if (cpyInput ==CAMERA_MOVING_COMMAND) {
-		if (InterpretateComm_CamMov(input)) {
+	else if (comDef ==CAMERA_MOVING_COMMAND) {
+		if (InterpretateComm_CamMov(syntax)) {
 			return;
 		}
 	}
-	else if (cpyInput==IMMORTAL_ARMY_COMMAND) {
-		if (InterpretateComm_ImmArmy(input))
+	else if (comDef ==IMMORTAL_ARMY_COMMAND) {
+		if (InterpretateComm_ImmArmy(syntax))
 			return;
 	}
-	else if (cpyInput == DISARM_COMMAND) {
-		if (InterpretateComm_Disarm(input))
+	else if (comDef == DISARM_COMMAND) {
+		if (InterpretateComm_Disarm(syntax))
 			return;
 	}
-	else if (cpyInput == REARM_COMMAND) {
-		if (InterpretateComm_Rearm(input))
+	else if (comDef == REARM_COMMAND) {
+		if (InterpretateComm_Rearm(syntax))
 			return;
 	}
-	else if (cpyInput == WARFOG_COMMAND) {
-		if (InterpretateComm_WarFog(input))
+	else if (comDef == WARFOG_COMMAND) {
+		if (InterpretateComm_WarFog(syntax))
 			return;
 	}
-	else if (cpyInput == FRACSET_COMMAND) {
-		if (InterpretateComm_FracSet(input))
+	else if (comDef == FRACSET_COMMAND) {
+		if (InterpretateComm_FracSet(syntax))
+			return;
+	}
+	else if (comDef == PRINT_COMMAND) {
+		if (InterpretateComm_Print(syntax))
 			return;
 	}
 
-	else if (input == "testab") {
+	/*else if (input == "testab") {
 
 		auto it = GroupSelectionSystem::GetChoosenEntities_Begin();
 		auto end = GroupSelectionSystem::GetChoosenEntities_End();
@@ -81,7 +87,7 @@ void ConsoleCommsInterpretator::ExecuteCommand(const string& input) {
 			++it;
 		}
 		return;
-	}
+	}*/
 	/*else if (input == "testaura") {
 
 		auto it = GroupSelectionSystem::GetChoosenEntities_Begin();
@@ -129,8 +135,7 @@ void ConsoleCommsInterpretator::ExecuteCommand(const string& input) {
 	PrintInterpetatorMessage("Unknown command: " + input);
 };
 
-bool ConsoleCommsInterpretator::InterpretateComm_Zoom(const string& input) {
-	auto& syntax = SplitCommandSyntax(input);
+bool ConsoleCommsInterpretator::InterpretateComm_Zoom(const vector<string>& syntax) {
 	if (syntax.size() != 2 ||
 		syntax.at(0) != ZOOM_COMMAND){
 
@@ -146,9 +151,8 @@ bool ConsoleCommsInterpretator::InterpretateComm_Zoom(const string& input) {
 	PrintInterpetatorMessage("Zoom was set to " + std::to_string(zoom));
 	return true;
 }
-bool ConsoleCommsInterpretator::InterpretateComm_DivComm(const string& input) {
+bool ConsoleCommsInterpretator::InterpretateComm_DivComm(const vector<string>& syntax) {
 
-	auto& syntax = SplitCommandSyntax(input);
 	if (syntax.size() != 1 ||
 		syntax.at(0)!=DIVIVE_COMMANDER_COMMAND) {
 		
@@ -167,9 +171,8 @@ bool ConsoleCommsInterpretator::InterpretateComm_DivComm(const string& input) {
 	}
 	return true;
 }
-bool ConsoleCommsInterpretator::InterpretateComm_CamMov(const string& input) {
+bool ConsoleCommsInterpretator::InterpretateComm_CamMov(const vector<string>& syntax) {
 
-	auto& syntax = SplitCommandSyntax(input);
 	if (syntax.size() != 3 ||
 		syntax.at(0) != CAMERA_MOVING_COMMAND) {
 
@@ -181,12 +184,14 @@ bool ConsoleCommsInterpretator::InterpretateComm_CamMov(const string& input) {
 	pos.y= stof(syntax[2].c_str());
 
 	Engine::SetCameraPos(pos);
-	PrintInterpetatorMessage("Set camera to position: " + to_string<float>(pos));
+	auto& posStr = to_string<float>(pos);
+	PrintInterpetatorMessage("Set camera to position: " + posStr);
+	delete& posStr;
 	return true;
 
 }
-bool ConsoleCommsInterpretator::InterpretateComm_ImmArmy(const string& input) {
-	auto& syntax = SplitCommandSyntax(input);
+bool ConsoleCommsInterpretator::InterpretateComm_ImmArmy(const vector<string>& syntax) {
+
 	if (syntax.size() != 1 ||
 		syntax.at(0) != IMMORTAL_ARMY_COMMAND) {
 
@@ -205,8 +210,8 @@ bool ConsoleCommsInterpretator::InterpretateComm_ImmArmy(const string& input) {
 	}
 	return true;
 }
-bool ConsoleCommsInterpretator::InterpretateComm_Disarm(const string& input) {
-	auto& syntax = SplitCommandSyntax(input);
+bool ConsoleCommsInterpretator::InterpretateComm_Disarm(const vector<string>& syntax) {
+	
 	if (syntax.size() != 1 ||
 		syntax.at(0) != DISARM_COMMAND) {
 		
@@ -252,8 +257,8 @@ bool ConsoleCommsInterpretator::InterpretateComm_Disarm(const string& input) {
 	return true;
 }
 
-bool ConsoleCommsInterpretator::InterpretateComm_Rearm(const string& input) {
-	auto& syntax = SplitCommandSyntax(input);
+bool ConsoleCommsInterpretator::InterpretateComm_Rearm(const vector<string>& syntax) {
+	
 	if (syntax.size() != 2 ||
 		syntax.at(0) != REARM_COMMAND) {
 
@@ -287,8 +292,8 @@ bool ConsoleCommsInterpretator::InterpretateComm_Rearm(const string& input) {
 	return true;
 }
 
-bool ConsoleCommsInterpretator::InterpretateComm_WarFog(const string& input) {
-	auto& syntax = SplitCommandSyntax(input);
+bool ConsoleCommsInterpretator::InterpretateComm_WarFog(const vector<string>& syntax) {
+	
 	if (syntax.size() != 1 ||
 		syntax.at(0) != WARFOG_COMMAND) {
 
@@ -304,8 +309,8 @@ bool ConsoleCommsInterpretator::InterpretateComm_WarFog(const string& input) {
 	return true;
 }
 
-bool ConsoleCommsInterpretator::InterpretateComm_FracSet(const string& input) {
-	auto& syntax = SplitCommandSyntax(input);
+bool ConsoleCommsInterpretator::InterpretateComm_FracSet(const vector<string>& syntax) {
+	
 	if (syntax.size() != 2 ||
 		syntax.at(0) != FRACSET_COMMAND) {
 
@@ -340,6 +345,28 @@ bool ConsoleCommsInterpretator::InterpretateComm_FracSet(const string& input) {
 			mem->SetFraction(*frac);
 	}
 	return true;
+}
+
+bool ConsoleCommsInterpretator::InterpretateComm_Print(const vector<string>& syntax) {
+	
+	if (syntax.size() < 2 ||
+		syntax.at(0) != PRINT_COMMAND) {
+		
+		return false;
+	}
+	
+	auto interParam = PrintComm_TryInterpetateParameter(syntax);
+	PrintInterpetatorMessage("Print-command: " + (interParam == nullptr ? syntax[1] : *interParam));
+	return true;
+}
+string* ConsoleCommsInterpretator::PrintComm_TryInterpetateParameter(const vector<string>& splitInput) {
+
+	auto& param = splitInput[1];
+	if (param == PRINT_PARAM_CAMERAPOS) {
+		return &to_string(Engine::GetCameraPos());
+	}
+	
+	return nullptr;
 }
 
 vector<string>& ConsoleCommsInterpretator::SplitCommandSyntax(const string& input) {

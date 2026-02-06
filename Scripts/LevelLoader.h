@@ -48,7 +48,7 @@ namespace KrostganEngine::Core {
 	class HeroesLoadEventAction: public IEventSubscriber<HeroesLoadEventArgs>{};
 
 
-	class LevelLoader {
+	class LevelLoader final {
 	public:
 		static inline ExecutedEvent<HeroesLoadEventArgs> HeroesLoadEvent = ExecutedEvent<HeroesLoadEventArgs>();
 		static inline ExecutedEvent<UnitsLoadEventArgs> UnitsLoadEvent = ExecutedEvent<UnitsLoadEventArgs>();
@@ -59,6 +59,8 @@ namespace KrostganEngine::Core {
 
 	private:
 		LevelLoader(){}
+
+		static void InstantiateWarFog(const LevelLoadingInfo& levelInfo, const Vector2f& mapPixelSize);
 
 		static inline EventHandler <HeroesLoadEventArgs> HeroesLoadEventHan = EventHandler<HeroesLoadEventArgs>(HeroesLoadEvent);
 		static inline EventHandler <UnitsLoadEventArgs> UnitsLoadEventHan= EventHandler<UnitsLoadEventArgs>(UnitsLoadEvent);

@@ -9,15 +9,6 @@ using namespace sf;
 using namespace KrostganEngine::GameObjects;
 
 namespace KrostganEngine::Core {
-	struct LevelLoadingInfo;
-
-
-
-//
-//
-// LevelLoadingInfo
-//
-//
 
 	struct LevelLoadingInfo final {
 
@@ -28,14 +19,14 @@ namespace KrostganEngine::Core {
 
 		//Consts
 
-		Rect<float>	CameraBorders;
+		Rect<float>		CameraBorders;
+		Vector2f		CameraStartPos = DEFAULT_POSITION;
 
-		float WarFogOffset = 0;
-
-		string WarFogShaderPath;
-
-		string BackgroundImagePath;
-		bool BackgroundTiled = false;
+		float	WarFogOffset = 0;
+		string	WarFogShaderPath;
+		
+		string	BackgroundImagePath;
+		bool	BackgroundTiled = false;
 
 		LevelLoadingInfo(vector<vector<LvlObjInstantiationInfo*>*>& LevelMap, forward_list<LvlObjInstantiationInfo*>& UniqueObjects)
 			:LevelMap(LevelMap),

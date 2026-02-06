@@ -22,7 +22,7 @@ GameMode::GameMode() :EngineMode() {
 
     GameInterface = new ExtVisualManager();
 
-    Engine::SetCameraPos(Vector2f(0, 0));
+    Engine::SetCameraPos(LevelManager::GetLevelInfo()->CameraStartPos);
 
     UserInterfaceLoader::Load_GameUI();
 }

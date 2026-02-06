@@ -19,21 +19,13 @@ void LevelLoader::LoadLevel(const LevelLoadingInfo& levelInfo) {
 
 	auto& consts = Engine::GetGlobalConsts();
 
-	Vector2f mapSize = Vector2f(
+	Vector2f mapPixelSize = Vector2f(
 
 		levelInfo.MapColumnsCount * consts.GameObjs_OneSizeSpriteResolution,
 		levelInfo.MapRowsCount * consts.GameObjs_OneSizeSpriteResolution
 	);
 
-	//Instantiate war fog
-	float warFogOffset = levelInfo.WarFogOffset;
-	Vector2f warFogMin = Vector2f(-warFogOffset, -warFogOffset);
-	Vector2f warFogMax = Vector2f(mapSize.x + warFogOffset, mapSize.y + warFogOffset);
-	new WarFogStencilGen(warFogMin, warFogMax, Engine::GetEngineConfig().WarForStencilShaderPath);
-	auto warFogShad = new Shader();
-	warFogShad->loadFromFile(levelInfo.WarFogShaderPath, Shader::Fragment);
-	new WarFog(warFogMin, warFogMax, DEFAULT_RENDLAYER, warFogShad);
-	//
+	InstantiateWarFog(levelInfo, mapPixelSize);
 
 	LvlObjInstantiationInfo* cell = nullptr;
 	WorldTransfObj* obj = nullptr;
@@ -89,7 +81,19 @@ void LevelLoader::LoadLevel(const LevelLoadingInfo& levelInfo) {
 		bgSprite.Set_LateRender(false);
 		bgSprite.SetRendLayer((std::byte)0);
 	}
+	//
+
 
 	LevelManager::AssignLevelInfo(levelInfo);
 
+}
+void LevelLoader::InstantiateWarFog(const LevelLoadingInfo& levelInfo, const Vector2f& mapPixelSize) {
+
+	float warFogOffset = levelInfo.WarFogOffset;
+	Vector2f warFogMin = Vector2f(-warFogOffset, -warFogOffset);
+	Vector2f warFogMax = Vector2f(mapPixelSize.x + warFogOffset, mapPixelSize.y + warFogOffset);
+	new WarFogStencilGen(warFogMin, warFogMax, Engine::GetEngineConfig().WarForStencilShaderPath);
+	auto warFogShad = new Shader();
+	warFogShad->loadFromFile(levelInfo.WarFogShaderPath, Shader::Fragment);
+	new WarFog(warFogMin, warFogMax, DEFAULT_RENDLAYER, warFogShad);
 }

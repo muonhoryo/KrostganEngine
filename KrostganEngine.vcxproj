@@ -574,9 +574,6 @@
     <Text Include="TestLevel.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Assets\Sprites\UnitSprite_Guardian.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Scripts\Shaders\MaskableImage.frag" />
     <None Include="Scripts\Shaders\WarFog.frag" />
     <None Include="Scripts\Shaders\WarFogStencil.frag" />

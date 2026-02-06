@@ -92,6 +92,10 @@ LevelLoadingInfo& LevelSerialization::DeserializeLevel(const string& serPath) {
 		else if (pr->first == DEF_BG_TILED) {
 			info->BackgroundTiled = FStreamExts::ParseBool(pr->second);
 		}
+		//Vector
+		else if (pr->first == DEF_CAMERA_STARTPOS) {
+			info->CameraStartPos = ParseVec2f(pr->second);
+		}
 
 		//Check end of level parameters
 		else if (line.find(LevelSerialization::UNIQUE_OBJECTS_HEADER) != string::npos) {

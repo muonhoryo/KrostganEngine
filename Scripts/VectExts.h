@@ -92,8 +92,8 @@ namespace KrostganEngine {
 	}
 
 	template<typename T>
-	static string to_string(const Vector2<T>& vect) {
-		return "{ " + std::to_string(vect.x) + " ; " + std::to_string(vect.y) + " }";
+	static string& to_string(const Vector2<T>& vect) {
+		return *new string(std::to_string(vect.x) + " ; " + std::to_string(vect.y));
 	}
 
 	template<typename T>
